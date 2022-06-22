@@ -23,12 +23,13 @@ a:hover {
   color: inherit;
 }
 
-.body-click {
+.body-outside {
   display: none;
   width: 100%;
   height: 100%;
-  position: absolute;
+  position: fixed;
   z-index: 899;
+  background-color: rgba(0, 0, 0, 0.3764705882);
 }
 
 /*--------DARK MODE----------*/
@@ -53,20 +54,79 @@ header .header-wrap {
   height: 5.1rem;
 }
 
-.drawer-cont {
+.drawerbtn-cont {
   display: flex;
   align-items: center;
   justify-content: center;
   width: 3.4rem;
 }
-.drawer-cont i {
+.drawerbtn-cont i {
   color: #ffffff;
   font-size: 3.4rem;
   text-shadow: 0px 0px 6px rgba(255, 255, 255, 0.3137254902);
   cursor: pointer;
 }
-.drawer-cont i:hover {
+.drawerbtn-cont i:hover {
   font-size: 3.2rem;
+}
+
+.drawer {
+  display: none;
+  flex-direction: column;
+  z-index: 901;
+  position: absolute;
+  height: 100%;
+  min-width: 70%;
+  top: 0;
+  left: 0;
+  background-color: #1D1D1D;
+  font-size: 1.8rem;
+  font-family: "Itim", cursive;
+}
+.drawer .dw-top {
+  display: flex;
+  flex-direction: row;
+  height: 100px;
+}
+.drawer .dw-top .dw-close {
+  padding: 10px;
+}
+.drawer .dw-top .dw-close i {
+  font-size: 2rem;
+  color: #ffffff;
+}
+.drawer .dw-top .dw-account {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+.drawer .dw-list {
+  flex-grow: 1;
+  overflow-y: scroll;
+}
+.drawer .dw-list > ul > li {
+  border-bottom: 1px solid #313131;
+}
+.drawer .dw-list > ul > li:last-child {
+  border-bottom: none;
+}
+.drawer .dw-list > ul > li > a {
+  padding: 4px 20px;
+  color: #ffffff !important;
+  transition: 0.2s ease;
+}
+.drawer .dw-list > ul > li > a:hover {
+  background-color: #313131;
+}
+.drawer .dw-settings {
+  margin-top: auto;
+  padding: 4px 20px;
+  color: #ffffff;
+  transition: 0.2s ease;
+  background-color: #b73d3d;
+}
+.drawer .dw-settings:hover {
+  background-color: #b94f4f;
 }
 
 .logo-cont {
@@ -229,7 +289,7 @@ header .header-wrap {
 .account-cont .account-dropdown > ul > li > a:hover {
   background-color: #373737;
 }
-.account-cont .account-dropdown .a_dd_settings {
+.account-cont .account-dropdown .acc_dd_settings {
   margin-top: 14px;
   padding: 4px 20px;
   text-align: center;
@@ -237,7 +297,7 @@ header .header-wrap {
   transition: 0.2s ease;
   background-color: #b73d3d;
 }
-.account-cont .account-dropdown .a_dd_settings:hover {
+.account-cont .account-dropdown .acc_dd_settings:hover {
   background-color: #b94f4f;
 }
 
@@ -263,6 +323,10 @@ header .header-wrap {
   .searchbar-cont {
     display: flex;
   }
+
+  .drawer {
+    min-width: 300px;
+  }
 }
 @media (min-width: 768px) {
   html {
@@ -277,7 +341,7 @@ header .header-wrap {
     display: flex;
   }
 
-  .drawer-cont {
+  .drawerbtn-cont {
     display: none;
   }
 }
@@ -294,7 +358,7 @@ header .header-wrap {
     max-width: 550px !important;
   }
 
-  .drawer-cont {
+  .drawerbtn-cont {
     padding-left: 16px;
   }
 
