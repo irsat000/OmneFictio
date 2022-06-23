@@ -92,19 +92,42 @@ header .header-wrap {
 .drawer .dw-top {
   display: flex;
   flex-direction: row;
-  height: 100px;
+  color: #ffffff;
+  border-bottom: 1px solid #313131;
+  padding-bottom: 10px;
 }
 .drawer .dw-top .dw-close {
   padding: 10px;
 }
 .drawer .dw-top .dw-close i {
   font-size: 2rem;
-  color: #ffffff;
 }
 .drawer .dw-top .dw-account {
   flex-grow: 1;
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  text-align: center;
+}
+.drawer .dw-top .dw-account .dw-userimg {
+  display: flex;
+  justify-content: center;
+  padding: 1rem 0 10px;
+}
+.drawer .dw-top .dw-account .dw-userimg img {
+  width: 4rem;
+  height: 4rem;
+  border-radius: 6px;
+}
+.drawer .dw-top .dw-account .dw-username {
+  font-family: "Doppio One", sans-serif;
+  padding-bottom: 8px;
+  font-size: 1.1rem;
+}
+.drawer .dw-top .dw-account .dw-acc-info {
+  font-family: "Hubballi", cursive;
+  padding-bottom: 6px;
+  font-size: 1.2rem;
 }
 .drawer .dw-icon-cont {
   width: 2.4rem;
@@ -113,14 +136,9 @@ header .header-wrap {
   font-size: 1.4rem;
 }
 .drawer .dw-list {
+  padding-top: 10px;
   flex-grow: 1;
   overflow-y: scroll;
-}
-.drawer .dw-list > ul > li {
-  border-bottom: 1px solid #313131;
-}
-.drawer .dw-list > ul > li:last-child {
-  border-bottom: none;
 }
 .drawer .dw-list > ul > li > a {
   padding: 4px 20px;
