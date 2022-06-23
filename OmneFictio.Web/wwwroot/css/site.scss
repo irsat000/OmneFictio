@@ -3,6 +3,19 @@ html {
     font-size: 14px;
     position: relative;
     height: 100%;
+    &::-webkit-scrollbar-track{
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        background-color: #F5F5F5;
+    }
+    &::-webkit-scrollbar{
+        width: 6px;
+        background-color: #F5F5F5;
+    }
+    &::-webkit-scrollbar-thumb{
+        -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        border-radius: 10px;
+        background-color: #555;
+    }
 }
 body{
     padding:0;
@@ -359,15 +372,6 @@ header{
 }
 /*----------TEMPLATE_DESKTOP---------*/
 @media (min-width: 576px) {
-    .donate-shortcut{
-        display:block;
-    }
-    .search-shortcut{
-        display:none;
-    }
-    .searchbar-cont{
-        display: flex;
-    }
     .drawer-active{
         width: 300px !important;
     }
@@ -404,6 +408,17 @@ header{
 }
 
 // Custom
+@media (min-width: 360px) {
+    .search-shortcut{
+        display:none;
+    }
+    .searchbar-cont{
+        display: flex;
+    }
+    .donate-shortcut{
+        display:block;
+    }
+}
 @media (min-width: 1300px) {
     .searchbar-wrap{
         max-width: 550px !important;
