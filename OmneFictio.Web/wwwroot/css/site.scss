@@ -74,18 +74,23 @@ header{
         }
     }
 }
+.drawer-active{
+    width:70% !important;
+}
 .drawer{
-    display: none;
+    display: flex;
     flex-direction: column;
     z-index: 901;
-    position: absolute;
-    height: 100%;
-    min-width: 70%;
+    position: fixed;
     top:0;
     left: 0;
+    height: 100%;
+    width: 0;
     background-color: $sitebgcolor;
     font-size: 1.8rem;
     font-family: 'Itim', cursive;
+    overflow-x: hidden;
+    transition: width 0.3s ease;
     .dw-top{
         display: flex;
         flex-direction: row;
@@ -261,7 +266,7 @@ header{
         z-index: 900;
         display:none;
         opacity:0;
-        transition:0.1s ease opacity;
+        transition: opacity 0.1s ease;
         position: absolute;
         top: 52px;
         right: 0;
@@ -324,8 +329,8 @@ header{
     .searchbar-cont{
         display: flex;
     }
-    .drawer{
-        min-width: 300px;
+    .drawer-active{
+        width: 300px !important;
     }
 }
 
