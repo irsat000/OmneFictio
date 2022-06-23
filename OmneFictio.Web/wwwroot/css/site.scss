@@ -109,6 +109,12 @@ header{
             //justify-content: center;
         }
     }
+    .dw-icon-cont{
+        width: 2.4rem;
+        i {
+            font-size: 1.4rem;
+        }
+    }
     .dw-list{
         flex-grow: 1;
         overflow-y: scroll;
@@ -122,6 +128,7 @@ header{
                     padding: 4px 20px;
                     color: $textcolor !important;
                     transition: 0.2s ease;
+                    display: flex;
                     &:hover{
                         background-color: $frontbgcolor;
                     }
@@ -135,6 +142,7 @@ header{
         color: #ffffff;
         transition: 0.2s ease;
         background-color: #b73d3d;
+        display: flex;
         &:hover{
             background-color: #b94f4f;
         }

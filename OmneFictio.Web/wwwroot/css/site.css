@@ -106,6 +106,12 @@ header .header-wrap {
   display: flex;
   flex-direction: column;
 }
+.drawer .dw-icon-cont {
+  width: 2.4rem;
+}
+.drawer .dw-icon-cont i {
+  font-size: 1.4rem;
+}
 .drawer .dw-list {
   flex-grow: 1;
   overflow-y: scroll;
@@ -120,6 +126,7 @@ header .header-wrap {
   padding: 4px 20px;
   color: #ffffff !important;
   transition: 0.2s ease;
+  display: flex;
 }
 .drawer .dw-list > ul > li > a:hover {
   background-color: #313131;
@@ -130,6 +137,7 @@ header .header-wrap {
   color: #ffffff;
   transition: 0.2s ease;
   background-color: #b73d3d;
+  display: flex;
 }
 .drawer .dw-settings:hover {
   background-color: #b94f4f;
