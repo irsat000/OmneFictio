@@ -138,7 +138,7 @@ header .header-wrap {
 .drawer .dw-list {
   padding-top: 10px;
   flex-grow: 1;
-  overflow-y: scroll;
+  overflow-y: auto;
 }
 .drawer .dw-list > ul > li > a {
   padding: 4px 20px;
@@ -148,6 +148,19 @@ header .header-wrap {
 }
 .drawer .dw-list > ul > li > a:hover {
   background-color: #313131;
+}
+.drawer .dw-list::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #F5F5F5;
+}
+.drawer .dw-list::-webkit-scrollbar {
+  width: 6px;
+  background-color: #F5F5F5;
+}
+.drawer .dw-list::-webkit-scrollbar-thumb {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #555;
 }
 .drawer .dw-settings {
   margin-top: auto;
@@ -264,14 +277,13 @@ header .header-wrap {
 .account-cont .ppic-wrap {
   width: 50px;
   height: 50px;
-  background-color: gray;
   border-radius: 6px;
+  overflow: hidden;
   cursor: pointer;
 }
 .account-cont .ppic-wrap img {
   width: 100%;
   height: 100%;
-  border-radius: 6px;
 }
 .account-cont .dropdown_icon-wrap {
   height: 50px;
