@@ -47,48 +47,50 @@ main {
   margin-right: 16px;
 }
 
-.post-wrap {
+.post {
   margin-bottom: 12px;
   background-color: #313131;
+  overflow: hidden;
+  max-height: 260px;
 }
 
-.post {
+.post-detail {
   display: flex;
   flex-direction: column;
 }
-.post:last-child {
+.post-detail:last-child {
   margin-bottom: unset;
 }
-.post .p-header {
+.post-detail .p-header {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
 }
-.post .p-header .p-title {
+.post-detail .p-header .p-title {
   padding: 10px;
   font-family: "Josefin Sans", sans-serif;
   font-weight: 600;
 }
-.post .p-header .p-title span:hover {
+.post-detail .p-header .p-title span:hover {
   text-decoration: underline;
 }
-.post .p-header .p-menu {
+.post-detail .p-header .p-menu {
   display: flex;
   height: 100%;
   padding: 0 10px;
   font-size: 2rem;
 }
-.post .p-header .p-menu i {
+.post-detail .p-header .p-menu i {
   cursor: pointer;
 }
-.post .p-body {
+.post-detail .p-body {
   padding: 0 14px;
   font-size: 0.9rem;
   font-family: "Gudea", sans-serif;
   margin-bottom: 10px;
 }
-.post .p-footer {
+.post-detail .p-footer {
   font-family: "Itim", cursive;
   padding: 0 10px 10px;
   display: flex;
@@ -96,31 +98,31 @@ main {
   justify-content: space-between;
   align-items: center;
 }
-.post .p-footer i {
+.post-detail .p-footer i {
   font-size: 1.2rem;
   cursor: pointer;
   transition: color 0.2s ease;
 }
-.post .p-footer i:hover {
+.post-detail .p-footer i:hover {
   color: #cccccc;
 }
-.post .p-footer .p-likes {
+.post-detail .p-footer .p-likes {
   padding: 0 8px;
 }
-.post .p-footer .p-rate {
+.post-detail .p-footer .p-rate {
   margin-right: auto;
   padding-left: 20px;
 }
-.post .p-footer .p-username {
+.post-detail .p-footer .p-username {
   font-size: 0.8rem;
   margin-left: auto;
   cursor: pointer;
   padding-right: 8px;
 }
-.post .p-footer .p-username:hover {
+.post-detail .p-footer .p-username:hover {
   text-decoration: underline;
 }
-.post .p-footer img {
+.post-detail .p-footer img {
   height: 1.7rem;
   width: 1.7rem;
   border-radius: 50%;
@@ -150,6 +152,7 @@ main {
   font-size: 0.9rem;
   font-family: "Gudea", sans-serif;
   margin: 5px 0 8px;
+  padding: 0 4px;
 }
 .post-menu .pd-details .pd-tags span {
   margin-right: 6px;
@@ -174,7 +177,7 @@ main {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 4px 10px 2px;
+  padding: 4px 10px;
 }
 .post-menu .pd-right .pd-actions .pd-saved {
   background-color: #4A8D5D !important;
@@ -229,7 +232,7 @@ main {
     display: flex;
   }
 
-  .post-wrap {
+  .post {
     background-color: #1D1D1D !important;
     border-radius: 10px;
   }

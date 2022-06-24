@@ -43,3 +43,21 @@ $('body').click(function(event) {
         $('.body-outside').removeClass('d-block');
     }*/
 });
+
+$('.p-menubtn, .pd-closebtn').click(function(){
+    var postwrap = $(this).parent().closest('.post');
+    var postdetail = $(postwrap).find('.post-detail');
+    var postmenu = $(postwrap).find('.post-menu');
+    if($(postdetail).hasClass('d-flex')){
+        $(postdetail).removeClass('d-flex');
+        $(postdetail).addClass('d-none');
+        $(postmenu).removeClass('d-none');
+        $(postmenu).addClass('d-flex');
+    }
+    else{
+        $(postdetail).removeClass('d-none');
+        $(postdetail).addClass('d-flex');
+        $(postmenu).removeClass('d-flex');
+        $(postmenu).addClass('d-none');
+    }
+});

@@ -48,11 +48,13 @@ main{
         }
     }
 }
-.post-wrap{
+.post{
     margin-bottom: 12px;
     background-color: $frontbgcolor;
+    overflow: hidden;
+    max-height: 260px;
 }
-.post{
+.post-detail{
     display: flex;
     flex-direction: column;
     &:last-child{
@@ -148,6 +150,7 @@ main{
             font-size: 0.9rem;
             font-family: 'Gudea', sans-serif;
             margin: 5px 0 8px;
+            padding: 0 4px;
             span{
                 margin-right: 6px;
             }
@@ -172,7 +175,7 @@ main{
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 4px 10px 2px;
+            padding: 4px 10px;
             .pd-saved{
                 background-color: #4A8D5D !important;
             }
@@ -243,7 +246,7 @@ main{
     .nav-cont{
         display: flex;
     }
-    .post-wrap{
+    .post{
         background-color: $sitebgcolor !important;
         border-radius: 10px;
     }
