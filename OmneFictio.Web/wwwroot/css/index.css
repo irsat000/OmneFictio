@@ -15,26 +15,25 @@ main {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  margin-bottom: 6px;
-}
-.posts-cont .post-options .p-option {
-  font-size: 1.6rem;
   padding: 10px;
+}
+.posts-cont .post-options .po-option {
+  font-size: 1.6rem;
   text-shadow: 0px 0px 6px rgba(255, 255, 255, 0.3137254902);
   font-family: "Josefin Sans", sans-serif;
   cursor: pointer;
 }
-.posts-cont .post-options .p-option:hover {
+.posts-cont .post-options .po-option:hover {
   text-decoration: underline;
 }
 .posts-cont .post-options .po-orderby {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  align-items: center;
+  align-items: baseline;
 }
 .posts-cont .post-options .po-orderby .orderby-btn {
-  margin-right: 6px;
+  margin-right: 16px;
 }
 .posts-cont .post-options .po-orderby .orderby-value {
   font-size: 1.2rem;
@@ -44,7 +43,7 @@ main {
 }
 .posts-cont .post-options .po-type {
   margin-left: auto;
-  margin-right: 16px;
+  margin-right: 36px;
 }
 
 .post {
@@ -236,6 +235,10 @@ main {
     background-color: #1D1D1D !important;
     border-radius: 10px;
   }
+
+  .post-options {
+    padding: 20px 10px 10px !important;
+  }
 }
 @media (min-width: 992px) {
   .nav-cont {
@@ -255,7 +258,7 @@ main {
     display: none;
   }
 
-  .p-option {
+  .po-option {
     font-size: 1.3rem !important;
   }
 }/*# sourceMappingURL=index.css.map */
