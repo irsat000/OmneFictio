@@ -1,3 +1,4 @@
+/*--------DARK MODE----------*/
 /*----------SETTINGS---------*/
 html {
   font-size: 14px;
@@ -5,7 +6,7 @@ html {
   height: 100%;
 }
 html::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #F5F5F5;
 }
 html::-webkit-scrollbar {
@@ -13,7 +14,7 @@ html::-webkit-scrollbar {
   background-color: #F5F5F5;
 }
 html::-webkit-scrollbar-thumb {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   background-color: #555;
 }
@@ -29,7 +30,6 @@ ul, ol, li, b, h1, h2, h3, h4, h6, a, p {
   padding: 0;
   margin: 0;
   display: block;
-  color: #1D1D1D;
 }
 
 a:hover {
@@ -45,10 +45,9 @@ a:hover {
   background-color: rgba(0, 0, 0, 0.3764705882);
 }
 
-/*--------DARK MODE----------*/
 /*-----------DESIGN-------------*/
 body {
-  background-color: #313131;
+  background-color: #1D1D1D;
 }
 
 .main-cont {
@@ -163,7 +162,7 @@ header .header-wrap {
   background-color: #313131;
 }
 .drawer .dw-list::-webkit-scrollbar-track {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   background-color: #F5F5F5;
 }
 .drawer .dw-list::-webkit-scrollbar {
@@ -171,7 +170,7 @@ header .header-wrap {
   background-color: #F5F5F5;
 }
 .drawer .dw-list::-webkit-scrollbar-thumb {
-  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
   border-radius: 10px;
   background-color: #555;
 }
@@ -358,7 +357,6 @@ header .header-wrap {
   background-color: #b94f4f;
 }
 
-/*----------TEMPLATE_MOBILE----------*/
 .donate-shortcut {
   display: none;
 }
@@ -367,7 +365,6 @@ header .header-wrap {
   display: none;
 }
 
-/*----------TEMPLATE_DESKTOP---------*/
 @media (min-width: 576px) {
   .drawer-active {
     width: 300px !important;
@@ -376,6 +373,10 @@ header .header-wrap {
 @media (min-width: 768px) {
   html {
     font-size: 16px;
+  }
+
+  body {
+    background-color: #313131;
   }
 
   .account-cont {

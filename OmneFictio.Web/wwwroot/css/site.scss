@@ -1,3 +1,5 @@
+@import 'theme';
+
 /*----------SETTINGS---------*/
 html {
     font-size: 14px;
@@ -5,6 +7,7 @@ html {
     height: 100%;
     &::-webkit-scrollbar-track{
         -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+        box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
         background-color: #F5F5F5;
     }
     &::-webkit-scrollbar{
@@ -13,6 +16,7 @@ html {
     }
     &::-webkit-scrollbar-thumb{
         -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+        box-shadow: inset 0 0 6px rgba(0,0,0,.3);
         border-radius: 10px;
         background-color: #555;
     }
@@ -27,7 +31,6 @@ ul,ol,li,b,h1,h2,h3,h4,h6,a,p{
     padding: 0;
     margin:0;
     display: block;
-    color:#1D1D1D;
 }
 a:hover{
     color: inherit;
@@ -41,21 +44,9 @@ a:hover{
     background-color: #00000060;
 }
 
-/*--------DARK MODE----------*/
-$sitebgcolor: #1D1D1D;
-$frontbgcolor: #313131;
-$textcolor:#ffffff;
-$searchplaceholdercolor: #939393;
-
-$textcolor_hover1: #b6c1e3;
-$frontbgcolor_hover1:#373737;
-
-$textcolor_boxshadow:#ffffff50;
-$frontbgcolor_boxshadow:#31313150;
-
 /*-----------DESIGN-------------*/
 body{
-    background-color: $frontbgcolor;
+    background-color: $sitebgcolor;
 }
 .main-cont{
     min-height: 100%;
@@ -169,6 +160,7 @@ header{
         }
         &::-webkit-scrollbar-track{
             -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+            box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
             background-color: #F5F5F5;
         }
         &::-webkit-scrollbar{
@@ -177,6 +169,7 @@ header{
         }
         &::-webkit-scrollbar-thumb{
             -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+            box-shadow: inset 0 0 6px rgba(0,0,0,.3);
             border-radius: 10px;
             background-color: #555;
         }
@@ -361,16 +354,16 @@ header{
     }
 }
 
-
-
-/*----------TEMPLATE_MOBILE----------*/
 .donate-shortcut{
     display: none;
 }
 .account-cont{
     display: none;
 }
-/*----------TEMPLATE_DESKTOP---------*/
+
+
+
+// Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) {
     .drawer-active{
         width: 300px !important;
@@ -381,6 +374,9 @@ header{
 @media (min-width: 768px) {
     html {
         font-size: 16px;
+    }
+    body{
+        background-color: $frontbgcolor;
     }
     .account-cont{
         display:flex;
