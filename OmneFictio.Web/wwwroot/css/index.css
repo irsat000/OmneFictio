@@ -47,11 +47,14 @@ main {
   margin-right: 16px;
 }
 
+.post-wrap {
+  margin-bottom: 12px;
+  background-color: #313131;
+}
+
 .post {
   display: flex;
   flex-direction: column;
-  margin-bottom: 12px;
-  background-color: #313131;
 }
 .post:last-child {
   margin-bottom: unset;
@@ -124,6 +127,49 @@ main {
   cursor: pointer;
 }
 
+.post-menu {
+  display: flex;
+  flex-direction: row;
+}
+.post-menu .pd-details {
+  flex-grow: 1;
+}
+.post-menu .pd-right {
+  display: flex;
+  flex-direction: column;
+}
+.post-menu .pd-right .pd-close {
+  display: flex;
+  justify-content: end;
+  padding: 4px 10px;
+  font-size: 1.5rem;
+}
+.post-menu .pd-right .pd-close i {
+  cursor: pointer;
+}
+.post-menu .pd-right .pd-actions {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 4px 10px 2px;
+}
+.post-menu .pd-right .pd-actions .pd-saved {
+  background-color: #4A8D5D !important;
+}
+.post-menu .pd-right .pd-actions button {
+  color: #ffffff;
+  border-radius: 30px;
+  background-color: #4E4E4E;
+  outline: none;
+  border: none;
+  margin-bottom: 8px;
+  padding: 2px 10px;
+  transition: 0.2s ease;
+}
+.post-menu .pd-right .pd-actions button:hover {
+  background-color: #5e5e5e;
+}
+
 .nav-cont {
   display: none;
   flex-direction: column;
@@ -160,7 +206,7 @@ main {
     display: flex;
   }
 
-  .post {
+  .post-wrap {
     background-color: #1D1D1D !important;
     border-radius: 10px;
   }
