@@ -67,11 +67,17 @@ main {
   font-family: "Josefin Sans", sans-serif;
   font-weight: 600;
 }
+.post .p-header .p-title span:hover {
+  text-decoration: underline;
+}
 .post .p-header .p-menu {
   display: flex;
   height: 100%;
   padding: 0 10px;
   font-size: 2rem;
+}
+.post .p-header .p-menu i {
+  cursor: pointer;
 }
 .post .p-body {
   padding: 0 10px;
@@ -80,7 +86,42 @@ main {
   font-family: "Gudea", sans-serif;
 }
 .post .p-footer {
+  font-family: "Itim", cursive;
   padding: 0 10px 10px;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: center;
+}
+.post .p-footer i {
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.post .p-footer i:hover {
+  color: #cccccc;
+}
+.post .p-footer .p-likes {
+  padding: 0 8px;
+}
+.post .p-footer .p-rate {
+  margin-right: auto;
+  padding-left: 20px;
+}
+.post .p-footer .p-username {
+  font-size: 0.8rem;
+  margin-left: auto;
+  cursor: pointer;
+  padding-right: 8px;
+}
+.post .p-footer .p-username:hover {
+  text-decoration: underline;
+}
+.post .p-footer img {
+  height: 1.7rem;
+  width: 1.7rem;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 .nav-cont {

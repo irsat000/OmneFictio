@@ -66,12 +66,18 @@ main{
             padding: 10px;
             font-family: 'Josefin Sans', sans-serif;
             font-weight: 600;
+            span:hover{
+                text-decoration: underline;
+            }
         }
         .p-menu{
             display: flex;
             height: 100%;
             padding: 0 10px;
             font-size: 2rem;
+            i{
+                cursor: pointer;
+            }
         }
     }
     .p-body{
@@ -81,7 +87,43 @@ main{
         font-family: 'Gudea', sans-serif;
     }
     .p-footer{
+        //color: $textcolor;
+        font-family: 'Itim', cursive;
         padding: 0 10px 10px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: center;
+        i{
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.2s ease;
+            &:hover{
+                color: $textcolor_hover1;
+            }
+        }
+        .p-likes{
+            padding: 0 8px;
+        }
+        .p-rate{
+            margin-right: auto;
+            padding-left: 20px;
+        }
+        .p-username{
+            font-size: 0.8rem;
+            margin-left: auto;
+            cursor: pointer;
+            padding-right: 8px;
+            &:hover{
+                text-decoration: underline;
+            }
+        }
+        img{
+            height: 1.7rem;
+            width: 1.7rem;
+            border-radius: 50%;
+            cursor: pointer;
+        }
     }
 }
 
