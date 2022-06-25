@@ -110,6 +110,7 @@ header .header-wrap {
 }
 .drawer .dw-top .dw-close {
   padding: 10px;
+  flex-shrink: 0;
 }
 .drawer .dw-top .dw-close i {
   font-size: 2rem;
@@ -149,7 +150,6 @@ header .header-wrap {
 }
 .drawer .dw-list {
   padding-top: 10px;
-  flex-grow: 1;
   overflow-y: auto;
 }
 .drawer .dw-list > ul > li > a {

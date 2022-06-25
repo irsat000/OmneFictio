@@ -103,6 +103,7 @@ header{
         padding-bottom: 10px;
         .dw-close{
             padding: 10px;
+            flex-shrink: 0;
             i{
                 font-size: 2rem;
             }
@@ -143,7 +144,6 @@ header{
     }
     .dw-list{
         padding-top: 10px;
-        flex-grow: 1;
         overflow-y: auto;
         > ul{
             > li {

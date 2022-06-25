@@ -162,6 +162,7 @@ main {
 .post-menu .pd-right {
   display: flex;
   flex-direction: column;
+  flex-shrink: 0;
 }
 .post-menu .pd-right .pd-close {
   display: flex;
@@ -200,6 +201,7 @@ main {
   flex-direction: column;
   width: 200px;
   margin: 20px 20px 0 0;
+  flex-shrink: 0;
 }
 .nav-cont .navcont-temp {
   display: flex;
