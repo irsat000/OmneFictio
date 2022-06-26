@@ -1,8 +1,15 @@
 {
   "version": 2,
-  "dgSpecHash": "Ti22zV4ok09qB5Udk+AQ/1HKe1JjmzKxcC/yyovaj2JPOgWHHWvHKXkSFMLYbQUA2+3dZ8UAX8V7uzlLzabpHQ==",
+  "dgSpecHash": "ozJD7HCx19ysG6eDOYQoWDD1ZcgqBRvOccXF5S9TKbiqDrXHSjqDieP9qLadINKrmNKNDNtYW0GvW5gc95Uo+w==",
   "success": true,
   "projectFilePath": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.MinApi\\OmneFictio.MinApi.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\user\\.nuget\\packages\\microsoft.extensions.apidescription.server\\3.0.0\\microsoft.extensions.apidescription.server.3.0.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\microsoft.openapi\\1.2.3\\microsoft.openapi.1.2.3.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\swashbuckle.aspnetcore\\6.2.3\\swashbuckle.aspnetcore.6.2.3.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\swashbuckle.aspnetcore.swagger\\6.2.3\\swashbuckle.aspnetcore.swagger.6.2.3.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\swashbuckle.aspnetcore.swaggergen\\6.2.3\\swashbuckle.aspnetcore.swaggergen.6.2.3.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\swashbuckle.aspnetcore.swaggerui\\6.2.3\\swashbuckle.aspnetcore.swaggerui.6.2.3.nupkg.sha512"
+  ],
   "logs": []
 }

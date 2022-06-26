@@ -5,7 +5,7 @@ VisualStudioVersion = 16.0.30114.105
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OmneFictio.Web", "OmneFictio.Web\OmneFictio.Web.csproj", "{51AF2817-E640-4AEE-8788-251796E07B3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OmneFictio.MinApi", "OmneFictio.MinApi\OmneFictio.MinApi.csproj", "{1C4DA0AB-0FC3-4143-B2B4-97B8BF9CF9B9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OmneFictio.MinApi", "OmneFictio.MinApi\OmneFictio.MinApi.csproj", "{78E31603-0F1D-4A23-8046-13503936A335}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -20,9 +20,9 @@ Global
 		{51AF2817-E640-4AEE-8788-251796E07B3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51AF2817-E640-4AEE-8788-251796E07B3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51AF2817-E640-4AEE-8788-251796E07B3F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1C4DA0AB-0FC3-4143-B2B4-97B8BF9CF9B9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1C4DA0AB-0FC3-4143-B2B4-97B8BF9CF9B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1C4DA0AB-0FC3-4143-B2B4-97B8BF9CF9B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1C4DA0AB-0FC3-4143-B2B4-97B8BF9CF9B9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{78E31603-0F1D-4A23-8046-13503936A335}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{78E31603-0F1D-4A23-8046-13503936A335}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{78E31603-0F1D-4A23-8046-13503936A335}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{78E31603-0F1D-4A23-8046-13503936A335}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
