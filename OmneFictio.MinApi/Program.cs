@@ -1,9 +1,16 @@
 using Microsoft.EntityFrameworkCore;
 using OmneFictio.MinApi.Models;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<OmneFictioContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
+JsonSerializerOptions options = new(){
+    ReferenceHandler = ReferenceHandler.Preserve,
+    WriteIndented = true
+};
+
 var app = builder.Build();
 
 app.UseHttpsRedirection();
@@ -13,11 +20,33 @@ app.MapGet("/", () =>
     return "Hello world";
 });
 
-app.MapGet("/posts", async (OmneFictioContext db) =>
-    await db.Posts.ToListAsync());
+app.MapGet("/posts", async (OmneFictioContext db) => {
+    return await db.Posts
+    .Select(p => new {
+            Id = p.Id,
+            Title = p.Title,
+            PostDescription = p.PostDescription,
+            PublishDate = p.PublishDate,
+            UpdateDate = p.UpdateDate,
+            Account = new {
+                Id = p.Account.Id,
+                Username = p.Account.Username
+            },
+            Language = new {
+                Id = p.Language.Id,
+                Body = p.Language.Body
+            }
+    })
+    /*.Include(t => t.PostType)
+    .Include(d => d.DeletedStatus)
+    .Include(p => p.PostStatus)
+    .Include(a => a.Account)*/
+    .ToListAsync();
+});
 
 app.Run();
 
+    //await db.Posts.ToListAsync());
 
 
 /*
