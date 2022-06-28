@@ -1,7 +1,8 @@
 using Microsoft.EntityFrameworkCore;
+using OmneFictio.MinApi.Models;
 
 var builder = WebApplication.CreateBuilder(args);
-builder.Services.AddDbContext<TodoDb>(opt => opt.UseInMemoryDatabase("TodoList"));
+builder.Services.AddDbContext<OmneFictioContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 builder.Services.AddDatabaseDeveloperPageExceptionFilter();
 var app = builder.Build();
 
@@ -12,6 +13,14 @@ app.MapGet("/", () =>
     return "Hello world";
 });
 
+app.MapGet("/posts", async (OmneFictioContext db) =>
+    await db.Posts.ToListAsync());
+
+app.Run();
+
+
+
+/*
 app.MapGet("/todoitems", async (TodoDb db) =>
     await db.Todos.ToListAsync());
 
@@ -32,9 +41,6 @@ app.MapPost("/todoitems", async (Todo todo, TodoDb db) =>
     return Results.Created($"/todoitems/{todo.Id}", todo);
 });
 
-
-
-
 app.Run();
 
 class Todo
@@ -51,3 +57,4 @@ class TodoDb : DbContext
     public DbSet<Todo> Todos => Set<Todo>();
 }
 
+*/
