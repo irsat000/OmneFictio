@@ -28,19 +28,28 @@ app.MapGet("/posts", async (OmneFictioContext db) => {
             PostDescription = p.PostDescription,
             PublishDate = p.PublishDate,
             UpdateDate = p.UpdateDate,
-            Account = new {
-                Id = p.Account.Id,
-                Username = p.Account.Username
+            DeletedStatus = new {
+                Id = p.DeletedStatus.Id,
+                Username = p.DeletedStatus.Body
+            },
+            PostStatus = new {
+                Id = p.PostStatus.Id,
+                Username = p.PostStatus.Body
+            },
+            PostType = new {
+                Id = p.PostType.Id,
+                Username = p.PostType.Body
             },
             Language = new {
                 Id = p.Language.Id,
                 Body = p.Language.Body
+            },
+            Account = new {
+                Id = p.Account.Id,
+                Username = p.Account.Username,
+                PPic = p.Account.ProfilePic
             }
     })
-    /*.Include(t => t.PostType)
-    .Include(d => d.DeletedStatus)
-    .Include(p => p.PostStatus)
-    .Include(a => a.Account)*/
     .ToListAsync();
 });
 
