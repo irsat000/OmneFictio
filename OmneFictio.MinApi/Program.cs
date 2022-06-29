@@ -48,7 +48,10 @@ app.MapGet("/posts", async (OmneFictioContext db) => {
                 Id = p.Account.Id,
                 Username = p.Account.Username,
                 PPic = p.Account.ProfilePic
-            }
+            },
+            Tags = p.Tags,
+            Votes = p.Votes,
+            Rates = p.Rates
     })
     .ToListAsync();
 });

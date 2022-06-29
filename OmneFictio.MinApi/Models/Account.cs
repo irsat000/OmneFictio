@@ -14,6 +14,8 @@ namespace OmneFictio.MinApi.Models
             Rates = new HashSet<Rate>();
             Replies = new HashSet<Reply>();
             Votes = new HashSet<Vote>();
+            Authorities = new HashSet<Authority>();
+            Ips = new HashSet<Ip>();
         }
 
         public int Id { get; set; }
@@ -38,5 +40,8 @@ namespace OmneFictio.MinApi.Models
         public virtual ICollection<Rate> Rates { get; set; }
         public virtual ICollection<Reply> Replies { get; set; }
         public virtual ICollection<Vote> Votes { get; set; }
+
+        public virtual ICollection<Authority> Authorities { get; set; }
+        public virtual ICollection<Ip> Ips { get; set; }
     }
 }
