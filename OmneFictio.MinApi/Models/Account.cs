@@ -10,6 +10,8 @@ namespace OmneFictio.MinApi.Models
             ChatMessageAccounts = new HashSet<ChatMessage>();
             ChatMessageTargetAccounts = new HashSet<ChatMessage>();
             Comments = new HashSet<Comment>();
+            GiftAccounts = new HashSet<Gift>();
+            GiftTargetAccounts = new HashSet<Gift>();
             Posts = new HashSet<Post>();
             Rates = new HashSet<Rate>();
             Replies = new HashSet<Reply>();
@@ -36,6 +38,8 @@ namespace OmneFictio.MinApi.Models
         public virtual ICollection<ChatMessage> ChatMessageAccounts { get; set; }
         public virtual ICollection<ChatMessage> ChatMessageTargetAccounts { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
+        public virtual ICollection<Gift> GiftAccounts { get; set; }
+        public virtual ICollection<Gift> GiftTargetAccounts { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
         public virtual ICollection<Rate> Rates { get; set; }
         public virtual ICollection<Reply> Replies { get; set; }

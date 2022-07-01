@@ -23,6 +23,7 @@ namespace OmneFictio.MinApi.Models
         public virtual DbSet<Comment> Comments { get; set; } = null!;
         public virtual DbSet<DeletedStatus> DeletedStatuses { get; set; } = null!;
         public virtual DbSet<Gift> Gifts { get; set; } = null!;
+        public virtual DbSet<GiftItem> GiftItems { get; set; } = null!;
         public virtual DbSet<Ip> Ips { get; set; } = null!;
         public virtual DbSet<Language> Languages { get; set; } = null!;
         public virtual DbSet<Post> Posts { get; set; } = null!;
@@ -285,12 +286,43 @@ namespace OmneFictio.MinApi.Models
 
             modelBuilder.Entity<Gift>(entity =>
             {
+                entity.ToTable("Gift");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.AccountId).HasColumnName("accountId");
+
+                entity.Property(e => e.GiftItemId).HasColumnName("giftItemId");
+
+                entity.Property(e => e.TargetAccountId).HasColumnName("targetAccountId");
+
+                entity.HasOne(d => d.Account)
+                    .WithMany(p => p.GiftAccounts)
+                    .HasForeignKey(d => d.AccountId)
+                    .HasConstraintName("FK_GiftAccount");
+
+                entity.HasOne(d => d.GiftItem)
+                    .WithMany(p => p.Gifts)
+                    .HasForeignKey(d => d.GiftItemId)
+                    .HasConstraintName("FK_GiftitemGift");
+
+                entity.HasOne(d => d.TargetAccount)
+                    .WithMany(p => p.GiftTargetAccounts)
+                    .HasForeignKey(d => d.TargetAccountId)
+                    .OnDelete(DeleteBehavior.SetNull)
+                    .HasConstraintName("FK_GiftTarget");
+            });
+
+            modelBuilder.Entity<GiftItem>(entity =>
+            {
+                entity.ToTable("GiftItem");
+
                 entity.Property(e => e.Id)
                     .ValueGeneratedNever()
                     .HasColumnName("id");
 
                 entity.Property(e => e.Body)
-                    .HasMaxLength(50)
+                    .HasMaxLength(250)
                     .IsUnicode(false)
                     .HasColumnName("body");
             });
@@ -384,23 +416,6 @@ namespace OmneFictio.MinApi.Models
                     .WithMany(p => p.Posts)
                     .HasForeignKey(d => d.PostTypeId)
                     .HasConstraintName("FK_PostPosttype");
-
-                entity.HasMany(d => d.Gifts)
-                    .WithMany(p => p.Posts)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "PostGift",
-                        l => l.HasOne<Gift>().WithMany().HasForeignKey("GiftId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_PostGifts_Gift"),
-                        r => r.HasOne<Post>().WithMany().HasForeignKey("PostId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_PostGifts_Post"),
-                        j =>
-                        {
-                            j.HasKey("PostId", "GiftId").HasName("PK_PostGifts");
-
-                            j.ToTable("Post_Gifts");
-
-                            j.IndexerProperty<int>("PostId").HasColumnName("postId");
-
-                            j.IndexerProperty<int>("GiftId").HasColumnName("giftId");
-                        });
 
                 entity.HasMany(d => d.RatedAs)
                     .WithMany(p => p.Posts)
