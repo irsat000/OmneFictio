@@ -294,23 +294,23 @@ namespace OmneFictio.MinApi.Models
 
                 entity.Property(e => e.GiftItemId).HasColumnName("giftItemId");
 
-                entity.Property(e => e.TargetAccountId).HasColumnName("targetAccountId");
+                entity.Property(e => e.TargetPostId).HasColumnName("targetPostId");
 
                 entity.HasOne(d => d.Account)
-                    .WithMany(p => p.GiftAccounts)
+                    .WithMany(p => p.Gifts)
                     .HasForeignKey(d => d.AccountId)
                     .HasConstraintName("FK_GiftAccount");
 
                 entity.HasOne(d => d.GiftItem)
                     .WithMany(p => p.Gifts)
                     .HasForeignKey(d => d.GiftItemId)
-                    .HasConstraintName("FK_GiftitemGift");
+                    .HasConstraintName("FK_GiftGiftitem");
 
-                entity.HasOne(d => d.TargetAccount)
-                    .WithMany(p => p.GiftTargetAccounts)
-                    .HasForeignKey(d => d.TargetAccountId)
+                entity.HasOne(d => d.TargetPost)
+                    .WithMany(p => p.Gifts)
+                    .HasForeignKey(d => d.TargetPostId)
                     .OnDelete(DeleteBehavior.SetNull)
-                    .HasConstraintName("FK_GiftTarget");
+                    .HasConstraintName("FK_GiftTargetpost");
             });
 
             modelBuilder.Entity<GiftItem>(entity =>
