@@ -4,6 +4,7 @@ using OmneFictio.MinApi.Dtos;
 using OmneFictio.MinApi.Configurations;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using AutoMapper;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<OmneFictioContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -24,13 +25,18 @@ if (app.Environment.IsDevelopment())
 }
 app.UseHttpsRedirection();
 
+var mapper = app.Services.GetService<IMapper>();
+if (mapper == null)
+    throw new InvalidOperationException("Mapper not found");
+
 app.MapGet("/", () =>
 {
     return "Hello world";
 });
 
 app.MapGet("/posts", async (OmneFictioContext db) => {
-    return await db.Posts.ToListAsync();
+    var posts = mapper.Map<IEnumerable<PostDtoRead_1>>(await db.Posts.ToListAsync());
+    return posts;
 });
 
 app.Run();

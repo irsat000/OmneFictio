@@ -5,6 +5,6 @@ namespace OmneFictio.MinApi.Dtos
 {
     public partial class GiftDto
     {
-        public int? GiftItemId { get; set; }
+        public virtual GiftItemDto? GiftItem { get; set; }
     }
 }

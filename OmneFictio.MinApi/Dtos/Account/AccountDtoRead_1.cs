@@ -10,7 +10,6 @@ public partial class AccountDtoRead_1
     public string Username { get; set; } = null!;
     public string? ProfilePic { get; set; }
     public string? SelfDesc { get; set; }
-    public byte? DeletedStatusId { get; set; }
 
     public virtual DeletedStatusDto? DeletedStatus { get; set; }
     public virtual LanguageDto? PrefLanguage { get; set; }

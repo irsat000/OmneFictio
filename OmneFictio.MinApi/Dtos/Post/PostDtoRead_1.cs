@@ -23,8 +23,6 @@ public class PostDtoRead_1
     //-----------
     public virtual ICollection<RateDto>? Rates { get; set; }
     public virtual ICollection<VoteDto>? Votes { get; set; }
-
-    public virtual ICollection<GiftDto>? Gifts { get; set; }
     public virtual ICollection<RatedAsDto>? RatedAs { get; set; }
     public virtual ICollection<TagDto>? Tags { get; set; }
 }
