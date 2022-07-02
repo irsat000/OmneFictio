@@ -4,7 +4,7 @@ using OmneFictio.MinApi.Dtos;
 
 namespace OmneFictio.MinApi.Dtos;
 
-public class ChapterDtoRead_1
+public class PostDtoRead_2
 {
     public int Id { get; set; }
 }

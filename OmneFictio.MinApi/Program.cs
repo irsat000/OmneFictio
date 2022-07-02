@@ -1,10 +1,13 @@
 using Microsoft.EntityFrameworkCore;
 using OmneFictio.MinApi.Models;
+using OmneFictio.MinApi.Dtos;
+using OmneFictio.MinApi.Configurations;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<OmneFictioContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddAutoMapper(typeof(MapperConfig));
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 

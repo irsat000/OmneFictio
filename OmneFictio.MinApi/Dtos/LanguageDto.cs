@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using OmneFictio.MinApi.Models;
 
 namespace OmneFictio.MinApi.Dtos;
 
