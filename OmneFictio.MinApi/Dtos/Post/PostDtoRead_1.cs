@@ -13,17 +13,19 @@ public class PostDtoRead_1
     public DateTime PublishDate { get; set; }
     public DateTime UpdateDate { get; set; }
 
-    public virtual AccountDtoRead_1? Account { get; set; }
-    public virtual DeletedStatus? DeletedStatus { get; set; }
-    public virtual Language? Language { get; set; }
-    public virtual PostStatus? PostStatus { get; set; }
-    public virtual PostType? PostType { get; set; }
-    public virtual ICollection<Chapter>? Chapters { get; set; }
-    public virtual ICollection<Comment>? Comments { get; set; }
-    public virtual ICollection<Rate>? Rates { get; set; }
-    public virtual ICollection<Vote>? Votes { get; set; }
+    public virtual AccountDtoRead_2? Account { get; set; }
+    public virtual DeletedStatusDto? DeletedStatus { get; set; }
+    public virtual LanguageDto? Language { get; set; }
+    public virtual PostStatusDto? PostStatus { get; set; }
+    public virtual PostTypeDto? PostType { get; set; }
+    //-----------
+    public virtual ICollection<ChapterDtoRead_1>? Chapters { get; set; }
+    public virtual ICollection<CommentDtoRead_1>? Comments { get; set; }
+    //-----------
+    public virtual ICollection<RateDto>? Rates { get; set; }
+    public virtual ICollection<VoteDto>? Votes { get; set; }
 
-    public virtual ICollection<Gift>? Gifts { get; set; }
-    public virtual ICollection<RatedA>? RatedAs { get; set; }
-    public virtual ICollection<Tag>? Tags { get; set; }
+    public virtual ICollection<GiftDto>? Gifts { get; set; }
+    public virtual ICollection<RatedAsDto>? RatedAs { get; set; }
+    public virtual ICollection<TagDto>? Tags { get; set; }
 }
