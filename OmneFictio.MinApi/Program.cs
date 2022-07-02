@@ -5,6 +5,8 @@ using System.Text.Json.Serialization;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<OmneFictioContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
+builder.Services.AddEndpointsApiExplorer();
+builder.Services.AddSwaggerGen();
 
 JsonSerializerOptions options = new(){
     ReferenceHandler = ReferenceHandler.Preserve,
@@ -12,7 +14,11 @@ JsonSerializerOptions options = new(){
 };
 
 var app = builder.Build();
-
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 app.UseHttpsRedirection();
 
 app.MapGet("/", () =>
@@ -21,6 +27,13 @@ app.MapGet("/", () =>
 });
 
 app.MapGet("/posts", async (OmneFictioContext db) => {
+    return await db.Posts.ToListAsync();
+});
+
+app.Run();
+
+
+/*
     return await db.Posts
     .Select(p => new {
             Id = p.Id,
@@ -54,6 +67,4 @@ app.MapGet("/posts", async (OmneFictioContext db) => {
             Rates = p.Rates
     })
     .ToListAsync();
-});
-
-app.Run();
+*/
