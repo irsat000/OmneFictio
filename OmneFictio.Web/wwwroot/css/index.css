@@ -105,6 +105,7 @@ main {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
+  flex-flow: wrap;
 }
 .post-detail .p-footer i {
   font-size: 1.2rem;
@@ -118,14 +119,17 @@ main {
   padding: 0 8px;
 }
 .post-detail .p-footer .p-rate {
-  margin-right: auto;
-  padding-left: 20px;
+  padding: 0 20px;
+  flex-grow: 1;
 }
 .post-detail .p-footer .p-username {
   font-size: 0.8rem;
-  margin-left: auto;
   cursor: pointer;
   padding-right: 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 180px;
 }
 .post-detail .p-footer .p-username:hover {
   text-decoration: underline;

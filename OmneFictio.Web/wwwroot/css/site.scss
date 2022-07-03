@@ -275,7 +275,7 @@ header{
     flex-direction: row;
     justify-content: center;
     align-items: center;
-    margin-left: 30px;
+    padding: 0 16px 0 30px;
     position: relative;
     .ppic-wrap{
         width: 50px;
@@ -314,10 +314,10 @@ header{
         transition: opacity 0.1s ease;
         position: absolute;
         top: 52px;
-        right: 0;
+        right: 16px;
         border-radius: 8px;
         background-color: $frontbgcolor;
-        font-size: 2rem;
+        font-size: 1rem;
         font-family: 'Itim', cursive;
         overflow: hidden;
         -webkit-box-shadow: -1px 1px 6px 0px rgba(0,0,0,0.2);
@@ -395,11 +395,11 @@ header{
 
 // Extra large devices (large desktops, 1200px and up)
 @media (min-width: 1200px) {
-    .logo-cont {
-        padding-left: 24px;
-        span{
-            font-size: 2.5rem;
-        }
+    .logo-cont span{
+        font-size: 2.5rem;
+    }
+    .account-dropdown{
+        font-size: 1.6rem !important;
     }
 }
 
@@ -418,11 +418,5 @@ header{
 @media (min-width: 1300px) {
     .searchbar-wrap{
         max-width: 550px !important;
-    }
-    .drawerbtn-cont{
-        padding-left: 16px;
-    }
-    .header_right_section{
-        padding-right: 16px;
     }
 }
