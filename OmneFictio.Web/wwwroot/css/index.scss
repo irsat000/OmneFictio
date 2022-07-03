@@ -63,13 +63,22 @@ main{
         display: flex;
         flex-direction: row;
         justify-content: space-between;
-        align-items: center;
+        align-items: flex-start;
         .p-title{
             padding: 10px;
             font-family: 'Josefin Sans', sans-serif;
             font-weight: 600;
+            span{
+                vertical-align:middle;
+            }
             span:hover{
                 text-decoration: underline;
+            }
+            .p-date{
+                margin-left: 6px;
+                color: $textcolor2;
+                font-size: 0.7rem;
+                font-family: 'Gudea';
             }
         }
         .p-menu{
@@ -148,7 +157,7 @@ main{
         .pd-tags{
             font-size: 0.9rem;
             font-family: 'Gudea', sans-serif;
-            margin: 5px 0 8px;
+            margin-bottom: 8px;
             padding: 0 4px;
             span{
                 margin-right: 6px;
@@ -166,7 +175,7 @@ main{
             display: flex;
             justify-content: end;
             padding: 4px 10px;
-            font-size: 1.5rem;
+            font-size: 2rem;
             i{
                 cursor: pointer;
             }
