@@ -125,6 +125,10 @@ main{
             font-size: 0.8rem;
             cursor: pointer;
             padding-right: 8px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            max-width: 180px;
             &:hover{
                 text-decoration: underline;
             }
