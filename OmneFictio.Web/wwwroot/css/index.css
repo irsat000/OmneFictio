@@ -473,6 +473,10 @@ main {
   }
 }
 @media (max-width: 260px) {
+  .orderby_type-cont {
+    width: 100%;
+  }
+
   .filter-cont {
     width: 100%;
   }
