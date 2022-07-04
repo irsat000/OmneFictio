@@ -311,6 +311,10 @@ main {
   .post-options {
     padding: 20px 10px 10px !important;
   }
+
+  .obt-content .obt-item i {
+    top: 0 !important;
+  }
 }
 @media (min-width: 992px) {
   .nav-cont {

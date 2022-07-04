@@ -8,14 +8,14 @@ $('.body-outside').click(function(){
         $('.drawer').removeClass('drawer-active');
         $('.body-outside').removeClass('d-block');
     }
-    if($('.orderby-popup').hasClass('d-flex')){
-        $('.orderby-popup').removeClass('d-flex');
-        $('.orderby-popup').removeClass('opacity-100');
+    if($('#orderby-popup').hasClass('d-flex')){
+        $('#orderby-popup').removeClass('d-flex');
+        $('#orderby-popup').removeClass('opacity-100');
         $('.body-outside').removeClass('d-block');
     }
-    if($('.type-popup').hasClass('d-flex')){
-        $('.type-popup').removeClass('d-flex');
-        $('.type-popup').removeClass('opacity-100');
+    if($('#type-popup').hasClass('d-flex')){
+        $('#type-popup').removeClass('d-flex');
+        $('#type-popup').removeClass('opacity-100');
         $('.body-outside').removeClass('d-block');
     }
     /* Maybe I use it
@@ -53,31 +53,31 @@ $('.drawerbtn-cont > i, .dw-close > i').click(function(){
     }
 });
 
-$('.orderby-btn, .orderby-popup .sb-close').click(function(){
-    if($('.orderby-popup').hasClass('d-flex')){
-        $('.orderby-popup').removeClass('d-flex');
-        $('.orderby-popup').removeClass('opacity-100');
+$('#orderby-btn, #sb-close').click(function(){
+    if($('#orderby-popup').hasClass('d-flex')){
+        $('#orderby-popup').removeClass('d-flex');
+        $('#orderby-popup').removeClass('opacity-100');
         $('.body-outside').removeClass('d-block');
     }
     else{
-        $('.orderby-popup').addClass('d-flex');
+        $('#orderby-popup').addClass('d-flex');
         $('.body-outside').addClass('d-block');
         setTimeout(function(){
-            $('.orderby-popup').addClass('opacity-100');
+            $('#orderby-popup').addClass('opacity-100');
         }, 100);
     }
 });
-$('.po-type, .type-popup .t-close').click(function(){
-    if($('.type-popup').hasClass('d-flex')){
-        $('.type-popup').removeClass('d-flex');
-        $('.type-popup').removeClass('opacity-100');
+$('#po-type, #t-close').click(function(){
+    if($('#type-popup').hasClass('d-flex')){
+        $('#type-popup').removeClass('d-flex');
+        $('#type-popup').removeClass('opacity-100');
         $('.body-outside').removeClass('d-block');
     }
     else{
-        $('.type-popup').addClass('d-flex');
+        $('#type-popup').addClass('d-flex');
         $('.body-outside').addClass('d-block');
         setTimeout(function(){
-            $('.type-popup').addClass('opacity-100');
+            $('#type-popup').addClass('opacity-100');
         }, 100);
     }
 });

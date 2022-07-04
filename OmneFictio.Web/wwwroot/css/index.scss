@@ -325,6 +325,10 @@ main{
     .post-options{
         padding: 20px 10px 10px !important;
     }
+    .obt-content .obt-item i{
+        //icon is normal after 768px
+        top: 0 !important;
+    }
 }
 
 // Large devices (desktops, 992px and up)

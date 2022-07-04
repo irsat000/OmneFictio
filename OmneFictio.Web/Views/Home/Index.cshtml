@@ -5,12 +5,12 @@
     }
 }
 
-<div class="orderby_type-cont orderby-popup">
+<div class="orderby_type-cont" id="orderby-popup">
     <div class="obt-header">
         <div class="obt-title">
             <span>Order By</span>
         </div>
-        <div class="obt-close sb-close">
+        <div class="obt-close" id="sb-close">
             <i class="bi bi-x-lg"></i>
         </div>
     </div>
@@ -36,12 +36,12 @@
     </div>
 </div>
 
-<div class="orderby_type-cont type-popup">
+<div class="orderby_type-cont" id="type-popup">
     <div class="obt-header">
         <div class="obt-title">
             <span>Type</span>
         </div>
-        <div class="obt-close t-close">
+        <div class="obt-close" id="t-close">
             <i class="bi bi-x-lg"></i>
         </div>
     </div>
@@ -71,6 +71,75 @@
     </div>
 </div>
 
+<div class="filter-cont" id="filter-popup">
+    <div class="f-header">
+        <div class="f-reset_cont">
+            <input type="button" value="Reset">
+        </div>
+        <div class="f-close" id="f-close">
+            <i class="bi bi-x-lg"></i>
+        </div>
+    </div>
+    <div class="f-body">
+        <div class="f-type_cont">
+            <span>Type</span>
+            <input type="button" value="Fanfiction">
+            <input type="button" value="Story">
+            <input type="button" value="Scenerio">
+            <input type="button" value="Fanfiction">
+        </div>
+        <div class="f-options">
+            <select name="minrate">
+                <option value="0">Min rate</option>
+                <option value="5">5+</option>
+                <option value="6">6+</option>
+                <option value="7">7+</option>
+                <option value="8">8+</option>
+                <option value="9">9+</option>
+            </select>
+            <select name="language">
+                <option value="0">Language</option>
+                <option value="1">Turkish</option>
+                <option value="2">English</option>
+                <option value="3">French</option>
+                <option value="4">German</option>
+                <option value="5">Japanese</option>
+            </select>
+            <select name="poststatus">
+                <option value="0">Cur. state</option>
+                <option value="1">In progress</option>
+                <option value="2">Dropped</option>
+                <option value="3">Finished</option>
+            </select>
+            <div class="f-allow18">
+                <span>+18</span>
+                <input type="checkbox" name="allow18">
+            </div>
+            <select name="lastupdate">
+                <option value="0">Last update</option>
+                <option value="1">&#60; 1 day</option>
+                <option value="2">&#60; 3 day</option>
+                <option value="3">&#60; 1 week</option>
+                <option value="4">&#60; 2 week</option>
+                <option value="5">&#60; 1 month</option>
+                <option value="6">&#60; 2 month</option>
+            </select>
+        </div>
+        <div class="f-tagsbtn_cont">
+            <input type="button" value="Tags+">
+            <input type="button" value="Tags-">
+        </div>
+        <div class="f-tags_include">
+            <span>Action</span>
+            <span>Comedy</span>
+            <span>Fantasy</span>
+        </div>
+        <div class="f-tags_exclude">
+            <span>Romance</span>
+            <span>Dram</span>
+        </div>
+    </div>
+</div>
 
 
 <div class="nav-cont">
@@ -87,13 +156,15 @@
 <div class="posts-cont">
     <div class="post-options">
         <div class="po-orderby">
-            <p class="orderby-btn po-option">Order By</p>
+            <p class="orderby-btn po-option" id="orderby-btn">Order By</p>
             <p class="orderby-value">(Recent)</p>
         </div>
-        <span class="po-type po-option">
+        <!--
+        <span class="po-type po-option" id="po-type">
             Type
         </span>
-        <span class="po-filters po-option">
+        -->
+        <span class="po-filters po-option" id="po-filter">
             Filter
         </span>
     </div>
