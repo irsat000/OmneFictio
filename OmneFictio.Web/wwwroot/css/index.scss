@@ -351,18 +351,19 @@ main{
         }
     }
     .f-body{
-        padding: 10px 12px;
+        padding: 10px 12px 0;
         .f-type_cont{
             display: flex;
             flex-wrap: wrap;
+            justify-content: center;
             padding-bottom: 3px;
-            span{
+            /*span{
                 font-size: 1.4rem;
-                margin: 0 10px 7px 0;
-            }
+                margin: 0 4px 7px;
+            }*/
             input{
                 font-size: 1.1rem;
-                margin: 0 10px 7px 0;
+                margin: 0 4px 7px;
                 background-color: rgb(139, 136, 199);
                 color: $textcolor;
                 transition: background-color 0.2s;
@@ -378,6 +379,7 @@ main{
         .f-options{
             display: flex;
             flex-wrap: wrap;
+            justify-content: center;
             padding-bottom: 3px;
             select, .f-allow18 {
                 outline: none;
@@ -385,7 +387,7 @@ main{
                 background: $frontbgcolor_hover2;
                 color: $textcolor;
                 padding: 4px;
-                margin: 0 10px 7px 0;
+                margin: 0 5px 7px;
                 border-radius: 5px;
                 font-size: 1.1rem;
             }
@@ -458,26 +460,43 @@ main{
         .f-tags_include{
             display: flex;
             flex-wrap: wrap;
+            justify-content: center;
             padding-bottom: 4px;
             span{
                 background-color: #5c976d;
                 border-radius: 12px;
                 padding: 2px 8px;
-                margin: 0 5px 4px 0;
+                margin: 0 3px 4px;
                 font-size: 0.9rem;
             }
         }
         .f-tags_exclude{
             display: flex;
             flex-wrap: wrap;
+            justify-content: center;
             padding-bottom: 4px;
             span{
                 background-color: #77749f;
                 border-radius: 12px;
                 padding: 2px 8px;
-                margin: 0 5px 4px 0;
+                margin: 0 3px 4px;
                 font-size: 0.9rem;
             }
+        }
+    }
+    .f-submit_cont{
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 4px 0 10px;
+        font-size: 1.3rem;
+        #f-submitbtn{
+            border: none;
+            outline: none;
+            background-color: rgb(42 72 114);
+            color: #fff;
+            border-radius: 8px;
+            padding: 3px 30px;
         }
     }
 }
