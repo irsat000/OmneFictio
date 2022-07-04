@@ -18,6 +18,11 @@ $('.body-outside').click(function(){
         $('#type-popup').removeClass('opacity-100');
         $('.body-outside').removeClass('d-block');
     }
+    if($('#filter-popup').hasClass('d-flex')){
+        $('#filter-popup').removeClass('d-flex');
+        $('#filter-popup').removeClass('opacity-100');
+        $('.body-outside').removeClass('d-block');
+    }
     /* Maybe I use it
     if($('.account-dropdown').hasClass('d-block')){
         $('.account-dropdown').removeClass('opacity-100');
@@ -53,34 +58,6 @@ $('.drawerbtn-cont > i, .dw-close > i').click(function(){
     }
 });
 
-$('#orderby-btn, #sb-close').click(function(){
-    if($('#orderby-popup').hasClass('d-flex')){
-        $('#orderby-popup').removeClass('d-flex');
-        $('#orderby-popup').removeClass('opacity-100');
-        $('.body-outside').removeClass('d-block');
-    }
-    else{
-        $('#orderby-popup').addClass('d-flex');
-        $('.body-outside').addClass('d-block');
-        setTimeout(function(){
-            $('#orderby-popup').addClass('opacity-100');
-        }, 100);
-    }
-});
-$('#po-type, #t-close').click(function(){
-    if($('#type-popup').hasClass('d-flex')){
-        $('#type-popup').removeClass('d-flex');
-        $('#type-popup').removeClass('opacity-100');
-        $('.body-outside').removeClass('d-block');
-    }
-    else{
-        $('#type-popup').addClass('d-flex');
-        $('.body-outside').addClass('d-block');
-        setTimeout(function(){
-            $('#type-popup').addClass('opacity-100');
-        }, 100);
-    }
-});
 
 $('body').click(function(event) {
     var target = $(event.target);

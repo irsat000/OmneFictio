@@ -3,6 +3,9 @@
     @section Stylesheets {
         <link rel="stylesheet" href="~/css/index.css" />
     }
+    @section Scripts {
+        <script src="~/js/index.js"></script>
+    }
 }
 
 <div class="orderby_type-cont" id="orderby-popup">
@@ -74,7 +77,7 @@
 <div class="filter-cont" id="filter-popup">
     <div class="f-header">
         <div class="f-reset_cont">
-            <input type="button" value="Reset">
+            <input type="button" value="Reset" id="f-resetbtn">
         </div>
         <div class="f-close" id="f-close">
             <i class="bi bi-x-lg"></i>
@@ -82,7 +85,7 @@
     </div>
     <div class="f-body">
         <div class="f-type_cont">
-            <span>Type</span>
+            <span>Type:</span>
             <input type="button" value="Fanfiction">
             <input type="button" value="Story">
             <input type="button" value="Scenerio">
@@ -112,8 +115,9 @@
                 <option value="3">Finished</option>
             </select>
             <div class="f-allow18">
-                <span>+18</span>
-                <input type="checkbox" name="allow18">
+                <label>+18
+                    <input type="checkbox" name="allow18">
+                </label>
             </div>
             <select name="lastupdate">
                 <option value="0">Last update</option>
@@ -126,8 +130,8 @@
             </select>
         </div>
         <div class="f-tagsbtn_cont">
-            <input type="button" value="Tags+">
-            <input type="button" value="Tags-">
+            <input type="button" value="Tags+" class="f-addtag">
+            <input type="button" value="Tags-" class="f-removetag">
         </div>
         <div class="f-tags_include">
             <span>Action</span>
