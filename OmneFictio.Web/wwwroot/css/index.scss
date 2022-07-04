@@ -389,6 +389,29 @@ main{
                 border-radius: 5px;
                 font-size: 1.1rem;
             }
+            .f-allow18{
+                display: flex;
+                justify-content: space-between;
+                .f-allow18check-cont{
+                    display: block;
+                    position: relative;
+                    margin-left: 4px;
+                    height: 100%;
+                    input{
+                        position: absolute;
+                        opacity: 0;
+                        cursor: pointer;
+                        height: 0;
+                        width: 0;
+                    }
+                    .f-allow18custom{
+                        height: 20px;
+                        width: 20px;
+                        background-color: transparent;
+                        border: 2px black solid;
+                    }
+                }
+            }
         }
         .f-tagsbtn_cont{
             display: flex;
