@@ -384,6 +384,52 @@ main {
   border-radius: 5px;
   font-size: 1.1rem;
 }
+.filter-cont .f-body .f-options .f-allow18 {
+  display: flex;
+  justify-content: space-between;
+}
+.filter-cont .f-body .f-options .f-allow18 input[type=checkbox] {
+  visibility: hidden;
+}
+.filter-cont .f-body .f-options .f-allow18 .checkboxOverride {
+  position: relative;
+  width: 16px;
+  margin-left: 4px;
+}
+.filter-cont .f-body .f-options .f-allow18 .checkboxOverride input[type=checkbox]:checked + label:after {
+  opacity: 1;
+}
+.filter-cont .f-body .f-options .f-allow18 .checkboxOverride input[type=checkbox]:checked + label {
+  background-color: #24ac17 !important;
+  border: 2px solid #24ac17 !important;
+  color: #fff !important;
+}
+.filter-cont .f-body .f-options .f-allow18 .checkboxOverride label {
+  background-color: transparent;
+  border: 2px solid #ffffff;
+  cursor: pointer;
+  height: 16px;
+  width: 16px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 1px;
+  margin: auto 0;
+  border-radius: 4px;
+}
+.filter-cont .f-body .f-options .f-allow18 .checkboxOverride label:after {
+  border-style: none none solid solid;
+  content: "";
+  height: 6px;
+  opacity: 0;
+  position: absolute;
+  left: 0;
+  top: 0px;
+  bottom: 3px;
+  margin: auto;
+  transform: rotate(-45deg);
+  width: 12px;
+}
 .filter-cont .f-body .f-tagsbtn_cont {
   display: flex;
   justify-content: space-between;
