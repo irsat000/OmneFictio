@@ -549,6 +549,7 @@ main {
 .filter-tagdd > ul {
   flex-grow: 1;
   overflow-y: auto;
+  display: none;
 }
 .filter-tagdd > ul > li {
   width: 100%;

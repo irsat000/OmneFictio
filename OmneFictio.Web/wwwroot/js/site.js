@@ -8,19 +8,19 @@ $('.body-outside').click(function(){
         $('.drawer').removeClass('drawer-active');
         $('.body-outside').removeClass('d-block');
     }
-    if($('#orderby-popup').hasClass('d-flex')){
-        $('#orderby-popup').removeClass('d-flex');
-        $('#orderby-popup').removeClass('opacity-100');
+    if($('#orderby-modal').hasClass('d-flex')){
+        $('#orderby-modal').removeClass('d-flex');
+        $('#orderby-modal').removeClass('opacity-100');
         $('.body-outside').removeClass('d-block');
     }
-    if($('#type-popup').hasClass('d-flex')){
-        $('#type-popup').removeClass('d-flex');
-        $('#type-popup').removeClass('opacity-100');
+    if($('#type-modal').hasClass('d-flex')){
+        $('#type-modal').removeClass('d-flex');
+        $('#type-modal').removeClass('opacity-100');
         $('.body-outside').removeClass('d-block');
     }
-    if($('#filter-popup').hasClass('d-flex')){
-        $('#filter-popup').removeClass('d-flex');
-        $('#filter-popup').removeClass('opacity-100');
+    if($('#filter-modal').hasClass('d-flex')){
+        $('#filter-modal').removeClass('d-flex');
+        $('#filter-modal').removeClass('opacity-100');
         $('.body-outside').removeClass('d-block');
     }
     /* Maybe I use it
