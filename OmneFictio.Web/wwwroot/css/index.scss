@@ -478,6 +478,7 @@ main{
                 padding: 2px 8px;
                 margin: 0 3px 4px;
                 font-size: 0.9rem;
+                cursor: pointer;
                 display: flex;
                 align-items: center;
             }
@@ -485,14 +486,14 @@ main{
                 font-size: 1.1rem;
                 margin-left: 5px;
                 cursor: pointer;
-                display: flex;
+                display: none;
                 &:before {
-                    background-color: #c08e8e;
+                    background-color: #be2424;
                     border-radius: 50%;
                     transition: 0.1s;
                 }
                 &:hover::before{
-                    background-color: #be2424;
+                    background-color: #be2424 !important;
                 }
             }
         }
@@ -618,6 +619,9 @@ main{
     }
     .filter-tagdd{
         width: 280px;
+    }
+    .f-removetagbtn:before {
+        background-color: #c08e8e !important;
     }
 }
 
