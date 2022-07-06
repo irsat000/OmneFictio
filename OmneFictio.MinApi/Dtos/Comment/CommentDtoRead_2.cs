@@ -15,7 +15,7 @@ namespace OmneFictio.MinApi.Dtos
         public virtual DeletedStatusDto? DeletedStatus { get; set; }
         public virtual ChapterDtoRead_1? TargetChapter { get; set; }
         public virtual PostDtoRead_2? TargetPost { get; set; }
-        public virtual ICollection<ReplyDtoRead_2> Replies { get; set; }
-        public virtual ICollection<VoteDto> Votes { get; set; }
+        public virtual ICollection<ReplyDtoRead_2>? Replies { get; set; }
+        public virtual ICollection<VoteDto>? Votes { get; set; }
     }
 }

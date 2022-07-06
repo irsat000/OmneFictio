@@ -13,6 +13,6 @@ namespace OmneFictio.MinApi.Dtos
 
         public virtual AccountDtoRead_1? Account { get; set; }
         public virtual DeletedStatusDto? DeletedStatus { get; set; }
-        public virtual ICollection<VoteDto> Votes { get; set; }
+        public virtual ICollection<VoteDto>? Votes { get; set; }
     }
 }
