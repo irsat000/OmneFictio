@@ -372,7 +372,7 @@ main{
                 font-size: 1.4rem;
                 margin: 0 4px 7px;
             }*/
-            input{
+            .f-typebtns{
                 font-size: 1.1rem;
                 margin: 0 4px 7px;
                 background-color: rgb(139, 136, 199);
@@ -385,6 +385,9 @@ main{
                 &:hover{
                     background-color: rgb(155, 153, 198);
                 }
+            }
+            .f-type_active{
+                background-color: rgb(72 139 78) !important;
             }
         }
         .f-options{

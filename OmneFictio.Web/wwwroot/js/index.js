@@ -133,3 +133,19 @@ $(document).on('click', '.filter-cont *', function(event){
         $('.f-removetagbtn').removeClass('d-flex');
     }
 });
+
+//Changes the condition of types in filter modal. Also changes input that will be sent to back end.
+$('.f-typebtns').click(function(){
+    var buttontext = $(this).val();
+    var type = $(this).attr('data-type');
+    if($(this).hasClass('f-type_active')){
+        $(this).removeClass('f-type_active');
+        $(this).val(buttontext.replace('-', '+'));
+        $('.f-type_cont > input[data-typeref="'+type+'"]').val(type + '-0');
+    }
+    else{
+        $(this).addClass('f-type_active');
+        $(this).val(buttontext.replace('+', '-'));
+        $('.f-type_cont > input[data-typeref="'+type+'"]').val(type + '-1');
+    }
+});

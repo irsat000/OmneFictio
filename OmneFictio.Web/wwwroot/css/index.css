@@ -367,7 +367,7 @@ main {
       margin: 0 4px 7px;
   }*/
 }
-.filter-cont .f-body .f-type_cont input {
+.filter-cont .f-body .f-type_cont .f-typebtns {
   font-size: 1.1rem;
   margin: 0 4px 7px;
   background-color: rgb(139, 136, 199);
@@ -378,8 +378,11 @@ main {
   border-radius: 5px;
   padding: 2px 8px;
 }
-.filter-cont .f-body .f-type_cont input:hover {
+.filter-cont .f-body .f-type_cont .f-typebtns:hover {
   background-color: rgb(155, 153, 198);
+}
+.filter-cont .f-body .f-type_cont .f-type_active {
+  background-color: rgb(72, 139, 78) !important;
 }
 .filter-cont .f-body .f-options {
   display: flex;

@@ -86,10 +86,14 @@
     <div class="f-body">
         <div class="f-type_cont">
             <!--<span>Type:</span>-->
-            <input type="button" value="Fanfiction +">
-            <input type="button" value="Story +">
-            <input type="button" value="Scenerio +">
-            <input type="button" value="Fanfiction +">
+            <input type="button" class="f-typebtns" value="Fanfiction +" data-type="fanfiction">
+            <input type="hidden" name="chosentypes" value="fanfiction-0" data-typeref="fanfiction"/>
+            <input type="button" class="f-typebtns" value="Story +" data-type="story">
+            <input type="hidden" name="chosentypes" value="story-0" data-typeref="story"/>
+            <input type="button" class="f-typebtns" value="Scenerio +" data-type="scenerio">
+            <input type="hidden" name="chosentypes" value="scenerio-0" data-typeref="scenerio"/>
+            <input type="button" class="f-typebtns" value="Plot +" data-type="plot">
+            <input type="hidden" name="chosentypes" value="plot-0" data-typeref="plot"/>
         </div>
         <div class="f-options">
             <select name="minrate">
