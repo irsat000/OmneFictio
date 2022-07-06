@@ -173,6 +173,9 @@ main {
 .post-menu .pd-details .pd-type {
   margin-bottom: 8px;
 }
+.post-menu .pd-details .pd-poststatus {
+  margin-bottom: 8px;
+}
 .post-menu .pd-right {
   display: flex;
   flex-direction: column;
