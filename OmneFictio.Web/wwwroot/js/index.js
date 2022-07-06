@@ -47,10 +47,10 @@ $('#po-filter, #f-close').click(function(){
 });
 
 
-$('#f-addtagbtn').click(function(){
+$('#f-includetagbtn').click(function(){
     openFilterTagDD("include");
 });
-$('#f-removetagbtn').click(function(){
+$('#f-excludetagbtn').click(function(){
     openFilterTagDD("exclude");
 });
 $('.f-modaldarkness, #f-taggdd-close').click(function(){
@@ -78,7 +78,6 @@ function openFilterTagDD(action){
         $('#f-tagdd-exclude').addClass('d-block');
     }
 }
-
 
 $('#f-tagdd-include > li, #f-tagdd-exclude > li').click(function(){
     var tagname = $(this).attr('data-tagddvalue');

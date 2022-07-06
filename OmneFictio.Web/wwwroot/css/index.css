@@ -456,37 +456,45 @@ main {
   border-radius: 8px;
   padding: 2px 12px;
 }
-.filter-cont .f-body .f-tagsbtn_cont .f-addtag {
+.filter-cont .f-body .f-tagsbtn_cont .f-includetag {
   background-color: #615ea1;
 }
-.filter-cont .f-body .f-tagsbtn_cont .f-removetag {
+.filter-cont .f-body .f-tagsbtn_cont .f-excludetag {
   background-color: rgb(168, 75, 75);
 }
-.filter-cont .f-body .f-tags_include {
+.filter-cont .f-body .f-tagsincexc {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   padding-bottom: 4px;
 }
-.filter-cont .f-body .f-tags_include span {
+.filter-cont .f-body .f-tagsincexc span {
+  border-radius: 12px;
+  padding: 2px 8px;
+  margin: 0 3px 4px;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+}
+.filter-cont .f-body .f-tagsincexc .f-removetagbtn {
+  font-size: 1.1rem;
+  margin-left: 5px;
+  cursor: pointer;
+  display: flex;
+}
+.filter-cont .f-body .f-tagsincexc .f-removetagbtn:before {
+  background-color: #c08e8e;
+  border-radius: 50%;
+  transition: 0.1s;
+}
+.filter-cont .f-body .f-tagsincexc .f-removetagbtn:hover::before {
+  background-color: #be2424;
+}
+.filter-cont .f-body .f-tags_include > span {
   background-color: #5c976d;
-  border-radius: 12px;
-  padding: 2px 8px;
-  margin: 0 3px 4px;
-  font-size: 0.9rem;
 }
-.filter-cont .f-body .f-tags_exclude {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  padding-bottom: 4px;
-}
-.filter-cont .f-body .f-tags_exclude span {
+.filter-cont .f-body .f-tags_exclude > span {
   background-color: #77749f;
-  border-radius: 12px;
-  padding: 2px 8px;
-  margin: 0 3px 4px;
-  font-size: 0.9rem;
 }
 .filter-cont .f-submit_cont {
   width: 100%;

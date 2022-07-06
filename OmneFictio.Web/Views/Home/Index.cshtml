@@ -138,20 +138,19 @@
             </select>
         </div>
         <div class="f-tagsbtn_cont">
-            <input type="button" value="Tags +" class="f-addtag" id="f-addtagbtn">
-            <input type="button" value="Tags -" class="f-removetag" id="f-removetagbtn">
+            <input type="button" value="Tags +" class="f-includetag" id="f-includetagbtn">
+            <input type="button" value="Tags -" class="f-excludetag" id="f-excludetagbtn">
         </div>
-        <div class="f-tags_include">
-            <!--
-            <span data-ftag="action">Action</span>
+        <div class="f-tagsincexc f-tags_include">
+            <span data-ftag="action">Action<i class="bi bi-x-circle f-removetagbtn"></i></span>
             <input type="hidden" name="taginclude" value="action" data-ftagref="action"/>
-            <span data-ftag="comedy">Comedy</span>
+            <!--<span data-ftag="comedy">Comedy</span>
             <input type="hidden" name="taginclude" value="comedy" data-ftagref="comedy"/>
             <span data-ftag="fantasy">Fantasy</span>
             <input type="hidden" name="taginclude" value="fantasy" data-ftagref="fantasy"/>
             -->
         </div>
-        <div class="f-tags_exclude">
+        <div class="f-tagsincexc f-tags_exclude">
             <!--
             <span data-ftag="romance">Romance</span>
             <input type="hidden" name="tagexclude" value="romance" data-ftagref="romance"/>
