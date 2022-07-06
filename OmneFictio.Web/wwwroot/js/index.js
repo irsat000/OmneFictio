@@ -57,6 +57,10 @@ $('.f-modaldarkness, #f-taggdd-close').click(function(){
     openFilterTagDD("close");
 });
 function openFilterTagDD(action){
+    $('#taggdd-searchbar').val("");
+    $("#filter-taggddmodal > ul > li").each(function () {
+        $(this).show()
+    });
     if($('#filter-taggddmodal').hasClass('d-flex')){
         $('#filter-taggddmodal').removeClass('d-flex');
         $('.f-modaldarkness').removeClass('d-block');
@@ -92,4 +96,15 @@ $('#f-tagdd-include > li, #f-tagdd-exclude > li').click(function(){
                                         <input type="hidden" name="tagexclude" value="`+tagname+`" data-ftagref="`+tagname+`"/>`);
     }
     openFilterTagDD("close");
+});
+
+$("#taggdd-searchbar").keyup(function () {
+    var filter = $(this).val();
+    $("#filter-taggddmodal > ul > li").each(function () {
+        if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+            $(this).hide();
+        } else {
+            $(this).show()
+        }
+    });
 });
