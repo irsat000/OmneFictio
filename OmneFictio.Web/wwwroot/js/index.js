@@ -1,3 +1,6 @@
+function capitalizeFirstLetter(string){
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
 
 $('#orderby-btn, #sb-close').click(function(){
     if($('#orderby-modal').hasClass('d-flex')){
@@ -71,3 +74,22 @@ function openFilterTagDD(action){
         $('#f-tagdd-exclude').addClass('d-block');
     }
 }
+
+
+$('#f-tagdd-include > li, #f-tagdd-exclude > li').click(function(){
+    var tagname = $(this).attr('data-tagddvalue');
+    var tagnamedisplay = capitalizeFirstLetter(tagname.replace('_', ' '));
+    if($(this).parents('#f-tagdd-include').length){
+        $('.filter-cont span[data-ftag="'+tagname+'"]').remove();
+        $('.filter-cont input[data-ftagref="'+tagname+'"]').remove();
+        $(".f-tags_include").append(`<span data-ftag="`+tagname+`">`+tagnamedisplay+`</span>
+                                        <input type="hidden" name="taginclude" value="`+tagname+`" data-ftagref="`+tagname+`"/>`);
+    }
+    else{
+        $('.filter-cont span[data-ftag="'+tagname+'"]').remove();
+        $('.filter-cont input[data-ftagref="'+tagname+'"]').remove();
+        $(".f-tags_exclude").append(`<span data-ftag="`+tagname+`">`+tagnamedisplay+`</span>
+                                        <input type="hidden" name="tagexclude" value="`+tagname+`" data-ftagref="`+tagname+`"/>`);
+    }
+    openFilterTagDD("close");
+});
