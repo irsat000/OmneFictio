@@ -349,6 +349,10 @@ main {
   color: #fff;
   border-radius: 8px;
   padding: 2px 40px;
+  transition: 0.2s ease;
+}
+.filter-cont .f-header .f-reset_cont #f-resetbtn:hover {
+  background-color: rgb(160, 53, 53);
 }
 .filter-cont .f-header .f-close {
   flex-shrink: 0;
@@ -382,10 +386,13 @@ main {
   padding: 2px 8px;
 }
 .filter-cont .f-body .f-type_cont .f-typebtns:hover {
-  background-color: rgb(155, 153, 198);
+  background-color: rgb(117, 113, 191);
 }
 .filter-cont .f-body .f-type_cont .f-type_active {
-  background-color: rgb(72, 139, 78) !important;
+  background-color: rgb(72, 139, 78);
+}
+.filter-cont .f-body .f-type_cont .f-type_active:hover {
+  background-color: rgb(87, 140, 92);
 }
 .filter-cont .f-body .f-options {
   display: flex;
@@ -463,10 +470,18 @@ main {
   padding: 2px 12px;
 }
 .filter-cont .f-body .f-tagsbtn_cont .f-includetag {
-  background-color: #615ea1;
+  background-color: rgb(72, 139, 78);
+  transition: 0.2s ease;
+}
+.filter-cont .f-body .f-tagsbtn_cont .f-includetag:hover {
+  background-color: rgb(58, 129, 64);
 }
 .filter-cont .f-body .f-tagsbtn_cont .f-excludetag {
-  background-color: rgb(168, 75, 75);
+  background-color: rgb(139, 136, 199);
+  transition: 0.2s ease;
+}
+.filter-cont .f-body .f-tagsbtn_cont .f-excludetag:hover {
+  background-color: rgb(117, 113, 191);
 }
 .filter-cont .f-body .f-tagsincexc {
   display: flex;
@@ -513,10 +528,15 @@ main {
 .filter-cont .f-submit_cont #f-submitbtn {
   border: none;
   outline: none;
-  background-color: rgb(42, 72, 114);
+  background-color: #33697e;
   color: #fff;
   border-radius: 8px;
   padding: 3px 30px;
+  font-family: "Kaushan Script", cursive;
+  transition: 0.2s ease;
+}
+.filter-cont .f-submit_cont #f-submitbtn:hover {
+  background-color: #0f546d;
 }
 
 .filter-tagdd {

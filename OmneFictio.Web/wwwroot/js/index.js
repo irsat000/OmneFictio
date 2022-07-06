@@ -149,3 +149,20 @@ $('.f-typebtns').click(function(){
         $('.f-type_cont > input[data-typeref="'+type+'"]').val(type + '-1');
     }
 });
+
+//Resets the filters
+$('#f-resetbtn').click(function(){
+    //type
+    $('.f-typebtns').removeClass('f-type_active');
+    $('.f-typebtns').each(function(i, x){
+        var buttontext = $(x).val();
+        $(x).val(buttontext.replace('-', '+'));
+        var type = $(x).attr('data-type');
+        $('.f-type_cont > input[data-typeref="'+type+'"]').val(type + '-0');
+    });
+    //tags
+    $('.f-tagsincexc').empty();
+    //options
+    $(".f-options > select").val('0');
+    $("#checkboxInputOverride").prop("checked", false);
+});

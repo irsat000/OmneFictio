@@ -354,6 +354,10 @@ main{
                 color: #fff;
                 border-radius: 8px;
                 padding: 2px 40px;
+                transition: 0.2s ease;
+                &:hover{
+                    background-color: rgb(160, 53, 53);
+                }
             }
         }
         .f-close{
@@ -386,11 +390,14 @@ main{
                 border-radius: 5px;
                 padding: 2px 8px;
                 &:hover{
-                    background-color: rgb(155, 153, 198);
+                    background-color: rgb(117, 113, 191);
                 }
             }
             .f-type_active{
-                background-color: rgb(72 139 78) !important;
+                background-color: rgb(72 139 78);
+                &:hover{
+                    background-color: rgb(87, 140, 92);
+                }
             }
         }
         .f-options{
@@ -468,10 +475,18 @@ main{
                 padding: 2px 12px;
             }
             .f-includetag{
-                background-color: #615ea1;
+                background-color: rgb(72, 139, 78);
+                transition: 0.2s ease;
+                &:hover{
+                    background-color: rgb(58, 129, 64);
+                }
             }
             .f-excludetag{
-                background-color: rgb(168, 75, 75);
+                background-color: rgb(139, 136, 199);
+                transition: 0.2s ease;
+                &:hover{
+                    background-color: rgb(117, 113, 191);
+                }
             }
         }
         .f-tagsincexc{
@@ -519,10 +534,15 @@ main{
         #f-submitbtn{
             border: none;
             outline: none;
-            background-color: rgb(42 72 114);
+            background-color: #33697e;
             color: #fff;
             border-radius: 8px;
             padding: 3px 30px;
+            font-family: 'Kaushan Script', cursive;
+            transition: 0.2s ease;
+            &:hover{
+                background-color: #0f546d;
+            }
         }
     }
 }
