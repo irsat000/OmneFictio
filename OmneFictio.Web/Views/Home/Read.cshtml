@@ -1,0 +1,413 @@
+@{
+    ViewData["Title"] = "Home";
+    @section Stylesheets {
+        <link rel="stylesheet" href="~/css/read.css" />
+    }
+    @section Scripts {
+        <script src="~/js/read.js"></script>
+    }
+}
+
+<div class="orderby_type-cont" id="orderby-modal">
+    <div class="obt-header">
+        <div class="obt-title">
+            <span>Order By</span>
+        </div>
+        <div class="obt-close" id="sb-close">
+            <i class="bi bi-x-lg"></i>
+        </div>
+    </div>
+    <div class="obt-body">
+        <div class="obt-content">
+            <div class="obt-item">
+                <i class="bi bi-caret-right-fill visible"></i>
+                <span>Recent</span>
+            </div>
+            <div class="obt-item">
+                <i class="bi bi-caret-right-fill"></i>
+                <span>Oldest</span>
+            </div>
+            <div class="obt-item">
+                <i class="bi bi-caret-right-fill"></i>
+                <span>Rate</span>
+            </div>
+            <div class="obt-item">
+                <i class="bi bi-caret-right-fill"></i>
+                <span>Points</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="orderby_type-cont" id="type-modal">
+    <div class="obt-header">
+        <div class="obt-title">
+            <span>Type</span>
+        </div>
+        <div class="obt-close" id="t-close">
+            <i class="bi bi-x-lg"></i>
+        </div>
+    </div>
+    <div class="obt-body">
+        <div class="obt-content">
+            <div class="obt-item">
+                <i class="bi bi-caret-right-fill visible"></i>
+                <span>All</span>
+            </div>
+            <div class="obt-item">
+                <i class="bi bi-caret-right-fill"></i>
+                <span>Fanfiction</span>
+            </div>
+            <div class="obt-item">
+                <i class="bi bi-caret-right-fill"></i>
+                <span>Original</span>
+            </div>
+            <div class="obt-item">
+                <i class="bi bi-caret-right-fill"></i>
+                <span>Plot</span>
+            </div>
+            <div class="obt-item">
+                <i class="bi bi-caret-right-fill"></i>
+                <span>Scenerio</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="filter-cont" id="filter-modal">
+    <div class="f-header">
+        <div class="f-reset_cont">
+            <input type="button" value="Reset" id="f-resetbtn">
+        </div>
+        <div class="f-close" id="f-close">
+            <i class="bi bi-x-lg"></i>
+        </div>
+    </div>
+    <div class="f-body">
+        <div class="f-type_cont">
+            <!--<span>Type:</span>-->
+            <input type="button" class="f-typebtns" value="Story +" data-type="story">
+            <input type="hidden" name="chosentypes" value="story-0" data-typeref="story"/>
+            <input type="button" class="f-typebtns" value="Scenerio +" data-type="scenerio">
+            <input type="hidden" name="chosentypes" value="scenerio-0" data-typeref="scenerio"/>
+            <input type="button" class="f-typebtns" value="Fanfiction +" data-type="fanfiction">
+            <input type="hidden" name="chosentypes" value="fanfiction-0" data-typeref="fanfiction"/>
+            <input type="button" class="f-typebtns" value="Plot +" data-type="plot">
+            <input type="hidden" name="chosentypes" value="plot-0" data-typeref="plot"/>
+        </div>
+        <div class="f-options">
+            <select name="minrate">
+                <option value="0">Min rate</option>
+                <option value="5">5+</option>
+                <option value="6">6+</option>
+                <option value="7">7+</option>
+                <option value="8">8+</option>
+                <option value="9">9+</option>
+            </select>
+            <select name="language">
+                <option value="0">Language</option>
+                <option value="1">Turkish</option>
+                <option value="2">English</option>
+                <option value="3">French</option>
+                <option value="4">German</option>
+                <option value="5">Japanese</option>
+            </select>
+            <select name="poststatus">
+                <option value="0">Cur. state</option>
+                <option value="1">In progress</option>
+                <option value="2">Dropped</option>
+                <option value="3">Finished</option>
+            </select>
+            <label class="f-allow18">
+                +18
+                <div class="checkboxOverride">
+                    <input type="checkbox" name="allow18" id="checkboxInputOverride" value="1">
+                    <label for="checkboxInputOverride"></label>
+                </div>
+            </label>
+            <!--<div class="f-allow18">
+                <div class="f-allow18check-cont">
+                    <input type="checkbox" name="allow18">
+                    <span class="f-allow18custom"></span>
+                </div>
+            </div>-->
+            <select name="lastupdate">
+                <option value="0">Last update</option>
+                <option value="1">&#60; 1 day</option>
+                <option value="2">&#60; 3 day</option>
+                <option value="3">&#60; 1 week</option>
+                <option value="4">&#60; 2 week</option>
+                <option value="5">&#60; 1 month</option>
+                <option value="6">&#60; 2 month</option>
+            </select>
+        </div>
+        <div class="f-tagsbtn_cont">
+            <input type="button" value="Tags +" class="f-includetag" id="f-includetagbtn">
+            <input type="button" value="Tags -" class="f-excludetag" id="f-excludetagbtn">
+        </div>
+        <div class="f-tagsincexc f-tags_include">
+            <!--<span data-ftag="comedy">Comedy</span>
+            <input type="hidden" name="taginclude" value="comedy" data-ftagref="comedy"/>
+            <span data-ftag="fantasy">Fantasy</span>
+            <input type="hidden" name="taginclude" value="fantasy" data-ftagref="fantasy"/>
+            -->
+        </div>
+        <div class="f-tagsincexc f-tags_exclude">
+            <!--
+            <span data-ftag="romance">Romance</span>
+            <input type="hidden" name="tagexclude" value="romance" data-ftagref="romance"/>
+            <span data-ftag="dram">Dram</span>
+            <input type="hidden" name="tagexclude" value="dram" data-ftagref="dram"/>
+            -->
+        </div>
+    </div>
+    <div class="f-submit_cont">
+        <input type="submit" id="f-submitbtn" value="Filter">
+    </div>
+</div>
+
+<div class="filter-tagdd" id="filter-taggddmodal">
+    <div class="tagdd-header">
+        <input type="text" class="taggdd-searchbar" id="taggdd-searchbar" placeholder="Search tag">
+        <i class="bi bi-x-lg" id="f-taggdd-close"></i>
+    </div>
+    <ul class="" id="f-tagdd-include">
+        <li data-tagddvalue="action">Action</li>
+        <li data-tagddvalue="comedy">Comedy</li>
+        <li data-tagddvalue="fantasy">Fantasy</li>
+        <li data-tagddvalue="romance">Romance</li>
+        <li data-tagddvalue="dram">Dram</li>
+        <li data-tagddvalue="horror">Horror</li>
+        <li data-tagddvalue="adventure">Adventure</li>
+        <li data-tagddvalue="science_fiction">Science fiction</li>
+    </ul>
+    <ul class="" id="f-tagdd-exclude">
+        <li data-tagddvalue="action">Action</li>
+        <li data-tagddvalue="comedy">Comedy</li>
+        <li data-tagddvalue="fantasy">Fantasy</li>
+        <li data-tagddvalue="romance">Romance</li>
+        <li data-tagddvalue="dram">Dram</li>
+        <li data-tagddvalue="horror">Horror</li>
+        <li data-tagddvalue="adventure">Adventure</li>
+        <li data-tagddvalue="science_fiction">Science fiction</li>
+    </ul>
+</div>
+
+<div class="nav-cont">
+    <div class="navcont-temp">
+
+    </div>
+    <div class="nav-ad1">
+
+    </div>
+    <nav class="sticky-nav">
+        
+    </nav>
+</div>
+<div class="posts-cont">
+    <div class="post-options">
+        <div class="po-orderby">
+            <p class="orderby-btn po-option" id="orderby-btn">Order By</p>
+            <p class="orderby-value">(Recent)</p>
+        </div>
+        <!--
+        <span class="po-type po-option" id="po-type">
+            Type
+        </span>
+        -->
+        <span class="po-filters po-option" id="po-filter">
+            Filter
+        </span>
+    </div>
+    <div class="post">
+        <div class="post-detail d-flex">
+            <div class="p-header">
+                <div class="p-title">
+                    <span>Odin the Omnipotent</span>
+                    <span class="p-date">27/07/022</span>
+                </div>
+                <div class="p-menu">
+                    <i class="bi bi-caret-left p-menubtn"></i>
+                </div>
+            </div>
+            <div class="p-body">
+                After his father’s death, Odin was not going to be so peaceful. Old ways died as the new skyfather born.
+            </div>
+            <div class="p-footer">
+                <i class="bi bi-hand-thumbs-up p-likebtn"></i>
+                <span class="p-likes">5465</span>
+                <i class="bi bi-hand-thumbs-down p-dislikebtn"></i>
+                <span class="p-rate">7.4/10</span>
+
+                <span class="p-username">MrBombastic</span>
+                <img src="https://uybor.uz/borless/avtobor/img/user-images/user_no_photo_300x300.png">
+            </div>
+        </div>
+        <div class="post-menu d-none">
+            <div class="pd-details">
+                <span class="pd-heading">
+                    Tags
+                </span>
+                <div class="pd-tags">
+                    <span>Action</span>
+                    <span>Comedy</span>
+                    <span>Mystery</span>
+                    <span>Fantasy</span>
+                    <span>Romance</span>
+                    <span>Western</span>
+                </div>
+                <div class="pd-type">
+                    <span class="pd-heading">Type:</span>
+                    <span class="pd-value">Fanfiction</span>
+                </div>
+                <div class="pd-poststatus">
+                    <span class="pd-heading">Status:</span>
+                    <span class="pd-value">In-progress</span>
+                </div>
+                <div class="pd-language">
+                    <span class="pd-heading">Language:</span>
+                    <span class="pd-value">English</span>
+                </div>
+            </div>
+            <div class="pd-right">
+                <div class="pd-close">
+                    <i class="bi bi-caret-down pd-closebtn"></i>
+                </div>
+                <div class="pd-actions">
+                    <button type="button" class="pd-saved">Save</button>
+                    <button type="button">Share</button>
+                    <button type="button">Report</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+    <div class="post">
+        <div class="post-detail d-flex">
+            <div class="p-header">
+                <div class="p-title">
+                    <span>Davy Jones</span>
+                    <span class="p-date">27/07/022</span>
+                </div>
+                <div class="p-menu">
+                <i class="bi bi-caret-left p-menubtn"></i>
+                </div>
+            </div>
+            <div class="p-body">
+                Jones fell in love with the goddess Calypso. He agreed to guide the dead but Calypso was a bi*ch. When he returned from duty, she was not there.
+            </div>
+            <div class="p-footer">
+                <i class="bi bi-hand-thumbs-up p-likebtn"></i>
+                <span class="p-likes">4878</span>
+                <i class="bi bi-hand-thumbs-down p-dislikebtn"></i>
+                <span class="p-rate">8.6/10</span>
+
+                <span class="p-username">TrashyTrash</span>
+                <img src="https://uybor.uz/borless/avtobor/img/user-images/user_no_photo_300x300.png">
+            </div>
+        </div>
+        <div class="post-menu d-none">
+            <div class="pd-details">
+                <span class="pd-heading">
+                    Tags
+                </span>
+                <div class="pd-tags">
+                    <span>Action</span>
+                    <span>Comedy</span>
+                    <span>Mystery</span>
+                    <span>Fantasy</span>
+                    <span>Romance</span>
+                    <span>Western</span>
+                </div>
+                <div class="pd-type">
+                    <span class="pd-heading">Type:</span>
+                    <span class="pd-value">Fanfiction</span>
+                </div>
+                <div class="pd-poststatus">
+                    <span class="pd-heading">Status:</span>
+                    <span class="pd-value">In-progress</span>
+                </div>
+                <div class="pd-language">
+                    <span class="pd-heading">Language:</span>
+                    <span class="pd-value">English</span>
+                </div>
+            </div>
+            <div class="pd-right">
+                <div class="pd-close">
+                    <i class="bi bi-caret-down pd-closebtn"></i>
+                </div>
+                <div class="pd-actions">
+                    <button type="button" class="pd-saved">Save</button>
+                    <button type="button">Share</button>
+                    <button type="button">Report</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="post">
+        <div class="post-detail d-flex">
+            <div class="p-header">
+                <div class="p-title">
+                    <span>Davy Jones</span>
+                    <span class="p-date">27/07/022</span>
+                </div>
+                <div class="p-menu">
+                    <i class="bi bi-caret-left p-menubtn"></i>
+                </div>
+            </div>
+            <div class="p-body">
+                Jones fell in love with the goddess Calypso. He agreed to guide the dead but Calypso was a bi*ch. When he returned from duty, she was not there.
+            </div>
+            <div class="p-footer">
+                <i class="bi bi-hand-thumbs-up p-likebtn"></i>
+                <span class="p-likes">4878</span>
+                <i class="bi bi-hand-thumbs-down p-dislikebtn"></i>
+                <span class="p-rate">8.6/10</span>
+
+                <span class="p-username">TrashyTrash</span>
+                <img src="https://uybor.uz/borless/avtobor/img/user-images/user_no_photo_300x300.png">
+            </div>
+        </div>
+        <div class="post-menu d-none">
+            <div class="pd-details">
+                <span class="pd-heading">
+                    Tags
+                </span>
+                <div class="pd-tags">
+                    <span>Action</span>
+                    <span>Comedy</span>
+                    <span>Mystery</span>
+                    <span>Fantasy</span>
+                    <span>Romance</span>
+                    <span>Western</span>
+                </div>
+                <div class="pd-type">
+                    <span class="pd-heading">Type:</span>
+                    <span class="pd-value">Fanfiction</span>
+                </div>
+                <div class="pd-poststatus">
+                    <span class="pd-heading">Status:</span>
+                    <span class="pd-value">In-progress</span>
+                </div>
+                <div class="pd-language">
+                    <span class="pd-heading">Language:</span>
+                    <span class="pd-value">English</span>
+                </div>
+            </div>
+            <div class="pd-right">
+                <div class="pd-close">
+                    <i class="bi bi-caret-down pd-closebtn"></i>
+                </div>
+                <div class="pd-actions">
+                    <button type="button" class="pd-saved">Save</button>
+                    <button type="button">Share</button>
+                    <button type="button">Report</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
