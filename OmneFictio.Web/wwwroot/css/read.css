@@ -46,20 +46,19 @@ main {
   margin-left: auto;
   margin-right: 36px;
 }
-
-.post {
+.posts-cont .post {
   margin-bottom: 12px;
   background-color: #313131;
   overflow: hidden;
   max-height: 260px;
 }
+.posts-cont .post:last-child {
+  margin-bottom: unset;
+}
 
 .post-detail {
   display: flex;
   flex-direction: column;
-}
-.post-detail:last-child {
-  margin-bottom: unset;
 }
 .post-detail .p-header {
   display: flex;
@@ -98,6 +97,9 @@ main {
   font-size: 0.9rem;
   font-family: "Gudea", sans-serif;
   margin-bottom: 10px;
+  /*
+  text-overflow: ellipsis;
+  overflow: hidden;*/
 }
 .post-detail .p-footer {
   font-family: "Itim", cursive;
@@ -120,7 +122,7 @@ main {
   padding: 0 8px;
 }
 .post-detail .p-footer .p-rate {
-  padding: 0 20px;
+  margin: 0 20px;
   flex-grow: 1;
 }
 .post-detail .p-footer .p-username {
@@ -162,7 +164,7 @@ main {
   font-family: "Gudea", sans-serif;
 }
 .post-menu .pd-details .pd-tags {
-  font-size: 0.9rem;
+  font-size: 0.7rem;
   font-family: "Gudea", sans-serif;
   margin-bottom: 8px;
   padding: 0 4px;
