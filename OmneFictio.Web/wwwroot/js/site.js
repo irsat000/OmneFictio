@@ -47,6 +47,7 @@ $('.ppic-wrap, .dropdown_icon-wrap').click(function(){
     }
 });
 
+//Drawer for mobile
 $('.drawerbtn-cont > i, .dw-close > i').click(function(){
     if($('.drawer').hasClass('drawer-active')){
         $('.drawer').removeClass('drawer-active');
@@ -61,6 +62,8 @@ $('.drawerbtn-cont > i, .dw-close > i').click(function(){
 
 $('body').click(function(event) {
     var target = $(event.target);
+
+    //Deactivate dropdown of account container in header if clicked somewhere else
     if($('.account-dropdown').hasClass('d-block') && !target.parents('.account-cont').length){
         $('.account-dropdown').removeClass('opacity-100');
         setTimeout(function(){

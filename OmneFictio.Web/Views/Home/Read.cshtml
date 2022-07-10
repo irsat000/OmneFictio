@@ -86,16 +86,33 @@
     <div class="f-body">
         <div class="f-type_cont">
             <!--<span>Type:</span>-->
-            <input type="button" class="f-typebtns" value="Story +" data-type="story">
-            <input type="hidden" name="chosentypes" value="story-0" data-typeref="story"/>
-            <input type="button" class="f-typebtns" value="Scenerio +" data-type="scenerio">
-            <input type="hidden" name="chosentypes" value="scenerio-0" data-typeref="scenerio"/>
+            @{
+                string typeQuery = Context.Request.Query["Type"];
+                if(typeQuery != "fanfiction" || typeQuery != "plot"){
+                    <input type="button" class="f-typebtns" value="Story +" data-type="story">
+                    <input type="hidden" name="chosentypes" value="story-0" data-typeref="story"/>
+                    <input type="button" class="f-typebtns" value="Scenerio +" data-type="scenerio">
+                    <input type="hidden" name="chosentypes" value="scenerio-0" data-typeref="scenerio"/>
+                }
+            }
             <!--
             <input type="button" class="f-typebtns" value="Fanfiction +" data-type="fanfiction">
             <input type="hidden" name="chosentypes" value="fanfiction-0" data-typeref="fanfiction"/>
             <input type="button" class="f-typebtns" value="Plot +" data-type="plot">
             <input type="hidden" name="chosentypes" value="plot-0" data-typeref="plot"/>
             -->
+        </div>
+        <div class="f-fanfiction_settings">
+            <div class="ffs-header">
+                <input type="button" class="" value="Choose Series" data-type="story">
+                <input type="button" class="" value="Add Crossover" data-type="scenerio">
+            </div>
+            <div class="ffs-series_include">
+                <span data-fseries="overlord" class="ffs-base_series">Overlord</span>
+                <input type="hidden" name="seriesinclude" value="overlord"/>
+                <span data-fseries="konosuba">Konosuba</span>
+                <input type="hidden" name="seriesinclude" value="konosuba"/>
+            </div>
         </div>
         <div class="f-options">
             <select name="minrate">
