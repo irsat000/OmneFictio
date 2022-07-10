@@ -404,6 +404,54 @@ main{
                 }
             }
         }
+        .f-fanfiction_settings{
+            display: flex;
+            flex-direction: column;
+            .ffs-header{
+                display: flex;
+                justify-content: space-between;
+                padding: 2px 10px 4px;
+                font-size: 1rem;
+                input, button{
+                    font-size: 1.1rem;
+                    margin: 0 6px 7px;
+                    background-color: rgb(139, 136, 199);
+                    color: $textcolor;
+                    transition: background-color 0.2s;
+                    outline: none;
+                    border: none;
+                    border-radius: 5px;
+                    padding: 4px 8px;
+                    &:hover {
+                        background-color: rgb(117, 113, 191);
+                    }
+                    i{
+                        font-size: 0.9rem;
+                        padding: 0 4px;
+                        -webkit-text-stroke: 1px white;
+                    }
+                }
+            }
+            .ffs-series_include{
+                display: flex;
+                flex-wrap: wrap;
+                justify-content: center;
+                margin-bottom: 10px;
+                span{
+                    border-radius: 12px;
+                    padding: 2px 8px;
+                    margin: 0 3px 4px;
+                    font-size: 0.9rem;
+                    cursor: pointer;
+                    display: flex;
+                    align-items: center;
+                    background-color: #985C30;
+                }
+                .ffs-base_series{
+                    background-color: #983030;
+                }
+            }
+        }
         .f-options{
             display: flex;
             flex-wrap: wrap;
@@ -477,6 +525,17 @@ main{
                 color: #fff;
                 border-radius: 8px;
                 padding: 2px 12px;
+            }
+            button{
+                border: none;
+                outline: none;
+                color: #fff;
+                border-radius: 8px;
+                padding: 2px 12px;
+                i{
+                    -webkit-text-stroke: 1px white;
+                    padding: 0 0 0 4px;
+                }
             }
             .f-includetag{
                 background-color: rgb(72, 139, 78);

@@ -84,36 +84,40 @@
         </div>
     </div>
     <div class="f-body">
-        <div class="f-type_cont">
-            <!--<span>Type:</span>-->
-            @{
-                string typeQuery = Context.Request.Query["Type"];
-                if(typeQuery != "fanfiction" || typeQuery != "plot"){
+        @{
+            string typeQuery = Context.Request.Query["Type"];
+            if(typeQuery != "fanfiction" && typeQuery != "plot"){
+                <div class="f-type_cont">
                     <input type="button" class="f-typebtns" value="Story +" data-type="story">
                     <input type="hidden" name="chosentypes" value="story-0" data-typeref="story"/>
                     <input type="button" class="f-typebtns" value="Scenerio +" data-type="scenerio">
                     <input type="hidden" name="chosentypes" value="scenerio-0" data-typeref="scenerio"/>
-                }
+                </div>
             }
-            <!--
-            <input type="button" class="f-typebtns" value="Fanfiction +" data-type="fanfiction">
-            <input type="hidden" name="chosentypes" value="fanfiction-0" data-typeref="fanfiction"/>
-            <input type="button" class="f-typebtns" value="Plot +" data-type="plot">
-            <input type="hidden" name="chosentypes" value="plot-0" data-typeref="plot"/>
-            -->
-        </div>
-        <div class="f-fanfiction_settings">
-            <div class="ffs-header">
-                <input type="button" class="" value="Choose Series" data-type="story">
-                <input type="button" class="" value="Add Crossover" data-type="scenerio">
-            </div>
-            <div class="ffs-series_include">
-                <span data-fseries="overlord" class="ffs-base_series">Overlord</span>
-                <input type="hidden" name="seriesinclude" value="overlord"/>
-                <span data-fseries="konosuba">Konosuba</span>
-                <input type="hidden" name="seriesinclude" value="konosuba"/>
-            </div>
-        </div>
+            else if(typeQuery == "fanfiction"){
+                <div class="f-fanfiction_settings">
+                    <div class="ffs-header">
+                        <button data-button="choose_series"><i class="bi bi-search"></i> Series</button>
+                        <button data-button="add_crossover">Crossover<i class="bi bi-plus"></i></button>
+                        <!--<input type="button" class="" value="Series" data-button="choose_series">
+                        <input type="button" class="" value="Crossover +" data-button="add_crossover">-->
+                    </div>
+                    <div class="ffs-series_include">
+                        <span data-fseries="overlord" class="ffs-base_series">Overlord</span>
+                        <input type="hidden" name="seriesinclude" value="overlord"/>
+                        <span data-fseries="konosuba">Konosuba</span>
+                        <input type="hidden" name="seriesinclude" value="konosuba"/>
+                    </div>
+                </div>
+            }
+        }
+        
+        <!--<span>Type:</span>
+        <input type="button" class="f-typebtns" value="Fanfiction +" data-type="fanfiction">
+        <input type="hidden" name="chosentypes" value="fanfiction-0" data-typeref="fanfiction"/>
+        <input type="button" class="f-typebtns" value="Plot +" data-type="plot">
+        <input type="hidden" name="chosentypes" value="plot-0" data-typeref="plot"/>
+        -->
         <div class="f-options">
             <select name="minrate">
                 <option value="0">Min rate</option>
@@ -161,8 +165,12 @@
             </select>
         </div>
         <div class="f-tagsbtn_cont">
+            <button class="f-includetag" id="f-includetagbtn">Tags<i class="bi bi-plus"></i></button>
+            <button class="f-excludetag" id="f-excludetagbtn">Tags<i class="bi bi-dash"></i></button>
+            <!--
             <input type="button" value="Tags +" class="f-includetag" id="f-includetagbtn">
             <input type="button" value="Tags -" class="f-excludetag" id="f-excludetagbtn">
+            -->
         </div>
         <div class="f-tagsincexc f-tags_include">
             <!--<span data-ftag="comedy">Comedy</span>

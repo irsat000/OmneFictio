@@ -358,34 +358,27 @@ header .header-wrap {
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     background-color: #F5F5F5;
   }
-
   ::-webkit-scrollbar {
     height: 6px;
     width: 6px;
     background-color: #F5F5F5;
   }
-
   ::-webkit-scrollbar-thumb {
     box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     background-color: #555;
   }
-
   html {
     font-size: 16px;
   }
-
   body {
     background-color: #313131;
   }
-
   .account-cont {
     display: flex;
   }
-
   .logo-cont {
     display: flex;
   }
-
   .drawerbtn-cont {
     display: none;
   }
@@ -394,7 +387,6 @@ header .header-wrap {
   .logo-cont span {
     font-size: 2.5rem;
   }
-
   .account-dropdown {
     font-size: 1.6rem !important;
   }
@@ -403,11 +395,9 @@ header .header-wrap {
   .search-shortcut {
     display: none;
   }
-
   .searchbar-cont {
     display: flex;
   }
-
   .donate-shortcut {
     display: block;
   }

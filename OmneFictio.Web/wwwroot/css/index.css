@@ -254,7 +254,6 @@ main {
   main {
     padding-top: 20px;
   }
-
   .linkgroups .linkgroup_cont {
     background-color: #1D1D1D;
     border-radius: 14px;
@@ -282,7 +281,6 @@ main {
     width: unset;
     margin: 10px 20px;
   }
-
   .toppost_groups > .tpgroup {
     width: 47%;
   }
