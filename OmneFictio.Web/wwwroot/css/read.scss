@@ -446,6 +446,20 @@ main{
                     display: flex;
                     align-items: center;
                     background-color: #985C30;
+
+                    > i{
+                        font-size: 1.1rem;
+                        margin-left: 5px;
+                        cursor: pointer;
+                        &:before {
+                            background-color: #c08e8e;
+                            border-radius: 50%;
+                            transition: 0.1s;
+                        }
+                        &:hover::before{
+                            background-color: #be2424 !important;
+                        }
+                    }
                 }
                 .ffs-base_series{
                     background-color: #983030;

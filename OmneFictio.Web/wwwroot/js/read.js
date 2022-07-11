@@ -108,6 +108,7 @@ $("#taggdd-searchbar").keyup(function(){
     });
 });
 
+//this hides, shows X and removes the tag if clicked on the X
 //appended elements require this method
 $(document).on('click', '.f-tagsincexc span', function(event){
     var target = $(event.target);
@@ -131,6 +132,16 @@ $(document).on('click', '.filter-cont *', function(event){
     var target = $(event.target);
     if($('#filter-modal').hasClass('d-flex') && !target.parents('.f-tagsincexc').length && $('.f-removetagbtn').hasClass('d-flex')){
         $('.f-removetagbtn').removeClass('d-flex');
+    }
+});
+//similar to the previous one. But doesn't need hide and show X, X will always be visible.
+//this is for crossover series spans
+$(document).on('click', '.ffs-series_include span', function(event){
+    var target = $(event.target);
+    if(target.hasClass('f-removeseriesbtn')){
+        var seriesname = $(this).attr('data-fseries');
+        $(this).remove();
+        $('.ffs-series_include > input[value="'+seriesname+'"]').remove();
     }
 });
 

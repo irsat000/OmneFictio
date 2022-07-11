@@ -441,6 +441,19 @@ main {
   align-items: center;
   background-color: #985C30;
 }
+.filter-cont .f-body .f-fanfiction_settings .ffs-series_include span > i {
+  font-size: 1.1rem;
+  margin-left: 5px;
+  cursor: pointer;
+}
+.filter-cont .f-body .f-fanfiction_settings .ffs-series_include span > i:before {
+  background-color: #c08e8e;
+  border-radius: 50%;
+  transition: 0.1s;
+}
+.filter-cont .f-body .f-fanfiction_settings .ffs-series_include span > i:hover::before {
+  background-color: #be2424 !important;
+}
 .filter-cont .f-body .f-fanfiction_settings .ffs-series_include .ffs-base_series {
   background-color: #983030;
 }
