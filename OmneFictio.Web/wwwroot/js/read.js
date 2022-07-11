@@ -108,10 +108,6 @@ $('#f-excludetagbtn').click(function(){
     openFilterTagDD("exclude");
 });
 function openFilterTagDD(action){
-    $('#taggdd-searchbar').val("");
-    $("#filter-taggddmodal > ul > li").each(function(){
-        $(this).show();
-    });
     var menu = $('#filter-taggddmodal');
     if(menu.hasClass('d-flex')){
         menu.removeClass('d-flex');
@@ -122,19 +118,17 @@ function openFilterTagDD(action){
         $('.f-modaldarkness').addClass('d-block');
     }
     if(action == "include") {
-        $('#f-tagdd-include').addClass('d-block');
-        $('#f-tagdd-exclude').removeClass('d-block');
+        $('#f-tagdd-list').attr('data-action', 'include');
     }
     else if(action == "exclude"){
-        $('#f-tagdd-include').removeClass('d-block');
-        $('#f-tagdd-exclude').addClass('d-block');
+        $('#f-tagdd-list').attr('data-action', 'exclude');
     }
 }
 //adding tags to the filter modal
-$('#f-tagdd-include > li, #f-tagdd-exclude > li').click(function(){
+$('#f-tagdd-list > li').click(function(){
     var tagname = $(this).attr('data-tagddvalue');
     var tagnamedisplay = capitalizeFirstLetter(tagname.replace('_', ' '));
-    if($(this).parents('#f-tagdd-include').length){
+    if($('#f-tagdd-list').attr('data-action') == 'include'){
         $('.f-tagsincexc span[data-ftag="'+tagname+'"]').remove();
         $('.f-tagsincexc input[data-ftagref="'+tagname+'"]').remove();
         $(".f-tags_include").append(`<span data-ftag="`+tagname+`">`+tagnamedisplay+`<i class="bi bi-x-circle f-removetagbtn"></i></span>
@@ -146,12 +140,14 @@ $('#f-tagdd-include > li, #f-tagdd-exclude > li').click(function(){
         $(".f-tags_exclude").append(`<span data-ftag="`+tagname+`">`+tagnamedisplay+`<i class="bi bi-x-circle f-removetagbtn"></i></span>
                                     <input type="hidden" name="tagexclude" value="`+tagname+`" data-ftagref="`+tagname+`"/>`);
     }
+    $('#taggdd-searchbar').val("");
+    $("#f-tagdd-list > li").show();
     openFilterTagDD("close");
 });
 //searchbar that works with keyup. it's for finding the option more easily.
 $("#taggdd-searchbar").keyup(function(){
     var filter = $(this).val();
-    $("#filter-taggddmodal > ul > li").each(function () {
+    $("#f-tagdd-list > li").each(function () {
         if ($(this).text().search(new RegExp(filter, "i")) < 0) {
             $(this).hide();
         } else {
@@ -177,10 +173,6 @@ $("#fanfic-chooseseries").click(function(){
     openFilterFanficSeriesMenu();
 });
 function openFilterFanficSeriesMenu(){
-    $('#fadds-searchbar').val("");
-    $("#fadds-list > li").each(function(){
-        $(this).show();
-    });
     var menu = $("#filter-addseriesmodal");
     if(menu.hasClass('d-flex')){
         menu.removeClass('d-flex');
@@ -201,6 +193,8 @@ $('#fadds-list > li').click(function(){
 
     $(".ffs-series_include").append(`<span data-fseries="`+name+`">`+namedisplay+`<i class="bi bi-x-circle f-removeseriesbtn"></i></span>
                                     <input type="hidden" name="seriesinclude" value="`+name+`"/>`);
+    $('#fadds-searchbar').val("");
+    $("#fadds-list > li").show();
     openFilterFanficSeriesMenu();
 });
 $("#fadds-searchbar").keyup(function(){
