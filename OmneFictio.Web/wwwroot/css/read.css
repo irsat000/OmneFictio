@@ -402,11 +402,11 @@ main {
 }
 .filter-cont .f-body .f-fanfiction_settings .ffs-header {
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   padding: 2px 10px 4px;
   font-size: 1rem;
 }
-.filter-cont .f-body .f-fanfiction_settings .ffs-header input, .filter-cont .f-body .f-fanfiction_settings .ffs-header button {
+.filter-cont .f-body .f-fanfiction_settings .ffs-header button {
   font-size: 1.1rem;
   margin: 0 6px 7px;
   background-color: rgb(139, 136, 199);
@@ -417,10 +417,10 @@ main {
   border-radius: 5px;
   padding: 4px 8px;
 }
-.filter-cont .f-body .f-fanfiction_settings .ffs-header input:hover, .filter-cont .f-body .f-fanfiction_settings .ffs-header button:hover {
+.filter-cont .f-body .f-fanfiction_settings .ffs-header button:hover {
   background-color: rgb(117, 113, 191);
 }
-.filter-cont .f-body .f-fanfiction_settings .ffs-header input i, .filter-cont .f-body .f-fanfiction_settings .ffs-header button i {
+.filter-cont .f-body .f-fanfiction_settings .ffs-header button i {
   font-size: 0.9rem;
   padding: 0 4px;
   -webkit-text-stroke: 1px white;
@@ -454,9 +454,6 @@ main {
 }
 .filter-cont .f-body .f-fanfiction_settings .ffs-series_include span > i:hover::before {
   background-color: #be2424 !important;
-}
-.filter-cont .f-body .f-fanfiction_settings .ffs-series_include .ffs-base_series {
-  background-color: #983030;
 }
 .filter-cont .f-body .f-options {
   display: flex;

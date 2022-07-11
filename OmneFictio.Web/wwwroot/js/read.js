@@ -46,21 +46,61 @@ $('#po-filter, #f-close').click(function(){
     }
 });
 
-//---------------------------------------------------------------------
+//----------FILTERS----------------------------------------
+
+//Changes the condition of types in filter modal. Also changes input that will be sent to back end.
+$('.f-typebtns').click(function(){
+    var buttontext = $(this).val();
+    var type = $(this).attr('data-type');
+    if($(this).hasClass('f-type_active')){
+        $(this).removeClass('f-type_active');
+        $(this).val(buttontext.replace('-', '+'));
+        $('.f-type_cont > input[data-typeref="'+type+'"]').val(type + '-0');
+    }
+    else{
+        $(this).addClass('f-type_active');
+        $(this).val(buttontext.replace('+', '-'));
+        $('.f-type_cont > input[data-typeref="'+type+'"]').val(type + '-1');
+    }
+});
 
 //Close second modals on the page
 $('.f-modaldarkness, #f-taggdd-close, #fadds-close').click(function(){
     if($('#filter-taggddmodal').hasClass('d-flex')){
-        $('#filter-taggddmodal').removeClass('d-flex');
-        $('.f-modaldarkness').removeClass('d-block');
+        openFilterTagDD("close");
     }
     if($("#filter-addseriesmodal").hasClass('d-flex')){
-        $("#filter-addseriesmodal").removeClass('d-flex');
-        $('.f-modaldarkness').removeClass('d-block');
+        openFilterFanficSeriesMenu();
     }
 });
 
+//Resets the filters
+$('#f-resetbtn').click(function(){
+    //type
+    if($('.f-typebtns').length){
+        $('.f-typebtns').removeClass('f-type_active');
+        $('.f-typebtns').each(function(i, x){
+            var buttontext = $(x).val();
+            $(x).val(buttontext.replace('-', '+'));
+            var type = $(x).attr('data-type');
+            $('.f-type_cont > input[data-typeref="'+type+'"]').val(type + '-0');
+        });
+    }
+    //tags
+    $('.f-tagsincexc').empty();
+    //fanfiction series
+    if($('.ffs-series_include').length){
+        $('.ffs-series_include').empty();
+    }
+    //options
+    $(".f-options > select").val('0');
+    $("#checkboxInputOverride").prop("checked", false);
+});
+
+//-----TAG SELECTIONS------
+
 //open tag include and exclude menus.
+//closes modal if it's open
 $('#f-includetagbtn').click(function(){
     openFilterTagDD("include");
 });
@@ -90,30 +130,6 @@ function openFilterTagDD(action){
         $('#f-tagdd-exclude').addClass('d-block');
     }
 }
-//choose series or add crossover menu for fanfictions
-$("#fanfic-chooseseries").click(function(){
-    openFilterFanficSeriesMenu("base");
-});
-$("#fanfic-choosecrossover").click(function(){
-    openFilterFanficSeriesMenu("crossover");
-});
-function openFilterFanficSeriesMenu(action){
-    $('#fadds-searchbar').val("");
-    $("#fadds-list > li").each(function(){
-        $(this).show();
-    });
-    var menu = $("#filter-addseriesmodal");
-    menu.attr("data-fanficseriestype", action);
-    if(menu.hasClass('d-flex')){
-        menu.removeClass('d-flex');
-        $('.f-modaldarkness').removeClass('d-block');
-    }
-    else{
-        menu.addClass('d-flex');
-        $('.f-modaldarkness').addClass('d-block');
-    }
-}
-
 //adding tags to the filter modal
 $('#f-tagdd-include > li, #f-tagdd-exclude > li').click(function(){
     var tagname = $(this).attr('data-tagddvalue');
@@ -128,11 +144,10 @@ $('#f-tagdd-include > li, #f-tagdd-exclude > li').click(function(){
         $('.f-tagsincexc span[data-ftag="'+tagname+'"]').remove();
         $('.f-tagsincexc input[data-ftagref="'+tagname+'"]').remove();
         $(".f-tags_exclude").append(`<span data-ftag="`+tagname+`">`+tagnamedisplay+`<i class="bi bi-x-circle f-removetagbtn"></i></span>
-                                        <input type="hidden" name="tagexclude" value="`+tagname+`" data-ftagref="`+tagname+`"/>`);
+                                    <input type="hidden" name="tagexclude" value="`+tagname+`" data-ftagref="`+tagname+`"/>`);
     }
     openFilterTagDD("close");
 });
-
 //searchbar that works with keyup. it's for finding the option more easily.
 $("#taggdd-searchbar").keyup(function(){
     var filter = $(this).val();
@@ -144,6 +159,50 @@ $("#taggdd-searchbar").keyup(function(){
         }
     });
 });
+//Hidex the tag X icon when clicked outside
+$(document).on('click', '.filter-cont *', function(event){
+    var target = $(event.target);
+    if($('#filter-modal').hasClass('d-flex') && !target.parents('.f-tagsincexc').length && $('.f-removetagbtn').hasClass('d-flex')){
+        $('.f-removetagbtn').removeClass('d-flex');
+    }
+});
+
+
+
+//--------FANFICTION SERIES OPTIONS-----------
+
+//choose series or add crossover menu for fanfictions
+//closes modal if it's open
+$("#fanfic-chooseseries").click(function(){
+    openFilterFanficSeriesMenu();
+});
+function openFilterFanficSeriesMenu(){
+    $('#fadds-searchbar').val("");
+    $("#fadds-list > li").each(function(){
+        $(this).show();
+    });
+    var menu = $("#filter-addseriesmodal");
+    if(menu.hasClass('d-flex')){
+        menu.removeClass('d-flex');
+        $('.f-modaldarkness').removeClass('d-block');
+    }
+    else{
+        menu.addClass('d-flex');
+        $('.f-modaldarkness').addClass('d-block');
+    }
+}
+//adding series to the filter modal / fanfiction
+$('#fadds-list > li').click(function(){
+    var name = $(this).attr('data-seriesval');
+    var namedisplay = capitalizeFirstLetter(name.replace('_', ' '));
+    //delete if span-input already exist
+    $('.ffs-series_include span[data-fseries="'+name+'"]').remove();
+    $('.ffs-series_include input[value="'+name+'"]').remove();
+
+    $(".ffs-series_include").append(`<span data-fseries="`+name+`">`+namedisplay+`<i class="bi bi-x-circle f-removeseriesbtn"></i></span>
+                                    <input type="hidden" name="seriesinclude" value="`+name+`"/>`);
+    openFilterFanficSeriesMenu();
+});
 $("#fadds-searchbar").keyup(function(){
     var filter = $(this).val();
     $("#fadds-list > li").each(function () {
@@ -154,7 +213,6 @@ $("#fadds-searchbar").keyup(function(){
         }
     });
 });
-
 //this hides, shows X and removes the tag if clicked on the X
 //appended elements require this method
 $(document).on('click', '.f-tagsincexc span', function(event){
@@ -175,14 +233,7 @@ $(document).on('click', '.f-tagsincexc span', function(event){
         }
     }
 });
-$(document).on('click', '.filter-cont *', function(event){
-    var target = $(event.target);
-    if($('#filter-modal').hasClass('d-flex') && !target.parents('.f-tagsincexc').length && $('.f-removetagbtn').hasClass('d-flex')){
-        $('.f-removetagbtn').removeClass('d-flex');
-    }
-});
-//similar to the previous one. But doesn't need hide and show X, X will always be visible.
-//this is for crossover series spans
+//this is for removing series from filters
 $(document).on('click', '.ffs-series_include span', function(event){
     var target = $(event.target);
     if(target.hasClass('f-removeseriesbtn')){
@@ -192,35 +243,3 @@ $(document).on('click', '.ffs-series_include span', function(event){
     }
 });
 
-//Changes the condition of types in filter modal. Also changes input that will be sent to back end.
-$('.f-typebtns').click(function(){
-    var buttontext = $(this).val();
-    var type = $(this).attr('data-type');
-    if($(this).hasClass('f-type_active')){
-        $(this).removeClass('f-type_active');
-        $(this).val(buttontext.replace('-', '+'));
-        $('.f-type_cont > input[data-typeref="'+type+'"]').val(type + '-0');
-    }
-    else{
-        $(this).addClass('f-type_active');
-        $(this).val(buttontext.replace('+', '-'));
-        $('.f-type_cont > input[data-typeref="'+type+'"]').val(type + '-1');
-    }
-});
-
-//Resets the filters
-$('#f-resetbtn').click(function(){
-    //type
-    $('.f-typebtns').removeClass('f-type_active');
-    $('.f-typebtns').each(function(i, x){
-        var buttontext = $(x).val();
-        $(x).val(buttontext.replace('-', '+'));
-        var type = $(x).attr('data-type');
-        $('.f-type_cont > input[data-typeref="'+type+'"]').val(type + '-0');
-    });
-    //tags
-    $('.f-tagsincexc').empty();
-    //options
-    $(".f-options > select").val('0');
-    $("#checkboxInputOverride").prop("checked", false);
-});
