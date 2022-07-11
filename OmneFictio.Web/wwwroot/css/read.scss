@@ -451,6 +451,7 @@ main{
                         font-size: 1.1rem;
                         margin-left: 5px;
                         cursor: pointer;
+                        display: flex;
                         &:before {
                             background-color: #c08e8e;
                             border-radius: 50%;
@@ -480,6 +481,7 @@ main{
                 margin: 0 5px 7px;
                 border-radius: 5px;
                 font-size: 1.1rem;
+                cursor: pointer;
             }
             .f-allow18{
                 display: flex;
@@ -679,6 +681,79 @@ main{
         }
     }
 }
+.filter-addseries{
+    display: none;
+    flex-direction: column;
+    position: absolute;
+    top: 60px;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    height: 400px;
+    width: 260px;
+    border-radius: 20px;
+    overflow: hidden;
+    z-index: 508;
+    background-color: $frontbgcolor;
+    box-shadow: 0px 0px 6px 0px $frontbgcolor_boxshadow;
+    padding-bottom: 10px;
+    .fadds-header{
+        width: 100%;
+        flex-shrink: 0;
+        display: flex;
+        flex-direction: row;
+        padding: 10px;
+        .fadds-searchbar{
+            padding: 2px 6px;
+            border: none;
+            outline: none;
+            border-radius: 4px;
+            width: 100%;
+            flex-shrink: 1;
+            border: 1px solid $textcolor;
+        }
+        > i {
+            margin: 0 4px 0 20px;
+            margin-right: 4px;
+            font-size: 1.3rem;
+            flex-shrink: 0;
+            text-shadow: 0px 0px 6px $textcolor_boxshadow;
+            cursor: pointer;
+        }
+    }
+    .fadds-dropdowns{
+        padding: 4px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        padding: 0 10px 6px;
+        > select{
+            outline: none;
+            border: none;
+            background: $frontbgcolor_hover2;
+            color: $textcolor;
+            padding: 4px;
+            border-radius: 5px;
+            font-size: 1.1rem;
+            cursor: pointer;
+        }
+    }
+    .fadds-list{
+        flex-grow: 1;
+        overflow-y: auto;
+        > li{
+            width: 100%;
+            padding: 6px 20px;
+            overflow: hidden;
+            cursor: pointer;
+            &:hover{
+                background-color: $frontbgcolor_hover1;
+            }
+        }
+    }
+}
 
 
 
@@ -708,6 +783,9 @@ main{
     }
     .filter-tagdd{
         width: 280px;
+    }
+    .filter-addseries{
+        width: 344px;
     }
     .f-removetagbtn:before {
         background-color: #c08e8e !important;

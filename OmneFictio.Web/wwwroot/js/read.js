@@ -46,27 +46,39 @@ $('#po-filter, #f-close').click(function(){
     }
 });
 
+//---------------------------------------------------------------------
 
+//Close second modals on the page
+$('.f-modaldarkness, #f-taggdd-close, #fadds-close').click(function(){
+    if($('#filter-taggddmodal').hasClass('d-flex')){
+        $('#filter-taggddmodal').removeClass('d-flex');
+        $('.f-modaldarkness').removeClass('d-block');
+    }
+    if($("#filter-addseriesmodal").hasClass('d-flex')){
+        $("#filter-addseriesmodal").removeClass('d-flex');
+        $('.f-modaldarkness').removeClass('d-block');
+    }
+});
+
+//open tag include and exclude menus.
 $('#f-includetagbtn').click(function(){
     openFilterTagDD("include");
 });
 $('#f-excludetagbtn').click(function(){
     openFilterTagDD("exclude");
 });
-$('.f-modaldarkness, #f-taggdd-close').click(function(){
-    openFilterTagDD("close");
-});
 function openFilterTagDD(action){
     $('#taggdd-searchbar').val("");
     $("#filter-taggddmodal > ul > li").each(function(){
-        $(this).show()
+        $(this).show();
     });
-    if($('#filter-taggddmodal').hasClass('d-flex')){
-        $('#filter-taggddmodal').removeClass('d-flex');
+    var menu = $('#filter-taggddmodal');
+    if(menu.hasClass('d-flex')){
+        menu.removeClass('d-flex');
         $('.f-modaldarkness').removeClass('d-block');
     }
     else{
-        $('#filter-taggddmodal').addClass('d-flex');
+        menu.addClass('d-flex');
         $('.f-modaldarkness').addClass('d-block');
     }
     if(action == "include") {
@@ -78,7 +90,31 @@ function openFilterTagDD(action){
         $('#f-tagdd-exclude').addClass('d-block');
     }
 }
+//choose series or add crossover menu for fanfictions
+$("#fanfic-chooseseries").click(function(){
+    openFilterFanficSeriesMenu("base");
+});
+$("#fanfic-choosecrossover").click(function(){
+    openFilterFanficSeriesMenu("crossover");
+});
+function openFilterFanficSeriesMenu(action){
+    $('#fadds-searchbar').val("");
+    $("#fadds-list > li").each(function(){
+        $(this).show();
+    });
+    var menu = $("#filter-addseriesmodal");
+    menu.attr("data-fanficseriestype", action);
+    if(menu.hasClass('d-flex')){
+        menu.removeClass('d-flex');
+        $('.f-modaldarkness').removeClass('d-block');
+    }
+    else{
+        menu.addClass('d-flex');
+        $('.f-modaldarkness').addClass('d-block');
+    }
+}
 
+//adding tags to the filter modal
 $('#f-tagdd-include > li, #f-tagdd-exclude > li').click(function(){
     var tagname = $(this).attr('data-tagddvalue');
     var tagnamedisplay = capitalizeFirstLetter(tagname.replace('_', ' '));
@@ -97,9 +133,20 @@ $('#f-tagdd-include > li, #f-tagdd-exclude > li').click(function(){
     openFilterTagDD("close");
 });
 
+//searchbar that works with keyup. it's for finding the option more easily.
 $("#taggdd-searchbar").keyup(function(){
     var filter = $(this).val();
     $("#filter-taggddmodal > ul > li").each(function () {
+        if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+            $(this).hide();
+        } else {
+            $(this).show()
+        }
+    });
+});
+$("#fadds-searchbar").keyup(function(){
+    var filter = $(this).val();
+    $("#fadds-list > li").each(function () {
         if ($(this).text().search(new RegExp(filter, "i")) < 0) {
             $(this).hide();
         } else {
