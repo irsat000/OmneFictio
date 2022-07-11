@@ -19,8 +19,11 @@ ul, ol, li, b, h1, h2, h3, h4, h6, a, p {
   display: block;
 }
 
+a {
+  color: unset;
+}
 a:hover {
-  color: inherit;
+  color: unset;
 }
 
 .body-outside {
