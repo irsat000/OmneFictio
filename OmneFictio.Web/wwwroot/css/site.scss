@@ -136,10 +136,15 @@ header{
             }
         }
     }
-    .dw-icon-cont{
-        width: 2.4rem;
-        i {
-            font-size: 1.4rem;
+    .dw-mainpage {
+        border-top: 1px solid #313131;
+        border-bottom: 1px solid #313131;
+        a{
+            /*height: 100%;
+            width: 100%;*/
+            padding: 6px 0 6px 20px;
+            color: $textcolor;
+            font-family: 'Kaushan Script', cursive;
         }
     }
     .dw-list{
@@ -154,6 +159,12 @@ header{
                     display: flex;
                     &:hover{
                         background-color: $frontbgcolor;
+                    }
+                    .dw-icon-cont{
+                        width: 2.4rem;
+                        i {
+                            font-size: 1.4rem;
+                        }
                     }
                 }
             }

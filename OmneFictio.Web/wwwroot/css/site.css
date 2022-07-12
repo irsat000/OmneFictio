@@ -141,11 +141,16 @@ header .header-wrap {
   padding-bottom: 6px;
   font-size: 1.2rem;
 }
-.drawer .dw-icon-cont {
-  width: 2.4rem;
+.drawer .dw-mainpage {
+  border-top: 1px solid #313131;
+  border-bottom: 1px solid #313131;
 }
-.drawer .dw-icon-cont i {
-  font-size: 1.4rem;
+.drawer .dw-mainpage a {
+  /*height: 100%;
+  width: 100%;*/
+  padding: 6px 0 6px 20px;
+  color: #ffffff;
+  font-family: "Kaushan Script", cursive;
 }
 .drawer .dw-list {
   padding-top: 10px;
@@ -159,6 +164,12 @@ header .header-wrap {
 }
 .drawer .dw-list > ul > li > a:hover {
   background-color: #313131;
+}
+.drawer .dw-list > ul > li > a .dw-icon-cont {
+  width: 2.4rem;
+}
+.drawer .dw-list > ul > li > a .dw-icon-cont i {
+  font-size: 1.4rem;
 }
 .drawer .dw-settings {
   margin-top: auto;

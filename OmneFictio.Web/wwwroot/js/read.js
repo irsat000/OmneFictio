@@ -49,23 +49,6 @@ $('#po-filter, #f-close').click(function(){
 //----------FILTERS----------------------------------------
 
 
-//----TYPE SELECTION------
-//Changes the condition of types in filter modal. Also changes input that will be sent to back end.
-$('.f-typebtns').click(function(){
-    var buttontext = $(this).val();
-    var type = $(this).attr('data-type');
-    if($(this).hasClass('f-type_active')){
-        $(this).removeClass('f-type_active');
-        $(this).val(buttontext.replace('-', '+'));
-        $('.f-type_cont input[value="'+type+'"]').remove();
-    }
-    else{
-        $(this).addClass('f-type_active');
-        $(this).val(buttontext.replace('+', '-'));
-        $(".f-type_cont").append('<input type="hidden" name="chosentypes" value="'+type+'"/>');
-    }
-});
-
 //Close second modals on the page
 $('.f-modaldarkness, #f-taggdd-close, #fadds-close').click(function(){
     if($('#filter-taggddmodal').hasClass('d-flex')){
@@ -84,9 +67,8 @@ $('#f-resetbtn').click(function(){
         $('.f-typebtns').each(function(i, x){
             var buttontext = $(x).val();
             $(x).val(buttontext.replace('-', '+'));
-            var type = $(x).attr('data-type');
-            $('.f-type_cont > input[data-typeref="'+type+'"]').val(type + '-0');
         });
+        $('.f-type_cont > input[type="hidden"]').remove();
     }
     //tags
     $('.f-tagsincexc').empty();
@@ -97,6 +79,23 @@ $('#f-resetbtn').click(function(){
     //options
     $(".f-options > select").val('0');
     $("#checkboxInputOverride").prop("checked", false);
+});
+
+//----TYPE SELECTION------
+//Changes the condition of types in filter modal. Also changes input that will be sent to back end.
+$('.f-typebtns').click(function(){
+    var buttontext = $(this).val();
+    var type = $(this).attr('data-type');
+    if($(this).hasClass('f-type_active')){
+        $(this).removeClass('f-type_active');
+        $(this).val(buttontext.replace('-', '+'));
+        $('.f-type_cont input[value="'+type+'"]').remove();
+    }
+    else{
+        $(this).addClass('f-type_active');
+        $(this).val(buttontext.replace('+', '-'));
+        $(".f-type_cont").append('<input type="hidden" name="chosentypes" value="'+type+'"/>');
+    }
 });
 
 //-----TAG SELECTIONS------
