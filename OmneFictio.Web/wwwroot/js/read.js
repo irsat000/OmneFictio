@@ -48,6 +48,8 @@ $('#po-filter, #f-close').click(function(){
 
 //----------FILTERS----------------------------------------
 
+
+//----TYPE SELECTION------
 //Changes the condition of types in filter modal. Also changes input that will be sent to back end.
 $('.f-typebtns').click(function(){
     var buttontext = $(this).val();
@@ -55,12 +57,12 @@ $('.f-typebtns').click(function(){
     if($(this).hasClass('f-type_active')){
         $(this).removeClass('f-type_active');
         $(this).val(buttontext.replace('-', '+'));
-        $('.f-type_cont > input[data-typeref="'+type+'"]').val(type + '-0');
+        $('.f-type_cont input[value="'+type+'"]').remove();
     }
     else{
         $(this).addClass('f-type_active');
         $(this).val(buttontext.replace('+', '-'));
-        $('.f-type_cont > input[data-typeref="'+type+'"]').val(type + '-1');
+        $(".f-type_cont").append('<input type="hidden" name="chosentypes" value="'+type+'"/>');
     }
 });
 
