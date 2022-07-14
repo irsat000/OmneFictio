@@ -50,7 +50,6 @@ main {
   margin-bottom: 12px;
   background-color: #313131;
   overflow: hidden;
-  max-height: 260px;
 }
 .posts-cont .post:last-child {
   margin-bottom: unset;
@@ -97,9 +96,13 @@ main {
   font-size: 0.9rem;
   font-family: "Gudea", sans-serif;
   margin-bottom: 10px;
+  max-height: 260px;
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-line-clamp: 7;
+  -webkit-box-orient: vertical;
   /*
-  text-overflow: ellipsis;
-  overflow: hidden;*/
+  text-overflow: ellipsis;*/
 }
 .post-detail .p-footer {
   font-family: "Itim", cursive;
@@ -164,13 +167,22 @@ main {
   font-family: "Gudea", sans-serif;
 }
 .post-menu .pd-details .pd-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
   font-size: 0.7rem;
   font-family: "Gudea", sans-serif;
   margin-bottom: 8px;
   padding: 0 4px;
 }
-.post-menu .pd-details .pd-tags span {
-  margin-right: 6px;
+.post-menu .pd-details .pd-series {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  font-size: 0.9rem;
+  font-family: "Itim", cursive;
+  margin-bottom: 8px;
+  padding: 0 4px;
 }
 .post-menu .pd-details .pd-type {
   margin-bottom: 8px;
@@ -221,15 +233,44 @@ main {
   width: 200px;
   margin: 20px 20px 0 0;
   flex-shrink: 0;
+  font-family: "Itim", cursive;
 }
-.nav-cont .navcont-temp {
+.nav-cont .navcont-links {
   display: flex;
+  flex-direction: column;
   background-color: #1D1D1D !important;
   border-radius: 10px;
   padding: 8px;
   width: 100%;
-  height: 140px;
+  min-height: 140px;
   margin-bottom: 12px;
+}
+.nav-cont .navcont-links .navlinks {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 6px;
+}
+.nav-cont .navcont-links .navlinks > a {
+  padding: 4px 14px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  transition: 0.2s ease;
+  cursor: pointer;
+}
+.nav-cont .navcont-links .nl-readingtime > a {
+  background-color: #a24c4c;
+}
+.nav-cont .navcont-links .nl-readingtime > a:hover {
+  background-color: #983636;
+}
+.nav-cont .navcont-links .nl-aboutyou > a {
+  background-color: rgb(186, 160, 42);
+}
+.nav-cont .navcont-links .nl-aboutyou > a:hover {
+  background-color: rgb(196, 134, 26);
 }
 .nav-cont .nav-ad1 {
   background-color: rgb(139, 136, 199);
@@ -767,6 +808,9 @@ main {
   }
   .f-removetagbtn:before {
     background-color: #c08e8e !important;
+  }
+  .orderby_type-cont, .filter-cont, .filter-tagdd, .filter-addseries {
+    top: 0;
   }
 }
 @media (min-width: 992px) {

@@ -86,15 +86,15 @@
     <div class="f-body">
         @{
             string typeQuery = Context.Request.Query["Type"];
-            if(typeQuery != "fanfiction" && typeQuery != "plot"){
+            /*if(typeQuery != "fanfiction" && typeQuery != "plot"){
                 <div class="f-type_cont">
                     <input type="button" class="f-typebtns" value="Story +" data-type="story">
                     <input type="button" class="f-typebtns" value="Scenerio +" data-type="scenerio">
                     <!--<input type="hidden" name="chosentypes" value="scenerio"/>
                     <input type="hidden" name="chosentypes" value="story"/>-->
                 </div>
-            }
-            else if(typeQuery == "fanfiction"){
+            }*/
+            if(typeQuery == "fanfiction"){
                 <div class="f-fanfiction_settings">
                     <div class="ffs-header">
                         <button data-button="choose_series" id="fanfic-chooseseries"><i class="bi bi-search"></i> Series <i class="bi bi-plus"></i></button>
@@ -269,8 +269,18 @@
 </div>
 
 <div class="nav-cont">
-    <div class="navcont-temp">
-
+    <div class="navcont-links">
+        <div class="navlinks nl-readingtime">
+            <a class="navlink_original" asp-controller="Home" asp-action="Read" asp-route-type="story">Story</a>
+            <a class="navlink_scenario" asp-controller="Home" asp-action="Read" asp-route-type="scenario">Scenario</a>
+            <a class="navlink_fanfiction" asp-controller="Home" asp-action="Read" asp-route-type="fanfiction">Fanfiction</a>
+            <a class="navlink_original" asp-controller="Home" asp-action="Read" asp-route-type="plot">Plot</a>
+        </div>
+        <div class="navlinks nl-aboutyou">
+            <a class="navlink_original">Library</a>
+            <a class="navlink_scenario">My Stuff</a>
+            <a class="navlink_fanfiction">History</a>
+        </div>
     </div>
     <div class="nav-ad1">
 
@@ -464,6 +474,18 @@
                     <span class="pd-heading">Type:</span>
                     <span class="pd-value">Fanfiction</span>
                 </div>
+                @{
+                    if(typeQuery == "fanfiction"){
+                        <span class="pd-heading">
+                            Series
+                        </span>
+                        <div class="pd-series">
+                            <span>Harry Potter</span>
+                            <span>Overlord</span>
+                            <span>Pirates of the Caribbean</span>
+                        </div>
+                    }
+                }
                 <div class="pd-poststatus">
                     <span class="pd-heading">Status:</span>
                     <span class="pd-value">In-progress</span>

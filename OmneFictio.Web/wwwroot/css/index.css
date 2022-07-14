@@ -296,11 +296,11 @@ main {
     flex-direction: row;
   }
   .linkgroups .readingtime {
-    width: 47%;
+    width: 54%;
     padding: 20px 0;
   }
   .linkgroups .aboutyou {
-    width: 47%;
+    width: 42%;
     padding: 20px 0;
   }
   .linkgroups .misclinks {
