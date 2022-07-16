@@ -22,6 +22,7 @@ namespace OmneFictio.MinApi.Models
         public virtual DbSet<ChatMessage> ChatMessages { get; set; } = null!;
         public virtual DbSet<Comment> Comments { get; set; } = null!;
         public virtual DbSet<DeletedStatus> DeletedStatuses { get; set; } = null!;
+        public virtual DbSet<ExistingStory> ExistingStories { get; set; } = null!;
         public virtual DbSet<Gift> Gifts { get; set; } = null!;
         public virtual DbSet<GiftItem> GiftItems { get; set; } = null!;
         public virtual DbSet<Ip> Ips { get; set; } = null!;
@@ -32,6 +33,7 @@ namespace OmneFictio.MinApi.Models
         public virtual DbSet<Rate> Rates { get; set; } = null!;
         public virtual DbSet<RatedA> RatedAs { get; set; } = null!;
         public virtual DbSet<Reply> Replies { get; set; } = null!;
+        public virtual DbSet<StoryType> StoryTypes { get; set; } = null!;
         public virtual DbSet<Tag> Tags { get; set; } = null!;
         public virtual DbSet<Vote> Votes { get; set; } = null!;
 
@@ -39,7 +41,8 @@ namespace OmneFictio.MinApi.Models
         {
             if (!optionsBuilder.IsConfigured)
             {
-                optionsBuilder.UseSqlServer("Name=ConnectionStrings:DefaultConnection");
+#warning To protect potentially sensitive information in your connection string, you should move it out of source code. You can avoid scaffolding the connection string by using the Name= syntax to read it from configuration - see https://go.microsoft.com/fwlink/?linkid=2131148. For more guidance on storing connection strings, see http://go.microsoft.com/fwlink/?LinkId=723263.
+                optionsBuilder.UseSqlServer("Server=DESKTOP-42J9V9H;Database=OmneFictio;Trusted_Connection=True;");
             }
         }
 
@@ -283,6 +286,34 @@ namespace OmneFictio.MinApi.Models
                     .HasColumnName("body");
             });
 
+            modelBuilder.Entity<ExistingStory>(entity =>
+            {
+                entity.ToTable("ExistingStory");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
+
+                entity.Property(e => e.Body)
+                    .HasMaxLength(250)
+                    .IsUnicode(false)
+                    .HasColumnName("body");
+
+                entity.Property(e => e.FirstLetter)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .HasColumnName("firstLetter")
+                    .IsFixedLength();
+
+                entity.Property(e => e.StoryTypeId).HasColumnName("storyTypeId");
+
+                entity.HasOne(d => d.StoryType)
+                    .WithMany(p => p.ExistingStories)
+                    .HasForeignKey(d => d.StoryTypeId)
+                    .OnDelete(DeleteBehavior.SetNull)
+                    .HasConstraintName("FK_ExistingstoryStorytype");
+            });
+
             modelBuilder.Entity<Gift>(entity =>
             {
                 entity.ToTable("Gift");
@@ -415,6 +446,23 @@ namespace OmneFictio.MinApi.Models
                     .WithMany(p => p.Posts)
                     .HasForeignKey(d => d.PostTypeId)
                     .HasConstraintName("FK_PostPosttype");
+
+                entity.HasMany(d => d.ExistingStories)
+                    .WithMany(p => p.Posts)
+                    .UsingEntity<Dictionary<string, object>>(
+                        "PostEstory",
+                        l => l.HasOne<ExistingStory>().WithMany().HasForeignKey("ExistingStoryId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_PostEStory_EStory"),
+                        r => r.HasOne<Post>().WithMany().HasForeignKey("PostId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_PostEStory_Post"),
+                        j =>
+                        {
+                            j.HasKey("PostId", "ExistingStoryId").HasName("PK_PostEStory");
+
+                            j.ToTable("Post_EStory");
+
+                            j.IndexerProperty<int>("PostId").HasColumnName("postId");
+
+                            j.IndexerProperty<int>("ExistingStoryId").HasColumnName("existingStoryId");
+                        });
 
                 entity.HasMany(d => d.RatedAs)
                     .WithMany(p => p.Posts)
@@ -552,6 +600,20 @@ namespace OmneFictio.MinApi.Models
                     .WithMany(p => p.Replies)
                     .HasForeignKey(d => d.DeletedStatusId)
                     .HasConstraintName("FK_ReplyDeletedstatus");
+            });
+
+            modelBuilder.Entity<StoryType>(entity =>
+            {
+                entity.ToTable("StoryType");
+
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
+
+                entity.Property(e => e.Body)
+                    .HasMaxLength(250)
+                    .IsUnicode(false)
+                    .HasColumnName("body");
             });
 
             modelBuilder.Entity<Tag>(entity =>

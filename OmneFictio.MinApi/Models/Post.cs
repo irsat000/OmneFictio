@@ -12,6 +12,7 @@ namespace OmneFictio.MinApi.Models
             Gifts = new HashSet<Gift>();
             Rates = new HashSet<Rate>();
             Votes = new HashSet<Vote>();
+            ExistingStories = new HashSet<ExistingStory>();
             RatedAs = new HashSet<RatedA>();
             Tags = new HashSet<Tag>();
         }
@@ -38,6 +39,7 @@ namespace OmneFictio.MinApi.Models
         public virtual ICollection<Rate> Rates { get; set; }
         public virtual ICollection<Vote> Votes { get; set; }
 
+        public virtual ICollection<ExistingStory> ExistingStories { get; set; }
         public virtual ICollection<RatedA> RatedAs { get; set; }
         public virtual ICollection<Tag> Tags { get; set; }
     }

@@ -26,4 +26,6 @@ public class PostDtoRead_1
     public virtual ICollection<VoteDto>? Votes { get; set; }
     public virtual ICollection<RatedAsDto>? RatedAs { get; set; }
     public virtual ICollection<TagDto>? Tags { get; set; }
+    //if existingStories is not empty, it's a fanfiction
+    public virtual ICollection<ExistingStoryDto>? ExistingStories { get; set; }
 }
