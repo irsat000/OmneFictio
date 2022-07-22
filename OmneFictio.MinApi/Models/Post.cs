@@ -9,7 +9,7 @@ namespace OmneFictio.MinApi.Models
         {
             Chapters = new HashSet<Chapter>();
             Comments = new HashSet<Comment>();
-            Gifts = new HashSet<Gift>();
+            PostGifts = new HashSet<PostGift>();
             Rates = new HashSet<Rate>();
             Votes = new HashSet<Vote>();
             ExistingStories = new HashSet<ExistingStory>();
@@ -35,7 +35,7 @@ namespace OmneFictio.MinApi.Models
         public virtual PostType? PostType { get; set; }
         public virtual ICollection<Chapter> Chapters { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
-        public virtual ICollection<Gift> Gifts { get; set; }
+        public virtual ICollection<PostGift> PostGifts { get; set; }
         public virtual ICollection<Rate> Rates { get; set; }
         public virtual ICollection<Vote> Votes { get; set; }
 

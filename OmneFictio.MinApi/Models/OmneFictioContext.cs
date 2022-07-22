@@ -23,11 +23,11 @@ namespace OmneFictio.MinApi.Models
         public virtual DbSet<Comment> Comments { get; set; } = null!;
         public virtual DbSet<DeletedStatus> DeletedStatuses { get; set; } = null!;
         public virtual DbSet<ExistingStory> ExistingStories { get; set; } = null!;
-        public virtual DbSet<Gift> Gifts { get; set; } = null!;
-        public virtual DbSet<GiftItem> GiftItems { get; set; } = null!;
+        public virtual DbSet<InventoryItem> InventoryItems { get; set; } = null!;
         public virtual DbSet<Ip> Ips { get; set; } = null!;
         public virtual DbSet<Language> Languages { get; set; } = null!;
         public virtual DbSet<Post> Posts { get; set; } = null!;
+        public virtual DbSet<PostGift> PostGifts { get; set; } = null!;
         public virtual DbSet<PostStatus> PostStatuses { get; set; } = null!;
         public virtual DbSet<PostType> PostTypes { get; set; } = null!;
         public virtual DbSet<Rate> Rates { get; set; } = null!;
@@ -131,6 +131,23 @@ namespace OmneFictio.MinApi.Models
                             j.IndexerProperty<int>("AccountId").HasColumnName("accountId");
 
                             j.IndexerProperty<int>("AuthorityId").HasColumnName("authorityId");
+                        });
+
+                entity.HasMany(d => d.InventoryItems)
+                    .WithMany(p => p.Accounts)
+                    .UsingEntity<Dictionary<string, object>>(
+                        "AccountInventory",
+                        l => l.HasOne<InventoryItem>().WithMany().HasForeignKey("InventoryItemId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_AccountInventory_InventoryItem"),
+                        r => r.HasOne<Account>().WithMany().HasForeignKey("AccountId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_AccountInventory_Account"),
+                        j =>
+                        {
+                            j.HasKey("AccountId", "InventoryItemId").HasName("PK_AccountInventory");
+
+                            j.ToTable("Account_Inventory");
+
+                            j.IndexerProperty<int>("AccountId").HasColumnName("accountId");
+
+                            j.IndexerProperty<int>("InventoryItemId").HasColumnName("inventoryItemId");
                         });
 
                 entity.HasMany(d => d.Ips)
@@ -314,38 +331,9 @@ namespace OmneFictio.MinApi.Models
                     .HasConstraintName("FK_ExistingstoryStorytype");
             });
 
-            modelBuilder.Entity<Gift>(entity =>
+            modelBuilder.Entity<InventoryItem>(entity =>
             {
-                entity.ToTable("Gift");
-
-                entity.Property(e => e.Id).HasColumnName("id");
-
-                entity.Property(e => e.AccountId).HasColumnName("accountId");
-
-                entity.Property(e => e.GiftItemId).HasColumnName("giftItemId");
-
-                entity.Property(e => e.TargetPostId).HasColumnName("targetPostId");
-
-                entity.HasOne(d => d.Account)
-                    .WithMany(p => p.Gifts)
-                    .HasForeignKey(d => d.AccountId)
-                    .HasConstraintName("FK_GiftAccount");
-
-                entity.HasOne(d => d.GiftItem)
-                    .WithMany(p => p.Gifts)
-                    .HasForeignKey(d => d.GiftItemId)
-                    .HasConstraintName("FK_GiftGiftitem");
-
-                entity.HasOne(d => d.TargetPost)
-                    .WithMany(p => p.Gifts)
-                    .HasForeignKey(d => d.TargetPostId)
-                    .OnDelete(DeleteBehavior.SetNull)
-                    .HasConstraintName("FK_GiftTargetpost");
-            });
-
-            modelBuilder.Entity<GiftItem>(entity =>
-            {
-                entity.ToTable("GiftItem");
+                entity.ToTable("InventoryItem");
 
                 entity.Property(e => e.Id)
                     .ValueGeneratedNever()
@@ -497,6 +485,39 @@ namespace OmneFictio.MinApi.Models
 
                             j.IndexerProperty<int>("TagId").HasColumnName("tagId");
                         });
+            });
+
+            modelBuilder.Entity<PostGift>(entity =>
+            {
+                entity.ToTable("PostGift");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.AccountId).HasColumnName("accountId");
+
+                entity.Property(e => e.ItemId).HasColumnName("itemId");
+
+                entity.Property(e => e.SentDate)
+                    .HasColumnType("smalldatetime")
+                    .HasColumnName("sentDate");
+
+                entity.Property(e => e.TargetPostId).HasColumnName("targetPostId");
+
+                entity.HasOne(d => d.Account)
+                    .WithMany(p => p.PostGifts)
+                    .HasForeignKey(d => d.AccountId)
+                    .HasConstraintName("FK_PostGiftAccount");
+
+                entity.HasOne(d => d.Item)
+                    .WithMany(p => p.PostGifts)
+                    .HasForeignKey(d => d.ItemId)
+                    .HasConstraintName("FK_PostGiftItem");
+
+                entity.HasOne(d => d.TargetPost)
+                    .WithMany(p => p.PostGifts)
+                    .HasForeignKey(d => d.TargetPostId)
+                    .OnDelete(DeleteBehavior.SetNull)
+                    .HasConstraintName("FK_PostGiftPost");
             });
 
             modelBuilder.Entity<PostStatus>(entity =>

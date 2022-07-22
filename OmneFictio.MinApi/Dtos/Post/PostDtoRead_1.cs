@@ -21,11 +21,11 @@ public class PostDtoRead_1
     public virtual ICollection<ChapterDtoRead_1>? Chapters { get; set; }
     public virtual ICollection<CommentDtoRead_1>? Comments { get; set; }
     //-----------
-    public virtual ICollection<GiftDto>? Gifts { get; set; }
+    public virtual ICollection<PostGiftDto>? Gifts { get; set; }
     public virtual ICollection<RateDto>? Rates { get; set; }
     public virtual ICollection<VoteDto>? Votes { get; set; }
     public virtual ICollection<RatedAsDto>? RatedAs { get; set; }
     public virtual ICollection<TagDto>? Tags { get; set; }
-    //if existingStories is not empty, it's a fanfiction
+    //if existingStories is not empty, the post is a fanfiction
     public virtual ICollection<ExistingStoryDto>? ExistingStories { get; set; }
 }
