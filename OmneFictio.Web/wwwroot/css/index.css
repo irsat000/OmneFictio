@@ -39,11 +39,6 @@
   --shortcuticons-color: #626262;
 }
 
-@media (min-width: 768) {
-  .pd-actions > button {
-    --pd-actionbtns-color: #dcdcdc;
-  }
-}
 /*
 .darkmode{
     --background-color1: #1D1D1D;
@@ -339,9 +334,19 @@ main {
   .linkgroups .linkgroup_cont .linkgroup span {
     font-size: 1.3rem;
   }
-  .linkgroups .misclinks > .linkgroup > .link_cont {
+  .linkgroups .misclinks > .linkgroup {
+    justify-content: unset;
+    padding: 0 20px;
+  }
+  .linkgroups .misclinks > .linkgroup .link_cont {
     width: unset;
     margin: 10px 20px;
+  }
+  .linkgroups .misclinks > .linkgroup .link_cont:first-child {
+    margin-left: auto;
+  }
+  .linkgroups .misclinks > .linkgroup .link_cont:last-child {
+    margin-right: auto;
   }
   .toppost_groups > .tpgroup {
     width: 47%;

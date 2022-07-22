@@ -37,7 +37,6 @@ main{
                 display: flex;
                 flex-direction: column;
                 cursor: pointer;
-                //justify-content: space-between;
                 i{
                     font-size: 3rem;
                     text-align: center;
@@ -290,9 +289,19 @@ main{
             }
         }
         //Misc links will lose 33% and become a line
-        .misclinks > .linkgroup > .link_cont{
-            width: unset;
-            margin: 10px 20px;
+        .misclinks > .linkgroup{
+            justify-content: unset;
+            padding: 0 20px;
+            .link_cont{
+                width: unset;
+                margin: 10px 20px;
+                &:first-child{
+                    margin-left: auto;
+                }
+                &:last-child{
+                    margin-right: auto;
+                }
+            }
         }
     }
 
