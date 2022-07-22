@@ -160,12 +160,6 @@ header{
                     &:hover{
                         background-color: var(--background-color2);
                     }
-                    .dw-icon-cont{
-                        width: 2.4rem;
-                        i {
-                            font-size: 1.4rem;
-                        }
-                    }
                 }
             }
         }
@@ -179,6 +173,12 @@ header{
         display: flex;
         &:hover{
             background-color: #b94f4f;
+        }
+    }
+    .dw-icon-cont{
+        width: 2.4rem;
+        i {
+            font-size: 1.4rem;
         }
     }
 }
@@ -245,19 +245,18 @@ header{
     margin-left: auto;
     /*height: 100%;*/
 }
-.shorcuts-cont{
+.shortcuts-cont{
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     > i{
-        color: var(--text-color1);
+        color: var(--shortcuticons-color);
         font-size: 2.4rem;
         margin-right: 16px;
         cursor: pointer;
         transition: 0.3s ease;
         &:hover {
-            text-shadow: 0px 0px 6px var(--text-color-boxshadow2);
         }
     }
     > i:last-child{
@@ -286,7 +285,7 @@ header{
     .dropdown_icon-wrap{
         height: 50px;
         padding: 0 2px;
-        background-color: var(--background-color2);
+        background-color: transparent;
         display: flex;
         justify-content: center;
         align-items: center;
@@ -299,7 +298,7 @@ header{
         }
     }
     &:hover .dropdown_icon-wrap{
-        background-color: var(--background-color-hover1);
+        background-color: var(--accountdropdown-icon-hover);
     }
 
     .account-dropdown{
@@ -311,7 +310,7 @@ header{
         top: 52px;
         right: 16px;
         border-radius: 8px;
-        background-color: var(--background-color2);
+        background-color: var(--dropdownbg-color);
         font-size: 1rem;
         font-family: 'Itim', cursive;
         overflow: hidden;

@@ -1,35 +1,57 @@
-/*--------DARK MODE----------*/
 :root {
   --background-color1: #1D1D1D;
   --background-color2: #313131;
-  --background-color-hover1:#373737;
-  --background-color-hover2:#4E4E4E;
-  --background-color-hover3:#5e5e5e;
-  --background-color-hover4:#3b3b3b;
-  --background-color-boxshadow1:#31313150;
+  --background-color-hover1: #373737;
+  --background-color-hover2: #4E4E4E;
+  --background-color-hover3: #5e5e5e;
+  --background-color-hover4: #3b3b3b;
+  --background-color-boxshadow1: #31313150;
   --text-color1: #ffffff;
-  --text-color2:#bababa;
+  --text-color2: #bababa;
   --text-color-hover1: #cccccc;
-  --text-color-boxshadow1:#ffffff50;
-  --text-color-boxshadow2:#ffffff70;
+  --text-color-boxshadow1: #ffffff50;
+  --text-color-boxshadow2: #ffffff70;
+  --headericon-color: #ffffff;
+  --accountdropdown-icon-hover: #ffffff10;
+  --dropdownbg-color: #313131;
   --searchplaceholder-color: #939393;
 }
 
-.darkmode {
-  --background-color1: #1D1D1D;
-  --background-color2: #313131;
-  --background-color-hover1:#373737;
-  --background-color-hover2:#4E4E4E;
-  --background-color-hover3:#5e5e5e;
-  --background-color-hover4:#3b3b3b;
-  --background-color-boxshadow1:#31313150;
-  --text-color1: #ffffff;
-  --text-color2:#bababa;
-  --text-color-hover1: #cccccc;
-  --text-color-boxshadow1:#ffffff50;
-  --text-color-boxshadow2:#ffffff70;
+.lightmode {
+  --background-color1: #f0f0f0;
+  --background-color2: #dcdcdc;
+  --background-color-hover1: #d1d8db;
+  --background-color-hover2: #c5c5c5;
+  --background-color-hover3: #c5c5c5;
+  --background-color-hover4: #b5b5b5;
+  --background-color-boxshadow1: #e5e5e550;
+  --text-color1: #282828;
+  --text-color2: #393939;
+  --text-color-hover1: #757575;
+  --text-color-boxshadow1: #d3d3d350;
+  --text-color-boxshadow2: #d3d3d370;
+  --headericon-color: #ffffff;
+  --accountdropdown-icon-hover:#00000010;
+  --dropdownbg-color: #e7e7e7;
+  --pd-actionbtns-color: #c7c7c7;
 }
 
+/*
+.darkmode{
+    --background-color1: #1D1D1D;
+    --background-color2: #313131;
+    --background-color-hover1:#373737;
+    --background-color-hover2:#4E4E4E;
+    --background-color-hover3:#5e5e5e;
+    --background-color-hover4:#3b3b3b;
+    --background-color-boxshadow1:#31313150;
+
+    --text-color1: #ffffff;
+    --text-color2:#bababa;
+    --text-color-hover1: #cccccc;
+    --text-color-boxshadow1:#ffffff50;
+    --text-color-boxshadow2:#ffffff70;
+}*/
 main {
   display: flex;
   flex-direction: row;
@@ -243,11 +265,12 @@ main {
 }
 .post-menu .pd-right .pd-actions .pd-saved {
   background-color: #4A8D5D !important;
+  color: #fff;
 }
 .post-menu .pd-right .pd-actions button {
   color: var(--text-color1);
   border-radius: 20px;
-  background-color: var(--background-color-hover2);
+  background-color: var(--pd-actionbtns-color);
   outline: none;
   border: none;
   margin-bottom: 8px;
@@ -282,6 +305,7 @@ main {
   justify-content: space-between;
   gap: 10px;
   padding: 6px;
+  color: #fff;
 }
 .nav-cont .navcont-links .navlinks > a {
   padding: 4px 14px;
@@ -312,7 +336,7 @@ main {
 }
 .nav-cont .sticky-nav {
   display: flex;
-  background-color: #1D1D1D !important;
+  background-color: var(--background-color1) !important;
   border-radius: 10px;
   padding: 8px;
   width: 100%;
@@ -482,7 +506,7 @@ main {
   font-size: 1.1rem;
   margin: 0 6px 7px;
   background-color: rgb(139, 136, 199);
-  color: var(--text-color1);
+  color: #fff;
   transition: background-color 0.2s;
   outline: none;
   border: none;
@@ -512,6 +536,7 @@ main {
   display: flex;
   align-items: center;
   background-color: #985C30;
+  color: #fff;
 }
 .filter-cont .f-body .f-fanfiction_settings .ffs-series_include span > i {
   font-size: 1.1rem;
@@ -633,6 +658,7 @@ main {
   flex-wrap: wrap;
   justify-content: center;
   padding-bottom: 4px;
+  color: #fff;
 }
 .filter-cont .f-body .f-tagsincexc span {
   border-radius: 12px;
@@ -821,6 +847,9 @@ main {
   .post {
     background-color: var(--background-color1) !important;
     border-radius: 10px;
+  }
+  .pd-actions > button {
+    --pd-actionbtns-color: #dcdcdc;
   }
   .post-options {
     padding: 20px 10px 10px !important;

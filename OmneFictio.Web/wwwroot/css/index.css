@@ -1,35 +1,56 @@
-/*--------DARK MODE----------*/
 :root {
   --background-color1: #1D1D1D;
   --background-color2: #313131;
-  --background-color-hover1:#373737;
-  --background-color-hover2:#4E4E4E;
-  --background-color-hover3:#5e5e5e;
-  --background-color-hover4:#3b3b3b;
-  --background-color-boxshadow1:#31313150;
+  --background-color-hover1: #373737;
+  --background-color-hover2: #4E4E4E;
+  --background-color-hover3: #5e5e5e;
+  --background-color-hover4: #3b3b3b;
+  --background-color-boxshadow1: #31313150;
   --text-color1: #ffffff;
-  --text-color2:#bababa;
+  --text-color2: #bababa;
   --text-color-hover1: #cccccc;
-  --text-color-boxshadow1:#ffffff50;
-  --text-color-boxshadow2:#ffffff70;
+  --text-color-boxshadow1: #ffffff50;
+  --text-color-boxshadow2: #ffffff70;
+  --headericon-color: #ffffff;
+  --accountdropdown-icon-hover: #ffffff10;
+  --dropdownbg-color: #313131;
   --searchplaceholder-color: #939393;
 }
 
-.darkmode {
-  --background-color1: #1D1D1D;
-  --background-color2: #313131;
-  --background-color-hover1:#373737;
-  --background-color-hover2:#4E4E4E;
-  --background-color-hover3:#5e5e5e;
-  --background-color-hover4:#3b3b3b;
-  --background-color-boxshadow1:#31313150;
-  --text-color1: #ffffff;
-  --text-color2:#bababa;
-  --text-color-hover1: #cccccc;
-  --text-color-boxshadow1:#ffffff50;
-  --text-color-boxshadow2:#ffffff70;
+.lightmode {
+  --background-color1: #f0f0f0;
+  --background-color2: #dcdcdc;
+  --background-color-hover1: #d1d8db;
+  --background-color-hover2: #c5c5c5;
+  --background-color-hover3: #c5c5c5;
+  --background-color-hover4: #b5b5b5;
+  --background-color-boxshadow1: #e5e5e550;
+  --text-color1: #282828;
+  --text-color2: #393939;
+  --text-color-hover1: #757575;
+  --text-color-boxshadow1: #d3d3d350;
+  --text-color-boxshadow2: #d3d3d370;
+  --headericon-color: #ffffff;
+  --accountdropdown-icon-hover:#00000010;
+  --dropdownbg-color: #e7e7e7;
 }
 
+/*
+.darkmode{
+    --background-color1: #1D1D1D;
+    --background-color2: #313131;
+    --background-color-hover1:#373737;
+    --background-color-hover2:#4E4E4E;
+    --background-color-hover3:#5e5e5e;
+    --background-color-hover4:#3b3b3b;
+    --background-color-boxshadow1:#31313150;
+
+    --text-color1: #ffffff;
+    --text-color2:#bababa;
+    --text-color-hover1: #cccccc;
+    --text-color-boxshadow1:#ffffff50;
+    --text-color-boxshadow2:#ffffff70;
+}*/
 main {
   display: flex;
   flex-direction: column;
