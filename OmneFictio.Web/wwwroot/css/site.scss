@@ -400,6 +400,9 @@ header{
     .drawerbtn-cont{
         display: none;
     }
+    .lightmode{
+        --pd-actionbtns-color: #dcdcdc !important;
+    }
 }
 
 // Large devices (desktops, 992px and up)

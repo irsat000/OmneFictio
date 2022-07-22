@@ -448,6 +448,9 @@ header .header-wrap {
   .drawerbtn-cont {
     display: none;
   }
+  .lightmode {
+    --pd-actionbtns-color: #dcdcdc !important;
+  }
 }
 @media (min-width: 1200px) {
   .logo-cont span {

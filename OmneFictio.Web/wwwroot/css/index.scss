@@ -232,11 +232,12 @@ main{
                         padding: 4px 10px;
                         .pd-saved{
                             background-color: #4A8D5D !important;
+                            color: #fff;
                         }
                         button{
                             color: var(--text-color1);
                             border-radius: 20px;
-                            background-color: var(--background-color-hover2);
+                            background-color: var(--pd-actionbtns-color);
                             outline: none;
                             border: none;
                             margin-bottom: 8px;

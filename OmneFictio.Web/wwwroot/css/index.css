@@ -14,6 +14,8 @@
   --headericon-color: #ffffff;
   --accountdropdown-icon-hover: #ffffff10;
   --dropdownbg-color: #313131;
+  --pd-actionbtns-color: #313131;
+  --shortcuticons-color: #ffffff;
   --searchplaceholder-color: #939393;
 }
 
@@ -28,13 +30,20 @@
   --text-color1: #282828;
   --text-color2: #393939;
   --text-color-hover1: #757575;
-  --text-color-boxshadow1: #d3d3d350;
-  --text-color-boxshadow2: #d3d3d370;
+  --text-color-boxshadow1: #00000050;
+  --text-color-boxshadow2: #00000070;
   --headericon-color: #ffffff;
   --accountdropdown-icon-hover:#00000010;
   --dropdownbg-color: #e7e7e7;
+  --pd-actionbtns-color: #c7c7c7;
+  --shortcuticons-color: #626262;
 }
 
+@media (min-width: 768) {
+  .pd-actions > button {
+    --pd-actionbtns-color: #dcdcdc;
+  }
+}
 /*
 .darkmode{
     --background-color1: #1D1D1D;
@@ -287,11 +296,12 @@ main {
 }
 .toppost_groups .tpgroup .post .post-menu .pd-right .pd-actions .pd-saved {
   background-color: #4A8D5D !important;
+  color: #fff;
 }
 .toppost_groups .tpgroup .post .post-menu .pd-right .pd-actions button {
   color: var(--text-color1);
   border-radius: 20px;
-  background-color: var(--background-color-hover2);
+  background-color: var(--pd-actionbtns-color);
   outline: none;
   border: none;
   margin-bottom: 8px;
