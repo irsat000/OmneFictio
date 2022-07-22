@@ -3,7 +3,7 @@
 main{
     display: flex;
     flex-direction: row;
-    color: $textcolor;
+    color: var(--text-color1);
     position: relative;
 }
 
@@ -17,10 +17,10 @@ main{
         justify-content: space-between;
         align-items: center;
         padding: 10px;
-        //color: $textcolor;
+        //color: var(--text-color1);
         .po-option{
             font-size: 1.6rem;
-            text-shadow: 0px 0px 6px $textcolor_boxshadow;
+            text-shadow: 0px 0px 6px var(--text-color-boxshadow1);
             font-family: 'Josefin Sans', sans-serif;
             cursor: pointer;
             &:hover{
@@ -50,7 +50,7 @@ main{
     
     .post{
         margin-bottom: 12px;
-        background-color: $frontbgcolor;
+        background-color: var(--background-color2);
         overflow: hidden;
         &:last-child{
             margin-bottom: unset;
@@ -77,7 +77,7 @@ main{
             }
             .p-date{
                 margin-left: 6px;
-                color: $textcolor2;
+                color: var(--text-color2);
                 font-size: 0.7rem;
                 font-family: 'Gudea';
             }
@@ -106,7 +106,7 @@ main{
         text-overflow: ellipsis;*/
     }
     .p-footer{
-        //color: $textcolor;
+        //color: var(--text-color1);
         font-family: 'Itim', cursive;
         padding: 0 10px 10px;
         display: flex;
@@ -119,7 +119,7 @@ main{
             cursor: pointer;
             transition: color 0.2s ease;
             &:hover{
-                color: $textcolor_hover1;
+                color: var(--text-color-hover1);
             }
         }
         .p-likes{
@@ -213,16 +213,16 @@ main{
                 background-color: #4A8D5D !important;
             }
             button{
-                color: $textcolor;
+                color: var(--text-color1);
                 border-radius: 20px;
-                background-color: $frontbgcolor_hover2;
+                background-color: var(--background-color-hover2);
                 outline: none;
                 border: none;
                 margin-bottom: 8px;
                 padding: 2px 10px;
                 transition: 0.2s ease;
                 &:hover{
-                    background-color: $frontbgcolor_hover3;
+                    background-color: var(--background-color-hover3);
                 }
             }
         }
@@ -245,7 +245,7 @@ main{
     .navcont-links{
         display: flex;
         flex-direction: column;
-        background-color: $sitebgcolor !important;
+        background-color: var(--background-color1) !important;
         border-radius: 10px;
         padding: 8px;
         width: 100%;
@@ -309,15 +309,15 @@ main{
     margin-right: auto;
     left: 0;
     right: 0;
-    background-color: $frontbgcolor;
-    box-shadow: 0px 0px 6px 0px $frontbgcolor_boxshadow;
+    background-color: var(--background-color2);
+    box-shadow: 0px 0px 6px 0px var(--background-color-boxshadow1);
     flex-direction: column;
     width: 240px;
     border-radius: 20px;
     font-family: 'Itim', cursive;
     .obt-header{
         width: 100%;
-        border-bottom: 2px solid $frontbgcolor_hover4;
+        border-bottom: 2px solid var(--background-color-hover4);
         display: flex;
         flex-direction: row;
         align-items: flex-start;
@@ -331,7 +331,7 @@ main{
             cursor: pointer;
             padding: 6px 16px 4px 12px;
             font-size: 1.8rem;
-            text-shadow: 0px 0px 6px $textcolor_boxshadow;
+            text-shadow: 0px 0px 6px var(--text-color-boxshadow1);
         }
     }
     .obt-body{
@@ -365,8 +365,8 @@ main{
     margin-right: auto;
     left: 0;
     right: 0;
-    background-color: $frontbgcolor;
-    box-shadow: 0px 0px 6px 0px $frontbgcolor_boxshadow;
+    background-color: var(--background-color2);
+    box-shadow: 0px 0px 6px 0px var(--background-color-boxshadow1);
     flex-direction: column;
     width: 260px;
     border-radius: 20px;
@@ -384,7 +384,7 @@ main{
     }*/
     .f-header{
         width: 100%;
-        border-bottom: 2px solid $frontbgcolor_hover4;
+        border-bottom: 2px solid var(--background-color-hover4);
         display: flex;
         flex-direction: row;
         align-items: flex-start;
@@ -410,7 +410,7 @@ main{
             cursor: pointer;
             padding: 6px 12px;
             font-size: 1.8rem;
-            text-shadow: 0px 0px 6px $textcolor_boxshadow;
+            text-shadow: 0px 0px 6px var(--text-color-boxshadow1);
         }
     }
     .f-body{
@@ -428,7 +428,7 @@ main{
                 font-size: 1.1rem;
                 margin: 0 4px 7px;
                 background-color: rgb(139, 136, 199);
-                color: $textcolor;
+                color: var(--text-color1);
                 transition: background-color 0.2s;
                 outline: none;
                 border: none;
@@ -457,7 +457,7 @@ main{
                     font-size: 1.1rem;
                     margin: 0 6px 7px;
                     background-color: rgb(139, 136, 199);
-                    color: $textcolor;
+                    color: var(--text-color1);
                     transition: background-color 0.2s;
                     outline: none;
                     border: none;
@@ -513,8 +513,8 @@ main{
             select, .f-allow18 {
                 outline: none;
                 border: none;
-                background: $frontbgcolor_hover2;
-                color: $textcolor;
+                background: var(--background-color-hover2);
+                color: var(--text-color1);
                 padding: 4px;
                 margin: 0 5px 7px;
                 border-radius: 5px;
@@ -542,7 +542,7 @@ main{
                 }
                 .checkboxOverride label {
                     background-color: transparent;
-                    border: 2px solid $textcolor;
+                    border: 2px solid var(--text-color1);
                     cursor: pointer;
                     height: 16px;
                     width: 16px;
@@ -677,8 +677,8 @@ main{
     border-radius: 20px;
     overflow: hidden;
     z-index: 507;
-    background-color: $frontbgcolor;
-    box-shadow: 0px 0px 6px 0px $frontbgcolor_boxshadow;
+    background-color: var(--background-color2);
+    box-shadow: 0px 0px 6px 0px var(--background-color-boxshadow1);
     padding-bottom: 10px;
     .tagdd-header{
         width: 100%;
@@ -693,14 +693,14 @@ main{
             border-radius: 4px;
             width: 100%;
             flex-shrink: 1;
-            border: 1px solid $textcolor;
+            border: 1px solid var(--text-color1);
         }
         > i {
             margin: 0 4px 0 20px;
             margin-right: 4px;
             font-size: 1.3rem;
             flex-shrink: 0;
-            text-shadow: 0px 0px 6px $textcolor_boxshadow;
+            text-shadow: 0px 0px 6px var(--text-color-boxshadow1);
             cursor: pointer;
         }
     }
@@ -713,7 +713,7 @@ main{
             overflow: hidden;
             cursor: pointer;
             &:hover{
-                background-color: $frontbgcolor_hover1;
+                background-color: var(--background-color-hover1);
             }
         }
     }
@@ -732,8 +732,8 @@ main{
     border-radius: 20px;
     overflow: hidden;
     z-index: 508;
-    background-color: $frontbgcolor;
-    box-shadow: 0px 0px 6px 0px $frontbgcolor_boxshadow;
+    background-color: var(--background-color2);
+    box-shadow: 0px 0px 6px 0px var(--background-color-boxshadow1);
     padding-bottom: 10px;
     .fadds-header{
         width: 100%;
@@ -748,14 +748,14 @@ main{
             border-radius: 4px;
             width: 100%;
             flex-shrink: 1;
-            border: 1px solid $textcolor;
+            border: 1px solid var(--text-color1);
         }
         > i {
             margin: 0 4px 0 20px;
             margin-right: 4px;
             font-size: 1.3rem;
             flex-shrink: 0;
-            text-shadow: 0px 0px 6px $textcolor_boxshadow;
+            text-shadow: 0px 0px 6px var(--text-color-boxshadow1);
             cursor: pointer;
         }
     }
@@ -769,8 +769,8 @@ main{
         > select{
             outline: none;
             border: none;
-            background: $frontbgcolor_hover2;
-            color: $textcolor;
+            background: var(--background-color-hover2);
+            color: var(--text-color1);
             padding: 4px;
             border-radius: 5px;
             font-size: 1.1rem;
@@ -786,7 +786,7 @@ main{
             overflow: hidden;
             cursor: pointer;
             &:hover{
-                background-color: $frontbgcolor_hover1;
+                background-color: var(--background-color-hover1);
             }
         }
     }
@@ -805,7 +805,7 @@ main{
         display: flex;
     }
     .post{
-        background-color: $sitebgcolor !important;
+        background-color: var(--background-color1) !important;
         border-radius: 10px;
     }
     .post-options{

@@ -46,14 +46,14 @@ a{
 
 /*-----------DESIGN-------------*/
 body{
-    background-color: $sitebgcolor;
+    background-color: var(--background-color1);
 }
 .main-cont{
     min-height: 100%;
 }
 
 header{
-    background-color: $sitebgcolor;
+    background-color: var(--background-color1);
     /*padding: 20px 0;*/
     .header-wrap{
         display: flex;
@@ -69,9 +69,9 @@ header{
     justify-content: center;
     width: 3.4rem;
     i{
-        color: $textcolor;
+        color: var(--text-color1);
         font-size:3.4rem;
-        text-shadow: 0px 0px 6px $textcolor_boxshadow;
+        text-shadow: 0px 0px 6px var(--text-color-boxshadow1);
         cursor: pointer;
         &:hover {
             font-size: 3.2rem;
@@ -90,7 +90,7 @@ header{
     left: 0;
     height: 100%;
     width: 0;
-    background-color: $sitebgcolor;
+    background-color: var(--background-color1);
     font-size: 1.8rem;
     font-family: 'Itim', cursive;
     overflow-x: hidden;
@@ -98,8 +98,8 @@ header{
     .dw-top{
         display: flex;
         flex-direction: row;
-        color: $textcolor;
-        border-bottom: 1px solid $frontbgcolor;
+        color: var(--text-color1);
+        border-bottom: 1px solid var(--background-color2);
         padding-bottom: 10px;
         .dw-close{
             padding: 10px;
@@ -143,7 +143,7 @@ header{
             /*height: 100%;
             width: 100%;*/
             padding: 6px 0 6px 20px;
-            color: $textcolor;
+            color: var(--text-color1);
             font-family: 'Kaushan Script', cursive;
         }
     }
@@ -154,11 +154,11 @@ header{
             > li {
                 > a{
                     padding: 4px 20px;
-                    color: $textcolor !important;
+                    color: var(--text-color1) !important;
                     transition: 0.2s ease;
                     display: flex;
                     &:hover{
-                        background-color: $frontbgcolor;
+                        background-color: var(--background-color2);
                     }
                     .dw-icon-cont{
                         width: 2.4rem;
@@ -191,8 +191,8 @@ header{
     span{
         font-size: 2rem;
         font-family: 'Kaushan Script', cursive;
-        color: $textcolor;
-        text-shadow: 0px 0px 6px $textcolor_boxshadow;
+        color: var(--text-color1);
+        text-shadow: 0px 0px 6px var(--text-color-boxshadow1);
         cursor: pointer;
     }
 }
@@ -209,7 +209,7 @@ header{
         position: relative;
         i{
             position: absolute;
-            color: $textcolor;
+            color: var(--text-color1);
             font-size: 1.4rem;
             right: 10px;
             top: 50%;
@@ -217,9 +217,9 @@ header{
         }
         .searchbar{
             font-size:1.2rem;
-            color: $textcolor;
-            background-color: $frontbgcolor;
-            box-shadow: 0px 0px 6px 0px $frontbgcolor_boxshadow;
+            color: var(--text-color1);
+            background-color: var(--background-color2);
+            box-shadow: 0px 0px 6px 0px var(--background-color-boxshadow1);
             padding: 6px 42px 6px 10px;
             border: none;
             outline: none;
@@ -228,11 +228,11 @@ header{
             border-radius: 4px;
         
             ::placeholder {
-                color: $searchplaceholdercolor;
+                color: var(--searchplaceholder-color);
                 opacity: 1;
             }
             ::-ms-input-placeholder {
-                color: $searchplaceholdercolor;
+                color: var(--searchplaceholder-color);
             }
         }
     }
@@ -251,13 +251,13 @@ header{
     justify-content: space-between;
     align-items: center;
     > i{
-        color: $textcolor;
+        color: var(--text-color1);
         font-size: 2.4rem;
         margin-right: 16px;
         cursor: pointer;
         transition: 0.3s ease;
         &:hover {
-            text-shadow: 0px 0px 6px $textcolor_boxshadow2;
+            text-shadow: 0px 0px 6px var(--text-color-boxshadow2);
         }
     }
     > i:last-child{
@@ -286,7 +286,7 @@ header{
     .dropdown_icon-wrap{
         height: 50px;
         padding: 0 2px;
-        background-color: $frontbgcolor;
+        background-color: var(--background-color2);
         display: flex;
         justify-content: center;
         align-items: center;
@@ -295,11 +295,11 @@ header{
         transition: 0.1s ease;
         i{
             font-size: 1rem;
-            color: $textcolor;
+            color: var(--text-color1);
         }
     }
     &:hover .dropdown_icon-wrap{
-        background-color: $frontbgcolor_hover1;
+        background-color: var(--background-color-hover1);
     }
 
     .account-dropdown{
@@ -311,7 +311,7 @@ header{
         top: 52px;
         right: 16px;
         border-radius: 8px;
-        background-color: $frontbgcolor;
+        background-color: var(--background-color2);
         font-size: 1rem;
         font-family: 'Itim', cursive;
         overflow: hidden;
@@ -320,17 +320,17 @@ header{
         box-shadow: -1px 1px 6px 0px rgba(0,0,0,0.2);
         > ul{
             > li {
-                border-bottom: 1px solid $frontbgcolor_hover1;
+                border-bottom: 1px solid var(--background-color-hover1);
                 &:last-child{
                     border-bottom: none;
                 }
                 > a{
                     padding: 4px 20px;
                     text-align: center;
-                    color: $textcolor !important;
+                    color: var(--text-color1) !important;
                     transition: 0.2s ease;
                     &:hover{
-                        background-color: $frontbgcolor_hover1;
+                        background-color: var(--background-color-hover1);
                     }
                 }
             }
@@ -390,7 +390,7 @@ header{
         font-size: 16px;
     }
     body{
-        background-color: $frontbgcolor;
+        background-color: var(--background-color2);
     }
     .account-cont{
         display:flex;

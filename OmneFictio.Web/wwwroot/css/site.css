@@ -1,4 +1,35 @@
 /*--------DARK MODE----------*/
+:root {
+  --background-color1: #1D1D1D;
+  --background-color2: #313131;
+  --background-color-hover1:#373737;
+  --background-color-hover2:#4E4E4E;
+  --background-color-hover3:#5e5e5e;
+  --background-color-hover4:#3b3b3b;
+  --background-color-boxshadow1:#31313150;
+  --text-color1: #ffffff;
+  --text-color2:#bababa;
+  --text-color-hover1: #cccccc;
+  --text-color-boxshadow1:#ffffff50;
+  --text-color-boxshadow2:#ffffff70;
+  --searchplaceholder-color: #939393;
+}
+
+.darkmode {
+  --background-color1: #1D1D1D;
+  --background-color2: #313131;
+  --background-color-hover1:#373737;
+  --background-color-hover2:#4E4E4E;
+  --background-color-hover3:#5e5e5e;
+  --background-color-hover4:#3b3b3b;
+  --background-color-boxshadow1:#31313150;
+  --text-color1: #ffffff;
+  --text-color2:#bababa;
+  --text-color-hover1: #cccccc;
+  --text-color-boxshadow1:#ffffff50;
+  --text-color-boxshadow2:#ffffff70;
+}
+
 /*----------SETTINGS---------*/
 html {
   font-size: 14px;
@@ -46,7 +77,7 @@ a:hover {
 
 /*-----------DESIGN-------------*/
 body {
-  background-color: #1D1D1D;
+  background-color: var(--background-color1);
 }
 
 .main-cont {
@@ -54,7 +85,7 @@ body {
 }
 
 header {
-  background-color: #1D1D1D;
+  background-color: var(--background-color1);
   /*padding: 20px 0;*/
 }
 header .header-wrap {
@@ -72,9 +103,9 @@ header .header-wrap {
   width: 3.4rem;
 }
 .drawerbtn-cont i {
-  color: #ffffff;
+  color: var(--text-color1);
   font-size: 3.4rem;
-  text-shadow: 0px 0px 6px rgba(255, 255, 255, 0.3137254902);
+  text-shadow: 0px 0px 6px var(--text-color-boxshadow1);
   cursor: pointer;
 }
 .drawerbtn-cont i:hover {
@@ -94,7 +125,7 @@ header .header-wrap {
   left: 0;
   height: 100%;
   width: 0;
-  background-color: #1D1D1D;
+  background-color: var(--background-color1);
   font-size: 1.8rem;
   font-family: "Itim", cursive;
   overflow-x: hidden;
@@ -103,8 +134,8 @@ header .header-wrap {
 .drawer .dw-top {
   display: flex;
   flex-direction: row;
-  color: #ffffff;
-  border-bottom: 1px solid #313131;
+  color: var(--text-color1);
+  border-bottom: 1px solid var(--background-color2);
   padding-bottom: 10px;
 }
 .drawer .dw-top .dw-close {
@@ -149,7 +180,7 @@ header .header-wrap {
   /*height: 100%;
   width: 100%;*/
   padding: 6px 0 6px 20px;
-  color: #ffffff;
+  color: var(--text-color1);
   font-family: "Kaushan Script", cursive;
 }
 .drawer .dw-list {
@@ -158,12 +189,12 @@ header .header-wrap {
 }
 .drawer .dw-list > ul > li > a {
   padding: 4px 20px;
-  color: #ffffff !important;
+  color: var(--text-color1) !important;
   transition: 0.2s ease;
   display: flex;
 }
 .drawer .dw-list > ul > li > a:hover {
-  background-color: #313131;
+  background-color: var(--background-color2);
 }
 .drawer .dw-list > ul > li > a .dw-icon-cont {
   width: 2.4rem;
@@ -192,8 +223,8 @@ header .header-wrap {
 .logo-cont span {
   font-size: 2rem;
   font-family: "Kaushan Script", cursive;
-  color: #ffffff;
-  text-shadow: 0px 0px 6px rgba(255, 255, 255, 0.3137254902);
+  color: var(--text-color1);
+  text-shadow: 0px 0px 6px var(--text-color-boxshadow1);
   cursor: pointer;
 }
 
@@ -211,7 +242,7 @@ header .header-wrap {
 }
 .searchbar-cont .searchbar-wrap i {
   position: absolute;
-  color: #ffffff;
+  color: var(--text-color1);
   font-size: 1.4rem;
   right: 10px;
   top: 50%;
@@ -219,9 +250,9 @@ header .header-wrap {
 }
 .searchbar-cont .searchbar-wrap .searchbar {
   font-size: 1.2rem;
-  color: #ffffff;
-  background-color: #313131;
-  box-shadow: 0px 0px 6px 0px rgba(49, 49, 49, 0.3137254902);
+  color: var(--text-color1);
+  background-color: var(--background-color2);
+  box-shadow: 0px 0px 6px 0px var(--background-color-boxshadow1);
   padding: 6px 42px 6px 10px;
   border: none;
   outline: none;
@@ -230,19 +261,19 @@ header .header-wrap {
   border-radius: 4px;
 }
 .searchbar-cont .searchbar-wrap .searchbar ::-moz-placeholder {
-  color: #939393;
+  color: var(--searchplaceholder-color);
   opacity: 1;
 }
 .searchbar-cont .searchbar-wrap .searchbar :-ms-input-placeholder {
-  color: #939393;
+  color: var(--searchplaceholder-color);
   opacity: 1;
 }
 .searchbar-cont .searchbar-wrap .searchbar ::placeholder {
-  color: #939393;
+  color: var(--searchplaceholder-color);
   opacity: 1;
 }
 .searchbar-cont .searchbar-wrap .searchbar ::-ms-input-placeholder {
-  color: #939393;
+  color: var(--searchplaceholder-color);
 }
 
 .header_right_section {
@@ -261,14 +292,14 @@ header .header-wrap {
   align-items: center;
 }
 .shorcuts-cont > i {
-  color: #ffffff;
+  color: var(--text-color1);
   font-size: 2.4rem;
   margin-right: 16px;
   cursor: pointer;
   transition: 0.3s ease;
 }
 .shorcuts-cont > i:hover {
-  text-shadow: 0px 0px 6px rgba(255, 255, 255, 0.4392156863);
+  text-shadow: 0px 0px 6px var(--text-color-boxshadow2);
 }
 .shorcuts-cont > i:last-child {
   margin-right: 0;
@@ -296,7 +327,7 @@ header .header-wrap {
 .account-cont .dropdown_icon-wrap {
   height: 50px;
   padding: 0 2px;
-  background-color: #313131;
+  background-color: var(--background-color2);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -306,10 +337,10 @@ header .header-wrap {
 }
 .account-cont .dropdown_icon-wrap i {
   font-size: 1rem;
-  color: #ffffff;
+  color: var(--text-color1);
 }
 .account-cont:hover .dropdown_icon-wrap {
-  background-color: #373737;
+  background-color: var(--background-color-hover1);
 }
 .account-cont .account-dropdown {
   z-index: 900;
@@ -320,14 +351,14 @@ header .header-wrap {
   top: 52px;
   right: 16px;
   border-radius: 8px;
-  background-color: #313131;
+  background-color: var(--background-color2);
   font-size: 1rem;
   font-family: "Itim", cursive;
   overflow: hidden;
   box-shadow: -1px 1px 6px 0px rgba(0, 0, 0, 0.2);
 }
 .account-cont .account-dropdown > ul > li {
-  border-bottom: 1px solid #373737;
+  border-bottom: 1px solid var(--background-color-hover1);
 }
 .account-cont .account-dropdown > ul > li:last-child {
   border-bottom: none;
@@ -335,11 +366,11 @@ header .header-wrap {
 .account-cont .account-dropdown > ul > li > a {
   padding: 4px 20px;
   text-align: center;
-  color: #ffffff !important;
+  color: var(--text-color1) !important;
   transition: 0.2s ease;
 }
 .account-cont .account-dropdown > ul > li > a:hover {
-  background-color: #373737;
+  background-color: var(--background-color-hover1);
 }
 .account-cont .account-dropdown .acc_dd_settings {
   margin-top: 14px;
@@ -384,7 +415,7 @@ header .header-wrap {
     font-size: 16px;
   }
   body {
-    background-color: #313131;
+    background-color: var(--background-color2);
   }
   .account-cont {
     display: flex;

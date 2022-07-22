@@ -1,1 +1,30 @@
-/*--------DARK MODE----------*//*# sourceMappingURL=theme.css.map */
+:root {
+  --background-color1: #1D1D1D;
+  --background-color2: #313131;
+  --background-color-hover1:#373737;
+  --background-color-hover2:#4E4E4E;
+  --background-color-hover3:#5e5e5e;
+  --background-color-hover4:#3b3b3b;
+  --background-color-boxshadow1:#31313150;
+  --text-color1: #ffffff;
+  --text-color2:#bababa;
+  --text-color-hover1: #cccccc;
+  --text-color-boxshadow1:#ffffff50;
+  --text-color-boxshadow2:#ffffff70;
+  --searchplaceholder-color: #939393;
+}
+
+.darkmode {
+  --background-color1: #1D1D1D;
+  --background-color2: #313131;
+  --background-color-hover1:#373737;
+  --background-color-hover2:#4E4E4E;
+  --background-color-hover3:#5e5e5e;
+  --background-color-hover4:#3b3b3b;
+  --background-color-boxshadow1:#31313150;
+  --text-color1: #ffffff;
+  --text-color2:#bababa;
+  --text-color-hover1: #cccccc;
+  --text-color-boxshadow1:#ffffff50;
+  --text-color-boxshadow2:#ffffff70;
+}/*# sourceMappingURL=theme.css.map */

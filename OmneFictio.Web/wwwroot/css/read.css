@@ -1,8 +1,39 @@
 /*--------DARK MODE----------*/
+:root {
+  --background-color1: #1D1D1D;
+  --background-color2: #313131;
+  --background-color-hover1:#373737;
+  --background-color-hover2:#4E4E4E;
+  --background-color-hover3:#5e5e5e;
+  --background-color-hover4:#3b3b3b;
+  --background-color-boxshadow1:#31313150;
+  --text-color1: #ffffff;
+  --text-color2:#bababa;
+  --text-color-hover1: #cccccc;
+  --text-color-boxshadow1:#ffffff50;
+  --text-color-boxshadow2:#ffffff70;
+  --searchplaceholder-color: #939393;
+}
+
+.darkmode {
+  --background-color1: #1D1D1D;
+  --background-color2: #313131;
+  --background-color-hover1:#373737;
+  --background-color-hover2:#4E4E4E;
+  --background-color-hover3:#5e5e5e;
+  --background-color-hover4:#3b3b3b;
+  --background-color-boxshadow1:#31313150;
+  --text-color1: #ffffff;
+  --text-color2:#bababa;
+  --text-color-hover1: #cccccc;
+  --text-color-boxshadow1:#ffffff50;
+  --text-color-boxshadow2:#ffffff70;
+}
+
 main {
   display: flex;
   flex-direction: row;
-  color: #ffffff;
+  color: var(--text-color1);
   position: relative;
 }
 
@@ -20,7 +51,7 @@ main {
 }
 .posts-cont .post-options .po-option {
   font-size: 1.6rem;
-  text-shadow: 0px 0px 6px rgba(255, 255, 255, 0.3137254902);
+  text-shadow: 0px 0px 6px var(--text-color-boxshadow1);
   font-family: "Josefin Sans", sans-serif;
   cursor: pointer;
 }
@@ -48,7 +79,7 @@ main {
 }
 .posts-cont .post {
   margin-bottom: 12px;
-  background-color: #313131;
+  background-color: var(--background-color2);
   overflow: hidden;
 }
 .posts-cont .post:last-child {
@@ -78,7 +109,7 @@ main {
 }
 .post-detail .p-header .p-title .p-date {
   margin-left: 6px;
-  color: #bababa;
+  color: var(--text-color2);
   font-size: 0.7rem;
   font-family: "Gudea";
 }
@@ -119,7 +150,7 @@ main {
   transition: color 0.2s ease;
 }
 .post-detail .p-footer i:hover {
-  color: #cccccc;
+  color: var(--text-color-hover1);
 }
 .post-detail .p-footer .p-likes {
   padding: 0 8px;
@@ -214,9 +245,9 @@ main {
   background-color: #4A8D5D !important;
 }
 .post-menu .pd-right .pd-actions button {
-  color: #ffffff;
+  color: var(--text-color1);
   border-radius: 20px;
-  background-color: #4E4E4E;
+  background-color: var(--background-color-hover2);
   outline: none;
   border: none;
   margin-bottom: 8px;
@@ -224,7 +255,7 @@ main {
   transition: 0.2s ease;
 }
 .post-menu .pd-right .pd-actions button:hover {
-  background-color: #5e5e5e;
+  background-color: var(--background-color-hover3);
 }
 
 .nav-cont {
@@ -238,7 +269,7 @@ main {
 .nav-cont .navcont-links {
   display: flex;
   flex-direction: column;
-  background-color: #1D1D1D !important;
+  background-color: var(--background-color1) !important;
   border-radius: 10px;
   padding: 8px;
   width: 100%;
@@ -299,8 +330,8 @@ main {
   margin-right: auto;
   left: 0;
   right: 0;
-  background-color: #313131;
-  box-shadow: 0px 0px 6px 0px rgba(49, 49, 49, 0.3137254902);
+  background-color: var(--background-color2);
+  box-shadow: 0px 0px 6px 0px var(--background-color-boxshadow1);
   flex-direction: column;
   width: 240px;
   border-radius: 20px;
@@ -308,7 +339,7 @@ main {
 }
 .orderby_type-cont .obt-header {
   width: 100%;
-  border-bottom: 2px solid #3b3b3b;
+  border-bottom: 2px solid var(--background-color-hover4);
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -323,7 +354,7 @@ main {
   cursor: pointer;
   padding: 6px 16px 4px 12px;
   font-size: 1.8rem;
-  text-shadow: 0px 0px 6px rgba(255, 255, 255, 0.3137254902);
+  text-shadow: 0px 0px 6px var(--text-color-boxshadow1);
 }
 .orderby_type-cont .obt-body {
   padding: 6px 50px 10px;
@@ -355,8 +386,8 @@ main {
   margin-right: auto;
   left: 0;
   right: 0;
-  background-color: #313131;
-  box-shadow: 0px 0px 6px 0px rgba(49, 49, 49, 0.3137254902);
+  background-color: var(--background-color2);
+  box-shadow: 0px 0px 6px 0px var(--background-color-boxshadow1);
   flex-direction: column;
   width: 260px;
   border-radius: 20px;
@@ -375,7 +406,7 @@ main {
 }
 .filter-cont .f-header {
   width: 100%;
-  border-bottom: 2px solid #3b3b3b;
+  border-bottom: 2px solid var(--background-color-hover4);
   display: flex;
   flex-direction: row;
   align-items: flex-start;
@@ -402,7 +433,7 @@ main {
   cursor: pointer;
   padding: 6px 12px;
   font-size: 1.8rem;
-  text-shadow: 0px 0px 6px rgba(255, 255, 255, 0.3137254902);
+  text-shadow: 0px 0px 6px var(--text-color-boxshadow1);
 }
 .filter-cont .f-body {
   padding: 10px 12px 0;
@@ -421,7 +452,7 @@ main {
   font-size: 1.1rem;
   margin: 0 4px 7px;
   background-color: rgb(139, 136, 199);
-  color: #ffffff;
+  color: var(--text-color1);
   transition: background-color 0.2s;
   outline: none;
   border: none;
@@ -451,7 +482,7 @@ main {
   font-size: 1.1rem;
   margin: 0 6px 7px;
   background-color: rgb(139, 136, 199);
-  color: #ffffff;
+  color: var(--text-color1);
   transition: background-color 0.2s;
   outline: none;
   border: none;
@@ -505,8 +536,8 @@ main {
 .filter-cont .f-body .f-options select, .filter-cont .f-body .f-options .f-allow18 {
   outline: none;
   border: none;
-  background: #4E4E4E;
-  color: #ffffff;
+  background: var(--background-color-hover2);
+  color: var(--text-color1);
   padding: 4px;
   margin: 0 5px 7px;
   border-radius: 5px;
@@ -535,7 +566,7 @@ main {
 }
 .filter-cont .f-body .f-options .f-allow18 .checkboxOverride label {
   background-color: transparent;
-  border: 2px solid #ffffff;
+  border: 2px solid var(--text-color1);
   cursor: pointer;
   height: 16px;
   width: 16px;
@@ -667,8 +698,8 @@ main {
   border-radius: 20px;
   overflow: hidden;
   z-index: 507;
-  background-color: #313131;
-  box-shadow: 0px 0px 6px 0px rgba(49, 49, 49, 0.3137254902);
+  background-color: var(--background-color2);
+  box-shadow: 0px 0px 6px 0px var(--background-color-boxshadow1);
   padding-bottom: 10px;
 }
 .filter-tagdd .tagdd-header {
@@ -685,14 +716,14 @@ main {
   border-radius: 4px;
   width: 100%;
   flex-shrink: 1;
-  border: 1px solid #ffffff;
+  border: 1px solid var(--text-color1);
 }
 .filter-tagdd .tagdd-header > i {
   margin: 0 4px 0 20px;
   margin-right: 4px;
   font-size: 1.3rem;
   flex-shrink: 0;
-  text-shadow: 0px 0px 6px rgba(255, 255, 255, 0.3137254902);
+  text-shadow: 0px 0px 6px var(--text-color-boxshadow1);
   cursor: pointer;
 }
 .filter-tagdd > ul {
@@ -706,7 +737,7 @@ main {
   cursor: pointer;
 }
 .filter-tagdd > ul > li:hover {
-  background-color: #373737;
+  background-color: var(--background-color-hover1);
 }
 
 .filter-addseries {
@@ -723,8 +754,8 @@ main {
   border-radius: 20px;
   overflow: hidden;
   z-index: 508;
-  background-color: #313131;
-  box-shadow: 0px 0px 6px 0px rgba(49, 49, 49, 0.3137254902);
+  background-color: var(--background-color2);
+  box-shadow: 0px 0px 6px 0px var(--background-color-boxshadow1);
   padding-bottom: 10px;
 }
 .filter-addseries .fadds-header {
@@ -741,14 +772,14 @@ main {
   border-radius: 4px;
   width: 100%;
   flex-shrink: 1;
-  border: 1px solid #ffffff;
+  border: 1px solid var(--text-color1);
 }
 .filter-addseries .fadds-header > i {
   margin: 0 4px 0 20px;
   margin-right: 4px;
   font-size: 1.3rem;
   flex-shrink: 0;
-  text-shadow: 0px 0px 6px rgba(255, 255, 255, 0.3137254902);
+  text-shadow: 0px 0px 6px var(--text-color-boxshadow1);
   cursor: pointer;
 }
 .filter-addseries .fadds-dropdowns {
@@ -762,8 +793,8 @@ main {
 .filter-addseries .fadds-dropdowns > select {
   outline: none;
   border: none;
-  background: #4E4E4E;
-  color: #ffffff;
+  background: var(--background-color-hover2);
+  color: var(--text-color1);
   padding: 4px;
   border-radius: 5px;
   font-size: 1.1rem;
@@ -780,7 +811,7 @@ main {
   cursor: pointer;
 }
 .filter-addseries .fadds-list > li:hover {
-  background-color: #373737;
+  background-color: var(--background-color-hover1);
 }
 
 @media (min-width: 768px) {
@@ -788,7 +819,7 @@ main {
     display: flex;
   }
   .post {
-    background-color: #1D1D1D !important;
+    background-color: var(--background-color1) !important;
     border-radius: 10px;
   }
   .post-options {
