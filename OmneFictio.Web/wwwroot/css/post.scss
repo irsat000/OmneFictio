@@ -57,14 +57,67 @@
         text-overflow: ellipsis;*/
     }
     .p-footer{
-        //color: var(--text-color1);
+        /*
         font-family: 'Itim', cursive;
         padding: 0 10px 10px;
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        flex-flow: wrap;
+        flex-flow: wrap;*/
+        font-family: 'Itim', cursive;
+        display: flex;
+        flex-direction: row;
+        padding: 0 10px 10px;
+        
+        .pf-evaluation{
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            flex-grow: 1;
+            i{
+                font-size: 1.2rem;
+                cursor: pointer;
+                transition: color 0.2s ease;
+                &:hover{
+                    color: var(--text-color-hover1);
+                }
+            }
+            .p-likes{
+                padding: 0 8px;
+            }
+            .p-rate{
+                margin-left: 20px;
+            }
+        }
+        .pf-user{
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            flex-shrink: 0;
+            .p-username{
+                font-size: 0.8rem;
+                cursor: pointer;
+                margin-left: 8px;
+                padding-right: 8px;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                max-width: 180px;
+                &:hover{
+                    text-decoration: underline;
+                }
+            }
+            img{
+                height: 1.7rem;
+                width: 1.7rem;
+                border-radius: 50%;
+                cursor: pointer;
+            }
+        }
+        /*
         i{
             font-size: 1.2rem;
             cursor: pointer;
@@ -97,7 +150,7 @@
             width: 1.7rem;
             border-radius: 50%;
             cursor: pointer;
-        }
+        }*/
     }
 }
 .post-menu{

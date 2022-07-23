@@ -319,13 +319,16 @@
                 After his father’s death, Odin was not going to be so peaceful. Old ways died as the new skyfather born.
             </div>
             <div class="p-footer">
-                <i class="bi bi-hand-thumbs-up p-likebtn"></i>
-                <span class="p-likes">5465</span>
-                <i class="bi bi-hand-thumbs-down p-dislikebtn"></i>
-                <span class="p-rate">7.4/10</span>
-
-                <span class="p-username">MrBombastic</span>
-                <img src="https://uybor.uz/borless/avtobor/img/user-images/user_no_photo_300x300.png">
+                <div class="pf-evaluation">
+                    <i class="bi bi-hand-thumbs-up p-likebtn"></i>
+                    <span class="p-likes">5465</span>
+                    <i class="bi bi-hand-thumbs-down p-dislikebtn"></i>
+                    <span class="p-rate">7.4/10</span>
+                </div>
+                <div class="pf-user">
+                    <span class="p-username">MrBombastic</span>
+                    <img src="https://uybor.uz/borless/avtobor/img/user-images/user_no_photo_300x300.png">
+                </div>
             </div>
         </div>
         <div class="post-menu d-none">
@@ -345,6 +348,19 @@
                     <span class="pd-heading">Type:</span>
                     <span class="pd-value">Fanfiction</span>
                 </div>
+                @{
+                    string posttype = "fanfiction";
+                    if(posttype == "fanfiction"){
+                        <span class="pd-heading">
+                            Series
+                        </span>
+                        <div class="pd-series">
+                            <span>Harry Potter</span>
+                            <span>Overlord</span>
+                            <span>Pirates of the Caribbean</span>
+                        </div>
+                    }
+                }
                 <div class="pd-poststatus">
                     <span class="pd-heading">Status:</span>
                     <span class="pd-value">In-progress</span>
@@ -384,13 +400,16 @@
                 Jones fell in love with the goddess Calypso. He agreed to guide the dead but Calypso was a bi*ch. When he returned from duty, she was not there.
             </div>
             <div class="p-footer">
-                <i class="bi bi-hand-thumbs-up p-likebtn"></i>
-                <span class="p-likes">4878</span>
-                <i class="bi bi-hand-thumbs-down p-dislikebtn"></i>
-                <span class="p-rate">8.6/10</span>
-
-                <span class="p-username">TrashyTrash</span>
-                <img src="https://uybor.uz/borless/avtobor/img/user-images/user_no_photo_300x300.png">
+                <div class="pf-evaluation">
+                    <i class="bi bi-hand-thumbs-up p-likebtn"></i>
+                    <span class="p-likes">5465</span>
+                    <i class="bi bi-hand-thumbs-down p-dislikebtn"></i>
+                    <span class="p-rate">7.4/10</span>
+                </div>
+                <div class="pf-user">
+                    <span class="p-username">MrBombastic</span>
+                    <img src="https://uybor.uz/borless/avtobor/img/user-images/user_no_photo_300x300.png">
+                </div>
             </div>
         </div>
         <div class="post-menu d-none">
@@ -448,13 +467,16 @@
                 Jones fell in love with the goddess Calypso. He agreed to guide the dead but Calypso was a bi*ch. When he returned from duty, she was not there.
             </div>
             <div class="p-footer">
-                <i class="bi bi-hand-thumbs-up p-likebtn"></i>
-                <span class="p-likes">4878</span>
-                <i class="bi bi-hand-thumbs-down p-dislikebtn"></i>
-                <span class="p-rate">8.6/10</span>
-
-                <span class="p-username">TrashyTrash</span>
-                <img src="https://uybor.uz/borless/avtobor/img/user-images/user_no_photo_300x300.png">
+                <div class="pf-evaluation">
+                    <i class="bi bi-hand-thumbs-up p-likebtn"></i>
+                    <span class="p-likes">5465</span>
+                    <i class="bi bi-hand-thumbs-down p-dislikebtn"></i>
+                    <span class="p-rate">7.4/10</span>
+                </div>
+                <div class="pf-user">
+                    <span class="p-username">MrBombastic</span>
+                    <img src="https://uybor.uz/borless/avtobor/img/user-images/user_no_photo_300x300.png">
+                </div>
             </div>
         </div>
         <div class="post-menu d-none">
@@ -474,18 +496,6 @@
                     <span class="pd-heading">Type:</span>
                     <span class="pd-value">Fanfiction</span>
                 </div>
-                @{
-                    if(typeQuery == "fanfiction"){
-                        <span class="pd-heading">
-                            Series
-                        </span>
-                        <div class="pd-series">
-                            <span>Harry Potter</span>
-                            <span>Overlord</span>
-                            <span>Pirates of the Caribbean</span>
-                        </div>
-                    }
-                }
                 <div class="pd-poststatus">
                     <span class="pd-heading">Status:</span>
                     <span class="pd-value">In-progress</span>
