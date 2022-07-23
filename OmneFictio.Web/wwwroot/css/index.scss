@@ -1,4 +1,5 @@
-@import 'theme';
+
+@import 'post';
 
 main{
     display: flex;
@@ -71,6 +72,9 @@ main{
                 font-family: 'Doppio One';
             }
         }
+    }
+}
+/*
         .post{
             margin-bottom: 12px;
             background-color: var(--background-color2);
@@ -79,6 +83,7 @@ main{
             &:last-child{
                 margin-bottom: unset;
             }
+        }
             .post-detail{
                 display: flex;
                 flex-direction: column;
@@ -119,8 +124,6 @@ main{
                     font-size: 0.9rem;
                     font-family: 'Gudea', sans-serif;
                     margin-bottom: 10px;
-                    /*text-overflow: ellipsis;
-                    overflow: hidden;*/
                 }
                 .p-footer{
                     //color: var(--text-color1);
@@ -248,11 +251,7 @@ main{
                         }
                     }
                 }
-            }
-        }
-    }
-}
-
+            }*/
 
 
 // Small devices (landscape phones, 576px and up)
@@ -329,8 +328,8 @@ main{
             width: 42%;
             padding: 20px 0;
         }
-        .misclinks{
-            padding: 20px 0;
+        .misclinks > .linkgroup{
+            padding: 20px;
         }
     }
 }

@@ -400,6 +400,9 @@ header{
     .drawerbtn-cont{
         display: none;
     }
+    .darkmode{
+        --pd-actionbtns-color: #313131 !important;
+    }
     .lightmode{
         --pd-actionbtns-color: #dcdcdc !important;
     }
