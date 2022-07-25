@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "COGOHLVCF1KtskZYrWWkclg/1HH3BLuSNao6XkgtJXj5+iY0+yCM49sRysK6/DNaWO5MrHBCMqLObq4kwQLIRg==",
+  "dgSpecHash": "eDK5rFPcwBh3gP+ZSgwhXS+RL6s38szCxlqeZYCIIwcvndnu6YWRDIQzklTfl0iVHBDPpjle9VJKrCrVxlzKcA==",
   "success": true,
   "projectFilePath": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\OmneFictio.Web.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\user\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512"
+  ],
   "logs": []
 }

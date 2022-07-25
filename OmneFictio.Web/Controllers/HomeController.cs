@@ -1,8 +1,11 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
-using OmneFictio.Web.Models;
-
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using Newtonsoft.Json;
 namespace OmneFictio.Web.Controllers;
+using OmneFictio.Web.Models;
+using QuickType;
 
 public class HomeController : Controller
 {
@@ -13,14 +16,27 @@ public class HomeController : Controller
         _logger = logger;
     }
 
-    public IActionResult Index()
+    public async Task<IActionResult> Index()
     {
         return View();
     }
 
-    public IActionResult Read(string? type)
+    public async Task<IActionResult> Read(string? type)
     {
-        return View();
+        List<PostRead1> account = new List<PostRead1>();
+        string postsUrl = "https://localhost:7022/posts";
+        using (HttpClient httpClient = new HttpClient())
+        {
+            using (HttpResponseMessage response = await httpClient.GetAsync(postsUrl))
+            {
+                using (HttpContent content = response.Content)
+                {
+                    var raw = await content.ReadAsStringAsync();
+                    account = JsonConvert.DeserializeObject<List<PostRead1>>(raw);
+                }
+            }
+        }
+        return View(account);
     }
 
     public IActionResult Privacy()

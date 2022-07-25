@@ -58,42 +58,95 @@
   text-overflow: ellipsis;*/
 }
 .post-detail .p-footer {
-  font-family: "Itim", cursive;
+  /*
+  font-family: 'Itim', cursive;
   padding: 0 10px 10px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  flex-flow: wrap;
+  flex-flow: wrap;*/
+  font-family: "Itim", cursive;
+  display: flex;
+  flex-direction: row;
+  padding: 0 10px 10px;
+  /*
+  i{
+      font-size: 1.2rem;
+      cursor: pointer;
+      transition: color 0.2s ease;
+      &:hover{
+          color: var(--text-color-hover1);
+      }
+  }
+  .p-likes{
+      padding: 0 8px;
+  }
+  .p-rate{
+      margin: 0 20px;
+      flex-grow: 1;
+  }
+  .p-username{
+      font-size: 0.8rem;
+      cursor: pointer;
+      padding-right: 8px;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      overflow: hidden;
+      max-width: 180px;
+      &:hover{
+          text-decoration: underline;
+      }
+  }
+  img{
+      height: 1.7rem;
+      width: 1.7rem;
+      border-radius: 50%;
+      cursor: pointer;
+  }*/
 }
-.post-detail .p-footer i {
+.post-detail .p-footer .pf-evaluation {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-grow: 1;
+}
+.post-detail .p-footer .pf-evaluation i {
   font-size: 1.2rem;
   cursor: pointer;
   transition: color 0.2s ease;
 }
-.post-detail .p-footer i:hover {
+.post-detail .p-footer .pf-evaluation i:hover {
   color: var(--text-color-hover1);
 }
-.post-detail .p-footer .p-likes {
+.post-detail .p-footer .pf-evaluation .p-likes {
   padding: 0 8px;
 }
-.post-detail .p-footer .p-rate {
-  margin: 0 20px;
-  flex-grow: 1;
+.post-detail .p-footer .pf-evaluation .p-rate {
+  margin-left: 20px;
 }
-.post-detail .p-footer .p-username {
+.post-detail .p-footer .pf-user {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-shrink: 0;
+}
+.post-detail .p-footer .pf-user .p-username {
   font-size: 0.8rem;
   cursor: pointer;
+  margin-left: 8px;
   padding-right: 8px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
   max-width: 180px;
 }
-.post-detail .p-footer .p-username:hover {
+.post-detail .p-footer .pf-user .p-username:hover {
   text-decoration: underline;
 }
-.post-detail .p-footer img {
+.post-detail .p-footer .pf-user img {
   height: 1.7rem;
   width: 1.7rem;
   border-radius: 50%;
