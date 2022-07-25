@@ -12,6 +12,7 @@ namespace OmneFictio.MinApi.Models
         }
 
         public int Id { get; set; }
+        public string? LanCode { get; set; }
         public string Body { get; set; } = null!;
 
         public virtual ICollection<Account> Accounts { get; set; }

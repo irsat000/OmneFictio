@@ -12,6 +12,5 @@ public partial class AccountDtoRead_1
     public string? SelfDesc { get; set; }
 
     public virtual DeletedStatusDto? DeletedStatus { get; set; }
-    public virtual LanguageDto? PrefLanguage { get; set; }
     public virtual ICollection<AuthorityDto>? Authorities { get; set; }
 }

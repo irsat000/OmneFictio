@@ -21,10 +21,12 @@ public class MapperConfig : Profile{
 
         CreateMap<AuthorityDto, Authority>().ReverseMap();
         CreateMap<DeletedStatusDto, DeletedStatus>().ReverseMap();
-        CreateMap<PostGiftDto, PostGift>().ReverseMap();
+        CreateMap<ExistingStoryDto, ExistingStory>().ReverseMap();
+        CreateMap<ExistingStoryTypeDto, ExistingStoryType>().ReverseMap();
         CreateMap<InventoryItemDto, InventoryItem>().ReverseMap();
         CreateMap<IpDto, Ip>().ReverseMap();
         CreateMap<LanguageDto, Language>().ReverseMap();
+        CreateMap<PostGiftDto, PostGift>().ReverseMap();
         CreateMap<PostStatusDto, PostStatus>().ReverseMap();
         CreateMap<PostTypeDto, PostType>().ReverseMap();
         CreateMap<RatedAsDto, RatedA>().ReverseMap();

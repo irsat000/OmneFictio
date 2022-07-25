@@ -23,6 +23,7 @@ namespace OmneFictio.MinApi.Models
         public virtual DbSet<Comment> Comments { get; set; } = null!;
         public virtual DbSet<DeletedStatus> DeletedStatuses { get; set; } = null!;
         public virtual DbSet<ExistingStory> ExistingStories { get; set; } = null!;
+        public virtual DbSet<ExistingStoryType> ExistingStoryTypes { get; set; } = null!;
         public virtual DbSet<InventoryItem> InventoryItems { get; set; } = null!;
         public virtual DbSet<Ip> Ips { get; set; } = null!;
         public virtual DbSet<Language> Languages { get; set; } = null!;
@@ -33,7 +34,6 @@ namespace OmneFictio.MinApi.Models
         public virtual DbSet<Rate> Rates { get; set; } = null!;
         public virtual DbSet<RatedA> RatedAs { get; set; } = null!;
         public virtual DbSet<Reply> Replies { get; set; } = null!;
-        public virtual DbSet<StoryType> StoryTypes { get; set; } = null!;
         public virtual DbSet<Tag> Tags { get; set; } = null!;
         public virtual DbSet<Vote> Votes { get; set; } = null!;
 
@@ -52,7 +52,7 @@ namespace OmneFictio.MinApi.Models
             {
                 entity.ToTable("Account");
 
-                entity.HasIndex(e => e.Username, "UQ__Account__F3DBC572FA8E9E08")
+                entity.HasIndex(e => e.Username, "UQ__Account__F3DBC57290695E70")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -88,7 +88,7 @@ namespace OmneFictio.MinApi.Models
                     .HasMaxLength(150)
                     .IsUnicode(false)
                     .HasColumnName("profilePic")
-                    .HasDefaultValueSql("('noppic.jpg')");
+                    .HasDefaultValueSql("('noppic.webp')");
 
                 entity.Property(e => e.Pw)
                     .HasMaxLength(100)
@@ -98,7 +98,7 @@ namespace OmneFictio.MinApi.Models
                 entity.Property(e => e.SelfDesc)
                     .IsUnicode(false)
                     .HasColumnName("selfDesc")
-                    .HasDefaultValueSql("('I am lazy because I didnt change my description. Or I dont care enough who knows.')");
+                    .HasDefaultValueSql("('I am lazy because I didnt change my description or I just dont care enough.')");
 
                 entity.Property(e => e.Username)
                     .HasMaxLength(60)
@@ -172,9 +172,7 @@ namespace OmneFictio.MinApi.Models
             {
                 entity.ToTable("Authority");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Body)
                     .HasMaxLength(50)
@@ -307,20 +305,12 @@ namespace OmneFictio.MinApi.Models
             {
                 entity.ToTable("ExistingStory");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Body)
                     .HasMaxLength(250)
                     .IsUnicode(false)
                     .HasColumnName("body");
-
-                entity.Property(e => e.FirstLetter)
-                    .HasMaxLength(1)
-                    .IsUnicode(false)
-                    .HasColumnName("firstLetter")
-                    .IsFixedLength();
 
                 entity.Property(e => e.StoryTypeId).HasColumnName("storyTypeId");
 
@@ -328,16 +318,26 @@ namespace OmneFictio.MinApi.Models
                     .WithMany(p => p.ExistingStories)
                     .HasForeignKey(d => d.StoryTypeId)
                     .OnDelete(DeleteBehavior.SetNull)
-                    .HasConstraintName("FK_ExistingstoryStorytype");
+                    .HasConstraintName("FK_EStoryEStorytype");
+            });
+
+            modelBuilder.Entity<ExistingStoryType>(entity =>
+            {
+                entity.ToTable("ExistingStoryType");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.Body)
+                    .HasMaxLength(250)
+                    .IsUnicode(false)
+                    .HasColumnName("body");
             });
 
             modelBuilder.Entity<InventoryItem>(entity =>
             {
                 entity.ToTable("InventoryItem");
 
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
+                entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Body)
                     .HasMaxLength(250)
@@ -364,9 +364,12 @@ namespace OmneFictio.MinApi.Models
                 entity.Property(e => e.Id).HasColumnName("id");
 
                 entity.Property(e => e.Body)
-                    .HasMaxLength(60)
-                    .IsUnicode(false)
+                    .HasMaxLength(140)
                     .HasColumnName("body");
+
+                entity.Property(e => e.LanCode)
+                    .HasMaxLength(15)
+                    .HasColumnName("lanCode");
             });
 
             modelBuilder.Entity<Post>(entity =>
@@ -621,20 +624,6 @@ namespace OmneFictio.MinApi.Models
                     .WithMany(p => p.Replies)
                     .HasForeignKey(d => d.DeletedStatusId)
                     .HasConstraintName("FK_ReplyDeletedstatus");
-            });
-
-            modelBuilder.Entity<StoryType>(entity =>
-            {
-                entity.ToTable("StoryType");
-
-                entity.Property(e => e.Id)
-                    .ValueGeneratedNever()
-                    .HasColumnName("id");
-
-                entity.Property(e => e.Body)
-                    .HasMaxLength(250)
-                    .IsUnicode(false)
-                    .HasColumnName("body");
             });
 
             modelBuilder.Entity<Tag>(entity =>

@@ -5,6 +5,7 @@ using OmneFictio.MinApi.Configurations;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<OmneFictioContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -35,7 +36,7 @@ app.MapGet("/", () =>
 });
 
 app.MapGet("/posts", async (OmneFictioContext db) => {
-    var posts = mapper.Map<IEnumerable<PostDtoRead_1>>(await db.Posts.ToListAsync());
+    var posts = await mapper.ProjectTo<PostDtoRead_1>(db.Posts).ToListAsync();
     return posts;
 });
 
