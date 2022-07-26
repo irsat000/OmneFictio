@@ -150,16 +150,10 @@
             <label class="f-allow18">
                 +18
                 <div class="checkboxOverride">
-                    <input type="checkbox" name="allow18" id="checkboxInputOverride" value="1">
-                    <label for="checkboxInputOverride"></label>
+                    <input type="checkbox" name="allow18" id="allow18checkbox" value="1">
+                    <label for="allow18checkbox"></label>
                 </div>
             </label>
-            <!--<div class="f-allow18">
-                <div class="f-allow18check-cont">
-                    <input type="checkbox" name="allow18">
-                    <span class="f-allow18custom"></span>
-                </div>
-            </div>-->
             <select name="lastupdate">
                 <option value="0">Last update</option>
                 <option value="1">&#60; 1 day</option>
@@ -179,18 +173,15 @@
             -->
         </div>
         <div class="f-tagsincexc f-tags_include">
-            <!--<span data-ftag="comedy">Comedy<i class="bi bi-x-circle f-removetagbtn"></i></span>
+            <!--
+            <span data-ftag="comedy">Comedy<i class="bi bi-x-circle f-removetagbtn"></i></span>
             <input type="hidden" name="taginclude" value="comedy" data-ftagref="comedy"/>
-            <span data-ftag="fantasy">Fantasy<i class="bi bi-x-circle f-removetagbtn"></i></span>
-            <input type="hidden" name="taginclude" value="fantasy" data-ftagref="fantasy"/>
             -->
         </div>
         <div class="f-tagsincexc f-tags_exclude">
             <!--
             <span data-ftag="romance">Romance</span>
             <input type="hidden" name="tagexclude" value="romance" data-ftagref="romance"/>
-            <span data-ftag="dram">Dram</span>
-            <input type="hidden" name="tagexclude" value="dram" data-ftagref="dram"/>
             -->
         </div>
     </div>
@@ -331,9 +322,29 @@
                         <div class="p-footer">
                             <div class="pf-evaluation">
                                 <i class="bi bi-hand-thumbs-up p-likebtn"></i>
-                                <span class="p-likes">5465</span>
+                                <span class="p-likes">
+                                    @{
+                                        int likes = 0;
+                                        foreach(Vote value in post.Votes){
+                                            if(value.Vote1 == true)
+                                                likes++;
+                                            else
+                                                likes--;
+                                        }
+                                        @likes
+                                    }
+                                </span>
                                 <i class="bi bi-hand-thumbs-down p-dislikebtn"></i>
-                                <span class="p-rate">7.4/10</span>
+                                <span class="p-rate">
+                                    @{
+                                        double rate = 0;
+                                        foreach(Rate value in post.Rates){
+                                            rate += value.Rate1;
+                                        }
+                                        string ortRate = Math.Round((rate / post.Rates.Count()), 1).ToString() + "/10";
+                                        @ortRate
+                                    }
+                                </span>
                             </div>
                             <div class="pf-user">
                                 <span class="p-username">@post.Account.Username</span>
@@ -347,7 +358,7 @@
                                 Tags
                             </span>
                             <div class="pd-tags">
-                                @if(post.Tags.Count() == 0){
+                                @if(post.Tags.Count() < 1){
                                     <span>Empty</span>
                                 }
                                 else{
@@ -401,86 +412,6 @@
     }
     
     <!--
-    <div class="post">
-        <div class="post-detail d-flex">
-            <div class="p-header">
-                <div class="p-title">
-                    <span>Odin the Omnipotent</span>
-                    <span class="p-date">27/07/022</span>
-                </div>
-                <div class="p-menu">
-                    <i class="bi bi-caret-left p-menubtn"></i>
-                </div>
-            </div>
-            <div class="p-body">
-                After his father’s death, Odin was not going to be so peaceful. Old ways died as the new skyfather born.
-            </div>
-            <div class="p-footer">
-                <div class="pf-evaluation">
-                    <i class="bi bi-hand-thumbs-up p-likebtn"></i>
-                    <span class="p-likes">5465</span>
-                    <i class="bi bi-hand-thumbs-down p-dislikebtn"></i>
-                    <span class="p-rate">7.4/10</span>
-                </div>
-                <div class="pf-user">
-                    <span class="p-username">MrBombastic</span>
-                    <img src="https://uybor.uz/borless/avtobor/img/user-images/user_no_photo_300x300.png">
-                </div>
-            </div>
-        </div>
-        <div class="post-menu d-none">
-            <div class="pd-details">
-                <span class="pd-heading">
-                    Tags
-                </span>
-                <div class="pd-tags">
-                    <span>Action</span>
-                    <span>Comedy</span>
-                    <span>Mystery</span>
-                    <span>Fantasy</span>
-                    <span>Romance</span>
-                    <span>Western</span>
-                </div>
-                <div class="pd-type">
-                    <span class="pd-heading">Type:</span>
-                    <span class="pd-value">Fanfiction</span>
-                </div>
-                @{/*
-                    string posttype = "fanfiction";
-                    if(posttype == "fanfiction"){
-                        <span class="pd-heading">
-                            Series
-                        </span>
-                        <div class="pd-series">
-                            <span>Harry Potter</span>
-                            <span>Overlord</span>
-                            <span>Pirates of the Caribbean</span>
-                        </div>
-                    }*/
-                }
-                <div class="pd-poststatus">
-                    <span class="pd-heading">Status:</span>
-                    <span class="pd-value">In-progress</span>
-                </div>
-                <div class="pd-language">
-                    <span class="pd-heading">Language:</span>
-                    <span class="pd-value">English</span>
-                </div>
-            </div>
-            <div class="pd-right">
-                <div class="pd-close">
-                    <i class="bi bi-caret-down pd-closebtn"></i>
-                </div>
-                <div class="pd-actions">
-                    <button type="button" class="pd-saved">Save</button>
-                    <button type="button">Share</button>
-                    <button type="button">Report</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-
     <div class="post">
         <div class="post-detail d-flex">
             <div class="p-header">
