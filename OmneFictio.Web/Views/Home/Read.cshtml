@@ -7,6 +7,12 @@
         <script src="~/js/read.js"></script>
     }
 }
+@using OmneFictio.Web.Models
+@using QuickType
+@model ReadViewmodel
+@{
+    /*DeletedStatus class is used for "string Body" in a lot of places. It's a QuickType thing.*/
+}
 
 <div class="orderby_type-cont" id="orderby-modal">
     <div class="obt-header">
@@ -304,6 +310,97 @@
             Filter
         </span>
     </div>
+
+    @{
+        if(Model.posts != null){
+            foreach(PostRead1 post in Model.posts){
+                <div class="post">
+                    <div class="post-detail d-flex">
+                        <div class="p-header">
+                            <div class="p-title">
+                                <span>@post.Title</span>
+                                <span class="p-date">@post.PublishDate.Date.ToShortDateString()</span>
+                            </div>
+                            <div class="p-menu">
+                                <i class="bi bi-caret-left p-menubtn"></i>
+                            </div>
+                        </div>
+                        <div class="p-body">
+                            @post.PostDescription    
+                        </div>
+                        <div class="p-footer">
+                            <div class="pf-evaluation">
+                                <i class="bi bi-hand-thumbs-up p-likebtn"></i>
+                                <span class="p-likes">5465</span>
+                                <i class="bi bi-hand-thumbs-down p-dislikebtn"></i>
+                                <span class="p-rate">7.4/10</span>
+                            </div>
+                            <div class="pf-user">
+                                <span class="p-username">@post.Account.Username</span>
+                                <img src="https://uybor.uz/borless/avtobor/img/user-images/user_no_photo_300x300.png">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="post-menu d-none">
+                        <div class="pd-details">
+                            <span class="pd-heading">
+                                Tags
+                            </span>
+                            <div class="pd-tags">
+                                @if(post.Tags.Count() == 0){
+                                    <span>Empty</span>
+                                }
+                                else{
+                                    foreach(QuickType.DeletedStatus tag in post.Tags){
+                                        <span>@tag.Body</span>
+                                    }
+                                }
+                                <!--<span>Action</span>-->
+                            </div>
+                            <div class="pd-type">
+                                <span class="pd-heading">Type:</span>
+                                <span class="pd-value">@post.PostType.Body</span>
+                            </div>
+                            @if(post.ExistingStories.Count() > 0){
+                                <span class="pd-heading">
+                                    Series
+                                </span>
+                                <div class="pd-series">
+                                    @foreach(QuickType.ExistingStory story in post.ExistingStories){
+                                        <span>@story.Body</span>
+                                    }
+                                    <!--<span>Pirates of the Caribbean</span>-->
+                                </div>
+                            }
+                            <div class="pd-poststatus">
+                                <span class="pd-heading">Status:</span>
+                                <span class="pd-value">@post.PostStatus.Body</span>
+                            </div>
+                            <div class="pd-language">
+                                <span class="pd-heading">Language:</span>
+                                <span class="pd-value">@post.Language.Body</span>
+                            </div>
+                        </div>
+                        <div class="pd-right">
+                            <div class="pd-close">
+                                <i class="bi bi-caret-down pd-closebtn"></i>
+                            </div>
+                            <div class="pd-actions">
+                                <button type="button" class="pd-saved">Save</button>
+                                <button type="button">Share</button>
+                                <button type="button">Report</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+        else{
+            <div><span>There doesn't seem to be anything.</span></div>
+        }
+    }
+    
+    <!--
     <div class="post">
         <div class="post-detail d-flex">
             <div class="p-header">
@@ -348,7 +445,7 @@
                     <span class="pd-heading">Type:</span>
                     <span class="pd-value">Fanfiction</span>
                 </div>
-                @{
+                @{/*
                     string posttype = "fanfiction";
                     if(posttype == "fanfiction"){
                         <span class="pd-heading">
@@ -359,7 +456,7 @@
                             <span>Overlord</span>
                             <span>Pirates of the Caribbean</span>
                         </div>
-                    }
+                    }*/
                 }
                 <div class="pd-poststatus">
                     <span class="pd-heading">Status:</span>
@@ -382,7 +479,6 @@
             </div>
         </div>
     </div>
-
 
 
     <div class="post">
@@ -450,71 +546,5 @@
             </div>
         </div>
     </div>
-
-
-    <div class="post">
-        <div class="post-detail d-flex">
-            <div class="p-header">
-                <div class="p-title">
-                    <span>Davy Jones</span>
-                    <span class="p-date">27/07/022</span>
-                </div>
-                <div class="p-menu">
-                    <i class="bi bi-caret-left p-menubtn"></i>
-                </div>
-            </div>
-            <div class="p-body">
-                Jones fell in love with the goddess Calypso. He agreed to guide the dead but Calypso was a bi*ch. When he returned from duty, she was not there.
-            </div>
-            <div class="p-footer">
-                <div class="pf-evaluation">
-                    <i class="bi bi-hand-thumbs-up p-likebtn"></i>
-                    <span class="p-likes">5465</span>
-                    <i class="bi bi-hand-thumbs-down p-dislikebtn"></i>
-                    <span class="p-rate">7.4/10</span>
-                </div>
-                <div class="pf-user">
-                    <span class="p-username">MrBombastic</span>
-                    <img src="https://uybor.uz/borless/avtobor/img/user-images/user_no_photo_300x300.png">
-                </div>
-            </div>
-        </div>
-        <div class="post-menu d-none">
-            <div class="pd-details">
-                <span class="pd-heading">
-                    Tags
-                </span>
-                <div class="pd-tags">
-                    <span>Action</span>
-                    <span>Comedy</span>
-                    <span>Mystery</span>
-                    <span>Fantasy</span>
-                    <span>Romance</span>
-                    <span>Western</span>
-                </div>
-                <div class="pd-type">
-                    <span class="pd-heading">Type:</span>
-                    <span class="pd-value">Fanfiction</span>
-                </div>
-                <div class="pd-poststatus">
-                    <span class="pd-heading">Status:</span>
-                    <span class="pd-value">In-progress</span>
-                </div>
-                <div class="pd-language">
-                    <span class="pd-heading">Language:</span>
-                    <span class="pd-value">English</span>
-                </div>
-            </div>
-            <div class="pd-right">
-                <div class="pd-close">
-                    <i class="bi bi-caret-down pd-closebtn"></i>
-                </div>
-                <div class="pd-actions">
-                    <button type="button" class="pd-saved">Save</button>
-                    <button type="button">Share</button>
-                    <button type="button">Report</button>
-                </div>
-            </div>
-        </div>
-    </div>
+    -->
 </div>

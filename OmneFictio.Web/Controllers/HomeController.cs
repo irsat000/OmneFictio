@@ -3,9 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using Newtonsoft.Json;
-namespace OmneFictio.Web.Controllers;
 using OmneFictio.Web.Models;
 using QuickType;
+
+namespace OmneFictio.Web.Controllers;
 
 public class HomeController : Controller
 {
@@ -23,7 +24,7 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Read(string? type)
     {
-        List<PostRead1> account = new List<PostRead1>();
+        List<PostRead1>? posts = new List<PostRead1>();
         string postsUrl = "https://localhost:7022/posts";
         using (HttpClient httpClient = new HttpClient())
         {
@@ -32,11 +33,14 @@ public class HomeController : Controller
                 using (HttpContent content = response.Content)
                 {
                     var raw = await content.ReadAsStringAsync();
-                    account = JsonConvert.DeserializeObject<List<PostRead1>>(raw);
+                    posts = JsonConvert.DeserializeObject<List<PostRead1>>(raw);
                 }
             }
         }
-        return View(account);
+        ReadViewmodel viewModel = new ReadViewmodel{
+            posts = posts
+        };
+        return View(viewModel);
     }
 
     public IActionResult Privacy()
