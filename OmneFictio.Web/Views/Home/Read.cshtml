@@ -303,7 +303,7 @@
     </div>
 
     @{
-        if(Model.posts != null){
+        if(Model.posts.Count() > 0){
             foreach(PostRead1 post in Model.posts){
                 <div class="post">
                     <div class="post-detail d-flex">
