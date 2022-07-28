@@ -9,12 +9,12 @@ namespace OmneFictio.Web.Controllers;
 public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
-    private readonly IHttpClientFactory _httpClientFactory;
+    private readonly HttpClient _httpClient;
 
-    public HomeController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory)
+    public HomeController(ILogger<HomeController> logger, HttpClient httpClient)
     {
         _logger = logger;
-        _httpClientFactory = httpClientFactory;
+        _httpClient = httpClient;
     }
 
     public async Task<IActionResult> Index()
@@ -32,8 +32,7 @@ public class HomeController : Controller
         string postsUrl = "https://localhost:7022/posts";
         
         stopwatch2.Start();
-        using HttpClient httpClient = new();
-        string raw = await httpClient.GetStringAsync(postsUrl);
+        string raw = await _httpClient.GetStringAsync(postsUrl);
         stopwatch2.Stop();
 
         stopwatch3.Start();
