@@ -1,5 +1,5 @@
 
-using QuickType;
+using Models;
 
 namespace OmneFictio.Web.Models
 {
