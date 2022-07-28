@@ -325,13 +325,17 @@
                                 <span class="p-likes">
                                     @{
                                         int likes = 0;
+                                        string negative = "--";
                                         foreach(Vote value in post.Votes){
                                             if(value.Vote1 == true)
                                                 likes++;
                                             else
                                                 likes--;
                                         }
-                                        @likes
+                                        if(likes > 0)
+                                            @likes
+                                        else
+                                            @negative
                                     }
                                 </span>
                                 <i class="bi bi-hand-thumbs-down p-dislikebtn"></i>
@@ -339,7 +343,8 @@
                                     @{
                                         double rate = 0;
                                         foreach(Rate value in post.Rates){
-                                            rate += value.Rate1;
+                                            if(value.Rate1 >= 0 && value.Rate1 <= 10)
+                                                rate += value.Rate1;
                                         }
                                         string ortRate = Math.Round((rate / post.Rates.Count()), 1).ToString() + "/10";
                                         @ortRate

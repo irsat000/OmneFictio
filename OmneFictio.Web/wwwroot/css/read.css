@@ -317,16 +317,16 @@ main {
   cursor: pointer;
 }
 .nav-cont .navcont-links .nl-readingtime > a {
-  background-color: #a24c4c;
+  background-color: var(--navlink-readingtime-color);
 }
 .nav-cont .navcont-links .nl-readingtime > a:hover {
-  background-color: #983636;
+  background-color: var(--navlink-readingtime-color-hover);
 }
 .nav-cont .navcont-links .nl-aboutyou > a {
-  background-color: rgb(186, 160, 42);
+  background-color: var(--navlink-aboutyou-color);
 }
 .nav-cont .navcont-links .nl-aboutyou > a:hover {
-  background-color: rgb(196, 134, 26);
+  background-color: var(--navlink-aboutyou-color-hover);
 }
 .nav-cont .nav-ad1 {
   background-color: rgb(139, 136, 199);

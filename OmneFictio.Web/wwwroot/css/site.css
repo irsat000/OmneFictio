@@ -16,6 +16,10 @@
   --dropdownbg-color: #313131;
   --pd-actionbtns-color: #444444;
   --shortcuticons-color: #ffffff;
+  --navlink-readingtime-color: #415050;
+  --navlink-readingtime-color-hover: #607d7d;
+  --navlink-aboutyou-color: #473c3c;
+  --navlink-aboutyou-color-hover: #6c5959;
   --searchplaceholder-color: #939393;
 }
 
@@ -37,6 +41,10 @@
   --dropdownbg-color: #e7e7e7;
   --pd-actionbtns-color: #c7c7c7;
   --shortcuticons-color: #626262;
+  --navlink-readingtime-color: #9298b9;
+  --navlink-readingtime-color-hover: #777ea8;
+  --navlink-aboutyou-color: #a08888;
+  --navlink-aboutyou-color-hover: #8d6767;
 }
 
 /*
@@ -150,6 +158,7 @@ header .header-wrap {
   left: 0;
   height: 100%;
   width: 0;
+  overflow-y: auto;
   background-color: var(--background-color1);
   font-size: 1.8rem;
   font-family: "Itim", cursive;
@@ -209,8 +218,7 @@ header .header-wrap {
   font-family: "Kaushan Script", cursive;
 }
 .drawer .dw-list {
-  padding-top: 10px;
-  overflow-y: auto;
+  padding: 10px 0 16px;
 }
 .drawer .dw-list > ul > li > a {
   padding: 4px 20px;
@@ -222,12 +230,14 @@ header .header-wrap {
   background-color: var(--background-color2);
 }
 .drawer .dw-settings {
-  margin-top: auto;
+  display: flex;
+  position: -webkit-sticky;
+  position: sticky;
+  bottom: 0;
   padding: 4px 20px;
   color: #ffffff;
   transition: 0.2s ease;
   background-color: #b73d3d;
-  display: flex;
 }
 .drawer .dw-settings:hover {
   background-color: #b94f4f;
@@ -318,7 +328,7 @@ header .header-wrap {
 }
 .shortcuts-cont > i {
   color: var(--shortcuticons-color);
-  font-size: 2.4rem;
+  font-size: 2rem;
   margin-right: 16px;
   cursor: pointer;
   transition: 0.3s ease;
@@ -406,10 +416,6 @@ header .header-wrap {
   background-color: #b94f4f;
 }
 
-.donate-shortcut {
-  display: none;
-}
-
 .account-cont {
   display: none;
 }
@@ -469,9 +475,6 @@ header .header-wrap {
   }
   .searchbar-cont {
     display: flex;
-  }
-  .donate-shortcut {
-    display: block;
   }
 }
 @media (min-width: 1300px) {

@@ -48,7 +48,7 @@
         font-size: 0.9rem;
         font-family: 'Gudea', sans-serif;
         margin-bottom: 10px;
-        max-height: 260px;
+        max-height: 300px;
         overflow: hidden;
         display: -webkit-box;
         -webkit-line-clamp: 7;
@@ -64,10 +64,11 @@
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
-        flex-flow: wrap;*/
+        */
         font-family: 'Itim', cursive;
         display: flex;
         flex-direction: row;
+        flex-flow: wrap;
         padding: 0 10px 10px;
         
         .pf-evaluation{

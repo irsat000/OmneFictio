@@ -90,6 +90,7 @@ header{
     left: 0;
     height: 100%;
     width: 0;
+    overflow-y: auto;
     background-color: var(--background-color1);
     font-size: 1.8rem;
     font-family: 'Itim', cursive;
@@ -148,8 +149,7 @@ header{
         }
     }
     .dw-list{
-        padding-top: 10px;
-        overflow-y: auto;
+        padding: 10px 0 16px;
         > ul{
             > li {
                 > a{
@@ -165,12 +165,13 @@ header{
         }
     }
     .dw-settings{
-        margin-top: auto;
+        display: flex;
+        position: sticky;
+        bottom: 0;
         padding: 4px 20px;
         color: #ffffff;
         transition: 0.2s ease;
         background-color: #b73d3d;
-        display: flex;
         &:hover{
             background-color: #b94f4f;
         }
@@ -252,7 +253,7 @@ header{
     align-items: center;
     > i{
         color: var(--shortcuticons-color);
-        font-size: 2.4rem;
+        font-size: 2rem;
         margin-right: 16px;
         cursor: pointer;
         transition: 0.3s ease;
@@ -348,9 +349,6 @@ header{
     }
 }
 
-.donate-shortcut{
-    display: none;
-}
 .account-cont{
     display: none;
 }
@@ -429,9 +427,6 @@ header{
     }
     .searchbar-cont{
         display: flex;
-    }
-    .donate-shortcut{
-        display:block;
     }
 }
 @media (min-width: 1300px) {

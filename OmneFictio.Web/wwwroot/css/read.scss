@@ -89,15 +89,15 @@ main{
             }
         }
         .nl-readingtime > a{
-            background-color: #a24c4c;
+            background-color: var(--navlink-readingtime-color);
             &:hover{
-                background-color: #983636;
+                background-color: var(--navlink-readingtime-color-hover);
             }
         }
         .nl-aboutyou > a{
-            background-color: rgb(186, 160, 42);
+            background-color: var(--navlink-aboutyou-color);
             &:hover{
-                background-color: rgb(196 134 26);
+                background-color: var(--navlink-aboutyou-color-hover);
             }
         }
     }
