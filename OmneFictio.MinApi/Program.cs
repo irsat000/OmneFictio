@@ -5,7 +5,6 @@ using OmneFictio.MinApi.Configurations;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using AutoMapper;
-using AutoMapper.QueryableExtensions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<OmneFictioContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -17,6 +16,7 @@ JsonSerializerOptions options = new(){
     ReferenceHandler = ReferenceHandler.Preserve,
     WriteIndented = true
 };
+OmneFictioContext _db = new OmneFictioContext();
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
@@ -35,9 +35,24 @@ app.MapGet("/", () =>
     return "Hello world";
 });
 
-app.MapGet("/posts", async (OmneFictioContext db) => {
-    var posts = await mapper.ProjectTo<PostDtoRead_1>(db.Posts).ToListAsync();
+app.MapGet("/posts", async () => {
+    var posts = await mapper.ProjectTo<PostDtoRead_1>(_db.Posts).ToListAsync();
     return posts;
+});
+
+app.MapPost("/register", async (AccountDtoWrite_1 request) => {
+    AccountDtoWrite_1 newAccount = new AccountDtoWrite_1{
+        Username = request.Username,
+        Pw = request.Pw,
+        Email = request.Email,
+        PrefLanguageId = request.PrefLanguageId,
+        AllowSexual = request.AllowSexual,
+        AllowViolence = request.AllowViolence
+    };
+    _db.Accounts.Add(mapper.Map<Account>(newAccount));
+    _db.SaveChangesAsync();
+        
+    return Results.Ok();
 });
 
 app.Run();
