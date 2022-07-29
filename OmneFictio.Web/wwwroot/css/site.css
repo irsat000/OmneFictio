@@ -196,6 +196,9 @@ header .header-wrap {
   height: 4rem;
   border-radius: 6px;
 }
+.drawer .dw-top .dw-account .dw-userimg i {
+  font-size: 4rem;
+}
 .drawer .dw-top .dw-account .dw-username {
   font-family: "Doppio One", sans-serif;
   padding-bottom: 8px;
@@ -219,6 +222,7 @@ header .header-wrap {
 }
 .drawer .dw-list {
   padding: 10px 0 16px;
+  flex-grow: 1;
 }
 .drawer .dw-list > ul > li > a {
   padding: 4px 20px;
@@ -342,10 +346,13 @@ header .header-wrap {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  padding: 0 16px 0 30px;
+  margin: 0 16px 0 30px;
   position: relative;
 }
 .account-cont .ppic-wrap {
+  display: flex;
+  justify-content: center;
+  align-items: center;
   width: 50px;
   height: 50px;
   border-radius: 6px;
@@ -355,6 +362,10 @@ header .header-wrap {
 .account-cont .ppic-wrap img {
   width: 100%;
   height: 100%;
+}
+.account-cont .ppic-wrap i {
+  color: var(--shortcuticons-color);
+  font-size: 2.3rem;
 }
 .account-cont .dropdown_icon-wrap {
   height: 50px;
