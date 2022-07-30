@@ -3,26 +3,9 @@
 
 // Write your JavaScript code.
 
+
 $('.click-outside').click(function(){
-    if($('.drawer').hasClass('drawer-active')){
-        $('.drawer').removeClass('drawer-active');
-        $('.click-outside').removeClass('d-block');
-    }
-    if($('#orderby-modal').hasClass('d-flex')){
-        $('#orderby-modal').removeClass('d-flex');
-        $('#orderby-modal').removeClass('opacity-100');
-        $('.click-outside').removeClass('d-block');
-    }
-    if($('#type-modal').hasClass('d-flex')){
-        $('#type-modal').removeClass('d-flex');
-        $('#type-modal').removeClass('opacity-100');
-        $('.click-outside').removeClass('d-block');
-    }
-    if($('#filter-modal').hasClass('d-flex')){
-        $('#filter-modal').removeClass('d-flex');
-        $('#filter-modal').removeClass('opacity-100');
-        $('.click-outside').removeClass('d-block');
-    }
+    closeModalsDrowpdownsEtc();
     /* Maybe I use it
     if($('.account-dropdown').hasClass('d-block')){
         $('.account-dropdown').removeClass('opacity-100');
@@ -32,6 +15,7 @@ $('.click-outside').click(function(){
     }*/
 });
 
+//Top-right account dropdown menu
 $('.ppic-wrap, .dropdown_icon-wrap').click(function(){
     if($('.account-dropdown').hasClass('d-block')){
         $('.account-dropdown').removeClass('opacity-100');
@@ -59,11 +43,33 @@ $('.drawerbtn-cont > i, .dw-close > i').click(function(){
     }
 });
 
+//Open/close login modal
+$('.login-openbtn, .lm-closebtn').click(function(){
+    if($('#login-modal').hasClass('d-flex')){
+        $('#login-modal').removeClass('d-flex');
+        $('#login-modal').removeClass('opacity-100');
+        $('.click-outside').removeClass('d-block');
+    }
+    else{
+        $('#login-modal').addClass('d-flex');
+        $('.click-outside').addClass('d-block');
+        setTimeout(function(){
+            $('#login-modal').addClass('opacity-100');
+        }, 100);
+    }
+    if($('.account-dropdown').hasClass('d-block')){
+        $('.account-dropdown').removeClass('opacity-100');
+        setTimeout(function(){
+            $('.account-dropdown').removeClass('d-block');
+        }, 100);
+    }
+});
+
 
 $('body').click(function(event) {
     var target = $(event.target);
 
-    //Deactivate dropdown of account container in header if clicked somewhere else
+    //Close dropdown of account container in header if clicked somewhere else
     if($('.account-dropdown').hasClass('d-block') && !target.parents('.account-cont').length){
         $('.account-dropdown').removeClass('opacity-100');
         setTimeout(function(){
@@ -77,6 +83,7 @@ $('body').click(function(event) {
     }*/
 });
 
+//Post menu actions
 $('.p-menubtn, .pd-closebtn').click(function(){
     var postwrap = $(this).parent().closest('.post');
     var postdetail = $(postwrap).find('.post-detail');
@@ -94,3 +101,30 @@ $('.p-menubtn, .pd-closebtn').click(function(){
         $(postmenu).addClass('d-none');
     }
 });
+
+//close modals, dropdowns, drawer etc
+function closeModalsDrowpdownsEtc(){
+    if($('.drawer').hasClass('drawer-active')){
+        $('.drawer').removeClass('drawer-active');
+        $('.click-outside').removeClass('d-block');
+    }
+    if($('#orderby-modal').hasClass('d-flex')){
+        $('#orderby-modal').removeClass('d-flex');
+        $('#orderby-modal').removeClass('opacity-100');
+        $('.click-outside').removeClass('d-block');
+    }
+    if($('#type-modal').hasClass('d-flex')){
+        $('#type-modal').removeClass('d-flex');
+        $('#type-modal').removeClass('opacity-100');
+        $('.click-outside').removeClass('d-block');
+    }
+    if($('#filter-modal').hasClass('d-flex')){
+        $('#filter-modal').removeClass('d-flex');
+        $('#filter-modal').removeClass('opacity-100');
+        $('.click-outside').removeClass('d-block');
+    }
+    if($('#login-modal').hasClass('d-flex')){
+        $('#login-modal').removeClass('d-flex');
+        $('.click-outside').removeClass('d-block');
+    }
+}
