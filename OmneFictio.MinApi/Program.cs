@@ -16,7 +16,6 @@ JsonSerializerOptions options = new(){
     ReferenceHandler = ReferenceHandler.Preserve,
     WriteIndented = true
 };
-OmneFictioContext _db = new OmneFictioContext();
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
@@ -35,12 +34,12 @@ app.MapGet("/", () =>
     return "Hello world";
 });
 
-app.MapGet("/posts", async () => {
-    var posts = await mapper.ProjectTo<PostDtoRead_1>(_db.Posts).ToListAsync();
+app.MapGet("/posts", async (OmneFictioContext db) => {
+    var posts = await mapper.ProjectTo<PostDtoRead_1>(db.Posts).ToListAsync();
     return posts;
 });
 
-app.MapPost("/register", async (AccountDtoWrite_1 request) => {
+app.MapPost("/register", async (OmneFictioContext db, AccountDtoWrite_1 request) => {
     AccountDtoWrite_1 newAccount = new AccountDtoWrite_1{
         Username = request.Username,
         Pw = request.Pw,
@@ -49,8 +48,8 @@ app.MapPost("/register", async (AccountDtoWrite_1 request) => {
         AllowSexual = request.AllowSexual,
         AllowViolence = request.AllowViolence
     };
-    _db.Accounts.Add(mapper.Map<Account>(newAccount));
-    _db.SaveChangesAsync();
+    db.Accounts.Add(mapper.Map<Account>(newAccount));
+    db.SaveChangesAsync();
         
     return Results.Ok();
 });

@@ -3,25 +3,25 @@
 
 // Write your JavaScript code.
 
-$('.body-outside').click(function(){
+$('.click-outside').click(function(){
     if($('.drawer').hasClass('drawer-active')){
         $('.drawer').removeClass('drawer-active');
-        $('.body-outside').removeClass('d-block');
+        $('.click-outside').removeClass('d-block');
     }
     if($('#orderby-modal').hasClass('d-flex')){
         $('#orderby-modal').removeClass('d-flex');
         $('#orderby-modal').removeClass('opacity-100');
-        $('.body-outside').removeClass('d-block');
+        $('.click-outside').removeClass('d-block');
     }
     if($('#type-modal').hasClass('d-flex')){
         $('#type-modal').removeClass('d-flex');
         $('#type-modal').removeClass('opacity-100');
-        $('.body-outside').removeClass('d-block');
+        $('.click-outside').removeClass('d-block');
     }
     if($('#filter-modal').hasClass('d-flex')){
         $('#filter-modal').removeClass('d-flex');
         $('#filter-modal').removeClass('opacity-100');
-        $('.body-outside').removeClass('d-block');
+        $('.click-outside').removeClass('d-block');
     }
     /* Maybe I use it
     if($('.account-dropdown').hasClass('d-block')){
@@ -51,11 +51,11 @@ $('.ppic-wrap, .dropdown_icon-wrap').click(function(){
 $('.drawerbtn-cont > i, .dw-close > i').click(function(){
     if($('.drawer').hasClass('drawer-active')){
         $('.drawer').removeClass('drawer-active');
-        $('.body-outside').removeClass('d-block');
+        $('.click-outside').removeClass('d-block');
     }
     else{
         $('.drawer').addClass('drawer-active');
-        $('.body-outside').addClass('d-block');
+        $('.click-outside').addClass('d-block');
     }
 });
 
@@ -73,7 +73,7 @@ $('body').click(function(event) {
     /*
     if($('.drawer').hasClass('drawer-active') && !target.parents('.drawer').length){
         $('.drawer').removeClass('drawer-active');
-        $('.body-outside').removeClass('d-block');
+        $('.click-outside').removeClass('d-block');
     }*/
 });
 

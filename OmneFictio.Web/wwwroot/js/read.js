@@ -6,11 +6,11 @@ $('#orderby-btn, #sb-close').click(function(){
     if($('#orderby-modal').hasClass('d-flex')){
         $('#orderby-modal').removeClass('d-flex');
         $('#orderby-modal').removeClass('opacity-100');
-        $('.body-outside').removeClass('d-block');
+        $('.click-outside').removeClass('d-block');
     }
     else{
         $('#orderby-modal').addClass('d-flex');
-        $('.body-outside').addClass('d-block');
+        $('.click-outside').addClass('d-block');
         setTimeout(function(){
             $('#orderby-modal').addClass('opacity-100');
         }, 100);
@@ -20,11 +20,11 @@ $('#po-type, #t-close').click(function(){
     if($('#type-modal').hasClass('d-flex')){
         $('#type-modal').removeClass('d-flex');
         $('#type-modal').removeClass('opacity-100');
-        $('.body-outside').removeClass('d-block');
+        $('.click-outside').removeClass('d-block');
     }
     else{
         $('#type-modal').addClass('d-flex');
-        $('.body-outside').addClass('d-block');
+        $('.click-outside').addClass('d-block');
         setTimeout(function(){
             $('#type-modal').addClass('opacity-100');
         }, 100);
@@ -35,11 +35,11 @@ $('#po-filter, #f-close').click(function(){
     if($('#filter-modal').hasClass('d-flex')){
         $('#filter-modal').removeClass('d-flex');
         $('#filter-modal').removeClass('opacity-100');
-        $('.body-outside').removeClass('d-block');
+        $('.click-outside').removeClass('d-block');
     }
     else{
         $('#filter-modal').addClass('d-flex');
-        $('.body-outside').addClass('d-block');
+        $('.click-outside').addClass('d-block');
         setTimeout(function(){
             $('#filter-modal').addClass('opacity-100');
         }, 100);

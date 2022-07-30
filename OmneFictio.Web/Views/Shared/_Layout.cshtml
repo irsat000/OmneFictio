@@ -19,8 +19,39 @@
     @RenderSection("Stylesheets", required: false)
 </head>
 <body class="darkmode">
-    <div class="body-outside"></div>
+    <div class="click-outside"></div>
     <div class="f-modaldarkness"></div>
+    <form class="login-modal">
+        <div class="lm-header">
+            <span class="lm-title">Login</span>
+            <div class="lm-close">
+                <i class="bi bi-x-lg"></i>
+            </div>
+        </div>
+        <div class="lm-primary">
+            <input type="text" placeholder="Username/Email" name="username_email" class="lm-textbox">
+            <input type="password" placeholder="Password" name="password" class="lm-textbox">
+            <input type="submit" value="Login" class="lm-submit">
+        </div>
+        <div class="lm-loginwith">
+            <div class="facebook">
+                <i class="bi bi-facebook"></i>
+            </div>
+            <div class="twitter">
+                <i class="bi bi-twitter"></i>
+            </div>
+            <div class="google">
+                <i class="bi bi-google"></i>
+            </div>
+        </div>
+        <div class="lm-forgot">
+            <span>I forgot <a href="#">something</a></span>
+        </div>
+        <div class="lm-rememberme">
+            <label><span>Remember me</span><input type="checkbox" name="rememberme"></label>
+            <a href="#">Sign Up</a>
+        </div>
+    </form>
     <div class="drawer">
         <div class="dw-top">
             <div class="dw-account">

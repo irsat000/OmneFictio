@@ -7,7 +7,7 @@ namespace OmneFictio.MinApi.Configurations;
 public class MapperConfig : Profile{
     public MapperConfig(){
         CreateMap<AccountDtoRead_1, Account>().ReverseMap();
-        CreateMap<AccountDtoWrite_1, Account>().ReverseMap();
+        //CreateMap<AccountDtoWrite_1, Account>().ReverseMap();
 
         CreateMap<PostDtoRead_1, Post>().ReverseMap();
         CreateMap<PostDtoRead_2, Post>().ReverseMap();

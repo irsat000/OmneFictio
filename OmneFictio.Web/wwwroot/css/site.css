@@ -90,7 +90,7 @@ a:hover {
   color: unset;
 }
 
-.body-outside {
+.click-outside {
   display: none;
   width: 100%;
   height: 100%;
@@ -111,6 +111,7 @@ a:hover {
 /*-----------DESIGN-------------*/
 body {
   background-color: var(--background-color1);
+  color: var(--text-color1);
 }
 
 .main-cont {
@@ -164,11 +165,11 @@ header .header-wrap {
   font-family: "Itim", cursive;
   overflow-x: hidden;
   transition: width 0.3s ease;
+  color: var(--text-color1);
 }
 .drawer .dw-top {
   display: flex;
   flex-direction: row;
-  color: var(--text-color1);
   border-bottom: 1px solid var(--background-color2);
   padding-bottom: 10px;
 }
@@ -217,7 +218,6 @@ header .header-wrap {
   /*height: 100%;
   width: 100%;*/
   padding: 6px 0 6px 20px;
-  color: var(--text-color1);
   font-family: "Kaushan Script", cursive;
 }
 .drawer .dw-list {
@@ -251,6 +251,137 @@ header .header-wrap {
 }
 .drawer .dw-icon-cont i {
   font-size: 1.4rem;
+}
+
+.login-modal {
+  display: flex;
+  flex-direction: column;
+  transition: opacity 0.3s ease;
+  z-index: 509;
+  position: absolute;
+  top: 12%;
+  margin-left: auto;
+  margin-right: auto;
+  left: 0;
+  right: 0;
+  background-color: var(--background-color2);
+  box-shadow: 0px 0px 16px 4px var(--background-color-boxshadow1);
+  width: 260px;
+  border-radius: 10px;
+  font-family: "Itim", cursive;
+  overflow: hidden;
+  color: var(--text-color1);
+}
+.login-modal .lm-header {
+  border-bottom: 2px solid var(--background-color-hover4);
+  display: flex;
+  flex-direction: row;
+}
+.login-modal .lm-header .lm-title {
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  font-size: 1.3rem;
+  flex-grow: 1;
+}
+.login-modal .lm-header .lm-close {
+  flex-shrink: 0;
+  cursor: pointer;
+  padding: 6px 12px;
+  font-size: 1.8rem;
+  text-shadow: 0px 0px 6px var(--text-color-boxshadow1);
+}
+.login-modal .lm-primary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 20px;
+}
+.login-modal .lm-primary .lm-textbox {
+  width: 100%;
+  margin-bottom: 14px;
+  background-color: var(--background-color1);
+  color: var(--text-color1);
+  padding: 6px;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+}
+.login-modal .lm-primary .lm-submit {
+  width: 50%;
+  margin-top: 2px;
+  border: none;
+  outline: none;
+  background-color: #4f5192;
+  color: #fff;
+  border-radius: 8px;
+  padding: 4px;
+  transition: 0.2s ease;
+}
+.login-modal .lm-primary .lm-submit:hover {
+  background-color: #5a5b95;
+}
+.login-modal .lm-loginwith {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 10px 20px;
+}
+.login-modal .lm-loginwith > div {
+  cursor: pointer;
+  padding: 6px 16px;
+  border-radius: 6px;
+  transition: 0.2s ease;
+}
+.login-modal .lm-loginwith > div > i {
+  font-size: 1.2rem;
+  margin: 0 auto;
+}
+.login-modal .lm-loginwith .facebook {
+  background-color: #284878;
+}
+.login-modal .lm-loginwith .facebook:hover {
+  background-color: #3e5b86;
+}
+.login-modal .lm-loginwith .twitter {
+  background-color: #4c7ac0;
+}
+.login-modal .lm-loginwith .twitter:hover {
+  background-color: #769ad2;
+}
+.login-modal .lm-loginwith .google {
+  background-color: #a23535;
+}
+.login-modal .lm-loginwith .google:hover {
+  background-color: #b25252;
+}
+.login-modal .lm-forgot {
+  text-align: center;
+  font-size: 1.2rem;
+  padding: 4px 10px;
+}
+.login-modal .lm-rememberme {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  padding: 6px 14px 10px;
+}
+.login-modal .lm-rememberme > label {
+  display: flex;
+  flex-direction: row;
+}
+.login-modal .lm-rememberme > label > span {
+  padding-right: 6px;
+}
+.login-modal .lm-rememberme > label > input {
+  width: 1rem;
+}
+.login-modal a {
+  color: #628ad8;
+  display: unset;
+}
+.login-modal a:hover {
+  text-decoration: underline;
 }
 
 .logo-cont {
