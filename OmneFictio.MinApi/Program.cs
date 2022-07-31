@@ -5,6 +5,9 @@ using OmneFictio.MinApi.Configurations;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using AutoMapper;
+using System.Security.Cryptography;
+using System.Text;
+using System.Text.RegularExpressions;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<OmneFictioContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -40,19 +43,33 @@ app.MapGet("/posts", async (OmneFictioContext db) => {
 });
 
 app.MapPost("/register", async (OmneFictioContext db, AccountDtoWrite_1 request) => {
-    AccountDtoWrite_1 newAccount = new AccountDtoWrite_1{
-        Username = request.Username,
-        Pw = request.Pw,
-        Email = request.Email,
-        PrefLanguageId = request.PrefLanguageId,
-        AllowSexual = request.AllowSexual,
-        AllowViolence = request.AllowViolence
-    };
+    Regex usernameRegex = new Regex(@"[A-Za-z0-9_]{3,30}");
+    if(!usernameRegex.IsMatch(request.Username))
+        return Results.BadRequest("Bad username");
+    
+    string passwordHash = BCrypt.Net.BCrypt.HashPassword(request.Pw);
+    AccountDtoWrite_1 newAccount = new AccountDtoWrite_1();
+    newAccount.Username = request.Username;
+    newAccount.Pw = passwordHash;
+    newAccount.Email = request.Email;
+    if(request.AllowSexual != null)
+        newAccount.AllowSexual = request.AllowSexual;
+    if(request.AllowViolence != null)
+        newAccount.AllowViolence = request.AllowViolence;
+    if(db.Languages.Any(l => l.Id == request.PrefLanguageId))
+        newAccount.PrefLanguageId = request.PrefLanguageId;
+
     db.Accounts.Add(mapper.Map<Account>(newAccount));
-    db.SaveChangesAsync();
-        
+    await db.SaveChangesAsync();
     return Results.Ok();
 });
+/*
+void CreatePwHash(string pw, out byte[] pwHash, out byte[] pwSalt){
+    using(var hmac = new HMACSHA512()){
+        pwSalt = hmac.Key;
+        pwHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(pw));
+    }
+}*/
 
 app.Run();
 

@@ -1,11 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "bYZ4qgJ6wDoK86bjbfX30W3R4ZbOZD1OLQnFL4M/QTgPzWXf9ebWnvm/zo5yiTvgqRQ2xawMw/Q2RZNlx4P7ew==",
+  "dgSpecHash": "mOy6ZGHaNUbXgQtIRjjHWT7Cmv0wxPiOBtQFSdHcWPGt+3TbL3ehyIQ2hunYDMNfq6yLCQ8o4T8MBp1NJdjTEQ==",
   "success": true,
-  "projectFilePath": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.MinApi\\OmneFictio.MinApi.csproj",
+  "projectFilePath": "c:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.MinApi\\OmneFictio.MinApi.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\user\\.nuget\\packages\\automapper\\11.0.0\\automapper.11.0.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\11.0.0\\automapper.extensions.microsoft.dependencyinjection.11.0.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\bcrypt.net-next\\4.0.3\\bcrypt.net-next.4.0.3.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\humanizer.core\\2.8.26\\humanizer.core.2.8.26.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.data.sqlclient\\2.1.4\\microsoft.data.sqlclient.2.1.4.nupkg.sha512",
