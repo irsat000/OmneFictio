@@ -10,6 +10,7 @@ using System.IdentityModel.Tokens.Jwt;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using BC = BCrypt.Net.BCrypt;
+using System.Security.Claims;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<OmneFictioContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -31,6 +32,7 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 
+var securityToken = Encoding.ASCII.GetBytes(builder.Configuration.GetSection("Token").Value);
 var mapper = app.Services.GetService<IMapper>();
 if (mapper == null)
     throw new InvalidOperationException("Mapper not found");
@@ -51,17 +53,20 @@ app.MapPost("/login", async (OmneFictioContext db, AccountDtoRead_2 request) => 
         user = mapper.Map<AccountDtoRead_3>(db.Accounts.SingleOrDefault(x => x.Email == request.Email));
     if (user == null || !BC.Verify(request.Pw, user.Pw))
         return Results.BadRequest("Login failed");
-
-    var userJsonString = JsonSerializer.Serialize(user);
+    
     var tokenHandler = new JwtSecurityTokenHandler();
-    /*var tokenDescriptor = new SecurityTokenDescriptor {
-        Claims = JsonSerializer.Deserialize<Dictionary<string, object>>(userJsonString),
+    var tokenDescriptor = new SecurityTokenDescriptor {
+        Subject = new ClaimsIdentity(new List<Claim>(){
+            new Claim(ClaimTypes.SerialNumber, user.Id.ToString()),
+            new Claim(ClaimTypes.Name, user.Username),
+            new Claim(ClaimTypes.Email, user.Email)
+        }),
         Issuer = "OmneFictio.com",
         Expires = DateTime.UtcNow.AddDays(30),
-        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(Encoding.ASCII.GetBytes("encryptionKey")), SecurityAlgorithms.HmacSha256Signature)
+        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(securityToken), SecurityAlgorithms.HmacSha256Signature)
     };
-    var token = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));*/
-    return Results.Ok("Token: ");
+    var token = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
+    return Results.Ok("Token: " + token);
 });
 
 app.MapPost("/register", async (OmneFictioContext db, AccountDtoWrite_1 request) => {

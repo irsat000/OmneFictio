@@ -10,7 +10,4 @@ public partial class AccountDtoRead_3
     public string Username { get; set; } = null!;
     public string Pw { get; set; } = null!;
     public string Email { get; set; } = null!;
-    public string? ProfilePic { get; set; }
-    
-    public virtual ICollection<AuthorityDto>? Authorities { get; set; }
 }
