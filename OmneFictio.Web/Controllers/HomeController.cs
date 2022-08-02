@@ -24,7 +24,6 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Read(string? type)
     {
-        Stopwatch stopwatch1 = new Stopwatch();
         Stopwatch stopwatch2 = new Stopwatch();
         Stopwatch stopwatch3 = new Stopwatch();
 
@@ -47,6 +46,10 @@ public class HomeController : Controller
         Console.WriteLine($"deserializing: {stopwatch3.Elapsed}");
         return View(viewModel);
         //return View(viewModel);
+    }
+    public IActionResult Register()
+    {
+        return View();
     }
 
     public IActionResult Privacy()

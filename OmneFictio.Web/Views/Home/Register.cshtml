@@ -1,0 +1,53 @@
+@{
+    ViewData["Title"] = "Register";
+    @section Stylesheets {
+        <link rel="stylesheet" href="~/css/register.css" asp-append-version="true" />
+    }
+    @section Scripts {
+        <script src="~/js/register.js" asp-append-version="true" ></script>
+    }
+}
+
+<div class="register">
+    <div class="register-main">
+        <div class="rm-header">
+            <span>Register</span>
+        </div>
+        <div class="rm-primary">
+            <input type="text" placeholder="Username" name="username" class="rm-textbox">
+            <input type="text" placeholder="Email" name="email" class="rm-textbox">
+            <input type="password" placeholder="Password" name="password" class="rm-textbox">
+            <input type="password" placeholder="Confirm Password" class="rm-textbox">
+            <input type="submit" value="Register" class="rm-submit">
+        </div>
+        <div class="rm-registerwith">
+            <div class="facebook">
+                <i class="bi bi-facebook"></i>
+            </div>
+            <div class="twitter">
+                <i class="bi bi-twitter"></i>
+            </div>
+            <div class="google">
+                <i class="bi bi-google"></i>
+            </div>
+        </div>
+    </div>
+    <div class="register-extra">
+        <div class="re-header">
+            <span>Extras</span>
+        </div>
+        <div class="re-primary">
+            <label><span>Allow sexual content</span><input type="checkbox" name="allowsexual"></label>
+            <label><span>Allow violent content</span><input type="checkbox" name="allowviolence"></label>
+            <span>Preferred language:</span>
+            <select name="language">
+                <option value="0">Language</option>
+                <option value="1">Turkish</option>
+                <option value="2">English</option>
+                <option value="3">French</option>
+                <option value="4">German</option>
+                <option value="5">Japanese</option>
+            </select>
+        </div>
+    </div>
+</div>
