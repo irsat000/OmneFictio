@@ -13,9 +13,10 @@
         .rm-header{
             padding: 8px;
             width: 100%;
+            text-align: center;
             span{
                 font-family: 'Josefin Sans', sans-serif;
-                font-size: 1.5rem;
+                font-size: 1.6rem;
             }
         }
         .rm-primary{
@@ -91,9 +92,10 @@
         .re-header{
             padding: 8px;
             width: 100%;
+            text-align: center;
             span{
                 font-family: 'Josefin Sans', sans-serif;
-                font-size: 1.5rem;
+                font-size: 1.6rem;
             }
         }
         .re-primary{
@@ -147,9 +149,17 @@
                     font-size: 2rem;
                 }
             }
+            .rm-header{
+                text-align: left;
+            }
         }
-        .register-extra .re-primary > select {
-            background-color: var(--background-color1);
+        .register-extra{
+            .re-header{
+                text-align: left;
+            }
+            .re-primary > select {
+                background-color: var(--background-color1);
+            }
         }
     }
 }

@@ -14,10 +14,11 @@
 .register .register-main .rm-header {
   padding: 8px;
   width: 100%;
+  text-align: center;
 }
 .register .register-main .rm-header span {
   font-family: "Josefin Sans", sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
 }
 .register .register-main .rm-primary {
   display: flex;
@@ -92,10 +93,11 @@
 .register .register-extra .re-header {
   padding: 8px;
   width: 100%;
+  text-align: center;
 }
 .register .register-extra .re-header span {
   font-family: "Josefin Sans", sans-serif;
-  font-size: 1.5rem;
+  font-size: 1.6rem;
 }
 .register .register-extra .re-primary {
   display: flex;
@@ -137,6 +139,12 @@
   }
   .register .register-main .rm-registerwith > div > i {
     font-size: 2rem;
+  }
+  .register .register-main .rm-header {
+    text-align: left;
+  }
+  .register .register-extra .re-header {
+    text-align: left;
   }
   .register .register-extra .re-primary > select {
     background-color: var(--background-color1);
