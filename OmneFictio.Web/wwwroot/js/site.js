@@ -57,11 +57,15 @@ $('.login-openbtn, .lm-closebtn').click(function(){
             $('#login-modal').addClass('opacity-100');
         }, 100);
     }
+    //Close others after opening login modal
     if($('.account-dropdown').hasClass('d-block')){
         $('.account-dropdown').removeClass('opacity-100');
         setTimeout(function(){
             $('.account-dropdown').removeClass('d-block');
         }, 100);
+    }
+    if($('.drawer').hasClass('drawer-active')){
+        $('.drawer').removeClass('drawer-active');
     }
 });
 

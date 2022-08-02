@@ -304,7 +304,7 @@ header .header-wrap {
   margin-bottom: 14px;
   background-color: var(--background-color1);
   color: var(--text-color1);
-  padding: 6px;
+  padding: 6px 10px;
   border-radius: 4px;
   border: none;
   outline: none;
@@ -338,6 +338,7 @@ header .header-wrap {
 .login-modal .lm-loginwith > div > i {
   font-size: 1.2rem;
   margin: 0 auto;
+  color: #fff;
 }
 .login-modal .lm-loginwith .facebook {
   background-color: #284878;
@@ -625,6 +626,11 @@ header .header-wrap {
 @media (min-width: 1300px) {
   .searchbar-wrap {
     max-width: 550px !important;
+  }
+}
+@media (max-width: 240px) {
+  .notifications-shortcut {
+    display: none;
   }
 }
 @media (max-width: 767.98px) {

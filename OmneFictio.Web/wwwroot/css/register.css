@@ -1,1 +1,144 @@
-/*# sourceMappingURL=register.css.map */
+.register {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  color: var(--text-color1);
+  font-family: "Itim", cursive;
+}
+.register .register-main {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 12px;
+}
+.register .register-main .rm-header {
+  padding: 8px;
+  width: 100%;
+}
+.register .register-main .rm-header span {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 1.5rem;
+}
+.register .register-main .rm-primary {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.register .register-main .rm-primary .rm-textbox {
+  width: 100%;
+  margin-bottom: 14px;
+  background-color: var(--background-color2);
+  color: var(--text-color1);
+  padding: 6px 10px;
+  border-radius: 4px;
+  border: none;
+  outline: none;
+}
+.register .register-main .rm-primary .rm-submit {
+  width: 50%;
+  border: none;
+  outline: none;
+  background-color: #4f5192;
+  color: #fff;
+  border-radius: 8px;
+  padding: 6px;
+  transition: 0.2s ease;
+  margin: 2px 0 16px;
+}
+.register .register-main .rm-primary .rm-submit:hover {
+  background-color: #5a5b95;
+}
+.register .register-main .rm-registerwith {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+.register .register-main .rm-registerwith > div {
+  cursor: pointer;
+  padding: 6px 16px;
+  border-radius: 6px;
+  transition: 0.2s ease;
+}
+.register .register-main .rm-registerwith > div > i {
+  font-size: 1.2rem;
+  margin: 0 auto;
+  color: #fff;
+}
+.register .register-main .rm-registerwith .facebook {
+  background-color: #284878;
+}
+.register .register-main .rm-registerwith .facebook:hover {
+  background-color: #3e5b86;
+}
+.register .register-main .rm-registerwith .twitter {
+  background-color: #4c7ac0;
+}
+.register .register-main .rm-registerwith .twitter:hover {
+  background-color: #769ad2;
+}
+.register .register-main .rm-registerwith .google {
+  background-color: #a23535;
+}
+.register .register-main .rm-registerwith .google:hover {
+  background-color: #b25252;
+}
+.register .register-extra {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 12px;
+  font-size: 1.2rem;
+}
+.register .register-extra .re-header {
+  padding: 8px;
+  width: 100%;
+}
+.register .register-extra .re-header span {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 1.5rem;
+}
+.register .register-extra .re-primary {
+  display: flex;
+  flex-direction: column;
+  padding: 0 20px;
+}
+.register .register-extra .re-primary > * {
+  width: 100%;
+  margin-bottom: 10px;
+}
+.register .register-extra .re-primary > label {
+  display: flex;
+  flex-direction: row;
+}
+.register .register-extra .re-primary > label > span {
+  padding-right: 6px;
+}
+.register .register-extra .re-primary > label > input {
+  width: 1rem;
+}
+.register .register-extra .re-primary > select {
+  background-color: var(--background-color2);
+  color: var(--text-color1);
+  border-radius: 4px;
+  border: none;
+  outline: none;
+  padding: 6px;
+}
+
+@media (min-width: 768px) {
+  .register {
+    flex-direction: row;
+  }
+  .register .register-main .rm-primary .rm-textbox {
+    background-color: var(--background-color1);
+  }
+  .register .register-main .rm-registerwith {
+    padding-top: 14px;
+  }
+  .register .register-main .rm-registerwith > div > i {
+    font-size: 2rem;
+  }
+  .register .register-extra .re-primary > select {
+    background-color: var(--background-color1);
+  }
+}/*# sourceMappingURL=register.css.map */
