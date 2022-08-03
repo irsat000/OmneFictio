@@ -62,4 +62,11 @@ public class HomeController : Controller
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
+
+    
+    public async Task<IActionResult> UserRegistration(AccountWrite1 account)
+    {
+        var result = await _httpClient.PostAsJsonAsync("https://localhost:7022/register", account);
+        return RedirectToAction("Index", "Home");
+    }
 }

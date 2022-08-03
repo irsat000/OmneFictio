@@ -8,15 +8,15 @@
     }
 }
 
-<div class="register">
+<form asp-controller="Home" asp-action="UserRegistration" method="post" class="register">
     <div class="register-main">
         <div class="rm-header">
             <span>Register</span>
         </div>
         <div class="rm-primary">
-            <input type="text" placeholder="Username" name="username" class="rm-textbox">
-            <input type="text" placeholder="Email" name="email" class="rm-textbox">
-            <input type="password" placeholder="Password" name="password" class="rm-textbox">
+            <input type="text" placeholder="Username" name="Username" class="rm-textbox">
+            <input type="text" placeholder="Email" name="Email" class="rm-textbox">
+            <input type="password" placeholder="Password" name="Pw" class="rm-textbox">
             <input type="password" placeholder="Confirm Password" class="rm-textbox">
             <input type="submit" value="Register" class="rm-submit">
         </div>
@@ -37,10 +37,10 @@
             <span>Extras</span>
         </div>
         <div class="re-primary">
-            <label><span>Allow sexual content</span><input type="checkbox" name="allowsexual"></label>
-            <label><span>Allow violent content</span><input type="checkbox" name="allowviolence"></label>
+            <label><span>Allow sexual content</span><input type="checkbox" name="AllowSexual" value="true" checked></label>
+            <label><span>Allow violent content</span><input type="checkbox" name="AllowViolence" value="true" checked></label>
             <span>Preferred language:</span>
-            <select name="language">
+            <select name="PrefLanguageId">
                 <option value="0">Language</option>
                 <option value="1">Turkish</option>
                 <option value="2">English</option>
@@ -50,4 +50,4 @@
             </select>
         </div>
     </div>
-</div>
+</form>
