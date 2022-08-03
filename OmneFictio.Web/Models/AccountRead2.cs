@@ -1,7 +1,7 @@
 
-namespace OmneFictio.MinApi.Dtos;
+namespace Models;
 
-public partial class AccountDtoRead_2
+public partial class AccountRead2
 {
     public string Username { get; set; } = null!;
     public string Pw { get; set; } = null!;

@@ -21,7 +21,7 @@
 <body class="darkmode">
     <div class="click-outside"></div>
     <div class="f-modaldarkness"></div>
-    <form class="login-modal" id="login-modal">
+    <form asp-controller="Home" asp-action="UserLogin" method="post" class="login-modal" id="login-modal">
         <div class="lm-header">
             <span class="lm-title">Login</span>
             <div class="lm-closebtn">
@@ -29,8 +29,8 @@
             </div>
         </div>
         <div class="lm-primary">
-            <input type="text" placeholder="Username/Email" name="username_email" class="lm-textbox">
-            <input type="password" placeholder="Password" name="password" class="lm-textbox">
+            <input type="text" placeholder="Username/Email" name="Username" class="lm-textbox">
+            <input type="password" placeholder="Password" name="Pw" class="lm-textbox">
             <input type="submit" value="Login" class="lm-submit">
         </div>
         <div class="lm-loginwith">

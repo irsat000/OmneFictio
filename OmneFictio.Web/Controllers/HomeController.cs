@@ -24,28 +24,18 @@ public class HomeController : Controller
 
     public async Task<IActionResult> Read(string? type)
     {
-        Stopwatch stopwatch2 = new Stopwatch();
-        Stopwatch stopwatch3 = new Stopwatch();
-
         List<PostRead1>? posts = new List<PostRead1>();
         string postsUrl = "https://localhost:7022/posts";
         
-        stopwatch2.Start();
         string raw = await _httpClient.GetStringAsync(postsUrl);
-        stopwatch2.Stop();
 
-        stopwatch3.Start();
         //posts = JsonConvert.DeserializeObject<List<PostRead1>>(raw);
         posts = JsonSerializer.Deserialize<List<PostRead1>>(raw);
-        stopwatch3.Stop();
         ReadViewmodel viewModel = new ReadViewmodel{
             posts = posts
         };
 
-        Console.WriteLine($"getting raw data: {stopwatch2.Elapsed}");
-        Console.WriteLine($"deserializing: {stopwatch3.Elapsed}");
         return View(viewModel);
-        //return View(viewModel);
     }
     public IActionResult Register()
     {
@@ -66,7 +56,14 @@ public class HomeController : Controller
     
     public async Task<IActionResult> UserRegistration(AccountWrite1 account)
     {
-        var result = await _httpClient.PostAsJsonAsync("https://localhost:7022/register", account);
+        var registerResult = await _httpClient.PostAsJsonAsync("https://localhost:7022/register", account);
+        return RedirectToAction("Index", "Home");
+    }
+    public async Task<IActionResult> UserLogin(AccountRead2 account)
+    {
+        var loginResult = await _httpClient.PostAsJsonAsync("https://localhost:7022/login", account);
+        string token = await loginResult.Content.ReadAsStringAsync();
+        Console.WriteLine(token);
         return RedirectToAction("Index", "Home");
     }
 }
