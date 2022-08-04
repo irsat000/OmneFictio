@@ -290,6 +290,18 @@ header{
             &:hover{
                 background-color: #b25252;
             }
+            position: relative;
+            > div{
+                position: absolute;
+                left:0;
+                top:0;
+                width: 100% !important;
+                height: 100% !important;
+                opacity: 0;
+                *{
+                    display: none;
+                }
+            }
         }
     }
     .lm-forgot{

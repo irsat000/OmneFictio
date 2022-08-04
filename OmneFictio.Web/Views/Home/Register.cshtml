@@ -7,7 +7,6 @@
         <script src="~/js/register.js" asp-append-version="true" ></script>
     }
 }
-
 <form asp-controller="Home" asp-action="UserRegistration" method="post" class="register">
     <div class="register-main">
         <div class="rm-header">
@@ -27,7 +26,7 @@
             <div class="twitter">
                 <i class="bi bi-twitter"></i>
             </div>
-            <div class="google">
+            <div class="google g-signin2" data-onsuccess="onSigninGoogle">
                 <i class="bi bi-google"></i>
             </div>
         </div>

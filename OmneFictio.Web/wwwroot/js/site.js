@@ -3,6 +3,9 @@
 
 // Write your JavaScript code.
 
+function googleRenderButton(){
+    $(".google").append('<i class="bi bi-google"></i>');
+}
 
 $('.click-outside').click(function(){
     closeModalsDrowpdownsEtc();

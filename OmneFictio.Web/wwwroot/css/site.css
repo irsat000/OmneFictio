@@ -358,9 +358,21 @@ header .header-wrap {
 }
 .login-modal .lm-loginwith .google {
   background-color: #a23535;
+  position: relative;
 }
 .login-modal .lm-loginwith .google:hover {
   background-color: #b25252;
+}
+.login-modal .lm-loginwith .google > div {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100% !important;
+  height: 100% !important;
+  opacity: 0;
+}
+.login-modal .lm-loginwith .google > div * {
+  display: none;
 }
 .login-modal .lm-forgot {
   text-align: center;

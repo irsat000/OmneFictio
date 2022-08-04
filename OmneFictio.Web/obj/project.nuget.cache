@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "COGOHLVCF1KtskZYrWWkclg/1HH3BLuSNao6XkgtJXj5+iY0+yCM49sRysK6/DNaWO5MrHBCMqLObq4kwQLIRg==",
+  "dgSpecHash": "FyaxeiL0MSITJdSlxam8Fcuaf6UjqGWCuNWGT4uoDRfn/NXdJF+XPDRhYW6qu6gGX21yWVijp4qF3WHkTKEhmA==",
   "success": true,
   "projectFilePath": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\OmneFictio.Web.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.authentication.google\\6.0.7\\microsoft.aspnetcore.authentication.google.6.0.7.nupkg.sha512"
+  ],
   "logs": []
 }

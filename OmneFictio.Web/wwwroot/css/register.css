@@ -82,9 +82,21 @@
 }
 .register .register-main .rm-registerwith .google {
   background-color: #a23535;
+  position: relative;
 }
 .register .register-main .rm-registerwith .google:hover {
   background-color: #b25252;
+}
+.register .register-main .rm-registerwith .google > div {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100% !important;
+  height: 100% !important;
+  opacity: 0;
+}
+.register .register-main .rm-registerwith .google > div * {
+  display: none;
 }
 .register .register-extra {
   display: flex;
