@@ -63,7 +63,6 @@ public class HomeController : Controller
     {
         var loginResult = await _httpClient.PostAsJsonAsync("https://localhost:7022/login", account);
         string token = await loginResult.Content.ReadAsStringAsync();
-        Console.WriteLine(token);
         return RedirectToAction("Index", "Home");
     }
 }

@@ -4,6 +4,9 @@
   width: 100%;
   color: var(--text-color1);
   font-family: "Itim", cursive;
+  margin-top: 20px;
+  border-radius: 10px;
+  background: var(--register-form-color);
 }
 .register .register-main {
   display: flex;
@@ -28,7 +31,7 @@
 .register .register-main .rm-primary .rm-textbox {
   width: 100%;
   margin-bottom: 14px;
-  background-color: var(--background-color2);
+  background-color: var(--register-input-color);
   color: var(--text-color1);
   padding: 6px 10px;
   border-radius: 4px;
@@ -119,7 +122,7 @@
   width: 1rem;
 }
 .register .register-extra .re-primary > select {
-  background-color: var(--background-color2);
+  background-color: var(--register-input-color);
   color: var(--text-color1);
   border-radius: 4px;
   border: none;
@@ -130,9 +133,7 @@
 @media (min-width: 768px) {
   .register {
     flex-direction: row;
-  }
-  .register .register-main .rm-primary .rm-textbox {
-    background-color: var(--background-color1);
+    padding: 20px 0;
   }
   .register .register-main .rm-registerwith {
     padding-top: 14px;
@@ -145,8 +146,5 @@
   }
   .register .register-extra .re-header {
     text-align: left;
-  }
-  .register .register-extra .re-primary > select {
-    background-color: var(--background-color1);
   }
 }/*# sourceMappingURL=register.css.map */

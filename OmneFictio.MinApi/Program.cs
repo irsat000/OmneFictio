@@ -49,21 +49,16 @@ app.MapGet("/posts", async (OmneFictioContext db) => {
 
 app.MapPost("/login", async (OmneFictioContext db, AccountDtoRead_2 request) => {
     var user = mapper.Map<AccountDtoRead_3>(db.Accounts.SingleOrDefault(x => x.Username == request.Username));
-    if(user == null)
-        user = mapper.Map<AccountDtoRead_3>(db.Accounts.SingleOrDefault(x => x.Email == request.Username));
     if (user == null || !BC.Verify(request.Pw, user.Pw))
         return Results.BadRequest("Login failed");
     var token = CreateToken(user);
-    return Results.Ok(token);
+    return Results.Ok(new {token});
 });
 
 app.MapPost("/register", async (OmneFictioContext db, AccountDtoWrite_1 request) => {
     Regex usernameRegex = new Regex(@"[A-Za-z0-9_]{3,30}");
     if(!usernameRegex.IsMatch(request.Username) ||
-        db.Accounts.Any(a => a.Username == request.Username) ||
-        db.Accounts.Any(a => a.Username == request.Email ||
-        db.Accounts.Any(a => a.Email == request.Username) ||
-        db.Accounts.Any(a => a.Email == request.Email)))
+        db.Accounts.Any(a => a.Username == request.Username))
         return Results.BadRequest("Registration failed");
 
     string passwordHash = BC.HashPassword(request.Pw);
@@ -88,7 +83,7 @@ string CreateToken(AccountDtoRead_3 user){
     var tokenHandler = new JwtSecurityTokenHandler();
     var tokenDescriptor = new SecurityTokenDescriptor {
         Subject = new ClaimsIdentity(new List<Claim>(){
-            new Claim(ClaimTypes.SerialNumber, user.Id.ToString()),
+            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
             new Claim(ClaimTypes.Name, user.Username),
             new Claim(ClaimTypes.Email, user.Email)
         }),
@@ -108,40 +103,3 @@ void CreatePwHash(string pw, out byte[] pwHash, out byte[] pwSalt){
 }*/
 
 app.Run();
-
-
-/*
-    return await db.Posts
-    .Select(p => new {
-            Id = p.Id,
-            Title = p.Title,
-            PostDescription = p.PostDescription,
-            PublishDate = p.PublishDate,
-            UpdateDate = p.UpdateDate,
-            DeletedStatus = new {
-                Id = p.DeletedStatus!.Id,
-                Username = p.DeletedStatus.Body
-            },
-            PostStatus = new {
-                Id = p.PostStatus!.Id,
-                Username = p.PostStatus.Body
-            },
-            PostType = new {
-                Id = p.PostType!.Id,
-                Username = p.PostType.Body
-            },
-            Language = new {
-                Id = p.Language!.Id,
-                Body = p.Language.Body
-            },
-            Account = new {
-                Id = p.Account!.Id,
-                Username = p.Account.Username,
-                PPic = p.Account.ProfilePic
-            },
-            Tags = p.Tags,
-            Votes = p.Votes,
-            Rates = p.Rates
-    })
-    .ToListAsync();
-*/
