@@ -22,12 +22,12 @@
     @RenderSection("Stylesheets", required: false)
 </head>
 <body class="darkmode">
-    
-    <script src="https://accounts.google.com/gsi/client" async defer></script>
     <div id="g_id_onload"
          data-client_id="589655350334-bdk3rgelbo3i4otkj08f2hvc69g1lql4.apps.googleusercontent.com"
-         data-callback="handleCredentialResponse">
+         data-ux_mode="popup"
+         data-callback="googleHandleCredentialResponse">
     </div>
+    <div class="g_id_signin" data-type="standard"></div>
     <div class="click-outside"></div>
     <div class="f-modaldarkness"></div>
     <form asp-controller="Home" asp-action="UserLogin" method="post" class="login-modal" id="login-modal">
@@ -173,6 +173,8 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
     @await RenderSectionAsync("Scripts", required: false)
     <!--RenderSection("Scripts", required: false)-->
 </body>

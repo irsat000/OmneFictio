@@ -17,10 +17,10 @@ public class AuthController : Controller
         _httpClient = httpClient;
     }
 
-    [HttpGet]
-    [Route("signin-google")]
-    public IActionResult GoogleSigninRedirect()
+    [HttpPost]
+    //[Route("google-signup")]
+    public JsonResult GoogleSignup(String jwt)
     {
-        return RedirectToAction("Home", "Register");
+        return new JsonResult(Ok());
     }
 }
