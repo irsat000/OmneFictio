@@ -22,7 +22,7 @@ namespace OmneFictio.MinApi.Models
 
         public int Id { get; set; }
         public string Username { get; set; } = null!;
-        public string Pw { get; set; } = null!;
+        public string? Pw { get; set; }
         public string Email { get; set; } = null!;
         public bool? EmailValid { get; set; }
         public string? ProfilePic { get; set; }
@@ -32,6 +32,7 @@ namespace OmneFictio.MinApi.Models
         public bool? AllowViolence { get; set; }
         public byte? DeletedStatusId { get; set; }
         public int? PrefLanguageId { get; set; }
+        public string? DisplayName { get; set; }
 
         public virtual DeletedStatus? DeletedStatus { get; set; }
         public virtual Language? PrefLanguage { get; set; }

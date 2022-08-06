@@ -3,8 +3,16 @@
 
 // Write your JavaScript code.
 
-function googleRenderButton(){
+//google auth
+function renderButton(){
     $(".google").append('<i class="bi bi-google"></i>');
+}
+function googleOnSignIn(googleUser) {
+    console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
+    alert("wait, it worked?");
+}
+function googleOnFailure(error) {
+    console.log(error);
 }
 
 $('.click-outside').click(function(){

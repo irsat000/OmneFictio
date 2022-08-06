@@ -16,7 +16,6 @@ public class HomeController : Controller
         _logger = logger;
         _httpClient = httpClient;
     }
-
     public async Task<IActionResult> Index()
     {
         return View();

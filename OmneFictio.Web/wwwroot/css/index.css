@@ -554,4 +554,9 @@ main {
   .linkgroups .misclinks > .linkgroup {
     padding: 20px;
   }
+}
+@media (max-width: 240px) {
+  .linkgroups .link_cont {
+    width: 49% !important;
+  }
 }/*# sourceMappingURL=index.css.map */

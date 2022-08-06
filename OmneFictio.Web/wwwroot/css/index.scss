@@ -342,8 +342,10 @@ main{
 @media (max-width: 340px) {
     
 }
-@media (max-width: 260px) {
-    
+@media (max-width: 240px) {
+    .linkgroups .link_cont{
+        width: 49% !important;
+    }
 }
 
 

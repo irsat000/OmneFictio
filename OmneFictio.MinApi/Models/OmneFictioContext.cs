@@ -69,6 +69,11 @@ namespace OmneFictio.MinApi.Models
                     .HasColumnName("deletedStatusId")
                     .HasDefaultValueSql("((1))");
 
+                entity.Property(e => e.DisplayName)
+                    .HasMaxLength(60)
+                    .IsUnicode(false)
+                    .HasColumnName("displayName");
+
                 entity.Property(e => e.Email)
                     .HasMaxLength(250)
                     .IsUnicode(false)
