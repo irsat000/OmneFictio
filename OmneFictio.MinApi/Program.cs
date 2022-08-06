@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using OmneFictio.MinApi.Models;
 using OmneFictio.MinApi.Dtos;
 using OmneFictio.MinApi.Configurations;
+using OmneFictio.MinApi.Stored;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using AutoMapper;
@@ -11,6 +12,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using BC = BCrypt.Net.BCrypt;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<OmneFictioContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -22,6 +24,8 @@ JsonSerializerOptions options = new(){
     ReferenceHandler = ReferenceHandler.Preserve,
     WriteIndented = true
 };
+JwtSecurityTokenHandler _jwtHandler = new JwtSecurityTokenHandler();
+Random _random = new Random(); 
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
@@ -51,7 +55,7 @@ app.MapPost("/login", async (OmneFictioContext db, AccountDtoRead_2 request) => 
     var user = mapper.Map<AccountDtoRead_3>(db.Accounts.SingleOrDefault(x => x.Username == request.Username));
     if (user == null || !BC.Verify(request.Pw, user.Pw))
         return Results.BadRequest("Login failed");
-    var token = CreateToken(user);
+    var token = MyMethods.CreateUserToken(user, securityToken);
     return Results.Ok(new {token});
 });
 
@@ -66,6 +70,7 @@ app.MapPost("/register", async (OmneFictioContext db, AccountDtoWrite_1 request)
     newAccount.Username = request.Username;
     newAccount.Pw = passwordHash;
     newAccount.Email = request.Email;
+    newAccount.ExternalType = "native";
     if(request.AllowSexual != null)
         newAccount.AllowSexual = request.AllowSexual;
     if(request.AllowViolence != null)
@@ -79,27 +84,41 @@ app.MapPost("/register", async (OmneFictioContext db, AccountDtoWrite_1 request)
     return Results.Ok();
 });
 
-string CreateToken(AccountDtoRead_3 user){
-    var tokenHandler = new JwtSecurityTokenHandler();
-    var tokenDescriptor = new SecurityTokenDescriptor {
-        Subject = new ClaimsIdentity(new List<Claim>(){
-            new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
-            new Claim(ClaimTypes.Name, user.Username),
-            new Claim(ClaimTypes.Email, user.Email)
-        }),
-        Issuer = "OmneFictio.com",
-        Expires = DateTime.UtcNow.AddDays(30),
-        SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(securityToken), SecurityAlgorithms.HmacSha256Signature)
-    };
-    var token = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
-    return token;
-}
-/*
-void CreatePwHash(string pw, out byte[] pwHash, out byte[] pwSalt){
-    using(var hmac = new HMACSHA512()){
-        pwSalt = hmac.Key;
-        pwHash = hmac.ComputeHash(Encoding.UTF8.GetBytes(pw));
+app.MapPost("/register-external", async (OmneFictioContext db, [FromBody] string token) => {
+    var jwt = _jwtHandler.ReadJwtToken(token);
+    
+    bool verified = bool.Parse(jwt.Claims.First(claim => claim.Type == "email_verified").Value);
+    if(verified == false)
+        return Results.BadRequest("1");
+    var extid = jwt.Claims.First(claim => claim.Type == "sub").Value;
+    
+    if(!db.Accounts.Any(a => a.ExternalId == extid && a.ExternalType == "google")){
+        var email = jwt.Claims.First(claim => claim.Type == "email").Value;
+        var profilePic = jwt.Claims.First(claim => claim.Type == "picture").Value;
+        var name = Regex.Replace(jwt.Claims.First(claim => claim.Type == "name").Value, @"\s+", "");
+        var username = name;
+        while(db.Accounts.Any(a => a.Username == username)){
+            username = name + _random.Next(100, 1000).ToString();
+        }
+        
+        string passwordHash = BC.HashPassword(GeneratePassword.Generate(16, 8));
+        AccountDtoWrite_3 newAccount = new AccountDtoWrite_3();
+        newAccount.Username = username;
+        newAccount.Email = email;
+        newAccount.ExternalId = extid;
+        newAccount.ProfilePic = profilePic;
+        newAccount.DisplayName = name;
+        newAccount.Pw = passwordHash;
+        newAccount.ExternalType = "google";
+        newAccount.AllowSexual = true;
+        newAccount.AllowViolence = true;
+        newAccount.PrefLanguageId = null;
+        db.Accounts.Add(mapper.Map<Account>(newAccount));
+        await db.SaveChangesAsync();
     }
-}*/
+
+    return Results.Ok(new {extid});
+});
+
 
 app.Run();

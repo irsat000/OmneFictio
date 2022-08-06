@@ -11,7 +11,7 @@ function googleHandleCredentialResponse(response) {
     $.ajax({
         type : "POST",
         url: "https://localhost:7067/Auth/GoogleSignup",
-        data: {jwt: response.credential},
+        data: {token: response.credential},
         timeout: 0,
         success: function () {
             alert("success");

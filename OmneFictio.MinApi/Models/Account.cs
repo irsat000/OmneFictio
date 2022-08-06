@@ -33,6 +33,8 @@ namespace OmneFictio.MinApi.Models
         public byte? DeletedStatusId { get; set; }
         public int? PrefLanguageId { get; set; }
         public string? DisplayName { get; set; }
+        public string? ExternalId { get; set; }
+        public string? ExternalType { get; set; }
 
         public virtual DeletedStatus? DeletedStatus { get; set; }
         public virtual Language? PrefLanguage { get; set; }

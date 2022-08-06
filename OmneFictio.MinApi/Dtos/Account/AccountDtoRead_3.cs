@@ -11,3 +11,4 @@ public partial class AccountDtoRead_3
     public string? Pw { get; set; }
     public string Email { get; set; } = null!;
 }
+//After authentication, map user

@@ -15,3 +15,4 @@ public partial class AccountDtoRead_1
     public virtual DeletedStatusDto? DeletedStatus { get; set; }
     public virtual ICollection<AuthorityDto>? Authorities { get; set; }
 }
+//Post's owner

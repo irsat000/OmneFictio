@@ -83,6 +83,17 @@ namespace OmneFictio.MinApi.Models
                     .HasColumnName("emailValid")
                     .HasDefaultValueSql("((0))");
 
+                entity.Property(e => e.ExternalId)
+                    .HasMaxLength(64)
+                    .IsUnicode(false)
+                    .HasColumnName("externalId");
+
+                entity.Property(e => e.ExternalType)
+                    .HasMaxLength(25)
+                    .IsUnicode(false)
+                    .HasColumnName("externalType")
+                    .HasDefaultValueSql("('Native')");
+
                 entity.Property(e => e.Gold)
                     .HasColumnName("gold")
                     .HasDefaultValueSql("((0))");

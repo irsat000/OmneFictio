@@ -51,17 +51,4 @@ public class HomeController : Controller
     {
         return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
     }
-
-    
-    public async Task<IActionResult> UserRegistration(AccountWrite1 account)
-    {
-        var registerResult = await _httpClient.PostAsJsonAsync("https://localhost:7022/register", account);
-        return RedirectToAction("Index", "Home");
-    }
-    public async Task<IActionResult> UserLogin(AccountRead2 account)
-    {
-        var loginResult = await _httpClient.PostAsJsonAsync("https://localhost:7022/login", account);
-        string token = await loginResult.Content.ReadAsStringAsync();
-        return RedirectToAction("Index", "Home");
-    }
 }
