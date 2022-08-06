@@ -292,15 +292,12 @@ header{
             }
             position: relative;
             > div{
-                position: absolute;
+                position: absolute !important;
                 left:0;
                 top:0;
                 width: 100% !important;
                 height: 100% !important;
                 opacity: 0;
-                *{
-                    display: none;
-                }
             }
         }
     }

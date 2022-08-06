@@ -4,16 +4,9 @@
 // Write your JavaScript code.
 
 //google auth
-function renderButton(){
+$(document).ready(function() {
     $(".google").append('<i class="bi bi-google"></i>');
-}
-function googleOnSignIn(googleUser) {
-    console.log('Logged in as: ' + googleUser.getBasicProfile().getName());
-    alert("wait, it worked?");
-}
-function googleOnFailure(error) {
-    console.log(error);
-}
+});
 
 $('.click-outside').click(function(){
     closeModalsDrowpdownsEtc();
