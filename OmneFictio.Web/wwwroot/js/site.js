@@ -14,17 +14,17 @@ function googleHandleCredentialResponse(response) {
         data: {token: response.credential},
         timeout: 0,
         success: function () {
-            alert("success");
+            window.location.replace("https://localhost:7067");
         },
         error: function () {
-            alert("failed");
+            alert("Login with google failed");
         }
     });
     /*const responsePayload = decodeJwtResponse(response.credential);
     console.log("ID: " + responsePayload.sub);
     console.log('Full Name: ' + responsePayload.name);
     console.log("Email: " + responsePayload.email);*/
- }
+ }/*
  function decodeJwtResponse(token) {
     var base64Url = token.split('.')[1];
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -32,7 +32,7 @@ function googleHandleCredentialResponse(response) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
     return JSON.parse(jsonPayload);
-};
+};*/
 //--------------
 
 

@@ -1,16 +1,16 @@
-using Microsoft.EntityFrameworkCore;
 using OmneFictio.MinApi.Models;
 using OmneFictio.MinApi.Dtos;
 using OmneFictio.MinApi.Configurations;
 using OmneFictio.MinApi.Stored;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using System.Text.Json.Serialization;
-using AutoMapper;
 using System.Text.RegularExpressions;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text;
+using AutoMapper;
 using BC = BCrypt.Net.BCrypt;
-using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<OmneFictioContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -93,9 +93,9 @@ app.MapPost("/register-external", async (OmneFictioContext db, [FromBody] string
     bool verified = bool.Parse(jwt.Claims.First(claim => claim.Type == "email_verified").Value);
     if(verified == false)
         return Results.BadRequest("The account is not a verified one.");
-    var extid = jwt.Claims.First(claim => claim.Type == "sub").Value;
+    var extId = jwt.Claims.First(claim => claim.Type == "sub").Value;
     
-    if(!db.Accounts.Any(a => a.ExternalId == extid && a.ExternalType == "google")){
+    if(db.Accounts.SingleOrDefault(a => a.ExternalId == extId && a.ExternalType == "google") == null){
         var email = jwt.Claims.First(claim => claim.Type == "email").Value;
         var profilePic = jwt.Claims.First(claim => claim.Type == "picture").Value;
         var name = Regex.Replace(jwt.Claims.First(claim => claim.Type == "name").Value, @"\s+", "");
@@ -108,7 +108,7 @@ app.MapPost("/register-external", async (OmneFictioContext db, [FromBody] string
         AccountDtoWrite_3 newAccount = new AccountDtoWrite_3();
         newAccount.Username = username;
         newAccount.Email = email;
-        newAccount.ExternalId = extid;
+        newAccount.ExternalId = extId;
         newAccount.ProfilePic = profilePic;
         newAccount.DisplayName = name;
         newAccount.Pw = passwordHash;
@@ -119,7 +119,7 @@ app.MapPost("/register-external", async (OmneFictioContext db, [FromBody] string
         db.Accounts.Add(mapper.Map<Account>(newAccount));
         await db.SaveChangesAsync();
     }
-    var user = mapper.Map<AccountDtoRead_4>(db.Accounts.Any(a => a.ExternalId == extid && a.ExternalType == "google"));
+    var user = mapper.Map<AccountDtoRead_4>(db.Accounts.SingleOrDefault(a => a.ExternalId == extId && a.ExternalType == "google"));
     if (user == null)
         return Results.Ok();
     var createToken = MyMethods.CreateUserToken(user, securityToken);

@@ -1,7 +1,6 @@
 ﻿using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using OmneFictio.Web.Models;
-using Models;
 using System.Text.Json;
 
 namespace OmneFictio.Web.Controllers;
@@ -18,7 +17,11 @@ public class HomeController : Controller
     }
     public async Task<IActionResult> Index()
     {
-        return View();
+        IndexViewmodel viewModel = new IndexViewmodel{
+            sessionUserId = HttpContext.Session.GetString("userId"),
+            sessionUsername = HttpContext.Session.GetString("username")
+        };
+        return View(viewModel);
     }
 
     public async Task<IActionResult> Read(string? type)

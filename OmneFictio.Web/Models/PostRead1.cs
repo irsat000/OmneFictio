@@ -1,5 +1,5 @@
 // Root myDeserializedClass = JsonConvert.DeserializeObject<List<Root>>(myJsonResponse);
-    namespace Models;
+namespace OmneFictio.Web.Models;
     public class Account
     {
         public int id { get; set; }

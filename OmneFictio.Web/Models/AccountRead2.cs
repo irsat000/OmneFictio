@@ -1,5 +1,5 @@
 
-namespace Models;
+namespace OmneFictio.Web.Models;
 
 public partial class AccountRead2
 {
