@@ -28,7 +28,6 @@ public class HomeController : Controller
         
         string raw = await _httpClient.GetStringAsync(postsUrl);
 
-        //posts = JsonConvert.DeserializeObject<List<PostRead1>>(raw);
         posts = JsonSerializer.Deserialize<List<PostRead1>>(raw);
         ReadViewmodel viewModel = new ReadViewmodel{
             posts = posts

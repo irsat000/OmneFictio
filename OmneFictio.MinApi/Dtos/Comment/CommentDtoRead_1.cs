@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using OmneFictio.MinApi.Dtos;
-
+﻿
 namespace OmneFictio.MinApi.Dtos
 {
     public partial class CommentDtoRead_1

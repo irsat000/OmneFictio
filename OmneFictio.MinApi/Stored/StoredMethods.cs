@@ -79,7 +79,7 @@ public static class GeneratePassword
 }
 
 public static class MyMethods{
-    public static string CreateUserToken(AccountDtoRead_3 user, byte[] securityToken){
+    public static string CreateUserToken(AccountDtoRead_4 user, byte[] securityToken){
         var tokenHandler = new JwtSecurityTokenHandler();
         var tokenDescriptor = new SecurityTokenDescriptor {
             Subject = new ClaimsIdentity(new List<Claim>(){

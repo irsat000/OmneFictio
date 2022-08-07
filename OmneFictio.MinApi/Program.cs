@@ -8,10 +8,8 @@ using System.Text.Json.Serialization;
 using AutoMapper;
 using System.Text.RegularExpressions;
 using System.IdentityModel.Tokens.Jwt;
-using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using BC = BCrypt.Net.BCrypt;
-using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -52,11 +50,13 @@ app.MapGet("/posts", async (OmneFictioContext db) => {
 });
 
 app.MapPost("/login", async (OmneFictioContext db, AccountDtoRead_2 request) => {
-    var user = mapper.Map<AccountDtoRead_3>(db.Accounts.SingleOrDefault(x => x.Username == request.Username));
-    if (user == null || !BC.Verify(request.Pw, user.Pw))
+    var checkUser = mapper.Map<AccountDtoRead_3>(db.Accounts.SingleOrDefault(x => x.Username == request.Username));
+    if (checkUser == null || !BC.Verify(request.Pw, checkUser.Pw))
         return Results.BadRequest("Login failed");
-    var token = MyMethods.CreateUserToken(user, securityToken);
-    return Results.Ok(new {token});
+    
+    var user = mapper.Map<AccountDtoRead_4>(db.Accounts.SingleOrDefault(x => x.Username == request.Username));
+    var createToken = MyMethods.CreateUserToken(user, securityToken);
+    return Results.Ok(new {jwt=createToken});
 });
 
 app.MapPost("/register", async (OmneFictioContext db, AccountDtoWrite_1 request) => {
@@ -80,8 +80,11 @@ app.MapPost("/register", async (OmneFictioContext db, AccountDtoWrite_1 request)
     db.Accounts.Add(mapper.Map<Account>(newAccount));
     await db.SaveChangesAsync();
 
-    //token function call
-    return Results.Ok();
+    var user = mapper.Map<AccountDtoRead_4>(db.Accounts.SingleOrDefault(x => x.Username == request.Username));
+    if (user == null)
+        return Results.Ok();
+    var createToken = MyMethods.CreateUserToken(user, securityToken);
+    return Results.Ok(new {jwt=createToken});
 });
 
 app.MapPost("/register-external", async (OmneFictioContext db, [FromBody] string token) => {
@@ -89,7 +92,7 @@ app.MapPost("/register-external", async (OmneFictioContext db, [FromBody] string
     
     bool verified = bool.Parse(jwt.Claims.First(claim => claim.Type == "email_verified").Value);
     if(verified == false)
-        return Results.BadRequest("1");
+        return Results.BadRequest("The account is not a verified one.");
     var extid = jwt.Claims.First(claim => claim.Type == "sub").Value;
     
     if(!db.Accounts.Any(a => a.ExternalId == extid && a.ExternalType == "google")){
@@ -116,8 +119,11 @@ app.MapPost("/register-external", async (OmneFictioContext db, [FromBody] string
         db.Accounts.Add(mapper.Map<Account>(newAccount));
         await db.SaveChangesAsync();
     }
-
-    return Results.Ok(new {extid});
+    var user = mapper.Map<AccountDtoRead_4>(db.Accounts.Any(a => a.ExternalId == extid && a.ExternalType == "google"));
+    if (user == null)
+        return Results.Ok();
+    var createToken = MyMethods.CreateUserToken(user, securityToken);
+    return Results.Ok(new {jwt=createToken});
 });
 
 
