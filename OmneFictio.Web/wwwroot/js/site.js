@@ -11,7 +11,7 @@ $(document).ready(function() {
 function googleHandleCredentialResponse(response) {
     $.ajax({
         type : "POST",
-        url: "https://localhost:7067/Auth/GoogleSignup",
+        url: "https://localhost:7067/Auth/GoogleSignin",
         data: {token: response.credential},
         timeout: 0,
         success: function () {

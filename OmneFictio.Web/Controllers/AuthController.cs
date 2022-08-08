@@ -21,35 +21,56 @@ public class AuthController : Controller
     
     public async Task<IActionResult> UserLogin(AccountRead2 account)
     {
-        var request = await _httpClient.PostAsJsonAsync("https://localhost:7022/login", account);
-        string token = await request.Content.ReadAsStringAsync();
-        string newTokenRaw = await DeserializeRaw(request);
+        var response = await _httpClient.PostAsJsonAsync("https://localhost:7022/login", account);
+        if((int)response.StatusCode == 404){
+            
+        }
+        string token = await response.Content.ReadAsStringAsync();
+        string newTokenRaw = await getJwtFromResponse(response);
         if(newTokenRaw != null)
             CreateUserSession(newTokenRaw);
         return RedirectToAction("Index", "Home");
     }
     public async Task<IActionResult> UserRegistration(AccountWrite1 account)
     {
-        var request = await _httpClient.PostAsJsonAsync("https://localhost:7022/register", account);
-        string newTokenRaw = await DeserializeRaw(request);
+        var response = await _httpClient.PostAsJsonAsync("https://localhost:7022/register", account);
+        if((int)response.StatusCode == 430){
+            
+        }
+        else if((int)response.StatusCode == 431){
+
+        }
+        else if((int)response.StatusCode == 422){
+            
+        }
+        string newTokenRaw = await getJwtFromResponse(response);
         if(newTokenRaw != null)
             CreateUserSession(newTokenRaw);
         return RedirectToAction("Index", "Home");
     }
 
-    public async Task<JsonResult> GoogleSignup(string token)
+    public async Task<JsonResult> GoogleSignin(string token)
     {
-        var request = await _httpClient.PostAsJsonAsync("https://localhost:7022/register-external", token);
-        string newTokenRaw = await DeserializeRaw(request);
+        var response = await _httpClient.PostAsJsonAsync("https://localhost:7022/signin-external", token);
+        if((int)response.StatusCode == 400){
+            return new JsonResult(StatusCode(400));
+        }
+        else if((int)response.StatusCode == 530){
+            return new JsonResult(StatusCode(530));
+        }
+        else if((int)response.StatusCode == 531){
+            return new JsonResult(StatusCode(531));
+        }
+        string newTokenRaw = await getJwtFromResponse(response);
         if(newTokenRaw != null){
             CreateUserSession(newTokenRaw);
             return new JsonResult(Ok());
         }
         else
-            return new JsonResult(BadRequest("No token returned"));
+            return new JsonResult(UnprocessableEntity());
     }
-    public async Task<string> DeserializeRaw(HttpResponseMessage request){
-        string raw = await request.Content.ReadAsStringAsync();
+    public async Task<string> getJwtFromResponse(HttpResponseMessage response){
+        string raw = await response.Content.ReadAsStringAsync();
         var result = JsonSerializer.Deserialize<Dictionary<string, object>>(raw);
         return result!.FirstOrDefault(x => x.Key == "jwt").Value.ToString()!;
     }

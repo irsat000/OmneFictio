@@ -11,6 +11,7 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using AutoMapper;
 using BC = BCrypt.Net.BCrypt;
+using System.Data.Entity.Validation;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<OmneFictioContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -52,7 +53,7 @@ app.MapGet("/posts", async (OmneFictioContext db) => {
 app.MapPost("/login", async (OmneFictioContext db, AccountDtoRead_2 request) => {
     var checkUser = mapper.Map<AccountDtoRead_3>(db.Accounts.SingleOrDefault(x => x.Username == request.Username));
     if (checkUser == null || !BC.Verify(request.Pw, checkUser.Pw))
-        return Results.BadRequest("Login failed");
+        return Results.NotFound("User not found");
     
     var user = mapper.Map<AccountDtoRead_4>(db.Accounts.SingleOrDefault(x => x.Username == request.Username));
     var createToken = MyMethods.CreateUserToken(user, securityToken);
@@ -61,9 +62,10 @@ app.MapPost("/login", async (OmneFictioContext db, AccountDtoRead_2 request) => 
 
 app.MapPost("/register", async (OmneFictioContext db, AccountDtoWrite_1 request) => {
     Regex usernameRegex = new Regex(@"[A-Za-z0-9_]{3,30}");
-    if(!usernameRegex.IsMatch(request.Username) ||
-        db.Accounts.Any(a => a.Username == request.Username))
-        return Results.BadRequest("Registration failed");
+    if(!usernameRegex.IsMatch(request.Username))
+        return Results.StatusCode(430);
+    if(db.Accounts.Any(a => a.Username == request.Username))
+        return Results.StatusCode(431);
 
     string passwordHash = BC.HashPassword(request.Pw);
     AccountDtoWrite_1 newAccount = new AccountDtoWrite_1();
@@ -77,8 +79,12 @@ app.MapPost("/register", async (OmneFictioContext db, AccountDtoWrite_1 request)
         newAccount.AllowViolence = request.AllowViolence;
     if(db.Languages.Any(l => l.Id == request.PrefLanguageId))
         newAccount.PrefLanguageId = request.PrefLanguageId;
-    db.Accounts.Add(mapper.Map<Account>(newAccount));
-    await db.SaveChangesAsync();
+    try {
+        db.Accounts.Add(mapper.Map<Account>(newAccount));
+        await db.SaveChangesAsync();
+    } catch (DbEntityValidationException e) {
+        return Results.UnprocessableEntity(e);
+    }
 
     var user = mapper.Map<AccountDtoRead_4>(db.Accounts.SingleOrDefault(x => x.Username == request.Username));
     if (user == null)
@@ -87,7 +93,7 @@ app.MapPost("/register", async (OmneFictioContext db, AccountDtoWrite_1 request)
     return Results.Ok(new {jwt=createToken});
 });
 
-app.MapPost("/register-external", async (OmneFictioContext db, [FromBody] string token) => {
+app.MapPost("/signin-external", async (OmneFictioContext db, [FromBody] string token) => {
     var jwt = _jwtHandler.ReadJwtToken(token);
     
     bool verified = bool.Parse(jwt.Claims.First(claim => claim.Type == "email_verified").Value);
@@ -116,12 +122,16 @@ app.MapPost("/register-external", async (OmneFictioContext db, [FromBody] string
         newAccount.AllowSexual = true;
         newAccount.AllowViolence = true;
         newAccount.PrefLanguageId = null;
-        db.Accounts.Add(mapper.Map<Account>(newAccount));
-        await db.SaveChangesAsync();
+        try {
+            db.Accounts.Add(mapper.Map<Account>(newAccount));
+            await db.SaveChangesAsync();
+        } catch (DbEntityValidationException e) {
+            return Results.StatusCode(530);
+        }
     }
     var user = mapper.Map<AccountDtoRead_4>(db.Accounts.SingleOrDefault(a => a.ExternalId == extId && a.ExternalType == "google"));
     if (user == null)
-        return Results.Ok();
+        return Results.StatusCode(531);
     var createToken = MyMethods.CreateUserToken(user, securityToken);
     return Results.Ok(new {jwt=createToken});
 });
