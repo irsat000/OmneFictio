@@ -1,9 +1,7 @@
 ﻿
-namespace OmneFictio.MinApi.Dtos
+namespace OmneFictio.MinApi.Dtos;
+public partial class PostGiftDto
 {
-    public partial class PostGiftDto
-    {
-        public DateTime SentDate { get; set; }
-        public virtual InventoryItemDto? Item { get; set; }
-    }
+    public DateTime SentDate { get; set; }
+    public virtual InventoryItemDto? Item { get; set; }
 }

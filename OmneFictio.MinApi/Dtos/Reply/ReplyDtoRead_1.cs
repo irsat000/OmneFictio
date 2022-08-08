@@ -1,8 +1,6 @@
 
-namespace OmneFictio.MinApi.Dtos
+namespace OmneFictio.MinApi.Dtos;
+public partial class ReplyDtoRead_1
 {
-    public partial class ReplyDtoRead_1
-    {
-        public int Id { get; set; }
-    }
+    public int Id { get; set; }
 }

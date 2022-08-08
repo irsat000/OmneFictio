@@ -1,8 +1,7 @@
 ﻿
-namespace OmneFictio.MinApi.Dtos
+namespace OmneFictio.MinApi.Dtos;
+public partial class RateDto
 {
-    public partial class RateDto
-    {
-        public double Rate1 { get; set; }
-    }
+    public double Rate1 { get; set; }
 }
+

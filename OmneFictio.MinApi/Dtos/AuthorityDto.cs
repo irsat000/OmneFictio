@@ -1,8 +1,6 @@
 ﻿
-namespace OmneFictio.MinApi.Dtos
+namespace OmneFictio.MinApi.Dtos;
+public partial class AuthorityDto
 {
-    public partial class AuthorityDto
-    {
-        public string Body { get; set; } = null!;
-    }
+    public string Body { get; set; } = null!;
 }

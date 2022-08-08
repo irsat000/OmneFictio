@@ -299,7 +299,7 @@
     </div>
 
     @{
-        if(Model.posts.Count > 0){
+        if(Model.posts != null){
             foreach(PostRead1 post in Model.posts){
                 <div class="post">
                     <div class="post-detail d-flex">
@@ -322,12 +322,14 @@
                                     @{
                                         int likes = 0;
                                         string negative = "--";
-                                        if(post.votes.Count > 0){
-                                            foreach(Vote value in post.votes){
-                                                if(value.vote1 == true)
-                                                    likes++;
-                                                else
-                                                    likes--;
+                                        if(post!.votes != null){
+                                            if(post.votes.Count > 0){
+                                                foreach(Vote value in post.votes){
+                                                    if(value.vote1 == true)
+                                                        likes++;
+                                                    else
+                                                        likes--;
+                                                }
                                             }
                                         }
                                         if(likes >= 0)
@@ -340,12 +342,17 @@
                                 <span class="p-rate">
                                     @{
                                         double rate = 0;
-                                        foreach(Rate value in post.rates){
-                                            if(value.rate1 >= 0 && value.rate1 <= 10)
-                                                rate += value.rate1;
+                                        if(post.rates != null){
+                                            foreach(Rate value in post.rates){
+                                                if(value.rate1 >= 0 && value.rate1 <= 10)
+                                                    rate += value.rate1;
+                                            }
+                                            string ortRate = Math.Round((rate / post!.rates.Count), 1).ToString() + "/10";
+                                            @ortRate
                                         }
-                                        string ortRate = Math.Round((rate / post.rates.Count), 1).ToString() + "/10";
-                                        @ortRate
+                                        else{
+                                            @Html.Raw("--");
+                                        }
                                     }
                                 </span>
                             </div>
@@ -367,38 +374,59 @@
                                 Tags
                             </span>
                             <div class="pd-tags">
-                                @if(post.tags.Count < 1){
-                                    <span>Empty</span>
-                                }
-                                else{
-                                    foreach(Tag tag in post.tags){
-                                        <span>@tag.body</span>
+                                @if(post!.tags != null){
+                                    if(post!.tags.Count < 1){
+                                        <span>Empty</span>
+                                    } else{
+                                        foreach(Tag tag in post.tags){
+                                            <span>@tag.body</span>
+                                        }
                                     }
                                 }
                                 <!--<span>Action</span>-->
                             </div>
                             <div class="pd-type">
                                 <span class="pd-heading">Type:</span>
-                                <span class="pd-value">@post.postType.body</span>
-                            </div>
-                            @if(post.existingStories.Count > 0){
-                                <span class="pd-heading">
-                                    Series
-                                </span>
-                                <div class="pd-series">
-                                    @foreach(ExistingStory story in post.existingStories){
-                                        <span>@story.body</span>
+                                <span class="pd-value">
+                                    @if(post!.postType != null){
+                                        @post!.postType.body
+                                    }else{
+                                        @Html.Raw("None")
                                     }
-                                    <!--<span>Pirates of the Caribbean</span>-->
-                                </div>
+                                </span>
+                            </div>
+                            @if(post!.existingStories != null){
+                                if(post!.existingStories.Count > 0){
+                                    <span class="pd-heading">
+                                        Based on;
+                                    </span>
+                                    <div class="pd-series">
+                                        @foreach(ExistingStory story in post.existingStories){
+                                            <span>@story.body</span>
+                                        }
+                                        <!--<span>Pirates of the Caribbean</span>-->
+                                    </div>
+                                }
                             }
                             <div class="pd-poststatus">
                                 <span class="pd-heading">Status:</span>
-                                <span class="pd-value">@post.postStatus.body</span>
+                                <span class="pd-value">
+                                    @if(post!.postStatus != null){
+                                        @post!.postStatus.body
+                                    }else{
+                                        @Html.Raw("None")
+                                    }
+                                </span>
                             </div>
                             <div class="pd-language">
                                 <span class="pd-heading">Language:</span>
-                                <span class="pd-value">@post.language.body</span>
+                                <span class="pd-value">
+                                    @if(post!.language != null){
+                                        @post!.language.body
+                                    }else{
+                                        @Html.Raw("None")
+                                    }
+                                </span>
                             </div>
                         </div>
                         <div class="pd-right">

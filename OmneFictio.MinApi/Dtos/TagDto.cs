@@ -1,8 +1,6 @@
 ﻿
-namespace OmneFictio.MinApi.Dtos
+namespace OmneFictio.MinApi.Dtos;
+public partial class TagDto
 {
-    public partial class TagDto
-    {
-        public string Body { get; set; } = null!;
-    }
+    public string Body { get; set; } = null!;
 }
