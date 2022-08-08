@@ -4,9 +4,10 @@
 // Write your JavaScript code.
 
 //google auth
+/*
 $(document).ready(function() {
     $(".google").append('<i class="bi bi-google"></i>');
-});
+});*/
 function googleHandleCredentialResponse(response) {
     $.ajax({
         type : "POST",

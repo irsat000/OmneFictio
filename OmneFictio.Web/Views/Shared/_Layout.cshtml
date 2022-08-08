@@ -29,7 +29,6 @@
          data-ux_mode="popup"
          data-callback="googleHandleCredentialResponse">
     </div>
-    <div class="g_id_signin" data-type="standard"></div>
     <div class="click-outside"></div>
     <div class="f-modaldarkness"></div>
     <form asp-controller="Auth" asp-action="UserLogin" method="post" class="login-modal" id="login-modal">
@@ -45,14 +44,16 @@
             <input type="submit" value="Login" class="lm-submit">
         </div>
         <div class="lm-loginwith">
-            <div class="facebook">
+            <div class="g_id_signin" data-type="standart"></div>
+            <!--<div class="facebook">
                 <i class="bi bi-facebook"></i>
             </div>
             <div class="twitter">
                 <i class="bi bi-twitter"></i>
             </div>
-            <div class="google g_id_signin" data-type="standard"></div>
-            <!--<i class="bi bi-google"></i>-->
+            <div class="google">
+                <i class="bi bi-google"></i>
+            </div>-->
         </div>
         <div class="lm-forgot">
             <span>I forgot <a href="#">something</a></span>

@@ -1,4 +1,18 @@
-
+/*
+.qJTHM{
+    height: 100% !important;
+    width: 100% !important;
+    > .container{
+        height: 100% !important;
+        width: 100% !important;
+        > div{
+            max-width: unset !important;
+            min-width: unset !important;
+            height: 100% !important;
+            width: 100% !important;
+        }
+    }
+}*/
 .register{
     display: flex;
     flex-direction: column;
@@ -53,9 +67,13 @@
         }
         .rm-registerwith{
             display: flex;
-            flex-direction: row;
-            justify-content: space-around;
+            flex-direction: column;
+            align-items: center;
+            overflow: hidden;
             > div{
+                margin-bottom: 12px;
+            }
+            /*> div{
                 cursor: pointer;
                 padding: 6px 16px;
                 border-radius: 6px;
@@ -78,21 +96,29 @@
                     background-color: #769ad2;
                 }
             }
+            
             .google{
                 background-color: #a23535;
                 &:hover{
                     background-color: #b25252;
                 }
                 position: relative;
-                > div{
-                    position: absolute !important;
-                    left:0;
-                    top:0;
+                .g_id_signin{
+                    opacity: 0;
+                    position: absolute;
+                    top: 0;
+                    left: 0;
                     width: 100% !important;
                     height: 100% !important;
-                    opacity: 0;
+                    overflow: hidden;
+                    display: flex;
+                    iframe{
+                        width: 100% !important;
+                        height: 100% !important;
+                        margin: 0 !important;
+                    }
                 }
-            }
+            }*/
         }
     }
     .register-extra{

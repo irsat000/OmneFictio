@@ -328,48 +328,43 @@ header .header-wrap {
   background-color: #5a5b95;
 }
 .login-modal .lm-loginwith {
+  padding: 10px 20px 0;
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  padding: 10px 20px;
+  flex-direction: column;
+  align-items: center;
+  overflow: hidden;
+  /*> div{
+      cursor: pointer;
+      padding: 6px 16px;
+      border-radius: 6px;
+      transition: 0.2s ease;
+      > i{
+          font-size: 1.2rem;
+          margin: 0 auto;
+          color: #fff;
+      }
+  }
+  .facebook{
+      background-color: #284878;
+      &:hover{
+          background-color: #3e5b86;
+      }
+  }
+  .twitter{
+      background-color: #4c7ac0;
+      &:hover{
+          background-color: #769ad2;
+      }
+  }
+  .google{
+      background-color: #a23535;
+      &:hover{
+          background-color: #b25252;
+      }
+  }*/
 }
 .login-modal .lm-loginwith > div {
-  cursor: pointer;
-  padding: 6px 16px;
-  border-radius: 6px;
-  transition: 0.2s ease;
-}
-.login-modal .lm-loginwith > div > i {
-  font-size: 1.2rem;
-  margin: 0 auto;
-  color: #fff;
-}
-.login-modal .lm-loginwith .facebook {
-  background-color: #284878;
-}
-.login-modal .lm-loginwith .facebook:hover {
-  background-color: #3e5b86;
-}
-.login-modal .lm-loginwith .twitter {
-  background-color: #4c7ac0;
-}
-.login-modal .lm-loginwith .twitter:hover {
-  background-color: #769ad2;
-}
-.login-modal .lm-loginwith .google {
-  background-color: #a23535;
-  position: relative;
-}
-.login-modal .lm-loginwith .google:hover {
-  background-color: #b25252;
-}
-.login-modal .lm-loginwith .google > div {
-  position: absolute !important;
-  left: 0;
-  top: 0;
-  width: 100% !important;
-  height: 100% !important;
-  opacity: 0;
+  margin-bottom: 12px;
 }
 .login-modal .lm-forgot {
   text-align: center;
