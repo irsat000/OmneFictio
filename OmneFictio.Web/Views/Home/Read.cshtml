@@ -350,7 +350,13 @@
                                 </span>
                             </div>
                             <div class="pf-user">
-                                <span class="p-username">@post.account.username</span>
+                                @{
+                                    if(post.account != null){
+                                        <span class="p-username p-deleted_user">@post.account.username</span>
+                                    }else{
+                                        <span class="p-username">DeletedUser</span>
+                                    }
+                                }
                                 <img src="https://uybor.uz/borless/avtobor/img/user-images/user_no_photo_300x300.png">
                             </div>
                         </div>
