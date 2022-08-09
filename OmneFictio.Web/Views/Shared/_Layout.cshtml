@@ -1,4 +1,18 @@
-﻿@{}
+﻿
+@inject IHttpContextAccessor Accessor
+@{
+    string userPicture = "none";
+    int userId = -1;
+    string username = "";
+    if(Accessor.HttpContext.Request.Cookies["userPicture"] != null){
+        userPicture = Accessor.HttpContext.Request.Cookies["userPicture"].ToString();
+    }
+    if(Accessor.HttpContext.Session.GetString("userId") != null){
+        userId = Convert.ToInt32(Accessor.HttpContext.Session.GetString("userId"));
+        username = Accessor.HttpContext.Session.GetString("username");
+    }
+}
+
 
 <!DOCTYPE html>
 <html lang="en">
@@ -93,13 +107,22 @@
         <div class="dw-top">
             <div class="dw-account">
                 <div class="dw-userimg">
-                    <i class="bi bi-person-square"></i>
+                    @if(userPicture != "none"){
+                        @Html.Raw("<img src='" + userPicture + "'/>");
+                    }else{
+                        <i class="bi bi-person-square"></i>
+                    }
                     <!--<img src="https://icon-library.com/images/no-user-image-icon/no-user-image-icon-0.jpg">-->
                 </div>
                 <!--<i class="bi bi-person-bounding-box dw-userimg"></i>-->
-                <span class="dw-username">No User</span>
-                <span class="dw-acc-info">--</span>
-                <span class="dw-acc-info">---</span>
+                @if(userId != -1){
+                    @username
+                }
+                else{
+                    <span class="dw-username">--</span>
+                }
+                    <!--<span class="dw-acc-info">--</span>
+                    <span class="dw-acc-info">---</span>-->
             </div>
             <div class="dw-close">
                 <i class="bi bi-x-lg"></i>
@@ -110,16 +133,25 @@
         </div>
         <div class="dw-list">
             <ul>
-                <li><a class="login-openbtn"><div class="dw-icon-cont"><i class="bi bi-person"></i></div>Login</a></li>
-                <li><a asp-controller="Home" asp-action="Register"><div class="dw-icon-cont"><i class="bi bi-person-plus"></i></div>Register</a></li>
+                @if(userId != -1){
+                    <li><a href="#"><div class="dw-icon-cont"><i class="bi bi-person"></i></div>Profile</a></li>
+                    <li><a href="#"><div class="dw-icon-cont"><i class="bi bi-journals"></i></div>Library</a></li>
+                    <li><a href="#"><div class="dw-icon-cont"><i class="bi bi-people"></i></div>Friends</a></li>
+                }
+                else{
+                    <li><a class="login-openbtn"><div class="dw-icon-cont"><i class="bi bi-person"></i></div>Login</a></li>
+                    <li><a asp-controller="Home" asp-action="Register"><div class="dw-icon-cont"><i class="bi bi-person-plus"></i></div>Register</a></li>
+                }
                 <!--<li><a href="#"><div class="dw-icon-cont"><i class="bi bi-person"></i></div>Profile</a></li>
                 <li><a href="#"><div class="dw-icon-cont"><i class="bi bi-journals"></i></div>Library</a></li>
-                <li><a href="#"><div class="dw-icon-cont"><i class="bi bi-people"></i></div>Friends</a></li>
-                <li><a href="#"><div class="dw-icon-cont"><i class="bi bi-cart"></i></div>Shop</a></li>-->
+                <li><a href="#"><div class="dw-icon-cont"><i class="bi bi-people"></i></div>Friends</a></li>-->
+                <li><a href="#"><div class="dw-icon-cont"><i class="bi bi-cart"></i></div>Shop</a></li>
                 <li><a href="#"><div class="dw-icon-cont"><i class="bi bi-gear-fill"></i></div>Settings</a></li>
             </ul>
         </div>
-        <!--<a href="#" class="dw-settings"><div class="dw-icon-cont"><i class="bi bi-box-arrow-left"></i></div>Logout</a>-->
+        @if(userId != -1){
+            <a asp-controller="Auth" asp-action="Logout" class="dw-redbutton"><div class="dw-icon-cont"><i class="bi bi-box-arrow-left"></i></div>Logout</a>
+        }
     </div>
     <header>
         <div class="container-fluid header-wrap">
@@ -144,7 +176,13 @@
                 </div>
                 <div class="account-cont">
                     <div class="ppic-wrap">
-                        <i class="bi bi-person-square"></i>
+                        @{
+                            if(userPicture != "none"){
+                                @Html.Raw("<img src='" + userPicture + "'/>");
+                            }else{
+                                <i class="bi bi-person-square"></i>
+                            }
+                        }
                         <!--<img src="https://icon-library.com/images/no-user-image-icon/no-user-image-icon-0.jpg">-->
                     </div>
                     <div class="dropdown_icon-wrap">
@@ -152,15 +190,26 @@
                     </div>
                     <div class="account-dropdown">
                         <ul>
-                            <li><a class="login-openbtn">Login</a></li>
-                            <li><a asp-controller="Home" asp-action="Register">Register</a></li>
+                            @if(userId != -1){
+                                <li><a href="#">@username</a></li>
+                                <li><a href="#">Profile</a></li>
+                                <li><a href="#">Library</a></li>
+                                <li><a href="#">Friends</a></li>
+                            }
+                            else{
+                                <li><a class="login-openbtn">Login</a></li>
+                                <li><a asp-controller="Home" asp-action="Register">Register</a></li>
+                            }
                             <!--<li><a href="#">Profile</a></li>
                             <li><a href="#">Library</a></li>
-                            <li><a href="#">Friends</a></li>
-                            <li><a href="#">Shop</a></li>-->
+                            <li><a href="#">Friends</a></li>-->
+                            <li><a href="#">Shop</a></li>
                             <li><a href="#">Settings</a></li>
                         </ul>
-                        <!--<a href="#" class="acc_dd_settings">Logout</a>-->
+                        @if(userId != -1){
+                            <a asp-controller="Auth" asp-action="LogOut" class="acc_dd_redbutton">Logout</a>
+                        }
+                        <!--<a href="#" class="acc_dd_redbutton">Logout</a>-->
                     </div>
                 </div>
             </div>

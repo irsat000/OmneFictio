@@ -81,8 +81,19 @@ public class AuthController : Controller
         string username = token.Claims.First(claim => claim.Type == "unique_name").Value;
         HttpContext.Session.SetString("userId", userId);
         HttpContext.Session.SetString("username", username);
+
+        string userPicture = token.Claims.First(claim => claim.Type == "actort").Value;
+        if(userPicture != "" || userPicture != null){
+            HttpContext.Response.Cookies.Delete("userPicture");
+            HttpContext.Response.Cookies.Append("userPicture", userPicture);
+        }
     }
     
+    public IActionResult LogOut(){
+        HttpContext.Session.Clear();
+        HttpContext.Response.Cookies.Delete("userPicture");
+        return RedirectToAction("Index", "Home");
+    }
     public async Task<IActionResult> Deneme()
     {
         return View();

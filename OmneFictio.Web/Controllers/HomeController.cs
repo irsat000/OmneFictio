@@ -17,11 +17,11 @@ public class HomeController : Controller
     }
     public async Task<IActionResult> Index()
     {
-        IndexViewmodel viewModel = new IndexViewmodel{
+        /*IndexViewmodel viewModel = new IndexViewmodel{
             sessionUserId = HttpContext.Session.GetString("userId"),
             sessionUsername = HttpContext.Session.GetString("username")
-        };
-        return View(viewModel);
+        };*/
+        return View();
     }
 
     public async Task<IActionResult> Read(string? type)

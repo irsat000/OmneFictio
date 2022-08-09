@@ -85,7 +85,8 @@ public static class MyMethods{
             Subject = new ClaimsIdentity(new List<Claim>(){
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Username),
-                new Claim(ClaimTypes.Email, user.Email)
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Actor, user.ProfilePic)
             }),
             Issuer = "OmneFictio.com",
             Expires = DateTime.UtcNow.AddDays(30),

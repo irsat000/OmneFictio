@@ -30,7 +30,7 @@ a{
     width: 100%;
     height: 100%;
     position: fixed;
-    background-color: #00000060;
+    background-color: rgba(0, 0, 0, 0.5);
     z-index: 200;
 }
 
@@ -116,6 +116,7 @@ header{
             flex-direction: column;
             justify-content: center;
             text-align: center;
+            overflow: hidden;
             .dw-userimg{
                 display: flex;
                 justify-content: center;
@@ -169,7 +170,7 @@ header{
             }
         }
     }
-    .dw-settings{
+    .dw-redbutton{
         display: flex;
         position: sticky;
         bottom: 0;
@@ -485,7 +486,7 @@ header{
                 }
             }
         }
-        .acc_dd_settings{
+        .acc_dd_redbutton{
             margin-top: 14px;
             padding: 4px 20px;
             text-align: center;

@@ -7,7 +7,7 @@ public class ReadViewmodel
 }
 public class IndexViewmodel
 {
-    public string? sessionUserId { get; set; }
-    public string? sessionUsername { get; set; }
+    /*public string? sessionUserId { get; set; }
+    public string? sessionUsername { get; set; }*/
     public List<PostRead1>? posts { get; set; }
 }
