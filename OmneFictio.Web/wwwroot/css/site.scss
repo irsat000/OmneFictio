@@ -468,21 +468,27 @@ header{
         -webkit-box-shadow: -1px 1px 6px 0px rgba(0,0,0,0.2);
         -moz-box-shadow: -1px 1px 6px 0px rgba(0,0,0,0.2);
         box-shadow: -1px 1px 6px 0px rgba(0,0,0,0.2);
-        > ul{
-            > li {
+        > ul > li {
+            &:last-child{
+                border-bottom: none;
+            }
+            > a{
+                padding: 4px 20px;
+                text-align: center;
+                color: var(--text-color1) !important;
+                transition: 0.2s ease;
+                cursor: pointer;
                 border-bottom: 1px solid var(--background-color-hover1);
-                &:last-child{
-                    border-bottom: none;
+                &:hover{
+                    background-color: var(--background-color-hover1);
                 }
-                > a{
-                    padding: 4px 20px;
-                    text-align: center;
-                    color: var(--text-color1) !important;
-                    transition: 0.2s ease;
-                    cursor: pointer;
-                    &:hover{
-                        background-color: var(--background-color-hover1);
-                    }
+            }
+            .ad-username{
+                border-bottom: 1px solid var(--text-color1);
+                font-size: 1rem;
+                cursor: text;
+                &:hover{
+                    background-color: unset !important;
                 }
             }
         }

@@ -52,13 +52,16 @@ public class AuthController : Controller
     public async Task<JsonResult> GoogleSignin(string token)
     {
         var response = await _httpClient.PostAsJsonAsync("https://localhost:7022/signin-external", token);
-        if((int)response.StatusCode == 400){
-            return new JsonResult(StatusCode(400));
+        if((int)response.StatusCode == 430){
+            //Token is malicious
+            return new JsonResult(StatusCode(430));
         }
         else if((int)response.StatusCode == 530){
+            //Data couldn't be saved in database
             return new JsonResult(StatusCode(530));
         }
         else if((int)response.StatusCode == 531){
+            //Couldn't find the user
             return new JsonResult(StatusCode(531));
         }
         string newTokenRaw = await getJwtFromResponse(response);

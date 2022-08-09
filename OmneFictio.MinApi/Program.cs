@@ -12,6 +12,8 @@ using System.Text;
 using AutoMapper;
 using BC = BCrypt.Net.BCrypt;
 using System.Data.Entity.Validation;
+using Google.Apis.Auth;
+using static Google.Apis.Auth.GoogleJsonWebSignature;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddDbContext<OmneFictioContext>(opt => opt.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
@@ -24,7 +26,8 @@ JsonSerializerOptions options = new(){
     WriteIndented = true
 };
 JwtSecurityTokenHandler _jwtHandler = new JwtSecurityTokenHandler();
-Random _random = new Random(); 
+Random _random = new Random();
+MyMethods _myMethods = new MyMethods();
 
 var app = builder.Build();
 if (app.Environment.IsDevelopment())
@@ -56,7 +59,7 @@ app.MapPost("/login", async (OmneFictioContext db, AccountDtoRead_2 request) => 
         return Results.NotFound("User not found");
     
     var user = mapper.Map<AccountDtoRead_4>(db.Accounts.SingleOrDefault(x => x.Username == request.Username));
-    var createToken = MyMethods.CreateUserToken(user, securityToken);
+    var createToken = _myMethods.CreateUserToken(user, securityToken);
     return Results.Ok(new {jwt=createToken});
 });
 
@@ -89,18 +92,31 @@ app.MapPost("/register", async (OmneFictioContext db, AccountDtoWrite_1 request)
     var user = mapper.Map<AccountDtoRead_4>(db.Accounts.SingleOrDefault(x => x.Username == request.Username));
     if (user == null)
         return Results.Ok();
-    var createToken = MyMethods.CreateUserToken(user, securityToken);
+    var createToken = _myMethods.CreateUserToken(user, securityToken);
     return Results.Ok(new {jwt=createToken});
 });
 
 app.MapPost("/signin-external", async (OmneFictioContext db, [FromBody] string token) => {
+    //Validate token
+        //string damagedpayload = "eyJhbGciOiJSUzI1NiIsImtpZCI6ImZkYTEwNjY0NTNkYzlkYzNkZDkzM2E0MWVhNTdkYTNlZjI0MmIwZjciLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJuYmYiOjE2NjAwNzE3MDcsImF1ZCI6IjU4OTY1NTM1MDMzNC1iZGszcmdlbGJvM2k0b3RrajA4ZjJodmM2OWcxbHFsNC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjEwODY4OTk5NTAyNjA3OTQ0OTk4MiIsImVtYWlsIjoiaXJzYXQwMDBAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF6cCI6IjU4OTY1NTM1MDMzNC1iZGszcmdlbGJvM2k0b3RrajA4ZjJodmM2OWcxbHFsNC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsIm5hbWUiOiJpcsWfYXQgYkZW5peiIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS0vQUZkWnVjcjkwMXpIcXRidU1BZXZlSlg2Q1JzemQ3dmw0eW83a3pmWW9UMUh3Zz1zOTYtYyIsImdpdmVuX25hbWUiOiJpcsWfYXQiLCJmYW1pbHlfbmFtZSI6ImFrZGVuaXoiLCJpYXQiOjE2NjAwNzIwMDcsImV4cCI6MTY2MDA3NTYwNywianRpIjoiY2Q2NWM3Y2UyNjZlZjBhN2JmMGE1MjA4NmU4ZTQ4YmE3YTQ1ZWM5NiJ9.dKz7pzPK8rIVXglhIe14OzijmZrgc7kVhfXDFX228CRbt1go3aCvuywaoMr_UWm4AO0gX4uII_lqIuDSZzSuzJ4yGEkSTfhqI2WRKqf1AUqSYfPTIAGTkx9_MgNoCRryQoRDtK5RHuqYpOWTFcmHRoKEtxtEaEl_fEUdyM5pquR44KV27ohsQdOQet1-cPUsDUDPIefzNpzS2DAR0QFHTr4YYrfvPRY95tY1m62Hwj3BkE_EF35Ks_lELshEfjfuE7w-GAVD7o88RzMlvPLEl6m82q65v76-0zPF5ZDOQJFdkP6thHhS69R44WpyRYDJU_PrJ05NcZcbDsSRlVq_Tg";
+        //string damagedsignature = "eyJhbGciOiJSUzI1NiIsImtpZCI6ImZkYTEwNjY0NTNkYzlkYzNkZDkzM2E0MWVhNTdkYTNlZjI0MmIwZjciLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJuYmYiOjE2NjAwNzE3MDcsImF1ZCI6IjU4OTY1NTM1MDMzNC1iZGszcmdlbGJvM2k0b3RrajA4ZjJodmM2OWcxbHFsNC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjEwODY4OTk5NTAyNjA3OTQ0OTk4MiIsImVtYWlsIjoiaXJzYXQwMDBAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF6cCI6IjU4OTY1NTM1MDMzNC1iZGszcmdlbGJvM2k0b3RrajA4ZjJodmM2OWcxbHFsNC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsIm5hbWUiOiJpcsWfYXQgYWtkZW5peiIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS0vQUZkWnVjcjkwMXpIcXRidU1BZXZlSlg2Q1JzemQ3dmw0eW83a3pmWW9UMUh3Zz1zOTYtYyIsImdpdmVuX25hbWUiOiJpcsWfYXQiLCJmYW1pbHlfbmFtZSI6ImFrZGVuaXoiLCJpYXQiOjE2NjAwNzIwMDcsImV4cCI6MTY2MDA3NTYwNywianRpIjoiY2Q2NWM3Y2UyNjZlZjBhN2JmMGE1MjA4NmU4ZTQ4YmE3YTQ1ZWM5NiJ9.dKz7pzPK8rIVXglhIe14OzijmZrgc7kVhfXDFX228CRbt1go3aCvuywaoMr_UWm4AO0gX4uII_lqIuDSZzSuzJ4yGEkSTfhqI2WRKqf1AUqSYfPTIAGTkx9_MgNoCRryQoRDtK5RHuqYpOWTFcmHRoKEtxtEaEl_fEUdyM5pquR44KV27ohsQdOQet1-cPUsDUDPIefzNpzS2DAR0QFHTr4YYrfvPRY95tY1m62Hwj3BkE_EF35Ks_lELshEfjfuE7w-GAVD7o88RzMlvPLEl6m82q65v76-0zPF5ZDOQJFdkP6thS69R44WpyRYDJU_PrJ05NcZcbDsSRlVq_Tg";
+        //JsonWebSignature.Payload payload;
+    var validationSettings = new ValidationSettings{
+        Audience = new string[]
+            {"589655350334-bdk3rgelbo3i4otkj08f2hvc69g1lql4.apps.googleusercontent.com"},
+        IssuedAtClockTolerance = TimeSpan.FromSeconds(100),
+        ExpirationTimeClockTolerance = TimeSpan.FromSeconds(100)
+    };
+    try {
+      JsonWebSignature.Payload payload = await GoogleJsonWebSignature.ValidateAsync(token, validationSettings);
+    } catch (InvalidJwtException) { return Results.StatusCode(430); }
+    
     var jwt = _jwtHandler.ReadJwtToken(token);
     
-    bool verified = bool.Parse(jwt.Claims.First(claim => claim.Type == "email_verified").Value);
-    if(verified == false)
-        return Results.BadRequest("The account is not a verified one.");
+    //Gets the Id given by google
     var extId = jwt.Claims.First(claim => claim.Type == "sub").Value;
-    
+
+    //Creates an account if there is no one with this ID from google
     if(db.Accounts.SingleOrDefault(a => a.ExternalId == extId && a.ExternalType == "google") == null){
         var email = jwt.Claims.First(claim => claim.Type == "email").Value;
         var profilePic = jwt.Claims.First(claim => claim.Type == "picture").Value;
@@ -129,12 +145,16 @@ app.MapPost("/signin-external", async (OmneFictioContext db, [FromBody] string t
             return Results.StatusCode(530);
         }
     }
+
+    //Gets the user for authorization
     var user = mapper.Map<AccountDtoRead_4>(db.Accounts.SingleOrDefault(a => a.ExternalId == extId && a.ExternalType == "google"));
     if (user == null)
         return Results.StatusCode(531);
-    var createToken = MyMethods.CreateUserToken(user, securityToken);
+    var createToken = _myMethods.CreateUserToken(user, securityToken);
+
     return Results.Ok(new {jwt=createToken});
 });
+
 
 
 app.Run();

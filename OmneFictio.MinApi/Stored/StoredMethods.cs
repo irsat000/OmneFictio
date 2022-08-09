@@ -3,8 +3,11 @@ using System.Security.Claims;
 using System.Security.Cryptography;
 using Microsoft.IdentityModel.Tokens;
 using OmneFictio.MinApi.Dtos;
+using System.Text.Json.Serialization;
+using Google.Apis.Auth;
 
 namespace OmneFictio.MinApi.Stored;
+
 public static class GeneratePassword
 {
     private static readonly char[] Punctuations = "!@#$%^&*()_-+=[{]};:>|./?".ToCharArray();
@@ -78,8 +81,9 @@ public static class GeneratePassword
     }
 }
 
-public static class MyMethods{
-    public static string CreateUserToken(AccountDtoRead_4 user, byte[] securityToken){
+public class MyMethods{
+    JwtSecurityTokenHandler _jwtHandler = new JwtSecurityTokenHandler();
+    public string CreateUserToken(AccountDtoRead_4 user, byte[] securityToken){
         var tokenHandler = new JwtSecurityTokenHandler();
         var tokenDescriptor = new SecurityTokenDescriptor {
             Subject = new ClaimsIdentity(new List<Claim>(){
@@ -95,4 +99,15 @@ public static class MyMethods{
         var token = tokenHandler.WriteToken(tokenHandler.CreateToken(tokenDescriptor));
         return token;
     }
+}
+
+public class CustomPayload : JsonWebSignature.Payload{
+    [JsonPropertyName("sub")]
+     public string Subject { get; set; }
+    [JsonPropertyName("email")]
+     public string Email { get; set; }
+    [JsonPropertyName("name")]
+     public string Name { get; set; }
+    [JsonPropertyName("picture")]
+     public string Picture { get; set; }
 }

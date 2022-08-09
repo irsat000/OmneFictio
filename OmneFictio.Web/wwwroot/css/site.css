@@ -543,9 +543,6 @@ header .header-wrap {
   overflow: hidden;
   box-shadow: -1px 1px 6px 0px rgba(0, 0, 0, 0.2);
 }
-.account-cont .account-dropdown > ul > li {
-  border-bottom: 1px solid var(--background-color-hover1);
-}
 .account-cont .account-dropdown > ul > li:last-child {
   border-bottom: none;
 }
@@ -555,9 +552,18 @@ header .header-wrap {
   color: var(--text-color1) !important;
   transition: 0.2s ease;
   cursor: pointer;
+  border-bottom: 1px solid var(--background-color-hover1);
 }
 .account-cont .account-dropdown > ul > li > a:hover {
   background-color: var(--background-color-hover1);
+}
+.account-cont .account-dropdown > ul > li .ad-username {
+  border-bottom: 1px solid var(--text-color1);
+  font-size: 1rem;
+  cursor: text;
+}
+.account-cont .account-dropdown > ul > li .ad-username:hover {
+  background-color: unset !important;
 }
 .account-cont .account-dropdown .acc_dd_redbutton {
   margin-top: 14px;
