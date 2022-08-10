@@ -42,6 +42,7 @@
          data-client_id="589655350334-bdk3rgelbo3i4otkj08f2hvc69g1lql4.apps.googleusercontent.com"
          data-ux_mode="popup"
          data-callback="googleHandleCredentialResponse">
+         <!--data-login_uri="https://localhost:7067/Auth/GoogleSigninDirectly">-->
     </div>
     <div class="click-outside"></div>
     <div class="f-modaldarkness"></div>
@@ -107,7 +108,7 @@
         <div class="dw-top">
             <div class="dw-account">
                 <div class="dw-userimg">
-                    @if(userPicture != "none"){
+                    @if(userPicture != "none" && userId != -1){
                         @Html.Raw("<img src='" + userPicture + "'/>");
                     }else{
                         <i class="bi bi-person-square"></i>
@@ -177,7 +178,7 @@
                 <div class="account-cont">
                     <div class="ppic-wrap">
                         @{
-                            if(userPicture != "none"){
+                            if(userPicture != "none" && userId != -1){
                                 @Html.Raw("<img src='" + userPicture + "'/>");
                             }else{
                                 <i class="bi bi-person-square"></i>

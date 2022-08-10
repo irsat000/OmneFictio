@@ -3,6 +3,10 @@ using Microsoft.AspNetCore.Mvc;
 using OmneFictio.Web.Models;
 using System.IdentityModel.Tokens.Jwt;
 using System.Text.Json;
+using Google.Apis.Auth;
+using Google.Apis.Auth.OAuth2;
+using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Authentication.Cookies;
 
 namespace OmneFictio.Web.Controllers;
 
@@ -17,60 +21,63 @@ public class AuthController : Controller
         _logger = logger;
         _httpClient = httpClient;
     }
-
-    
-    public async Task<IActionResult> UserLogin(AccountRead2 account)
+    //fetch api manual login function 1
+    [HttpPost]
+    public async Task<JsonResult> UserLogin([FromBody] AccountRead2 account)
     {
-        var response = await _httpClient.PostAsJsonAsync("https://localhost:7022/login", account);
-        if((int)response.StatusCode == 404){
+        var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/login", account);
+        if((int)apiResponse.StatusCode == 404){
             
         }
-        string token = await response.Content.ReadAsStringAsync();
-        string newTokenRaw = await getJwtFromResponse(response);
-        if(newTokenRaw != null)
-            CreateUserSession(newTokenRaw);
-        return RedirectToAction("Index", "Home");
+        string newToken = await getJwtFromResponse(apiResponse);
+        if(newToken != null)
+            CreateUserSession(newToken);
+        return new JsonResult(Ok());
     }
     public async Task<IActionResult> UserRegistration(AccountWrite1 account)
     {
-        var response = await _httpClient.PostAsJsonAsync("https://localhost:7022/register", account);
-        if((int)response.StatusCode == 430){
+        var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/register", account);
+        if((int)apiResponse.StatusCode == 430){
             
         }
-        else if((int)response.StatusCode == 431){
+        else if((int)apiResponse.StatusCode == 431){
 
         }
-        else if((int)response.StatusCode == 422){
+        else if((int)apiResponse.StatusCode == 422){
             
         }
-        string newTokenRaw = await getJwtFromResponse(response);
-        if(newTokenRaw != null)
-            CreateUserSession(newTokenRaw);
+        string newToken = await getJwtFromResponse(apiResponse);
+        if(newToken != null)
+            CreateUserSession(newToken);
         return RedirectToAction("Index", "Home");
     }
 
-    public async Task<JsonResult> GoogleSignin(string token)
+    public async Task<JsonResult> GoogleSignin(string googleToken)
     {
-        var response = await _httpClient.PostAsJsonAsync("https://localhost:7022/signin-external", token);
-        if((int)response.StatusCode == 430){
+        var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/signin-external", googleToken);
+        if((int)apiResponse.StatusCode == 430){
             //Token is malicious
             return new JsonResult(StatusCode(430));
         }
-        else if((int)response.StatusCode == 530){
+        else if((int)apiResponse.StatusCode == 530){
             //Data couldn't be saved in database
             return new JsonResult(StatusCode(530));
         }
-        else if((int)response.StatusCode == 531){
+        else if((int)apiResponse.StatusCode == 531){
             //Couldn't find the user
             return new JsonResult(StatusCode(531));
         }
-        string newTokenRaw = await getJwtFromResponse(response);
-        if(newTokenRaw != null){
-            CreateUserSession(newTokenRaw);
+        else if(apiResponse == null){
+            //Api request failed
+            return new JsonResult(StatusCode(532));
+        }
+        string newToken = await getJwtFromResponse(apiResponse);
+        if(newToken != null){
+            CreateUserSession(newToken);
             return new JsonResult(Ok());
         }
         else
-            return new JsonResult(UnprocessableEntity());
+            return new JsonResult(StatusCode(532));
     }
     public async Task<string> getJwtFromResponse(HttpResponseMessage response){
         string raw = await response.Content.ReadAsStringAsync();
@@ -97,8 +104,54 @@ public class AuthController : Controller
         HttpContext.Response.Cookies.Delete("userPicture");
         return RedirectToAction("Index", "Home");
     }
-    public async Task<IActionResult> Deneme()
-    {
-        return View();
-    }
 }
+
+
+
+
+
+
+
+/* UserLogin backup
+    public async Task<IActionResult> UserLogin(AccountRead2 account)
+    {
+        var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/login", account);
+        if((int)apiResponse.StatusCode == 404){
+            
+        }
+        string newToken = await getJwtFromResponse(apiResponse);
+        if(newToken != null)
+            CreateUserSession(newToken);
+        return RedirectToAction("Index", "Home");
+    }
+    */
+
+
+
+
+
+
+
+    //Trying login endpoint
+    /*
+    public async Task<IActionResult> GoogleSigninDirectly(HttpResponse request)
+    {
+        string text = request.ToString();
+        
+        var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/signin-external", request);
+        if((int)apiResponse.StatusCode == 430){
+            //Token is malicious
+        }
+        else if((int)apiResponse.StatusCode == 530){
+            //Data couldn't be saved in database
+        }
+        else if((int)apiResponse.StatusCode == 531){
+            //Couldn't find the user
+        }
+        string newToken = await getJwtFromResponse(apiResponse);
+        if(newToken != null){
+            CreateUserSession(newToken);
+        }
+        
+        return RedirectToAction("Index", "Home");
+    }*/

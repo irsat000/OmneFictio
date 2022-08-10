@@ -3,16 +3,41 @@
 
 // Write your JavaScript code.
 
+async function manualLogin(){
+    var account = {
+        Username: "string",
+        Pw: "string"
+    };
+    var jsonString = JSON.stringify(account);
+    await fetch("/Auth/UserLogin", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(account)
+    })
+    .then(function (response) {
+        if (response.status !== 200) {
+            console.log('NOT OK' + response.status);
+        }
+        response.json().then(function (data) {
+            console.log('OK');
+            console.log(data);
+        });
+    })
+    .catch(error => console.error('Fetch api login failed.', error));
+}
+
+
+
+
 //google auth
-/*
-$(document).ready(function() {
-    $(".google").append('<i class="bi bi-google"></i>');
-});*/
 function googleHandleCredentialResponse(response) {
     $.ajax({
         type : "POST",
         url: "https://localhost:7067/Auth/GoogleSignin",
-        data: {token: response.credential},
+        data: {googleToken: response.credential},
         timeout: 0,
         success: function () {
             window.location.replace("https://localhost:7067");
@@ -25,7 +50,8 @@ function googleHandleCredentialResponse(response) {
     console.log("ID: " + responsePayload.sub);
     console.log('Full Name: ' + responsePayload.name);
     console.log("Email: " + responsePayload.email);*/
- }/*
+ }
+ /*
  function decodeJwtResponse(token) {
     var base64Url = token.split('.')[1];
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');

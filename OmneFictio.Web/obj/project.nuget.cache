@@ -1,15 +1,19 @@
 {
   "version": 2,
-  "dgSpecHash": "Emulo3WyZsnmiaM1ouin5Er9shBCT6n/D7t1SXO9nPDtO/6MjW3jjHyhltXGMgdXTO7Yuq3i1BSf6zhgC9lwGg==",
+  "dgSpecHash": "XM1ndrBt7TLxhh9K78KGb+B0GdftLCHtZrh/VWE0O83K9M1swlZE5KulgnzP5UGlPGgFaw0t+MzB+W/kUAAvZw==",
   "success": true,
   "projectFilePath": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\OmneFictio.Web.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\user\\.nuget\\packages\\google.apis\\1.57.0\\google.apis.1.57.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\google.apis.auth\\1.57.0\\google.apis.auth.1.57.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\google.apis.core\\1.57.0\\google.apis.core.1.57.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.aspnetcore.authentication.google\\6.0.7\\microsoft.aspnetcore.authentication.google.6.0.7.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.csharp\\4.5.0\\microsoft.csharp.4.5.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.identitymodel.abstractions\\6.22.0\\microsoft.identitymodel.abstractions.6.22.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\6.22.0\\microsoft.identitymodel.jsonwebtokens.6.22.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.identitymodel.logging\\6.22.0\\microsoft.identitymodel.logging.6.22.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\microsoft.identitymodel.tokens\\6.22.0\\microsoft.identitymodel.tokens.6.22.0.nupkg.sha512",
+    "C:\\Users\\user\\.nuget\\packages\\newtonsoft.json\\13.0.1\\newtonsoft.json.13.0.1.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\system.identitymodel.tokens.jwt\\6.22.0\\system.identitymodel.tokens.jwt.6.22.0.nupkg.sha512",
     "C:\\Users\\user\\.nuget\\packages\\system.security.cryptography.cng\\4.5.0\\system.security.cryptography.cng.4.5.0.nupkg.sha512"
   ],
