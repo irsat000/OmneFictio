@@ -21,22 +21,22 @@ public class AuthController : Controller
         _logger = logger;
         _httpClient = httpClient;
     }
-    //fetch api manual login function 2
+    //fetch api manual login
     [HttpPost]
-    public async Task<JsonResult> UserLogin([FromBody] AccountRead2 account)
+    public async Task<ActionResult> UserLogin([FromBody] AccountRead2 account)
     {
         var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/login", account);
         string statusCode = apiResponse.StatusCode.ToString();
         if(statusCode == "NotFound")
-            return new JsonResult(StatusCode(404));
+            return NotFound();
         else{
             string newToken = await getJwtFromResponse(apiResponse);
             if(newToken != null){
                 CreateUserSession(newToken);
-                return new JsonResult(Ok());
+                return Ok();
             }
             else
-                return new JsonResult(StatusCode(530));
+                return StatusCode(530);
         }
     }
     public async Task<IActionResult> UserRegistration(AccountWrite1 account)
@@ -90,6 +90,17 @@ public class AuthController : Controller
             return new JsonResult(StatusCode(532));
         }
     }
+    public IActionResult LogOut(){
+        HttpContext.Session.Clear();
+        HttpContext.Response.Cookies.Delete("userPicture");
+        return RedirectToAction("Index", "Home");
+    }
+
+
+
+
+
+    
     public async Task<string> getJwtFromResponse(HttpResponseMessage response){
         string raw = await response.Content.ReadAsStringAsync();
         var result = JsonSerializer.Deserialize<Dictionary<string, object>>(raw);
@@ -108,12 +119,6 @@ public class AuthController : Controller
             HttpContext.Response.Cookies.Delete("userPicture");
             HttpContext.Response.Cookies.Append("userPicture", userPicture);
         }
-    }
-    
-    public IActionResult LogOut(){
-        HttpContext.Session.Clear();
-        HttpContext.Response.Cookies.Delete("userPicture");
-        return RedirectToAction("Index", "Home");
     }
 }
 
