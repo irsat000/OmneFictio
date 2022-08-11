@@ -26,58 +26,69 @@ public class AuthController : Controller
     public async Task<JsonResult> UserLogin([FromBody] AccountRead2 account)
     {
         var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/login", account);
-        if((int)apiResponse.StatusCode == 404){
-            
+        string statusCode = apiResponse.StatusCode.ToString();
+        if(statusCode == "NotFound")
+            return new JsonResult(StatusCode(404));
+        else{
+            string newToken = await getJwtFromResponse(apiResponse);
+            if(newToken != null){
+                CreateUserSession(newToken);
+                return new JsonResult(Ok());
+            }
+            else
+                return new JsonResult(StatusCode(530));
         }
-        string newToken = await getJwtFromResponse(apiResponse);
-        if(newToken != null)
-            CreateUserSession(newToken);
-        return new JsonResult(Ok());
     }
     public async Task<IActionResult> UserRegistration(AccountWrite1 account)
     {
         var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/register", account);
-        if((int)apiResponse.StatusCode == 430){
+        string statusCode = apiResponse.StatusCode.ToString();
+        if(statusCode == "200"){
+            string newToken = await getJwtFromResponse(apiResponse);
+            if(newToken != null)
+                CreateUserSession(newToken);
+        }
+        else if(statusCode == "430"){
             
         }
-        else if((int)apiResponse.StatusCode == 431){
+        else if(statusCode == "431"){
 
         }
-        else if((int)apiResponse.StatusCode == 422){
+        else if(statusCode == "422"){
             
         }
-        string newToken = await getJwtFromResponse(apiResponse);
-        if(newToken != null)
-            CreateUserSession(newToken);
         return RedirectToAction("Index", "Home");
     }
 
     public async Task<JsonResult> GoogleSignin(string googleToken)
     {
         var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/signin-external", googleToken);
-        if((int)apiResponse.StatusCode == 430){
+        string statusCode = apiResponse.StatusCode.ToString();
+        if(statusCode == "200"){
+            string newToken = await getJwtFromResponse(apiResponse);
+            if(newToken != null){
+                CreateUserSession(newToken);
+                return new JsonResult(Ok());
+            }
+            else
+                return new JsonResult(StatusCode(532));
+        }
+        else if(statusCode == "430"){
             //Token is malicious
             return new JsonResult(StatusCode(430));
         }
-        else if((int)apiResponse.StatusCode == 530){
+        else if(statusCode == "530"){
             //Data couldn't be saved in database
             return new JsonResult(StatusCode(530));
         }
-        else if((int)apiResponse.StatusCode == 531){
+        else if(statusCode == "531"){
             //Couldn't find the user
             return new JsonResult(StatusCode(531));
         }
-        else if(apiResponse == null){
-            //Api request failed
+        else{
+            //Api request utterly failed
             return new JsonResult(StatusCode(532));
         }
-        string newToken = await getJwtFromResponse(apiResponse);
-        if(newToken != null){
-            CreateUserSession(newToken);
-            return new JsonResult(Ok());
-        }
-        else
-            return new JsonResult(StatusCode(532));
     }
     public async Task<string> getJwtFromResponse(HttpResponseMessage response){
         string raw = await response.Content.ReadAsStringAsync();

@@ -328,6 +328,16 @@ header .header-wrap {
 .login-modal .lm-primary .lm-submit:hover {
   background-color: #5a5b95;
 }
+.login-modal .lm-primary .lm-message {
+  margin-top: 6px;
+  text-align: center;
+  color: #b22525;
+}
+.login-modal .lm-primary .lm-success {
+  margin-top: 6px;
+  text-align: center;
+  color: #36914e;
+}
 .login-modal .lm-loginwith {
   padding: 10px 20px 0;
   display: flex;

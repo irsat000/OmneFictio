@@ -60,7 +60,10 @@ app.MapPost("/login", async (OmneFictioContext db, AccountDtoRead_2 request) => 
     
     var user = mapper.Map<AccountDtoRead_4>(db.Accounts.SingleOrDefault(x => x.Username == request.Username));
     var createToken = _myMethods.CreateUserToken(user, securityToken);
-    return Results.Ok(new {jwt=createToken});
+    if(createToken != null)
+        return Results.Ok(new {jwt=createToken});
+    else
+        return Results.StatusCode(530);
 });
 
 app.MapPost("/register", async (OmneFictioContext db, AccountDtoWrite_1 request) => {
@@ -150,6 +153,7 @@ app.MapPost("/signin-external", async (OmneFictioContext db, [FromBody] string t
     var user = mapper.Map<AccountDtoRead_4>(db.Accounts.SingleOrDefault(a => a.ExternalId == extId && a.ExternalType == "google"));
     if (user == null)
         return Results.StatusCode(531);
+        
     var createToken = _myMethods.CreateUserToken(user, securityToken);
 
     return Results.Ok(new {jwt=createToken});

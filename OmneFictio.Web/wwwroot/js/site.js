@@ -8,9 +8,14 @@ $(document).ready(function(){
     //login modal - fetch api
     const login_form = document.getElementById('login-modal');
     login_form.addEventListener('submit', async function(event){
+        //disables redirection of form element
         event.preventDefault();
+        //Get message elements
+        const message = document.getElementById('loginmodal-message');
+        const success = document.getElementById('loginmodal-success');
+        message.innerHTML = "";
+        //Request
         const payload = JSON.stringify(Object.fromEntries(new FormData(login_form)));
-        console.log(payload);
         await fetch("/Auth/UserLogin", {
             method: 'POST',
             headers: {
@@ -20,18 +25,20 @@ $(document).ready(function(){
             body: payload
         })
         .then(function (response) {
-            if (response.status !== 200) {
-                console.log('NOT OK' + response.status);
+            if (response.ok) {
+                success.innerHTML = "SUCCESS";
+                setTimeout(function() {
+                    location.reload();
+                }, 1000);
+            }
+            else if(response.status === 404){
+                message.innerHTML = "*User not found*";
             }
             else{
-                window.location.replace("https://localhost:7067");
+                message.innerHTML = "*Server error*";
             }
-            /*response.json().then(function (data) {
-                console.log('OK');
-                console.log(data);
-            });*/
         })
-        .catch(error => console.error('Login function failed.', error));
+        .catch(error => console.log('Login function failed. Should be logged', error));
     });
 });
 
