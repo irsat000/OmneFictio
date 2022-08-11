@@ -21,7 +21,7 @@ public class AuthController : Controller
         _logger = logger;
         _httpClient = httpClient;
     }
-    //fetch api manual login function 1
+    //fetch api manual login function 2
     [HttpPost]
     public async Task<JsonResult> UserLogin([FromBody] AccountRead2 account)
     {

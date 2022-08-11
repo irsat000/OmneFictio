@@ -3,31 +3,37 @@
 
 // Write your JavaScript code.
 
-async function manualLogin(){
-    var account = {
-        Username: "string",
-        Pw: "string"
-    };
-    var jsonString = JSON.stringify(account);
-    await fetch("/Auth/UserLogin", {
-        method: 'POST',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(account)
-    })
-    .then(function (response) {
-        if (response.status !== 200) {
-            console.log('NOT OK' + response.status);
-        }
-        response.json().then(function (data) {
-            console.log('OK');
-            console.log(data);
-        });
-    })
-    .catch(error => console.error('Fetch api login failed.', error));
-}
+$(document).ready(function(){
+
+    //login modal - fetch api
+    const login_form = document.getElementById('login-modal');
+    login_form.addEventListener('submit', async function(event){
+        event.preventDefault();
+        const payload = JSON.stringify(Object.fromEntries(new FormData(login_form)));
+        console.log(payload);
+        await fetch("/Auth/UserLogin", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: payload
+        })
+        .then(function (response) {
+            if (response.status !== 200) {
+                console.log('NOT OK' + response.status);
+            }
+            else{
+                window.location.replace("https://localhost:7067");
+            }
+            /*response.json().then(function (data) {
+                console.log('OK');
+                console.log(data);
+            });*/
+        })
+        .catch(error => console.error('Login function failed.', error));
+    });
+});
 
 
 
