@@ -29,7 +29,7 @@ $(document).ready(function(){
                 success.innerHTML = "SUCCESS";
                 setTimeout(function() {
                     location.reload();
-                }, 1000);
+                }, 500);
             }
             else if(response.status === 404){
                 message.innerHTML = "*User not found*";
@@ -38,7 +38,7 @@ $(document).ready(function(){
                 message.innerHTML = "*Server error*";
             }
         })
-        .catch(error => console.log('Login function failed. Should be logged', error));
+        .catch(error => console.log('Login function failed.', error));
     });
 });
 

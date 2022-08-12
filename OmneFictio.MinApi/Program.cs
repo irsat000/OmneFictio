@@ -54,10 +54,11 @@ app.MapGet("/posts", async (OmneFictioContext db) => {
 });
 
 app.MapPost("/login", async (OmneFictioContext db, AccountDtoRead_2 request) => {
+    //Authentication
     var checkUser = mapper.Map<AccountDtoRead_3>(db.Accounts.SingleOrDefault(x => x.Username == request.Username));
     if (checkUser == null || !BC.Verify(request.Pw, checkUser.Pw))
         return Results.NotFound("User not found");
-    
+    //Login
     var user = mapper.Map<AccountDtoRead_4>(db.Accounts.SingleOrDefault(x => x.Username == request.Username));
     var createToken = _myMethods.CreateUserToken(user, securityToken);
     if(createToken != null)
@@ -67,15 +68,15 @@ app.MapPost("/login", async (OmneFictioContext db, AccountDtoRead_2 request) => 
 });
 
 app.MapPost("/register", async (OmneFictioContext db, AccountDtoWrite_1 request) => {
+    //Input validation
     Regex usernameRegex = new Regex(@"[A-Za-z0-9_]{3,30}");
-    Regex pwRegex = new Regex(@"[^ ]\S{3,99}");
     if(!usernameRegex.IsMatch(request.Username))
         return Results.StatusCode(480);
     if(db.Accounts.Any(a => a.Username == request.Username))
         return Results.StatusCode(481);
-    if(!pwRegex.IsMatch(request.Pw!))
+    if(request.Pw!.Contains(" ") || request.Pw!.Length < 6)
         return Results.StatusCode(482);
-
+    //Fill an account object
     string passwordHash = BC.HashPassword(request.Pw);
     AccountDtoWrite_1 newAccount = new AccountDtoWrite_1();
     newAccount.Username = request.Username;
@@ -88,13 +89,14 @@ app.MapPost("/register", async (OmneFictioContext db, AccountDtoWrite_1 request)
         newAccount.AllowViolence = request.AllowViolence;
     if(db.Languages.Any(l => l.Id == request.PrefLanguageId))
         newAccount.PrefLanguageId = request.PrefLanguageId;
+    //Save user in the database
     try {
         db.Accounts.Add(mapper.Map<Account>(newAccount));
         await db.SaveChangesAsync();
     } catch (Exception) {
         return Results.StatusCode(483);
     }
-
+    //Login
     var user = mapper.Map<AccountDtoRead_4>(db.Accounts.SingleOrDefault(x => x.Username == request.Username));
     if (user == null)
         return Results.Ok();

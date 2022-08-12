@@ -10,6 +10,25 @@ $(document).ready(function(){
         const message = document.getElementById('registerform-message');
         const success = document.getElementById('registerform-success');
         message.innerHTML = "";
+        
+        //Input validation
+        const usernameRegex = new RegExp("[A-Za-z0-9_]{3,30}");
+        var username = document.getElementById("rm-username").value;
+        var pw1 = document.getElementById("rm-pw").value;
+        var pw2 = document.getElementById("rm-pwconfirm").value;
+        console.log("uname=" + username + " pw1="+pw1+" pw2="+ pw2);
+        if(!usernameRegex.test(username)){
+            message.innerHTML = "*Username is not acceptable*";
+            return;
+        }
+        else if(/\s/g.test(pw1) || pw1.length < 6){
+            message.innerHTML = "*Password is not acceptable*";
+            return;
+        }
+        else if(pw1 !== pw2){
+            message.innerHTML = "*Passwords don't match*";
+            return;
+        }
         //Request
         const payload = JSON.stringify(Object.fromEntries(new FormData(register_form)));
         await fetch("/Auth/UserRegistration", {
@@ -25,7 +44,7 @@ $(document).ready(function(){
                 success.innerHTML = "SUCCESS";
                 setTimeout(function() {
                     window.location.href = "https://localhost:7067/";
-                }, 1000);
+                }, 500);
             }
             else if(response.status === 480){
                 message.innerHTML = "Bad username";
@@ -43,6 +62,6 @@ $(document).ready(function(){
                 message.innerHTML = "*Unknown error*";
             }
         })
-        .catch(error => console.log('Login function failed. Should be logged', error));
+        .catch(error => console.log('Login function failed.', error));
     });
 });
