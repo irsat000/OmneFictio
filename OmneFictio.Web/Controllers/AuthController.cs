@@ -26,6 +26,9 @@ public class AuthController : Controller
     [HttpPost]
     public async Task<ActionResult> UserLogin([FromBody] AccountRead2 account)
     {
+        if(account == null)
+            return NotFound();
+        bool rememberme = bool.TryParse(account.RememberMe, out rememberme);
         var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/login", account);
         string statusCode = apiResponse.StatusCode.ToString();
         if(statusCode == "NotFound")
@@ -33,7 +36,7 @@ public class AuthController : Controller
         else{
             string newToken = await getJwtFromResponse(apiResponse);
             if(newToken != null){
-                CreateUserSession(newToken, rememberme: account.RememberMe.Value);
+                CreateUserSession(newToken, rememberme: rememberme);
                 return Ok();
             }
             else
@@ -108,7 +111,7 @@ public class AuthController : Controller
         var result = JsonSerializer.Deserialize<Dictionary<string, object>>(raw);
         return result!.FirstOrDefault(x => x.Key == "jwt").Value.ToString()!;
     }
-    public void CreateUserSession(string tokenRaw, bool rememberme = false){
+    public void CreateUserSession(string tokenRaw, bool rememberme = true){
         HttpContext.Session.Clear();
         var token = _jwtHandler.ReadJwtToken(tokenRaw);
         string userId = token.Claims.FirstOrDefault(claim => claim.Type == "nameid")?.Value;
@@ -126,15 +129,15 @@ public class AuthController : Controller
         
         var sessionSettings = new AuthenticationProperties{
             IsPersistent = true,
-            ExpiresUtc = DateTime.UtcNow.AddHours(4)
+            ExpiresUtc = DateTime.UtcNow.AddMonths(1)
         };
         var coockieSettings = new CookieOptions{
             IsEssential = true,
-            Expires = DateTime.UtcNow.AddHours(4)
+            Expires = DateTime.UtcNow.AddMonths(1)
         };
-        if(rememberme == true){
-            sessionSettings.ExpiresUtc = DateTime.UtcNow.AddMonths(1);
-            coockieSettings.Expires = DateTime.UtcNow.AddMonths(1);
+        if(rememberme == false){
+            sessionSettings.ExpiresUtc = DateTime.UtcNow.AddHours(4);
+            coockieSettings.Expires = DateTime.UtcNow.AddHours(4);
         }
         HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, sessionSettings);
         HttpContext.Response.Cookies.Append("UserAuth", "True", coockieSettings);
