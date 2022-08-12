@@ -7,6 +7,7 @@ using Google.Apis.Auth;
 using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using System.Security.Claims;
 
 namespace OmneFictio.Web.Controllers;
 
@@ -43,7 +44,7 @@ public class AuthController : Controller
     {
         var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/register", account);
         string statusCode = apiResponse.StatusCode.ToString();
-        if(statusCode == "200"){
+        if(statusCode == "OK"){
             string newToken = await getJwtFromResponse(apiResponse);
             if(newToken != null)
                 CreateUserSession(newToken);
@@ -64,7 +65,7 @@ public class AuthController : Controller
     {
         var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/signin-external", googleToken);
         string statusCode = apiResponse.StatusCode.ToString();
-        if(statusCode == "200"){
+        if(statusCode == "OK"){
             string newToken = await getJwtFromResponse(apiResponse);
             if(newToken != null){
                 CreateUserSession(newToken);
@@ -92,7 +93,7 @@ public class AuthController : Controller
     }
     public IActionResult LogOut(){
         HttpContext.Session.Clear();
-        HttpContext.Response.Cookies.Delete("userPicture");
+        HttpContext.SignOutAsync();
         return RedirectToAction("Index", "Home");
     }
 
@@ -109,16 +110,23 @@ public class AuthController : Controller
     public void CreateUserSession(string tokenRaw){
         HttpContext.Session.Clear();
         var token = _jwtHandler.ReadJwtToken(tokenRaw);
-        string userId = token.Claims.First(claim => claim.Type == "nameid").Value;
-        string username = token.Claims.First(claim => claim.Type == "unique_name").Value;
-        HttpContext.Session.SetString("userId", userId);
-        HttpContext.Session.SetString("username", username);
-
-        string userPicture = token.Claims.First(claim => claim.Type == "actort").Value;
-        if(userPicture != "" || userPicture != null){
-            HttpContext.Response.Cookies.Delete("userPicture");
-            HttpContext.Response.Cookies.Append("userPicture", userPicture);
-        }
+        string userId = token.Claims.FirstOrDefault(claim => claim.Type == "nameid")?.Value;
+        string username = token.Claims.FirstOrDefault(claim => claim.Type == "unique_name")?.Value;
+        string userPicture = token.Claims.FirstOrDefault(claim => claim.Type == "actort")?.Value;
+        
+        var claims = new List<Claim>
+        {
+            new Claim(ClaimTypes.NameIdentifier, userId),
+            new Claim(ClaimTypes.Name, username),
+            new Claim(ClaimTypes.Actor, userPicture)
+        };
+        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+        var principal = new ClaimsPrincipal(identity);
+        var sessionSettings = new AuthenticationProperties{
+            IsPersistent = true,
+            ExpiresUtc = DateTime.UtcNow.AddMonths(1)
+        };
+        HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, sessionSettings);
     }
 }
 
