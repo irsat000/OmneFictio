@@ -63,15 +63,18 @@ app.MapPost("/login", async (OmneFictioContext db, AccountDtoRead_2 request) => 
     if(createToken != null)
         return Results.Ok(new {jwt=createToken});
     else
-        return Results.StatusCode(530);
+        return Results.StatusCode(580);
 });
 
 app.MapPost("/register", async (OmneFictioContext db, AccountDtoWrite_1 request) => {
     Regex usernameRegex = new Regex(@"[A-Za-z0-9_]{3,30}");
+    Regex pwRegex = new Regex(@"[^ ]\S{3,99}");
     if(!usernameRegex.IsMatch(request.Username))
-        return Results.StatusCode(430);
+        return Results.StatusCode(480);
     if(db.Accounts.Any(a => a.Username == request.Username))
-        return Results.StatusCode(431);
+        return Results.StatusCode(481);
+    if(!pwRegex.IsMatch(request.Pw!))
+        return Results.StatusCode(482);
 
     string passwordHash = BC.HashPassword(request.Pw);
     AccountDtoWrite_1 newAccount = new AccountDtoWrite_1();
@@ -88,8 +91,8 @@ app.MapPost("/register", async (OmneFictioContext db, AccountDtoWrite_1 request)
     try {
         db.Accounts.Add(mapper.Map<Account>(newAccount));
         await db.SaveChangesAsync();
-    } catch (DbEntityValidationException e) {
-        return Results.UnprocessableEntity(e);
+    } catch (Exception) {
+        return Results.StatusCode(483);
     }
 
     var user = mapper.Map<AccountDtoRead_4>(db.Accounts.SingleOrDefault(x => x.Username == request.Username));
@@ -112,7 +115,7 @@ app.MapPost("/signin-external", async (OmneFictioContext db, [FromBody] string t
     };
     try {
       JsonWebSignature.Payload payload = await GoogleJsonWebSignature.ValidateAsync(token, validationSettings);
-    } catch (InvalidJwtException) { return Results.StatusCode(430); }
+    } catch (InvalidJwtException) { return Results.StatusCode(480); }
     
     var jwt = _jwtHandler.ReadJwtToken(token);
     
@@ -145,14 +148,14 @@ app.MapPost("/signin-external", async (OmneFictioContext db, [FromBody] string t
             db.Accounts.Add(mapper.Map<Account>(newAccount));
             await db.SaveChangesAsync();
         } catch (DbEntityValidationException e) {
-            return Results.StatusCode(530);
+            return Results.StatusCode(580);
         }
     }
 
     //Gets the user for authorization
     var user = mapper.Map<AccountDtoRead_4>(db.Accounts.SingleOrDefault(a => a.ExternalId == extId && a.ExternalType == "google"));
     if (user == null)
-        return Results.StatusCode(531);
+        return Results.StatusCode(581);
         
     var createToken = _myMethods.CreateUserToken(user, securityToken);
 

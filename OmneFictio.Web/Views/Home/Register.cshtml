@@ -7,7 +7,7 @@
         <script src="~/js/register.js" asp-append-version="true" ></script>
     }
 }
-<form asp-controller="Auth" asp-action="UserRegistration" method="post" class="register">
+<form method="post" class="register" id="register-form">
     <div class="register-main">
         <div class="rm-header">
             <span>Register</span>
@@ -18,20 +18,11 @@
             <input type="password" placeholder="Password" name="Pw" class="rm-textbox">
             <input type="password" placeholder="Confirm Password" class="rm-textbox">
             <input type="submit" value="Register" class="rm-submit">
+            <span class="rm-message" id="registerform-message"></span>
+            <span class="rm-success" id="registerform-success"></span>
         </div>
         <div class="rm-registerwith">
             <div class="g_id_signin" data-type="standart"></div>
-            <!--<div class="facebook">
-                <i class="bi bi-facebook"></i>
-            </div>
-            <div class="twitter">
-                <i class="bi bi-twitter"></i>
-            </div>
-            <div class="google">
-                <i class="bi bi-google"></i>
-                <div class="g_id_signin" data-type="standart"></div>
-            </div>-->
-            <!--<i class="bi bi-google"></i>-->
         </div>
     </div>
     <div class="register-extra">

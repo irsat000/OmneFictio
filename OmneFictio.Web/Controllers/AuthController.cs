@@ -28,7 +28,8 @@ public class AuthController : Controller
     {
         if(account == null)
             return NotFound();
-        bool rememberme = bool.TryParse(account.RememberMe, out rememberme);
+        bool rememberme;
+        bool.TryParse(account.RememberMe, out rememberme);
         var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/login", account);
         string statusCode = apiResponse.StatusCode.ToString();
         if(statusCode == "NotFound")
@@ -40,28 +41,53 @@ public class AuthController : Controller
                 return Ok();
             }
             else
-                return StatusCode(530);
+                return StatusCode(580);
         }
     }
-    public async Task<IActionResult> UserRegistration(AccountWrite1 account)
+    public async Task<IActionResult> UserRegistration([FromBody] AccountWrite2 account)
     {
-        var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/register", account);
+        int prefLan;
+        bool allowSexual;
+        bool allowViolence;
+        int.TryParse(account.PrefLanguageId, out prefLan);
+        bool.TryParse(account.AllowSexual, out allowSexual);
+        bool.TryParse(account.AllowViolence, out allowViolence);
+        AccountWrite1 createAccount = new AccountWrite1{
+            Username = account.Username,
+            Email = account.Email,
+            Pw = account.Pw,
+            PrefLanguageId = prefLan,
+            AllowSexual = allowSexual,
+            AllowViolence = allowViolence
+        };
+
+        var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/register", createAccount);
         string statusCode = apiResponse.StatusCode.ToString();
         if(statusCode == "OK"){
             string newToken = await getJwtFromResponse(apiResponse);
             if(newToken != null)
                 CreateUserSession(newToken);
+            return Ok();
         }
-        else if(statusCode == "430"){
-            
+        else if(statusCode == "480"){
+            //Username is bad
+            return StatusCode(480);
         }
-        else if(statusCode == "431"){
-
+        else if(statusCode == "481"){
+            //Username duplicate
+            return StatusCode(481);
         }
-        else if(statusCode == "422"){
-            
+        else if(statusCode == "482"){
+            //Password is bad
+            return StatusCode(482);
         }
-        return RedirectToAction("Index", "Home");
+        else if(statusCode == "483"){
+            //Failed to save the data to database
+            return StatusCode(483);
+        }
+        else{
+            return StatusCode(580);
+        }
     }
 
     public async Task<JsonResult> GoogleSignin(string googleToken)
@@ -75,23 +101,23 @@ public class AuthController : Controller
                 return new JsonResult(Ok());
             }
             else
-                return new JsonResult(StatusCode(532));
+                return new JsonResult(StatusCode(582));
         }
-        else if(statusCode == "430"){
+        else if(statusCode == "480"){
             //Token is malicious
-            return new JsonResult(StatusCode(430));
+            return new JsonResult(StatusCode(480));
         }
-        else if(statusCode == "530"){
+        else if(statusCode == "580"){
             //Data couldn't be saved in database
-            return new JsonResult(StatusCode(530));
+            return new JsonResult(StatusCode(580));
         }
-        else if(statusCode == "531"){
+        else if(statusCode == "581"){
             //Couldn't find the user
-            return new JsonResult(StatusCode(531));
+            return new JsonResult(StatusCode(581));
         }
         else{
             //Api request utterly failed
-            return new JsonResult(StatusCode(532));
+            return new JsonResult(StatusCode(582));
         }
     }
     public IActionResult LogOut(){
@@ -165,8 +191,28 @@ public class AuthController : Controller
     */
 
 
+/*
+    public async Task<IActionResult> UserRegistration(AccountWrite1 account)
+    {
+        var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/register", account);
+        string statusCode = apiResponse.StatusCode.ToString();
+        if(statusCode == "OK"){
+            string newToken = await getJwtFromResponse(apiResponse);
+            if(newToken != null)
+                CreateUserSession(newToken);
+        }
+        else if(statusCode == "480"){
+            
+        }
+        else if(statusCode == "481"){
 
-
+        }
+        else if(statusCode == "422"){
+            
+        }
+        return RedirectToAction("Index", "Home");
+    }
+*/
 
 
 
@@ -177,13 +223,13 @@ public class AuthController : Controller
         string text = request.ToString();
         
         var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/signin-external", request);
-        if((int)apiResponse.StatusCode == 430){
+        if((int)apiResponse.StatusCode == 480){
             //Token is malicious
         }
-        else if((int)apiResponse.StatusCode == 530){
+        else if((int)apiResponse.StatusCode == 580){
             //Data couldn't be saved in database
         }
-        else if((int)apiResponse.StatusCode == 531){
+        else if((int)apiResponse.StatusCode == 581){
             //Couldn't find the user
         }
         string newToken = await getJwtFromResponse(apiResponse);
