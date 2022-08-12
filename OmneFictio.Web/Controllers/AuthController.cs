@@ -33,7 +33,7 @@ public class AuthController : Controller
         else{
             string newToken = await getJwtFromResponse(apiResponse);
             if(newToken != null){
-                CreateUserSession(newToken);
+                CreateUserSession(newToken, rememberme: account.RememberMe.Value);
                 return Ok();
             }
             else
@@ -94,6 +94,7 @@ public class AuthController : Controller
     public IActionResult LogOut(){
         HttpContext.Session.Clear();
         HttpContext.SignOutAsync();
+        HttpContext.Response.Cookies.Delete("UserAuth");
         return RedirectToAction("Index", "Home");
     }
 
@@ -107,7 +108,7 @@ public class AuthController : Controller
         var result = JsonSerializer.Deserialize<Dictionary<string, object>>(raw);
         return result!.FirstOrDefault(x => x.Key == "jwt").Value.ToString()!;
     }
-    public void CreateUserSession(string tokenRaw){
+    public void CreateUserSession(string tokenRaw, bool rememberme = false){
         HttpContext.Session.Clear();
         var token = _jwtHandler.ReadJwtToken(tokenRaw);
         string userId = token.Claims.FirstOrDefault(claim => claim.Type == "nameid")?.Value;
@@ -122,11 +123,21 @@ public class AuthController : Controller
         };
         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
         var principal = new ClaimsPrincipal(identity);
+        
         var sessionSettings = new AuthenticationProperties{
             IsPersistent = true,
-            ExpiresUtc = DateTime.UtcNow.AddMonths(1)
+            ExpiresUtc = DateTime.UtcNow.AddHours(4)
         };
+        var coockieSettings = new CookieOptions{
+            IsEssential = true,
+            Expires = DateTime.UtcNow.AddHours(4)
+        };
+        if(rememberme == true){
+            sessionSettings.ExpiresUtc = DateTime.UtcNow.AddMonths(1);
+            coockieSettings.Expires = DateTime.UtcNow.AddMonths(1);
+        }
         HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, sessionSettings);
+        HttpContext.Response.Cookies.Append("UserAuth", "True", coockieSettings);
     }
 }
 
