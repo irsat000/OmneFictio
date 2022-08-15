@@ -40,8 +40,61 @@ $(document).ready(function(){
         })
         .catch(error => console.log('Login function failed.', error));
     });
-});
 
+
+    //Vote - fetch api
+    var voteBtns = document.getElementsByClassName('post-vote');
+    Array.from(voteBtns).forEach(btn => {
+        btn.addEventListener('click', async function(event){
+            var voteTarget = "post";
+            var targetId = btn.closest('.post').id.replace("post-", "");
+            if(targetId !== null){
+                VoteRequest(btn, voteTarget, targetId);
+            }
+        });
+    });
+});
+async function VoteRequest(btn, voteTarget, targetId){
+    var action = btn.getAttribute('data-action');
+    var vote;
+    if(action === "like"){ vote = true; }
+    else{ vote = false; }
+
+    var data = {};
+    if(voteTarget == "post"){
+        data = { TargetPostId: targetId, Vote1: vote };
+    }
+    else if(voteTarget == "chapter"){
+        data = { TargetChapterId: targetId, Vote1: vote };
+    }
+    else if(voteTarget == "comment"){
+        data = { TargetCommentId: targetId, Vote1: vote };
+    }
+    else if(voteTarget == "like"){
+        data = { TargetReplyId: targetId, Vote1: vote };
+    }
+    
+    await fetch("/HomeAction/Vote", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+    .then(function (response) {
+        if (response.ok) {
+            console.log("SUCCESS");
+        }
+        else if(response.status === 480){
+            console.log("It's already voted.");
+        }
+        else{
+            console.log("Server error");
+        }
+    })
+    .catch(error => console.log('Vote function failed.', error));
+}
 
 
 

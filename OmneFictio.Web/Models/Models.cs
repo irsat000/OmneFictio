@@ -1,6 +1,14 @@
 
 namespace OmneFictio.Web.Models;
 
+public partial class AccountRead2
+{
+    public string Username { get; set; } = null!;
+    public string Pw { get; set; } = null!;
+    public string RememberMe { get; set; } = null!;
+}
+//Authentication
+
 public partial class AccountWrite1
 {
     public string Username { get; set; } = null!;
@@ -22,3 +30,20 @@ public partial class AccountWrite2
     public string PrefLanguageId { get; set; } = null!;
 }
 //Getting payload from registration form
+
+
+
+
+
+
+
+public partial class VoteDtoWrite1
+{
+    public int? AccountId { get; set; }
+    public bool Vote1 { get; set; }
+    public int? TargetPostId { get; set; }
+    public int? TargetChapterId { get; set; }
+    public int? TargetCommentId { get; set; }
+    public int? TargetReplyId { get; set; }
+}
+//Voting

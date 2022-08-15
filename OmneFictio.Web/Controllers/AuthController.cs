@@ -44,6 +44,7 @@ public class AuthController : Controller
                 return StatusCode(580);
         }
     }
+    [HttpPost]
     public async Task<IActionResult> UserRegistration([FromBody] AccountWrite2 account)
     {
         int prefLan;
@@ -82,7 +83,7 @@ public class AuthController : Controller
             return StatusCode(482);
         }
         else if(statusCode == "483"){
-            //Failed to save the data to database
+            //Failed to save the data in database
             return StatusCode(483);
         }
         else{

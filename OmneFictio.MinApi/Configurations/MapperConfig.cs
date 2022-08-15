@@ -25,6 +25,9 @@ public class MapperConfig : Profile{
         CreateMap<ReplyDtoRead_1, Reply>().ReverseMap();
         CreateMap<ReplyDtoRead_2, Reply>().ReverseMap();
 
+        CreateMap<VoteDtoWrite_1, Vote>().ReverseMap();
+        
+
         CreateMap<AuthorityDto, Authority>().ReverseMap();
         CreateMap<DeletedStatusDto, DeletedStatus>().ReverseMap();
         CreateMap<ExistingStoryDto, ExistingStory>().ReverseMap();

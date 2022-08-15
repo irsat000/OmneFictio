@@ -165,5 +165,60 @@ app.MapPost("/signin-external", async (OmneFictioContext db, [FromBody] string t
 });
 
 
+app.MapPost("/vote", async (OmneFictioContext db, VoteDtoWrite_1 request) => {
+    string type = "";
+    if(request.TargetPostId != null)
+        type = "post";
+    else if(request.TargetChapterId != null)
+        type = "chapter";
+    else if(request.TargetCommentId != null)
+        type = "comment";
+    else if(request.TargetReplyId != null)
+        type = "reply";
+
+    dynamic? checkVote = null;
+    if(type == "post"){
+        checkVote = mapper.Map<VoteDtoWrite_1>
+                (db.Votes.SingleOrDefault(x => x.AccountId == request.AccountId &&
+                x.TargetPostId == request.TargetPostId));
+    }
+    else if(type == "chapter"){
+        checkVote = mapper.Map<VoteDtoWrite_1>
+                (db.Votes.SingleOrDefault(x => x.AccountId == request.AccountId &&
+                x.TargetChapterId == request.TargetChapterId));
+    }
+    else if(type == "comment"){
+        checkVote = mapper.Map<VoteDtoWrite_1>
+                (db.Votes.SingleOrDefault(x => x.AccountId == request.AccountId && 
+                x.TargetCommentId == request.TargetCommentId));
+    }
+    else if(type == "reply"){
+        checkVote = mapper.Map<VoteDtoWrite_1>
+                (db.Votes.SingleOrDefault(x => x.AccountId == request.AccountId &&
+                x.TargetReplyId == request.TargetReplyId));
+    }
+
+    if(checkVote != null)
+        return Results.StatusCode(480);
+    else{
+        try {
+            db.Votes.Add(mapper.Map<Vote>(request));
+            await db.SaveChangesAsync();
+        } catch (Exception e) {
+            return Results.BadRequest(e);
+        }
+    }
+    return Results.Ok();
+});
+
+
+
+
+
+
+
+
+
+
 
 app.Run();

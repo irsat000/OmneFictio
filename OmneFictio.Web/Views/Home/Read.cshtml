@@ -306,7 +306,7 @@
     @{
         if(Model.posts != null){
             foreach(PostRead1 post in Model.posts){
-                <div class="post">
+                <div class="post" id="post-@post.id">
                     <div class="post-detail d-flex">
                         <div class="p-header">
                             <div class="p-title">
@@ -322,7 +322,7 @@
                         </div>
                         <div class="p-footer">
                             <div class="pf-evaluation">
-                                <i class="bi bi-hand-thumbs-up p-likebtn"></i>
+                                <i class="bi bi-hand-thumbs-up post-vote p-likebtn" data-action="like"></i>
                                 <span class="p-likes">
                                     @{
                                         int likes = 0;
@@ -343,7 +343,7 @@
                                             @negative
                                     }
                                 </span>
-                                <i class="bi bi-hand-thumbs-down p-dislikebtn"></i>
+                                <i class="bi bi-hand-thumbs-down post-vote p-dislikebtn" data-action="dislike"></i>
                                 <span class="p-rate">
                                     @{
                                         double rate = 0;
