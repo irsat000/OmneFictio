@@ -26,6 +26,7 @@ public class MapperConfig : Profile{
         CreateMap<ReplyDtoRead_2, Reply>().ReverseMap();
 
         CreateMap<VoteDtoWrite_1, Vote>().ReverseMap();
+        CreateMap<VoteDtoRead_2, Vote>().ReverseMap();
         
 
         CreateMap<AuthorityDto, Authority>().ReverseMap();

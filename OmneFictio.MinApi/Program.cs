@@ -176,37 +176,41 @@ app.MapPost("/vote", async (OmneFictioContext db, VoteDtoWrite_1 request) => {
     else if(request.TargetReplyId != null)
         type = "reply";
 
-    dynamic? checkVote = null;
+    VoteDtoRead_2? checkVote = null;
     if(type == "post"){
-        checkVote = mapper.Map<VoteDtoWrite_1>
+        checkVote = mapper.Map<VoteDtoRead_2>
                 (db.Votes.SingleOrDefault(x => x.AccountId == request.AccountId &&
                 x.TargetPostId == request.TargetPostId));
     }
     else if(type == "chapter"){
-        checkVote = mapper.Map<VoteDtoWrite_1>
+        checkVote = mapper.Map<VoteDtoRead_2>
                 (db.Votes.SingleOrDefault(x => x.AccountId == request.AccountId &&
                 x.TargetChapterId == request.TargetChapterId));
     }
     else if(type == "comment"){
-        checkVote = mapper.Map<VoteDtoWrite_1>
+        checkVote = mapper.Map<VoteDtoRead_2>
                 (db.Votes.SingleOrDefault(x => x.AccountId == request.AccountId && 
                 x.TargetCommentId == request.TargetCommentId));
     }
     else if(type == "reply"){
-        checkVote = mapper.Map<VoteDtoWrite_1>
+        checkVote = mapper.Map<VoteDtoRead_2>
                 (db.Votes.SingleOrDefault(x => x.AccountId == request.AccountId &&
                 x.TargetReplyId == request.TargetReplyId));
     }
 
-    if(checkVote != null)
-        return Results.StatusCode(480);
-    else{
-        try {
-            db.Votes.Add(mapper.Map<Vote>(request));
+    if(checkVote != null){
+        if(checkVote.Vote1 != request.Vote1){
+            db.Votes.Remove(db.Votes.SingleOrDefault(x => x.Id == checkVote.Id));
             await db.SaveChangesAsync();
-        } catch (Exception e) {
-            return Results.BadRequest(e);
         }
+        else
+            return Results.StatusCode(480);
+    }
+    try {
+        db.Votes.Add(mapper.Map<Vote>(request));
+        await db.SaveChangesAsync();
+    } catch (Exception) {
+        return Results.StatusCode(580);
     }
     return Results.Ok();
 });

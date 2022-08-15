@@ -31,7 +31,7 @@ public class HomeActionController : Controller
             return Ok();
         }
         else if(statusCode == "480"){
-            //Already voted by this user
+            //This value is already applied.
             return StatusCode(480);
         }
         else if(statusCode == "580"){
@@ -39,7 +39,7 @@ public class HomeActionController : Controller
             return StatusCode(580);
         }
         else{
-            //Unknown
+            //Unknown error
             return StatusCode(581);
         }
     }
