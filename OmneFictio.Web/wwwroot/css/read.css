@@ -295,8 +295,9 @@ main {
   margin: 20px 20px 0 0;
   flex-shrink: 0;
   font-family: "Itim", cursive;
+  color: #fff;
 }
-.nav-cont .navcont-links {
+.nav-cont .nav-primary {
   display: flex;
   flex-direction: column;
   background-color: var(--background-color1) !important;
@@ -306,15 +307,14 @@ main {
   min-height: 140px;
   margin-bottom: 12px;
 }
-.nav-cont .navcont-links .navlinks {
+.nav-cont .nav-primary .nlink-cont {
   display: flex;
   flex-wrap: wrap;
   justify-content: space-between;
   gap: 10px;
   padding: 6px;
-  color: #fff;
 }
-.nav-cont .navcont-links .navlinks > a {
+.nav-cont .nav-primary .nlink-cont > a {
   padding: 4px 14px;
   border-radius: 8px;
   border: none;
@@ -322,16 +322,16 @@ main {
   transition: 0.2s ease;
   cursor: pointer;
 }
-.nav-cont .navcont-links .nl-readingtime > a {
+.nav-cont .nav-primary .np-readingtime > a {
   background-color: var(--navlink-readingtime-color);
 }
-.nav-cont .navcont-links .nl-readingtime > a:hover {
+.nav-cont .nav-primary .np-readingtime > a:hover {
   background-color: var(--navlink-readingtime-color-hover);
 }
-.nav-cont .navcont-links .nl-aboutyou > a {
+.nav-cont .nav-primary .np-aboutyou > a {
   background-color: var(--navlink-aboutyou-color);
 }
-.nav-cont .navcont-links .nl-aboutyou > a:hover {
+.nav-cont .nav-primary .np-aboutyou > a:hover {
   background-color: var(--navlink-aboutyou-color-hover);
 }
 .nav-cont .nav-ad1 {
@@ -341,13 +341,30 @@ main {
   height: 200px;
   margin-bottom: 12px;
 }
-.nav-cont .sticky-nav {
-  display: flex;
+.nav-cont .nav-others {
+  position: -webkit-sticky; /* Safari & IE */
+  position: sticky;
+  top: 20px;
   background-color: var(--background-color1) !important;
   border-radius: 10px;
-  padding: 8px;
   width: 100%;
-  height: 420px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  gap: 10px;
+  padding: 14px;
+}
+.nav-cont .nav-others > a {
+  padding: 4px 14px;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  transition: 0.2s ease;
+  cursor: pointer;
+  background-color: var(--navlink-others-color);
+}
+.nav-cont .nav-others > a:hover {
+  background-color: var(--navlink-others-color-hover);
 }
 
 .orderby_type-cont {
