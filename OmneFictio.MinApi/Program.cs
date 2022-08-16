@@ -166,6 +166,10 @@ app.MapPost("/signin-external", async (OmneFictioContext db, [FromBody] string t
 
 
 app.MapPost("/vote", async (OmneFictioContext db, VoteDtoWrite_1 request) => {
+    if(db.Accounts.FirstOrDefault(a => a.Id == request.AccountId) == null){
+        return Results.StatusCode(480);
+    }
+    
     string type = "";
     if(request.TargetPostId != null)
         type = "post";

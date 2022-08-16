@@ -106,10 +106,16 @@ async function VoteRequest(btn, voteTarget, action, targetElement){
                 if(btnsibling.classList.contains("p-dislikebtn")){
                     btnsibling.classList.remove("bi-hand-thumbs-down-fill");
                     btnsibling.classList.add("bi-hand-thumbs-down");
+                    if(p_likes !== "--"){
+                        p_likesElement.innerText = votecount + 1;
+                    }
                 }
                 else{
                     btnsibling.classList.remove("bi-hand-thumbs-up-fill");
                     btnsibling.classList.add("bi-hand-thumbs-up");
+                    if(p_likes !== "--"){
+                        p_likesElement.innerText = votecount - 1;
+                    }
                 }
             }
             if(btn.classList.contains("active")){

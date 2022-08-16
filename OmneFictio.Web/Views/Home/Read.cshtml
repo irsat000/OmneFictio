@@ -1,3 +1,5 @@
+@using OmneFictio.Web.Models
+@using System.Security.Claims
 @{
     ViewData["Title"] = "Read";
     @section Stylesheets {
@@ -7,7 +9,14 @@
         <script src="~/js/read.js"></script>
     }
 }
-@using OmneFictio.Web.Models
+@{
+    string userId = "-1";
+    string username = "";
+    string userPicture = "none"; 
+    userId = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier)?.Value ?? "-1";
+    username = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name)?.Value ?? "";
+    userPicture = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Actor)?.Value ?? "none";
+}
 @model ReadViewmodel
 
 <div class="orderby_type-cont" id="orderby-modal">
@@ -306,6 +315,9 @@
     @{
         if(Model.posts != null){
             foreach(PostRead1 post in Model.posts){
+                /*if(post.id != 5){
+                    continue;
+                }*/
                 <div class="post" id="post-@post.id">
                     <div class="post-detail d-flex">
                         <div class="p-header">
@@ -322,31 +334,71 @@
                         </div>
                         <div class="p-footer">
                             <div class="pf-evaluation">
-                                <i class="bi bi-hand-thumbs-up post-vote p-likebtn" data-action="like"></i>
+                                @{
+                                    int votedByUser = -2; // -2 means not logged in  (maybe temporary)
+                                    if(userId != "-1"){
+                                        if(post!.votes.SingleOrDefault(p => p.accountId == Convert.ToInt32(userId) && p.vote1 == true) != null){
+                                            votedByUser = 1;
+                                        }
+                                        else if(post!.votes.SingleOrDefault(p => p.accountId == Convert.ToInt32(userId) && p.vote1 == false) != null){
+                                            votedByUser = 0;
+                                        }
+                                        else{
+                                            votedByUser = -1;
+                                        }
+                                    }
+                                    
+                                    if(votedByUser == 1){
+                                        <i class="bi bi-hand-thumbs-up-fill active post-vote p-likebtn" data-action="like"></i>
+                                    }
+                                    else if(votedByUser == 0 || votedByUser == -1){
+                                        <i class="bi bi-hand-thumbs-up post-vote p-likebtn" data-action="like"></i>
+                                    }
+                                    else if(votedByUser == -2){
+                                        <i class="bi bi-hand-thumbs-up p-likebtn"></i>
+                                    }
+                                }
                                 <span class="p-likes">
                                     @{
                                         int likes = 0;
                                         string negative = "--";
+                                        foreach(Vote value in post.votes){
+                                            if(value.vote1 == true)
+                                                likes++;
+                                            else
+                                                likes--;
+                                        }
+                                        /*
                                         if(post!.votes != null){
                                             if(post.votes.Count > 0){
-                                                foreach(Vote value in post.votes){
-                                                    if(value.vote1 == true)
-                                                        likes++;
-                                                    else
-                                                        likes--;
-                                                }
                                             }
-                                        }
+                                        }*/
+                                        
                                         if(likes >= 0)
                                             @likes
                                         else
                                             @negative
                                     }
                                 </span>
-                                <i class="bi bi-hand-thumbs-down post-vote p-dislikebtn" data-action="dislike"></i>
                                 @{
+                                    if(votedByUser == 0){
+                                        <i class="bi bi-hand-thumbs-down-fill active post-vote p-dislikebtn" data-action="dislike"></i>
+                                    }
+                                    else if(votedByUser == 1 || votedByUser == -1){
+                                        <i class="bi bi-hand-thumbs-down post-vote p-dislikebtn" data-action="dislike"></i>
+                                    }
+                                    else if(votedByUser == -2){
+                                        <i class="bi bi-hand-thumbs-down p-dislikebtn"></i>
+                                    }
+
                                     if(likes >= 0){
-                                        <input type="hidden" id="postvote-@post.id" value="@likes">
+                                        int untouchedLikes = likes;
+                                        if(votedByUser == 1){
+                                            untouchedLikes = likes - 1;
+                                        } else if (votedByUser == 0){
+                                            untouchedLikes = likes + 1;
+                                        }
+                                        <input type="hidden" id="postvote-@post.id" value="@untouchedLikes">
                                     }
                                     else{
                                         <input type="hidden" id="postvote-@post.id" value="--">

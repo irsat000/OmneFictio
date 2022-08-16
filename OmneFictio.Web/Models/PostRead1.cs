@@ -116,6 +116,7 @@ public class Tag
 
 public class Vote
 {
+    public int? accountId { get; set; }
     public bool vote1 { get; set; }
 }
 

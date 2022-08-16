@@ -30,6 +30,10 @@ public class HomeActionController : Controller
         if(statusCode == "OK"){
             return Ok();
         }
+        else if(statusCode == "480"){
+            //No user
+            return StatusCode(580);
+        }
         else if(statusCode == "580"){
             //Failed to save the data in database
             return StatusCode(580);
