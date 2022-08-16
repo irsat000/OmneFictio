@@ -113,7 +113,10 @@ async function VoteRequest(btn, voteTarget, action, targetElement){
                 }
             }
             if(btn.classList.contains("active")){
-                p_likesElement.innerText = votecount;
+                if(p_likes !== "--"){
+                    //return to original value without calculation
+                    p_likesElement.innerText = votecount;
+                }
                 btn.classList.remove("active");
                 if(action === "like"){
                     btn.classList.remove("bi-hand-thumbs-up-fill");
@@ -135,9 +138,6 @@ async function VoteRequest(btn, voteTarget, action, targetElement){
                     btn.classList.add("bi-hand-thumbs-down-fill");
                 }
             }
-        }
-        else if(response.status === 480){
-            console.log("It's already voted.");
         }
         else{
             console.log("Server error");

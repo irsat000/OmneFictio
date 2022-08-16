@@ -198,16 +198,15 @@ app.MapPost("/vote", async (OmneFictioContext db, VoteDtoWrite_1 request) => {
                 x.TargetReplyId == request.TargetReplyId));
     }
 
-    if(checkVote != null){
-        if(checkVote.Vote1 != request.Vote1){
-            db.Votes.Remove(db.Votes.SingleOrDefault(x => x.Id == checkVote.Id));
-            await db.SaveChangesAsync();
-        }
-        else
-            return Results.StatusCode(480);
-    }
     try {
-        db.Votes.Add(mapper.Map<Vote>(request));
+        if(checkVote != null && checkVote.Vote1 != request.Vote1)
+            db.Votes.Remove(db.Votes.SingleOrDefault(x => x.Id == checkVote.Id));
+            
+        if(checkVote != null && checkVote.Vote1 == request.Vote1)
+            db.Votes.Remove(db.Votes.SingleOrDefault(x => x.Id == checkVote.Id));
+        else
+            db.Votes.Add(mapper.Map<Vote>(request));
+
         await db.SaveChangesAsync();
     } catch (Exception) {
         return Results.StatusCode(580);
