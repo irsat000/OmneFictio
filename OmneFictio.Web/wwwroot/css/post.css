@@ -54,6 +54,7 @@
   margin-bottom: 10px;
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
 }
 .post-detail .p-body .p-cover {
   flex-shrink: 0;
@@ -72,7 +73,6 @@
   display: -webkit-box;
   -webkit-line-clamp: 7;
   -webkit-box-orient: vertical;
-  max-height: 152px;
   overflow: hidden;
 }
 .post-detail .p-footer {

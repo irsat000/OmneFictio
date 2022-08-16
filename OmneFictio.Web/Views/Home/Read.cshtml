@@ -330,12 +330,10 @@
                             </div>
                         </div>
                         <div class="p-body">
-                            @{
-                                if(post.coverImage != null){
-                                    <div class="p-cover">
-                                        <img src="@post.coverImage">
-                                    </div>
-                                }
+                            @if(post.coverImage != null){
+                                <div class="p-cover">
+                                    <img src="@post.coverImage">
+                                </div>
                             }
                             <span>@post.postDescription</span>
                         </div>
@@ -414,7 +412,7 @@
                                 <span class="p-rate">
                                     @{
                                         double rate = 0;
-                                        if(post.rates != null){
+                                        if(post.rates.Count > 0){
                                             foreach(Rate value in post.rates){
                                                 if(value.rate1 >= 0 && value.rate1 <= 10)
                                                     rate += value.rate1;
@@ -423,18 +421,16 @@
                                             @ortRate
                                         }
                                         else{
-                                            @Html.Raw("--");
+                                            @Html.Raw("--/10");
                                         }
                                     }
                                 </span>
                             </div>
                             <div class="pf-user">
-                                @{
-                                    if(post.account != null){
-                                        <span class="p-username p-deleted_user">@post.account.username</span>
-                                    }else{
-                                        <span class="p-username">DeletedUser</span>
-                                    }
+                                @if(post.account != null){
+                                    <span class="p-username p-deleted_user">@post.account.username</span>
+                                }else{
+                                    <span class="p-username">DeletedUser</span>
                                 }
                                 <img src="https://uybor.uz/borless/avtobor/img/user-images/user_no_photo_300x300.png">
                             </div>
@@ -446,13 +442,11 @@
                                 Tags
                             </span>
                             <div class="pd-tags">
-                                @if(post.tags != null){
-                                    if(post.tags.Count < 1){
-                                        <span>Empty</span>
-                                    } else{
-                                        foreach(Tag tag in post.tags){
-                                            <span>@tag.body</span>
-                                        }
+                                @if(post.tags.Count < 1){
+                                    <span>Empty</span>
+                                } else{
+                                    foreach(Tag tag in post.tags){
+                                        <span>@tag.body</span>
                                     }
                                 }
                                 <!--<span>Action</span>-->
@@ -467,18 +461,16 @@
                                     }
                                 </span>
                             </div>
-                            @if(post.existingStories != null){
-                                if(post.existingStories.Count > 0){
-                                    <span class="pd-heading">
-                                        Based on;
-                                    </span>
-                                    <div class="pd-series">
-                                        @foreach(ExistingStory story in post.existingStories){
-                                            <span>@story.body</span>
-                                        }
-                                        <!--<span>Pirates of the Caribbean</span>-->
-                                    </div>
-                                }
+                            @if(post.existingStories.Count > 0){
+                                <span class="pd-heading">
+                                    Based on
+                                </span>
+                                <div class="pd-series">
+                                    @foreach(ExistingStory story in post.existingStories){
+                                        <span>@story.body</span>
+                                    }
+                                    <!--<span>Pirates of the Caribbean</span>-->
+                                </div>
                             }
                             <div class="pd-poststatus">
                                 <span class="pd-heading">Status:</span>

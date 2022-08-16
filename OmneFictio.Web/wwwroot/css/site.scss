@@ -51,6 +51,7 @@ body{
 }
 .main-cont{
     min-height: 100%;
+    padding-bottom: 30px;
 }
 
 header{
@@ -603,7 +604,7 @@ header{
 // custom max widths
 @media (max-width: 767.98px) {
     .main-cont{
-        padding: 0;
+        padding: 0 0 30px;
         margin: 0;
         max-width: unset;
         width: 100%;
