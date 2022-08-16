@@ -8,6 +8,7 @@ public class PostDtoRead_1
     public string PostDescription { get; set; } = null!;
     public DateTime PublishDate { get; set; }
     public DateTime UpdateDate { get; set; }
+    public string? CoverImage { get; set; }
 
     public virtual AccountDtoRead_1? Account { get; set; }
     public virtual DeletedStatusDto? DeletedStatus { get; set; }

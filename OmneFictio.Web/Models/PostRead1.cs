@@ -87,6 +87,7 @@ public class PostRead1
     public int id { get; set; }
     public string title { get; set; }
     public string postDescription { get; set; }
+    public string? coverImage { get; set; }
     public DateTime publishDate { get; set; }
     public DateTime updateDate { get; set; }
     public Account account { get; set; }

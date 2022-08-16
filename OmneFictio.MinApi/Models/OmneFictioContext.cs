@@ -396,6 +396,10 @@ namespace OmneFictio.MinApi.Models
 
                 entity.Property(e => e.AccountId).HasColumnName("accountId");
 
+                entity.Property(e => e.CoverImage)
+                    .IsUnicode(false)
+                    .HasColumnName("coverImage");
+
                 entity.Property(e => e.DeletedStatusId)
                     .HasColumnName("deletedStatusId")
                     .HasDefaultValueSql("((1))");

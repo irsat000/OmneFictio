@@ -2,8 +2,6 @@
 .post{
     margin-bottom: 12px;
     background-color: var(--background-color2);
-    overflow: hidden;
-    max-height: 260px;
     -webkit-box-shadow: 0px 2px 4px -2px rgb(0 0 0 / 25%);
     -moz-box-shadow: 0px 2px 4px -2px rgb(0 0 0 / 25%);
     box-shadow: 0px 2px 4px -2px rgb(0 0 0 / 25%);
@@ -56,23 +54,30 @@
         font-size: 0.9rem;
         font-family: 'Gudea', sans-serif;
         margin-bottom: 10px;
-        max-height: 300px;
-        overflow: hidden;
-        display: -webkit-box;
-        -webkit-line-clamp: 7;
-        -webkit-box-orient: vertical;
-        /*
-        text-overflow: ellipsis;*/
-    }
-    .p-footer{
-        /*
-        font-family: 'Itim', cursive;
-        padding: 0 10px 10px;
         display: flex;
         flex-direction: row;
-        justify-content: space-between;
-        align-items: center;
-        */
+        .p-cover{
+            flex-shrink: 0;
+            padding-right: 14px;
+            display: flex;
+            align-items: center;
+            img{
+                max-width: 90px;
+                height: auto;
+                max-height: 140px;
+                border-radius: 4px;
+            }
+        }
+        span{
+            flex-grow: 1;
+            display: -webkit-box;
+            -webkit-line-clamp: 7;
+            -webkit-box-orient: vertical;
+            max-height: 152px;
+            overflow: hidden;
+        }
+    }
+    .p-footer{
         font-family: 'Itim', cursive;
         display: flex;
         flex-direction: row;
@@ -133,40 +138,6 @@
                 cursor: pointer;
             }
         }
-        /*
-        i{
-            font-size: 1.2rem;
-            cursor: pointer;
-            transition: color 0.2s ease;
-            &:hover{
-                color: var(--text-color-hover1);
-            }
-        }
-        .p-likes{
-            padding: 0 8px;
-        }
-        .p-rate{
-            margin: 0 20px;
-            flex-grow: 1;
-        }
-        .p-username{
-            font-size: 0.8rem;
-            cursor: pointer;
-            padding-right: 8px;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-            max-width: 180px;
-            &:hover{
-                text-decoration: underline;
-            }
-        }
-        img{
-            height: 1.7rem;
-            width: 1.7rem;
-            border-radius: 50%;
-            cursor: pointer;
-        }*/
     }
 }
 .post-menu{

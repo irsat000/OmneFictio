@@ -330,17 +330,24 @@
                             </div>
                         </div>
                         <div class="p-body">
-                            @post.postDescription    
+                            @{
+                                if(post.coverImage != null){
+                                    <div class="p-cover">
+                                        <img src="@post.coverImage">
+                                    </div>
+                                }
+                            }
+                            <span>@post.postDescription</span>
                         </div>
                         <div class="p-footer">
                             <div class="pf-evaluation">
                                 @{
                                     int votedByUser = -2; // -2 means not logged in  (maybe temporary)
                                     if(userId != "-1"){
-                                        if(post!.votes.SingleOrDefault(p => p.accountId == Convert.ToInt32(userId) && p.vote1 == true) != null){
+                                        if(post.votes.SingleOrDefault(p => p.accountId == Convert.ToInt32(userId) && p.vote1 == true) != null){
                                             votedByUser = 1;
                                         }
-                                        else if(post!.votes.SingleOrDefault(p => p.accountId == Convert.ToInt32(userId) && p.vote1 == false) != null){
+                                        else if(post.votes.SingleOrDefault(p => p.accountId == Convert.ToInt32(userId) && p.vote1 == false) != null){
                                             votedByUser = 0;
                                         }
                                         else{
@@ -369,7 +376,7 @@
                                                 likes--;
                                         }
                                         /*
-                                        if(post!.votes != null){
+                                        if(post.votes != null){
                                             if(post.votes.Count > 0){
                                             }
                                         }*/
@@ -412,7 +419,7 @@
                                                 if(value.rate1 >= 0 && value.rate1 <= 10)
                                                     rate += value.rate1;
                                             }
-                                            string ortRate = Math.Round((rate / post!.rates.Count), 1).ToString() + "/10";
+                                            string ortRate = Math.Round((rate / post.rates.Count), 1).ToString() + "/10";
                                             @ortRate
                                         }
                                         else{
@@ -439,8 +446,8 @@
                                 Tags
                             </span>
                             <div class="pd-tags">
-                                @if(post!.tags != null){
-                                    if(post!.tags.Count < 1){
+                                @if(post.tags != null){
+                                    if(post.tags.Count < 1){
                                         <span>Empty</span>
                                     } else{
                                         foreach(Tag tag in post.tags){
@@ -453,15 +460,15 @@
                             <div class="pd-type">
                                 <span class="pd-heading">Type:</span>
                                 <span class="pd-value">
-                                    @if(post!.postType != null){
-                                        @post!.postType.body
+                                    @if(post.postType != null){
+                                        @post.postType.body
                                     }else{
                                         @Html.Raw("None")
                                     }
                                 </span>
                             </div>
-                            @if(post!.existingStories != null){
-                                if(post!.existingStories.Count > 0){
+                            @if(post.existingStories != null){
+                                if(post.existingStories.Count > 0){
                                     <span class="pd-heading">
                                         Based on;
                                     </span>
@@ -476,8 +483,8 @@
                             <div class="pd-poststatus">
                                 <span class="pd-heading">Status:</span>
                                 <span class="pd-value">
-                                    @if(post!.postStatus != null){
-                                        @post!.postStatus.body
+                                    @if(post.postStatus != null){
+                                        @post.postStatus.body
                                     }else{
                                         @Html.Raw("None")
                                     }
@@ -486,8 +493,8 @@
                             <div class="pd-language">
                                 <span class="pd-heading">Language:</span>
                                 <span class="pd-value">
-                                    @if(post!.language != null){
-                                        @post!.language.body
+                                    @if(post.language != null){
+                                        @post.language.body
                                     }else{
                                         @Html.Raw("None")
                                     }
