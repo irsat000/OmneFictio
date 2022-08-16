@@ -46,16 +46,18 @@ $(document).ready(function(){
     var voteBtns = document.getElementsByClassName('post-vote');
     Array.from(voteBtns).forEach(btn => {
         btn.addEventListener('click', async function(event){
+            var action = btn.getAttribute('data-action');
             var voteTarget = "post";
-            var targetId = btn.closest('.post').id.replace("post-", "");
-            if(targetId !== null){
-                VoteRequest(btn, voteTarget, targetId);
+            var targetElement = btn.closest('.post').id;
+            if(targetElement !== null){
+                VoteRequest(btn, voteTarget, action, targetElement);
             }
         });
     });
 });
-async function VoteRequest(btn, voteTarget, targetId){
-    var action = btn.getAttribute('data-action');
+async function VoteRequest(btn, voteTarget, action, targetElement){
+    var targetId = targetElement.replace("post-", "");
+
     var vote;
     if(action === "like"){ vote = true; }
     else{ vote = false; }
@@ -84,7 +86,55 @@ async function VoteRequest(btn, voteTarget, targetId){
     })
     .then(function (response) {
         if (response.ok) {
-            console.log("SUCCESS");
+            var p_likesElement = document.querySelectorAll('#' + targetElement + ' .p-likes')[0];
+            var p_likes = document.getElementById("postvote-" + targetId).value;
+            if(p_likes !== "--"){
+                var votecount = parseInt(p_likes);
+                if(action === "like"){
+                    p_likesElement.innerText = votecount + 1;
+                }
+                else{
+                    p_likesElement.innerText = votecount - 1;
+                }
+            }
+            var btnsibling = document.querySelectorAll('#' + targetElement + ' .p-likebtn')[0];
+            if(action === "like"){
+                btnsibling = document.querySelectorAll('#' + targetElement + ' .p-dislikebtn')[0];
+            }
+            if(btnsibling.classList.contains("active")){
+                btnsibling.classList.remove("active");
+                if(btnsibling.classList.contains("p-dislikebtn")){
+                    btnsibling.classList.remove("bi-hand-thumbs-down-fill");
+                    btnsibling.classList.add("bi-hand-thumbs-down");
+                }
+                else{
+                    btnsibling.classList.remove("bi-hand-thumbs-up-fill");
+                    btnsibling.classList.add("bi-hand-thumbs-up");
+                }
+            }
+            if(btn.classList.contains("active")){
+                p_likesElement.innerText = votecount;
+                btn.classList.remove("active");
+                if(action === "like"){
+                    btn.classList.remove("bi-hand-thumbs-up-fill");
+                    btn.classList.add("bi-hand-thumbs-up");
+                }
+                else{
+                    btn.classList.remove("bi-hand-thumbs-down-fill");
+                    btn.classList.add("bi-hand-thumbs-down");
+                }
+            }
+            else{
+                btn.classList.add("active");
+                if(action === "like"){
+                    btn.classList.remove("bi-hand-thumbs-up");
+                    btn.classList.add("bi-hand-thumbs-up-fill");
+                }
+                else{
+                    btn.classList.remove("bi-hand-thumbs-down");
+                    btn.classList.add("bi-hand-thumbs-down-fill");
+                }
+            }
         }
         else if(response.status === 480){
             console.log("It's already voted.");

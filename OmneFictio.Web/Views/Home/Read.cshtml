@@ -344,6 +344,14 @@
                                     }
                                 </span>
                                 <i class="bi bi-hand-thumbs-down post-vote p-dislikebtn" data-action="dislike"></i>
+                                @{
+                                    if(likes >= 0){
+                                        <input type="hidden" id="postvote-@post.id" value="@likes">
+                                    }
+                                    else{
+                                        <input type="hidden" id="postvote-@post.id" value="--">
+                                    }
+                                }
                                 <span class="p-rate">
                                     @{
                                         double rate = 0;
