@@ -69,7 +69,7 @@ public class PostType
 
 public class Rate
 {
-    public double rate1 { get; set; }
+    public double body { get; set; }
 }
 
 public class RatedA
@@ -118,7 +118,7 @@ public class Tag
 public class Vote
 {
     public int? accountId { get; set; }
-    public bool vote1 { get; set; }
+    public bool body { get; set; }
 }
 
 

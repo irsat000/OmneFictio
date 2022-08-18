@@ -21,6 +21,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     .AddCookie(options =>
     {
         options.ExpireTimeSpan = TimeSpan.FromHours(4);
+        options.Cookie.SameSite = SameSiteMode.Strict;
     })
     .AddGoogle(GoogleDefaults.AuthenticationScheme, googleOptions =>
     {

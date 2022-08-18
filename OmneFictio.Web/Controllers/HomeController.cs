@@ -15,6 +15,8 @@ public class HomeController : Controller
         _logger = logger;
         _httpClient = httpClient;
     }
+
+    [HttpGet("/")]
     public async Task<IActionResult> Index()
     {
         /*IndexViewmodel viewModel = new IndexViewmodel{
@@ -38,10 +40,20 @@ public class HomeController : Controller
 
         return View(viewModel);
     }
+
+    [HttpGet("Register")]
     public IActionResult Register()
     {
         return View();
     }
+
+    [HttpGet("Publish")]
+    public IActionResult Publish()
+    {
+        return View();
+    }
+
+
 
     public IActionResult Privacy()
     {

@@ -40,7 +40,7 @@ public partial class AccountWrite2
 public partial class VoteDtoWrite1
 {
     public int? AccountId { get; set; }
-    public bool Vote1 { get; set; }
+    public bool Body { get; set; }
     public int? TargetPostId { get; set; }
     public int? TargetChapterId { get; set; }
     public int? TargetCommentId { get; set; }

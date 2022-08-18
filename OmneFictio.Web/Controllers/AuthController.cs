@@ -140,10 +140,13 @@ public class AuthController : Controller
     }
     public void CreateUserSession(string tokenRaw, bool rememberme = true){
         HttpContext.Session.Clear();
-        var token = _jwtHandler.ReadJwtToken(tokenRaw);
-        string userId = token.Claims.FirstOrDefault(claim => claim.Type == "nameid")?.Value;
-        string username = token.Claims.FirstOrDefault(claim => claim.Type == "unique_name")?.Value;
-        string userPicture = token.Claims.FirstOrDefault(claim => claim.Type == "actort")?.Value;
+        JwtSecurityToken? token = _jwtHandler.ReadJwtToken(tokenRaw);
+        if(token == null)
+            return;
+        
+        string userId = token.Claims.FirstOrDefault(claim => claim.Type == "nameid").Value;
+        string username = token.Claims.FirstOrDefault(claim => claim.Type == "unique_name").Value;
+        string userPicture = token.Claims.FirstOrDefault(claim => claim.Type == "actort").Value;
         
         var claims = new List<Claim>
         {

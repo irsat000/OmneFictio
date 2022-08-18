@@ -342,10 +342,10 @@
                                 @{
                                     int votedByUser = -2; // -2 means not logged in  (maybe temporary)
                                     if(userId != "-1"){
-                                        if(post.votes.SingleOrDefault(p => p.accountId == Convert.ToInt32(userId) && p.vote1 == true) != null){
+                                        if(post.votes.SingleOrDefault(p => p.accountId == Convert.ToInt32(userId) && p.body == true) != null){
                                             votedByUser = 1;
                                         }
-                                        else if(post.votes.SingleOrDefault(p => p.accountId == Convert.ToInt32(userId) && p.vote1 == false) != null){
+                                        else if(post.votes.SingleOrDefault(p => p.accountId == Convert.ToInt32(userId) && p.body == false) != null){
                                             votedByUser = 0;
                                         }
                                         else{
@@ -368,7 +368,7 @@
                                         int likes = 0;
                                         string negative = "--";
                                         foreach(Vote value in post.votes){
-                                            if(value.vote1 == true)
+                                            if(value.body == true)
                                                 likes++;
                                             else
                                                 likes--;
@@ -414,8 +414,8 @@
                                         double rate = 0;
                                         if(post.rates.Count > 0){
                                             foreach(Rate value in post.rates){
-                                                if(value.rate1 >= 0 && value.rate1 <= 10)
-                                                    rate += value.rate1;
+                                                if(value.body >= 0 && value.body <= 10)
+                                                    rate += value.body;
                                             }
                                             string ortRate = Math.Round((rate / post.rates.Count), 1).ToString() + "/10";
                                             @ortRate

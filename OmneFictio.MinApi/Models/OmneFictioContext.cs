@@ -208,11 +208,20 @@ namespace OmneFictio.MinApi.Models
 
                 entity.Property(e => e.ChapterIndex).HasColumnName("chapterIndex");
 
+                entity.Property(e => e.IsPublished)
+                    .HasColumnName("isPublished")
+                    .HasDefaultValueSql("((0))");
+
                 entity.Property(e => e.PostId).HasColumnName("postId");
 
                 entity.Property(e => e.PublishDate)
                     .HasColumnType("smalldatetime")
                     .HasColumnName("publishDate");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(250)
+                    .IsUnicode(false)
+                    .HasColumnName("title");
 
                 entity.Property(e => e.UpdateDate)
                     .HasColumnType("smalldatetime")
@@ -404,6 +413,10 @@ namespace OmneFictio.MinApi.Models
                     .HasColumnName("deletedStatusId")
                     .HasDefaultValueSql("((1))");
 
+                entity.Property(e => e.IsPublished)
+                    .HasColumnName("isPublished")
+                    .HasDefaultValueSql("((0))");
+
                 entity.Property(e => e.LanguageId).HasColumnName("languageId");
 
                 entity.Property(e => e.PostDescription)
@@ -575,9 +588,9 @@ namespace OmneFictio.MinApi.Models
 
                 entity.Property(e => e.AccountId).HasColumnName("accountId");
 
-                entity.Property(e => e.PostId).HasColumnName("postId");
+                entity.Property(e => e.Body).HasColumnName("body");
 
-                entity.Property(e => e.Rate1).HasColumnName("rate");
+                entity.Property(e => e.PostId).HasColumnName("postId");
 
                 entity.HasOne(d => d.Account)
                     .WithMany(p => p.Rates)
@@ -666,6 +679,8 @@ namespace OmneFictio.MinApi.Models
 
                 entity.Property(e => e.AccountId).HasColumnName("accountId");
 
+                entity.Property(e => e.Body).HasColumnName("body");
+
                 entity.Property(e => e.TargetChapterId).HasColumnName("targetChapterId");
 
                 entity.Property(e => e.TargetCommentId).HasColumnName("targetCommentId");
@@ -673,8 +688,6 @@ namespace OmneFictio.MinApi.Models
                 entity.Property(e => e.TargetPostId).HasColumnName("targetPostId");
 
                 entity.Property(e => e.TargetReplyId).HasColumnName("targetReplyId");
-
-                entity.Property(e => e.Vote1).HasColumnName("vote");
 
                 entity.HasOne(d => d.Account)
                     .WithMany(p => p.Votes)

@@ -8,7 +8,7 @@ namespace OmneFictio.MinApi.Models
         public int Id { get; set; }
         public int? AccountId { get; set; }
         public int? PostId { get; set; }
-        public double Rate1 { get; set; }
+        public double Body { get; set; }
 
         public virtual Account? Account { get; set; }
         public virtual Post? Post { get; set; }

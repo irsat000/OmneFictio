@@ -49,7 +49,9 @@ app.MapGet("/", () =>
 });
 
 app.MapGet("/posts", async (OmneFictioContext db) => {
-    var posts = await mapper.ProjectTo<PostDtoRead_1>(db.Posts).ToListAsync();
+    var posts = await mapper.ProjectTo<PostDtoRead_1>(db.Posts.Where(p => 
+    p.IsPublished == true &&
+    p.DeletedStatus.Body == "Default")).ToListAsync();
     return posts;
 });
 
@@ -203,10 +205,10 @@ app.MapPost("/vote", async (OmneFictioContext db, VoteDtoWrite_1 request) => {
     }
 
     try {
-        if(checkVote != null && checkVote.Vote1 != request.Vote1)
+        if(checkVote != null && checkVote.Body != request.Body)
             db.Votes.Remove(db.Votes.SingleOrDefault(x => x.Id == checkVote.Id));
             
-        if(checkVote != null && checkVote.Vote1 == request.Vote1)
+        if(checkVote != null && checkVote.Body == request.Body)
             db.Votes.Remove(db.Votes.SingleOrDefault(x => x.Id == checkVote.Id));
         else
             db.Votes.Add(mapper.Map<Vote>(request));

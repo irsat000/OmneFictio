@@ -28,6 +28,7 @@ namespace OmneFictio.MinApi.Models
         public int? LanguageId { get; set; }
         public int? AccountId { get; set; }
         public string? CoverImage { get; set; }
+        public bool? IsPublished { get; set; }
 
         public virtual Account? Account { get; set; }
         public virtual DeletedStatus? DeletedStatus { get; set; }

@@ -17,6 +17,8 @@ namespace OmneFictio.MinApi.Models
         public int? ChapterIndex { get; set; }
         public DateTime PublishDate { get; set; }
         public DateTime UpdateDate { get; set; }
+        public bool? IsPublished { get; set; }
+        public string? Title { get; set; }
 
         public virtual Post? Post { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }

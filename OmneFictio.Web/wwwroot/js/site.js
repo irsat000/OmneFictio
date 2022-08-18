@@ -64,16 +64,16 @@ async function VoteRequest(btn, voteTarget, action, targetElement){
 
     var data = {};
     if(voteTarget == "post"){
-        data = { TargetPostId: targetId, Vote1: vote };
+        data = { TargetPostId: targetId, Body: vote };
     }
     else if(voteTarget == "chapter"){
-        data = { TargetChapterId: targetId, Vote1: vote };
+        data = { TargetChapterId: targetId, Body: vote };
     }
     else if(voteTarget == "comment"){
-        data = { TargetCommentId: targetId, Vote1: vote };
+        data = { TargetCommentId: targetId, Body: vote };
     }
     else if(voteTarget == "like"){
-        data = { TargetReplyId: targetId, Vote1: vote };
+        data = { TargetReplyId: targetId, Body: vote };
     }
     
     await fetch("/HomeAction/Vote", {
