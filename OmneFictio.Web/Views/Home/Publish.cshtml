@@ -7,3 +7,76 @@
         <script src="~/js/publish.js" asp-append-version="true" ></script>
     }
 }
+
+<div class="swap_form">
+    <div class="sf-write">
+        <span id="sf-swapToWriting">Write</span>
+        <div class="sf-icon"></div>
+    </div>
+    <div class="sf-request">
+        <span id="sf-swapToRequest">Request</span>
+        <div class="sf-icon"></div>
+    </div>
+</div>
+<div class="createpost">
+    <form class="writing_form">
+        <div class="wf-post_body">
+            <span>Title</span>
+            <input class="wf-title" type="text" name="title">
+            <span>Description</span>
+            <textarea class="wf-description" name="description"></textarea>
+        </div>
+        <div class="wf-post_details">
+            <div class="wf-language">
+                <span>Language:</span>
+                <select>
+                    <option>English</option>
+                    <option>Turkish</option>
+                    <option>German</option>
+                    <option>Japanese</option>
+                    <option>Russian</option>
+                </select>
+            </div>
+            <div class="wf-type">
+                <span>Type:</span>
+                <select>
+                    <option>Story</option>
+                    <option>Scenario</option>
+                    <option>Fanfiction</option>
+                    <option>Plot</option>
+                </select>
+            </div>
+            <div class="wf-addtag">
+                <button>Add Tag <i class="bi bi-plus"></i></button>
+            </div>
+            <div class="wf-tags">
+                <span data-wftag="action">Action<i class="bi bi-x-circle wf-removetagbtn"></i></span>
+                <span data-wftag="comedy">Comedy<i class="bi bi-x-circle wf-removetagbtn"></i></span>
+                <span data-wftag="fantasy">Fantasy<i class="bi bi-x-circle wf-removetagbtn"></i></span>
+            </div>
+            
+            <div class="wf-fanfiction">
+                <button>Series <i class="bi bi-plus"></i></button>
+            </div>
+            <div class="wf-fanfic_series">
+                <span data-wfseries="overlord">Overlord<i class="bi bi-x-circle wf-removeseriesbtn"></i></span>
+                <span data-wfseries="harry_potter">Harry Potter<i class="bi bi-x-circle wf-removeseriesbtn"></i></span>
+            </div>
+        </div>
+        <div class="wf-submit">
+            <input type="submit">Save</input>
+        </div>
+    </form>
+    <form class="request_form">
+        <div class="rf-post_body">
+            <span>Title</span>
+            <input class="rf-title" type="text" name="title">
+            <span>Description</span>
+            <textarea class="rf-description" name="body"></textarea>
+        </div>
+        <div class="rf-submit">
+            <input type="submit">Send</input>
+        </div>
+    </form>
+</div>
+
