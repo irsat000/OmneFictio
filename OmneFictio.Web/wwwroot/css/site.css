@@ -24,6 +24,8 @@
   --navlink-others-color-hover: #5f5a66;
   --register-form-color: #404040;
   --register-input-color: #1d1d1d;
+  --publish-form-color: #404040;
+  --publish-input-color: #1d1d1d;
   --searchplaceholder-color: #939393;
 }
 
@@ -53,6 +55,8 @@
   --navlink-others-color-hover: #816f96;
   --register-form-color: #f0f0f0;
   --register-input-color: #dcdcdc;
+  --publish-form-color: #f0f0f0;
+  --publish-input-color: #dcdcdc;
 }
 
 /*
@@ -486,17 +490,18 @@ header .header-wrap {
   justify-content: space-between;
   align-items: center;
 }
-.shortcuts-cont > i {
+.shortcuts-cont > * {
+  margin-right: 16px;
+}
+.shortcuts-cont > *:last-child {
+  margin-right: 0;
+}
+.shortcuts-cont i {
   color: var(--shortcuticons-color);
   font-size: 2rem;
-  margin-right: 16px;
   cursor: pointer;
   transition: 0.3s ease;
 }
-.shortcuts-cont > i:last-child {
-  margin-right: 0;
-}
-
 .account-cont {
   display: flex;
   flex-direction: row;

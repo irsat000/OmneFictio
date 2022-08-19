@@ -403,17 +403,19 @@ header{
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-    > i{
+    > * {
+        margin-right: 16px;
+        &:last-child{
+            margin-right: 0;
+        }
+    }
+    i{
         color: var(--shortcuticons-color);
         font-size: 2rem;
-        margin-right: 16px;
         cursor: pointer;
         transition: 0.3s ease;
         &:hover {
         }
-    }
-    > i:last-child{
-        margin-right: 0;
     }
 }
 

@@ -545,10 +545,10 @@ main {
   color: #fff;
 }
 .filter-cont .f-body .f-fanfiction_settings .ffs-series_include span > i {
+  display: flex;
   font-size: 1.1rem;
   margin-left: 5px;
   cursor: pointer;
-  display: flex;
 }
 .filter-cont .f-body .f-fanfiction_settings .ffs-series_include span > i:before {
   background-color: #c08e8e;
@@ -570,10 +570,10 @@ main {
   background: var(--background-color-hover2);
   color: var(--text-color1);
   padding: 4px;
-  margin: 0 5px 7px;
   border-radius: 5px;
   font-size: 1.1rem;
   cursor: pointer;
+  margin: 0 5px 7px;
 }
 .filter-cont .f-body .f-options .f-allow18 {
   display: flex;
@@ -675,18 +675,18 @@ main {
   display: flex;
   align-items: center;
 }
-.filter-cont .f-body .f-tagsincexc .f-removetagbtn {
+.filter-cont .f-body .f-tagsincexc span i {
   font-size: 1.1rem;
   margin-left: 5px;
   cursor: pointer;
   display: none;
 }
-.filter-cont .f-body .f-tagsincexc .f-removetagbtn:before {
+.filter-cont .f-body .f-tagsincexc span i:before {
   background-color: #be2424;
   border-radius: 50%;
   transition: 0.1s;
 }
-.filter-cont .f-body .f-tagsincexc .f-removetagbtn:hover::before {
+.filter-cont .f-body .f-tagsincexc span i:hover::before {
   background-color: #be2424 !important;
 }
 .filter-cont .f-body .f-tags_include > span {

@@ -24,6 +24,8 @@
   --navlink-others-color-hover: #5f5a66;
   --register-form-color: #404040;
   --register-input-color: #1d1d1d;
+  --publish-form-color: #404040;
+  --publish-input-color: #1d1d1d;
   --searchplaceholder-color: #939393;
 }
 
@@ -53,6 +55,8 @@
   --navlink-others-color-hover: #816f96;
   --register-form-color: #f0f0f0;
   --register-input-color: #dcdcdc;
+  --publish-form-color: #f0f0f0;
+  --publish-input-color: #dcdcdc;
 }
 
 /*
