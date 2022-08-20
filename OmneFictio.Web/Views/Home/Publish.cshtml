@@ -10,16 +10,16 @@
 
 <div class="createpost">
     <div class="swap_form">
-        <div class="sf-swapformbtn">
+        <div class="sf-swapformbtn sf-swaptowriting">
             <span id="sf-swapToWriting">Write</span>
-            <div class="sf-icon sf-w_icon"></div>
+            <div class="sf-icon d-block" id="sf-w_icon"></div>
         </div>
-        <div class="sf-swapformbtn">
+        <div class="sf-swapformbtn sf-swaptorequest">
             <span id="sf-swapToRequest">Request</span>
-            <div class="sf-icon sf-r_icon"></div>
+            <div class="sf-icon" id="sf-r_icon"></div>
         </div>
     </div>
-    <form class="writing_form">
+    <form class="writing_form d-flex" id="writing_form">
         <div class="wf-post_body">
             <div class="wf-post_primary">
                 <span>Title</span>
@@ -69,12 +69,12 @@
             <input type="submit" value="Save"></input>
         </div>
     </form>
-    <form class="request_form">
+    <form class="request_form" id="request_form">
         <div class="rf-post_primary">
             <span>Title</span>
-            <input class="rf-title" type="text" name="title">
+            <input class="rf-title" type="text" name="title" placeholder="Title">
             <span>Description</span>
-            <textarea class="rf-description" name="body"></textarea>
+            <textarea class="rf-description" name="body" placeholder="Description"></textarea>
         </div>
         <div class="rf-submit">
             <input type="submit" value="Send"></input>

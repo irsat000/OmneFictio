@@ -15,18 +15,21 @@
         display: flex;
         flex-direction: row;
         justify-content: center;
-        padding: 18px;
+        align-items: center;
+        height: 84px;
+        user-select: none;
+        
         .sf-swapformbtn{
             padding: 0 20px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            span{
-                font-family: 'Josefin Sans', sans-serif;
-                font-size: 1.4rem;
-            }
+            cursor: pointer;
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 1.4rem;
+            
             .sf-icon{
-                //display: none;
+                display: none;
                 background-color: var(--text-color1);
                 width: 6px;
                 height: 4px;
@@ -166,7 +169,7 @@
     .wf-submit{
         display: flex;
         justify-content: center;
-        padding: 18px;
+        padding: 0 18px 18px;
         input{
             border: none;
             outline: none;
@@ -187,7 +190,8 @@
 
 
 .request_form{
-    display: flex;
+    //display: flex;
+    display: none;
     flex-direction: column;
 
     .rf-post_primary{
@@ -249,8 +253,15 @@
 
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) {
-    .sf-swapformbtn > span{
-        font-size: 1.6rem !important;
+    .sf-swapformbtn {
+        font-size: 1.8rem !important;
+        transition: 0.2s;
+    }
+    .sf-swaptowriting:hover{
+        font-size: 2rem !important;
+    }
+    .sf-swaptorequest:hover{
+        font-size: 2rem !important;
     }
     .wf-post_primary > span{
         font-size: 1.4rem !important;
@@ -260,7 +271,7 @@
     }
     .wf-post_body{
         flex-direction: row !important;
-        justify-content: space-between;
+        justify-content: space-evenly;
         .wf-post_primary{
             width: 45%;
         }
