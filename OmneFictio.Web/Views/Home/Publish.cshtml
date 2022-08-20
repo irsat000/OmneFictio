@@ -8,6 +8,81 @@
     }
 }
 
+<div class="filter-tagdd" id="wf-addtagmodal">
+    <div class="tagdd-header">
+        <input type="text" class="tagdd-searchbar" id="wf-addtag-searchbar" placeholder="Search tag">
+        <i class="bi bi-x-lg" id="wf-taggdd-close"></i>
+    </div>
+    <ul class="" id="wf-addtag-list" data-action="include">
+        <li data-tagvalue="action">Action</li>
+        <li data-tagvalue="comedy">Comedy</li>
+        <li data-tagvalue="fantasy">Fantasy</li>
+        <li data-tagvalue="romance">Romance</li>
+        <li data-tagvalue="dram">Dram</li>
+        <li data-tagvalue="horror">Horror</li>
+        <li data-tagvalue="adventure">Adventure</li>
+        <li data-tagvalue="science_fiction">Science fiction</li>
+    </ul>
+</div>
+<div class="filter-addseries" id="wf-addseriesmodal">
+    <div class="fadds-header">
+        <input type="text" class="fadds-searchbar" id="wf-addseries-searchbar" placeholder="Search">
+        <i class="bi bi-x-lg" id="wf-addseries-close"></i>
+    </div>
+    <div class="fadds-dropdowns">
+        <select>
+            <option value="Type">Type</option>
+            <option value="Book">Book</option>
+            <option value="Movie">Movie</option>
+            <option value="TV Show">TV Show</option>
+            <option value="Game">Game</option>
+            <option value="Anime">Anime</option>
+            <option value="Cartoon">Cartoon</option>
+            <option value="Comic/Manga">Comic/Manga</option>
+        </select>
+        <select>
+            <option value="AZ">A-Z</option>
+            <option value="Others">Others</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="E">E</option>
+            <option value="F">F</option>
+            <option value="G">G</option>
+            <option value="H">H</option>
+            <option value="I">I</option>
+            <option value="J">J</option>
+            <option value="K">K</option>
+            <option value="L">L</option>
+            <option value="M">M</option>
+            <option value="N">N</option>
+            <option value="O">O</option>
+            <option value="P">P</option>
+            <option value="Q">Q</option>
+            <option value="R">R</option>
+            <option value="S">S</option>
+            <option value="T">T</option>
+            <option value="U">U</option>
+            <option value="V">V</option>
+            <option value="W">W</option>
+            <option value="X">X</option>
+            <option value="Y">Y</option>
+            <option value="Z">Z</option>
+        </select>
+    </div>
+    <ul class="fadds-list" id="wf-addseries-list">
+        <li data-seriesval="Overlord">Overlord</li>
+        <li data-seriesval="Harry_Potter">Harry Potter</li>
+        <li data-seriesval="The_Boys">The Boys</li>
+        <li data-seriesval="Stranger_Things">Stranger Things</li>
+        <li data-seriesval="Breaking_Bad">Breaking Bad</li>
+        <li data-seriesval="Game_of_Thrones">Game of Thrones</li>
+        <li data-seriesval="Hunger_Games">Hunger Games</li>
+        <li data-seriesval="Pirates_of_the_Caribbean">Pirates of the Caribbean</li>
+    </ul>
+</div>
+
 <div class="createpost">
     <div class="swap_form">
         <div class="sf-swapformbtn sf-swaptowriting">
@@ -48,20 +123,17 @@
                     </select>
                 </div>
                 <div class="wf-addtag">
-                    <button type="button">Add Tag <i class="bi bi-plus"></i></button>
+                    <button type="button" id="wf-addtagbtn">Add Tag <i class="bi bi-plus"></i></button>
                 </div>
                 <div class="wf-tags">
-                    <span data-wftag="action">Action<i class="bi bi-x-circle wf-removespanbtn"></i></span>
-                    <span data-wftag="comedy">Comedy<i class="bi bi-x-circle wf-removespanbtn"></i></span>
-                    <span data-wftag="fantasy">Fantasy<i class="bi bi-x-circle wf-removespanbtn"></i></span>
+                    <!--<span data-wftag="action">Action<i class="bi bi-x-circle wf-removespanbtn"></i></span>-->
                 </div>
                 
                 <div class="wf-addseries">
-                    <button type="button">Series <i class="bi bi-plus"></i></button>
+                    <button type="button" id="wf-addseriesbtn">Series <i class="bi bi-plus"></i></button>
                 </div>
                 <div class="wf-fanfic_series">
-                    <span data-wfseries="overlord">Overlord<i class="bi bi-x-circle wf-removespanbtn"></i></span>
-                    <span data-wfseries="harry_potter">Harry Potter<i class="bi bi-x-circle wf-removespanbtn"></i></span>
+                    <!--<span data-wfseries="harry_potter">Harry Potter<i class="bi bi-x-circle wf-removespanbtn"></i></span>-->
                 </div>
             </div>
         </div>

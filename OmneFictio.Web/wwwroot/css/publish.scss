@@ -1,5 +1,7 @@
 
-
+.modalbg{
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
 
 .createpost{
     display: flex;
@@ -144,12 +146,12 @@
                 display: flex;
                 align-items: center;
                 i{
-                    display: none;
+                    display: flex;
                     font-size: 1.1rem;
                     margin-left: 5px;
                     cursor: pointer;
                     &:before {
-                        background-color: #c08e8e;
+                        background-color: #be2424;
                         border-radius: 50%;
                         transition: 0.1s;
                     }
@@ -268,6 +270,11 @@
     }
     .wf-title, .wf-description{
         font-size: 1.2rem;
+    }
+    .wf-tags, .wf-fanfic_series{
+        span > i:before {
+            background-color: #c08e8e !important;
+        }
     }
     .wf-post_body{
         flex-direction: row !important;
