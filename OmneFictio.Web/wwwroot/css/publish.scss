@@ -36,7 +36,8 @@
     }
 }
 .writing_form{
-    display: flex;
+    display: none;
+    //display: flex;
     flex-direction: column;
     .wf-post_body{
         display: flex;
@@ -72,6 +73,8 @@
     .wf-post_details{
         display: flex;
         flex-direction: column;
+        gap: 4px;
+        padding: 10px 16px;
 
         .wf-language, .wf-type{
             display: flex;
@@ -183,13 +186,55 @@
 
 
 
-
-
-
-
-
 .request_form{
-    display: none;
+    display: flex;
+    flex-direction: column;
+
+    .rf-post_primary{
+        display: flex;
+        flex-direction: column;
+        span{
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 1.2rem;
+            padding-left: 6px;
+            margin-bottom: 8px;
+        }
+        .rf-title{
+            padding: 6px 10px;
+            margin-bottom: 12px;
+        }
+        .rf-description{
+            padding: 6px 10px;
+            width: 100%;
+            height: 300px;
+            margin-bottom: 20px;
+        }
+        .rf-title, .rf-description{
+            border-radius: 4px;
+            background-color: var(--publish-input-color);
+            color: var(--text-color1);
+            border: none;
+            outline: none;
+        }
+    }
+    .rf-submit{
+        display: flex;
+        justify-content: center;
+        padding: 0 18px 18px;
+        input{
+            border: none;
+            outline: none;
+            color: #fff;
+            border-radius: 8px;
+            padding: 4px 16px;
+            font-size: 1.5rem;
+            transition: 0.2s ease;
+            background-color: rgb(32, 109, 40);
+            &:hover{
+                background-color: rgb(22, 95, 29);
+            }
+        }
+    }
 }
 
 
@@ -215,23 +260,33 @@
     }
     .wf-post_body{
         flex-direction: row !important;
+        justify-content: space-between;
         .wf-post_primary{
-            width: 50%;
+            width: 45%;
         }
         .wf-post_details{
-            width: 50%;
-            padding: 30px 0 10px 20px;
-            gap: 8px;
+            width: 45%;
+            padding: 30px 0 10px;
+        }
+    }
+    .request_form{
+        align-items: center;
+        .rf-post_primary{
+            width: 80%;
         }
     }
 }
 
 // Large devices (desktops, 992px and up)
 @media (min-width: 992px) {
-    
-    .wf-post_body .wf-post_details{
-        padding: 30px 0 20px 30px;
-        gap: 10px;
+    .wf-post_body{
+        .wf-post_primary{
+            width: 50%;
+        }
+        .wf-post_details{
+            width: 40%;
+            gap: 10px;
+        }
     }
 }
 
