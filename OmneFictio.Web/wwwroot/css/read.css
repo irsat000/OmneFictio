@@ -727,12 +727,4 @@ main {
   .po-option {
     font-size: 1.3rem !important;
   }
-}
-@media (max-width: 260px) {
-  .orderby_type-cont {
-    width: 100%;
-  }
-  .filter-cont {
-    width: 100%;
-  }
 }/*# sourceMappingURL=read.css.map */

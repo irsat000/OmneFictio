@@ -17,6 +17,7 @@
   flex-direction: row;
   justify-content: center;
   align-items: center;
+  flex-wrap: wrap;
   height: 84px;
   -webkit-user-select: none;
      -moz-user-select: none;
@@ -81,19 +82,19 @@
   gap: 4px;
   padding: 10px 16px;
 }
-.writing_form .wf-post_details .wf-language, .writing_form .wf-post_details .wf-type {
+.writing_form .wf-post_details .wf-language, .writing_form .wf-post_details .wf-type, .writing_form .wf-post_details .wf-ratedas {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   align-items: flex-end;
   margin-bottom: 12px;
 }
-.writing_form .wf-post_details .wf-language span, .writing_form .wf-post_details .wf-type span {
+.writing_form .wf-post_details .wf-language span, .writing_form .wf-post_details .wf-type span, .writing_form .wf-post_details .wf-ratedas span {
   font-family: "Josefin Sans", sans-serif;
   font-size: 1.2rem;
   margin-right: 12px;
 }
-.writing_form .wf-post_details .wf-language select, .writing_form .wf-post_details .wf-type select {
+.writing_form .wf-post_details .wf-language select, .writing_form .wf-post_details .wf-type select, .writing_form .wf-post_details .wf-ratedas select {
   outline: none;
   border: none;
   background-color: var(--publish-input-color);
@@ -101,6 +102,7 @@
   padding: 4px;
   border-radius: 5px;
   font-size: 1.1rem;
+  font-family: "Gudea";
   cursor: pointer;
 }
 .writing_form .wf-post_details .wf-addtag, .writing_form .wf-post_details .wf-addseries {
@@ -214,6 +216,8 @@
   border-radius: 4px;
   background-color: var(--publish-input-color);
   color: var(--text-color1);
+  font-family: "Gudea";
+  font-size: 1.1rem;
   border: none;
   outline: none;
 }

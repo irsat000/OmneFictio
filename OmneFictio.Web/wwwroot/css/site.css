@@ -809,6 +809,12 @@ header .header-wrap {
     width: 100%;
   }
 }
+@media (max-width: 260px) {
+  .filter-tagdd, .filter-addseries, .login-modal,
+.orderby_type-cont, .filter-cont {
+    width: 100% !important;
+  }
+}
 @media (max-width: 240px) {
   .notifications-shortcut {
     display: none;
