@@ -274,7 +274,7 @@ header .header-wrap {
   flex-direction: column;
   transition: opacity 0.3s ease;
   z-index: 509;
-  position: absolute;
+  position: fixed;
   top: 12%;
   margin-left: auto;
   margin-right: auto;
@@ -598,8 +598,8 @@ header .header-wrap {
 .filter-tagdd {
   display: none;
   flex-direction: column;
-  position: absolute;
-  top: 6%;
+  position: fixed;
+  top: 12%;
   margin-left: auto;
   margin-right: auto;
   left: 0;
@@ -658,8 +658,8 @@ header .header-wrap {
 .filter-addseries {
   display: none;
   flex-direction: column;
-  position: absolute;
-  top: 6%;
+  position: fixed;
+  top: 12%;
   margin-left: auto;
   margin-right: auto;
   left: 0;

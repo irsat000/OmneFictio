@@ -26,18 +26,28 @@ public class HomeController : Controller
         return View();
     }
 
+    [HttpGet("Read")]
     public async Task<IActionResult> Read(string? type)
     {
         List<PostRead1>? posts = new List<PostRead1>();
         string postsUrl = "https://localhost:7022/posts";
-        
-        string raw = await _httpClient.GetStringAsync(postsUrl);
-
-        posts = JsonSerializer.Deserialize<List<PostRead1>>(raw);
+        try
+        {
+            string raw = await _httpClient.GetStringAsync(postsUrl);
+            posts = JsonSerializer.Deserialize<List<PostRead1>>(raw);
+        }
+        catch (Exception e)
+        {
+            if (e is HttpRequestException){
+                //Api request error
+            }
+            if(e is JsonException){
+                //Couldn't deserialize api response
+            }
+        }
         ReadViewmodel viewModel = new ReadViewmodel{
             posts = posts
         };
-
         return View(viewModel);
     }
 

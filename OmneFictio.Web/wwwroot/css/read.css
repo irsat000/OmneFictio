@@ -218,6 +218,21 @@
   background-color: var(--background-color-hover3);
 }
 
+.read-nopost {
+  display: flex;
+  justify-content: center;
+  padding: 20px 0;
+  color: var(--text-color1);
+  font-size: 1.2rem;
+  font-family: "Josefin Sans", sans-serif;
+}
+.read-nopost span {
+  padding: 20px 40px;
+  background-color: #6f2424;
+  border-radius: 10px;
+  border: 2px solid #340505;
+}
+
 main {
   display: flex;
   flex-direction: row;
@@ -407,8 +422,8 @@ main {
   opacity: 0;
   transition: opacity 0.3s ease;
   z-index: 505;
-  position: absolute;
-  top: 6%;
+  position: fixed;
+  top: 12%;
   margin-left: auto;
   margin-right: auto;
   left: 0;

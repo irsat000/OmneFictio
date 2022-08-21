@@ -313,7 +313,7 @@
     </div>
 
     @{
-        if(Model.posts != null){
+        if(Model.posts.Count > 0){
             foreach(PostRead1 post in Model.posts){
                 /*if(post.id != 5){
                     continue;
@@ -508,7 +508,7 @@
             }
         }
         else{
-            <div><span>There doesn't seem to be anything.</span></div>
+            <div class="read-nopost"><span>We have failed to provide you service :(</span></div>
         }
     }
     
