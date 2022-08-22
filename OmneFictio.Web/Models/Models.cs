@@ -37,7 +37,7 @@ public partial class AccountWrite2
 
 
 
-public partial class VoteDtoWrite1
+public partial class VoteWrite1
 {
     public int? AccountId { get; set; }
     public bool Body { get; set; }
@@ -47,3 +47,20 @@ public partial class VoteDtoWrite1
     public int? TargetReplyId { get; set; }
 }
 //Voting
+
+
+
+public class PostWrite1
+{
+    public string Title { get; set; } = null!;
+    public string PostDescription { get; set; } = null!;
+    public byte PostTypeId { get; set; }
+    public int LanguageId { get; set; }
+    public int AccountId { get; set; }
+    public string? CoverImage { get; set; }
+}
+//for creating the post
+
+
+
+

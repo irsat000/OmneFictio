@@ -135,8 +135,8 @@ app.MapPost("/signin-external", async (OmneFictioContext db, [FromBody] string t
         while(db.Accounts.Any(a => a.Username == username)){
             username = name + _random.Next(100, 1000).ToString();
         }
-        
         string passwordHash = BC.HashPassword(GeneratePassword.Generate(16, 8));
+
         AccountDtoWrite_3 newAccount = new AccountDtoWrite_3();
         newAccount.Username = username;
         newAccount.Email = email;
@@ -148,6 +148,7 @@ app.MapPost("/signin-external", async (OmneFictioContext db, [FromBody] string t
         newAccount.AllowSexual = true;
         newAccount.AllowViolence = true;
         newAccount.PrefLanguageId = null;
+
         try {
             db.Accounts.Add(mapper.Map<Account>(newAccount));
             await db.SaveChangesAsync();
@@ -182,6 +183,7 @@ app.MapPost("/vote", async (OmneFictioContext db, VoteDtoWrite_1 request) => {
     else if(request.TargetReplyId != null)
         type = "reply";
 
+    //checks if it's already voted
     VoteDtoRead_2? checkVote = null;
     if(type == "post"){
         checkVote = mapper.Map<VoteDtoRead_2>
@@ -205,13 +207,19 @@ app.MapPost("/vote", async (OmneFictioContext db, VoteDtoWrite_1 request) => {
     }
 
     try {
-        if(checkVote != null && checkVote.Body != request.Body)
+        //it's already voted but it's the opposite value
+        if(checkVote != null && checkVote.Body != request.Body){
             db.Votes.Remove(db.Votes.SingleOrDefault(x => x.Id == checkVote.Id));
+        }
             
-        if(checkVote != null && checkVote.Body == request.Body)
+        //if user clicks on the same button to take their vote back
+        //else, votes the post normally
+        if(checkVote != null && checkVote.Body == request.Body){
             db.Votes.Remove(db.Votes.SingleOrDefault(x => x.Id == checkVote.Id));
-        else
+        }
+        else{
             db.Votes.Add(mapper.Map<Vote>(request));
+        }
 
         await db.SaveChangesAsync();
     } catch (Exception) {
@@ -221,7 +229,44 @@ app.MapPost("/vote", async (OmneFictioContext db, VoteDtoWrite_1 request) => {
 });
 
 
+app.MapPost("/createpost", async (OmneFictioContext db, PostDtoWrite_1 request) => {
+    if(db.Accounts.FirstOrDefault(a => a.Id == request.AccountId) == null){
+        return Results.StatusCode(480);
+    }
+    if(db.Languages.FirstOrDefault(l => l.Id == request.LanguageId) == null){
+        return Results.StatusCode(481);
+    }
+    if(db.PostTypes.FirstOrDefault(t => t.Id == request.PostTypeId) == null){
+        return Results.StatusCode(482);
+    }
+    if(request.Title.Length > 250){
+        return Results.StatusCode(483);
+    }
+    if(request.PostDescription.Length > 2000){
+        return Results.StatusCode(484);
+    }
 
+    PostDtoWrite_1 newpost = new PostDtoWrite_1();
+    newpost.Title = request.Title;
+    newpost.PostDescription = request.PostDescription;
+    newpost.LanguageId = request.LanguageId;
+    newpost.AccountId = request.AccountId;
+    newpost.PostTypeId = request.PostTypeId;
+    newpost.CoverImage = request.CoverImage;
+    newpost.PublishDate = DateTime.Now;
+    newpost.UpdateDate = DateTime.Now;
+    newpost.DeletedStatusId = 1;
+    newpost.PostTypeId = 1;
+    newpost.IsPublished = false;
+        
+    try{
+        db.Posts.Add(mapper.Map<Post>(newpost));
+        await db.SaveChangesAsync();
+    } catch (Exception) {
+        return Results.StatusCode(580);
+    }
+    return Results.Ok();
+});
 
 
 

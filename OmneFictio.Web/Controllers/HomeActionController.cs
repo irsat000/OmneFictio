@@ -17,12 +17,12 @@ public class HomeActionController : Controller
 
     //Voting post/chapter/comment/reply
     [HttpPost]
-    public async Task<IActionResult> Vote([FromBody] VoteDtoWrite1 request)
+    public async Task<IActionResult> Vote([FromBody] VoteWrite1 request)
     {
         int accountid;
         int.TryParse((HttpContext.User.Claims.FirstOrDefault
             (claim => claim.Type == ClaimTypes.NameIdentifier)?.Value ?? "-1"), out accountid);
-        VoteDtoWrite1 vote = request;
+        VoteWrite1 vote = request;
         vote.AccountId = accountid;
         
         var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/vote", vote);
@@ -42,6 +42,10 @@ public class HomeActionController : Controller
             //Unknown error
             return StatusCode(581);
         }
+    }
+
+    public async Task<IActionResult> CreatePost(){
+        return Ok();
     }
 
 }
