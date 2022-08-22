@@ -112,6 +112,7 @@ public class StoryType
 
 public class Tag
 {
+    public int id { get; set; }
     public string body { get; set; }
 }
 

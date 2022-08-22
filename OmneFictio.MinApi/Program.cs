@@ -246,7 +246,7 @@ app.MapPost("/createpost", async (OmneFictioContext db, PostDtoWrite_1 request) 
         return Results.StatusCode(484);
     }
 
-    PostDtoWrite_1 newpost = new PostDtoWrite_1();
+    Post newpost = new Post();
     newpost.Title = request.Title;
     newpost.PostDescription = request.PostDescription;
     newpost.LanguageId = request.LanguageId;
@@ -257,14 +257,22 @@ app.MapPost("/createpost", async (OmneFictioContext db, PostDtoWrite_1 request) 
     newpost.UpdateDate = DateTime.Now;
     newpost.DeletedStatusId = 1;
     newpost.PostTypeId = 1;
-    newpost.IsPublished = false;
-        
+    newpost.IsPublished = true;
+    foreach (var t in request.Tags)
+    {
+        Tag tag = db.Tags.FirstOrDefault(s => s.Id == t.Id);
+        if(tag != null){
+            newpost.Tags.Add(tag);
+        }
+    }
+
     try{
         db.Posts.Add(mapper.Map<Post>(newpost));
         await db.SaveChangesAsync();
     } catch (Exception) {
         return Results.StatusCode(580);
     }
+
     return Results.Ok();
 });
 
