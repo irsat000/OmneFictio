@@ -9,7 +9,8 @@ public class PostDtoWrite_1
     public int? LanguageId { get; set; }
     public int? AccountId { get; set; }
     public string? CoverImage { get; set; }
-    public List<TagDtoWrite_1>? Tags { get; set; }
+    public List<int>? TagList { get; set; }
+    public List<int>? SeriesList { get; set; }
 }
 //for creating the post
 //The model that comes from the controller

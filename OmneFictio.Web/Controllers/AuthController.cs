@@ -22,6 +22,7 @@ public class AuthController : Controller
         _logger = logger;
         _httpClient = httpClient;
     }
+
     //fetch api manual login
     [HttpPost]
     public async Task<ActionResult> UserLogin([FromBody] AccountRead2 account)
@@ -44,6 +45,7 @@ public class AuthController : Controller
                 return StatusCode(580);
         }
     }
+
     [HttpPost]
     public async Task<IActionResult> UserRegistration([FromBody] AccountWrite2 account)
     {
@@ -91,6 +93,7 @@ public class AuthController : Controller
         }
     }
 
+    [HttpPost]
     public async Task<JsonResult> GoogleSignin(string googleToken)
     {
         var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/signin-external", googleToken);
@@ -121,6 +124,8 @@ public class AuthController : Controller
             return new JsonResult(StatusCode(582));
         }
     }
+    
+    [HttpGet]
     public IActionResult LogOut(){
         HttpContext.Session.Clear();
         HttpContext.SignOutAsync();

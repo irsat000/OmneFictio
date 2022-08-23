@@ -19,20 +19,54 @@ public class HomeActionController : Controller
     [HttpPost]
     public async Task<IActionResult> Vote([FromBody] VoteWrite1 request)
     {
-        int accountid;
-        int.TryParse((HttpContext.User.Claims.FirstOrDefault
-            (claim => claim.Type == ClaimTypes.NameIdentifier)?.Value ?? "-1"), out accountid);
-        VoteWrite1 vote = request;
-        vote.AccountId = accountid;
+        int accountid = checkUserLogin();
+        if(accountid == -1){
+            return StatusCode(499);
+        }
+        request.AccountId = accountid;
         
-        var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/vote", vote);
+        var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/vote", request);
         string statusCode = apiResponse.StatusCode.ToString();
+        
+        if(statusCode == "OK"){
+            return Ok();
+        }
+        else if(statusCode == "480" || statusCode == "580"){
+            //No user
+            //Failed to save the data in database
+            return StatusCode(580);
+        }
+        else{
+            //Unknown error
+            return StatusCode(599);
+        }
+    }
+
+    [HttpPost]
+    public async Task<IActionResult> CreatePost([FromBody] PostWrite1 request){
+        int accountid = checkUserLogin();
+        if(accountid == -1){
+            return StatusCode(499);
+        }
+        request.AccountId = accountid;
+
+        var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/createpost", request);
+        string statusCode = apiResponse.StatusCode.ToString();
+
         if(statusCode == "OK"){
             return Ok();
         }
         else if(statusCode == "480"){
-            //No user
-            return StatusCode(580);
+            //Inputs are not available
+            return StatusCode(480);
+        }
+        else if(statusCode == "481"){
+            //Title is longer than 250 character
+            return StatusCode(481);
+        }
+        else if(statusCode == "482"){
+            //Description is longer than 2000 character
+            return StatusCode(482);
         }
         else if(statusCode == "580"){
             //Failed to save the data in database
@@ -40,12 +74,15 @@ public class HomeActionController : Controller
         }
         else{
             //Unknown error
-            return StatusCode(581);
+            return StatusCode(599);
         }
     }
 
-    public async Task<IActionResult> CreatePost(){
-        return Ok();
+    public int checkUserLogin(){
+        int accountid = -1;
+        int.TryParse((HttpContext.User.Claims.FirstOrDefault
+            (claim => claim.Type == ClaimTypes.NameIdentifier)?.Value ?? "-1"), out accountid);
+        return accountid;
     }
 
 }

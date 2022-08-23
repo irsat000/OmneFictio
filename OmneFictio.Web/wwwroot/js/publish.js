@@ -108,7 +108,65 @@ $(document).ready(function(){
     });
 
 
+
+    
+    //create post form - fetch api
+    const createpost_form = document.getElementById('writing_form');
+    createpost_form.addEventListener('submit', async function(event){
+        //disables redirection of form element
+        event.preventDefault();
+        //Get message elements
+        /*const message = document.getElementById('loginmodal-message');
+        const success = document.getElementById('loginmodal-success');
+        message.innerHTML = "";*/
+
+        //Request
+        //const payload = JSON.stringify(Object.fromEntries(new FormData(createpost_form)));
+        const payload = {
+            Title: 'Post title from fetch api',
+            PostDescription: 'Post description from fetch api',
+            PostTypeId: 3,
+            LanguageId: 1,
+            CoverImage: null,
+            TagList: null
+        };
+        await fetch("/HomeAction/CreatePost", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+        .then(function (response) {
+            if (response.ok) {
+                //success.innerHTML = "SUCCESS";
+                /*setTimeout(function() {
+                    location.reload();
+                }, 500);*/
+                console.log('OK');
+            }
+            else if(response.status === 480){
+                console.log('User error');
+                //message.innerHTML = "**";
+            }
+            else{
+                console.log('Server/User error -> ' + response.status);
+                //message.innerHTML = "*Server error*";
+            }
+        })
+        .catch(error => console.log('Create post submit has failed.', error));
+    });
+
+
+
 });
+
+
+
+
+
+
 
 
 

@@ -57,7 +57,7 @@ app.MapGet("/posts", async (OmneFictioContext db) => {
 
 app.MapPost("/login", async (OmneFictioContext db, AccountDtoRead_2 request) => {
     //Authentication
-    var checkUser = mapper.Map<AccountDtoRead_3>(db.Accounts.SingleOrDefault(x => x.Username == request.Username));
+    var checkUser = db.Accounts.SingleOrDefault(x => x.Username == request.Username);
     if (checkUser == null || !BC.Verify(request.Pw, checkUser.Pw))
         return Results.NotFound("User not found");
     //Login
@@ -80,7 +80,7 @@ app.MapPost("/register", async (OmneFictioContext db, AccountDtoWrite_1 request)
         return Results.StatusCode(482);
     //Fill an account object
     string passwordHash = BC.HashPassword(request.Pw);
-    AccountDtoWrite_1 newAccount = new AccountDtoWrite_1();
+    Account newAccount = new Account();
     newAccount.Username = request.Username;
     newAccount.Pw = passwordHash;
     newAccount.Email = request.Email;
@@ -93,7 +93,7 @@ app.MapPost("/register", async (OmneFictioContext db, AccountDtoWrite_1 request)
         newAccount.PrefLanguageId = request.PrefLanguageId;
     //Save user in the database
     try {
-        db.Accounts.Add(mapper.Map<Account>(newAccount));
+        db.Accounts.Add(newAccount);
         await db.SaveChangesAsync();
     } catch (Exception) {
         return Results.StatusCode(483);
@@ -107,7 +107,7 @@ app.MapPost("/register", async (OmneFictioContext db, AccountDtoWrite_1 request)
 });
 
 app.MapPost("/signin-external", async (OmneFictioContext db, [FromBody] string token) => {
-    //Validate token
+    //Validate token test
         //string damagedpayload = "eyJhbGciOiJSUzI1NiIsImtpZCI6ImZkYTEwNjY0NTNkYzlkYzNkZDkzM2E0MWVhNTdkYTNlZjI0MmIwZjciLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJuYmYiOjE2NjAwNzE3MDcsImF1ZCI6IjU4OTY1NTM1MDMzNC1iZGszcmdlbGJvM2k0b3RrajA4ZjJodmM2OWcxbHFsNC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjEwODY4OTk5NTAyNjA3OTQ0OTk4MiIsImVtYWlsIjoiaXJzYXQwMDBAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF6cCI6IjU4OTY1NTM1MDMzNC1iZGszcmdlbGJvM2k0b3RrajA4ZjJodmM2OWcxbHFsNC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsIm5hbWUiOiJpcsWfYXQgYkZW5peiIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS0vQUZkWnVjcjkwMXpIcXRidU1BZXZlSlg2Q1JzemQ3dmw0eW83a3pmWW9UMUh3Zz1zOTYtYyIsImdpdmVuX25hbWUiOiJpcsWfYXQiLCJmYW1pbHlfbmFtZSI6ImFrZGVuaXoiLCJpYXQiOjE2NjAwNzIwMDcsImV4cCI6MTY2MDA3NTYwNywianRpIjoiY2Q2NWM3Y2UyNjZlZjBhN2JmMGE1MjA4NmU4ZTQ4YmE3YTQ1ZWM5NiJ9.dKz7pzPK8rIVXglhIe14OzijmZrgc7kVhfXDFX228CRbt1go3aCvuywaoMr_UWm4AO0gX4uII_lqIuDSZzSuzJ4yGEkSTfhqI2WRKqf1AUqSYfPTIAGTkx9_MgNoCRryQoRDtK5RHuqYpOWTFcmHRoKEtxtEaEl_fEUdyM5pquR44KV27ohsQdOQet1-cPUsDUDPIefzNpzS2DAR0QFHTr4YYrfvPRY95tY1m62Hwj3BkE_EF35Ks_lELshEfjfuE7w-GAVD7o88RzMlvPLEl6m82q65v76-0zPF5ZDOQJFdkP6thHhS69R44WpyRYDJU_PrJ05NcZcbDsSRlVq_Tg";
         //string damagedsignature = "eyJhbGciOiJSUzI1NiIsImtpZCI6ImZkYTEwNjY0NTNkYzlkYzNkZDkzM2E0MWVhNTdkYTNlZjI0MmIwZjciLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJuYmYiOjE2NjAwNzE3MDcsImF1ZCI6IjU4OTY1NTM1MDMzNC1iZGszcmdlbGJvM2k0b3RrajA4ZjJodmM2OWcxbHFsNC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsInN1YiI6IjEwODY4OTk5NTAyNjA3OTQ0OTk4MiIsImVtYWlsIjoiaXJzYXQwMDBAZ21haWwuY29tIiwiZW1haWxfdmVyaWZpZWQiOnRydWUsImF6cCI6IjU4OTY1NTM1MDMzNC1iZGszcmdlbGJvM2k0b3RrajA4ZjJodmM2OWcxbHFsNC5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsIm5hbWUiOiJpcsWfYXQgYWtkZW5peiIsInBpY3R1cmUiOiJodHRwczovL2xoMy5nb29nbGV1c2VyY29udGVudC5jb20vYS0vQUZkWnVjcjkwMXpIcXRidU1BZXZlSlg2Q1JzemQ3dmw0eW83a3pmWW9UMUh3Zz1zOTYtYyIsImdpdmVuX25hbWUiOiJpcsWfYXQiLCJmYW1pbHlfbmFtZSI6ImFrZGVuaXoiLCJpYXQiOjE2NjAwNzIwMDcsImV4cCI6MTY2MDA3NTYwNywianRpIjoiY2Q2NWM3Y2UyNjZlZjBhN2JmMGE1MjA4NmU4ZTQ4YmE3YTQ1ZWM5NiJ9.dKz7pzPK8rIVXglhIe14OzijmZrgc7kVhfXDFX228CRbt1go3aCvuywaoMr_UWm4AO0gX4uII_lqIuDSZzSuzJ4yGEkSTfhqI2WRKqf1AUqSYfPTIAGTkx9_MgNoCRryQoRDtK5RHuqYpOWTFcmHRoKEtxtEaEl_fEUdyM5pquR44KV27ohsQdOQet1-cPUsDUDPIefzNpzS2DAR0QFHTr4YYrfvPRY95tY1m62Hwj3BkE_EF35Ks_lELshEfjfuE7w-GAVD7o88RzMlvPLEl6m82q65v76-0zPF5ZDOQJFdkP6thS69R44WpyRYDJU_PrJ05NcZcbDsSRlVq_Tg";
         //JsonWebSignature.Payload payload;
@@ -184,26 +184,22 @@ app.MapPost("/vote", async (OmneFictioContext db, VoteDtoWrite_1 request) => {
         type = "reply";
 
     //checks if it's already voted
-    VoteDtoRead_2? checkVote = null;
+    Vote? checkVote = null;
     if(type == "post"){
-        checkVote = mapper.Map<VoteDtoRead_2>
-                (db.Votes.SingleOrDefault(x => x.AccountId == request.AccountId &&
-                x.TargetPostId == request.TargetPostId));
+        checkVote = db.Votes.SingleOrDefault(x => x.AccountId == request.AccountId &&
+                x.TargetPostId == request.TargetPostId);
     }
     else if(type == "chapter"){
-        checkVote = mapper.Map<VoteDtoRead_2>
-                (db.Votes.SingleOrDefault(x => x.AccountId == request.AccountId &&
-                x.TargetChapterId == request.TargetChapterId));
+        checkVote = db.Votes.SingleOrDefault(x => x.AccountId == request.AccountId &&
+                x.TargetChapterId == request.TargetChapterId);
     }
     else if(type == "comment"){
-        checkVote = mapper.Map<VoteDtoRead_2>
-                (db.Votes.SingleOrDefault(x => x.AccountId == request.AccountId && 
-                x.TargetCommentId == request.TargetCommentId));
+        checkVote = db.Votes.SingleOrDefault(x => x.AccountId == request.AccountId && 
+                x.TargetCommentId == request.TargetCommentId);
     }
     else if(type == "reply"){
-        checkVote = mapper.Map<VoteDtoRead_2>
-                (db.Votes.SingleOrDefault(x => x.AccountId == request.AccountId &&
-                x.TargetReplyId == request.TargetReplyId));
+        checkVote = db.Votes.SingleOrDefault(x => x.AccountId == request.AccountId &&
+                x.TargetReplyId == request.TargetReplyId);
     }
 
     try {
@@ -230,20 +226,16 @@ app.MapPost("/vote", async (OmneFictioContext db, VoteDtoWrite_1 request) => {
 
 
 app.MapPost("/createpost", async (OmneFictioContext db, PostDtoWrite_1 request) => {
-    if(db.Accounts.FirstOrDefault(a => a.Id == request.AccountId) == null){
+    if(db.Accounts.FirstOrDefault(a => a.Id == request.AccountId) == null ||
+     db.Languages.FirstOrDefault(l => l.Id == request.LanguageId) == null ||
+     db.PostTypes.FirstOrDefault(t => t.Id == request.PostTypeId) == null){
         return Results.StatusCode(480);
     }
-    if(db.Languages.FirstOrDefault(l => l.Id == request.LanguageId) == null){
+    else if(request.Title.Length > 250){
         return Results.StatusCode(481);
     }
-    if(db.PostTypes.FirstOrDefault(t => t.Id == request.PostTypeId) == null){
+    else if(request.PostDescription.Length > 2000){
         return Results.StatusCode(482);
-    }
-    if(request.Title.Length > 250){
-        return Results.StatusCode(483);
-    }
-    if(request.PostDescription.Length > 2000){
-        return Results.StatusCode(484);
     }
 
     Post newpost = new Post();
@@ -256,18 +248,34 @@ app.MapPost("/createpost", async (OmneFictioContext db, PostDtoWrite_1 request) 
     newpost.PublishDate = DateTime.Now;
     newpost.UpdateDate = DateTime.Now;
     newpost.DeletedStatusId = 1;
-    newpost.PostTypeId = 1;
+    newpost.PostStatusId = 1;
     newpost.IsPublished = true;
-    foreach (var t in request.Tags)
-    {
-        Tag tag = db.Tags.FirstOrDefault(s => s.Id == t.Id);
-        if(tag != null){
-            newpost.Tags.Add(tag);
+    if(request.TagList != null){
+        foreach (int tagid in request.TagList)
+        {
+            Tag? tag = db.Tags.FirstOrDefault(s => s.Id == tagid);
+            if(tag != null){
+                newpost.Tags.Add(tag);
+            }
+        }
+    }
+    if(request.PostTypeId == 3){
+        if(request.SeriesList != null){
+            foreach (int seriesid in request.SeriesList)
+            {
+                ExistingStory? series = db.ExistingStories.FirstOrDefault(s => s.Id == seriesid);
+                if(series != null){
+                    newpost.ExistingStories.Add(series);
+                }
+            }
+        }
+        if(newpost.ExistingStories.Count == 0){
+            return Results.StatusCode(480);
         }
     }
 
     try{
-        db.Posts.Add(mapper.Map<Post>(newpost));
+        db.Posts.Add(newpost);
         await db.SaveChangesAsync();
     } catch (Exception) {
         return Results.StatusCode(580);

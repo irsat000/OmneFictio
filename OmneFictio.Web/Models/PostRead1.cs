@@ -1,5 +1,5 @@
 // Root myDeserializedClass = JsonConvert.DeserializeObject<List<Root>>(myJsonResponse);
-namespace OmneFictio.Web.Models;
+namespace OmneFictio.Web.PostReadModel;
 
 //Read page
 public class Account
