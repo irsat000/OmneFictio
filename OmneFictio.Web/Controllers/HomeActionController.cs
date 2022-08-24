@@ -53,6 +53,7 @@ public class HomeActionController : Controller
         var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/createpost", request);
         string statusCode = apiResponse.StatusCode.ToString();
 
+        //reminder: client side errors will be handled with js only
         if(statusCode == "OK"){
             return Ok();
         }
@@ -67,6 +68,14 @@ public class HomeActionController : Controller
         else if(statusCode == "482"){
             //Description is longer than 2000 character
             return StatusCode(482);
+        }
+        else if(statusCode == "483"){
+            //Title is empty
+            return StatusCode(483);
+        }
+        else if(statusCode == "484"){
+            //Description is shorter than 50 character or empty
+            return StatusCode(484);
         }
         else if(statusCode == "580"){
             //Failed to save the data in database

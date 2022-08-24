@@ -178,7 +178,7 @@
 .writing_form .wf-submit {
   display: flex;
   justify-content: center;
-  padding: 0 18px 18px;
+  padding: 18px;
 }
 .writing_form .wf-submit input {
   border: none;
@@ -192,6 +192,14 @@
 }
 .writing_form .wf-submit input:hover {
   background-color: rgb(22, 95, 29);
+}
+.writing_form .wf-errormessage, .writing_form .rf-errormessage {
+  text-align: center;
+  color: #b22525;
+}
+.writing_form .wf-successmessage, .writing_form .rf-successmessage {
+  text-align: center;
+  color: #36914e;
 }
 
 .request_form {

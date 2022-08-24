@@ -130,9 +130,9 @@ $(document).ready(function(){
         //disables redirection of form element
         event.preventDefault();
         //Get message elements
-        /*const error = document.getElementById('errormessage');
-        const success = document.getElementById('successmessage');
-        message.innerHTML = "";*/
+        const error = document.getElementsByClassName('wf-errormessage')[0];
+        const success = document.getElementsByClassName('wf-successmessage')[0];
+        error.innerHTML = "";
 
         /*const payload = JSON.stringify(Object.fromEntries(new FormData(createpost_form)));
         const payload = {
@@ -170,17 +170,18 @@ $(document).ready(function(){
         })
         .then(function (response) {
             if (response.ok) {
-                //success.innerHTML = "SUCCESS";
-                console.log('OK');
+                success.innerHTML = "SUCCESS";
+                setTimeout(function() {
+                    window.location.replace("https://localhost:7067");
+                }, 500);
             }
-            else if(response.status === 480){
-                console.log('User error');
-                //message.innerHTML = "**";
-            }
-            else{
-                console.log('Server/User error -> ' + response.status);
-                //message.innerHTML = "*Server error*";
-            }
+            else if(response.status === 499){ error.innerHTML = "*Login to be able to create your post*"; }
+            else if(response.status === 480){ error.innerHTML = "*Fill the form properly*"; }
+            else if(response.status === 481){ error.innerHTML = "*Title is too long (max 250 character)*"; }
+            else if(response.status === 482){ error.innerHTML = "*Description is too long (max 2000 character)*"; }
+            else if(response.status === 483){ error.innerHTML = "*Title is empty*"; }
+            else if(response.status === 484){ error.innerHTML = "*Description is too short or empty* (min 50 character)"; }
+            else{ error.innerHTML = "*Server error*"; }
         })
         .catch(error => console.log('Create post submit has failed.', error));
     });

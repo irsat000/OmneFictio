@@ -179,7 +179,7 @@
     .wf-submit{
         display: flex;
         justify-content: center;
-        padding: 0 18px 18px;
+        padding: 18px;
         input{
             border: none;
             outline: none;
@@ -193,6 +193,14 @@
                 background-color: rgb(22, 95, 29);
             }
         }
+    }
+    .wf-errormessage, .rf-errormessage{
+        text-align: center;
+        color: #b22525;
+    }
+    .wf-successmessage, .rf-successmessage{
+        text-align: center;
+        color: #36914e;
     }
 }
 

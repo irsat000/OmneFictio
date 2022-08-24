@@ -51,18 +51,17 @@ app.MapGet("/", () =>
 app.MapGet("/posts", async (OmneFictioContext db) => {
     var posts = await mapper.ProjectTo<PostDtoRead_1>(db.Posts.Where(p => 
     p.IsPublished == true &&
-    p.DeletedStatus.Body == "Default")).ToListAsync();
+    p.DeletedStatus!.Body == "Default")).ToListAsync();
     return posts;
 });
 
 app.MapPost("/login", async (OmneFictioContext db, AccountDtoRead_2 request) => {
     //Authentication
-    var checkUser = db.Accounts.SingleOrDefault(x => x.Username == request.Username);
+    var checkUser = await db.Accounts.SingleOrDefaultAsync(x => x.Username == request.Username);
     if (checkUser == null || !BC.Verify(request.Pw, checkUser.Pw))
         return Results.NotFound("User not found");
     //Login
-    var user = mapper.Map<AccountDtoRead_4>(db.Accounts.SingleOrDefault(x => x.Username == request.Username));
-    var createToken = _myMethods.CreateUserToken(user, securityToken);
+    var createToken = _myMethods.CreateUserToken(checkUser, securityToken);
     if(createToken != null)
         return Results.Ok(new {jwt=createToken});
     else
@@ -74,7 +73,7 @@ app.MapPost("/register", async (OmneFictioContext db, AccountDtoWrite_1 request)
     Regex usernameRegex = new Regex(@"[A-Za-z0-9_]{3,30}");
     if(!usernameRegex.IsMatch(request.Username))
         return Results.StatusCode(480);
-    if(db.Accounts.Any(a => a.Username == request.Username))
+    if(await db.Accounts.AnyAsync(a => a.Username == request.Username))
         return Results.StatusCode(481);
     if(request.Pw!.Contains(" ") || request.Pw!.Length < 6)
         return Results.StatusCode(482);
@@ -89,17 +88,17 @@ app.MapPost("/register", async (OmneFictioContext db, AccountDtoWrite_1 request)
         newAccount.AllowSexual = request.AllowSexual;
     if(request.AllowViolence != null)
         newAccount.AllowViolence = request.AllowViolence;
-    if(db.Languages.Any(l => l.Id == request.PrefLanguageId))
+    if(await db.Languages.AnyAsync(l => l.Id == request.PrefLanguageId))
         newAccount.PrefLanguageId = request.PrefLanguageId;
     //Save user in the database
     try {
-        db.Accounts.Add(newAccount);
+        await db.Accounts.AddAsync(newAccount);
         await db.SaveChangesAsync();
     } catch (Exception) {
         return Results.StatusCode(483);
     }
     //Login
-    var user = mapper.Map<AccountDtoRead_4>(db.Accounts.SingleOrDefault(x => x.Username == request.Username));
+    var user = await db.Accounts.SingleOrDefaultAsync(x => x.Username == request.Username);
     if (user == null)
         return Results.Ok();
     var createToken = _myMethods.CreateUserToken(user, securityToken);
@@ -127,12 +126,12 @@ app.MapPost("/signin-external", async (OmneFictioContext db, [FromBody] string t
     var extId = jwt.Claims.First(claim => claim.Type == "sub").Value;
 
     //Creates an account if there is no one with this ID from google
-    if(db.Accounts.SingleOrDefault(a => a.ExternalId == extId && a.ExternalType == "google") == null){
+    if(await db.Accounts.SingleOrDefaultAsync(a => a.ExternalId == extId && a.ExternalType == "google") == null){
         var email = jwt.Claims.First(claim => claim.Type == "email").Value;
         var profilePic = jwt.Claims.First(claim => claim.Type == "picture").Value;
         var name = Regex.Replace(jwt.Claims.First(claim => claim.Type == "name").Value, @"\s+", "");
         var username = name;
-        while(db.Accounts.Any(a => a.Username == username)){
+        while(await db.Accounts.AnyAsync(a => a.Username == username)){
             username = name + _random.Next(100, 1000).ToString();
         }
         string passwordHash = BC.HashPassword(GeneratePassword.Generate(16, 8));
@@ -151,15 +150,15 @@ app.MapPost("/signin-external", async (OmneFictioContext db, [FromBody] string t
         newAccount.EmailValid = true;
 
         try {
-            db.Accounts.Add(newAccount);
+            await db.Accounts.AddAsync(newAccount);
             await db.SaveChangesAsync();
-        } catch (DbEntityValidationException e) {
+        } catch (DbEntityValidationException) {
             return Results.StatusCode(580);
         }
     }
 
     //Gets the user for authorization
-    var user = mapper.Map<AccountDtoRead_4>(db.Accounts.SingleOrDefault(a => a.ExternalId == extId && a.ExternalType == "google"));
+    var user = await db.Accounts.SingleOrDefaultAsync(a => a.ExternalId == extId && a.ExternalType == "google");
     if (user == null)
         return Results.StatusCode(581);
         
@@ -170,7 +169,7 @@ app.MapPost("/signin-external", async (OmneFictioContext db, [FromBody] string t
 
 
 app.MapPost("/vote", async (OmneFictioContext db, VoteDtoWrite_1 request) => {
-    if(db.Accounts.FirstOrDefault(a => a.Id == request.AccountId) == null){
+    if(await db.Accounts.FirstOrDefaultAsync(a => a.Id == request.AccountId) == null){
         return Results.StatusCode(480);
     }
     
@@ -187,35 +186,35 @@ app.MapPost("/vote", async (OmneFictioContext db, VoteDtoWrite_1 request) => {
     //checks if it's already voted
     Vote? checkVote = null;
     if(type == "post"){
-        checkVote = db.Votes.SingleOrDefault(x => x.AccountId == request.AccountId &&
+        checkVote = await db.Votes.SingleOrDefaultAsync(x => x.AccountId == request.AccountId &&
                 x.TargetPostId == request.TargetPostId);
     }
     else if(type == "chapter"){
-        checkVote = db.Votes.SingleOrDefault(x => x.AccountId == request.AccountId &&
+        checkVote = await db.Votes.SingleOrDefaultAsync(x => x.AccountId == request.AccountId &&
                 x.TargetChapterId == request.TargetChapterId);
     }
     else if(type == "comment"){
-        checkVote = db.Votes.SingleOrDefault(x => x.AccountId == request.AccountId && 
+        checkVote = await db.Votes.SingleOrDefaultAsync(x => x.AccountId == request.AccountId && 
                 x.TargetCommentId == request.TargetCommentId);
     }
     else if(type == "reply"){
-        checkVote = db.Votes.SingleOrDefault(x => x.AccountId == request.AccountId &&
+        checkVote = await db.Votes.SingleOrDefaultAsync(x => x.AccountId == request.AccountId &&
                 x.TargetReplyId == request.TargetReplyId);
     }
 
     try {
         //it's already voted but it's the opposite value
         if(checkVote != null && checkVote.Body != request.Body){
-            db.Votes.Remove(db.Votes.SingleOrDefault(x => x.Id == checkVote.Id));
+            db.Votes.Remove(db.Votes.SingleOrDefault(x => x.Id == checkVote.Id)!);
         }
             
         //if user clicks on the same button to take their vote back
         //else, votes the post normally
         if(checkVote != null && checkVote.Body == request.Body){
-            db.Votes.Remove(db.Votes.SingleOrDefault(x => x.Id == checkVote.Id));
+            db.Votes.Remove(db.Votes.SingleOrDefault(x => x.Id == checkVote.Id)!);
         }
         else{
-            db.Votes.Add(mapper.Map<Vote>(request));
+            await db.Votes.AddAsync(mapper.Map<Vote>(request));
         }
 
         await db.SaveChangesAsync();
@@ -227,10 +226,10 @@ app.MapPost("/vote", async (OmneFictioContext db, VoteDtoWrite_1 request) => {
 
 
 app.MapPost("/createpost", async (OmneFictioContext db, PostDtoWrite_1 request) => {
-    if(db.Accounts.FirstOrDefault(a => a.Id == request.AccountId) == null ||
-     db.Languages.FirstOrDefault(l => l.Id == request.LanguageId) == null ||
-     db.PostTypes.FirstOrDefault(t => t.Id == request.PostTypeId) == null ||
-     db.RatedAs.FirstOrDefault(s => s.Id == request.RatedAsId) == null){
+    if(await db.Accounts.FirstOrDefaultAsync(a => a.Id == request.AccountId) == null ||
+     await db.Languages.FirstOrDefaultAsync(l => l.Id == request.LanguageId) == null ||
+     await db.PostTypes.FirstOrDefaultAsync(t => t.Id == request.PostTypeId) == null ||
+     await db.RatedAs.FirstOrDefaultAsync(s => s.Id == request.RatedAsId) == null){
         return Results.StatusCode(480);
     }
     else if(request.Title.Length > 250){
@@ -238,6 +237,12 @@ app.MapPost("/createpost", async (OmneFictioContext db, PostDtoWrite_1 request) 
     }
     else if(request.PostDescription.Length > 2000){
         return Results.StatusCode(482);
+    }
+    else if(request.Title.Length == 0 || request.Title == null){
+        return Results.StatusCode(483);
+    }
+    else if(request.PostDescription.Length < 50 || request.PostDescription == null){
+        return Results.StatusCode(484);
     }
 
     Post newpost = new Post();
@@ -256,7 +261,7 @@ app.MapPost("/createpost", async (OmneFictioContext db, PostDtoWrite_1 request) 
     if(request.TagList != null){
         foreach (int tagid in request.TagList)
         {
-            Tag? tag = db.Tags.FirstOrDefault(s => s.Id == tagid);
+            Tag? tag = await db.Tags.FirstOrDefaultAsync(s => s.Id == tagid);
             if(tag != null){
                 newpost.Tags.Add(tag);
             }
@@ -266,7 +271,7 @@ app.MapPost("/createpost", async (OmneFictioContext db, PostDtoWrite_1 request) 
         if(request.SeriesList != null){
             foreach (int seriesid in request.SeriesList)
             {
-                ExistingStory? series = db.ExistingStories.FirstOrDefault(s => s.Id == seriesid);
+                ExistingStory? series = await db.ExistingStories.FirstOrDefaultAsync(s => s.Id == seriesid);
                 if(series != null){
                     newpost.ExistingStories.Add(series);
                 }
@@ -278,7 +283,7 @@ app.MapPost("/createpost", async (OmneFictioContext db, PostDtoWrite_1 request) 
     }
 
     try{
-        db.Posts.Add(newpost);
+        await db.Posts.AddAsync(newpost);
         await db.SaveChangesAsync();
     } catch (Exception) {
         return Results.StatusCode(580);

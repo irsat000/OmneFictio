@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using OmneFictio.MinApi.Dtos;
 using System.Text.Json.Serialization;
 using Google.Apis.Auth;
+using OmneFictio.MinApi.Models;
 
 namespace OmneFictio.MinApi.Stored;
 
@@ -83,14 +84,14 @@ public static class GeneratePassword
 
 public class MyMethods{
     JwtSecurityTokenHandler _jwtHandler = new JwtSecurityTokenHandler();
-    public string CreateUserToken(AccountDtoRead_4 user, byte[] securityToken){
+    public string CreateUserToken(Account user, byte[] securityToken){
         var tokenHandler = new JwtSecurityTokenHandler();
         var tokenDescriptor = new SecurityTokenDescriptor {
             Subject = new ClaimsIdentity(new List<Claim>(){
                 new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
                 new Claim(ClaimTypes.Name, user.Username),
                 new Claim(ClaimTypes.Email, user.Email),
-                new Claim(ClaimTypes.Actor, user.ProfilePic)
+                new Claim(ClaimTypes.Actor, user.ProfilePic ?? "noimage")
             }),
             Issuer = "OmneFictio.com",
             Expires = DateTime.UtcNow.AddDays(30),
@@ -101,6 +102,7 @@ public class MyMethods{
     }
 }
 
+/*
 public class CustomPayload : JsonWebSignature.Payload{
     [JsonPropertyName("sub")]
      public string Subject { get; set; }
@@ -111,3 +113,4 @@ public class CustomPayload : JsonWebSignature.Payload{
     [JsonPropertyName("picture")]
      public string Picture { get; set; }
 }
+*/
