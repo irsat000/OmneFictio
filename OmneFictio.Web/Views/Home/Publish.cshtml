@@ -14,14 +14,13 @@
         <i class="bi bi-x-lg" id="wf-taggdd-close"></i>
     </div>
     <ul class="" id="wf-addtag-list" data-action="include">
-        <li data-tagvalue="action">Action</li>
-        <li data-tagvalue="comedy">Comedy</li>
-        <li data-tagvalue="fantasy">Fantasy</li>
-        <li data-tagvalue="romance">Romance</li>
-        <li data-tagvalue="dram">Dram</li>
-        <li data-tagvalue="horror">Horror</li>
-        <li data-tagvalue="adventure">Adventure</li>
-        <li data-tagvalue="science_fiction">Science fiction</li>
+        <li data-tagvalue="Sci-Fi" data-id="1">Sci-Fi</li>
+        <li data-tagvalue="Tragedy" data-id="2">Tragedy</li>
+        <li data-tagvalue="Spiritual" data-id="3">Spiritual</li>
+        <li data-tagvalue="Mystery" data-id="4">Mystery</li>
+        <li data-tagvalue="Parody" data-id="5">Parody</li>
+        <li data-tagvalue="Horror" data-id="6">Horror</li>
+        <li data-tagvalue="Fantasy" data-id="7">Fantasy</li>
     </ul>
 </div>
 <div class="filter-addseries" id="wf-addseriesmodal">
@@ -72,14 +71,12 @@
         </select>
     </div>
     <ul class="fadds-list" id="wf-addseries-list">
-        <li data-seriesval="Overlord">Overlord</li>
-        <li data-seriesval="Harry_Potter">Harry Potter</li>
-        <li data-seriesval="The_Boys">The Boys</li>
-        <li data-seriesval="Stranger_Things">Stranger Things</li>
-        <li data-seriesval="Breaking_Bad">Breaking Bad</li>
-        <li data-seriesval="Game_of_Thrones">Game of Thrones</li>
-        <li data-seriesval="Hunger_Games">Hunger Games</li>
-        <li data-seriesval="Pirates_of_the_Caribbean">Pirates of the Caribbean</li>
+        <li data-seriesval="Pirates of the Caribbean" data-id="1">Pirates of the Caribbean</li>
+        <li data-seriesval="Star Trek" data-id="2">Star Trek</li>
+        <li data-seriesval="Thor" data-id="4">Thor</li>
+        <li data-seriesval="X-Men" data-id="5">X-Men</li>
+        <li data-seriesval="Supernatural" data-id="6">Supernatural</li>
+        <li data-seriesval="Doctor Who" data-id="8">Doctor Who</li>
     </ul>
 </div>
 
@@ -98,14 +95,14 @@
         <div class="wf-post_body">
             <div class="wf-post_primary">
                 <span>Title</span>
-                <input class="wf-title" type="text" name="title" placeholder="Title">
+                <input class="wf-title" type="text" name="Title" placeholder="Title">
                 <span>Description</span>
-                <textarea class="wf-description" name="description" placeholder="Description"></textarea>
+                <textarea class="wf-description" name="PostDescription" placeholder="Description"></textarea>
             </div>
             <div class="wf-post_details">
                 <div class="wf-language">
                     <span>Language:</span>
-                    <select name="postlan">
+                    <select name="LanguageId">
                         <option value="0">Language</option>
                         <option value="1">English</option>
                         <option value="2">Turkish</option>
@@ -116,7 +113,7 @@
                 </div>
                 <div class="wf-type">
                     <span>Type:</span>
-                    <select name="type">
+                    <select name="PostTypeId" id="wf-posttype">
                         <option value="0">Type</option>
                         <option value="1">Story</option>
                         <option value="2">Scenario</option>
@@ -126,7 +123,7 @@
                 </div>
                 <div class="wf-ratedas">
                     <span>Rated as:</span>
-                    <select name="postratedas">
+                    <select name="RatedAsId">
                         <option value="0">Rate</option>
                         <option value="1">E - Everyone</option>
                         <option value="2">T - 13+</option>

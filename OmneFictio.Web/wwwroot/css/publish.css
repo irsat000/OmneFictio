@@ -127,6 +127,9 @@
 .writing_form .wf-post_details .wf-addtag button:hover {
   background-color: rgb(58, 129, 64);
 }
+.writing_form .wf-post_details .wf-addseries {
+  display: none;
+}
 .writing_form .wf-post_details .wf-addseries button {
   background-color: rgb(139, 136, 199);
 }
@@ -166,7 +169,10 @@
 .writing_form .wf-post_details .wf-tags > span {
   background-color: rgb(91, 130, 94);
 }
-.writing_form .wf-post_details .wf-fanfic_series > span {
+.writing_form .wf-post_details .wf-fanfic_series {
+  display: none;
+}
+.writing_form .wf-post_details .wf-fanfic_series span {
   background-color: rgb(106, 105, 138);
 }
 .writing_form .wf-submit {

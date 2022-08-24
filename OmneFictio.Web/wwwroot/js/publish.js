@@ -34,9 +34,21 @@ $(document).ready(function(){
         closeTagAndSeriesDD();
     });
     //removing selected tags and series
-    $(document).on('click', '.wf-removespanbtn', function(e){
+    $(document).on('click', '.wf-removespanbtn', function(){
         this.parentElement.remove();
     });
+    //activate/deactivate adding series option depending on post type
+    const seriesbtndiv = document.getElementsByClassName('wf-addseries')[0];
+    const serieslistdiv = document.getElementsByClassName('wf-fanfic_series')[0];
+    document.getElementById('wf-posttype').onchange = function() {
+        if(this.selectedIndex === 3) {
+            seriesbtndiv.style.display = 'flex';
+            serieslistdiv.style.display = 'flex';
+        } else {
+            seriesbtndiv.style.display = 'none';
+            serieslistdiv.style.display = 'none';
+        }
+    }
 
 //-----TAG SELECTIONS------
 
@@ -60,12 +72,13 @@ $(document).ready(function(){
     
     //adding tags
     $('#wf-addtag-list > li').click(function(){
-        var tagname = $(this).attr('data-tagvalue');
-        var tagnamedisplay = capitalizeFirstLetter(tagname.replaceAll('_', ' '));
+        var name = $(this).attr('data-tagvalue');
+        var id = $(this).attr('data-id');
+        //var tagnamedisplay = capitalizeFirstLetter(name.replaceAll('_', ' '));
         //delete if span already exist
-        $('.wf-tags span[data-wftag="'+tagname+'"]').remove();
+        $('.wf-tags span[data-id="'+id+'"]').remove();
 
-        $(".wf-tags").append(`<span data-wftag="`+tagname+`">`+tagnamedisplay+`<i class="bi bi-x-circle wf-removespanbtn"></i></span>`);
+        $(".wf-tags").append(`<span class="wf-taglist" data-id="`+id+`">`+name+`<i class="bi bi-x-circle wf-removespanbtn"></i></span>`);
         
         $('#wf-addtag-searchbar').val("");
         $("#wf-addtag-list > li").show();
@@ -96,11 +109,12 @@ $(document).ready(function(){
     //fadds = fanfiction add series
     $('#wf-addseries-list > li').click(function(){
         var name = $(this).attr('data-seriesval');
-        var namedisplay = capitalizeFirstLetter(name.replaceAll('_', ' '));
+        var id = $(this).attr('data-id');
+        //var namedisplay = capitalizeFirstLetter(name.replaceAll('_', ' '));
         //delete if span already exist
-        $('.wf-fanfic_series span[data-wfseries="'+name+'"]').remove();
+        $('.wf-fanfic_series span[data-id="'+id+'"]').remove();
 
-        $(".wf-fanfic_series").append(`<span data-wfseries="`+name+`">`+namedisplay+`<i class="bi bi-x-circle f-removeseriesbtn"></i></span>`);
+        $(".wf-fanfic_series").append(`<span class="wf-serieslist" data-id="`+id+`">`+name+`<i class="bi bi-x-circle wf-removespanbtn"></i></span>`);
         
         $('#wf-addseries-searchbar').val("");
         $("#wf-addseries-list > li").show();
@@ -116,12 +130,11 @@ $(document).ready(function(){
         //disables redirection of form element
         event.preventDefault();
         //Get message elements
-        /*const message = document.getElementById('loginmodal-message');
-        const success = document.getElementById('loginmodal-success');
+        /*const error = document.getElementById('errormessage');
+        const success = document.getElementById('successmessage');
         message.innerHTML = "";*/
 
-        //Request
-        //const payload = JSON.stringify(Object.fromEntries(new FormData(createpost_form)));
+        /*const payload = JSON.stringify(Object.fromEntries(new FormData(createpost_form)));
         const payload = {
             Title: 'Post title from fetch api',
             PostDescription: 'Post description from fetch api',
@@ -130,7 +143,23 @@ $(document).ready(function(){
             RatedAsId: 2,
             CoverImage: null,
             TagList: null
-        };
+        };*/
+
+        //Request
+        var payload = Object.fromEntries(new FormData(createpost_form));
+
+        var tagsList = [];
+        Array.prototype.forEach.call(document.getElementsByClassName('wf-taglist'), function(tag) {
+            tagsList.push(parseInt(tag.getAttribute('data-id')));
+        });
+        payload["TagList"] = tagsList;
+
+        var seriesList = [];
+        Array.prototype.forEach.call(document.getElementsByClassName('wf-serieslist'), function(series) {
+            seriesList.push(parseInt(series.getAttribute('data-id')));
+        });
+        payload["SeriesList"] = seriesList;
+
         await fetch("/HomeAction/CreatePost", {
             method: 'POST',
             headers: {
@@ -142,9 +171,6 @@ $(document).ready(function(){
         .then(function (response) {
             if (response.ok) {
                 //success.innerHTML = "SUCCESS";
-                /*setTimeout(function() {
-                    location.reload();
-                }, 500);*/
                 console.log('OK');
             }
             else if(response.status === 480){

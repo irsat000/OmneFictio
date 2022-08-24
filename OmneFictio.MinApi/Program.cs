@@ -229,7 +229,8 @@ app.MapPost("/vote", async (OmneFictioContext db, VoteDtoWrite_1 request) => {
 app.MapPost("/createpost", async (OmneFictioContext db, PostDtoWrite_1 request) => {
     if(db.Accounts.FirstOrDefault(a => a.Id == request.AccountId) == null ||
      db.Languages.FirstOrDefault(l => l.Id == request.LanguageId) == null ||
-     db.PostTypes.FirstOrDefault(t => t.Id == request.PostTypeId) == null){
+     db.PostTypes.FirstOrDefault(t => t.Id == request.PostTypeId) == null ||
+     db.RatedAs.FirstOrDefault(s => s.Id == request.RatedAsId) == null){
         return Results.StatusCode(480);
     }
     else if(request.Title.Length > 250){
@@ -245,20 +246,13 @@ app.MapPost("/createpost", async (OmneFictioContext db, PostDtoWrite_1 request) 
     newpost.LanguageId = request.LanguageId;
     newpost.AccountId = request.AccountId;
     newpost.PostTypeId = request.PostTypeId;
+    newpost.RatedAsId = request.RatedAsId;
     newpost.CoverImage = request.CoverImage;
     newpost.PublishDate = DateTime.Now;
     newpost.UpdateDate = DateTime.Now;
     newpost.DeletedStatusId = 1;
     newpost.PostStatusId = 1;
     newpost.IsPublished = true;
-    if(request.RatedAsId != null){
-        if(db.RatedAs.FirstOrDefault(s => s.Id == request.RatedAsId) != null){
-            newpost.RatedAsId = request.RatedAsId;
-        }
-        else{
-            newpost.RatedAsId = 1;
-        }
-    }
     if(request.TagList != null){
         foreach (int tagid in request.TagList)
         {
