@@ -137,7 +137,7 @@ app.MapPost("/signin-external", async (OmneFictioContext db, [FromBody] string t
         }
         string passwordHash = BC.HashPassword(GeneratePassword.Generate(16, 8));
 
-        AccountDtoWrite_3 newAccount = new AccountDtoWrite_3();
+        Account newAccount = new Account();
         newAccount.Username = username;
         newAccount.Email = email;
         newAccount.ExternalId = extId;
@@ -148,9 +148,10 @@ app.MapPost("/signin-external", async (OmneFictioContext db, [FromBody] string t
         newAccount.AllowSexual = true;
         newAccount.AllowViolence = true;
         newAccount.PrefLanguageId = null;
+        newAccount.EmailValid = true;
 
         try {
-            db.Accounts.Add(mapper.Map<Account>(newAccount));
+            db.Accounts.Add(newAccount);
             await db.SaveChangesAsync();
         } catch (DbEntityValidationException e) {
             return Results.StatusCode(580);
@@ -250,6 +251,14 @@ app.MapPost("/createpost", async (OmneFictioContext db, PostDtoWrite_1 request) 
     newpost.DeletedStatusId = 1;
     newpost.PostStatusId = 1;
     newpost.IsPublished = true;
+    if(request.RatedAsId != null){
+        if(db.RatedAs.FirstOrDefault(s => s.Id == request.RatedAsId) != null){
+            newpost.RatedAsId = request.RatedAsId;
+        }
+        else{
+            newpost.RatedAsId = 1;
+        }
+    }
     if(request.TagList != null){
         foreach (int tagid in request.TagList)
         {

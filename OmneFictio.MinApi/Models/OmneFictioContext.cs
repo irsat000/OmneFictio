@@ -34,6 +34,7 @@ namespace OmneFictio.MinApi.Models
         public virtual DbSet<Rate> Rates { get; set; } = null!;
         public virtual DbSet<RatedA> RatedAs { get; set; } = null!;
         public virtual DbSet<Reply> Replies { get; set; } = null!;
+        public virtual DbSet<Request> Requests { get; set; } = null!;
         public virtual DbSet<Tag> Tags { get; set; } = null!;
         public virtual DbSet<Vote> Votes { get; set; } = null!;
 
@@ -52,7 +53,7 @@ namespace OmneFictio.MinApi.Models
             {
                 entity.ToTable("Account");
 
-                entity.HasIndex(e => e.Username, "UQ__Account__F3DBC57290695E70")
+                entity.HasIndex(e => e.Username, "UQ__Account__F3DBC572E3DF65B8")
                     .IsUnique();
 
                 entity.Property(e => e.Id).HasColumnName("id");
@@ -124,6 +125,7 @@ namespace OmneFictio.MinApi.Models
                 entity.HasOne(d => d.DeletedStatus)
                     .WithMany(p => p.Accounts)
                     .HasForeignKey(d => d.DeletedStatusId)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_AccountDeletedstatus");
 
                 entity.HasOne(d => d.PrefLanguage)
@@ -136,8 +138,8 @@ namespace OmneFictio.MinApi.Models
                     .WithMany(p => p.Accounts)
                     .UsingEntity<Dictionary<string, object>>(
                         "AccountAuthority",
-                        l => l.HasOne<Authority>().WithMany().HasForeignKey("AuthorityId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_AccountAuthority_Authority"),
-                        r => r.HasOne<Account>().WithMany().HasForeignKey("AccountId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_AccountAuthority_Account"),
+                        l => l.HasOne<Authority>().WithMany().HasForeignKey("AuthorityId").HasConstraintName("FK_AccountAuthority_Authority"),
+                        r => r.HasOne<Account>().WithMany().HasForeignKey("AccountId").HasConstraintName("FK_AccountAuthority_Account"),
                         j =>
                         {
                             j.HasKey("AccountId", "AuthorityId").HasName("PK_AccountAuthority");
@@ -153,8 +155,8 @@ namespace OmneFictio.MinApi.Models
                     .WithMany(p => p.Accounts)
                     .UsingEntity<Dictionary<string, object>>(
                         "AccountInventory",
-                        l => l.HasOne<InventoryItem>().WithMany().HasForeignKey("InventoryItemId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_AccountInventory_InventoryItem"),
-                        r => r.HasOne<Account>().WithMany().HasForeignKey("AccountId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_AccountInventory_Account"),
+                        l => l.HasOne<InventoryItem>().WithMany().HasForeignKey("InventoryItemId").HasConstraintName("FK_AccountInventory_InventoryItem"),
+                        r => r.HasOne<Account>().WithMany().HasForeignKey("AccountId").HasConstraintName("FK_AccountInventory_Account"),
                         j =>
                         {
                             j.HasKey("AccountId", "InventoryItemId").HasName("PK_AccountInventory");
@@ -170,8 +172,8 @@ namespace OmneFictio.MinApi.Models
                     .WithMany(p => p.Accounts)
                     .UsingEntity<Dictionary<string, object>>(
                         "AccountIp",
-                        l => l.HasOne<Ip>().WithMany().HasForeignKey("IpId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_AccountIP_IP"),
-                        r => r.HasOne<Account>().WithMany().HasForeignKey("AccountId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_AccountIP_Account"),
+                        l => l.HasOne<Ip>().WithMany().HasForeignKey("IpId").HasConstraintName("FK_AccountIP_IP"),
+                        r => r.HasOne<Account>().WithMany().HasForeignKey("AccountId").HasConstraintName("FK_AccountIP_Account"),
                         j =>
                         {
                             j.HasKey("AccountId", "IpId").HasName("PK_AccountIP");
@@ -301,16 +303,19 @@ namespace OmneFictio.MinApi.Models
                 entity.HasOne(d => d.DeletedStatus)
                     .WithMany(p => p.Comments)
                     .HasForeignKey(d => d.DeletedStatusId)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_CommentDeletedstatus");
 
                 entity.HasOne(d => d.TargetChapter)
                     .WithMany(p => p.Comments)
                     .HasForeignKey(d => d.TargetChapterId)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_CommentChapter");
 
                 entity.HasOne(d => d.TargetPost)
                     .WithMany(p => p.Comments)
                     .HasForeignKey(d => d.TargetPostId)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_CommentPost");
             });
 
@@ -350,7 +355,9 @@ namespace OmneFictio.MinApi.Models
             {
                 entity.ToTable("ExistingStoryType");
 
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
 
                 entity.Property(e => e.Body)
                     .HasMaxLength(250)
@@ -435,6 +442,10 @@ namespace OmneFictio.MinApi.Models
                     .HasColumnType("smalldatetime")
                     .HasColumnName("publishDate");
 
+                entity.Property(e => e.RatedAsId)
+                    .HasColumnName("ratedAsId")
+                    .HasDefaultValueSql("((1))");
+
                 entity.Property(e => e.Title)
                     .HasMaxLength(250)
                     .IsUnicode(false)
@@ -453,6 +464,7 @@ namespace OmneFictio.MinApi.Models
                 entity.HasOne(d => d.DeletedStatus)
                     .WithMany(p => p.Posts)
                     .HasForeignKey(d => d.DeletedStatusId)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_PostDeletedstatus");
 
                 entity.HasOne(d => d.Language)
@@ -464,19 +476,27 @@ namespace OmneFictio.MinApi.Models
                 entity.HasOne(d => d.PostStatus)
                     .WithMany(p => p.Posts)
                     .HasForeignKey(d => d.PostStatusId)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_PostPoststatus");
 
                 entity.HasOne(d => d.PostType)
                     .WithMany(p => p.Posts)
                     .HasForeignKey(d => d.PostTypeId)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_PostPosttype");
+
+                entity.HasOne(d => d.RatedAs)
+                    .WithMany(p => p.Posts)
+                    .HasForeignKey(d => d.RatedAsId)
+                    .OnDelete(DeleteBehavior.SetNull)
+                    .HasConstraintName("FK_PostRatedas");
 
                 entity.HasMany(d => d.ExistingStories)
                     .WithMany(p => p.Posts)
                     .UsingEntity<Dictionary<string, object>>(
                         "PostEstory",
-                        l => l.HasOne<ExistingStory>().WithMany().HasForeignKey("ExistingStoryId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_PostEStory_EStory"),
-                        r => r.HasOne<Post>().WithMany().HasForeignKey("PostId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_PostEStory_Post"),
+                        l => l.HasOne<ExistingStory>().WithMany().HasForeignKey("ExistingStoryId").HasConstraintName("FK_PostEStory_EStory"),
+                        r => r.HasOne<Post>().WithMany().HasForeignKey("PostId").HasConstraintName("FK_PostEStory_Post"),
                         j =>
                         {
                             j.HasKey("PostId", "ExistingStoryId").HasName("PK_PostEStory");
@@ -488,29 +508,12 @@ namespace OmneFictio.MinApi.Models
                             j.IndexerProperty<int>("ExistingStoryId").HasColumnName("existingStoryId");
                         });
 
-                entity.HasMany(d => d.RatedAs)
-                    .WithMany(p => p.Posts)
-                    .UsingEntity<Dictionary<string, object>>(
-                        "PostRatedA",
-                        l => l.HasOne<RatedA>().WithMany().HasForeignKey("RatedAsId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_PostRatedas_RatedAs"),
-                        r => r.HasOne<Post>().WithMany().HasForeignKey("PostId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_PostRatedas_Post"),
-                        j =>
-                        {
-                            j.HasKey("PostId", "RatedAsId").HasName("PK_PostRatedAs");
-
-                            j.ToTable("Post_RatedAs");
-
-                            j.IndexerProperty<int>("PostId").HasColumnName("postId");
-
-                            j.IndexerProperty<int>("RatedAsId").HasColumnName("ratedAsId");
-                        });
-
                 entity.HasMany(d => d.Tags)
                     .WithMany(p => p.Posts)
                     .UsingEntity<Dictionary<string, object>>(
                         "PostTag",
-                        l => l.HasOne<Tag>().WithMany().HasForeignKey("TagId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_PostTag_Tag"),
-                        r => r.HasOne<Post>().WithMany().HasForeignKey("PostId").OnDelete(DeleteBehavior.ClientSetNull).HasConstraintName("FK_PostTag_Post"),
+                        l => l.HasOne<Tag>().WithMany().HasForeignKey("TagId").HasConstraintName("FK_PostTag_Tag"),
+                        r => r.HasOne<Post>().WithMany().HasForeignKey("PostId").HasConstraintName("FK_PostTag_Post"),
                         j =>
                         {
                             j.HasKey("PostId", "TagId").HasName("PK_PostTag");
@@ -542,11 +545,13 @@ namespace OmneFictio.MinApi.Models
                 entity.HasOne(d => d.Account)
                     .WithMany(p => p.PostGifts)
                     .HasForeignKey(d => d.AccountId)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_PostGiftAccount");
 
                 entity.HasOne(d => d.Item)
                     .WithMany(p => p.PostGifts)
                     .HasForeignKey(d => d.ItemId)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_PostGiftItem");
 
                 entity.HasOne(d => d.TargetPost)
@@ -607,7 +612,9 @@ namespace OmneFictio.MinApi.Models
 
             modelBuilder.Entity<RatedA>(entity =>
             {
-                entity.Property(e => e.Id).HasColumnName("id");
+                entity.Property(e => e.Id)
+                    .ValueGeneratedNever()
+                    .HasColumnName("id");
 
                 entity.Property(e => e.Body)
                     .HasMaxLength(30)
@@ -656,7 +663,46 @@ namespace OmneFictio.MinApi.Models
                 entity.HasOne(d => d.DeletedStatus)
                     .WithMany(p => p.Replies)
                     .HasForeignKey(d => d.DeletedStatusId)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_ReplyDeletedstatus");
+            });
+
+            modelBuilder.Entity<Request>(entity =>
+            {
+                entity.ToTable("Request");
+
+                entity.Property(e => e.Id).HasColumnName("id");
+
+                entity.Property(e => e.AccountId).HasColumnName("accountId");
+
+                entity.Property(e => e.Body)
+                    .IsUnicode(false)
+                    .HasColumnName("body");
+
+                entity.Property(e => e.DeletedStatusId)
+                    .HasColumnName("deletedStatusId")
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.PublishDate)
+                    .HasColumnType("smalldatetime")
+                    .HasColumnName("publishDate");
+
+                entity.Property(e => e.Title)
+                    .HasMaxLength(250)
+                    .IsUnicode(false)
+                    .HasColumnName("title");
+
+                entity.HasOne(d => d.Account)
+                    .WithMany(p => p.Requests)
+                    .HasForeignKey(d => d.AccountId)
+                    .OnDelete(DeleteBehavior.SetNull)
+                    .HasConstraintName("FK_RequestAccount");
+
+                entity.HasOne(d => d.DeletedStatus)
+                    .WithMany(p => p.Requests)
+                    .HasForeignKey(d => d.DeletedStatusId)
+                    .OnDelete(DeleteBehavior.SetNull)
+                    .HasConstraintName("FK_RequestDeletedstatus");
             });
 
             modelBuilder.Entity<Tag>(entity =>
@@ -698,21 +744,25 @@ namespace OmneFictio.MinApi.Models
                 entity.HasOne(d => d.TargetChapter)
                     .WithMany(p => p.Votes)
                     .HasForeignKey(d => d.TargetChapterId)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_VoteChapter");
 
                 entity.HasOne(d => d.TargetComment)
                     .WithMany(p => p.Votes)
                     .HasForeignKey(d => d.TargetCommentId)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_VoteComment");
 
                 entity.HasOne(d => d.TargetPost)
                     .WithMany(p => p.Votes)
                     .HasForeignKey(d => d.TargetPostId)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_VotePost");
 
                 entity.HasOne(d => d.TargetReply)
                     .WithMany(p => p.Votes)
                     .HasForeignKey(d => d.TargetReplyId)
+                    .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_VoteReply");
             });
 

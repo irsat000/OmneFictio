@@ -127,6 +127,7 @@ $(document).ready(function(){
             PostDescription: 'Post description from fetch api',
             PostTypeId: 3,
             LanguageId: 1,
+            RatedAsId: 2,
             CoverImage: null,
             TagList: null
         };

@@ -11,6 +11,7 @@ namespace OmneFictio.MinApi.Models
             Comments = new HashSet<Comment>();
             Posts = new HashSet<Post>();
             Replies = new HashSet<Reply>();
+            Requests = new HashSet<Request>();
         }
 
         public byte Id { get; set; }
@@ -20,5 +21,6 @@ namespace OmneFictio.MinApi.Models
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
         public virtual ICollection<Reply> Replies { get; set; }
+        public virtual ICollection<Request> Requests { get; set; }
     }
 }

@@ -15,6 +15,7 @@ public class PostDtoRead_1
     public LanguageDto? Language { get; set; }
     public PostStatusDto? PostStatus { get; set; }
     public PostTypeDto? PostType { get; set; }
+    public RatedAsDto? RatedAs { get; set; }
     //-----------
     public ICollection<ChapterDtoRead_1>? Chapters { get; set; }
     public ICollection<CommentDtoRead_1>? Comments { get; set; }
@@ -22,7 +23,6 @@ public class PostDtoRead_1
     public ICollection<PostGiftDto>? Gifts { get; set; }
     public ICollection<RateDto>? Rates { get; set; }
     public ICollection<VoteDto>? Votes { get; set; }
-    public ICollection<RatedAsDto>? RatedAs { get; set; }
     public ICollection<TagDto>? Tags { get; set; }
     public ICollection<ExistingStoryDto>? ExistingStories { get; set; }
 }

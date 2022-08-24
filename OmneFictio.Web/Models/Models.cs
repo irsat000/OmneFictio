@@ -57,6 +57,7 @@ public class PostWrite1
     public byte PostTypeId { get; set; }
     public int LanguageId { get; set; }
     public int? AccountId { get; set; }
+    public int? RatedAsId { get; set; }
     public string? CoverImage { get; set; }
     public List<int>? TagList { get; set; }
     public List<int>? SeriesList { get; set; }

@@ -14,6 +14,7 @@ namespace OmneFictio.MinApi.Models
             Posts = new HashSet<Post>();
             Rates = new HashSet<Rate>();
             Replies = new HashSet<Reply>();
+            Requests = new HashSet<Request>();
             Votes = new HashSet<Vote>();
             Authorities = new HashSet<Authority>();
             InventoryItems = new HashSet<InventoryItem>();
@@ -21,10 +22,13 @@ namespace OmneFictio.MinApi.Models
         }
 
         public int Id { get; set; }
+        public string? ExternalId { get; set; }
+        public string? ExternalType { get; set; }
         public string Username { get; set; } = null!;
         public string? Pw { get; set; }
         public string Email { get; set; } = null!;
         public bool? EmailValid { get; set; }
+        public string? DisplayName { get; set; }
         public string? ProfilePic { get; set; }
         public string? SelfDesc { get; set; }
         public int? Gold { get; set; }
@@ -32,9 +36,6 @@ namespace OmneFictio.MinApi.Models
         public bool? AllowViolence { get; set; }
         public byte? DeletedStatusId { get; set; }
         public int? PrefLanguageId { get; set; }
-        public string? DisplayName { get; set; }
-        public string? ExternalId { get; set; }
-        public string? ExternalType { get; set; }
 
         public virtual DeletedStatus? DeletedStatus { get; set; }
         public virtual Language? PrefLanguage { get; set; }
@@ -45,6 +46,7 @@ namespace OmneFictio.MinApi.Models
         public virtual ICollection<Post> Posts { get; set; }
         public virtual ICollection<Rate> Rates { get; set; }
         public virtual ICollection<Reply> Replies { get; set; }
+        public virtual ICollection<Request> Requests { get; set; }
         public virtual ICollection<Vote> Votes { get; set; }
 
         public virtual ICollection<Authority> Authorities { get; set; }
