@@ -32,10 +32,9 @@ namespace OmneFictio.MinApi.Models
         public string? ProfilePic { get; set; }
         public string? SelfDesc { get; set; }
         public int? Gold { get; set; }
-        public bool? AllowSexual { get; set; }
-        public bool? AllowViolence { get; set; }
         public byte? DeletedStatusId { get; set; }
         public int? PrefLanguageId { get; set; }
+        public bool? AllowAdultContent { get; set; }
 
         public virtual DeletedStatus? DeletedStatus { get; set; }
         public virtual Language? PrefLanguage { get; set; }

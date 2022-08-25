@@ -84,12 +84,15 @@ app.MapPost("/register", async (OmneFictioContext db, AccountDtoWrite_1 request)
     newAccount.Pw = passwordHash;
     newAccount.Email = request.Email;
     newAccount.ExternalType = "native";
-    if(request.AllowSexual != null)
-        newAccount.AllowSexual = request.AllowSexual;
-    if(request.AllowViolence != null)
-        newAccount.AllowViolence = request.AllowViolence;
-    if(await db.Languages.AnyAsync(l => l.Id == request.PrefLanguageId))
+    newAccount.EmailValid = false;
+    if(request.AllowAdultContent != null){
+        newAccount.AllowAdultContent = request.AllowAdultContent;
+    } else{
+        newAccount.AllowAdultContent = false;
+    }
+    if(await db.Languages.AnyAsync(l => l.Id == request.PrefLanguageId)){
         newAccount.PrefLanguageId = request.PrefLanguageId;
+    }
     //Save user in the database
     try {
         await db.Accounts.AddAsync(newAccount);
@@ -144,8 +147,7 @@ app.MapPost("/signin-external", async (OmneFictioContext db, [FromBody] string t
         newAccount.DisplayName = name;
         newAccount.Pw = passwordHash;
         newAccount.ExternalType = "google";
-        newAccount.AllowSexual = true;
-        newAccount.AllowViolence = true;
+        newAccount.AllowAdultContent = false;
         newAccount.PrefLanguageId = null;
         newAccount.EmailValid = true;
 

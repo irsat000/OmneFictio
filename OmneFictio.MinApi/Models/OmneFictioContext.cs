@@ -58,12 +58,8 @@ namespace OmneFictio.MinApi.Models
 
                 entity.Property(e => e.Id).HasColumnName("id");
 
-                entity.Property(e => e.AllowSexual)
-                    .HasColumnName("allowSexual")
-                    .HasDefaultValueSql("((0))");
-
-                entity.Property(e => e.AllowViolence)
-                    .HasColumnName("allowViolence")
+                entity.Property(e => e.AllowAdultContent)
+                    .HasColumnName("allowAdultContent")
                     .HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.DeletedStatusId)

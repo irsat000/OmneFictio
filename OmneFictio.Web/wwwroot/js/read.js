@@ -81,7 +81,7 @@ $('#f-resetbtn').click(function(){
     }
     //options
     $(".f-options > select").val('0');
-    $("#allow18checkbox").prop("checked", false);
+        //$("#allow18checkbox").prop("checked", false);
 });
 
 //----TYPE SELECTION------

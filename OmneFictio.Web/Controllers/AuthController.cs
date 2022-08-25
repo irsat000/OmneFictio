@@ -47,21 +47,18 @@ public class AuthController : Controller
     }
 
     [HttpPost]
-    public async Task<IActionResult> UserRegistration([FromBody] AccountWrite2 account)
+    public async Task<IActionResult> UserRegistration([FromBody] AccountWrite1 account)
     {
         int prefLan;
-        bool allowSexual;
-        bool allowViolence;
-        int.TryParse(account.PrefLanguageId, out prefLan);
-        bool.TryParse(account.AllowSexual, out allowSexual);
-        bool.TryParse(account.AllowViolence, out allowViolence);
+        bool _AllowAdultContent;
+        int.TryParse(account.PrefLanguageId.ToString(), out prefLan);
+        bool.TryParse(account.AllowAdultContent.ToString(), out _AllowAdultContent);
         AccountWrite1 createAccount = new AccountWrite1{
             Username = account.Username,
             Email = account.Email,
             Pw = account.Pw,
             PrefLanguageId = prefLan,
-            AllowSexual = allowSexual,
-            AllowViolence = allowViolence
+            AllowAdultContent = _AllowAdultContent
         };
 
         var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/register", createAccount);
