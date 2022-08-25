@@ -82,12 +82,12 @@
 
 <div class="createpost">
     <div class="swap_form">
-        <div class="sf-swapformbtn sf-swaptowriting">
-            <span id="sf-swapToWriting">Write</span>
+        <div class="sf-swapformbtn sf-swaptowriting" id="sf-swapToWriting">
+            <span>Write</span>
             <div class="sf-icon d-block" id="sf-w_icon"></div>
         </div>
-        <div class="sf-swapformbtn sf-swaptorequest">
-            <span id="sf-swapToRequest">Request</span>
+        <div class="sf-swapformbtn sf-swaptorequest" id="sf-swapToRequest">
+            <span>Request</span>
             <div class="sf-icon" id="sf-r_icon"></div>
         </div>
     </div>
@@ -98,6 +98,10 @@
                 <input class="wf-title" type="text" name="Title" placeholder="Title">
                 <span>Description</span>
                 <textarea class="wf-description" name="PostDescription" placeholder="Description"></textarea>
+                <span>Cover image (optional)</span>
+                <div class="coverupload_wrap">
+                    <input type="file" id="uploadCoverImg">
+                </div>
             </div>
             <div class="wf-post_details">
                 <div class="wf-language">

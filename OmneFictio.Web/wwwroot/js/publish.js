@@ -159,6 +159,11 @@ $(document).ready(function(){
             seriesList.push(parseInt(series.getAttribute('data-id')));
         });
         payload["SeriesList"] = seriesList;
+        
+        var coverImg = document.getElementById('uploadCoverImg').value.replace(/.*[\/\\]/, '');
+        if(coverImg !== null && coverImg !== ""){
+            payload["CoverImage"] = coverImg;
+        }
 
         await fetch("/HomeAction/CreatePost", {
             method: 'POST',

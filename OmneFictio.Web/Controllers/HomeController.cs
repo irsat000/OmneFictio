@@ -31,6 +31,8 @@ public class HomeController : Controller
     [HttpGet("Read")]
     public async Task<IActionResult> Read(string? type)
     {
+        //Stopwatch time = new Stopwatch();
+        //time.Start();
         List<PostRead1>? posts = new List<PostRead1>();
         string postsUrl = "https://localhost:7022/posts";
         try
@@ -50,6 +52,8 @@ public class HomeController : Controller
         ReadViewmodel viewModel = new ReadViewmodel{
             posts = posts
         };
+        //time.Stop();
+        //Console.WriteLine("elapsed time: " + time.Elapsed);
         return View(viewModel);
     }
 
