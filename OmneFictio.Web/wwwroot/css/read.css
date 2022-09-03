@@ -22,9 +22,8 @@ main {
 
 .posts-cont {
   display: flex;
+  flex-direction: column;
   flex-grow: 1;
-  flex-wrap: wrap;
-  justify-content: space-between;
 }
 .posts-cont .post-options {
   display: flex;
@@ -61,6 +60,15 @@ main {
 .posts-cont .post-options .po-type {
   margin-left: auto;
   margin-right: 36px;
+}
+.posts-cont .post-list {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+}
+.posts-cont .post-list .post {
+  display: inline-block;
 }
 
 .nav-cont {
@@ -498,11 +506,15 @@ main {
   }
 }
 @media (min-width: 992px) {
-  .post {
-    width: 49% !important;
-  }
   .nav-cont {
     width: 240px;
+  }
+  .post-list .post {
+    width: 49% !important;
+  }
+  .post-list .post > * {
+    height: 100%;
+    justify-content: space-between;
   }
 }
 @media (max-width: 340px) {
