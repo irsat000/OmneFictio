@@ -280,10 +280,10 @@
 <nav class="nav-cont">
     <div class="nav-primary">
         <div class="nlink-cont np-readingtime">
-            <a class="navlink_original" asp-controller="Home" asp-action="Read" asp-route-type="story">Story</a>
-            <a class="navlink_scenario" asp-controller="Home" asp-action="Read" asp-route-type="scenario">Scenario</a>
-            <a class="navlink_fanfiction" asp-controller="Home" asp-action="Read" asp-route-type="fanfiction">Fanfiction</a>
-            <a class="navlink_original" asp-controller="Home" asp-action="Read" asp-route-type="plot">Plot</a>
+            <a class="navlink_original" asp-controller="Home" asp-action="Read" asp-route-type="Story">Story</a>
+            <a class="navlink_scenario" asp-controller="Home" asp-action="Read" asp-route-type="Scenario">Scenario</a>
+            <a class="navlink_fanfiction" asp-controller="Home" asp-action="Read" asp-route-type="Fanfiction">Fanfiction</a>
+            <a class="navlink_original" asp-controller="Home" asp-action="Read" asp-route-type="Plot">Plot</a>
         </div>
         <div class="nlink-cont np-aboutyou">
             <a class="">Library</a>
@@ -340,7 +340,7 @@
                         <div class="p-body">
                             @if(post.coverImage != null){
                                 <div class="p-cover">
-                                    <img src="@post.coverImage">
+                                    <img src="/images/covers/@post.coverImage">
                                 </div>
                             }
                             <span>@post.postDescription</span>
@@ -440,7 +440,7 @@
                                 }else{
                                     <span class="p-username">DeletedUser</span>
                                 }
-                                <img src="https://uybor.uz/borless/avtobor/img/user-images/user_no_photo_300x300.png">
+                                <img src="/images/users/user_no_photo_300x300.png">
                             </div>
                         </div>
                     </div>

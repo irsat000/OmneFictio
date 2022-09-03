@@ -24,14 +24,17 @@ main{
 
 .posts-cont{
     display: flex;
-    flex-direction: column;
+    //flex-direction: column;
     flex-grow: 1;
+    flex-wrap: wrap;
+    justify-content: space-between;
     .post-options{
         display: flex;
         flex-direction: row;
         justify-content: space-between;
         align-items: center;
         padding: 10px;
+        width: 100%;
         //color: var(--text-color1);
         .po-option{
             font-size: 1.6rem;
@@ -486,8 +489,6 @@ main{
 
 
 
-
-
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) {
 }
@@ -519,8 +520,11 @@ main{
 
 // Large devices (desktops, 992px and up)
 @media (min-width: 992px) {
+    .post {
+        width: 49% !important;
+    }
     .nav-cont{
-        width: 300px;
+        width: 240px;
     }
 }
 

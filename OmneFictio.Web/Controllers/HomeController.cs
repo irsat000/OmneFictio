@@ -28,8 +28,8 @@ public class HomeController : Controller
         return View();
     }
 
-    [HttpGet("Read")]
-    public async Task<IActionResult> Read(string? type)
+    [HttpGet("Read/{Type}")]
+    public async Task<IActionResult> Read(string? Type)
     {
         //Stopwatch time = new Stopwatch();
         //time.Start();
@@ -54,6 +54,7 @@ public class HomeController : Controller
         };
         //time.Stop();
         //Console.WriteLine("elapsed time: " + time.Elapsed);
+        Console.WriteLine("Type= " + Type);
         return View(viewModel);
     }
 

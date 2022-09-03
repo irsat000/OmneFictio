@@ -22,8 +22,9 @@ main {
 
 .posts-cont {
   display: flex;
-  flex-direction: column;
   flex-grow: 1;
+  flex-wrap: wrap;
+  justify-content: space-between;
 }
 .posts-cont .post-options {
   display: flex;
@@ -31,6 +32,7 @@ main {
   justify-content: space-between;
   align-items: center;
   padding: 10px;
+  width: 100%;
 }
 .posts-cont .post-options .po-option {
   font-size: 1.6rem;
@@ -496,8 +498,11 @@ main {
   }
 }
 @media (min-width: 992px) {
+  .post {
+    width: 49% !important;
+  }
   .nav-cont {
-    width: 300px;
+    width: 240px;
   }
 }
 @media (max-width: 340px) {
