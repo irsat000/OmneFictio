@@ -66,10 +66,18 @@ main{
     .post-list{
         width: 100%;
         display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-        .post{
-            display: inline-block;
+        flex-direction: column;
+        &::before, &::after {
+            content: "";
+            flex-basis: 100%;
+            width: 0px;
+            order: 2;
+        }
+        .post:nth-child(2n+1) {
+            order: 1;
+        }
+        .post:nth-child(2n) {
+            order: 2;
         }
     }
 }
@@ -529,11 +537,14 @@ main{
     .nav-cont{
         width: 240px;
     }
-    .post-list .post{
-        width: 49% !important;
-        > * {
-            height: 100%;
-            justify-content: space-between;
+    .post-list{
+        flex-flow: column wrap;
+        .post{
+            width: 49% !important;
+            > * {
+                height: 100%;
+                justify-content: space-between;
+            }
         }
     }
 }

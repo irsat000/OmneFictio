@@ -64,11 +64,19 @@ main {
 .posts-cont .post-list {
   width: 100%;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  flex-direction: column;
 }
-.posts-cont .post-list .post {
-  display: inline-block;
+.posts-cont .post-list::before, .posts-cont .post-list::after {
+  content: "";
+  flex-basis: 100%;
+  width: 0px;
+  order: 2;
+}
+.posts-cont .post-list .post:nth-child(2n+1) {
+  order: 1;
+}
+.posts-cont .post-list .post:nth-child(2n) {
+  order: 2;
 }
 
 .nav-cont {
@@ -508,6 +516,9 @@ main {
 @media (min-width: 992px) {
   .nav-cont {
     width: 240px;
+  }
+  .post-list {
+    flex-flow: column wrap;
   }
   .post-list .post {
     width: 49% !important;
