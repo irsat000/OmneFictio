@@ -5,7 +5,7 @@
     ViewData["Title"] = "Read";
     @section Stylesheets {
         <link rel="stylesheet" href="~/css/read.css" asp-append-version="true" />
-        <link rel="stylesheet" href="~/css/post.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/postitem.css" asp-append-version="true" />
     }
     @section Scripts {
         <script src="~/js/read.js" asp-append-version="true" ></script>
@@ -98,16 +98,8 @@
     </div>
     <div class="f-body">
         @{
-            string typeQuery = Context.Request.Query["Type"];
-            /*if(typeQuery != "fanfiction" && typeQuery != "plot"){
-                <div class="f-type_cont">
-                    <input type="button" class="f-typebtns" value="Story +" data-type="story">
-                    <input type="button" class="f-typebtns" value="Scenerio +" data-type="scenerio">
-                    <!--<input type="hidden" name="chosentypes" value="scenerio"/>
-                    <input type="hidden" name="chosentypes" value="story"/>-->
-                </div>
-            }*/
-            if(typeQuery == "fanfiction"){
+            string? typeQuery = Context.Request.RouteValues["Type"]!.ToString();
+            if(typeQuery == "Fanfiction" || typeQuery == "fanfiction"){
                 <div class="f-fanfiction_settings">
                     <div class="ffs-header">
                         <button data-button="choose_series" id="fanfic-chooseseries"><i class="bi bi-search"></i> Series <i class="bi bi-plus"></i></button>
@@ -125,12 +117,6 @@
             }
         }
         
-        <!--<span>Type:</span>
-        <input type="button" class="f-typebtns" value="Fanfiction +" data-type="fanfiction">
-        <input type="hidden" name="chosentypes" value="fanfiction-0" data-typeref="fanfiction"/>
-        <input type="button" class="f-typebtns" value="Plot +" data-type="plot">
-        <input type="hidden" name="chosentypes" value="plot-0" data-typeref="plot"/>
-        -->
         <div class="f-options">
             <select name="minrate">
                 <option value="0">Min rate</option>
@@ -319,7 +305,7 @@
             Filter
         </span>
     </div>
-    <div class="post-list">
+    <div class="post-list pl-masonry">
     @{
         if(Model.posts.Count > 0){
             foreach(PostRead1 post in Model.posts){

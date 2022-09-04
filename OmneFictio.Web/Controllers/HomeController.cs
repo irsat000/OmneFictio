@@ -29,7 +29,7 @@ public class HomeController : Controller
     }
 
     [HttpGet("Read/{Type}")]
-    public async Task<IActionResult> Read(string? Type)
+    public async Task<IActionResult> Read(string Type)
     {
         //Stopwatch time = new Stopwatch();
         //time.Start();
@@ -66,6 +66,12 @@ public class HomeController : Controller
 
     [HttpGet("Publish")]
     public IActionResult Publish()
+    {
+        return View();
+    }
+
+    [HttpGet("p/{postid}")]
+    public IActionResult Post(string postid)
     {
         return View();
     }

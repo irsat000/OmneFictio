@@ -10,8 +10,6 @@ namespace OmneFictio.MinApi.Dtos
 
         public AccountDtoRead_1? Account { get; set; }
         public DeletedStatusDto? DeletedStatus { get; set; }
-        public ChapterDtoRead_1? TargetChapter { get; set; }
-        public PostDtoRead_2? TargetPost { get; set; }
         public ICollection<ReplyDtoRead_2>? Replies { get; set; }
         public ICollection<VoteDto>? Votes { get; set; }
     }

@@ -55,6 +55,15 @@ app.MapGet("/posts", async (OmneFictioContext db) => {
     return posts;
 });
 
+app.MapGet("/getpost/{postid}", async (OmneFictioContext db, int postid) => {
+    var post = await mapper.ProjectTo<PostDtoRead_3>(db.Posts.Where(p => 
+    p.IsPublished == true &&
+    p.DeletedStatus!.Body == "Default" &&
+    p.Id == postid)).ToListAsync();
+    return post;
+});
+
+
 app.MapPost("/login", async (OmneFictioContext db, AccountDtoRead_2 request) => {
     //Authentication
     var checkUser = await db.Accounts.SingleOrDefaultAsync(x => x.Username == request.Username);

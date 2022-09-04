@@ -12,3 +12,8 @@ public class IndexViewmodel
     public string? sessionUsername { get; set; }*/
     public List<PostRead1>? posts { get; set; }
 }
+
+public class PostViewmodel
+{
+    public PostRead1? post { get; set; }
+}
