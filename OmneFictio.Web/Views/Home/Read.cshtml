@@ -316,7 +316,7 @@
                     <div class="post-detail d-flex">
                         <div class="p-header">
                             <div class="p-title">
-                                <span>@post.title</span>
+                                <a asp-controller="Home" asp-action="Post" asp-route-postid="@post.id">@post.title</a>
                                 <span class="p-date">@post.publishDate.Date.ToShortDateString()</span>
                             </div>
                             <div class="p-menu">

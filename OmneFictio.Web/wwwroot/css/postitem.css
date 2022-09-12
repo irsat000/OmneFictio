@@ -26,11 +26,11 @@
   padding: 10px;
   font-family: "Josefin Sans", sans-serif;
   font-weight: 600;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
 }
-.post-detail .p-header .p-title span {
-  vertical-align: middle;
-}
-.post-detail .p-header .p-title span:hover {
+.post-detail .p-header .p-title a:hover {
   text-decoration: underline;
 }
 .post-detail .p-header .p-title .p-date {
@@ -218,5 +218,5 @@
   transition: 0.2s ease;
 }
 .post-menu .pd-right .pd-actions button:hover {
-  background-color: var(--background-color-hover3);
+  background-color: var(--pd-actionbtns-color-hover1);
 }/*# sourceMappingURL=postitem.css.map */
