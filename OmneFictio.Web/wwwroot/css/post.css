@@ -1,3 +1,10 @@
+main {
+  background-color: #2a2a2a;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+}
+
 .post-2 {
   width: 100%;
   padding-top: 16px;
@@ -61,6 +68,7 @@
   display: flex;
   flex-flow: wrap;
   width: 100%;
+  justify-content: center;
 }
 .post-2 .post-card .p-footer .p-evaluation {
   display: flex;
@@ -127,6 +135,7 @@
   flex-wrap: wrap;
   gap: 6px 8px;
   padding-bottom: 16px;
+  font-family: "Gudea";
 }
 .post-2 .post-more .p-actions .pd-saved {
   background-color: #4A8D5D !important;
@@ -138,24 +147,21 @@
   background-color: var(--pd-actionbtns-color2);
   outline: none;
   border: none;
-  padding: 2px 20px;
+  padding: 2px 20px 1px;
   transition: 0.2s ease;
 }
 .post-2 .post-more .p-actions button:hover {
   background-color: var(--pd-actionbtns-color-hover2);
 }
-.post-2 .post-more .p-details {
-  display: flex;
-  flex-direction: column;
-}
-.post-2 .post-more .p-details .pd-items {
+.post-2 .post-more .pd-items {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   gap: 6px 8px;
   padding-bottom: 10px;
+  font-family: "Gudea";
 }
-.post-2 .post-more .p-details .pd-items span {
+.post-2 .post-more .pd-items span {
   background-color: rgb(36, 83, 41);
   color: #fff;
   outline: none;
@@ -163,14 +169,15 @@
   border-radius: 4px;
   padding: 2px 16px;
 }
-.post-2 .post-more .p-details .pd-series {
+.post-2 .post-more .pd-series {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
   gap: 6px 8px;
   padding-bottom: 12px;
+  font-family: "Gudea";
 }
-.post-2 .post-more .p-details .pd-series span {
+.post-2 .post-more .pd-series span {
   background-color: rgb(106, 38, 55);
   color: #fff;
   outline: none;
@@ -178,13 +185,14 @@
   border-radius: 4px;
   padding: 2px 16px;
 }
-.post-2 .post-more .p-details .pd-tags {
+.post-2 .post-more .pd-tags {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  gap: 6px 8px;
+  gap: 6px;
+  font-family: "Itim", cursive;
 }
-.post-2 .post-more .p-details .pd-tags span {
+.post-2 .post-more .pd-tags span {
   background-color: rgb(103, 138, 144);
   color: #fff;
   outline: none;
@@ -194,19 +202,93 @@
   font-size: 0.8rem;
 }
 
+.start_reading {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 20px;
+  font-family: "Josefin Sans", sans-serif;
+}
+.start_reading a {
+  background-color: rgb(138, 15, 15);
+  transition: background-color 0.2s ease;
+  color: #fff;
+  font-size: 1.3rem;
+  border-radius: 6px;
+  padding: 7px 16px 2px;
+}
+.start_reading a:hover {
+  background-color: rgb(157, 36, 36);
+}
+
+.chapter_selection {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+  padding: 0 10px;
+  height: 30px;
+  font-family: "Josefin Sans", sans-serif;
+}
+.chapter_selection a {
+  font-size: 1.2rem;
+  transition: font-size 0.1s ease;
+  color: var(--text-color1);
+  text-decoration: underline;
+}
+.chapter_selection a:hover {
+  font-size: 1.4rem;
+}
+
+.rate_it {
+  width: 100%;
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0 10px;
+  font-family: "Josefin Sans", sans-serif;
+}
+.rate_it button {
+  background-color: rgb(60, 102, 119);
+  transition: background-color 0.2s ease;
+  color: #fff;
+  outline: none;
+  border: none;
+  font-size: 1.2rem;
+  border-radius: 6px;
+  padding: 4px 12px 1px;
+}
+.rate_it button:hover {
+  background-color: rgb(89, 125, 139);
+}
+.rate_it span {
+  margin-left: 16px;
+}
+
+img {
+  height: 1.7rem;
+  width: 1.7rem;
+}
+
 @media (min-width: 768px) {
+  main {
+    margin-top: 10px;
+    padding: 0 16px;
+  }
   .post-2 {
+    padding: unset;
     margin: 20px 0 12px;
   }
   .post-2 .post-card {
     align-items: unset;
     padding: unset;
   }
-  .post-2 .p-footer {
-    max-width: 500px;
-  }
   .post-2 .p-footer .p-user {
     margin-left: 40px !important;
+  }
+  .chapter_selection {
+    justify-content: space-evenly;
   }
 }
 @media (min-width: 992px) {
