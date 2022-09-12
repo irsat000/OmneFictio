@@ -28,7 +28,7 @@
             font-family: 'Josefin Sans', sans-serif;
             font-weight: 600;
             span{
-                vertical-align:middle;
+                vertical-align: middle;
             }
             span:hover{
                 text-decoration: underline;
@@ -81,16 +81,14 @@
     .p-footer{
         font-family: 'Itim', cursive;
         display: flex;
-        flex-direction: row;
         flex-flow: wrap;
         padding: 0 10px 10px;
         
-        .pf-evaluation{
+        .p-evaluation{
             display: flex;
             flex-direction: row;
             justify-content: flex-start;
             align-items: center;
-            flex-grow: 1;
             color: var(--text-color-hover1);
             i{
                 font-size: 1.2rem;
@@ -113,12 +111,13 @@
                 margin-left: 20px;
             }
         }
-        .pf-user{
+        .p-user{
             display: flex;
             flex-direction: row;
             justify-content: flex-start;
             align-items: center;
             flex-shrink: 0;
+            margin-left: auto;
             .p-username{
                 font-size: 0.8rem;
                 cursor: pointer;

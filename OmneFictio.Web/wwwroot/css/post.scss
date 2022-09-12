@@ -1,3 +1,165 @@
 main{
     
 }
+
+.post-2{
+    width: 100%;
+    margin: 0 0 12px;
+    display: flex;
+    flex-direction: column;
+    .post-card{
+        display: flex;
+        flex-direction: column;
+        margin-bottom: 20px;
+        padding: 16px 0;
+        .p-body{
+            margin-bottom: 10px;
+            display: flex;
+            flex-direction: row;
+            .p-cover{
+                display: flex;
+                align-items: center;
+                flex-shrink: 0;
+                padding-left: 6px;
+                padding-right: 12px;
+                width: 20%;
+                min-width: 90px;
+                img{
+                    width: 100%;
+                    height: auto;
+                    border-radius: 4px;
+                }
+            }
+            .p-text{
+                display: flex;
+                flex-direction: column;
+                flex-grow: 1;
+                .p-title-cont{
+                    display: flex;
+                    flex-wrap: wrap;
+                    align-items: center;
+                    margin-bottom: 10px;
+                    .p-title{
+                        font-family: 'Josefin Sans', sans-serif;
+                        font-weight: 600;
+                        vertical-align: middle;
+                    }
+                    .p-date{
+                        margin-left: 6px;
+                        color: var(--text-color2);
+                        font-size: 0.7rem;
+                        font-family: 'Gudea';
+                    }
+                }
+                .p-description{
+                    font-size: 0.9rem;
+                    font-family: 'Gudea', sans-serif;
+                }
+            }
+        }
+        
+        .p-footer{
+            font-family: 'Itim', cursive;
+            display: flex;
+            flex-flow: wrap;
+            padding: 0 10px 10px;
+            width: 100%;
+            .p-evaluation{
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                color: var(--text-color-hover1);
+                i{
+                    font-size: 1.2rem;
+                    cursor: pointer;
+                    transition: color 0.2s ease;
+                    &:hover{
+                        color: var(--text-color1);
+                    }
+                }
+                .p-likebtn.active{
+                    color: #1198ff;
+                }
+                .p-dislikebtn.active{
+                    color: #bd1313;
+                }
+                .p-likes{
+                    padding: 0 8px;
+                }
+                .p-rate{
+                    margin-left: 20px;
+                }
+            }
+            .p-user{
+                display: flex;
+                flex-direction: row;
+                justify-content: flex-start;
+                align-items: center;
+                flex-shrink: 0;
+                margin-left: auto;
+                .p-username{
+                    font-size: 0.8rem;
+                    cursor: pointer;
+                    margin-left: 8px;
+                    padding-right: 8px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    max-width: 180px;
+                    &:hover{
+                        text-decoration: underline;
+                    }
+                }
+                img{
+                    height: 1.7rem;
+                    width: 1.7rem;
+                    border-radius: 50%;
+                    cursor: pointer;
+                }
+            }
+        }
+    }
+    
+}
+
+
+
+
+
+
+
+
+
+
+
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+    
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+    .post-2{
+        margin: 20px 0 12px;
+        .post-card{
+            align-items: unset;
+        }
+        .p-footer{
+            max-width: 500px;
+            .p-user{
+                margin-left: 40px !important;
+            }
+        }
+    }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+    
+}

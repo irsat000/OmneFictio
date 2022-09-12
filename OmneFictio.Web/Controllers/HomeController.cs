@@ -73,6 +73,7 @@ public class HomeController : Controller
     [HttpGet("p/{postid}")]
     public IActionResult Post(string postid)
     {
+        //check if post exists
         return View();
     }
 
