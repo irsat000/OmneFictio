@@ -1,5 +1,5 @@
 main {
-  background-color: #2a2a2a;
+  background-color: var(--background-color1);
   border-radius: 10px;
   display: flex;
   flex-direction: column;
@@ -66,38 +66,43 @@ main {
 .post-2 .post-card .p-footer {
   font-family: "Itim", cursive;
   display: flex;
-  flex-flow: wrap;
-  width: 100%;
   justify-content: center;
+  width: 100%;
 }
-.post-2 .post-card .p-footer .p-evaluation {
+.post-2 .post-card .p-footer .p-footer-wrap {
+  display: flex;
+  flex-wrap: wrap;
+  border-radius: 4px;
+  width: 100%;
+}
+.post-2 .post-card .p-footer .p-footer-wrap .p-evaluation {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
   color: var(--text-color-hover1);
 }
-.post-2 .post-card .p-footer .p-evaluation i {
+.post-2 .post-card .p-footer .p-footer-wrap .p-evaluation i {
   font-size: 1.2rem;
   cursor: pointer;
   transition: color 0.2s ease;
 }
-.post-2 .post-card .p-footer .p-evaluation i:hover {
+.post-2 .post-card .p-footer .p-footer-wrap .p-evaluation i:hover {
   color: var(--text-color1);
 }
-.post-2 .post-card .p-footer .p-evaluation .p-likebtn.active {
+.post-2 .post-card .p-footer .p-footer-wrap .p-evaluation .p-likebtn.active {
   color: #1198ff;
 }
-.post-2 .post-card .p-footer .p-evaluation .p-dislikebtn.active {
+.post-2 .post-card .p-footer .p-footer-wrap .p-evaluation .p-dislikebtn.active {
   color: #bd1313;
 }
-.post-2 .post-card .p-footer .p-evaluation .p-likes {
+.post-2 .post-card .p-footer .p-footer-wrap .p-evaluation .p-likes {
   padding: 0 8px;
 }
-.post-2 .post-card .p-footer .p-evaluation .p-rate {
+.post-2 .post-card .p-footer .p-footer-wrap .p-evaluation .p-rate {
   margin-left: 20px;
 }
-.post-2 .post-card .p-footer .p-user {
+.post-2 .post-card .p-footer .p-footer-wrap .p-user {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
@@ -105,7 +110,7 @@ main {
   flex-shrink: 0;
   margin-left: auto;
 }
-.post-2 .post-card .p-footer .p-user .p-username {
+.post-2 .post-card .p-footer .p-footer-wrap .p-user .p-username {
   font-size: 0.8rem;
   cursor: pointer;
   margin-left: 8px;
@@ -115,10 +120,10 @@ main {
   overflow: hidden;
   max-width: 180px;
 }
-.post-2 .post-card .p-footer .p-user .p-username:hover {
+.post-2 .post-card .p-footer .p-footer-wrap .p-user .p-username:hover {
   text-decoration: underline;
 }
-.post-2 .post-card .p-footer .p-user img {
+.post-2 .post-card .p-footer .p-footer-wrap .p-user img {
   height: 1.7rem;
   width: 1.7rem;
   border-radius: 50%;
@@ -271,6 +276,80 @@ img {
   width: 1.7rem;
 }
 
+.add_comment-cont {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 20px;
+  padding: 0 6px;
+  max-width: 800px;
+  align-self: center;
+}
+.add_comment-cont textarea {
+  background-color: var(--background-color2);
+  color: var(--text-color1);
+  width: 100%;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  padding: 6px 8px;
+  min-height: 70px;
+  margin-bottom: 10px;
+  font-family: "Gudea", sans-serif;
+  font-size: 0.8rem;
+}
+.add_comment-cont .ac-footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  padding: 0 6px;
+  font-family: "Itim", cursive;
+}
+.add_comment-cont .ac-footer .ac-user {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.add_comment-cont .ac-footer .ac-user .ac-username {
+  font-size: 0.9rem;
+  cursor: pointer;
+  margin-left: 8px;
+  padding-right: 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 180px;
+}
+.add_comment-cont .ac-footer .ac-user .ac-username:hover {
+  text-decoration: underline;
+}
+.add_comment-cont .ac-footer .ac-user img {
+  height: 1.7rem;
+  width: 1.7rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.add_comment-cont .ac-footer .comment-btn {
+  font-size: 1.3rem;
+  transition: font-size 0.1s ease;
+  color: var(--text-color1);
+  text-decoration: underline;
+}
+.add_comment-cont .ac-footer .comment-btn:hover {
+  text-decoration: underline;
+}
+
+@media (min-width: 576px) {
+  .post-2 .p-footer-wrap {
+    width: unset !important;
+    background: var(--background-color2);
+    padding: 4px 30px;
+  }
+  .post-2 .p-footer-wrap .p-user {
+    margin-left: 40px !important;
+  }
+}
 @media (min-width: 768px) {
   main {
     margin-top: 10px;
@@ -284,11 +363,11 @@ img {
     align-items: unset;
     padding: unset;
   }
-  .post-2 .p-footer .p-user {
-    margin-left: 40px !important;
-  }
   .chapter_selection {
     justify-content: space-evenly;
+  }
+  .add_comment-cont .ac-footer .comment-btn {
+    text-decoration: unset;
   }
 }
 @media (min-width: 992px) {

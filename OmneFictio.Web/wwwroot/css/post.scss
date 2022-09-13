@@ -1,5 +1,5 @@
 main{
-    background-color: #2a2a2a;
+    background-color: var(--background-color1);
     border-radius: 10px;
     display: flex;
     flex-direction: column;
@@ -65,61 +65,66 @@ main{
         .p-footer{
             font-family: 'Itim', cursive;
             display: flex;
-            flex-flow: wrap;
-            width: 100%;
             justify-content: center;
-            .p-evaluation{
+            width: 100%;
+            .p-footer-wrap{
                 display: flex;
-                flex-direction: row;
-                justify-content: flex-start;
-                align-items: center;
-                color: var(--text-color-hover1);
-                i{
-                    font-size: 1.2rem;
-                    cursor: pointer;
-                    transition: color 0.2s ease;
-                    &:hover{
-                        color: var(--text-color1);
+                flex-wrap: wrap;
+                border-radius: 4px;
+                width: 100%;
+                .p-evaluation{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    color: var(--text-color-hover1);
+                    i{
+                        font-size: 1.2rem;
+                        cursor: pointer;
+                        transition: color 0.2s ease;
+                        &:hover{
+                            color: var(--text-color1);
+                        }
+                    }
+                    .p-likebtn.active{
+                        color: #1198ff;
+                    }
+                    .p-dislikebtn.active{
+                        color: #bd1313;
+                    }
+                    .p-likes{
+                        padding: 0 8px;
+                    }
+                    .p-rate{
+                        margin-left: 20px;
                     }
                 }
-                .p-likebtn.active{
-                    color: #1198ff;
-                }
-                .p-dislikebtn.active{
-                    color: #bd1313;
-                }
-                .p-likes{
-                    padding: 0 8px;
-                }
-                .p-rate{
-                    margin-left: 20px;
-                }
-            }
-            .p-user{
-                display: flex;
-                flex-direction: row;
-                justify-content: flex-start;
-                align-items: center;
-                flex-shrink: 0;
-                margin-left: auto;
-                .p-username{
-                    font-size: 0.8rem;
-                    cursor: pointer;
-                    margin-left: 8px;
-                    padding-right: 8px;
-                    text-overflow: ellipsis;
-                    white-space: nowrap;
-                    overflow: hidden;
-                    max-width: 180px;
-                    &:hover{
-                        text-decoration: underline;
+                .p-user{
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    flex-shrink: 0;
+                    margin-left: auto;
+                    .p-username{
+                        font-size: 0.8rem;
+                        cursor: pointer;
+                        margin-left: 8px;
+                        padding-right: 8px;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        max-width: 180px;
+                        &:hover{
+                            text-decoration: underline;
+                        }
                     }
-                }
-                img{
-                    height: 1.7rem;
-                    width: 1.7rem;
-                    border-radius: 50%;
-                    cursor: pointer;
+                    img{
+                        height: 1.7rem;
+                        width: 1.7rem;
+                        border-radius: 50%;
+                        cursor: pointer;
+                    }
                 }
             }
         }
@@ -274,6 +279,71 @@ img{
 }
 
 
+.add_comment-cont{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 0 6px;
+    max-width: 800px;
+    align-self: center;
+    textarea{
+        background-color: var(--background-color2);
+        color: var(--text-color1);
+        width: 100%;
+        border: none;
+        outline: none;
+        border-radius: 6px;
+        padding: 6px 8px;
+        min-height: 70px;
+        margin-bottom: 10px;
+        font-family: 'Gudea', sans-serif;
+        font-size: 0.8rem;
+    }
+    .ac-footer{
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        width: 100%;
+        padding: 0 6px;
+        font-family: 'Itim', cursive;
+        .ac-user{
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+            .ac-username{
+                font-size: 0.9rem;
+                cursor: pointer;
+                margin-left: 8px;
+                padding-right: 8px;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                max-width: 180px;
+                &:hover{
+                    text-decoration: underline;
+                }
+            }
+            img{
+                height: 1.7rem;
+                width: 1.7rem;
+                border-radius: 50%;
+                cursor: pointer;
+            }
+        }
+        //.comment-btn
+        .comment-btn{
+            font-size: 1.3rem;
+            transition: font-size 0.1s ease;
+            color: var(--text-color1);
+            text-decoration: underline;
+            &:hover{
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
 
 
 
@@ -284,7 +354,16 @@ img{
 
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) {
-    
+    .post-2{
+        .p-footer-wrap{
+            width: unset !important;
+            background: var(--background-color2);
+            padding: 4px 30px;
+            .p-user{
+                margin-left: 40px !important;
+            }
+        }
+    }
 }
 
 // Medium devices (tablets, 768px and up)
@@ -300,14 +379,13 @@ img{
             align-items: unset;
             padding: unset;
         }
-        .p-footer{
-            .p-user{
-                margin-left: 40px !important;
-            }
-        }
     }
     .chapter_selection{
         justify-content: space-evenly;
+    }
+    
+    .add_comment-cont .ac-footer .comment-btn{
+        text-decoration: unset;
     }
 }
 
