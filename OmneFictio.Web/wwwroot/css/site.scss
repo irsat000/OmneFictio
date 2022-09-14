@@ -1,4 +1,4 @@
-@import 'theme';
+//@import 'theme';
 
 /*----------SETTINGS---------*/
 html {
@@ -44,6 +44,18 @@ a{
     z-index: 506;
 }
 
+.likebtn:hover{
+    color: #1198ff !important;
+}
+.dislikebtn:hover{
+    color: #bd1313 !important;
+}
+.likebtn.active{
+    color: #1198ff !important;
+}
+.dislikebtn.active{
+    color: #bd1313 !important;
+}
 
 /*-----------DESIGN-------------*/
 body{

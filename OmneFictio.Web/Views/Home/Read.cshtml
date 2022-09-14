@@ -348,13 +348,13 @@
                                     }
                                     
                                     if(votedByUser == 1){
-                                        <i class="bi bi-hand-thumbs-up-fill active post-vote p-likebtn" data-action="like"></i>
+                                        <i class="bi bi-hand-thumbs-up-fill active post-vote p-likebtn likebtn" data-action="like"></i>
                                     }
                                     else if(votedByUser == 0 || votedByUser == -1){
-                                        <i class="bi bi-hand-thumbs-up post-vote p-likebtn" data-action="like"></i>
+                                        <i class="bi bi-hand-thumbs-up post-vote p-likebtn likebtn" data-action="like"></i>
                                     }
                                     else if(votedByUser == -2){
-                                        <i class="bi bi-hand-thumbs-up p-likebtn"></i>
+                                        <i class="bi bi-hand-thumbs-up p-likebtn likebtn"></i>
                                     }
                                 }
                                 <span class="p-likes">
@@ -381,13 +381,13 @@
                                 </span>
                                 @{
                                     if(votedByUser == 0){
-                                        <i class="bi bi-hand-thumbs-down-fill active post-vote p-dislikebtn" data-action="dislike"></i>
+                                        <i class="bi bi-hand-thumbs-down-fill active post-vote p-dislikebtn dislikebtn" data-action="dislike"></i>
                                     }
                                     else if(votedByUser == 1 || votedByUser == -1){
-                                        <i class="bi bi-hand-thumbs-down post-vote p-dislikebtn" data-action="dislike"></i>
+                                        <i class="bi bi-hand-thumbs-down post-vote p-dislikebtn dislikebtn" data-action="dislike"></i>
                                     }
                                     else if(votedByUser == -2){
-                                        <i class="bi bi-hand-thumbs-down p-dislikebtn"></i>
+                                        <i class="bi bi-hand-thumbs-down p-dislikebtn dislikebtn"></i>
                                     }
 
                                     if(likes >= 0){
@@ -534,9 +534,9 @@
             </div>
             <div class="p-footer">
                 <div class="p-evaluation">
-                    <i class="bi bi-hand-thumbs-up p-likebtn"></i>
+                    <i class="bi bi-hand-thumbs-up p-likebtn likebtn"></i>
                     <span class="p-likes">5465</span>
-                    <i class="bi bi-hand-thumbs-down p-dislikebtn"></i>
+                    <i class="bi bi-hand-thumbs-down p-dislikebtn dislikebtn"></i>
                     <span class="p-rate">7.4/10</span>
                 </div>
                 <div class="p-user">

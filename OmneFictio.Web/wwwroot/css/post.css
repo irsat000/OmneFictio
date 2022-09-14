@@ -41,6 +41,7 @@ main {
   display: flex;
   flex-direction: column;
   flex-grow: 1;
+  overflow: auto;
 }
 .post-2 .post-card .p-body .p-text .p-title-cont {
   display: flex;
@@ -80,21 +81,12 @@ main {
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  color: var(--text-color-hover1);
 }
 .post-2 .post-card .p-footer .p-footer-wrap .p-evaluation i {
   font-size: 1.2rem;
   cursor: pointer;
   transition: color 0.2s ease;
-}
-.post-2 .post-card .p-footer .p-footer-wrap .p-evaluation i:hover {
-  color: var(--text-color1);
-}
-.post-2 .post-card .p-footer .p-footer-wrap .p-evaluation .p-likebtn.active {
-  color: #1198ff;
-}
-.post-2 .post-card .p-footer .p-footer-wrap .p-evaluation .p-dislikebtn.active {
-  color: #bd1313;
+  color: var(--text-color2);
 }
 .post-2 .post-card .p-footer .p-footer-wrap .p-evaluation .p-likes {
   padding: 0 8px;
@@ -301,6 +293,7 @@ img {
 .add_comment-cont .ac-footer {
   display: flex;
   justify-content: space-between;
+  flex-wrap: wrap;
   align-items: center;
   width: 100%;
   padding: 0 6px;
@@ -314,8 +307,7 @@ img {
 .add_comment-cont .ac-footer .ac-user .ac-username {
   font-size: 0.9rem;
   cursor: pointer;
-  margin-left: 8px;
-  padding-right: 8px;
+  padding: 0 8px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -335,9 +327,175 @@ img {
   transition: font-size 0.1s ease;
   color: var(--text-color1);
   text-decoration: underline;
+  margin-left: auto;
 }
 .add_comment-cont .ac-footer .comment-btn:hover {
   text-decoration: underline;
+}
+
+.comments {
+  width: 100%;
+}
+.comments .comment-cont {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  padding: 6px 0 14px;
+  border-top: 2px solid var(--background-color2);
+}
+.comments .comment-cont .comment {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.comments .comment-cont .comment .c-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 0 6px;
+  font-family: "Itim", cursive;
+}
+.comments .comment-cont .comment .c-header .c-user {
+  display: flex;
+  align-items: center;
+}
+.comments .comment-cont .comment .c-header .c-user img {
+  height: 1.3rem;
+  width: 1.3rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.comments .comment-cont .comment .c-header .c-user .c-username {
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 0 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 180px;
+}
+.comments .comment-cont .comment .c-header .c-menu {
+  display: flex;
+  height: 100%;
+  padding: 0 10px;
+  font-size: 1.6rem;
+}
+.comments .comment-cont .comment .c-header .c-menu i {
+  display: flex;
+}
+.comments .comment-cont .comment .c-text {
+  padding: 0px 10px;
+  margin: 6px 0;
+  font-size: 0.8rem;
+  font-family: "Gudea", sans-serif;
+  line-height: 1rem;
+}
+.comments .comment-cont .comment .c-text span {
+  flex-grow: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.comments .comment-cont .comment .c-footer {
+  font-family: "Itim", cursive;
+  display: flex;
+  flex-flow: wrap;
+  align-items: flex-start;
+}
+.comments .comment-cont .comment .c-footer .c-evaluation {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 10px;
+  color: var(--text-color2);
+}
+.comments .comment-cont .comment .c-footer .c-evaluation i {
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.comments .comment-cont .comment .c-footer .c-evaluation .c-likes {
+  padding: 0 8px;
+}
+.comments .comment-cont .comment .c-footer .c-evaluation .c-replybtn {
+  margin-left: 14px;
+  font-family: "Josefin Sans", sans-serif;
+  color: var(--text-color1);
+  padding: 2px 0 0;
+  margin-bottom: -1px;
+}
+.comments .comment-cont .comment .c-footer .get_replies-cont {
+  background-color: var(--reply-bgcolor);
+  padding: 4px 26px;
+  border-radius: 6px 6px 0 0;
+  text-decoration: underline;
+  margin-left: auto;
+}
+.comments .comment-cont .reply {
+  display: flex;
+  flex-direction: column;
+  width: 92%;
+  border-radius: 6px 0 6px 6px;
+  background-color: var(--reply-bgcolor);
+  padding: 6px 0;
+}
+.comments .comment-cont .reply .r-text {
+  padding: 0 10px 6px;
+  font-size: 0.8rem;
+  font-family: "Gudea", sans-serif;
+  line-height: 1rem;
+}
+.comments .comment-cont .reply .r-footer {
+  font-family: "Itim", cursive;
+  display: flex;
+  flex-flow: wrap;
+  align-items: center;
+}
+.comments .comment-cont .reply .r-footer .r-evaluation {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  padding-left: 6px;
+  color: var(--text-color2);
+}
+.comments .comment-cont .reply .r-footer .r-evaluation i {
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.comments .comment-cont .reply .r-footer .r-evaluation .r-likes {
+  padding: 0 6px;
+}
+.comments .comment-cont .reply .r-footer .r-evaluation .r-replybtn {
+  margin-left: 10px;
+  font-family: "Josefin Sans", sans-serif;
+  color: var(--text-color1);
+  padding: 1px 0 0;
+  margin-bottom: -1px;
+}
+.comments .comment-cont .reply .r-footer .r-user {
+  display: flex;
+  align-items: center;
+  padding-right: 6px;
+  margin-left: auto;
+}
+.comments .comment-cont .reply .r-footer .r-user .r-username {
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 0 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 180px;
+}
+.comments .comment-cont .reply .r-footer .r-user img {
+  height: 1.3rem;
+  width: 1.3rem;
+  border-radius: 50%;
+  cursor: pointer;
 }
 
 @media (min-width: 576px) {

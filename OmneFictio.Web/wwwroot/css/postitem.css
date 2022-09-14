@@ -87,21 +87,12 @@
   flex-direction: row;
   justify-content: flex-start;
   align-items: center;
-  color: var(--text-color-hover1);
+  color: var(--text-color2);
 }
 .post-detail .p-footer .p-evaluation i {
   font-size: 1.2rem;
   cursor: pointer;
   transition: color 0.2s ease;
-}
-.post-detail .p-footer .p-evaluation i:hover {
-  color: var(--text-color1);
-}
-.post-detail .p-footer .p-evaluation .p-likebtn.active {
-  color: #1198ff;
-}
-.post-detail .p-footer .p-evaluation .p-dislikebtn.active {
-  color: #bd1313;
 }
 .post-detail .p-footer .p-evaluation .p-likes {
   padding: 0 8px;
