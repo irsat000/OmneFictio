@@ -111,11 +111,13 @@ main{
                             text-decoration: underline;
                         }
                     }
-                    img{
-                        height: 1.7rem;
-                        width: 1.7rem;
-                        border-radius: 50%;
-                        cursor: pointer;
+                    .p-uimg-cont{
+                        img{
+                            height: 1.7rem;
+                            width: 1.7rem;
+                            border-radius: 50%;
+                            cursor: pointer;
+                        }
                     }
                 }
             }
@@ -517,6 +519,14 @@ img{
             padding: 4px 30px;
             .p-user{
                 margin-left: 40px !important;
+                .p-uimg-cont{
+                    padding: 0 7px;
+                    background-color: var(--background-color2);
+                    display: flex;
+                    align-items: center;
+                    height: 150%;
+                    border-radius: 50%;
+                }
             }
         }
     }

@@ -14,7 +14,7 @@ $(document).ready(function(){
 
     
 
-    $('.click-outside').click(function(){
+    $('.modalbg1').click(function(){
         closeModalsDrowpdownsEtc();
         /* Maybe I use it
         if($('.account-dropdown').hasClass('d-block')){
@@ -45,11 +45,11 @@ $(document).ready(function(){
     $('.drawerbtn-cont > i, .dw-close > i').click(function(){
         if($('.drawer').hasClass('drawer-active')){
             $('.drawer').removeClass('drawer-active');
-            $('.click-outside').removeClass('d-block');
+            $('.modalbg1').removeClass('d-block');
         }
         else{
             $('.drawer').addClass('drawer-active');
-            $('.click-outside').addClass('d-block');
+            $('.modalbg1').addClass('d-block');
         }
     });
 
@@ -58,11 +58,11 @@ $(document).ready(function(){
         if($('#login-modal').hasClass('d-flex')){
             $('#login-modal').removeClass('d-flex');
             $('#login-modal').removeClass('opacity-100');
-            $('.click-outside').removeClass('d-block');
+            $('.modalbg1').removeClass('d-block');
         }
         else{
             $('#login-modal').addClass('d-flex');
-            $('.click-outside').addClass('d-block');
+            $('.modalbg1').addClass('d-block');
             setTimeout(function(){
                 $('#login-modal').addClass('opacity-100');
             }, 100);
@@ -93,7 +93,7 @@ $(document).ready(function(){
         /*
         if($('.drawer').hasClass('drawer-active') && !target.parents('.drawer').length){
             $('.drawer').removeClass('drawer-active');
-            $('.click-outside').removeClass('d-block');
+            $('.modalbg1').removeClass('d-block');
         }*/
     });
 
@@ -319,25 +319,25 @@ function googleHandleCredentialResponse(response) {
 function closeModalsDrowpdownsEtc(){
     if($('.drawer').hasClass('drawer-active')){
         $('.drawer').removeClass('drawer-active');
-        $('.click-outside').removeClass('d-block');
+        $('.modalbg1').removeClass('d-block');
     }
     if($('#orderby-modal').hasClass('d-flex')){
         $('#orderby-modal').removeClass('d-flex');
         $('#orderby-modal').removeClass('opacity-100');
-        $('.click-outside').removeClass('d-block');
+        $('.modalbg1').removeClass('d-block');
     }
     if($('#type-modal').hasClass('d-flex')){
         $('#type-modal').removeClass('d-flex');
         $('#type-modal').removeClass('opacity-100');
-        $('.click-outside').removeClass('d-block');
+        $('.modalbg1').removeClass('d-block');
     }
     if($('#filter-modal').hasClass('d-flex')){
         $('#filter-modal').removeClass('d-flex');
         $('#filter-modal').removeClass('opacity-100');
-        $('.click-outside').removeClass('d-block');
+        $('.modalbg1').removeClass('d-block');
     }
     if($('#login-modal').hasClass('d-flex')){
         $('#login-modal').removeClass('d-flex');
-        $('.click-outside').removeClass('d-block');
+        $('.modalbg1').removeClass('d-block');
     }
 }

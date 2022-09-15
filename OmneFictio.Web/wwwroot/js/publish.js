@@ -13,7 +13,7 @@ $(document).ready(function(){
 
 //---TAG AND SERIES OPTIONS----
     //Variables for tag/series options
-    var modalbg = document.getElementsByClassName('modalbg')[0];
+    var modalbg2 = document.getElementsByClassName('modalbg2')[0];
     var tagmenu = document.getElementById('wf-addtagmodal');
     var seriesmenu = document.getElementById('wf-addseriesmodal');
     var addtagbtn = document.getElementById('wf-addtagbtn');
@@ -22,15 +22,15 @@ $(document).ready(function(){
     function closeTagAndSeriesDD(){
         if(tagmenu.classList.contains('d-flex')){
             tagmenu.classList.remove('d-flex');
-            modalbg.classList.remove('d-block');
+            modalbg2.classList.remove('d-block');
         }
         if(seriesmenu.classList.contains('d-flex')){
             seriesmenu.classList.remove('d-flex');
-            modalbg.classList.remove('d-block');
+            modalbg2.classList.remove('d-block');
         }
     }
     //Close modals on the page
-    $('.modalbg, #wf-taggdd-close, #wf-addseries-close').click(function(){
+    $('.modalbg2, #wf-taggdd-close, #wf-addseries-close').click(function(){
         closeTagAndSeriesDD();
     });
     //removing selected tags and series
@@ -55,7 +55,7 @@ $(document).ready(function(){
     //open/close 'add tag' modal
     addtagbtn.addEventListener('click', function(){
         tagmenu.classList.add('d-flex');
-        modalbg.classList.add('d-block');
+        modalbg2.classList.add('d-block');
     });
 
     //searchbar for tags
@@ -90,7 +90,7 @@ $(document).ready(function(){
     
     addseriesbtn.addEventListener('click', function(){
         seriesmenu.classList.add('d-flex');
-        modalbg.classList.add('d-block');
+        modalbg2.classList.add('d-block');
     });
 
     //searchbar for choosing series

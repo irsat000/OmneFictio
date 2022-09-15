@@ -10,6 +10,81 @@
 @using OmneFictio.Web.Models
 <!--model PostViewmodel-->
 
+<div class="modal-replies">
+    <div class="mr-header">
+        <span>Replies</span>
+        <div class="mr-close">
+            <i class="bi bi-x-lg"></i>
+        </div>
+    </div>
+    
+    <div class="mr-comment">
+        <div class="mrc-header">
+            <div class="mrc-user">
+                <img src="/images/users/user_no_photo_300x300.png">
+                <span class="mrc-username">MrBombastic</span>
+            </div>
+            <div class="mrc-menu">
+                <i class="bi bi-three-dots"></i>
+            </div>
+        </div>
+        <div class="mrc-text">
+            <span>This is a comment right here. This is a comment right here. This is a comment right here. This is a comment right here.</span>
+        </div>
+        <div class="mrc-footer">
+            <div class="mrc-evaluation">
+                <i class="bi bi-hand-thumbs-up mrc-likebtn likebtn"></i>
+                <span class="mrc-likes">5465</span>
+                <i class="bi bi-hand-thumbs-down mrc-dislikebtn dislikebtn"></i>
+                <a href="#" class="mrc-replybtn">Reply</a>
+            </div>
+        </div>
+    </div>
+
+    <div class="mr-body">
+        <div class="mr-reply">
+            <div class="mrr-text">
+                <span>This is a reply right here. This is a reply right here. This is a reply right here.</span>
+            </div>
+            <div class="mrr-footer">
+                <div class="mrr-evaluation">
+                    <i class="bi bi-hand-thumbs-up mrr-likebtn likebtn"></i>
+                    <span class="mrr-likes">5465</span>
+                    <i class="bi bi-hand-thumbs-down mrr-dislikebtn dislikebtn"></i>
+                    <a href="#" class="mrr-replybtn">Reply</a>
+                </div>
+                <div class="mrr-user">
+                    <span class="mrr-username">MrBombastic</span>
+                    <img src="/images/users/user_no_photo_300x300.png">
+                    <div class="mrr-menu">
+                        <i class="bi bi-three-dots"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mr-reply">
+            <div class="mrr-text">
+                <span>This is a reply right here. This is a reply right here. This is a reply right here.</span>
+            </div>
+            <div class="mrr-footer">
+                <div class="mrr-evaluation">
+                    <i class="bi bi-hand-thumbs-up mrr-likebtn likebtn"></i>
+                    <span class="mrr-likes">5465</span>
+                    <i class="bi bi-hand-thumbs-down mrr-dislikebtn dislikebtn"></i>
+                    <a href="#" class="mrr-replybtn">Reply</a>
+                </div>
+                <div class="mrr-user">
+                    <span class="mrr-username">MrBombastic</span>
+                    <img src="/images/users/user_no_photo_300x300.png">
+                    <div class="mrr-menu">
+                        <i class="bi bi-three-dots"></i>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <div class="post-2">
     <div class="post-card">
@@ -35,7 +110,9 @@
                 </div>
                 <div class="p-user">
                     <span class="p-username">MrBombastic</span>
-                    <img src="/images/users/user_no_photo_300x300.png">
+                    <div class="p-uimg-cont">
+                        <img src="/images/users/user_no_photo_300x300.png">
+                    </div>
                 </div>
             </div>
         </div>

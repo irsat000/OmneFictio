@@ -4,11 +4,11 @@ $('#orderby-btn, #sb-close').click(function(){
     if($('#orderby-modal').hasClass('d-flex')){
         $('#orderby-modal').removeClass('d-flex');
         $('#orderby-modal').removeClass('opacity-100');
-        $('.click-outside').removeClass('d-block');
+        $('.modalbg1').removeClass('d-block');
     }
     else{
         $('#orderby-modal').addClass('d-flex');
-        $('.click-outside').addClass('d-block');
+        $('.modalbg1').addClass('d-block');
         setTimeout(function(){
             $('#orderby-modal').addClass('opacity-100');
         }, 100);
@@ -18,11 +18,11 @@ $('#po-type, #t-close').click(function(){
     if($('#type-modal').hasClass('d-flex')){
         $('#type-modal').removeClass('d-flex');
         $('#type-modal').removeClass('opacity-100');
-        $('.click-outside').removeClass('d-block');
+        $('.modalbg1').removeClass('d-block');
     }
     else{
         $('#type-modal').addClass('d-flex');
-        $('.click-outside').addClass('d-block');
+        $('.modalbg1').addClass('d-block');
         setTimeout(function(){
             $('#type-modal').addClass('opacity-100');
         }, 100);
@@ -33,11 +33,11 @@ $('#po-filter, #f-close').click(function(){
     if($('#filter-modal').hasClass('d-flex')){
         $('#filter-modal').removeClass('d-flex');
         $('#filter-modal').removeClass('opacity-100');
-        $('.click-outside').removeClass('d-block');
+        $('.modalbg1').removeClass('d-block');
     }
     else{
         $('#filter-modal').addClass('d-flex');
-        $('.click-outside').addClass('d-block');
+        $('.modalbg1').addClass('d-block');
         setTimeout(function(){
             $('#filter-modal').addClass('opacity-100');
         }, 100);
@@ -49,16 +49,16 @@ $('#po-filter, #f-close').click(function(){
 function closeTagAndSeriesDD(){
     if($('#filter-tagddmodal').hasClass('d-flex')){
         $('#filter-tagddmodal').removeClass('d-flex');
-        $('.modalbg').removeClass('d-block');
+        $('.modalbg2').removeClass('d-block');
     }
     if($("#filter-addseriesmodal").hasClass('d-flex')){
         $("#filter-addseriesmodal").removeClass('d-flex');
-        $('.modalbg').removeClass('d-block');
+        $('.modalbg2').removeClass('d-block');
     }
 }
 
 //Close second modals on the page
-$('.modalbg, #f-taggdd-close, #fadds-close').click(function(){
+$('.modalbg2, #f-taggdd-close, #fadds-close').click(function(){
     closeTagAndSeriesDD();
 });
 
@@ -113,7 +113,7 @@ $('#f-excludetagbtn').click(function(){
 });
 function openFilterTagDD(action){
     $('#filter-tagddmodal').addClass('d-flex');
-    $('.modalbg').addClass('d-block');
+    $('.modalbg2').addClass('d-block');
     
     if(action == "include") {
         $('#f-tagdd-list').attr('data-action', 'include');
@@ -169,7 +169,7 @@ $(document).on('click', '.filter-cont *', function(event){
 //closes modal if it's open
 $("#fanfic-chooseseries").click(function(){
     $("#filter-addseriesmodal").addClass('d-flex');
-    $('.modalbg').addClass('d-block');
+    $('.modalbg2').addClass('d-block');
 });
 
 //adding series to the filter modal / fanfiction

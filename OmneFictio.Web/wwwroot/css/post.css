@@ -115,7 +115,7 @@ main {
 .post-2 .post-card .p-footer .p-footer-wrap .p-user .p-username:hover {
   text-decoration: underline;
 }
-.post-2 .post-card .p-footer .p-footer-wrap .p-user img {
+.post-2 .post-card .p-footer .p-footer-wrap .p-user .p-uimg-cont img {
   height: 1.7rem;
   width: 1.7rem;
   border-radius: 50%;
@@ -506,6 +506,14 @@ img {
   }
   .post-2 .p-footer-wrap .p-user {
     margin-left: 40px !important;
+  }
+  .post-2 .p-footer-wrap .p-user .p-uimg-cont {
+    padding: 0 7px;
+    background-color: var(--background-color2);
+    display: flex;
+    align-items: center;
+    height: 150%;
+    border-radius: 50%;
   }
 }
 @media (min-width: 768px) {
