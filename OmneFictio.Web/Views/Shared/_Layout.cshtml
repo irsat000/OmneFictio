@@ -4,10 +4,11 @@
 @{
     string userId = "-1";
     string username = "";
-    string userPicture = "none"; 
-    userId = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier)?.Value ?? "-1";
-    username = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name)?.Value ?? "";
-    userPicture = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Actor)?.Value ?? "none";
+    string userPicture = "none";
+
+    userId = User.Claims.FirstOrDefault(claim => claim.Type == "nameid")?.Value ?? "-1";
+    username = User.Claims.FirstOrDefault(claim => claim.Type == "unique_name")?.Value ?? "";
+    userPicture = User.Claims.FirstOrDefault(claim => claim.Type == "actort")?.Value ?? "none";
 }
 
 

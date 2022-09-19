@@ -143,6 +143,8 @@ public class AuthController : Controller
     public void CreateUserSession(string tokenRaw, bool rememberme = true){
         //HttpContext.Session.Clear();
         HttpContext.SignOutAsync();
+
+        /*
         string userId, username, userPicture;
         try
         {
@@ -163,7 +165,6 @@ public class AuthController : Controller
             return;
         }
         
-        
         var claims = new List<Claim>
         {
             new Claim(ClaimTypes.NameIdentifier, userId),
@@ -172,6 +173,11 @@ public class AuthController : Controller
         };
         var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
         var principal = new ClaimsPrincipal(identity);
+        */
+
+
+        JwtSecurityToken token = _jwtHandler.ReadJwtToken(tokenRaw);
+        var principal = new ClaimsPrincipal(new ClaimsIdentity(token.Claims, CookieAuthenticationDefaults.AuthenticationScheme));
         
         var sessionSettings = new AuthenticationProperties{
             IsPersistent = true,
