@@ -340,4 +340,8 @@ function closeModalsDrowpdownsEtc(){
         $('#login-modal').removeClass('d-flex');
         $('.modalbg1').removeClass('d-block');
     }
+    if($('#modal-replies').hasClass('d-flex')){
+        $('#modal-replies').removeClass('d-flex');
+        $('.modalbg1').removeClass('d-block');
+    }
 }

@@ -27,15 +27,35 @@ main {
   display: flex;
   align-items: center;
   flex-shrink: 0;
-  padding-right: 12px;
+  margin-right: 12px;
   width: 20%;
   min-width: 90px;
+  position: relative;
 }
-.post-2 .post-card .p-body .p-cover img {
+.post-2 .post-card .p-body .p-cover .p-basecover {
   width: 100%;
   height: auto;
   max-height: 370px;
   border-radius: 4px;
+}
+.post-2 .post-card .p-body .p-cover .p-basecover:hover + .p-megacover {
+  visibility: visible !important;
+}
+.post-2 .post-card .p-body .p-cover .p-megacover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+  visibility: hidden;
+  transition: all 0.1s ease;
+  z-index: 10;
+}
+.post-2 .post-card .p-body .p-cover .p-megacover:hover {
+  height: 150%;
+  width: 150%;
+  visibility: visible;
 }
 .post-2 .post-card .p-body .p-text {
   display: flex;
@@ -427,12 +447,13 @@ img {
   padding: 2px 0 0;
   margin-bottom: -1px;
 }
-.comments .comment-cont .comment .c-footer .get_replies-cont {
+.comments .comment-cont .comment .c-footer .get_replies {
   background-color: var(--reply-bgcolor);
   padding: 4px 26px;
   border-radius: 6px 6px 0 0;
   text-decoration: underline;
   margin-left: auto;
+  cursor: pointer;
 }
 .comments .comment-cont .reply {
   display: flex;
@@ -500,7 +521,7 @@ img {
 }
 
 .modal-replies {
-  display: flex;
+  display: none;
   flex-direction: column;
   position: fixed;
   left: 50%;
@@ -577,7 +598,7 @@ img {
   display: flex;
 }
 .modal-replies .mr-comment .mrc-text {
-  margin: 6px 0;
+  margin: 10px 0;
   font-size: 0.8rem;
   font-family: "Gudea", sans-serif;
   line-height: 1rem;
@@ -688,10 +709,6 @@ img {
 }
 .modal-replies .mr-body .mr-reply .mrr-footer .mrr-user .mrr-menu i {
   display: flex;
-}
-
-.modalbg1 {
-  display: block;
 }
 
 @media (min-width: 576px) {

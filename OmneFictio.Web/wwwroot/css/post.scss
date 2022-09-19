@@ -24,14 +24,34 @@ main{
                 display: flex;
                 align-items: center;
                 flex-shrink: 0;
-                padding-right: 12px;
+                margin-right: 12px;
                 width: 20%;
                 min-width: 90px;
-                img{
+                position: relative;
+                .p-basecover{
                     width: 100%;
                     height: auto;
                     max-height: 370px;
                     border-radius: 4px;
+                    &:hover + .p-megacover{
+                        visibility: visible !important;
+                    }
+                }
+                .p-megacover{
+                    position: absolute;
+                    top: 0;
+                    left: 0;
+                    height: 100%;
+                    width: 100%;
+                    border-radius: 8px;
+                    visibility: hidden;
+                    transition: all 0.1s ease;
+                    z-index: 10;
+                    &:hover{
+                        height: 150%;
+                        width: 150%;
+                        visibility: visible;
+                    }
                 }
             }
             .p-text{
@@ -430,12 +450,13 @@ img{
                         margin-bottom: -1px;
                     }
                 }
-                .get_replies-cont{
+                .get_replies{
                     background-color: var(--reply-bgcolor);
                     padding: 4px 26px;
                     border-radius: 6px 6px 0 0;
                     text-decoration: underline;
                     margin-left: auto;
+                    cursor: pointer;
                 }
             }
         }
@@ -507,8 +528,8 @@ img{
 }
 
 .modal-replies{
-    //display: none;
-    display: flex;
+    display: none;
+    //display: flex;
     flex-direction: column;
     position: fixed;
     left: 50%;
@@ -584,7 +605,7 @@ img{
             }
         }
         .mrc-text{
-            margin: 6px 0;
+            margin: 10px 0;
             font-size: 0.8rem;
             font-family: "Gudea", sans-serif;
             line-height: 1rem;
@@ -704,7 +725,6 @@ img{
 
 }
 
-.modalbg1{display: block;}
 
 
 
