@@ -379,6 +379,7 @@ img {
   height: 100%;
   padding: 0 10px;
   font-size: 1.6rem;
+  cursor: pointer;
 }
 .comments .comment-cont .comment .c-header .c-menu i {
   display: flex;
@@ -498,6 +499,201 @@ img {
   cursor: pointer;
 }
 
+.modal-replies {
+  display: flex;
+  flex-direction: column;
+  position: fixed;
+  left: 50%;
+  top: 40%;
+  transform: translate(-50%, -40%);
+  width: 92%;
+  max-width: 500px;
+  max-height: 90%;
+  background-color: var(--background-color2);
+  box-shadow: 0px 0px 6px 0px var(--background-color-boxshadow1);
+  border-radius: 20px 20px 10px 10px;
+  font-family: "Itim", cursive;
+  overflow-y: auto;
+  z-index: 200;
+  padding-bottom: 6px;
+}
+.modal-replies .mr-header {
+  border-bottom: 2px solid var(--background-color-hover4);
+  display: flex;
+  flex-direction: row;
+}
+.modal-replies .mr-header span {
+  display: flex;
+  align-items: center;
+  padding-left: 20px;
+  font-size: 1.3rem;
+  margin-right: auto;
+}
+.modal-replies .mr-header .mr-close {
+  cursor: pointer;
+  padding: 4px 12px 0px;
+  font-size: 1.8rem;
+  text-shadow: 0px 0px 6px var(--text-color-boxshadow1);
+}
+.modal-replies .mr-comment {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 10px 6px 15px;
+}
+.modal-replies .mr-comment .mrc-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-family: "Itim", cursive;
+}
+.modal-replies .mr-comment .mrc-header .mrc-user {
+  display: flex;
+  align-items: center;
+}
+.modal-replies .mr-comment .mrc-header .mrc-user img {
+  height: 1.7rem;
+  width: 1.7rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.modal-replies .mr-comment .mrc-header .mrc-user .mrc-username {
+  font-size: 0.9rem;
+  cursor: pointer;
+  padding: 0 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 180px;
+}
+.modal-replies .mr-comment .mrc-header .mrc-menu {
+  display: flex;
+  height: 100%;
+  padding: 0 10px;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+.modal-replies .mr-comment .mrc-header .mrc-menu i {
+  display: flex;
+}
+.modal-replies .mr-comment .mrc-text {
+  margin: 6px 0;
+  font-size: 0.8rem;
+  font-family: "Gudea", sans-serif;
+  line-height: 1rem;
+}
+.modal-replies .mr-comment .mrc-text span {
+  flex-grow: 1;
+  display: -webkit-box;
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.modal-replies .mr-comment .mrc-footer .mrc-evaluation {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  color: var(--text-color2);
+}
+.modal-replies .mr-comment .mrc-footer .mrc-evaluation i {
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.modal-replies .mr-comment .mrc-footer .mrc-evaluation .mrc-likes {
+  padding: 0 8px;
+}
+.modal-replies .mr-comment .mrc-footer .mrc-evaluation .mrc-replybtn {
+  margin-left: 10px;
+  font-family: "Josefin Sans", sans-serif;
+  color: var(--text-color1);
+  padding: 2px 0 0;
+  margin-bottom: -1px;
+}
+.modal-replies .mr-body .mr-reply {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-bottom: 7px;
+  background-color: #424242;
+  padding: 6px 4px 3px;
+}
+.modal-replies .mr-body .mr-reply .mrr-text {
+  margin-bottom: 4px;
+  font-size: 0.8rem;
+  font-family: "Gudea", sans-serif;
+  line-height: 1rem;
+}
+.modal-replies .mr-body .mr-reply .mrr-text span {
+  display: -webkit-box;
+  -webkit-line-clamp: 10;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.modal-replies .mr-body .mr-reply .mrr-footer {
+  font-family: "Itim", cursive;
+  display: flex;
+  flex-flow: wrap;
+  align-items: center;
+}
+.modal-replies .mr-body .mr-reply .mrr-footer .mrr-evaluation {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  color: var(--text-color2);
+}
+.modal-replies .mr-body .mr-reply .mrr-footer .mrr-evaluation i {
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+  display: flex;
+}
+.modal-replies .mr-body .mr-reply .mrr-footer .mrr-evaluation .mrr-likes {
+  padding: 0 4px;
+}
+.modal-replies .mr-body .mr-reply .mrr-footer .mrr-evaluation .mrr-replybtn {
+  margin-left: 8px;
+  font-family: "Josefin Sans", sans-serif;
+  color: var(--text-color1);
+  margin-bottom: -3px;
+  font-size: 0.9rem;
+}
+.modal-replies .mr-body .mr-reply .mrr-footer .mrr-user {
+  display: flex;
+  align-items: center;
+  margin-left: auto;
+}
+.modal-replies .mr-body .mr-reply .mrr-footer .mrr-user .mrr-username {
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 0 4px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 180px;
+}
+.modal-replies .mr-body .mr-reply .mrr-footer .mrr-user img {
+  height: 1.3rem;
+  width: 1.3rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.modal-replies .mr-body .mr-reply .mrr-footer .mrr-user .mrr-menu {
+  display: flex;
+  height: 100%;
+  padding: 0 7px;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+.modal-replies .mr-body .mr-reply .mrr-footer .mrr-user .mrr-menu i {
+  display: flex;
+}
+
+.modalbg1 {
+  display: block;
+}
+
 @media (min-width: 576px) {
   .post-2 .p-footer-wrap {
     width: unset !important;
@@ -535,6 +731,18 @@ img {
   .add_comment-cont .ac-footer .comment-btn {
     text-decoration: unset;
   }
+  .modal-replies {
+    max-width: 650px;
+    max-height: 60%;
+  }
+  .modal-replies .mr-comment .mrc-text {
+    padding: 0 10px;
+    font-size: 0.9rem;
+  }
+  .modal-replies .mr-body .mr-reply {
+    padding: 6px 10px 3px;
+    font-size: 0.9rem;
+  }
 }
 @media (min-width: 992px) {
   .post-2 {
@@ -545,5 +753,8 @@ img {
   }
   .post-2 .post-more {
     width: 40%;
+  }
+  .modal-replies {
+    max-width: 900px;
   }
 }/*# sourceMappingURL=post.css.map */

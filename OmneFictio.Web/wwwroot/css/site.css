@@ -441,7 +441,10 @@ header .header-wrap {
   font-size: 2rem;
   cursor: pointer;
   transition: 0.3s ease;
+  /*&:hover {
+  }*/
 }
+
 .account-cont {
   display: none;
   flex-direction: row;
