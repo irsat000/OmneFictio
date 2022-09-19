@@ -307,7 +307,7 @@
     </div>
     <div class="post-list pl-masonry">
     @{
-        if(Model.posts.Count > 0){
+        if(Model.posts != null && Model.posts.Count > 0){
             foreach(PostRead1 post in Model.posts){
                 /*if(post.id != 5){
                     continue;

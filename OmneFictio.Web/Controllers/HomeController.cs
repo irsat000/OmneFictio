@@ -19,7 +19,7 @@ public class HomeController : Controller
     }
 
     [HttpGet("/")]
-    public async Task<IActionResult> Index()
+    public IActionResult Index()
     {
         /*IndexViewmodel viewModel = new IndexViewmodel{
             sessionUserId = HttpContext.Session.GetString("userId"),

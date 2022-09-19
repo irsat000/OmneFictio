@@ -124,7 +124,7 @@ public class AuthController : Controller
     
     [HttpGet]
     public IActionResult LogOut(){
-        HttpContext.Session.Clear();
+        //HttpContext.Session.Clear();
         HttpContext.SignOutAsync();
         HttpContext.Response.Cookies.Delete("UserAuth");
         return RedirectToAction("Index", "Home");
@@ -141,14 +141,28 @@ public class AuthController : Controller
         return result!.FirstOrDefault(x => x.Key == "jwt").Value.ToString()!;
     }
     public void CreateUserSession(string tokenRaw, bool rememberme = true){
-        HttpContext.Session.Clear();
-        JwtSecurityToken? token = _jwtHandler.ReadJwtToken(tokenRaw);
-        if(token == null)
+        //HttpContext.Session.Clear();
+        HttpContext.SignOutAsync();
+        string userId, username, userPicture;
+        try
+        {
+            JwtSecurityToken? token = _jwtHandler.ReadJwtToken(tokenRaw);
+            Claim? c_nameid = token.Claims.FirstOrDefault(claim => claim.Type == "nameid");
+            Claim? c_username = token.Claims.FirstOrDefault(claim => claim.Type == "unique_name");
+            Claim? c_userPicture = token.Claims.FirstOrDefault(claim => claim.Type == "actort");
+            if(c_nameid != null && c_username != null && c_userPicture != null){
+                userId = c_nameid.Value;
+                username = c_username.Value;
+                userPicture = c_userPicture.Value;
+            }
+            else{
+                return;
+            }
+        }
+        catch (Exception){
             return;
+        }
         
-        string userId = token.Claims.FirstOrDefault(claim => claim.Type == "nameid").Value;
-        string username = token.Claims.FirstOrDefault(claim => claim.Type == "unique_name").Value;
-        string userPicture = token.Claims.FirstOrDefault(claim => claim.Type == "actort").Value;
         
         var claims = new List<Claim>
         {
