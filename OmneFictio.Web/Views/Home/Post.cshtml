@@ -32,12 +32,11 @@
     </div>
     <div class="mc-body">
         <ul>
-            <li><a href="#">Prologue</a></li>
-            <li><a href="#">Chapter 1</a></li>
-            <li><a href="#">Chapter 2</a></li>
-            <li><a href="#">Chapter 3</a></li>
-            <li><a href="#">Chapter 4</a></li>
-            <li><a href="#">Epilogue</a></li>
+            @foreach (PostModel.Chapter chapter in 
+                post.chapters.OrderBy(s => s.chapterIndex).ToList())
+            {
+                <li><a href="#">@chapter.title</a></li>
+            }
         </ul>
     </div>
 </div>
