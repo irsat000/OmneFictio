@@ -20,7 +20,7 @@ public class PostDtoRead_1
     public ICollection<ChapterDtoRead_1>? Chapters { get; set; }
     public ICollection<CommentDtoRead_1>? Comments { get; set; }
     //-----------
-    public ICollection<PostGiftDto>? Gifts { get; set; }
+    public ICollection<PostGiftDto>? PostGifts { get; set; }
     public ICollection<RateDto>? Rates { get; set; }
     public ICollection<VoteDto>? Votes { get; set; }
     public ICollection<TagDto>? Tags { get; set; }

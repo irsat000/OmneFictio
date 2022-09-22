@@ -1,6 +1,7 @@
 ﻿
 using OmneFictio.Web.Models;
 using OmneFictio.Web.PostReadModel;
+using OmneFictio.Web.PostReadModel2;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -45,7 +46,7 @@ public class HomeController : Controller
             if (e is HttpRequestException){
                 //Api request error
             }
-            if(e is JsonException){
+            else if(e is JsonException){
                 //Couldn't deserialize api response
             }
         }
@@ -71,10 +72,28 @@ public class HomeController : Controller
     }
 
     [HttpGet("p/{postid}")]
-    public IActionResult Post(string postid)
+    public async Task<IActionResult> Post(string postid)
     {
-        //check if post exists
-        return View();
+        PostRead2? post = new PostRead2();
+        string getPostUrl = "https://localhost:7022/getpost/" + postid;
+        try
+        {
+            string raw = await _httpClient.GetStringAsync(getPostUrl);
+            post = JsonSerializer.Deserialize<PostRead2>(raw);
+        }
+        catch (Exception e)
+        {
+            if (e is HttpRequestException){
+                //Api request error
+            }
+            else if(e is JsonException){
+                //Couldn't deserialize api response
+            }
+        }
+        GetpostViewmodel viewModel = new GetpostViewmodel{
+            post = post
+        };
+        return View(viewModel);
     }
 
 

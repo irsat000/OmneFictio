@@ -59,7 +59,7 @@ app.MapGet("/getpost/{postid}", async (OmneFictioContext db, int postid) => {
     var post = await mapper.ProjectTo<PostDtoRead_3>(db.Posts.Where(p => 
     p.IsPublished == true &&
     p.DeletedStatus!.Body == "Default" &&
-    p.Id == postid)).ToListAsync();
+    p.Id == postid)).FirstOrDefaultAsync();
     return post;
 });
 
