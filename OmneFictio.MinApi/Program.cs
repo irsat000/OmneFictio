@@ -64,6 +64,12 @@ app.MapGet("/getpost/{postid}", async (OmneFictioContext db, int postid) => {
     return post;
 });
 
+app.MapGet("/getcomment/{commentid}", async (OmneFictioContext db, int commentid) => {
+    var comment = await mapper.ProjectTo<CommentDtoRead_3>(db.Comments.Where(c =>
+    c.Id == commentid)).FirstOrDefaultAsync();
+    return comment;
+});
+
 
 app.MapPost("/login", async (OmneFictioContext db, AccountDtoRead_2 request) => {
     //Authentication

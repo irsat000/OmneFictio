@@ -1,7 +1,7 @@
 
 namespace OmneFictio.MinApi.Dtos;
 
-public partial class CommentDtoRead_2
+public class CommentDtoRead_2
 {
     public int Id { get; set; }
     public string Body { get; set; } = null!;
@@ -12,4 +12,11 @@ public partial class CommentDtoRead_2
     public DeletedStatusDto? DeletedStatus { get; set; }
     public ICollection<ReplyDtoRead_1>? Replies { get; set; }
     public ICollection<VoteDto>? Votes { get; set; }
+    public int VoteResult { get; set; } = 0;
+    public CommentDtoRead_2(ICollection<VoteDto>? Votes)
+    {
+        if(Votes != null && Votes.Count > 0)
+            this.VoteResult = Votes.Count(l => l.Body) - Votes.Count(d => !d.Body);
+    } 
 }
+//Used as part of the individual post. Its replies will be send with ajax when user click on replies.

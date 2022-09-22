@@ -1,6 +1,8 @@
 using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using OmneFictio.Web.Models;
+using OmneFictio.Web.CommentReadModel;
+using System.Text.Json;
 
 namespace OmneFictio.Web.Controllers;
 
@@ -86,6 +88,32 @@ public class HomeActionController : Controller
             return StatusCode(599);
         }
     }
+
+    
+    //fetch api - get comment and its replies
+    [HttpGet]
+    public async Task<ActionResult> GetComment([FromQuery] int commentId)
+    {
+        ReadComment1? comment = new ReadComment1();
+        string getCommentUrl = "https://localhost:7022/getcomment/" + commentId;
+        string raw = await _httpClient.GetStringAsync(getCommentUrl);
+        comment = JsonSerializer.Deserialize<ReadComment1>(raw);
+
+        
+        return new JsonResult(Ok());
+    }
+
+
+
+
+
+
+
+
+
+
+
+
 
     public int checkUserLogin(){
         int accountid = -1;

@@ -22,7 +22,8 @@ public class MapperConfig : Profile{
 
         CreateMap<CommentDtoRead_1, Comment>().ReverseMap();
         CreateMap<CommentDtoRead_2, Comment>().ReverseMap();
-
+        CreateMap<CommentDtoRead_3, Comment>().ReverseMap();
+        
         CreateMap<ReplyDtoRead_1, Reply>().ReverseMap();
         CreateMap<ReplyDtoRead_2, Reply>().ReverseMap();
 
