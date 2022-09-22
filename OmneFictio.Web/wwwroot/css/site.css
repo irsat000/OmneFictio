@@ -754,7 +754,7 @@ header .header-wrap {
 }
 @media (max-width: 260px) {
   .filter-tagdd, .filter-addseries, .login-modal,
-.orderby_type-cont, .filter-cont {
+.orderby-cont, .filter-cont {
     width: 100% !important;
   }
 }

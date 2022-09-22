@@ -22,7 +22,7 @@
     userPicture = User.Claims.FirstOrDefault(claim => claim.Type == "actort")?.Value ?? "none";
 }
 
-<div class="orderby_type-cont" id="orderby-modal">
+<div class="orderby-cont" id="orderby-modal">
     <div class="obt-header">
         <div class="obt-title">
             <span>Order By</span>
@@ -48,41 +48,6 @@
             <div class="obt-item">
                 <i class="bi bi-caret-right-fill"></i>
                 <span>Points</span>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="orderby_type-cont" id="type-modal">
-    <div class="obt-header">
-        <div class="obt-title">
-            <span>Type</span>
-        </div>
-        <div class="obt-close" id="t-close">
-            <i class="bi bi-x-lg"></i>
-        </div>
-    </div>
-    <div class="obt-body">
-        <div class="obt-content">
-            <div class="obt-item">
-                <i class="bi bi-caret-right-fill visible"></i>
-                <span>All</span>
-            </div>
-            <div class="obt-item">
-                <i class="bi bi-caret-right-fill"></i>
-                <span>Fanfiction</span>
-            </div>
-            <div class="obt-item">
-                <i class="bi bi-caret-right-fill"></i>
-                <span>Original</span>
-            </div>
-            <div class="obt-item">
-                <i class="bi bi-caret-right-fill"></i>
-                <span>Plot</span>
-            </div>
-            <div class="obt-item">
-                <i class="bi bi-caret-right-fill"></i>
-                <span>Scenerio</span>
             </div>
         </div>
     </div>
@@ -402,9 +367,14 @@
                             </div>
                             <div class="p-user">
                                 @if(post.account != null){
-                                    <span class="p-username p-deleted_user">@post.account.username</span>
+                                    <span class="p-username">
+                                        @if(post.account.displayName != null)
+                                            @post.account.displayName
+                                        else
+                                            @post.account.username
+                                    </span>
                                 }else{
-                                    <span class="p-username">DeletedUser</span>
+                                    <span class="p-username p-deleted_user">DeletedUser</span>
                                 }
                                 <img src="/images/users/user_no_photo_300x300.png">
                             </div>

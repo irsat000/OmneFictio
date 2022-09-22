@@ -159,7 +159,7 @@ main {
   background-color: var(--navlink-others-color-hover);
 }
 
-.orderby_type-cont {
+.orderby-cont {
   display: none;
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -177,34 +177,34 @@ main {
   border-radius: 20px;
   font-family: "Itim", cursive;
 }
-.orderby_type-cont .obt-header {
+.orderby-cont .obt-header {
   width: 100%;
   border-bottom: 2px solid var(--background-color-hover4);
   display: flex;
   flex-direction: row;
   align-items: flex-start;
 }
-.orderby_type-cont .obt-header .obt-title {
+.orderby-cont .obt-header .obt-title {
   flex-grow: 1;
   padding: 6px 0 6px 16px;
   font-size: 1.6rem;
 }
-.orderby_type-cont .obt-header .obt-close {
+.orderby-cont .obt-header .obt-close {
   flex-shrink: 0;
   cursor: pointer;
   padding: 6px 16px 4px 12px;
   font-size: 1.8rem;
   text-shadow: 0px 0px 6px var(--text-color-boxshadow1);
 }
-.orderby_type-cont .obt-body {
+.orderby-cont .obt-body {
   padding: 6px 50px 10px;
 }
-.orderby_type-cont .obt-body .obt-content .obt-item {
+.orderby-cont .obt-body .obt-content .obt-item {
   position: relative;
   padding: 6px 0;
   font-size: 1.3rem;
 }
-.orderby_type-cont .obt-body .obt-content .obt-item i {
+.orderby-cont .obt-body .obt-content .obt-item i {
   visibility: hidden;
   font-size: 0.9rem;
   position: absolute;

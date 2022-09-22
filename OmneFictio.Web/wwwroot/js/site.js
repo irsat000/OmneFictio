@@ -316,31 +316,38 @@ function googleHandleCredentialResponse(response) {
 
 //close modals, dropdowns, drawer etc
 function closeModalsDrowpdownsEtc(){
-    if($('.drawer').hasClass('drawer-active')){
-        $('.drawer').removeClass('drawer-active');
-        $('.modalbg1').removeClass('d-block');
+    const modalbg1 = document.getElementsByClassName('modalbg1')[0];
+    const drawer = document.getElementById('drawer');
+    const repliesModal = document.getElementById('modal-replies');
+    const chaptersModal = document.getElementById('modal-chapters');
+    const orderbyModal = document.getElementById('orderby-modal');
+    const filterModal = document.getElementById('filter-modal');
+    const loginModal = document.getElementById('login-modal');
+
+    if(drawer !== null && drawer.classList.contains('drawer-active')){
+        drawer.classList.remove('drawer-active');
+        modalbg1.classList.remove('d-block');
     }
-    if($('#orderby-modal').hasClass('d-flex')){
-        $('#orderby-modal').removeClass('d-flex');
-        $('#orderby-modal').removeClass('opacity-100');
-        $('.modalbg1').removeClass('d-block');
+    if(orderbyModal !== null && orderbyModal.classList.contains('d-flex')){
+        orderbyModal.classList.remove('d-flex');
+        orderbyModal.classList.remove('opacity-100');
+        modalbg1.classList.remove('d-block');
     }
-    if($('#type-modal').hasClass('d-flex')){
-        $('#type-modal').removeClass('d-flex');
-        $('#type-modal').removeClass('opacity-100');
-        $('.modalbg1').removeClass('d-block');
+    if(filterModal !== null && filterModal.classList.contains('d-flex')){
+        filterModal.classList.remove('d-flex');
+        filterModal.classList.remove('opacity-100');
+        modalbg1.classList.remove('d-block');
     }
-    if($('#filter-modal').hasClass('d-flex')){
-        $('#filter-modal').removeClass('d-flex');
-        $('#filter-modal').removeClass('opacity-100');
-        $('.modalbg1').removeClass('d-block');
+    if(loginModal !== null && loginModal.classList.contains('d-flex')){
+        loginModal.classList.remove('d-flex');
+        modalbg1.classList.remove('d-block');
     }
-    if($('#login-modal').hasClass('d-flex')){
-        $('#login-modal').removeClass('d-flex');
-        $('.modalbg1').removeClass('d-block');
+    if(repliesModal !== null && repliesModal.classList.contains('d-flex')){
+        repliesModal.classList.remove('d-flex');
+        modalbg1.classList.remove('d-block');
     }
-    if($('#modal-replies').hasClass('d-flex')){
-        $('#modal-replies').removeClass('d-flex');
-        $('.modalbg1').removeClass('d-block');
+    if(chaptersModal !== null && chaptersModal.classList.contains('d-flex')){
+        chaptersModal.classList.remove('d-flex');
+        modalbg1.classList.remove('d-block');
     }
 }

@@ -14,7 +14,33 @@
 }
 @{
     PostModel.PostRead2 post = @Model.post!;
+
+    string userId = "-1";
+    string username = "";
+    string userPicture = "none"; 
+
+    userId = User.Claims.FirstOrDefault(claim => claim.Type == "nameid")?.Value ?? "-1";
+    username = User.Claims.FirstOrDefault(claim => claim.Type == "unique_name")?.Value ?? "";
+    userPicture = User.Claims.FirstOrDefault(claim => claim.Type == "actort")?.Value ?? "none";
 }
+<div class="modal-chapters" id="modal-chapters">
+    <div class="mc-header">
+        <span>Chapters</span>
+        <div class="mc-close" id="mc-close">
+            <i class="bi bi-x-lg"></i>
+        </div>
+    </div>
+    <div class="mc-body">
+        <ul>
+            <li><a href="#">Prologue</a></li>
+            <li><a href="#">Chapter 1</a></li>
+            <li><a href="#">Chapter 2</a></li>
+            <li><a href="#">Chapter 3</a></li>
+            <li><a href="#">Chapter 4</a></li>
+            <li><a href="#">Epilogue</a></li>
+        </ul>
+    </div>
+</div>
 
 <div class="modal-replies" id="modal-replies">
     <div class="mr-header">
@@ -23,31 +49,30 @@
             <i class="bi bi-x-lg"></i>
         </div>
     </div>
-    
-    <div class="mr-comment">
-        <div class="mrc-header">
-            <div class="mrc-user">
-                <img src="/images/users/user_no_photo_300x300.png">
-                <span class="mrc-username">MrBombastic</span>
-            </div>
-            <div class="mrc-menu">
-                <i class="bi bi-three-dots"></i>
-            </div>
-        </div>
-        <div class="mrc-text">
-            <span>This is a comment right here. This is a comment right here. This is a comment right here. This is a comment right here.</span>
-        </div>
-        <div class="mrc-footer">
-            <div class="mrc-evaluation">
-                <i class="bi bi-hand-thumbs-up mrc-likebtn likebtn"></i>
-                <span class="mrc-likes">5465</span>
-                <i class="bi bi-hand-thumbs-down mrc-dislikebtn dislikebtn"></i>
-                <a href="#" class="mrc-replybtn">Reply</a>
-            </div>
-        </div>
-    </div>
-
     <div class="mr-body">
+        <div class="mr-comment">
+            <div class="mrc-header">
+                <div class="mrc-user">
+                    <img src="/images/users/user_no_photo_300x300.png">
+                    <span class="mrc-username">MrBombastic</span>
+                </div>
+                <div class="mrc-menu">
+                    <i class="bi bi-three-dots"></i>
+                </div>
+            </div>
+            <div class="mrc-text">
+                <span>This is a comment right here. This is a comment right here. This is a comment right here. This is a comment right here.</span>
+            </div>
+            <div class="mrc-footer">
+                <div class="mrc-evaluation">
+                    <i class="bi bi-hand-thumbs-up mrc-likebtn likebtn"></i>
+                    <span class="mrc-likes">5465</span>
+                    <i class="bi bi-hand-thumbs-down mrc-dislikebtn dislikebtn"></i>
+                    <a href="#" class="mrc-replybtn">Reply</a>
+                </div>
+            </div>
+        </div>
+
         <div class="mr-reply">
             <div class="mrr-text">
                 <span>This is a reply right here. This is a reply right here. This is a reply right here.</span>
@@ -132,22 +157,18 @@
                     </span>
                 </div>
                 <div class="p-user">
-                    <span class="p-username">
-                        @if(post.account != null){
-                            <span class="p-username p-deleted_user">
-                                @{
-                                    if(post.account.displayName != null)
-                                        @post.account.displayName
-                                    else
-                                        @post.account.username
-                                }
-                            </span>
-                        }else{
-                            <span class="p-username">DeletedUser</span>
-                        }
-                    </span>
+                    @if(post.account != null){
+                        <span class="p-username">
+                            @if(post.account.displayName != null)
+                                @post.account.displayName
+                            else
+                                @post.account.username
+                        </span>
+                    }else{
+                        <span class="p-username p-deleted_user">DeletedUser</span>
+                    }
                     <div class="p-uimg-cont">
-                        <img src="/images/users/user_no_photo_300x300.png">
+                        <img src="@userPicture">
                     </div>
                 </div>
             </div>
@@ -199,25 +220,30 @@
 </div>
 
 <div class="chapter_selection">
-    <a href="#">Chapters</a>
+    <span id="get_chapters">Chapters</span>
     <a href="#">Open all</a>
 </div>
 
-<div class="rate_it">
+<!--<div class="rate_it">
     <button>Rate again</button>
     <span>8/10</span>
+</div>-->
+<div class="rate_it">
+    <button>Rate it</button>
 </div>
 
-<div class="add_comment-cont">
-    <textarea placeholder="This is where we comment."></textarea>
-    <div class="ac-footer">
-        <div class="ac-user">
-            <img src="/images/users/user_no_photo_300x300.png">
-            <span class="ac-username">MrBombastic</span>
+@if(userId != "-1"){ ///images/users/
+    <div class="add_comment-cont">
+        <textarea placeholder="This is where we comment."></textarea>
+        <div class="ac-footer">
+            <div class="ac-user">
+                <img src="@userPicture">
+                <span class="ac-username">@username</span>
+            </div>
+            <a href="#" class="comment-btn">Send</a>
         </div>
-        <a href="#" class="comment-btn">Send</a>
     </div>
-</div>
+}
 
 <div class="comments">
     <div class="comment-cont">
