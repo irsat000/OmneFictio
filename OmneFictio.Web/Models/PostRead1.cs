@@ -104,6 +104,8 @@ public class PostRead1
     public List<Vote> votes { get; set; }
     public List<Tag> tags { get; set; }
     public List<ExistingStory> existingStories { get; set; }
+    public int voteResult { get; set; }
+    public double rateResult { get; set; }
 }
 
 public class StoryType

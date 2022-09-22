@@ -90,7 +90,7 @@ public class HomeActionController : Controller
     public int checkUserLogin(){
         int accountid = -1;
         int.TryParse((HttpContext.User.Claims.FirstOrDefault
-            (claim => claim.Type == ClaimTypes.NameIdentifier)?.Value ?? "-1"), out accountid);
+            (claim => claim.Type == "nameid")?.Value ?? "-1"), out accountid);
         return accountid;
     }
 

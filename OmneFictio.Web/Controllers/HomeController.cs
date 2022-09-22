@@ -90,6 +90,9 @@ public class HomeController : Controller
                 //Couldn't deserialize api response
             }
         }
+        if(post == null){
+            return RedirectToAction("Index", "Home");
+        }
         GetpostViewmodel viewModel = new GetpostViewmodel{
             post = post
         };

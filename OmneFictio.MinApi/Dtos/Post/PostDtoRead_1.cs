@@ -25,4 +25,15 @@ public class PostDtoRead_1
     public ICollection<VoteDto>? Votes { get; set; }
     public ICollection<TagDto>? Tags { get; set; }
     public ICollection<ExistingStoryDto>? ExistingStories { get; set; }
+
+    public int VoteResult { get; set; } = 0;
+    public double RateResult { get; set; } = -1;
+    public PostDtoRead_1(ICollection<VoteDto>? Votes, ICollection<RateDto>? Rates)
+    {
+        if(Votes != null && Votes.Count > 0)
+            this.VoteResult = Votes.Count(l => l.Body) - Votes.Count(d => !d.Body);
+
+        if(Rates != null && Rates.Count > 0)
+            this.RateResult = Rates.Average(r => r.Body);
+    }
 }

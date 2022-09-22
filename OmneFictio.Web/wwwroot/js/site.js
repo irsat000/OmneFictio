@@ -201,7 +201,6 @@ async function VoteRequest(btn, voteTarget, action, targetElement){
     else if(voteTarget == "like"){
         data = { TargetReplyId: targetId, Body: vote };
     }
-    
     await fetch("/HomeAction/Vote", {
         method: 'POST',
         headers: {
@@ -272,7 +271,7 @@ async function VoteRequest(btn, voteTarget, action, targetElement){
             }
         }
         else{
-            console.log("Server error");
+            console.log("Server error -> " + response.status);
         }
     })
     .catch(error => console.log('Vote function failed.', error));

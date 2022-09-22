@@ -1,3 +1,8 @@
+@using OmneFictio.Web.Models
+@using OmneFictio.Web.PostReadModel
+@using PostModel = OmneFictio.Web.PostReadModel2
+@model GetpostViewmodel
+
 @{
     ViewData["Title"] = "Post";
     @section Stylesheets {
@@ -7,8 +12,9 @@
         <script src="~/js/post.js" asp-append-version="true" ></script>
     }
 }
-@using OmneFictio.Web.Models
-@model GetpostViewmodel
+@{
+    PostModel.PostRead2 post = @Model.post!;
+}
 
 <div class="modal-replies" id="modal-replies">
     <div class="mr-header">
@@ -89,28 +95,57 @@
 <div class="post-2">
     <div class="post-card">
         <div class="p-body">
-            <div class="p-cover">
-                <img src="/images/covers/71GFREhtqNL.jpg" class="p-basecover">
-                <img src="/images/covers/71GFREhtqNL.jpg" class="p-megacover">
-            </div>
+            @if(post.coverImage != null){
+                <div class="p-cover">
+                    <img src="/images/covers/@post.coverImage" class="p-basecover">
+                    <img src="/images/covers/@post.coverImage" class="p-megacover">
+                </div>
+            }
             <div class="p-text">
                 <div class="p-title-cont">
-                    <span class="p-title">Odin the Omnipotent</span>
-                    <span class="p-date">12/09/2022</span>
+                    <span class="p-title">@post!.title</span>
+                    <span class="p-date">@post.publishDate.Date.ToShortDateString()</span>
                 </div>
-                <span class="p-description">Jones fell in love with the goddess Calypso. He agreed to guide the dead but Calypso was a bi*ch. When he returned from duty, she was not there.</span>
+                <span class="p-description">@post.postDescription</span>
             </div>
         </div>
         <div class="p-footer">
             <div class="p-footer-wrap">
                 <div class="p-evaluation">
                     <i class="bi bi-hand-thumbs-up post-vote p-likebtn likebtn" data-action="like"></i>
-                    <span class="p-likes">5432</span>
+                    <span class="p-likes">
+                        @{
+                            if(post.voteResult >= 0)
+                                @post.voteResult
+                            else
+                                @Html.Raw("--")
+                        }
+                    </span>
                     <i class="bi bi-hand-thumbs-down post-vote p-dislikebtn dislikebtn" data-action="dislike"></i>
-                    <span class="p-rate">8/10</span>
+                    <span class="p-rate">
+                        @{
+                            if(post.rateResult >= 0 && post.rateResult <= 10)
+                                @Html.Raw(Math.Round(post.rateResult, 1).ToString() + "/10")
+                            else
+                                @Html.Raw("-/10")
+                        }
+                    </span>
                 </div>
                 <div class="p-user">
-                    <span class="p-username">MrBombastic</span>
+                    <span class="p-username">
+                        @if(post.account != null){
+                            <span class="p-username p-deleted_user">
+                                @{
+                                    if(post.account.displayName != null)
+                                        @post.account.displayName
+                                    else
+                                        @post.account.username
+                                }
+                            </span>
+                        }else{
+                            <span class="p-username">DeletedUser</span>
+                        }
+                    </span>
                     <div class="p-uimg-cont">
                         <img src="/images/users/user_no_photo_300x300.png">
                     </div>
@@ -126,20 +161,34 @@
             <button type="button">Report</button>
         </div>
         <div class="pd-items">
-            <span>Story</span>
-            <span>English</span>
-            <span>On-going</span>
+            @if(post.postType != null){
+                <span>@post.postType.body</span>
+            }
+            @if(post.language != null){
+                <span>@post.language.body</span>
+            }
+            @if(post.postStatus != null){
+                <span>@post.postStatus.body</span>
+            }
+            @if(post.ratedAs != null){
+                <span>@post.ratedAs.body</span>
+            }
         </div>
-        <div class="pd-series">
-            <span>Harry Potter</span>
-            <span>Pirates</span>
-        </div>
+        @if(post.existingStories.Count > 0){
+            <div class="pd-series">
+                @foreach(ExistingStory story in post.existingStories){
+                    <span>@story.body</span>
+                }
+            </div>
+        }
         <div class="pd-tags">
-            <span>Action</span>
-            <span>Comedy</span>
-            <span>Fantasy</span>
-            <span>Romance</span>
-            <span>Dram</span>
+            @if(post.tags.Count < 1){
+                <span>No tag</span>
+            } else{
+                foreach(Tag tag in post.tags){
+                    <span>@tag.body</span>
+                }
+            }
         </div>
     </div>
     

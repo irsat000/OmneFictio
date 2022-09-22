@@ -1,6 +1,7 @@
 @using OmneFictio.Web.Models
-@using OmneFictio.Web.PostReadModel;
+@using OmneFictio.Web.PostReadModel
 @using System.Security.Claims
+@model ReadViewmodel
 @{
     ViewData["Title"] = "Read";
     @section Stylesheets {
@@ -15,11 +16,11 @@
     string userId = "-1";
     string username = "";
     string userPicture = "none"; 
-    userId = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.NameIdentifier)?.Value ?? "-1";
-    username = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Name)?.Value ?? "";
-    userPicture = User.Claims.FirstOrDefault(claim => claim.Type == ClaimTypes.Actor)?.Value ?? "none";
+
+    userId = User.Claims.FirstOrDefault(claim => claim.Type == "nameid")?.Value ?? "-1";
+    username = User.Claims.FirstOrDefault(claim => claim.Type == "unique_name")?.Value ?? "";
+    userPicture = User.Claims.FirstOrDefault(claim => claim.Type == "actort")?.Value ?? "none";
 }
-@model ReadViewmodel
 
 <div class="orderby_type-cont" id="orderby-modal">
     <div class="obt-header">
@@ -311,6 +312,7 @@
             foreach(PostRead1 post in Model.posts){
                 /*if(post.id != 5){
                     continue;
+                    for tests
                 }*/
                 <div class="post" id="post-@post.id">
                     <div class="post-detail d-flex">
@@ -359,24 +361,10 @@
                                 }
                                 <span class="p-likes">
                                     @{
-                                        int likes = 0;
-                                        string negative = "--";
-                                        foreach(Vote value in post.votes){
-                                            if(value.body == true)
-                                                likes++;
-                                            else
-                                                likes--;
-                                        }
-                                        /*
-                                        if(post.votes != null){
-                                            if(post.votes.Count > 0){
-                                            }
-                                        }*/
-                                        
-                                        if(likes >= 0)
-                                            @likes
+                                        if(post.voteResult >= 0)
+                                            @post.voteResult
                                         else
-                                            @negative
+                                            @Html.Raw("--")
                                     }
                                 </span>
                                 @{
@@ -390,12 +378,12 @@
                                         <i class="bi bi-hand-thumbs-down p-dislikebtn dislikebtn"></i>
                                     }
 
-                                    if(likes >= 0){
-                                        int untouchedLikes = likes;
+                                    if(post.voteResult >= 0){
+                                        int untouchedLikes = post.voteResult;
                                         if(votedByUser == 1){
-                                            untouchedLikes = likes - 1;
+                                            untouchedLikes = post.voteResult - 1;
                                         } else if (votedByUser == 0){
-                                            untouchedLikes = likes + 1;
+                                            untouchedLikes = post.voteResult + 1;
                                         }
                                         <input type="hidden" id="postvote-@post.id" value="@untouchedLikes">
                                     }
@@ -405,18 +393,10 @@
                                 }
                                 <span class="p-rate">
                                     @{
-                                        double rate = 0;
-                                        if(post.rates.Count > 0){
-                                            foreach(Rate value in post.rates){
-                                                if(value.body >= 0 && value.body <= 10)
-                                                    rate += value.body;
-                                            }
-                                            string ortRate = Math.Round((rate / post.rates.Count), 1).ToString() + "/10";
-                                            @ortRate
-                                        }
-                                        else{
-                                            @Html.Raw("-/10");
-                                        }
+                                        if(post.rateResult >= 0 && post.rateResult <= 10)
+                                            @Html.Raw(Math.Round(post.rateResult, 1).ToString() + "/10")
+                                        else
+                                            @Html.Raw("-/10")
                                     }
                                 </span>
                             </div>
