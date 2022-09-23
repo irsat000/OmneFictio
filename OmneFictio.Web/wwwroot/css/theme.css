@@ -29,7 +29,9 @@
   --pd-actionbtns-color-hover1: #5e5e5e;
   --pd-actionbtns-color2: #444444;
   --pd-actionbtns-color-hover2: #5e5e5e;
+  --comment-menu-bgcolor: #3b3b3b;
   --reply-bgcolor: #313131;
+  --replies-bgcolor: #424242;
   --searchplaceholder-color: #939393;
 }
 
@@ -64,7 +66,9 @@
   --pd-actionbtns-color-hover1: #c5c5c5;
   --pd-actionbtns-color2: #c7c7c7;
   --pd-actionbtns-color-hover2: #bbbbbb;
+  --comment-menu-bgcolor: #e3e3e3;
   --reply-bgcolor: #dcdcdc;
+  --replies-bgcolor: #cfcfcf;
 }
 
 /*

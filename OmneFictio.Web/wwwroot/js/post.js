@@ -51,6 +51,8 @@ $(document).ready(function(){
             console.log(data.statusCode);
             if(data.statusCode === 200){
                 console.log(data.value);
+
+                //Will fill replies
             }
         })
         .catch(error => console.log('Fetching reply method is at fault', error));
