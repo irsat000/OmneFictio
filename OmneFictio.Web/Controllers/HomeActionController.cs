@@ -91,16 +91,29 @@ public class HomeActionController : Controller
 
     
     //fetch api - get comment and its replies
-    [HttpGet]
-    public async Task<ActionResult> GetComment([FromQuery] int commentId)
+    [HttpGet("HomeAction/GetComment/{commentId}")]
+    public async Task<JsonResult> GetComment(int commentId)
     {
         ReadComment1? comment = new ReadComment1();
         string getCommentUrl = "https://localhost:7022/getcomment/" + commentId;
-        string raw = await _httpClient.GetStringAsync(getCommentUrl);
-        comment = JsonSerializer.Deserialize<ReadComment1>(raw);
-
-        
-        return new JsonResult(Ok());
+        try{
+            string raw = await _httpClient.GetStringAsync(getCommentUrl);
+            comment = JsonSerializer.Deserialize<ReadComment1>(raw);
+        } catch (Exception e) {
+            if (e is HttpRequestException){
+                //Api request error
+            }
+            else if(e is JsonException){
+                //Couldn't deserialize api response
+            }
+        }
+        if(comment == null || comment.deletedStatus.body != "Default") { //Temporary Removal or Removed
+            return new JsonResult(NotFound());
+        }
+        comment.replies = comment.replies.Where(r => r.deletedStatus.body != "Default").ToList();
+        //Excludes the deleted replies from the comment
+        return new JsonResult(Ok(comment));
+        //return new JsonResult ( new { Data = comment } );
     }
 
 
