@@ -45,17 +45,15 @@ $(document).ready(function(){
             }
         })
         .then((response) => {
-            if (response.ok) {
-                console.log("Success");
-            } else { 
-                console.log("Error"); 
-            }
             return response.json();
         })
-        .then((comment) => {
-            console.log(comment.value);
+        .then((data) => {
+            console.log(data.statusCode);
+            if(data.statusCode === 200){
+                console.log(data.value);
+            }
         })
-        .catch(error => console.log('Fetching replies method is at fault', error));
+        .catch(error => console.log('Fetching reply method is at fault', error));
     }
 
 });

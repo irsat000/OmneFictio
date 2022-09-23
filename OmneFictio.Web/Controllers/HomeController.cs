@@ -74,22 +74,11 @@ public class HomeController : Controller
     [HttpGet("p/{postid}")]
     public async Task<IActionResult> Post(string postid)
     {
-        PostRead2? post = new PostRead2();
-        string getPostUrl = "https://localhost:7022/getpost/" + postid;
-        try
-        {
-            string raw = await _httpClient.GetStringAsync(getPostUrl);
-            post = JsonSerializer.Deserialize<PostRead2>(raw);
-        }
-        catch (Exception e)
-        {
-            if (e is HttpRequestException){
-                //Api request error
-            }
-            else if(e is JsonException){
-                //Couldn't deserialize api response
-            }
-        }
+        string url = "https://localhost:7022/getpost/" + postid;
+        string raw = await _httpClient.GetStringAsync(url);
+
+        PostRead2? post = JsonSerializer.Deserialize<PostRead2>(raw);
+
         if(post == null){
             return RedirectToAction("Index", "Home");
         }

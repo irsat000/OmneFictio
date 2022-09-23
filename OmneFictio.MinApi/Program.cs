@@ -67,6 +67,10 @@ app.MapGet("/getpost/{postid}", async (OmneFictioContext db, int postid) => {
 app.MapGet("/getcomment/{commentid}", async (OmneFictioContext db, int commentid) => {
     var comment = await mapper.ProjectTo<CommentDtoRead_3>(db.Comments.Where(c =>
     c.Id == commentid)).FirstOrDefaultAsync();
+    
+    if(comment != null && comment.Replies != null) {
+        comment.Replies = comment.Replies.Where(r => r.DeletedStatus.Body == "Default").ToList();
+    }
     return comment;
 });
 
