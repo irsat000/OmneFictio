@@ -1,5 +1,18 @@
 
 $(document).ready(function(){
+    var commentMenuBtns = document.querySelectorAll('.c-menu');
+    commentMenuBtns.forEach(function(element) {
+        element.addEventListener("click", function() {
+            const menu = element.closest('.c-header')
+                .querySelector('.c-menupopup');
+            if(menu.classList.contains('d-block')){
+                menu.classList.remove('d-block');
+            } else {
+                menu.classList.add('d-block');
+            }
+        });
+    });
+
     const modalbg1 = document.getElementsByClassName('modalbg1')[0];
 
     const chaptersModal = document.getElementById('modal-chapters');

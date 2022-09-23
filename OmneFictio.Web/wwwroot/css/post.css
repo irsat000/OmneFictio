@@ -374,6 +374,7 @@ img {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  position: relative;
   padding: 0 6px;
   font-family: "Itim", cursive;
 }
@@ -401,13 +402,13 @@ img {
   height: 100%;
   padding: 0 10px;
   font-size: 1.6rem;
-  position: relative;
   cursor: pointer;
 }
 .comments .comment-cont .comment .c-header .c-menu i {
   display: flex;
 }
-.comments .comment-cont .comment .c-header .c-menu .c-menupopup {
+.comments .comment-cont .comment .c-header .c-menupopup {
+  display: none;
   position: absolute;
   top: 30px;
   right: 12px;
@@ -417,23 +418,24 @@ img {
   background-color: var(--comment-menu-bgcolor);
   box-shadow: 0 2px 10px 0px rgba(0, 0, 0, 0.25);
 }
-.comments .comment-cont .comment .c-header .c-menu .c-menupopup li {
+.comments .comment-cont .comment .c-header .c-menupopup li {
   padding: 3px 10px;
   border-bottom: 1px solid var(--background-color-hover3);
   white-space: nowrap;
   transition: background-color 0.1s ease;
+  cursor: pointer;
 }
-.comments .comment-cont .comment .c-header .c-menu .c-menupopup li:hover {
+.comments .comment-cont .comment .c-header .c-menupopup li:hover {
   background-color: var(--background-color-hover2);
 }
-.comments .comment-cont .comment .c-header .c-menu .c-menupopup li:first-child {
+.comments .comment-cont .comment .c-header .c-menupopup li:first-child {
   border-radius: 6px 6px 0 0;
 }
-.comments .comment-cont .comment .c-header .c-menu .c-menupopup li:last-child {
+.comments .comment-cont .comment .c-header .c-menupopup li:last-child {
   border-radius: 0 0 6px 6px;
   border-bottom: unset;
 }
-.comments .comment-cont .comment .c-header .c-menu .lightmode .c-menupopup {
+.comments .comment-cont .comment .c-header .lightmode .c-menupopup {
   box-shadow: 0 2px 10px 0px rgba(0, 0, 0, 0.1) !important;
 }
 .comments .comment-cont .comment .c-text {
