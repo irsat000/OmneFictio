@@ -30,6 +30,28 @@ $(document).ready(function(){
         });
     });
 
+
+
+
+    const commentSection = document.getElementById('comment-section');
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     const repliesModal = document.getElementById('modal-replies');
     var repliesBtns = []
         .concat(Array.from(document.getElementsByClassName('mr-close')))

@@ -59,17 +59,27 @@ app.MapGet("/posts", async (OmneFictioContext db) => {
 app.MapGet("/getpost/{postid}", async (OmneFictioContext db, int postid) => {
     var post = await mapper.ProjectTo<PostDtoRead_3>(db.Posts.Where(p => 
     p.IsPublished == true &&
-    p.DeletedStatus!.Body == "Default" &&
+    p.DeletedStatus.Body == "Default" &&
     p.Id == postid)).FirstOrDefaultAsync();
     return post;
 });
 
+app.MapGet("/getcomments/{postid}", async (OmneFictioContext db, int postid) => {
+    var comments = await mapper.ProjectTo<CommentDtoRead_3>(db.Comments.Where(c =>
+    c.TargetPostId == postid &&
+    c.DeletedStatus.Body == "Default")).ToListAsync();
+    comments = comments.OrderBy(c => c.PublishDate).ToList();
+
+    return comments;
+});
+
 app.MapGet("/getcomment/{commentid}", async (OmneFictioContext db, int commentid) => {
-    var comment = await mapper.ProjectTo<CommentDtoRead_3>(db.Comments.Where(c =>
+    var comment = await mapper.ProjectTo<CommentDtoRead_2>(db.Comments.Where(c =>
     c.Id == commentid)).FirstOrDefaultAsync();
     
     if(comment != null && comment.Replies != null) {
         comment.Replies = comment.Replies.Where(r => r.DeletedStatus.Body == "Default").ToList();
+        comment.Replies = comment.Replies.OrderBy(r => r.PublishDate).ToList();
     }
     return comment;
 });
