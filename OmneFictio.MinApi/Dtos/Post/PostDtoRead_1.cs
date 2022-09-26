@@ -18,7 +18,6 @@ public class PostDtoRead_1
     public RatedAsDto? RatedAs { get; set; }
     //-----------
     public ICollection<ChapterDtoRead_1>? Chapters { get; set; }
-    public ICollection<CommentDtoRead_1>? Comments { get; set; }
     //-----------
     public ICollection<PostGiftDto>? PostGifts { get; set; }
     public ICollection<RateDto>? Rates { get; set; }

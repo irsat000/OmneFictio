@@ -72,7 +72,7 @@ $(document).ready(function(){
     });
 
     async function fetchReplies(commentId){
-        await fetch("/HomeAction/GetComment/" + commentId, {
+        await fetch("/g/GetComment/" + commentId, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',

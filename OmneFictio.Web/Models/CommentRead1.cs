@@ -1,4 +1,4 @@
-// Root myDeserializedClass = JsonConvert.DeserializeObject<Root>(myJsonResponse);
+
 namespace OmneFictio.Web.CommentReadModel;
 
 public class Account
@@ -34,7 +34,7 @@ public class Reply
     public int voteResult { get; set; }
 }
 
-public class ReadComment1
+public class CommentRead1
 {
     public int id { get; set; }
     public string body { get; set; }
@@ -42,9 +42,10 @@ public class ReadComment1
     public DateTime updateDate { get; set; }
     public Account account { get; set; }
     public DeletedStatus deletedStatus { get; set; }
-    public List<Reply> replies { get; set; }
     public List<Vote> votes { get; set; }
     public int voteResult { get; set; }
+    public int repliesCount { get; set; }
+    public List<Reply> replies { get; set; }
 }
 
 public class Vote
@@ -53,3 +54,4 @@ public class Vote
     public bool body { get; set; }
 }
 
+//Get comment and its replies

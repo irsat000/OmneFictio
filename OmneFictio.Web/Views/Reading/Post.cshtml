@@ -1,6 +1,6 @@
 @using OmneFictio.Web.Models
 @using OmneFictio.Web.PostReadModel
-@using PostModel = OmneFictio.Web.PostReadModel2
+@using PostModel = OmneFictio.Web.PostReadModel
 @model GetpostViewmodel
 
 @{
@@ -13,7 +13,7 @@
     }
 }
 @{
-    PostModel.PostRead2 post = @Model.post!;
+    PostModel.PostRead1 post = @Model.post!;
 
     string userId = "-1";
     string username = "";
@@ -32,7 +32,7 @@
     </div>
     <div class="mc-body">
         <ul>
-            @foreach (PostModel.Chapter chapter in 
+            @foreach (Chapter chapter in 
                 post.chapters.OrderBy(s => s.chapterIndex).ToList())
             {
                 <li><a href="#">@chapter.title</a></li>

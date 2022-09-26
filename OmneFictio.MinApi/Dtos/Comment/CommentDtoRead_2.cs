@@ -10,14 +10,19 @@ public class CommentDtoRead_2
 
     public AccountDtoRead_1? Account { get; set; }
     public DeletedStatusDto? DeletedStatus { get; set; }
-    public ICollection<ReplyDtoRead_2>? Replies { get; set; }
     public ICollection<VoteDto>? Votes { get; set; }
     public int VoteResult { get; set; } = 0;
-    public CommentDtoRead_2(ICollection<VoteDto>? Votes)
+    public int? RepliesCount { get; set; }
+    public CommentDtoRead_2(ICollection<VoteDto>? Votes, ICollection<ReplyDtoRead_1>? Replies)
     {
-        if(Votes != null && Votes.Count > 0){
+        if(Votes != null && Votes.Count > 0) {
             this.VoteResult = Votes.Count(l => l.Body) - Votes.Count(d => !d.Body);
+        }
+        if(Replies != null) {
+            RepliesCount = Replies.Count;
         }
     } 
 }
-//Used as part of the individual post. Its replies will be send with ajax when user click on replies.
+//Getting comments of the post. Fetched by ajax. Highlighted reply will be fetched by javascript. 
+//Its replies will be sent with ajax when user click on replies.
+

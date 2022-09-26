@@ -13,12 +13,9 @@ public class MapperConfig : Profile{
         CreateMap<AccountDtoWrite_1, Account>().ReverseMap();
 
         CreateMap<PostDtoRead_1, Post>().ReverseMap();
-        CreateMap<PostDtoRead_2, Post>().ReverseMap();
-        CreateMap<PostDtoRead_3, Post>().ReverseMap();
         CreateMap<PostDtoWrite_1, Post>().ReverseMap();
 
         CreateMap<ChapterDtoRead_1, Chapter>().ReverseMap();
-        CreateMap<ChapterDtoRead_2, Chapter>().ReverseMap();
 
         CreateMap<CommentDtoRead_1, Comment>().ReverseMap();
         CreateMap<CommentDtoRead_2, Comment>().ReverseMap();
@@ -29,7 +26,6 @@ public class MapperConfig : Profile{
         CreateMap<ReplyDtoRead_2, Reply>().ReverseMap();
 
         CreateMap<VoteDtoWrite_1, Vote>().ReverseMap();
-        CreateMap<VoteDtoRead_2, Vote>().ReverseMap();
         
         CreateMap<TagDtoWrite_1, Tag>().ReverseMap();
         

@@ -45,9 +45,10 @@ if (mapper == null)
 
 app.MapGet("/", () =>
 {
-    return "Hello world";
+    return "Hello jupiter";
 });
 
+//get posts
 app.MapGet("/posts", async (OmneFictioContext db) => {
     var posts = await mapper.ProjectTo<PostDtoRead_1>(db.Posts.Where(p => 
     p.IsPublished == true &&
@@ -56,16 +57,18 @@ app.MapGet("/posts", async (OmneFictioContext db) => {
     return posts;
 });
 
+//get post
 app.MapGet("/getpost/{postid}", async (OmneFictioContext db, int postid) => {
-    var post = await mapper.ProjectTo<PostDtoRead_3>(db.Posts.Where(p => 
+    var post = await mapper.ProjectTo<PostDtoRead_1>(db.Posts.Where(p =>
     p.IsPublished == true &&
     p.DeletedStatus.Body == "Default" &&
     p.Id == postid)).FirstOrDefaultAsync();
     return post;
 });
 
+//get post's comments
 app.MapGet("/getcomments/{postid}", async (OmneFictioContext db, int postid) => {
-    var comments = await mapper.ProjectTo<CommentDtoRead_3>(db.Comments.Where(c =>
+    var comments = await mapper.ProjectTo<CommentDtoRead_2>(db.Comments.Where(c =>
     c.TargetPostId == postid &&
     c.DeletedStatus.Body == "Default")).ToListAsync();
     comments = comments.OrderBy(c => c.PublishDate).ToList();
@@ -73,8 +76,9 @@ app.MapGet("/getcomments/{postid}", async (OmneFictioContext db, int postid) => 
     return comments;
 });
 
+//get comment and its replies(for modal)
 app.MapGet("/getcomment/{commentid}", async (OmneFictioContext db, int commentid) => {
-    var comment = await mapper.ProjectTo<CommentDtoRead_2>(db.Comments.Where(c =>
+    var comment = await mapper.ProjectTo<CommentDtoRead_3>(db.Comments.Where(c =>
     c.Id == commentid)).FirstOrDefaultAsync();
     
     if(comment != null && comment.Replies != null) {
@@ -84,6 +88,15 @@ app.MapGet("/getcomment/{commentid}", async (OmneFictioContext db, int commentid
     return comment;
 });
 
+
+
+
+
+
+
+
+
+//--------------------------------------
 
 app.MapPost("/login", async (OmneFictioContext db, AccountDtoRead_2 request) => {
     //Authentication

@@ -1,7 +1,6 @@
 ﻿
 using OmneFictio.Web.Models;
 using OmneFictio.Web.PostReadModel;
-using OmneFictio.Web.PostReadModel2;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
@@ -34,22 +33,10 @@ public class HomeController : Controller
     {
         //Stopwatch time = new Stopwatch();
         //time.Start();
-        List<PostRead1>? posts = new List<PostRead1>();
         string postsUrl = "https://localhost:7022/posts";
-        try
-        {
-            string raw = await _httpClient.GetStringAsync(postsUrl);
-            posts = JsonSerializer.Deserialize<List<PostRead1>>(raw);
-        }
-        catch (Exception e)
-        {
-            if (e is HttpRequestException){
-                //Api request error
-            }
-            else if(e is JsonException){
-                //Couldn't deserialize api response
-            }
-        }
+        string raw = await _httpClient.GetStringAsync(postsUrl);
+        List<PostRead1>? posts = JsonSerializer.Deserialize<List<PostRead1>>(raw);
+        
         ReadViewmodel viewModel = new ReadViewmodel{
             posts = posts
         };
@@ -70,25 +57,6 @@ public class HomeController : Controller
     {
         return View();
     }
-
-    [HttpGet("p/{postid}")]
-    public async Task<IActionResult> Post(string postid)
-    {
-        string url = "https://localhost:7022/getpost/" + postid;
-        string raw = await _httpClient.GetStringAsync(url);
-
-        PostRead2? post = JsonSerializer.Deserialize<PostRead2>(raw);
-
-        if(post == null){
-            return RedirectToAction("Index", "Home");
-        }
-        GetpostViewmodel viewModel = new GetpostViewmodel{
-            post = post
-        };
-        return View(viewModel);
-    }
-
-
 
     public IActionResult Privacy()
     {

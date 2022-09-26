@@ -1,8 +1,5 @@
-using System.Security.Claims;
 using Microsoft.AspNetCore.Mvc;
 using OmneFictio.Web.Models;
-using OmneFictio.Web.CommentReadModel;
-using System.Text.Json;
 
 namespace OmneFictio.Web.Controllers;
 
@@ -88,34 +85,6 @@ public class HomeActionController : Controller
             return StatusCode(599);
         }
     }
-
-    
-    //fetch api - get comment and its replies
-    [HttpGet("HomeAction/GetComment/{commentId}")]
-    public async Task<JsonResult> GetComment(int commentId)
-    {
-        string url = "https://localhost:7022/getcomment/" + commentId;
-        string apiResponse = await _httpClient.GetStringAsync(url);
-
-        ReadComment1? comment = JsonSerializer.Deserialize<ReadComment1>(apiResponse);
-
-        if(comment == null || comment.deletedStatus.body != "Default") {
-            return new JsonResult(NotFound());
-        }
-        //return new JsonResult(NotFound());
-        return new JsonResult(Ok(comment));
-    }
-
-
-
-
-
-
-
-
-
-
-
 
 
     public int checkUserLogin(){
