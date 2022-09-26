@@ -301,7 +301,6 @@ img{
     width: 100%;
     margin-bottom: 20px;
     padding: 0 6px;
-    max-width: 800px;
     align-self: center;
     textarea{
         background-color: var(--background-color2);
@@ -376,31 +375,32 @@ img{
             //box-shadow: 0px 6px 8px -7px #00000060;
             .c-header{
                 display: flex;
-                justify-content: space-between;
                 align-items: center;
                 position: relative;
                 padding: 0 6px;
                 font-family: "Itim", cursive;
-                .c-user{
-                    display: flex;
-                    align-items: center;
-                    img{
-                        height: 1.3rem;
-                        width: 1.3rem;
-                        border-radius: 50%;
-                        cursor: pointer;
-                    }
-                    .c-username{
-                        font-size: 0.8rem;
-                        cursor: pointer;
-                        padding: 0 8px;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
-                        overflow: hidden;
-                        max-width: 180px;
-                    }
+                img{
+                    height: 1.3rem;
+                    width: 1.3rem;
+                    border-radius: 50%;
+                    cursor: pointer;
+                }
+                .c-username{
+                    font-size: 0.8rem;
+                    cursor: pointer;
+                    margin: 0 6px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    max-width: 180px;
+                }
+                .c-date{
+                    color: var(--text-color2);
+                    font-size: 0.7rem;
+                    font-family: 'Gudea';
                 }
                 .c-menu{
+                    margin-left: auto;
                     display: flex;
                     height: 100%;
                     padding: 0 10px;
@@ -606,29 +606,30 @@ img{
             padding: 10px 6px 15px;
             .mrc-header{
                 display: flex;
-                justify-content: space-between;
                 align-items: center;
                 font-family: "Itim", cursive;
-                .mrc-user{
-                    display: flex;
-                    align-items: center;
-                    img{
-                        height: 1.7rem;
-                        width: 1.7rem;
-                        border-radius: 50%;
-                        cursor: pointer;
-                    }
-                    .mrc-username{
-                        font-size: 0.9rem;
-                        cursor: pointer;
-                        padding: 0 8px;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
-                        overflow: hidden;
-                        max-width: 180px;
-                    }
+                img{
+                    height: 1.7rem;
+                    width: 1.7rem;
+                    border-radius: 50%;
+                    cursor: pointer;
+                }
+                .mrc-username{
+                    font-size: 0.8rem;
+                    cursor: pointer;
+                    margin: 0 8px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    max-width: 180px;
+                }
+                .mrc-date{
+                    color: var(--text-color2);
+                    font-size: 0.7rem;
+                    font-family: 'Gudea';
                 }
                 .mrc-menu{
+                    margin-left: auto;
                     display: flex;
                     height: 100%;
                     padding: 0 10px;
@@ -683,6 +684,31 @@ img{
             margin-bottom: 7px;
             background-color: var(--replies-bgcolor);
             padding: 6px 4px 3px;
+            .mrr-header{
+                display: flex;
+                align-items: center;
+                margin-bottom: 5px;
+                img{
+                    height: 1.3rem;
+                    width: 1.3rem;
+                    border-radius: 50%;
+                    cursor: pointer;
+                }
+                .mrr-username{
+                    font-size: 0.8rem;
+                    cursor: pointer;
+                    margin: 0 6px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    max-width: 180px;
+                }
+                .mrr-date{
+                    color: var(--text-color2);
+                    font-size: 0.7rem;
+                    font-family: 'Gudea';
+                }
+            }
             .mrr-text{
                 margin-bottom: 4px;
                 font-size: 0.8rem;
@@ -723,34 +749,15 @@ img{
                         font-size: 0.9rem;
                     }
                 }
-                .mrr-user{
-                    display: flex;
-                    align-items: center;
+                .mrr-menu{
                     margin-left: auto;
-                    .mrr-username{
-                        font-size: 0.8rem;
-                        cursor: pointer;
-                        padding: 0 4px;
-                        text-overflow: ellipsis;
-                        white-space: nowrap;
-                        overflow: hidden;
-                        max-width: 180px;
-                    }
-                    img{
-                        height: 1.3rem;
-                        width: 1.3rem;
-                        border-radius: 50%;
-                        cursor: pointer;
-                    }
-                    .mrr-menu{
+                    display: flex;
+                    height: 100%;
+                    padding: 0 7px;
+                    font-size: 1.6rem;
+                    cursor: pointer;
+                    i{
                         display: flex;
-                        height: 100%;
-                        padding: 0 7px;
-                        font-size: 1.6rem;
-                        cursor: pointer;
-                        i{
-                            display: flex;
-                        }
                     }
                 }
             }

@@ -296,7 +296,6 @@ img {
   width: 100%;
   margin-bottom: 20px;
   padding: 0 6px;
-  max-width: 800px;
   align-self: center;
 }
 .add_comment-cont textarea {
@@ -372,32 +371,33 @@ img {
 }
 .comments .comment-cont .comment .c-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   position: relative;
   padding: 0 6px;
   font-family: "Itim", cursive;
 }
-.comments .comment-cont .comment .c-header .c-user {
-  display: flex;
-  align-items: center;
-}
-.comments .comment-cont .comment .c-header .c-user img {
+.comments .comment-cont .comment .c-header img {
   height: 1.3rem;
   width: 1.3rem;
   border-radius: 50%;
   cursor: pointer;
 }
-.comments .comment-cont .comment .c-header .c-user .c-username {
+.comments .comment-cont .comment .c-header .c-username {
   font-size: 0.8rem;
   cursor: pointer;
-  padding: 0 8px;
+  margin: 0 6px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
   max-width: 180px;
 }
+.comments .comment-cont .comment .c-header .c-date {
+  color: var(--text-color2);
+  font-size: 0.7rem;
+  font-family: "Gudea";
+}
 .comments .comment-cont .comment .c-header .c-menu {
+  margin-left: auto;
   display: flex;
   height: 100%;
   padding: 0 10px;
@@ -600,30 +600,31 @@ img {
 }
 .modal-replies .mr-body .mr-comment .mrc-header {
   display: flex;
-  justify-content: space-between;
   align-items: center;
   font-family: "Itim", cursive;
 }
-.modal-replies .mr-body .mr-comment .mrc-header .mrc-user {
-  display: flex;
-  align-items: center;
-}
-.modal-replies .mr-body .mr-comment .mrc-header .mrc-user img {
+.modal-replies .mr-body .mr-comment .mrc-header img {
   height: 1.7rem;
   width: 1.7rem;
   border-radius: 50%;
   cursor: pointer;
 }
-.modal-replies .mr-body .mr-comment .mrc-header .mrc-user .mrc-username {
-  font-size: 0.9rem;
+.modal-replies .mr-body .mr-comment .mrc-header .mrc-username {
+  font-size: 0.8rem;
   cursor: pointer;
-  padding: 0 8px;
+  margin: 0 8px;
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
   max-width: 180px;
 }
+.modal-replies .mr-body .mr-comment .mrc-header .mrc-date {
+  color: var(--text-color2);
+  font-size: 0.7rem;
+  font-family: "Gudea";
+}
 .modal-replies .mr-body .mr-comment .mrc-header .mrc-menu {
+  margin-left: auto;
   display: flex;
   height: 100%;
   padding: 0 10px;
@@ -675,6 +676,31 @@ img {
   background-color: var(--replies-bgcolor);
   padding: 6px 4px 3px;
 }
+.modal-replies .mr-body .mr-reply .mrr-header {
+  display: flex;
+  align-items: center;
+  margin-bottom: 5px;
+}
+.modal-replies .mr-body .mr-reply .mrr-header img {
+  height: 1.3rem;
+  width: 1.3rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.modal-replies .mr-body .mr-reply .mrr-header .mrr-username {
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin: 0 6px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 180px;
+}
+.modal-replies .mr-body .mr-reply .mrr-header .mrr-date {
+  color: var(--text-color2);
+  font-size: 0.7rem;
+  font-family: "Gudea";
+}
 .modal-replies .mr-body .mr-reply .mrr-text {
   margin-bottom: 4px;
   font-size: 0.8rem;
@@ -716,34 +742,15 @@ img {
   margin-bottom: -3px;
   font-size: 0.9rem;
 }
-.modal-replies .mr-body .mr-reply .mrr-footer .mrr-user {
-  display: flex;
-  align-items: center;
+.modal-replies .mr-body .mr-reply .mrr-footer .mrr-menu {
   margin-left: auto;
-}
-.modal-replies .mr-body .mr-reply .mrr-footer .mrr-user .mrr-username {
-  font-size: 0.8rem;
-  cursor: pointer;
-  padding: 0 4px;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  overflow: hidden;
-  max-width: 180px;
-}
-.modal-replies .mr-body .mr-reply .mrr-footer .mrr-user img {
-  height: 1.3rem;
-  width: 1.3rem;
-  border-radius: 50%;
-  cursor: pointer;
-}
-.modal-replies .mr-body .mr-reply .mrr-footer .mrr-user .mrr-menu {
   display: flex;
   height: 100%;
   padding: 0 7px;
   font-size: 1.6rem;
   cursor: pointer;
 }
-.modal-replies .mr-body .mr-reply .mrr-footer .mrr-user .mrr-menu i {
+.modal-replies .mr-body .mr-reply .mrr-footer .mrr-menu i {
   display: flex;
 }
 

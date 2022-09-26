@@ -26,4 +26,5 @@ public class Comment
     public DeletedStatus deletedStatus { get; set; }
     public List<Reply> replies { get; set; }
     public List<Vote> votes { get; set; }
+    public int voteResult { get; set; }
 }
