@@ -34,8 +34,50 @@ $(document).ready(function(){
 
 
     const commentSection = document.getElementById('comment-section');
-    
+    const postId = document.getElementById('postid');
+    fetchComments(12);
+    async function fetchComments(postId){
+        await fetch("/g/GetComments/" + postId, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(data.statusCode);
+            if(data.statusCode === 200){
+                console.log(data.value);
+                const commentInstance = document.getElementById('comment_instance');
+                data.value.forEach(comment => {
+                    const clone = commentInstance.content.cloneNode(true);
+                    if(comment.displayName != null){
+                        clone.querySelector('.c-username').textContent = comment.account.displayName;
+                    } else {
+                        clone.querySelector('.c-username').textContent = comment.account.username;
+                    }
+                    clone.querySelector('.c-date').textContent = comment.publishDate;
+                    clone.querySelector('.c-body').textContent = comment.body;
+                    if(comment.voteResult >= 0){
+                        clone.querySelector('.c-likes').textContent = comment.voteResult;
+                    } else {
+                        clone.querySelector('.c-likes').textContent = "--";
+                    }
+                    if(comment.repliesCount > 0){
+                        clone.querySelector('.get_replies-text').textContent = comment.repliesCount + " replies";
+                    } else {
+                        clone.querySelector('.get_replies-text').textContent = "No reply";
+                    }
 
+                    commentSection.appendChild(clone);
+                });
+            }
+        })
+        .catch(error => {
+            console.log('Fetch failed -> ' + error);
+        });
+    }
 
 
 
@@ -79,9 +121,7 @@ $(document).ready(function(){
                 'Content-Type': 'application/json'
             }
         })
-        .then((response) => {
-            return response.json();
-        })
+        .then((res) => res.json())
         .then((data) => {
             console.log(data.statusCode);
             if(data.statusCode === 200){

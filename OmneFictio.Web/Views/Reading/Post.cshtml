@@ -23,6 +23,73 @@
     username = User.Claims.FirstOrDefault(claim => claim.Type == "unique_name")?.Value ?? "";
     userPicture = User.Claims.FirstOrDefault(claim => claim.Type == "actort")?.Value ?? "none";
 }
+<input type="hidden" value="@post.id" id="postid">
+
+
+
+<template id="comment_instance">
+    <div class="comment-cont">
+        <div class="comment">
+            <div class="c-header">
+                <img src="/images/users/user_no_photo_300x300.png">
+                <span class="c-username">
+                    
+                </span>
+                <span class="c-date">
+                
+                </span>
+                <div class="c-menu">
+                    <i class="bi bi-three-dots"></i>
+                </div>
+                <ul class="c-menupopup">
+                    <li>Report</li>
+                    <li>Block User</li>
+                </ul>
+            </div>
+            <div class="c-text">
+                <span class="c-body">
+                    
+                </span>
+            </div>
+            <div class="c-footer">
+                <div class="c-evaluation">
+                    <i class="bi bi-hand-thumbs-up c-likebtn likebtn"></i>
+                    <span class="c-likes">
+
+                    </span>
+                    <i class="bi bi-hand-thumbs-down c-dislikebtn dislikebtn"></i>
+                    <a href="#" class="c-replybtn">Reply</a>
+                </div>
+                <div class="get_replies">
+                    <span class="get_replies-text">
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="reply">
+            <div class="r-text">
+                <span>Elle girilmiş yanıt.</span>
+            </div>
+            <div class="r-footer">
+                <div class="r-evaluation">
+                    <i class="bi bi-hand-thumbs-up r-likebtn likebtn"></i>
+                    <span class="r-likes">5465</span>
+                    <i class="bi bi-hand-thumbs-down r-dislikebtn dislikebtn"></i>
+                    <span class="r-gotoreply">GO</span>
+                </div>
+                <div class="r-user">
+                    <span class="r-username">MrBombastic</span>
+                    <img src="/images/users/user_no_photo_300x300.png">
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+
+
+
 <div class="modal-chapters" id="modal-chapters">
     <div class="mc-header">
         <span>Chapters</span>
@@ -138,9 +205,6 @@
                 </div>
             </div>
         </div>
-
-
-
 
     </div>
 </div>
