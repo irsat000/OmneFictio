@@ -11,7 +11,7 @@ $(document).ready(function(){
                 menu.classList.add('d-block');
             }
         });
-    });
+    }); //will be transfered to document.onclick because these are appended elements.
 
     const modalbg1 = document.getElementsByClassName('modalbg1')[0];
     const repliesModal = document.getElementById('modal-replies');
@@ -103,7 +103,6 @@ $(document).ready(function(){
         })
         .then((res) => res.json())
         .then((data) => {
-            console.log(data.statusCode);
             if(data.statusCode === 200){
                 const comm = data.value;
                 const modalRepliesBody = document.querySelector('#modal-replies > .mr-body');

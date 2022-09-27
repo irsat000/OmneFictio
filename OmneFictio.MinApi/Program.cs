@@ -38,7 +38,6 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 
-var securityToken = Encoding.ASCII.GetBytes(builder.Configuration.GetSection("Token").Value);
 var mapper = app.Services.GetService<IMapper>();
 if (mapper == null)
     throw new InvalidOperationException("Mapper not found");
@@ -71,9 +70,18 @@ app.MapGet("/getcomments/{postid}", async (OmneFictioContext db, int postid) => 
     var comments = await mapper.ProjectTo<CommentDtoRead_2>(db.Comments.Where(c =>
     c.TargetPostId == postid &&
     c.DeletedStatus.Body == "Default")).ToListAsync();
+    
     comments = comments.OrderBy(c => c.PublishDate).ToList();
-
+    
     return comments;
+
+
+    /*ICollection<ReplyDtoRead_2>? Replies
+    public int? HighlightedReply { get; set; }
+    if(Replies != null && Replies.Count() > 0) {
+        HighlightedReply = Replies.OrderByDescending(r => r.VoteResult)
+                            .ThenBy(r => r.PublishDate).FirstOrDefault()!.Id;
+    }*/
 });
 
 //get comment and its replies(for modal)
@@ -97,6 +105,8 @@ app.MapGet("/getcomment/{commentid}", async (OmneFictioContext db, int commentid
 
 
 //--------------------------------------
+var securityToken = Encoding.ASCII.GetBytes(builder.Configuration.GetSection("Token").Value);
+
 
 app.MapPost("/login", async (OmneFictioContext db, AccountDtoRead_2 request) => {
     //Authentication
@@ -212,6 +222,9 @@ app.MapPost("/signin-external", async (OmneFictioContext db, [FromBody] string t
     return Results.Ok(new {jwt=createToken});
 });
 
+
+
+//-------Actions
 
 app.MapPost("/vote", async (OmneFictioContext db, VoteDtoWrite_1 request) => {
     if(await db.Accounts.FirstOrDefaultAsync(a => a.Id == request.AccountId) == null){
