@@ -679,6 +679,7 @@ img {
 .modal-replies .mr-body .mr-reply .mrr-header {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
   margin-bottom: 5px;
 }
 .modal-replies .mr-body .mr-reply .mrr-header img {
@@ -700,6 +701,17 @@ img {
   color: var(--text-color2);
   font-size: 0.7rem;
   font-family: "Gudea";
+}
+.modal-replies .mr-body .mr-reply .mrr-header .mrr-menu {
+  margin-left: auto;
+  display: flex;
+  height: 100%;
+  padding: 0 7px;
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+.modal-replies .mr-body .mr-reply .mrr-header .mrr-menu i {
+  display: flex;
 }
 .modal-replies .mr-body .mr-reply .mrr-text {
   margin-bottom: 4px;
@@ -741,17 +753,6 @@ img {
   color: var(--text-color1);
   margin-bottom: -3px;
   font-size: 0.9rem;
-}
-.modal-replies .mr-body .mr-reply .mrr-footer .mrr-menu {
-  margin-left: auto;
-  display: flex;
-  height: 100%;
-  padding: 0 7px;
-  font-size: 1.6rem;
-  cursor: pointer;
-}
-.modal-replies .mr-body .mr-reply .mrr-footer .mrr-menu i {
-  display: flex;
 }
 
 .modal-chapters {

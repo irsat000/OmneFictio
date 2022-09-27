@@ -687,6 +687,7 @@ img{
             .mrr-header{
                 display: flex;
                 align-items: center;
+                flex-wrap: wrap;
                 margin-bottom: 5px;
                 img{
                     height: 1.3rem;
@@ -707,6 +708,17 @@ img{
                     color: var(--text-color2);
                     font-size: 0.7rem;
                     font-family: 'Gudea';
+                }
+                .mrr-menu{
+                    margin-left: auto;
+                    display: flex;
+                    height: 100%;
+                    padding: 0 7px;
+                    font-size: 1.6rem;
+                    cursor: pointer;
+                    i{
+                        display: flex;
+                    }
                 }
             }
             .mrr-text{
@@ -747,17 +759,6 @@ img{
                         color: var(--text-color1);
                         margin-bottom: -3px;
                         font-size: 0.9rem;
-                    }
-                }
-                .mrr-menu{
-                    margin-left: auto;
-                    display: flex;
-                    height: 100%;
-                    padding: 0 7px;
-                    font-size: 1.6rem;
-                    cursor: pointer;
-                    i{
-                        display: flex;
                     }
                 }
             }
