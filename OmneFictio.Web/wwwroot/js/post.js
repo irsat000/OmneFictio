@@ -77,8 +77,8 @@ $(document).ready(function(){
                     } else {
                         clone.querySelector('.c-likes').textContent = "--";
                     }
-                    if(comment.repliesCount > 0){
-                        clone.querySelector('.get_replies > span').textContent = comment.repliesCount + " replies";
+                    if(comment.repliesLength > 0){
+                        clone.querySelector('.get_replies > span').textContent = comment.repliesLength + " replies";
                     } else {
                         clone.querySelector('.get_replies > span').textContent = "No reply";
                     }

@@ -12,16 +12,14 @@ public class CommentDtoRead_2
     public DeletedStatusDto? DeletedStatus { get; set; }
     public ICollection<VoteDto>? Votes { get; set; }
     public int VoteResult { get; set; } = 0;
-    public int RepliesCount { get; set; } = 0;
-    public int deneme { get; set; } = 0;
+    public int RepliesLength { get; set; } = 0;
     public CommentDtoRead_2(ICollection<VoteDto>? Votes, ICollection<ReplyDtoRead_1>? Replies)
     {
         if(Votes != null && Votes.Count > 0) {
             this.VoteResult = Votes.Count(l => l.Body) - Votes.Count(d => !d.Body);
         }
         if(Replies != null && Replies.Count > 0) {
-            this.RepliesCount = Replies.Count(r => r.DeletedStatus!.Body == "Default");
-            deneme = RepliesCount;
+            this.RepliesLength = Replies.Count(r => r.DeletedStatus!.Body == "Default");
         }
     }
 }

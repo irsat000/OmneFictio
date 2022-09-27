@@ -17,6 +17,7 @@ public class Reply
     public List<Vote> votes { get; set; }
     public int voteResult { get; set; }
 }
+//Get comment and its replies
 
 
 
