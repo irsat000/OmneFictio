@@ -1,4 +1,30 @@
 
+$(document).ready(function(){
+    
+    document.querySelector('.modalbg1').addEventListener("click", function () {
+        var oldFunc = modalbg1_click;
+        return modalbg1_click_read();
+    });
+
+
+    
+});
+
+function modalbg1_click_read(){
+    const modalbg1 = document.querySelector('.modalbg1');
+    const orderbyModal = document.getElementById('orderby-modal');
+    const filterModal = document.getElementById('filter-modal');
+    if (orderbyModal !== null && orderbyModal.classList.contains('d-flex')) {
+        orderbyModal.classList.remove('d-flex');
+        orderbyModal.classList.remove('opacity-100');
+        modalbg1.classList.remove('d-block');
+    }
+    if (filterModal !== null && filterModal.classList.contains('d-flex')) {
+        filterModal.classList.remove('d-flex');
+        filterModal.classList.remove('opacity-100');
+        modalbg1.classList.remove('d-block');
+    }
+}
 
 $('#orderby-btn, #sb-close').click(function(){
     if($('#orderby-modal').hasClass('d-flex')){

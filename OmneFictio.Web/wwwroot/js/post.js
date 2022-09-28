@@ -1,13 +1,10 @@
 
+
 $(document).ready(function () {
-
-    $('.modalbg1').click( () => {
-        var oldFunc = closeModalsDrowpdownsEtc;
-        return closeRepliesModal();
+    document.querySelector('.modalbg1').addEventListener("click", function () {
+        var oldFunc = modalbg1_click;
+        return modalbg1_click_post();
     });
-
-
-
 
 
 
@@ -46,8 +43,7 @@ $(document).ready(function () {
     chapterModalBtns.forEach(function (element) {
         element.addEventListener("click", function () {
             if (chaptersModal.classList.contains('d-flex')) {
-                chaptersModal.classList.remove('d-flex');
-                modalbg1.classList.remove('d-block');
+                closeChaptersModal();
             }
             else {
                 chaptersModal.classList.add('d-flex');
@@ -138,7 +134,6 @@ $(document).ready(function () {
                     console.log("Fetch failed -> " + error);
                 });
         })
-
     }
 
     let frController = null;
@@ -198,16 +193,7 @@ $(document).ready(function () {
             .catch(error => console.log('Fetching reply method is at fault', error));
     }
 
-
-
-
-
-
-
-
-
-
-
+    
 
     function openRepliesModal(element) {
         var commentId = element.closest('.comment').id;
@@ -218,17 +204,31 @@ $(document).ready(function () {
             fetchReplies(commentId);
         }
     }
-    function closeRepliesModal() {
+
+
+    function modalbg1_click_post() {
+        closeRepliesModal();
+        closeChaptersModal();
+    }
+    function closeRepliesModal(){
+        const modalbg1 = document.querySelector('.modalbg1');
+        const repliesModal = document.getElementById('modal-replies');
         if (repliesModal.classList.contains('d-flex')) {
             repliesModal.classList.remove('d-flex');
             modalbg1.classList.remove('d-block');
-        }
-        if (frController) {
-            frController.abort();
+            if (frController) {
+                frController.abort();
+            }
         }
     }
-
-
+    function closeChaptersModal(){
+        const modalbg1 = document.querySelector('.modalbg1');
+        const chaptersModal = document.getElementById('modal-chapters');
+        if (chaptersModal !== null && chaptersModal.classList.contains('d-flex')) {
+            chaptersModal.classList.remove('d-flex');
+            modalbg1.classList.remove('d-block');
+        }
+    }
 
 
     var periods = {
@@ -238,7 +238,6 @@ $(document).ready(function () {
         hour: 60 * 60 * 1000,
         minute: 60 * 1000
     };
-
     function TimeAgo(time) {
         var diff = Date.now() - new Date(time);
         var val;
