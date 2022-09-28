@@ -98,7 +98,7 @@ $(document).ready(function () {
                                 clone.querySelector('.r-username').textContent = hreply.account.username;
                             }
                         }
-                        else{
+                        else {
                             clone.querySelector('.reply').remove();
                         }
                         commentSection.appendChild(clone);
@@ -129,14 +129,22 @@ $(document).ready(function () {
 
     }
 
-
+    let frController = null;
     async function fetchReplies(commentId) {
+        //cancel pending request if there is one
+        if (frController) {
+            frController.abort();
+        }
+        //new controller for new request
+        frController = new AbortController();
+        const frSignal = frController.signal;
         await fetch("/g/GetComment/" + commentId, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-            }
+            },
+            signal: frSignal
         })
             .then((res) => res.json())
             .then((data) => {
@@ -192,9 +200,9 @@ $(document).ready(function () {
     function openRepliesModal(element) {
         var commentId = element.closest('.comment').id;
         if (!repliesModal.classList.contains('d-flex')) {
-            document.querySelector('#modal-replies > .mr-body').innerHTML = "";
             repliesModal.classList.add('d-flex');
             modalbg1.classList.add('d-block');
+            document.querySelector('#modal-replies > .mr-body').innerHTML = "";
             fetchReplies(commentId);
         }
     }

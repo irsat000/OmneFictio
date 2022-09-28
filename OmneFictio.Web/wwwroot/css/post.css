@@ -591,6 +591,7 @@ img {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
+  min-height: 200px;
 }
 .modal-replies .mr-body .mr-comment {
   display: flex;

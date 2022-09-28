@@ -599,6 +599,7 @@ img{
         display: flex;
         flex-direction: column;
         overflow-y: auto;
+        min-height: 200px;
         .mr-comment{
             display: flex;
             flex-direction: column;
