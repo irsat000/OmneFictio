@@ -38,24 +38,34 @@ main {
   max-height: 370px;
   border-radius: 4px;
 }
-.post-2 .post-card .p-body .p-cover .p-basecover:hover + .p-upscalecover {
+.post-2 .post-card .p-body .p-cover .p-basecover:hover + .p-upscalecover-cont {
   visibility: visible !important;
 }
-.post-2 .post-card .p-body .p-cover .p-upscalecover {
+.post-2 .post-card .p-body .p-cover .p-upscalecover-cont {
   position: absolute;
   top: 0;
   left: 0;
   height: 100%;
   width: 100%;
-  border-radius: 8px;
   visibility: hidden;
+  cursor: pointer;
   transition: all 0.1s ease;
   z-index: 10;
-  cursor: pointer;
 }
-.post-2 .post-card .p-body .p-cover .p-upscalecover:hover {
-  height: 150%;
-  width: 150%;
+.post-2 .post-card .p-body .p-cover .p-upscalecover-cont .p-upscalecover {
+  height: 100%;
+  width: 100%;
+  border-radius: 8px;
+  filter: grayscale(50%) brightness(60%);
+}
+.post-2 .post-card .p-body .p-cover .p-upscalecover-cont i {
+  position: absolute;
+  bottom: 6px;
+  right: 10px;
+  font-size: 1.4rem;
+  opacity: 0.7;
+}
+.post-2 .post-card .p-body .p-cover .p-upscalecover-cont:hover {
   visibility: visible;
 }
 .post-2 .post-card .p-body .p-text {
@@ -875,6 +885,14 @@ main {
   .post-2 .post-card {
     align-items: unset;
     padding: unset;
+  }
+  .p-upscalecover-cont:hover {
+    height: 150% !important;
+    width: 150% !important;
+  }
+  .p-upscalecover-cont i {
+    right: 14px !important;
+    font-size: 2rem !important;
   }
   .chapter_selection {
     justify-content: space-evenly;
