@@ -1,5 +1,17 @@
 
 $(document).ready(function () {
+
+    $('.modalbg1').click( () => {
+        var oldFunc = closeModalsDrowpdownsEtc;
+        return closeRepliesModal();
+    });
+
+
+
+
+
+
+
     var commentMenuBtns = document.querySelectorAll('.c-menu');
     commentMenuBtns.forEach(function (element) {
         element.addEventListener("click", function () {
@@ -25,7 +37,7 @@ $(document).ready(function () {
         }
         else if (e.target.classList.contains('mr-close') ||
             e.target.parentNode.classList.contains('mr-close')) {
-            closeRepliesModal(e.target);
+            closeRepliesModal();
         }
     });
 
@@ -206,10 +218,13 @@ $(document).ready(function () {
             fetchReplies(commentId);
         }
     }
-    function closeRepliesModal(element) {
+    function closeRepliesModal() {
         if (repliesModal.classList.contains('d-flex')) {
             repliesModal.classList.remove('d-flex');
             modalbg1.classList.remove('d-block');
+        }
+        if (frController) {
+            frController.abort();
         }
     }
 

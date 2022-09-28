@@ -14,7 +14,7 @@ $(document).ready(function(){
 
     
 
-    $('.modalbg1').click(function(){
+    $('.modalbg1').click( () => {
         closeModalsDrowpdownsEtc();
         /* Maybe I use it
         if($('.account-dropdown').hasClass('d-block')){
@@ -315,7 +315,7 @@ function googleHandleCredentialResponse(response) {
 
 
 //close modals, dropdowns, drawer etc
-function closeModalsDrowpdownsEtc(){
+closeModalsDrowpdownsEtc = function(){
     const modalbg1 = document.getElementsByClassName('modalbg1')[0];
     const drawer = document.getElementById('drawer');
     const repliesModal = document.getElementById('modal-replies');
@@ -342,10 +342,12 @@ function closeModalsDrowpdownsEtc(){
         loginModal.classList.remove('d-flex');
         modalbg1.classList.remove('d-block');
     }
-    if(repliesModal !== null && repliesModal.classList.contains('d-flex')){
+    /*if(repliesModal !== null && repliesModal.classList.contains('d-flex')){
         repliesModal.classList.remove('d-flex');
         modalbg1.classList.remove('d-block');
     }
+    transfered to post.js
+    */
     if(chaptersModal !== null && chaptersModal.classList.contains('d-flex')){
         chaptersModal.classList.remove('d-flex');
         modalbg1.classList.remove('d-block');
