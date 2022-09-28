@@ -38,10 +38,10 @@ main {
   max-height: 370px;
   border-radius: 4px;
 }
-.post-2 .post-card .p-body .p-cover .p-basecover:hover + .p-megacover {
+.post-2 .post-card .p-body .p-cover .p-basecover:hover + .p-upscalecover {
   visibility: visible !important;
 }
-.post-2 .post-card .p-body .p-cover .p-megacover {
+.post-2 .post-card .p-body .p-cover .p-upscalecover {
   position: absolute;
   top: 0;
   left: 0;
@@ -51,8 +51,9 @@ main {
   visibility: hidden;
   transition: all 0.1s ease;
   z-index: 10;
+  cursor: pointer;
 }
-.post-2 .post-card .p-body .p-cover .p-megacover:hover {
+.post-2 .post-card .p-body .p-cover .p-upscalecover:hover {
   height: 150%;
   width: 150%;
   visibility: visible;
@@ -220,6 +221,44 @@ main {
   font-size: 0.8rem;
 }
 
+.fullsize-cover-cont {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 600;
+}
+.fullsize-cover-cont .fsc-wrap {
+  width: 100%;
+  height: 100vh;
+  position: relative;
+  background-color: rgba(0, 0, 0, 0.6);
+}
+.fullsize-cover-cont .fsc-wrap .fsc-close {
+  z-index: 602;
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  cursor: pointer;
+  padding: 10px 14px;
+  font-size: 2.2rem;
+  text-shadow: 0px 0px 6px var(--text-color-boxshadow1);
+}
+.fullsize-cover-cont img {
+  z-index: 601;
+  max-width: 100%;
+  max-height: 100vh;
+  margin: auto;
+  display: block;
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+}
+
 .start_reading {
   width: 100%;
   display: flex;
@@ -283,11 +322,6 @@ main {
 }
 .rate_it span {
   margin-left: 16px;
-}
-
-img {
-  height: 1.7rem;
-  width: 1.7rem;
 }
 
 .add_comment-cont {

@@ -157,7 +157,6 @@
 </template>
 
 
-
 <div class="modal-chapters" id="modal-chapters">
     <div class="mc-header">
         <span>Chapters</span>
@@ -231,6 +230,16 @@
     </div>
 </div>
 
+<div class="fullsize-cover-cont" id="fullsize-cover">
+    <div class="fsc-wrap" id="fsc-wrap">
+        <div class="fsc-close" id="fsc-close">
+            <i class="bi bi-x-lg"></i>
+        </div>
+        <!--<div style='background-image: url("/images/covers/@post.coverImage");'></div>-->
+    </div>
+    <img src="/images/covers/@post.coverImage">
+</div>
+
 <div class="post-2">
     <div class="post-card">
         <div class="p-body">
@@ -238,7 +247,7 @@
                 <div class="p-cover">
                     <img src="/images/covers/@post.coverImage" class="p-basecover" 
                         onerror="this.onerror=null; this.closest('.p-cover').remove()">
-                    <img src="/images/covers/@post.coverImage" class="p-megacover">
+                    <img src="/images/covers/@post.coverImage" class="p-upscalecover" id="p-upscalecover">
                 </div>
             }
             <div class="p-text">

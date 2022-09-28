@@ -688,7 +688,7 @@ header .header-wrap {
   }
   ::-webkit-scrollbar {
     height: 6px;
-    width: 10px;
+    width: 15px;
     background-color: #F5F5F5;
   }
   ::-webkit-scrollbar-thumb {

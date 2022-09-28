@@ -6,7 +6,23 @@ $(document).ready(function () {
         return modalbg1_click_post();
     });
 
-
+    //-----full size cover------
+    const coverBtn = document.getElementById('p-upscalecover');
+    const fullsizecover = document.getElementById('fullsize-cover');
+    const fsc_close = [document.getElementById('fsc-wrap'), document.getElementById('fsc-close')];
+    coverBtn.addEventListener("click", function(){
+        if(!fullsizecover.classList.contains('d-block')){
+            fullsizecover.classList.add('d-block')
+        }
+    });
+    fsc_close.forEach(function (element) {
+        element.addEventListener("click", function () {
+            if(fullsizecover.classList.contains('d-block')){
+                fullsizecover.classList.remove('d-block')
+            }
+        });
+    });
+    //----------------------
 
 
     var commentMenuBtns = document.querySelectorAll('.c-menu');
@@ -25,7 +41,6 @@ $(document).ready(function () {
     const modalbg1 = document.getElementsByClassName('modalbg1')[0];
     const repliesModal = document.getElementById('modal-replies');
     const chaptersModal = document.getElementById('modal-chapters');
-
 
     document.addEventListener('click', function (e) {
         if (e.target.classList.contains('get_replies') ||
