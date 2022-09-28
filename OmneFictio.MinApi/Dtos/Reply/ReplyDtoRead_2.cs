@@ -11,6 +11,9 @@ public partial class ReplyDtoRead_2
     public DeletedStatusDto? DeletedStatus { get; set; }
     public ICollection<VoteDto>? Votes { get; set; }
     public int VoteResult { get; set; } = 0;
+    public ReplyDtoRead_2()
+    {
+    } 
     public ReplyDtoRead_2(ICollection<VoteDto>? Votes)
     {
         if(Votes != null && Votes.Count > 0)

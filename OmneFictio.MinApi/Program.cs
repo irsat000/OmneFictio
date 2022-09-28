@@ -84,6 +84,15 @@ app.MapGet("/getcomments/{postid}", async (OmneFictioContext db, int postid) => 
     }*/
 });
 
+app.MapGet("/get_highlighted_comment/{commentid}", async (OmneFictioContext db, int commentid) => {
+    var replies = await mapper.ProjectTo<ReplyDtoRead_2>(db.Replies.Where(r =>
+    r.CommentId == commentid)).ToListAsync();
+    ReplyDtoRead_2? HighlightedReply = 
+                replies.OrderByDescending(r => r.VoteResult)
+                        .ThenBy(r => r.PublishDate).FirstOrDefault();
+    return HighlightedReply;
+});
+
 //get comment and its replies(for modal)
 app.MapGet("/getcomment/{commentid}", async (OmneFictioContext db, int commentid) => {
     var comment = await mapper.ProjectTo<CommentDtoRead_3>(db.Comments.Where(c =>

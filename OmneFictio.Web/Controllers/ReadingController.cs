@@ -1,6 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
 using OmneFictio.Web.Models;
 using OmneFictio.Web.CommentReadModel;
+using OmneFictio.Web.CommentReadModel2;
 using System.Text.Json;
 using OmneFictio.Web.PostReadModel;
 
@@ -53,6 +54,21 @@ public class ReadingController : Controller
         return new JsonResult(Ok(comments));
     }
 
+    [HttpGet("g/GetHighlightedReply/{commentId}")]
+    public async Task<JsonResult> GetHighlightedReply(int commentId)
+    {
+        string url = "https://localhost:7022/get_highlighted_comment/" + commentId;
+        string apiResponse = await _httpClient.GetStringAsync(url);
+
+        CommentReadModel2.Reply? h_reply = JsonSerializer.Deserialize<CommentReadModel2.Reply>(apiResponse);
+         
+        if(h_reply == null) {
+            return new JsonResult(NotFound());
+        } else {
+            return new JsonResult(Ok(h_reply));
+        }
+    }
+
     
     //fetch api - get comment and its replies
     [HttpGet("g/GetComment/{commentId}")]
@@ -66,7 +82,6 @@ public class ReadingController : Controller
         if(comment == null || comment.deletedStatus.body != "Default") {
             return new JsonResult(NotFound());
         }
-        //return new JsonResult(NotFound());
         return new JsonResult(Ok(comment));
     }
 
