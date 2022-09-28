@@ -5,9 +5,17 @@ $(document).ready(function(){
         var oldFunc = modalbg1_click;
         return modalbg1_click_read();
     });
+    document.querySelector('.modalbg2').addEventListener("click", function () {
+        return modalbg2_click_read();
+    });
 
-
-    
+    //Close second modals on the page
+    $('#f-taggdd-close').click(function(){
+        closeTagModal();
+    });
+    $('#fadds-close').click(function(){
+        closeSeriesModal();
+    });
 });
 
 function modalbg1_click_read(){
@@ -24,6 +32,10 @@ function modalbg1_click_read(){
         filterModal.classList.remove('opacity-100');
         modalbg1.classList.remove('d-block');
     }
+}
+function modalbg2_click_read(){
+    closeTagModal();
+    closeSeriesModal();
 }
 
 $('#orderby-btn, #sb-close').click(function(){
@@ -70,23 +82,20 @@ $('#po-filter, #f-close').click(function(){
     }
 });
 
-//----------FILTERS----------------------------------------
+//----------Modals----------------------------------------
 
-function closeTagAndSeriesDD(){
+function closeTagModal(){
     if($('#filter-tagddmodal').hasClass('d-flex')){
         $('#filter-tagddmodal').removeClass('d-flex');
         $('.modalbg2').removeClass('d-block');
     }
+}
+function closeSeriesModal(){
     if($("#filter-addseriesmodal").hasClass('d-flex')){
         $("#filter-addseriesmodal").removeClass('d-flex');
         $('.modalbg2').removeClass('d-block');
     }
 }
-
-//Close second modals on the page
-$('.modalbg2, #f-taggdd-close, #fadds-close').click(function(){
-    closeTagAndSeriesDD();
-});
 
 //Resets the filters
 $('#f-resetbtn').click(function(){
@@ -107,25 +116,15 @@ $('#f-resetbtn').click(function(){
     }
     //options
     $(".f-options > select").val('0');
-        //$("#allow18checkbox").prop("checked", false);
+    //tag modal
+    $('#tagdd-searchbar').val("");
+    $("#f-tagdd-list > li").show();
+    //fanfiction modal
+    $('#fadds-searchbar').val("");
+    $("#fadds-list > li").show();
+    $(".fadds-dropdowns > select").val('0');
 });
 
-//----TYPE SELECTION------
-//Changes the condition of types in filter modal. Also changes input that will be sent to back end.
-$('.f-typebtns').click(function(){
-    var buttontext = $(this).val();
-    var type = $(this).attr('data-type');
-    if($(this).hasClass('f-type_active')){
-        $(this).removeClass('f-type_active');
-        $(this).val(buttontext.replace('-', '+'));
-        $('.f-type_cont input[value="'+type+'"]').remove();
-    }
-    else{
-        $(this).addClass('f-type_active');
-        $(this).val(buttontext.replace('+', '-'));
-        $(".f-type_cont").append('<input type="hidden" name="chosentypes" value="'+type+'"/>');
-    }
-});
 
 //-----TAG SELECTIONS------
 
@@ -166,7 +165,7 @@ $('#f-tagdd-list > li').click(function(){
     }
     $('#tagdd-searchbar').val("");
     $("#f-tagdd-list > li").show();
-    closeTagAndSeriesDD();
+    closeTagModal();
 });
 //searchbar that works with keyup. it's for finding the option more easily.
 $("#tagdd-searchbar").keyup(function(){
@@ -211,7 +210,7 @@ $('#fadds-list > li').click(function(){
                                     <input type="hidden" name="seriesinclude" value="`+name+`"/>`);
     $('#fadds-searchbar').val("");
     $("#fadds-list > li").show();
-    closeTagAndSeriesDD();
+    closeSeriesModal();
 });
 $("#fadds-searchbar").keyup(function(){
     var filter = $(this).val();
