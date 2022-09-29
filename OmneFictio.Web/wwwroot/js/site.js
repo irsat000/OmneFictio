@@ -171,7 +171,7 @@ $(document).ready(function () {
             e.target.classList.contains('dislikebtn')) {
             const btn = e.target;
             const action = btn.getAttribute('data-action');
-            const targetType = btn.getAttribute('data-target');
+            const targetType = btn.getAttribute('data-target_type');
             let targetId = -1;
             switch (targetType) {
                 case "post":
@@ -209,7 +209,7 @@ $(document).ready(function () {
 VoteRequest = async function (btn, data) {
     var targetId = data.TargetId;
     var action = data.Body ? "like" : "dislike";
-    
+
     await fetch("/HomeAction/Vote", {
         method: 'POST',
         headers: {
@@ -220,54 +220,23 @@ VoteRequest = async function (btn, data) {
     })
         .then(function (response) {
             if (response.ok) {
-                var p_likesElement = document.querySelector('[data-postid="'+ targetId + '"] .p-likes');
-                var p_likes = document.getElementById("postvote-" + targetId).value;
-                if (p_likes !== "--") {
-                    var votecount = parseInt(p_likes);
-                    if (action === "like") {
-                        p_likesElement.innerText = votecount + 1;
-                    }
-                    else {
-                        p_likesElement.innerText = votecount - 1;
-                    }
-                }
-                var btnsibling = document.querySelector('[data-postid="'+ targetId + '"] .p-likebtn');
-                if (action === "like") {
-                    btnsibling = document.querySelector('[data-postid="'+ targetId + '"] .p-dislikebtn');
-                }
-                if (btnsibling.classList.contains("active")) {
-                    btnsibling.classList.remove("active");
-                    if (btnsibling.classList.contains("p-dislikebtn")) {
-                        btnsibling.classList.remove("bi-hand-thumbs-down-fill");
-                        btnsibling.classList.add("bi-hand-thumbs-down");
-                        if (p_likes !== "--") {
-                            p_likesElement.innerText = votecount + 1;
-                        }
-                    }
-                    else {
-                        btnsibling.classList.remove("bi-hand-thumbs-up-fill");
-                        btnsibling.classList.add("bi-hand-thumbs-up");
-                        if (p_likes !== "--") {
-                            p_likesElement.innerText = votecount - 1;
-                        }
+                let btnSibling = action === "like"
+                    ? btn.parentElement.querySelector('.dislikebtn')
+                    : btn.parentElement.querySelector('.likebtn');
+                const baseVotesInput = btn.parentElement.querySelector('[data-base_votes]')
+                    .getAttribute('data-base_votes');
+                const showVoteCount = btn.parentElement.querySelector('.vote_count');
+                const baseVotes = parseInt(baseVotesInput, 10);
+                //Increase/Decrease vote count
+                if(baseVotesInput !== "--"){
+                    if(action === "like"){
+                        showVoteCount.innerText = baseVotes + 1;
+                    } else {
+                        showVoteCount.innerText = baseVotes - 1;
                     }
                 }
-                if (btn.classList.contains("active")) {
-                    if (p_likes !== "--") {
-                        //return to original value without calculation
-                        p_likesElement.innerText = votecount;
-                    }
-                    btn.classList.remove("active");
-                    if (action === "like") {
-                        btn.classList.remove("bi-hand-thumbs-up-fill");
-                        btn.classList.add("bi-hand-thumbs-up");
-                    }
-                    else {
-                        btn.classList.remove("bi-hand-thumbs-down-fill");
-                        btn.classList.add("bi-hand-thumbs-down");
-                    }
-                }
-                else {
+                //Vote
+                if(!btn.classList.contains("active")) {
                     btn.classList.add("active");
                     if (action === "like") {
                         btn.classList.remove("bi-hand-thumbs-up");
@@ -278,13 +247,48 @@ VoteRequest = async function (btn, data) {
                         btn.classList.add("bi-hand-thumbs-down-fill");
                     }
                 }
+                //Take the vote back
+                else {
+                    btn.classList.remove("active");
+                    if (action === "like") {
+                        btn.classList.remove("bi-hand-thumbs-up-fill");
+                        btn.classList.add("bi-hand-thumbs-up");
+                    }
+                    else {
+                        btn.classList.remove("bi-hand-thumbs-down-fill");
+                        btn.classList.add("bi-hand-thumbs-down");
+                    }
+                    if(baseVotesInput !== "--"){
+                        showVoteCount.innerText = baseVotes;
+                    }
+                }
+                //Voting again - Opposite vote
+                if (btnSibling.classList.contains("active")) {
+                    //removes the active status of old one
+                    //doesn't add something to the current action btn
+                    btnSibling.classList.remove("active");
+                    if (btnSibling.classList.contains("dislikebtn")) {
+                        btnSibling.classList.remove("bi-hand-thumbs-down-fill");
+                        btnSibling.classList.add("bi-hand-thumbs-down");
+                        if (baseVotesInput !== "--") {
+                            showVoteCount.innerText = baseVotes + 1;
+                        }
+                    }
+                    else {
+                        btnSibling.classList.remove("bi-hand-thumbs-up-fill");
+                        btnSibling.classList.add("bi-hand-thumbs-up");
+                        if (baseVotesInput !== "--") {
+                            showVoteCount.innerText = baseVotes - 1;
+                        }
+                    }
+                }
             }
             else {
                 console.log("Server error -> " + response.status);
             }
         })
         .catch(error => console.log('Vote function failed.', error));
-    
+
 }
 
 
