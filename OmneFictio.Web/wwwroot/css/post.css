@@ -40,6 +40,8 @@ main {
 }
 .post-2 .post-card .p-body .p-cover .p-basecover:hover + .p-upscalecover-cont {
   visibility: visible !important;
+  height: 120%;
+  width: 120%;
 }
 .post-2 .post-card .p-body .p-cover .p-upscalecover-cont {
   position: absolute;
@@ -67,6 +69,8 @@ main {
 }
 .post-2 .post-card .p-body .p-cover .p-upscalecover-cont:hover {
   visibility: visible;
+  height: 120%;
+  width: 120%;
 }
 .post-2 .post-card .p-body .p-text {
   display: flex;
@@ -485,7 +489,7 @@ main {
 .comments .comment-cont .comment .c-text {
   padding: 0px 10px;
   margin: 6px 0;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-family: "Gudea", sans-serif;
   line-height: 1rem;
 }
@@ -543,7 +547,7 @@ main {
 }
 .comments .comment-cont .reply .r-text {
   padding: 0 10px 6px;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-family: "Gudea", sans-serif;
   line-height: 1rem;
 }
@@ -681,7 +685,7 @@ main {
 }
 .modal-replies .mr-body .mr-comment .mrc-text {
   margin: 10px 0;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-family: "Gudea", sans-serif;
   line-height: 1rem;
 }
@@ -760,7 +764,7 @@ main {
 }
 .modal-replies .mr-body .mr-reply .mrr-text {
   margin-bottom: 4px;
-  font-size: 0.8rem;
+  font-size: 0.9rem;
   font-family: "Gudea", sans-serif;
   line-height: 1rem;
 }
@@ -885,10 +889,6 @@ main {
   .post-2 .post-card {
     align-items: unset;
     padding: unset;
-  }
-  .p-upscalecover-cont:hover {
-    height: 150% !important;
-    width: 150% !important;
   }
   .p-upscalecover-cont i {
     right: 14px !important;

@@ -33,19 +33,19 @@ $(document).ready(function () {
     });
     //----------------------
 
-
-    var commentMenuBtns = document.querySelectorAll('.c-menu');
-    commentMenuBtns.forEach(function (element) {
-        element.addEventListener("click", function () {
-            const menu = element.closest('.c-header')
-                .querySelector('.c-menupopup');
-            if (menu.classList.contains('d-block')) {
-                menu.classList.remove('d-block');
-            } else {
-                menu.classList.add('d-block');
-            }
-        });
-    }); //will be transfered to document.onclick because these are appended elements.
+    //open or close comment menu
+    document.addEventListener('click', function (e) {
+        if (e.target.classList.contains('c-menu') ||
+            e.target.parentNode.classList.contains('c-menu')) {
+                const menu = e.target.closest('.c-header')
+                    .querySelector('.c-menupopup');
+                if (menu.classList.contains('d-block')) {
+                    menu.classList.remove('d-block');
+                } else {
+                    menu.classList.add('d-block');
+                }
+        }
+    });
 
     const modalbg1 = document.getElementsByClassName('modalbg1')[0];
     const repliesModal = document.getElementById('modal-replies');
@@ -109,12 +109,11 @@ $(document).ready(function () {
                         } else {
                             clone.querySelector('.c-likes').textContent = "--";
                         }
-                        if (comment.repliesLength > 0) {
-                            clone.querySelector('.get_replies > span').textContent = comment.repliesLength + " replies";
-                        } else {
-                            clone.querySelector('.get_replies > span').textContent = "No reply";
+                        var repliesLengthText = " replies";
+                        if (comment.repliesLength < 2){
+                            repliesLengthText = " reply";
                         }
-
+                        clone.querySelector('.get_replies > span').textContent = comment.repliesLength + repliesLengthText;
                         const hreply = await fetchHighlightedReply(comment.id);
                         if (hreply.hasOwnProperty('id')) {
                             clone.querySelector('.reply').id = hreply.id;

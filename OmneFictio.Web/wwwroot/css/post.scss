@@ -35,6 +35,8 @@ main{
                     border-radius: 4px;
                     &:hover + .p-upscalecover-cont{
                         visibility: visible !important;
+                        height: 120%;
+                        width: 120%;
                     }
                 }
                 .p-upscalecover-cont{
@@ -62,6 +64,8 @@ main{
                     }
                     &:hover{
                         visibility: visible;
+                        height: 120%;
+                        width: 120%;
                     }
                 }
             }
@@ -489,7 +493,7 @@ main{
             .c-text{
                 padding: 0px 10px;
                 margin: 6px 0;
-                font-size: 0.8rem;
+                font-size: 0.9rem;
                 font-family: "Gudea", sans-serif;
                 line-height: 1rem;
                 span{
@@ -547,7 +551,7 @@ main{
             padding: 6px 0;
             .r-text{
                 padding: 0 10px 6px;
-                font-size: 0.8rem;
+                font-size: 0.9rem;
                 font-family: "Gudea", sans-serif;
                 line-height: 1rem;
             }
@@ -687,7 +691,7 @@ main{
             }
             .mrc-text{
                 margin: 10px 0;
-                font-size: 0.8rem;
+                font-size: 0.9rem;
                 font-family: "Gudea", sans-serif;
                 line-height: 1rem;
                 span{
@@ -768,7 +772,7 @@ main{
             }
             .mrr-text{
                 margin-bottom: 4px;
-                font-size: 0.8rem;
+                font-size: 0.9rem;
                 font-family: "Gudea", sans-serif;
                 line-height: 1rem;
                 span{
@@ -913,10 +917,6 @@ main{
     }
 
     .p-upscalecover-cont{
-        &:hover{
-            height: 150% !important;
-            width: 150% !important;
-        }
         i{
             right: 14px !important;
             font-size: 2rem !important;
