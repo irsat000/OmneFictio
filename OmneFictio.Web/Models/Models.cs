@@ -25,10 +25,8 @@ public partial class VoteWrite1
 {
     public int? AccountId { get; set; }
     public bool Body { get; set; }
-    public int? TargetPostId { get; set; }
-    public int? TargetChapterId { get; set; }
-    public int? TargetCommentId { get; set; }
-    public int? TargetReplyId { get; set; }
+    public int? TargetId { get; set; }
+    public string? TargetType { get; set; }
 }
 //Voting
 

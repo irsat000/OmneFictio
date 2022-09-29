@@ -279,7 +279,7 @@
                     continue;
                     for tests
                 }*/
-                <div class="post" id="post-@post.id">
+                <div class="post" data-postid="@post.id">
                     <div class="post-detail d-flex">
                         <div class="p-header">
                             <div class="p-title">
@@ -315,10 +315,10 @@
                                     }
                                     
                                     if(votedByUser == 1){
-                                        <i class="bi bi-hand-thumbs-up-fill active post-vote p-likebtn likebtn" data-action="like"></i>
+                                        <i class="bi bi-hand-thumbs-up-fill active post-vote p-likebtn likebtn" data-action="like" data-target="post"></i>
                                     }
                                     else if(votedByUser == 0 || votedByUser == -1){
-                                        <i class="bi bi-hand-thumbs-up post-vote p-likebtn likebtn" data-action="like"></i>
+                                        <i class="bi bi-hand-thumbs-up post-vote p-likebtn likebtn" data-action="like" data-target="post"></i>
                                     }
                                     else if(votedByUser == -2){
                                         <i class="bi bi-hand-thumbs-up p-likebtn likebtn"></i>
@@ -334,10 +334,10 @@
                                 </span>
                                 @{
                                     if(votedByUser == 0){
-                                        <i class="bi bi-hand-thumbs-down-fill active post-vote p-dislikebtn dislikebtn" data-action="dislike"></i>
+                                        <i class="bi bi-hand-thumbs-down-fill active post-vote p-dislikebtn dislikebtn" data-action="dislike" data-target="post"></i>
                                     }
                                     else if(votedByUser == 1 || votedByUser == -1){
-                                        <i class="bi bi-hand-thumbs-down post-vote p-dislikebtn dislikebtn" data-action="dislike"></i>
+                                        <i class="bi bi-hand-thumbs-down post-vote p-dislikebtn dislikebtn" data-action="dislike" data-target="post"></i>
                                     }
                                     else if(votedByUser == -2){
                                         <i class="bi bi-hand-thumbs-down p-dislikebtn dislikebtn"></i>

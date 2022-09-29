@@ -166,40 +166,50 @@ $(document).ready(function () {
 
 
     //Vote - fetch api
-    var voteBtns = document.getElementsByClassName('post-vote');
-    Array.from(voteBtns).forEach(btn => {
-        btn.addEventListener('click', async function (event) {
-            var action = btn.getAttribute('data-action');
-            var voteTarget = "post";
-            var targetElement = btn.closest('.post').id;
-            if (targetElement !== null) {
-                VoteRequest(btn, voteTarget, action, targetElement);
+    document.addEventListener('click', function (e) {
+        if (e.target.classList.contains('likebtn') ||
+            e.target.classList.contains('dislikebtn')) {
+            const btn = e.target;
+            const action = btn.getAttribute('data-action');
+            const targetType = btn.getAttribute('data-target');
+            let targetId = -1;
+            switch (targetType) {
+                case "post":
+                    targetId = parseInt(btn.closest('[data-postid]')
+                        .getAttribute('data-postid'), 10);
+                    break;
+                case "comment":
+                    targetId = parseInt(btn.closest('[data-commentid]')
+                        .getAttribute('data-commentid'), 10);
+                    break;
+                case "reply":
+                    targetId = parseInt(btn.closest('[data-replyid]')
+                        .getAttribute('data-replyid'), 10);
+                    break;
+                case "chapter":
+                    targetId = parseInt(btn.closest('[data-chapterid]')
+                        .getAttribute('data-chapterid'), 10);
+                    break;
+                default:
+                    return;
             }
-        });
+            if (targetId !== -1) {
+                let vote = false;
+                if (action === "like") { vote = true; }
+                const data = { TargetId: targetId, Body: vote, TargetType: targetType };
+                VoteRequest(btn, data);
+            }
+        }
     });
+
+
 });
 
 
-async function VoteRequest(btn, voteTarget, action, targetElement) {
-    var targetId = targetElement.replace("post-", "");
-
-    var vote;
-    if (action === "like") { vote = true; }
-    else { vote = false; }
-
-    var data = {};
-    if (voteTarget == "post") {
-        data = { TargetPostId: targetId, Body: vote };
-    }
-    else if (voteTarget == "chapter") {
-        data = { TargetChapterId: targetId, Body: vote };
-    }
-    else if (voteTarget == "comment") {
-        data = { TargetCommentId: targetId, Body: vote };
-    }
-    else if (voteTarget == "like") {
-        data = { TargetReplyId: targetId, Body: vote };
-    }
+VoteRequest = async function (btn, data) {
+    var targetId = data.TargetId;
+    var action = data.Body ? "like" : "dislike";
+    
     await fetch("/HomeAction/Vote", {
         method: 'POST',
         headers: {
@@ -210,7 +220,7 @@ async function VoteRequest(btn, voteTarget, action, targetElement) {
     })
         .then(function (response) {
             if (response.ok) {
-                var p_likesElement = document.querySelectorAll('#' + targetElement + ' .p-likes')[0];
+                var p_likesElement = document.querySelector('[data-postid="'+ targetId + '"] .p-likes');
                 var p_likes = document.getElementById("postvote-" + targetId).value;
                 if (p_likes !== "--") {
                     var votecount = parseInt(p_likes);
@@ -221,9 +231,9 @@ async function VoteRequest(btn, voteTarget, action, targetElement) {
                         p_likesElement.innerText = votecount - 1;
                     }
                 }
-                var btnsibling = document.querySelectorAll('#' + targetElement + ' .p-likebtn')[0];
+                var btnsibling = document.querySelector('[data-postid="'+ targetId + '"] .p-likebtn');
                 if (action === "like") {
-                    btnsibling = document.querySelectorAll('#' + targetElement + ' .p-dislikebtn')[0];
+                    btnsibling = document.querySelector('[data-postid="'+ targetId + '"] .p-dislikebtn');
                 }
                 if (btnsibling.classList.contains("active")) {
                     btnsibling.classList.remove("active");
@@ -274,6 +284,7 @@ async function VoteRequest(btn, voteTarget, action, targetElement) {
             }
         })
         .catch(error => console.log('Vote function failed.', error));
+    
 }
 
 

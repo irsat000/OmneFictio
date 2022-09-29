@@ -7,7 +7,6 @@ $(document).ready(function () {
     });
 
     //-----full size cover------
-    //const coverBtn = document.getElementById('p-upscalecover');
     const fullsizecover = document.getElementById('fullsize-cover');
     const fsc_close = [document.getElementById('fsc-wrap'), document.getElementById('fsc-close')];
     
@@ -19,11 +18,6 @@ $(document).ready(function () {
             }
         }
     });
-    /*coverBtn.addEventListener("click", function(){
-        if(!fullsizecover.classList.contains('d-block')){
-            fullsizecover.classList.add('d-block')
-        }
-    });*/
     fsc_close.forEach(function (element) {
         element.addEventListener("click", function () {
             if(fullsizecover.classList.contains('d-block')){

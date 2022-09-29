@@ -240,50 +240,53 @@ app.MapPost("/vote", async (OmneFictioContext db, VoteDtoWrite_1 request) => {
         return Results.StatusCode(480);
     }
     
-    string type = "";
-    if(request.TargetPostId != null)
-        type = "post";
-    else if(request.TargetChapterId != null)
-        type = "chapter";
-    else if(request.TargetCommentId != null)
-        type = "comment";
-    else if(request.TargetReplyId != null)
-        type = "reply";
+    string type = request.TargetType;
 
     //checks if it's already voted
     Vote? checkVote = null;
     if(type == "post"){
         checkVote = await db.Votes.SingleOrDefaultAsync(x => x.AccountId == request.AccountId &&
-                x.TargetPostId == request.TargetPostId);
+                x.TargetPostId == request.TargetId);
     }
     else if(type == "chapter"){
         checkVote = await db.Votes.SingleOrDefaultAsync(x => x.AccountId == request.AccountId &&
-                x.TargetChapterId == request.TargetChapterId);
+                x.TargetChapterId == request.TargetId);
     }
     else if(type == "comment"){
         checkVote = await db.Votes.SingleOrDefaultAsync(x => x.AccountId == request.AccountId && 
-                x.TargetCommentId == request.TargetCommentId);
+                x.TargetCommentId == request.TargetId);
     }
     else if(type == "reply"){
         checkVote = await db.Votes.SingleOrDefaultAsync(x => x.AccountId == request.AccountId &&
-                x.TargetReplyId == request.TargetReplyId);
+                x.TargetReplyId == request.TargetId);
     }
 
     try {
-        //it's already voted but it's the opposite value
+        //it's already voted and it's the opposite value
         if(checkVote != null && checkVote.Body != request.Body){
             db.Votes.Remove(db.Votes.SingleOrDefault(x => x.Id == checkVote.Id)!);
         }
-            
         //if user clicks on the same button to take their vote back
         //else, votes the post normally
         if(checkVote != null && checkVote.Body == request.Body){
             db.Votes.Remove(db.Votes.SingleOrDefault(x => x.Id == checkVote.Id)!);
         }
         else{
-            await db.Votes.AddAsync(mapper.Map<Vote>(request));
+            Vote newVote = new Vote{
+                AccountId = request.AccountId,
+                Body = request.Body
+            };
+            
+            if(type == "post")
+                newVote.TargetPostId = request.TargetId;
+            else if(type == "chapter")
+                newVote.TargetChapterId = request.TargetId;
+            else if(type == "comment")
+                newVote.TargetCommentId = request.TargetId;
+            else if(type == "reply")
+                newVote.TargetReplyId = request.TargetId;
+            await db.Votes.AddAsync(newVote);
         }
-
         await db.SaveChangesAsync();
     } catch (Exception) {
         return Results.StatusCode(580);
