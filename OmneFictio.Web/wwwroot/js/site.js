@@ -206,7 +206,7 @@ $(document).ready(function () {
 });
 
 
-async function VoteRequest (btn, data) {
+async function VoteRequest(btn, data) {
     var targetId = data.TargetId;
     var action = data.Body ? "like" : "dislike";
 
@@ -229,16 +229,32 @@ async function VoteRequest (btn, data) {
         .catch(error => console.log('Vote function failed.', error));
 }
 
+
+let baseVotes = "notAssigned";
 function voting_visual(btn, action) {
     let btnSibling = action === "like"
         ? btn.parentElement.querySelector('.dislikebtn')
         : btn.parentElement.querySelector('.likebtn');
     const baseVotesInput = btn.parentElement.querySelector('[data-base_votes]')
         .getAttribute('data-base_votes');
+    let bvInputVal = baseVotesInput !== "--" ? parseInt(baseVotesInput, 10) : "--";
+
+    //Find the base vote
+    if (baseVotesInput !== "--" && baseVotes == "notAssigned") {
+        if(btn.parentElement.querySelector('.likebtn').classList.contains('active')){
+            baseVotes = bvInputVal - 1;
+        }
+        else if(btn.parentElement.querySelector('.dislikebtn').classList.contains('active')){
+            baseVotes = bvInputVal + 1;
+        }
+        else {
+            baseVotes = bvInputVal;
+        }
+    }
+    
     const showVoteCount = btn.parentElement.querySelector('.vote_count');
-    const baseVotes = parseInt(baseVotesInput, 10);
     //Increase/Decrease vote count
-    if (baseVotesInput !== "--") {
+    if (baseVotes !== "--") {
         if (action === "like") {
             showVoteCount.innerText = baseVotes + 1;
         } else {

@@ -244,7 +244,7 @@
                         }
 
                         //Writing base vote result
-                        if(post.voteResult >= 0){
+                        /*if(post.voteResult >= 0){
                             int baseVotes = post.voteResult;
                             if(votedByUser == 1){
                                 baseVotes = post.voteResult - 1;
@@ -254,6 +254,13 @@
                             <input type="hidden" data-base_votes="@baseVotes">
                         }
                         else{
+                            <input type="hidden" data-base_votes="--">
+                        }*/
+                    }
+                    @{
+                        if(post.voteResult >= 0){
+                            <input type="hidden" data-base_votes="@post.voteResult">
+                        } else {
                             <input type="hidden" data-base_votes="--">
                         }
                     }
