@@ -9,7 +9,6 @@ public partial class ReplyDtoRead_2
 
     public AccountDtoRead_1? Account { get; set; }
     public DeletedStatusDto? DeletedStatus { get; set; }
-    public ICollection<VoteDto>? Votes { get; set; }
     public int VoteResult { get; set; } = 0;
     public ReplyDtoRead_2()
     {

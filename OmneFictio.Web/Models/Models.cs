@@ -1,7 +1,7 @@
 
 namespace OmneFictio.Web.Models;
 
-public partial class AccountRead2
+public class AccountRead2
 {
     public string Username { get; set; } = null!;
     public string Pw { get; set; } = null!;
@@ -9,7 +9,7 @@ public partial class AccountRead2
 }
 //Authentication
 
-public partial class AccountWrite1
+public class AccountWrite1
 {
     public string Username { get; set; } = null!;
     public string Pw { get; set; } = null!;
@@ -21,12 +21,18 @@ public partial class AccountWrite1
 //sending payload to api
 
 
-public partial class VoteWrite1
+public class VoteWrite1
 {
     public int? AccountId { get; set; }
     public bool Body { get; set; }
     public int? TargetId { get; set; }
     public string? TargetType { get; set; }
+}
+public class CheckVoted
+{
+    public int? UserId { get; set; }
+    public int TargetId { get; set; }
+    public string TargetType { get; set; }
 }
 //Voting
 

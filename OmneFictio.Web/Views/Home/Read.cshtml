@@ -300,22 +300,33 @@
                         </div>
                         <div class="p-footer">
                             <div class="p-evaluation">
-                                
-                                @{ //Checking if the user logged in and voted the post
+                                @{//Required codes
+                                    //Checking if the user logged in and voted the post
+                                    string likeBtnClasses = "bi bi-hand-thumbs-up";
+                                    string dislikeBtnClasses = "bi bi-hand-thumbs-down";
                                     int votedByUser = -2; // -2 means not logged in
                                     if(userId != "-1"){
                                         if(post.votes.SingleOrDefault(p => p.accountId == Convert.ToInt32(userId) && p.body == true) != null){
                                             votedByUser = 1;
+                                            likeBtnClasses = "bi bi-hand-thumbs-up-fill active likebtn";
+                                            dislikeBtnClasses = "bi bi-hand-thumbs-down dislikebtn";
                                         }
                                         else if(post.votes.SingleOrDefault(p => p.accountId == Convert.ToInt32(userId) && p.body == false) != null){
                                             votedByUser = 0;
+                                            likeBtnClasses = "bi bi-hand-thumbs-up likebtn";
+                                            dislikeBtnClasses = "bi bi-hand-thumbs-down-fill active dislikebtn";
                                         }
                                         else{
-                                            votedByUser = -1;
+                                            likeBtnClasses = "bi bi-hand-thumbs-up likebtn";
+                                            dislikeBtnClasses = "bi bi-hand-thumbs-down dislikebtn";
                                         }
                                     }
-                                }
-                                @{ //Writing base vote result
+                                    else{
+                                        likeBtnClasses = "bi bi-hand-thumbs-up";
+                                        dislikeBtnClasses = "bi bi-hand-thumbs-down";
+                                    }
+
+                                    //Writing base vote result
                                     if(post.voteResult >= 0){
                                         int baseVotes = post.voteResult;
                                         if(votedByUser == 1){
@@ -329,43 +340,15 @@
                                         <input type="hidden" data-base_votes="--">
                                     }
                                 }
-                                @{
-                                    if(votedByUser == 1){
-                                        <i class="bi bi-hand-thumbs-up-fill active likebtn" data-action="like" data-target_type="post"></i>
-                                    }
-                                    else if(votedByUser == 0 || votedByUser == -1){
-                                        <i class="bi bi-hand-thumbs-up likebtn" data-action="like" data-target_type="post"></i>
-                                    }
-                                    else if(votedByUser == -2){
-                                        <i class="bi bi-hand-thumbs-up"></i>
-                                    }
-                                }
+                                @Html.Raw("<i class='" + @likeBtnClasses + "' data-action='like' data-target_type='post'></i>")
                                 <span class="p-likes vote_count">
-                                    @{
-                                        if(post.voteResult >= 0)
-                                            @post.voteResult
-                                        else
-                                            @Html.Raw("--")
-                                    }
+                                    @(post.voteResult >= 0 ? post.voteResult : "--")
                                 </span>
-                                @{
-                                    if(votedByUser == 0){
-                                        <i class="bi bi-hand-thumbs-down-fill active dislikebtn" data-action="dislike" data-target_type="post"></i>
-                                    }
-                                    else if(votedByUser == 1 || votedByUser == -1){
-                                        <i class="bi bi-hand-thumbs-down dislikebtn" data-action="dislike" data-target_type="post"></i>
-                                    }
-                                    else if(votedByUser == -2){
-                                        <i class="bi bi-hand-thumbs-down"></i>
-                                    }
-                                }
+                                @Html.Raw("<i class='" + @dislikeBtnClasses + "' data-action='dislike' data-target_type='post'></i>")
                                 <span class="p-rate">
-                                    @{
-                                        if(post.rateResult >= 0 && post.rateResult <= 10)
-                                            @Html.Raw(Math.Round(post.rateResult, 1).ToString() + "/10")
-                                        else
-                                            @Html.Raw("-/10")
-                                    }
+                                    @(post.rateResult >= 0 && post.rateResult <= 10
+                                        ? Math.Round(post.rateResult, 1).ToString() + "/10"
+                                        : "-/10" )
                                 </span>
                             </div>
                             <div class="p-user">
@@ -379,7 +362,7 @@
                                 }else{
                                     <span class="p-username p-deleted_user">DeletedUser</span>
                                 }
-                                <img src="/images/users/user_no_photo_300x300.png">
+                                <img src="/images/users/@userPicture" onerror="this.onerror=null; this.src='/images/onerror/user_no_photo_300x300.png'">
                             </div>
                         </div>
                     </div>

@@ -42,7 +42,6 @@ public class HomeController : Controller
         };
         //time.Stop();
         //Console.WriteLine("elapsed time: " + time.Elapsed);
-        Console.WriteLine("Type= " + Type);
         return View(viewModel);
     }
 

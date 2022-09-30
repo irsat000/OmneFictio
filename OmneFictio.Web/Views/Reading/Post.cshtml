@@ -29,7 +29,7 @@
 
 <template id="comment_instance">
     <div class="comment-cont">
-        <div class="comment">
+        <div class="comment" data-commentid="">
             <div class="c-header">
                 <img src="/images/users/user_no_photo_300x300.png">
                 <span class="c-username">
@@ -53,11 +53,10 @@
             </div>
             <div class="c-footer">
                 <div class="c-evaluation">
-                    <i class="bi bi-hand-thumbs-up likebtn" data-action="like" data-target_type="comment"></i>
-                    <span class="c-likes vote_count">
-
-                    </span>
-                    <i class="bi bi-hand-thumbs-down dislikebtn" data-action="dislike" data-target_type="comment"></i>
+                    <input type="hidden" data-base_votes="--">
+                    <i class="bi" data-action="like" data-target_type="comment"></i>
+                    <span class="c-likes vote_count">--</span>
+                    <i class="bi" data-action="dislike" data-target_type="comment"></i>
                     <a href="#" class="c-replybtn">Reply</a>
                 </div>
                 <div class="get_replies">
@@ -67,7 +66,7 @@
                 </div>
             </div>
         </div>
-        <div class="reply">
+        <div class="reply" data-replyid="">
             <div class="r-text">
                 <span>
 
@@ -75,10 +74,9 @@
             </div>
             <div class="r-footer">
                 <div class="r-evaluation">
+                    <input type="hidden" data-base_votes="--">
                     <i class="bi bi-hand-thumbs-up likebtn" data-action="like" data-target_type="reply"></i>
-                    <span class="r-likes vote_count">
-                        
-                    </span>
+                    <span class="r-likes vote_count">--</span>
                     <i class="bi bi-hand-thumbs-down dislikebtn" data-action="dislike" data-target_type="reply"></i>
                     <span class="r-gotoreply">GO</span>
                 </div>
@@ -94,7 +92,7 @@
 </template>
 
 <template id="modalReplies-comment">
-    <div class="mr-comment">
+    <div class="mr-comment" data-commentid="">
         <div class="mrc-header">
             <img src="/images/users/user_no_photo_300x300.png" onerror="this.onerror=null; this.src='/images/onerror/user_no_photo_300x300.png'">
             <span class="mrc-username">
@@ -114,10 +112,9 @@
         </div>
         <div class="mrc-footer">
             <div class="mrc-evaluation">
+                <input type="hidden" data-base_votes="--">
                 <i class="bi bi-hand-thumbs-up mrc-likebtn likebtn" data-action="like" data-target_type="comment"></i>
-                <span class="mrc-likes vote_count">
-                    
-                </span>
+                <span class="mrc-likes vote_count">--</span>
                 <i class="bi bi-hand-thumbs-down mrc-dislikebtn dislikebtn" data-action="dislike" data-target_type="comment"></i>
                 <a href="#" class="mrc-replybtn">Reply</a>
             </div>
@@ -125,7 +122,7 @@
     </div>
 </template>
 <template id="modalReplies-reply">
-    <div class="mr-reply">
+    <div class="mr-reply" data-replyid="">
         <div class="mrr-header">
             <img src="/images/users/user_no_photo_300x300.png" onerror="this.onerror=null; this.src='/images/onerror/user_no_photo_300x300.png'">
             <span class="mrr-username">
@@ -145,10 +142,9 @@
         </div>
         <div class="mrr-footer">
             <div class="mrr-evaluation">
+                <input type="hidden" data-base_votes="--">
                 <i class="bi bi-hand-thumbs-up likebtn" data-action="like" data-target_type="reply"></i>
-                <span class="mrr-likes vote_count">
-                    
-                </span>
+                <span class="mrr-likes vote_count">--</span>
                 <i class="bi bi-hand-thumbs-down dislikebtn" data-action="dislike" data-target_type="reply"></i>
                 <a href="#" class="mrr-replybtn">Reply</a>
             </div>
@@ -221,21 +217,33 @@
         <div class="p-footer">
             <div class="p-footer-wrap">
                 <div class="p-evaluation">
-                    @{ //Checking if the user logged in and voted the post
+                    @{//Required codes
+                        //Checking if the user logged in and voted the post
+                        string likeBtnClasses = "bi bi-hand-thumbs-up";
+                        string dislikeBtnClasses = "bi bi-hand-thumbs-down";
                         int votedByUser = -2; // -2 means not logged in
                         if(userId != "-1"){
                             if(post.votes.SingleOrDefault(p => p.accountId == Convert.ToInt32(userId) && p.body == true) != null){
                                 votedByUser = 1;
+                                likeBtnClasses = "bi bi-hand-thumbs-up-fill active likebtn";
+                                dislikeBtnClasses = "bi bi-hand-thumbs-down dislikebtn";
                             }
                             else if(post.votes.SingleOrDefault(p => p.accountId == Convert.ToInt32(userId) && p.body == false) != null){
                                 votedByUser = 0;
+                                likeBtnClasses = "bi bi-hand-thumbs-up likebtn";
+                                dislikeBtnClasses = "bi bi-hand-thumbs-down-fill active dislikebtn";
                             }
                             else{
-                                votedByUser = -1;
+                                likeBtnClasses = "bi bi-hand-thumbs-up likebtn";
+                                dislikeBtnClasses = "bi bi-hand-thumbs-down dislikebtn";
                             }
                         }
-                    }
-                    @{ //Writing base vote result
+                        else{
+                            likeBtnClasses = "bi bi-hand-thumbs-up";
+                            dislikeBtnClasses = "bi bi-hand-thumbs-down";
+                        }
+
+                        //Writing base vote result
                         if(post.voteResult >= 0){
                             int baseVotes = post.voteResult;
                             if(votedByUser == 1){
@@ -249,32 +257,23 @@
                             <input type="hidden" data-base_votes="--">
                         }
                     }
-                    <i class="bi bi-hand-thumbs-up likebtn" data-action="like" data-target_type="post"></i>
+                    @Html.Raw("<i class='" + @likeBtnClasses + "' data-action='like' data-target_type='post'></i>")
                     <span class="p-likes vote_count">
-                        @{
-                            if(post.voteResult >= 0)
-                                @post.voteResult
-                            else
-                                @Html.Raw("--")
-                        }
+                        @(post.voteResult >= 0 ? post.voteResult : "--")
                     </span>
-                    <i class="bi bi-hand-thumbs-down dislikebtn" data-action="dislike" data-target_type="post"></i>
+                    @Html.Raw("<i class='" + @dislikeBtnClasses + "' data-action='dislike' data-target_type='post'></i>")
                     <span class="p-rate">
-                        @{
-                            if(post.rateResult >= 0 && post.rateResult <= 10)
-                                @Html.Raw(Math.Round(post.rateResult, 1).ToString() + "/10")
-                            else
-                                @Html.Raw("-/10")
-                        }
+                        @(post.rateResult >= 0 && post.rateResult <= 10
+                            ? Math.Round(post.rateResult, 1).ToString() + "/10"
+                            : "-/10" )
                     </span>
                 </div>
                 <div class="p-user">
                     @if(post.account != null){
                         <span class="p-username">
-                            @if(post.account.displayName != null)
-                                @post.account.displayName
-                            else
-                                @post.account.username
+                            @(post.account.displayName != null
+                                ? post.account.displayName
+                                : post.account.username )
                         </span>
                     }else{
                         <span class="p-username p-deleted_user">DeletedUser</span>
@@ -358,69 +357,5 @@
 }
 
 <div class="comments" id="comment-section">
-<!--
-    foreach (PostModel.Comment comment in post.comments)
-    {
-    <div class="comment-cont">
-        <div class="comment" id="comment-comment.id">
-            <div class="c-header">
-                <img src="/images/users/user_no_photo_300x300.png">
-                <span class="c-username">
-                    if(comment.account.displayName != null) {
-                        comment.account.displayName
-                    } else {
-                        comment.account.username
-                    }
-                </span>
-                <span class="c-date">comment.publishDate.Date.ToShortDateString()</span>
-                <div class="c-menu">
-                    <i class="bi bi-three-dots"></i>
-                </div>
-                <ul class="c-menupopup">
-                    <li>Report</li>
-                    <li>Block User</li>
-                </ul>
-            </div>
-            <div class="c-text">
-                <span>comment.body</span>
-            </div>
-            <div class="c-footer">
-                <div class="c-evaluation">
-                    <i class="bi bi-hand-thumbs-up likebtn"></i>
-                    <span class="c-likes vote_count">
-                        {
-                            if(comment.voteResult >= 0)
-                                comment.voteResult
-                            else
-                                Html.Raw("--")
-                        }
-                    </span>
-                    <i class="bi bi-hand-thumbs-down dislikebtn"></i>
-                    <a href="#" class="c-replybtn">Reply</a>
-                </div>
-                <div class="get_replies">
-                    <span>comment.replies.Count replies</span>
-                </div>
-            </div>
-        </div>
-        <div class="reply">
-            <div class="r-text">
-                <span>Elle girilmiş yanıt.</span>
-            </div>
-            <div class="r-footer">
-                <div class="r-evaluation">
-                    <i class="bi bi-hand-thumbs-up likebtn"></i>
-                    <span class="r-likes vote_count">5465</span>
-                    <i class="bi bi-hand-thumbs-down dislikebtn"></i>
-                    <span class="r-gotoreply">GO</span>
-                </div>
-                <div class="r-user">
-                    <span class="r-username">MrBombastic</span>
-                    <img src="/images/users/user_no_photo_300x300.png">
-                </div>
-            </div>
-        </div>
-    </div>
-    }
--->
+    
 </div>

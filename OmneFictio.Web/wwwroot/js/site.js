@@ -206,7 +206,7 @@ $(document).ready(function () {
 });
 
 
-VoteRequest = async function (btn, data) {
+async function VoteRequest (btn, data) {
     var targetId = data.TargetId;
     var action = data.Body ? "like" : "dislike";
 
@@ -220,78 +220,79 @@ VoteRequest = async function (btn, data) {
     })
         .then(function (response) {
             if (response.ok) {
-                let btnSibling = action === "like"
-                    ? btn.parentElement.querySelector('.dislikebtn')
-                    : btn.parentElement.querySelector('.likebtn');
-                const baseVotesInput = btn.parentElement.querySelector('[data-base_votes]')
-                    .getAttribute('data-base_votes');
-                const showVoteCount = btn.parentElement.querySelector('.vote_count');
-                const baseVotes = parseInt(baseVotesInput, 10);
-                //Increase/Decrease vote count
-                if(baseVotesInput !== "--"){
-                    if(action === "like"){
-                        showVoteCount.innerText = baseVotes + 1;
-                    } else {
-                        showVoteCount.innerText = baseVotes - 1;
-                    }
-                }
-                //Vote
-                if(!btn.classList.contains("active")) {
-                    btn.classList.add("active");
-                    if (action === "like") {
-                        btn.classList.remove("bi-hand-thumbs-up");
-                        btn.classList.add("bi-hand-thumbs-up-fill");
-                    }
-                    else {
-                        btn.classList.remove("bi-hand-thumbs-down");
-                        btn.classList.add("bi-hand-thumbs-down-fill");
-                    }
-                }
-                //Take the vote back
-                else {
-                    btn.classList.remove("active");
-                    if (action === "like") {
-                        btn.classList.remove("bi-hand-thumbs-up-fill");
-                        btn.classList.add("bi-hand-thumbs-up");
-                    }
-                    else {
-                        btn.classList.remove("bi-hand-thumbs-down-fill");
-                        btn.classList.add("bi-hand-thumbs-down");
-                    }
-                    if(baseVotesInput !== "--"){
-                        showVoteCount.innerText = baseVotes;
-                    }
-                }
-                //Voting again - Opposite vote
-                if (btnSibling.classList.contains("active")) {
-                    //removes the active status of old one
-                    //doesn't add something to the current action btn
-                    btnSibling.classList.remove("active");
-                    if (btnSibling.classList.contains("dislikebtn")) {
-                        btnSibling.classList.remove("bi-hand-thumbs-down-fill");
-                        btnSibling.classList.add("bi-hand-thumbs-down");
-                        if (baseVotesInput !== "--") {
-                            showVoteCount.innerText = baseVotes + 1;
-                        }
-                    }
-                    else {
-                        btnSibling.classList.remove("bi-hand-thumbs-up-fill");
-                        btnSibling.classList.add("bi-hand-thumbs-up");
-                        if (baseVotesInput !== "--") {
-                            showVoteCount.innerText = baseVotes - 1;
-                        }
-                    }
-                }
+                voting_visual(btn, action);
             }
             else {
                 console.log("Server error -> " + response.status);
             }
         })
         .catch(error => console.log('Vote function failed.', error));
-
 }
 
-
+function voting_visual(btn, action) {
+    let btnSibling = action === "like"
+        ? btn.parentElement.querySelector('.dislikebtn')
+        : btn.parentElement.querySelector('.likebtn');
+    const baseVotesInput = btn.parentElement.querySelector('[data-base_votes]')
+        .getAttribute('data-base_votes');
+    const showVoteCount = btn.parentElement.querySelector('.vote_count');
+    const baseVotes = parseInt(baseVotesInput, 10);
+    //Increase/Decrease vote count
+    if (baseVotesInput !== "--") {
+        if (action === "like") {
+            showVoteCount.innerText = baseVotes + 1;
+        } else {
+            showVoteCount.innerText = baseVotes - 1;
+        }
+    }
+    //Vote
+    if (!btn.classList.contains("active")) {
+        btn.classList.add("active");
+        if (action === "like") {
+            btn.classList.remove("bi-hand-thumbs-up");
+            btn.classList.add("bi-hand-thumbs-up-fill");
+        }
+        else {
+            btn.classList.remove("bi-hand-thumbs-down");
+            btn.classList.add("bi-hand-thumbs-down-fill");
+        }
+    }
+    //Take the vote back
+    else {
+        btn.classList.remove("active");
+        if (action === "like") {
+            btn.classList.remove("bi-hand-thumbs-up-fill");
+            btn.classList.add("bi-hand-thumbs-up");
+        }
+        else {
+            btn.classList.remove("bi-hand-thumbs-down-fill");
+            btn.classList.add("bi-hand-thumbs-down");
+        }
+        if (baseVotesInput !== "--") {
+            showVoteCount.innerText = baseVotes;
+        }
+    }
+    //Voting again - Opposite vote
+    if (btnSibling.classList.contains("active")) {
+        //removes the active status of old one
+        //doesn't add something to the current action btn
+        btnSibling.classList.remove("active");
+        if (btnSibling.classList.contains("dislikebtn")) {
+            btnSibling.classList.remove("bi-hand-thumbs-down-fill");
+            btnSibling.classList.add("bi-hand-thumbs-down");
+            if (baseVotesInput !== "--") {
+                showVoteCount.innerText = baseVotes + 1;
+            }
+        }
+        else {
+            btnSibling.classList.remove("bi-hand-thumbs-up-fill");
+            btnSibling.classList.add("bi-hand-thumbs-up");
+            if (baseVotesInput !== "--") {
+                showVoteCount.innerText = baseVotes - 1;
+            }
+        }
+    }
+}
 
 //google auth
 function googleHandleCredentialResponse(response) {

@@ -1,3 +1,4 @@
+using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
 using OmneFictio.Web.Models;
 
@@ -39,6 +40,24 @@ public class HomeActionController : Controller
             //Unknown error
             return StatusCode(599);
         }
+    }
+    [HttpPost]
+    public async Task<JsonResult> CheckVoted([FromBody] CheckVoted request){
+        int accountid = checkUserLogin();
+        if(accountid == -1){
+            return new JsonResult(StatusCode(499));
+        }
+        request.UserId = accountid;
+        var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/checkvoted", request);
+        string statusCode = apiResponse.StatusCode.ToString();
+
+        string value = await apiResponse.Content.ReadAsStringAsync();
+        if(statusCode == "OK")
+            return new JsonResult(Ok(value));
+        else if(statusCode == "NotFound")
+            return new JsonResult(Ok("none"));
+        else
+            return new JsonResult(StatusCode(580));
     }
 
     [HttpPost]

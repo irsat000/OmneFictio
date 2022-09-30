@@ -144,38 +144,6 @@ public class AuthController : Controller
         //HttpContext.Session.Clear();
         HttpContext.SignOutAsync();
 
-        /*
-        string userId, username, userPicture;
-        try
-        {
-            JwtSecurityToken? token = _jwtHandler.ReadJwtToken(tokenRaw);
-            Claim? c_nameid = token.Claims.FirstOrDefault(claim => claim.Type == "nameid");
-            Claim? c_username = token.Claims.FirstOrDefault(claim => claim.Type == "unique_name");
-            Claim? c_userPicture = token.Claims.FirstOrDefault(claim => claim.Type == "actort");
-            if(c_nameid != null && c_username != null && c_userPicture != null){
-                userId = c_nameid.Value;
-                username = c_username.Value;
-                userPicture = c_userPicture.Value;
-            }
-            else{
-                return;
-            }
-        }
-        catch (Exception){
-            return;
-        }
-        
-        var claims = new List<Claim>
-        {
-            new Claim(ClaimTypes.NameIdentifier, userId),
-            new Claim(ClaimTypes.Name, username),
-            new Claim(ClaimTypes.Actor, userPicture)
-        };
-        var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
-        var principal = new ClaimsPrincipal(identity);
-        */
-
-
         JwtSecurityToken token = _jwtHandler.ReadJwtToken(tokenRaw);
         var principal = new ClaimsPrincipal(new ClaimsIdentity(token.Claims, CookieAuthenticationDefaults.AuthenticationScheme));
         
