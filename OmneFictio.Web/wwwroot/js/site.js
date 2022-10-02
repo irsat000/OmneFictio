@@ -254,7 +254,7 @@ function voting_visual(btn, action) {
     
     const showVoteCount = btn.parentElement.querySelector('.vote_count');
     //Increase/Decrease vote count
-    if (baseVotes !== "--") {
+    if (baseVotesInput !== "--") {
         if (action === "like") {
             showVoteCount.innerText = baseVotes + 1;
         } else {

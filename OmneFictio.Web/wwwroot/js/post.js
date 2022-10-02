@@ -257,7 +257,8 @@ $(document).ready(function () {
 
 
     function openRepliesModal(element) {
-        var commentId = element.closest('.comment').id;
+        var commentId = element.closest('.comment')
+            .getAttribute('data-commentid');
         if (!repliesModal.classList.contains('d-flex')) {
             repliesModal.classList.add('d-flex');
             modalbg1.classList.add('d-block');
