@@ -104,8 +104,6 @@ $(document).ready(function () {
                         clone.querySelector('.c-text > span').textContent = comment.body;
                         if (comment.voteResult >= 0) {
                             clone.querySelector('.c-likes').textContent = comment.voteResult;
-                            clone.querySelector('[data-base_votes]')
-                                .setAttribute('data-base_votes', comment.voteResult);
                         }
                         var repliesLengthText = " replies";
                         if (comment.repliesLength < 2) {

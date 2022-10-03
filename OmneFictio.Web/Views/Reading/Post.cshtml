@@ -53,7 +53,6 @@
             </div>
             <div class="c-footer">
                 <div class="c-evaluation">
-                    <input type="hidden" data-base_votes="--">
                     <i class="bi" data-action="like" data-target_type="comment"></i>
                     <span class="c-likes vote_count">--</span>
                     <i class="bi" data-action="dislike" data-target_type="comment"></i>
@@ -74,7 +73,6 @@
             </div>
             <div class="r-footer">
                 <div class="r-evaluation">
-                    <input type="hidden" data-base_votes="--">
                     <i class="bi bi-hand-thumbs-up likebtn" data-action="like" data-target_type="reply"></i>
                     <span class="r-likes vote_count">--</span>
                     <i class="bi bi-hand-thumbs-down dislikebtn" data-action="dislike" data-target_type="reply"></i>
@@ -112,7 +110,6 @@
         </div>
         <div class="mrc-footer">
             <div class="mrc-evaluation">
-                <input type="hidden" data-base_votes="--">
                 <i class="bi bi-hand-thumbs-up mrc-likebtn likebtn" data-action="like" data-target_type="comment"></i>
                 <span class="mrc-likes vote_count">--</span>
                 <i class="bi bi-hand-thumbs-down mrc-dislikebtn dislikebtn" data-action="dislike" data-target_type="comment"></i>
@@ -142,7 +139,6 @@
         </div>
         <div class="mrr-footer">
             <div class="mrr-evaluation">
-                <input type="hidden" data-base_votes="--">
                 <i class="bi bi-hand-thumbs-up likebtn" data-action="like" data-target_type="reply"></i>
                 <span class="mrr-likes vote_count">--</span>
                 <i class="bi bi-hand-thumbs-down dislikebtn" data-action="dislike" data-target_type="reply"></i>
@@ -221,15 +217,12 @@
                         //Checking if the user logged in and voted the post
                         string likeBtnClasses = "bi bi-hand-thumbs-up";
                         string dislikeBtnClasses = "bi bi-hand-thumbs-down";
-                        int votedByUser = -2; // -2 means not logged in
                         if(userId != "-1"){
                             if(post.votes.SingleOrDefault(p => p.accountId == Convert.ToInt32(userId) && p.body == true) != null){
-                                votedByUser = 1;
                                 likeBtnClasses = "bi bi-hand-thumbs-up-fill active likebtn";
                                 dislikeBtnClasses = "bi bi-hand-thumbs-down dislikebtn";
                             }
                             else if(post.votes.SingleOrDefault(p => p.accountId == Convert.ToInt32(userId) && p.body == false) != null){
-                                votedByUser = 0;
                                 likeBtnClasses = "bi bi-hand-thumbs-up likebtn";
                                 dislikeBtnClasses = "bi bi-hand-thumbs-down-fill active dislikebtn";
                             }
@@ -241,27 +234,6 @@
                         else{
                             likeBtnClasses = "bi bi-hand-thumbs-up";
                             dislikeBtnClasses = "bi bi-hand-thumbs-down";
-                        }
-
-                        //Writing base vote result
-                        /*if(post.voteResult >= 0){
-                            int baseVotes = post.voteResult;
-                            if(votedByUser == 1){
-                                baseVotes = post.voteResult - 1;
-                            } else if (votedByUser == 0){
-                                baseVotes = post.voteResult + 1;
-                            }
-                            <input type="hidden" data-base_votes="@baseVotes">
-                        }
-                        else{
-                            <input type="hidden" data-base_votes="--">
-                        }*/
-                    }
-                    @{
-                        if(post.voteResult >= 0){
-                            <input type="hidden" data-base_votes="@post.voteResult">
-                        } else {
-                            <input type="hidden" data-base_votes="--">
                         }
                     }
                     @Html.Raw("<i class='" + @likeBtnClasses + "' data-action='like' data-target_type='post'></i>")

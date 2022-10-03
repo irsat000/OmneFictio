@@ -230,37 +230,42 @@ async function VoteRequest(btn, data) {
 }
 
 
-let baseVotes = "notAssigned";
 function voting_visual(btn, action) {
     let btnSibling = action === "like"
         ? btn.parentElement.querySelector('.dislikebtn')
         : btn.parentElement.querySelector('.likebtn');
-    const baseVotesInput = btn.parentElement.querySelector('[data-base_votes]')
-        .getAttribute('data-base_votes');
-    let bvInputVal = baseVotesInput !== "--" ? parseInt(baseVotesInput, 10) : "--";
-
-    //Find the base vote
-    if (baseVotesInput !== "--" && baseVotes == "notAssigned") {
-        if(btn.parentElement.querySelector('.likebtn').classList.contains('active')){
-            baseVotes = bvInputVal - 1;
-        }
-        else if(btn.parentElement.querySelector('.dislikebtn').classList.contains('active')){
-            baseVotes = bvInputVal + 1;
-        }
-        else {
-            baseVotes = bvInputVal;
-        }
-    }
-    
-    const showVoteCount = btn.parentElement.querySelector('.vote_count');
+        
     //Increase/Decrease vote count
-    if (baseVotesInput !== "--") {
-        if (action === "like") {
-            showVoteCount.innerText = baseVotes + 1;
-        } else {
-            showVoteCount.innerText = baseVotes - 1;
+    const showVoteCount = btn.parentElement.querySelector('.vote_count');
+    let bvInputVal = showVoteCount.innerText !== "--" 
+        ? parseInt(showVoteCount.innerText, 10) 
+        : "--";
+    if(bvInputVal !== "--"){
+        if(action === "like"){
+            if(btn.classList.contains('active')){
+                bvInputVal = bvInputVal - 1;
+            } else{
+                if(btnSibling.classList.contains('active')){
+                    bvInputVal = bvInputVal + 2;
+                } else {
+                    bvInputVal = bvInputVal + 1;
+                }
+            }
+        } else if(action === "dislike") {
+            if(btn.classList.contains('active')){
+                bvInputVal = bvInputVal + 1;
+            } else {
+                if(btnSibling.classList.contains('active')){
+                    bvInputVal = bvInputVal - 2;
+                } else {
+                    bvInputVal = bvInputVal - 1;
+                }
+            }
         }
+        showVoteCount.innerText = bvInputVal;
     }
+
+
     //Vote
     if (!btn.classList.contains("active")) {
         btn.classList.add("active");
@@ -284,9 +289,6 @@ function voting_visual(btn, action) {
             btn.classList.remove("bi-hand-thumbs-down-fill");
             btn.classList.add("bi-hand-thumbs-down");
         }
-        if (baseVotesInput !== "--") {
-            showVoteCount.innerText = baseVotes;
-        }
     }
     //Voting again - Opposite vote
     if (btnSibling.classList.contains("active")) {
@@ -296,16 +298,10 @@ function voting_visual(btn, action) {
         if (btnSibling.classList.contains("dislikebtn")) {
             btnSibling.classList.remove("bi-hand-thumbs-down-fill");
             btnSibling.classList.add("bi-hand-thumbs-down");
-            if (baseVotesInput !== "--") {
-                showVoteCount.innerText = baseVotes + 1;
-            }
         }
         else {
             btnSibling.classList.remove("bi-hand-thumbs-up-fill");
             btnSibling.classList.add("bi-hand-thumbs-up");
-            if (baseVotesInput !== "--") {
-                showVoteCount.innerText = baseVotes - 1;
-            }
         }
     }
 }
