@@ -111,19 +111,19 @@ app.MapPost("/checkvoted", async (OmneFictioContext db, CheckVoted checkVoted) =
     {
         case "post":
             vote = await db.Votes.FirstOrDefaultAsync(v =>
-            v.AccountId == checkVoted.UserId && v.TargetPostId == checkVoted.TargetId);
+            v.AccountId == checkVoted.AccountId && v.TargetPostId == checkVoted.TargetId);
             break;
         case "comment":
             vote = await db.Votes.FirstOrDefaultAsync(v =>
-            v.AccountId == checkVoted.UserId && v.TargetCommentId == checkVoted.TargetId);
+            v.AccountId == checkVoted.AccountId && v.TargetCommentId == checkVoted.TargetId);
             break;
         case "reply":
             vote = await db.Votes.FirstOrDefaultAsync(v =>
-            v.AccountId == checkVoted.UserId && v.TargetReplyId == checkVoted.TargetId);
+            v.AccountId == checkVoted.AccountId && v.TargetReplyId == checkVoted.TargetId);
             break;
         case "chapter":
             vote = await db.Votes.FirstOrDefaultAsync(v =>
-            v.AccountId == checkVoted.UserId && v.TargetChapterId == checkVoted.TargetId);
+            v.AccountId == checkVoted.AccountId && v.TargetChapterId == checkVoted.TargetId);
             break;
     }
     if(vote != null)
@@ -291,22 +291,22 @@ app.MapPost("/vote", async (OmneFictioContext db, VoteDtoWrite_1 request) =>
     Vote? checkVote = null;
     if (type == "post")
     {
-        checkVote = await db.Votes.SingleOrDefaultAsync(x => x.AccountId == request.AccountId &&
+        checkVote = await db.Votes.FirstOrDefaultAsync(x => x.AccountId == request.AccountId &&
                 x.TargetPostId == request.TargetId);
     }
     else if (type == "chapter")
     {
-        checkVote = await db.Votes.SingleOrDefaultAsync(x => x.AccountId == request.AccountId &&
+        checkVote = await db.Votes.FirstOrDefaultAsync(x => x.AccountId == request.AccountId &&
                 x.TargetChapterId == request.TargetId);
     }
     else if (type == "comment")
     {
-        checkVote = await db.Votes.SingleOrDefaultAsync(x => x.AccountId == request.AccountId &&
+        checkVote = await db.Votes.FirstOrDefaultAsync(x => x.AccountId == request.AccountId &&
                 x.TargetCommentId == request.TargetId);
     }
     else if (type == "reply")
     {
-        checkVote = await db.Votes.SingleOrDefaultAsync(x => x.AccountId == request.AccountId &&
+        checkVote = await db.Votes.FirstOrDefaultAsync(x => x.AccountId == request.AccountId &&
                 x.TargetReplyId == request.TargetId);
     }
 
@@ -347,6 +347,34 @@ app.MapPost("/vote", async (OmneFictioContext db, VoteDtoWrite_1 request) =>
     {
         return Results.StatusCode(580);
     }
+    return Results.Ok();
+});
+
+app.MapPost("/rate", async (OmneFictioContext db, RateInfo request) => {
+    //check account and post if they exist
+    if (await db.Accounts.FirstOrDefaultAsync(a => a.Id == request.AccountId) == null ||
+        await db.Posts.FirstOrDefaultAsync(p => p.Id == request.PostId) == null)
+    {
+        return Results.NotFound();
+    }
+    
+    if(!(request.RateValue >= 1 && request.RateValue <= 10)){
+        return Results.BadRequest();
+    }
+    //check existing rate and replace if it exists
+    Rate? rate = await db.Rates.FirstOrDefaultAsync(x => x.AccountId == request.AccountId &&
+                x.PostId == request.PostId);
+    if(rate != null){
+        db.Rates.Remove(db.Rates.SingleOrDefault(x => x.Id == rate.Id)!);
+    }
+    //create new rate
+    rate = new Rate{
+        AccountId = request.AccountId,
+        PostId = request.PostId,
+        Body = request.RateValue
+    };
+    await db.Rates.AddAsync(rate);
+    await db.SaveChangesAsync();
     return Results.Ok();
 });
 

@@ -5,6 +5,35 @@ $(document).ready(function () {
         var oldFunc = modalbg1_click;
         return modalbg1_click_post();
     });
+    const postId = document.getElementById('postid').value;
+
+    //----Rating the post---
+    document.getElementById('rate_it_btn')
+        .addEventListener('click', async function(){
+            const rateVal = document.getElementById('rate_it_select').value;
+            if(rateVal >= 1 && rateVal <= 10){
+                const payload = {Id: postId, Rate: rateVal};
+                await fetch("/HomeAction/RateThePost", {
+                    method: 'POST',
+                    headers: {
+                        'Accept': 'application/json',
+                        'Content-Type': 'application/json'
+                    },
+                    payload: payload
+                })
+                .then((res) => res.json())
+                .then((data) => {
+
+                })
+                .catch(error => {
+                    console.log('Fetch failed -> ' + error);
+                });
+            }
+        });
+    //-------------
+
+
+
 
     //-----full size cover------
     const fullsizecover = document.getElementById('fullsize-cover');
@@ -72,7 +101,6 @@ $(document).ready(function () {
 
 
     const commentSection = document.getElementById('comment-section');
-    const postId = document.getElementById('postid').value;
     fetchComments(postId);
     async function fetchComments(postId) {
         await fetch("/g/GetComments/" + postId, {

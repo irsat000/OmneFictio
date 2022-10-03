@@ -15,6 +15,17 @@ public class HomeActionController : Controller
         _httpClient = httpClient;
     }
 
+    public async Task<IActionResult> RateThePost([FromBody] RateInfo request)
+    {
+        int accountid = checkUserLogin();
+        if(accountid == -1){
+            return StatusCode(499);
+        }
+        request.AccountId = accountid;
+        
+        
+        return Ok();
+    }
     //Voting post/chapter/comment/reply
     [HttpPost]
     public async Task<IActionResult> Vote([FromBody] VoteWrite1 request)
@@ -47,7 +58,7 @@ public class HomeActionController : Controller
         if(accountid == -1){
             return new JsonResult(StatusCode(499));
         }
-        request.UserId = accountid;
+        request.AccountId = accountid;
         var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/checkvoted", request);
         string statusCode = apiResponse.StatusCode.ToString();
 

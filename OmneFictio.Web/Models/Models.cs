@@ -30,7 +30,7 @@ public class VoteWrite1
 }
 public class CheckVoted
 {
-    public int? UserId { get; set; }
+    public int? AccountId { get; set; }
     public int TargetId { get; set; }
     public string TargetType { get; set; }
 }
@@ -51,6 +51,15 @@ public class PostWrite1
     public List<int>? SeriesList { get; set; }
 }
 //create post request
+
+
+public class RateInfo
+{
+    public int? AccountId { get; set; }
+    public int PostId { get; set; }
+    public int RateValue { get; set; }
+}
+//rate the post
 
 
 
