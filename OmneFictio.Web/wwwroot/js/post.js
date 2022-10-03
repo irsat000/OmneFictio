@@ -112,6 +112,10 @@ $(document).ready(function () {
                         clone.querySelector('.get_replies > span').textContent = comment.repliesLength + repliesLengthText;
                         const hreply = await fetchHighlightedReply(comment.id);
                         if (hreply.hasOwnProperty('id')) {
+                            //Check if user voted this parent
+                            const replyPayload = JSON.stringify({ TargetId: hreply.id, TargetType: "reply" });
+                            await checkVoted_IconStuff(clone.querySelector('.reply'), replyPayload);
+
                             clone.querySelector('.reply').setAttribute('data-replyid', hreply.id);
                             clone.querySelector('.r-text > span').textContent = hreply.body;
                             if (hreply.voteResult >= 0) {
@@ -171,12 +175,15 @@ $(document).ready(function () {
             signal: frSignal
         })
             .then((res) => res.json())
-            .then((data) => {
+            .then(async (data) => {
                 if (data.statusCode === 200) {
                     const comm = data.value;
                     const modalRepliesBody = document.querySelector('#modal-replies > .mr-body');
                     const commentInstance = document.getElementById('modalReplies-comment');
                     const commentClone = commentInstance.content.cloneNode(true);
+                    //Check if user voted this parent
+                    const commentPayload = JSON.stringify({ TargetId: comm.id, TargetType: "comment" });
+                    await checkVoted_IconStuff(commentClone, commentPayload);
 
                     commentClone.querySelector('.mr-comment').setAttribute('data-commentid', comm.id);
                     if (comm.account.displayName != null) {
@@ -193,8 +200,12 @@ $(document).ready(function () {
                     //if it has replies
                     if (comm.replies.length > 0) {
                         const replyInstance = document.getElementById('modalReplies-reply');
-                        comm.replies.forEach(reply => {
+                        comm.replies.forEach(async reply => {
                             const replyClone = replyInstance.content.cloneNode(true);
+                            //Check if user voted this parent
+                            const replyPayload = JSON.stringify({ TargetId: reply.id, TargetType: "reply" });
+                            await checkVoted_IconStuff(replyClone, replyPayload);
+
                             replyClone.querySelector('.mr-reply').setAttribute('data-replyid', reply.id);
                             if (reply.account.displayName != null) {
                                 replyClone.querySelector('.mrr-username').textContent = reply.account.displayName;
@@ -228,6 +239,8 @@ $(document).ready(function () {
                 if (data.statusCode === 200) {
                     const likebtn = clone.querySelector('[data-action="like"]');
                     const dislikebtn = clone.querySelector('[data-action="dislike"]');
+                    likebtn.className = "";
+                    dislikebtn.className = "";
                     switch (data.value) {
                         case "true":
                             likebtn.classList.add('likebtn', 'bi-hand-thumbs-up-fill', 'active');
@@ -242,8 +255,8 @@ $(document).ready(function () {
                             dislikebtn.classList.add('dislikebtn', 'bi-hand-thumbs-down');
                             break;
                         default:
-                            likebtn.classList.add('bi-hand-thumbs-up');
-                            dislikebtn.classList.add('bi-hand-thumbs-down');
+                            likebtn.classList.add('likebtn', 'bi-hand-thumbs-up');
+                            dislikebtn.classList.add('dislikebtn', 'bi-hand-thumbs-down');
                             break;
                     }
                 }

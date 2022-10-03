@@ -267,19 +267,7 @@ function voting_visual(btn, action) {
 
 
     //Vote
-    if (!btn.classList.contains("active")) {
-        btn.classList.add("active");
-        if (action === "like") {
-            btn.classList.remove("bi-hand-thumbs-up");
-            btn.classList.add("bi-hand-thumbs-up-fill");
-        }
-        else {
-            btn.classList.remove("bi-hand-thumbs-down");
-            btn.classList.add("bi-hand-thumbs-down-fill");
-        }
-    }
-    //Take the vote back
-    else {
+    if (btn.classList.contains("active")) {
         btn.classList.remove("active");
         if (action === "like") {
             btn.classList.remove("bi-hand-thumbs-up-fill");
@@ -288,6 +276,18 @@ function voting_visual(btn, action) {
         else {
             btn.classList.remove("bi-hand-thumbs-down-fill");
             btn.classList.add("bi-hand-thumbs-down");
+        }
+    }
+    //Take the vote back
+    else {
+        btn.classList.add("active");
+        if (action === "like") {
+            btn.classList.remove("bi-hand-thumbs-up");
+            btn.classList.add("bi-hand-thumbs-up-fill");
+        }
+        else {
+            btn.classList.remove("bi-hand-thumbs-down");
+            btn.classList.add("bi-hand-thumbs-down-fill");
         }
     }
     //Voting again - Opposite vote
