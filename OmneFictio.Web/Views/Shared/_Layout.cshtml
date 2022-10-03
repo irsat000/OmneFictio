@@ -116,21 +116,19 @@
                     }else{
                         <i class="bi bi-person-square"></i>
                     }
-                    <!--<img src="https://icon-library.com/images/no-user-image-icon/no-user-image-icon-0.jpg">-->
                 </div>
-                <!--<i class="bi bi-person-bounding-box dw-userimg"></i>-->
-                @if(userId != "-1"){
-                    @username
-                }
-                else{
-                    <span class="dw-username">--</span>
-                }
-                    <!--<span class="dw-acc-info">--</span>
-                    <span class="dw-acc-info">---</span>-->
             </div>
             <div class="dw-close">
                 <i class="bi bi-x-lg"></i>
             </div>
+        </div>
+        <div class="dw-username">
+            @if(userId != "-1"){
+                <span>@username</span>
+            }
+            else{
+                <span class="dw-username">--</span>
+            }
         </div>
         <div class="dw-mainpage">
             <a asp-controller="Home" asp-action="Index">OmneFictio</a>

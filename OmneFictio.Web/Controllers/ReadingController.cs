@@ -60,6 +60,7 @@ public class ReadingController : Controller
         string url = "https://localhost:7022/get_highlighted_comment/" + commentId;
         string apiResponse = await _httpClient.GetStringAsync(url);
 
+        //h means highlighted
         CommentReadModel2.Reply? h_reply = JsonSerializer.Deserialize<CommentReadModel2.Reply>(apiResponse);
          
         if(h_reply == null) {

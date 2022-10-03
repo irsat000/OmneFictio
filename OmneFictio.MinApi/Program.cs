@@ -126,10 +126,22 @@ app.MapPost("/checkvoted", async (OmneFictioContext db, CheckVoted checkVoted) =
             v.AccountId == checkVoted.AccountId && v.TargetChapterId == checkVoted.TargetId);
             break;
     }
-    if(vote != null)
+    if (vote != null)
         return Results.Ok(vote.Body);
     else
         return Results.NotFound();
+});
+
+app.MapGet("/check_rate_by_user/{postid}/{accountid}", async (OmneFictioContext db, int postid, int accountid) =>
+{
+    Rate? rate = await db.Rates.FirstOrDefaultAsync(r => 
+        r.PostId == postid &&
+        r.AccountId == accountid);
+    if(rate != null){
+        return rate.Body;
+    } else {
+        return -1;
+    }
 });
 
 
@@ -138,7 +150,7 @@ app.MapPost("/checkvoted", async (OmneFictioContext db, CheckVoted checkVoted) =
 
 
 
-//--------------------------------------
+//-------------AUTH-------------------------
 var securityToken = Encoding.ASCII.GetBytes(builder.Configuration.GetSection("Token").Value);
 
 
@@ -310,37 +322,38 @@ app.MapPost("/vote", async (OmneFictioContext db, VoteDtoWrite_1 request) =>
                 x.TargetReplyId == request.TargetId);
     }
 
+    //it's already voted and it's the opposite value
+    if (checkVote != null && checkVote.Body != request.Body)
+    {
+        db.Votes.Remove(db.Votes.SingleOrDefault(x => x.Id == checkVote.Id)!);
+    }
+    //if user clicks on the same button to take their vote back
+    //else, votes the post normally
+    if (checkVote != null && checkVote.Body == request.Body)
+    {
+        db.Votes.Remove(db.Votes.SingleOrDefault(x => x.Id == checkVote.Id)!);
+    }
+    else
+    {
+        Vote newVote = new Vote
+        {
+            AccountId = request.AccountId,
+            Body = request.Body
+        };
+
+        if (type == "post")
+            newVote.TargetPostId = request.TargetId;
+        else if (type == "chapter")
+            newVote.TargetChapterId = request.TargetId;
+        else if (type == "comment")
+            newVote.TargetCommentId = request.TargetId;
+        else if (type == "reply")
+            newVote.TargetReplyId = request.TargetId;
+        await db.Votes.AddAsync(newVote);
+    }
+
     try
     {
-        //it's already voted and it's the opposite value
-        if (checkVote != null && checkVote.Body != request.Body)
-        {
-            db.Votes.Remove(db.Votes.SingleOrDefault(x => x.Id == checkVote.Id)!);
-        }
-        //if user clicks on the same button to take their vote back
-        //else, votes the post normally
-        if (checkVote != null && checkVote.Body == request.Body)
-        {
-            db.Votes.Remove(db.Votes.SingleOrDefault(x => x.Id == checkVote.Id)!);
-        }
-        else
-        {
-            Vote newVote = new Vote
-            {
-                AccountId = request.AccountId,
-                Body = request.Body
-            };
-
-            if (type == "post")
-                newVote.TargetPostId = request.TargetId;
-            else if (type == "chapter")
-                newVote.TargetChapterId = request.TargetId;
-            else if (type == "comment")
-                newVote.TargetCommentId = request.TargetId;
-            else if (type == "reply")
-                newVote.TargetReplyId = request.TargetId;
-            await db.Votes.AddAsync(newVote);
-        }
         await db.SaveChangesAsync();
     }
     catch (Exception)
@@ -350,31 +363,37 @@ app.MapPost("/vote", async (OmneFictioContext db, VoteDtoWrite_1 request) =>
     return Results.Ok();
 });
 
-app.MapPost("/rate", async (OmneFictioContext db, RateInfo request) => {
-    //check account and post if they exist
-    if (await db.Accounts.FirstOrDefaultAsync(a => a.Id == request.AccountId) == null ||
-        await db.Posts.FirstOrDefaultAsync(p => p.Id == request.PostId) == null)
+app.MapPost("/rate", async (OmneFictioContext db, RateInfo request) =>
+{
+    if (!(request.RateValue >= 1 && request.RateValue <= 10))
     {
-        return Results.NotFound();
-    }
-    
-    if(!(request.RateValue >= 1 && request.RateValue <= 10)){
         return Results.BadRequest();
     }
     //check existing rate and replace if it exists
-    Rate? rate = await db.Rates.FirstOrDefaultAsync(x => x.AccountId == request.AccountId &&
-                x.PostId == request.PostId);
-    if(rate != null){
+    Rate? rate = await db.Rates.FirstOrDefaultAsync(x => 
+        x.AccountId == request.AccountId &&
+        x.PostId == request.PostId);
+    if (rate != null)
+    {
         db.Rates.Remove(db.Rates.SingleOrDefault(x => x.Id == rate.Id)!);
     }
     //create new rate
-    rate = new Rate{
+    rate = new Rate
+    {
         AccountId = request.AccountId,
         PostId = request.PostId,
         Body = request.RateValue
     };
     await db.Rates.AddAsync(rate);
-    await db.SaveChangesAsync();
+
+    try
+    {
+        await db.SaveChangesAsync();
+    }
+    catch (Exception)
+    {
+        return Results.StatusCode(580);
+    }
     return Results.Ok();
 });
 

@@ -325,7 +325,18 @@ main{
     padding: 0 10px;
     font-family: 'Josefin Sans', sans-serif;
     select{
-        
+        outline: none;
+        border: none;
+        border-radius: 4px;
+        padding: 2px 10px 2px 0;
+        margin-right: 16px;
+        height: 30px;
+        width: 60px;
+        font-size: 1.2rem;
+        font-family: 'Gudea', sans-serif;
+        text-align: right;
+        color: var(--text-color1);
+        background-color: var(--background-color2);
     }
     button{
         background-color: rgb(60, 102, 119);

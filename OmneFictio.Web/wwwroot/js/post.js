@@ -7,27 +7,53 @@ $(document).ready(function () {
     });
     const postId = document.getElementById('postid').value;
 
+    //Fetch function that brings me the existing rate.
+    CheckRateByUser();
+    async function CheckRateByUser() {
+        await fetch("/g/CheckRateByUser/" + postId, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.statusCode === 200) {
+                    document.getElementById('rate_by_user').innerText = data.value + "/10";
+                }
+            })
+            .catch(error => {
+                console.log('Fetch failed -> ' + error);
+            });
+    }
+
     //----Rating the post---
     document.getElementById('rate_it_btn')
-        .addEventListener('click', async function(){
+        .addEventListener('click', async function () {
             const rateVal = document.getElementById('rate_it_select').value;
-            if(rateVal >= 1 && rateVal <= 10){
-                const payload = {Id: postId, Rate: rateVal};
+            if (rateVal >= 1 && rateVal <= 10) {
+                const ratePayload = {
+                    PostId: postId,
+                    RateValue: rateVal
+                };
                 await fetch("/HomeAction/RateThePost", {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',
                         'Content-Type': 'application/json'
                     },
-                    payload: payload
+                    body: JSON.stringify(ratePayload)
                 })
-                .then((res) => res.json())
-                .then((data) => {
-
-                })
-                .catch(error => {
-                    console.log('Fetch failed -> ' + error);
-                });
+                    .then((res) => res.json())
+                    .then((data) => {
+                        if(data.statusCode === 200){
+                            document.getElementById('rate_by_user').innerText = rateVal + "/10";
+                        }
+                    })
+                    .catch(error => {
+                        console.log('Fetch failed -> ' + error);
+                    });
             }
         });
     //-------------
@@ -101,8 +127,8 @@ $(document).ready(function () {
 
 
     const commentSection = document.getElementById('comment-section');
-    fetchComments(postId);
-    async function fetchComments(postId) {
+    fetchComments();
+    async function fetchComments() {
         await fetch("/g/GetComments/" + postId, {
             method: 'GET',
             headers: {

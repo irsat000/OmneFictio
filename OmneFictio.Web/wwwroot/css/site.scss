@@ -116,7 +116,6 @@ header{
         display: flex;
         flex-direction: row;
         border-bottom: 1px solid var(--background-color2);
-        padding-bottom: 10px;
         .dw-close{
             padding: 10px;
             flex-shrink: 0;
@@ -127,9 +126,7 @@ header{
         .dw-account{
             flex-grow: 1;
             display: flex;
-            flex-direction: column;
             justify-content: center;
-            text-align: center;
             overflow: hidden;
             .dw-userimg{
                 display: flex;
@@ -144,17 +141,19 @@ header{
                     font-size: 4rem;
                 }
             }
-            .dw-username{
-                font-family: 'Doppio One', sans-serif;
-                padding-bottom: 8px;
-                font-size: 1.1rem;
-            }
             .dw-acc-info{
                 font-family: 'Hubballi', cursive;
                 padding-bottom: 6px;
-                font-size: 1.2rem;
+                font-size: 1.1rem;
             }
         }
+    }
+    .dw-username{
+        display: flex;
+        justify-content: center;
+        font-family: 'Doppio One', sans-serif;
+        padding: 8px 0;
+        font-size: 1.1rem;
     }
     .dw-mainpage {
         border-top: 1px solid #313131;

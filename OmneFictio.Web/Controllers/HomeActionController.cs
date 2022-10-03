@@ -15,17 +15,48 @@ public class HomeActionController : Controller
         _httpClient = httpClient;
     }
 
-    public async Task<IActionResult> RateThePost([FromBody] RateInfo request)
+    //rating the post
+    [HttpPost]
+    public async Task<JsonResult> RateThePost([FromBody] RateInfo request)
     {
         int accountid = checkUserLogin();
         if(accountid == -1){
-            return StatusCode(499);
+            return new JsonResult(Unauthorized());
         }
         request.AccountId = accountid;
+
+        var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/rate", request);
+        string statusCode = apiResponse.StatusCode.ToString();
         
-        
-        return Ok();
+        if(statusCode == "OK"){
+            return new JsonResult(Ok());
+        }
+        else if(statusCode == "BadRequest"){
+            //unacceptable rate value
+            return new JsonResult(BadRequest());
+        }
+        else{
+            //Unknown error
+            return new JsonResult(500);
+        }
     }
+    [HttpGet("g/CheckRateByUser/{postid}")]
+    public async Task<JsonResult> CheckRateByUser(string postid)
+    {
+        int accountid = checkUserLogin();
+        if(accountid == -1){
+            return new JsonResult(StatusCode(499));
+        }
+        string url = $"https://localhost:7022/check_rate_by_user/{postid}/{accountid}";
+        string apiResponse = await _httpClient.GetStringAsync(url);
+
+        if(apiResponse == "-1"){
+            return new JsonResult(NotFound());
+        } else {
+            return new JsonResult(Ok(apiResponse));
+        }
+    }
+
     //Voting post/chapter/comment/reply
     [HttpPost]
     public async Task<IActionResult> Vote([FromBody] VoteWrite1 request)

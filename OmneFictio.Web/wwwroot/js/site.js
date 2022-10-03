@@ -207,7 +207,6 @@ $(document).ready(function () {
 
 
 async function VoteRequest(btn, data) {
-    var targetId = data.TargetId;
     var action = data.Body ? "like" : "dislike";
 
     await fetch("/HomeAction/Vote", {

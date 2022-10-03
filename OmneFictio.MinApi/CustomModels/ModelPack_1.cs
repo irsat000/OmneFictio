@@ -7,9 +7,12 @@ public class CheckVoted
     public string TargetType { get; set; }
 }
 
-public class RateInfo
+public class RateInfo : CheckRateInfo
+{
+    public int RateValue { get; set; }
+}
+public class CheckRateInfo
 {
     public int AccountId { get; set; }
     public int PostId { get; set; }
-    public int RateValue { get; set; }
 }
