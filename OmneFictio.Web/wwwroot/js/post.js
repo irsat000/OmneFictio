@@ -6,7 +6,9 @@ $(document).ready(function () {
         return modalbg1_click_post();
     });
     const postId = document.getElementById('postid').value;
+    const commentSection = document.getElementById('comment-section');
     CheckRateByUser();
+    fetchComments();
 
 
     document.getElementById('addCommentToPost').addEventListener('click', function () {
@@ -25,10 +27,34 @@ $(document).ready(function () {
             body: JSON.stringify(payload)
         })
             .then((res) => res.json())
-            .then((data) => {
+            .then(async (data) => {
                 if (data.statusCode === 200) {
-                    //Add comment visually
-                    console.log(data.value);
+                    const comment = JSON.parse(data.value).returnComment;
+                    console.log(comment);
+                    const instance = document.getElementById('comment_instance');
+                    const clone = instance.content.cloneNode(true);
+
+                    clone.querySelector('.comment').setAttribute('data-commentid', comment.id);
+                    if (comment.account.displayName != null) {
+                        clone.querySelector('.c-username').textContent = comment.account.displayName;
+                    } else {
+                        clone.querySelector('.c-username').textContent = comment.account.username;
+                    }
+                    clone.querySelector('.c-date').textContent = TimeAgo(comment.publishDate);
+                    clone.querySelector('.c-text > span').textContent = comment.body;
+                    if (comment.voteResult >= 0) {
+                        clone.querySelector('.c-likes').textContent = comment.voteResult;
+                    }
+                    var repliesLengthText = " replies";
+                    if (comment.repliesLength < 2) {
+                        repliesLengthText = " reply";
+                    }
+                    clone.querySelector('.get_replies > span').textContent = comment.repliesLength + repliesLengthText;
+                    clone.querySelector('.reply').remove();
+                    //add comment to the comment section
+                    commentSection.insertBefore(clone, commentSection.firstChild);
+                    //clear commenting body
+                    document.getElementById('commentBody').value = "";
                 } else if (data.statusCode === 499) {
                 } else {
                 }
@@ -161,8 +187,6 @@ $(document).ready(function () {
     });
 
 
-    const commentSection = document.getElementById('comment-section');
-    fetchComments();
     async function fetchComments() {
         await fetch("/g/GetComments/" + postId, {
             method: 'GET',
