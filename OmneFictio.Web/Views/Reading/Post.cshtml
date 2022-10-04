@@ -338,13 +338,13 @@
 
 @if(userId != "-1"){ ///images/users/
     <div class="add_comment-cont">
-        <textarea placeholder="This is where we comment."></textarea>
+        <textarea placeholder="This is where we comment." id="commentBody"></textarea>
         <div class="ac-footer">
             <div class="ac-user">
                 <img src="/images/users/@userPicture" onerror="this.onerror=null; this.src='/images/onerror/user_no_photo_300x300.png'">
                 <span class="ac-username">@username</span>
             </div>
-            <a href="#" class="comment-btn">Send</a>
+            <a href="#" class="comment-btn" id="addCommentToPost">Send</a>
         </div>
     </div>
 }

@@ -15,6 +15,28 @@ public class HomeActionController : Controller
         _httpClient = httpClient;
     }
 
+    
+    [HttpPost]
+    public async Task<JsonResult> AddComment([FromBody] CommentWrite1 request)
+    {
+        int accountid = checkUserLogin();
+        if(accountid == -1){
+            return new JsonResult(StatusCode(499));
+        }
+        request.AccountId = accountid;
+
+        var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/add_comment", request);
+        string statusCode = apiResponse.StatusCode.ToString();
+
+        if(statusCode == "OK"){
+            return new JsonResult(Ok());
+        } else {
+            return new JsonResult(StatusCode(599));
+        }
+    }
+
+
+
     //rating the post
     [HttpPost]
     public async Task<JsonResult> RateThePost([FromBody] RateInfo request)

@@ -6,9 +6,38 @@ $(document).ready(function () {
         return modalbg1_click_post();
     });
     const postId = document.getElementById('postid').value;
+    CheckRateByUser();
+
+
+    document.getElementById('addCommentToPost').addEventListener('click', function () {
+        AddComment({ 
+            Body: document.getElementById('commentBody').value,
+            TargetPostId: postId });
+    });
+    async function AddComment(payload) {
+        await fetch("/HomeAction/AddComment", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.statusCode === 200) {
+                    //Add comment visually
+                } else if (data.statusCode === 499) {
+                } else {
+                }
+            })
+            .catch(error => {
+                console.log('Fetch failed -> ' + error);
+            });
+    }
+
 
     //Fetch function that brings me the existing rate.
-    CheckRateByUser();
     async function CheckRateByUser() {
         await fetch("/g/CheckRateByUser/" + postId, {
             method: 'GET',
@@ -47,7 +76,7 @@ $(document).ready(function () {
                 })
                     .then((res) => res.json())
                     .then((data) => {
-                        if(data.statusCode === 200){
+                        if (data.statusCode === 200) {
                             document.getElementById('rate_by_user').innerText = rateVal + "/10";
                         }
                     })

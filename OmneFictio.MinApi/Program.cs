@@ -134,12 +134,15 @@ app.MapPost("/checkvoted", async (OmneFictioContext db, CheckVoted checkVoted) =
 
 app.MapGet("/check_rate_by_user/{postid}/{accountid}", async (OmneFictioContext db, int postid, int accountid) =>
 {
-    Rate? rate = await db.Rates.FirstOrDefaultAsync(r => 
+    Rate? rate = await db.Rates.FirstOrDefaultAsync(r =>
         r.PostId == postid &&
         r.AccountId == accountid);
-    if(rate != null){
+    if (rate != null)
+    {
         return rate.Body;
-    } else {
+    }
+    else
+    {
         return -1;
     }
 });
@@ -370,7 +373,7 @@ app.MapPost("/rate", async (OmneFictioContext db, RateInfo request) =>
         return Results.BadRequest();
     }
     //check existing rate and replace if it exists
-    Rate? rate = await db.Rates.FirstOrDefaultAsync(x => 
+    Rate? rate = await db.Rates.FirstOrDefaultAsync(x =>
         x.AccountId == request.AccountId &&
         x.PostId == request.PostId);
     if (rate != null)
@@ -400,14 +403,14 @@ app.MapPost("/rate", async (OmneFictioContext db, RateInfo request) =>
 
 app.MapPost("/createpost", async (OmneFictioContext db, PostDtoWrite_1 request) =>
 {
-    if (await db.Accounts.FirstOrDefaultAsync(a => a.Id == request.AccountId) == null ||
+    /*if (await db.Accounts.FirstOrDefaultAsync(a => a.Id == request.AccountId) == null ||
      await db.Languages.FirstOrDefaultAsync(l => l.Id == request.LanguageId) == null ||
      await db.PostTypes.FirstOrDefaultAsync(t => t.Id == request.PostTypeId) == null ||
      await db.RatedAs.FirstOrDefaultAsync(s => s.Id == request.RatedAsId) == null)
     {
         return Results.StatusCode(480);
-    }
-    else if (request.Title.Length > 250)
+    }*/
+    if (request.Title.Length > 250)
     {
         return Results.StatusCode(481);
     }
@@ -448,23 +451,20 @@ app.MapPost("/createpost", async (OmneFictioContext db, PostDtoWrite_1 request) 
             }
         }
     }
-    if (request.PostTypeId == 3)
+    if (request.PostTypeId == 3 && request.SeriesList != null)
     {
-        if (request.SeriesList != null)
+        foreach (int seriesid in request.SeriesList)
         {
-            foreach (int seriesid in request.SeriesList)
+            ExistingStory? series = await db.ExistingStories.FirstOrDefaultAsync(s => s.Id == seriesid);
+            if (series != null)
             {
-                ExistingStory? series = await db.ExistingStories.FirstOrDefaultAsync(s => s.Id == seriesid);
-                if (series != null)
-                {
-                    newpost.ExistingStories.Add(series);
-                }
+                newpost.ExistingStories.Add(series);
             }
         }
-        if (newpost.ExistingStories.Count == 0)
-        {
-            return Results.StatusCode(480);
-        }
+    }
+    if (request.PostTypeId == 3 && newpost.ExistingStories.Count < 1)
+    {
+        return Results.StatusCode(480);
     }
 
     try
@@ -480,6 +480,39 @@ app.MapPost("/createpost", async (OmneFictioContext db, PostDtoWrite_1 request) 
     return Results.Ok();
 });
 
+app.MapPost("/add_comment", async (OmneFictioContext db, CommentDtoWrite_1 request) =>
+{
+    Comment? newComment = new Comment
+    {
+        AccountId = request.AccountId,
+        DeletedStatusId = 1,
+        PublishDate = DateTime.Now,
+        UpdateDate = DateTime.Now
+    };
+
+    if (request.TargetPostId != null && request.TargetPostId != 0)
+        newComment.TargetPostId = request.TargetPostId;
+    else
+        newComment.TargetChapterId = request.TargetChapterId;
+
+    if (request.Body != null &&
+        request.Body.Length > 0 &&
+        String.IsNullOrWhiteSpace(request.Body) == false)
+    {
+        newComment.Body = request.Body;
+    }
+
+    try
+    {
+        await db.Comments.AddAsync(newComment);
+        await db.SaveChangesAsync();
+    }
+    catch (Exception)
+    {
+        return Results.StatusCode(580);
+    }
+    return Results.Ok();
+});
 
 
 

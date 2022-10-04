@@ -62,6 +62,14 @@ public class RateInfo
 //rate the post
 
 
+public class CommentWrite1
+{
+    public int? AccountId { get; set; }
+    public string Body { get; set; } = null!;
+    public int? TargetPostId { get; set; }
+    public int? TargetChapterId { get; set; }
+}
+//Adding a comment
 
 
 
