@@ -511,7 +511,11 @@ app.MapPost("/add_comment", async (OmneFictioContext db, CommentDtoWrite_1 reque
     {
         return Results.StatusCode(580);
     }
-    return Results.Ok();
+    CommentDtoRead_2? returnComment = 
+        await mapper.ProjectTo<CommentDtoRead_2>
+        (db.Comments.Where(p => p.Id == newComment.Id))
+        .FirstOrDefaultAsync();
+    return Results.Ok(new { returnComment });
 });
 
 

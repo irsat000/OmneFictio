@@ -27,9 +27,9 @@ public class HomeActionController : Controller
 
         var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/add_comment", request);
         string statusCode = apiResponse.StatusCode.ToString();
-
         if(statusCode == "OK"){
-            return new JsonResult(Ok());
+            string returnedContent = await apiResponse.Content.ReadAsStringAsync();
+            return new JsonResult(Ok(returnedContent));
         } else {
             return new JsonResult(StatusCode(599));
         }

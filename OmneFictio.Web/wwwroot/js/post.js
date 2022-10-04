@@ -10,9 +10,10 @@ $(document).ready(function () {
 
 
     document.getElementById('addCommentToPost').addEventListener('click', function () {
-        AddComment({ 
+        AddComment({
             Body: document.getElementById('commentBody').value,
-            TargetPostId: postId });
+            TargetPostId: postId
+        });
     });
     async function AddComment(payload) {
         await fetch("/HomeAction/AddComment", {
@@ -27,6 +28,7 @@ $(document).ready(function () {
             .then((data) => {
                 if (data.statusCode === 200) {
                     //Add comment visually
+                    console.log(data.value);
                 } else if (data.statusCode === 499) {
                 } else {
                 }
@@ -96,7 +98,8 @@ $(document).ready(function () {
 
     document.addEventListener('click', function (e) {
         if (e.target.getAttribute('id') === "p-upscalecover" ||
-            e.target.parentNode.getAttribute('id') === "p-upscalecover") {
+            (e.target.parentElement != null &&
+                e.target.parentElement.getAttribute('id') === "p-upscalecover")) {
             if (!fullsizecover.classList.contains('d-block')) {
                 fullsizecover.classList.add('d-block')
             }
@@ -114,7 +117,8 @@ $(document).ready(function () {
     //open or close comment menu
     document.addEventListener('click', function (e) {
         if (e.target.classList.contains('c-menu') ||
-            e.target.parentNode.classList.contains('c-menu')) {
+            (e.target.parentElement != null &&
+                e.target.parentElement.classList.contains('c-menu'))) {
             const menu = e.target.closest('.c-header')
                 .querySelector('.c-menupopup');
             if (menu.classList.contains('d-block')) {
@@ -131,11 +135,13 @@ $(document).ready(function () {
 
     document.addEventListener('click', function (e) {
         if (e.target.classList.contains('get_replies') ||
-            e.target.parentNode.classList.contains('get_replies')) {
+            (e.target.parentElement != null &&
+                e.target.parentElement.classList.contains('get_replies'))) {
             openRepliesModal(e.target);
         }
         else if (e.target.classList.contains('mr-close') ||
-            e.target.parentNode.classList.contains('mr-close')) {
+            (e.target.parentElement != null &&
+                e.target.parentElement.classList.contains('mr-close'))) {
             closeRepliesModal();
         }
     });
