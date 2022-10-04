@@ -9,10 +9,10 @@ public class HomeActionController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly HttpClient _httpClient;
 
-    public HomeActionController(ILogger<HomeController> logger, HttpClient httpClient)
+    public HomeActionController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory)
     {
         _logger = logger;
-        _httpClient = httpClient;
+        _httpClient = httpClientFactory.CreateClient("of");
     }
 
     
@@ -25,7 +25,7 @@ public class HomeActionController : Controller
         }
         request.AccountId = accountid;
 
-        var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/add_comment", request);
+        var apiResponse = await _httpClient.PostAsJsonAsync("add_comment", request);
         string statusCode = apiResponse.StatusCode.ToString();
         if(statusCode == "OK"){
             string returnedContent = await apiResponse.Content.ReadAsStringAsync();
@@ -47,7 +47,7 @@ public class HomeActionController : Controller
         }
         request.AccountId = accountid;
 
-        var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/rate", request);
+        var apiResponse = await _httpClient.PostAsJsonAsync("rate", request);
         string statusCode = apiResponse.StatusCode.ToString();
         
         if(statusCode == "OK"){
@@ -69,7 +69,7 @@ public class HomeActionController : Controller
         if(accountid == -1){
             return new JsonResult(StatusCode(499));
         }
-        string url = $"https://localhost:7022/check_rate_by_user/{postid}/{accountid}";
+        string url = $"check_rate_by_user/{postid}/{accountid}";
         string apiResponse = await _httpClient.GetStringAsync(url);
 
         if(apiResponse == "-1"){
@@ -89,7 +89,7 @@ public class HomeActionController : Controller
         }
         request.AccountId = accountid;
         
-        var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/vote", request);
+        var apiResponse = await _httpClient.PostAsJsonAsync("vote", request);
         string statusCode = apiResponse.StatusCode.ToString();
         
         if(statusCode == "OK"){
@@ -112,7 +112,7 @@ public class HomeActionController : Controller
             return new JsonResult(StatusCode(499));
         }
         request.AccountId = accountid;
-        var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/checkvoted", request);
+        var apiResponse = await _httpClient.PostAsJsonAsync("checkvoted", request);
         string statusCode = apiResponse.StatusCode.ToString();
 
         string value = await apiResponse.Content.ReadAsStringAsync();
@@ -132,7 +132,7 @@ public class HomeActionController : Controller
         }
         request.AccountId = accountid;
 
-        var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/createpost", request);
+        var apiResponse = await _httpClient.PostAsJsonAsync("createpost", request);
         string statusCode = apiResponse.StatusCode.ToString();
 
         //reminder: client side errors will be handled with js only

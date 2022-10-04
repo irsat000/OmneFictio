@@ -17,10 +17,10 @@ public class AuthController : Controller
     private readonly HttpClient _httpClient;
     JwtSecurityTokenHandler _jwtHandler = new JwtSecurityTokenHandler();
 
-    public AuthController(ILogger<HomeController> logger, HttpClient httpClient)
+    public AuthController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory)
     {
         _logger = logger;
-        _httpClient = httpClient;
+        _httpClient = httpClientFactory.CreateClient("of");
     }
 
     //fetch api manual login
@@ -31,7 +31,7 @@ public class AuthController : Controller
             return NotFound();
         bool rememberme;
         bool.TryParse(account.RememberMe, out rememberme);
-        var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/login", account);
+        var apiResponse = await _httpClient.PostAsJsonAsync("login", account);
         string statusCode = apiResponse.StatusCode.ToString();
         if(statusCode == "NotFound")
             return NotFound();
@@ -61,7 +61,7 @@ public class AuthController : Controller
             AllowAdultContent = _AllowAdultContent
         };
 
-        var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/register", createAccount);
+        var apiResponse = await _httpClient.PostAsJsonAsync("register", createAccount);
         string statusCode = apiResponse.StatusCode.ToString();
         if(statusCode == "OK"){
             string newToken = await getJwtFromResponse(apiResponse);
@@ -93,7 +93,7 @@ public class AuthController : Controller
     [HttpPost]
     public async Task<JsonResult> GoogleSignin(string googleToken)
     {
-        var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/signin-external", googleToken);
+        var apiResponse = await _httpClient.PostAsJsonAsync("signin-external", googleToken);
         string statusCode = apiResponse.StatusCode.ToString();
         if(statusCode == "OK"){
             string newToken = await getJwtFromResponse(apiResponse);
@@ -173,7 +173,7 @@ public class AuthController : Controller
 /* UserLogin backup
     public async Task<IActionResult> UserLogin(AccountRead2 account)
     {
-        var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/login", account);
+        var apiResponse = await _httpClient.PostAsJsonAsync("login", account);
         if((int)apiResponse.StatusCode == 404){
             
         }
@@ -188,7 +188,7 @@ public class AuthController : Controller
 /*
     public async Task<IActionResult> UserRegistration(AccountWrite1 account)
     {
-        var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/register", account);
+        var apiResponse = await _httpClient.PostAsJsonAsync("register", account);
         string statusCode = apiResponse.StatusCode.ToString();
         if(statusCode == "OK"){
             string newToken = await getJwtFromResponse(apiResponse);
@@ -216,7 +216,7 @@ public class AuthController : Controller
     {
         string text = request.ToString();
         
-        var apiResponse = await _httpClient.PostAsJsonAsync("https://localhost:7022/signin-external", request);
+        var apiResponse = await _httpClient.PostAsJsonAsync("signin-external", request);
         if((int)apiResponse.StatusCode == 480){
             //Token is malicious
         }

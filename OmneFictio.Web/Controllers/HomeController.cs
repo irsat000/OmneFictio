@@ -12,10 +12,10 @@ public class HomeController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly HttpClient _httpClient;
 
-    public HomeController(ILogger<HomeController> logger, HttpClient httpClient)
+    public HomeController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory)
     {
         _logger = logger;
-        _httpClient = httpClient;
+        _httpClient = httpClientFactory.CreateClient("of");
     }
 
     [HttpGet("/")]
@@ -33,7 +33,7 @@ public class HomeController : Controller
     {
         //Stopwatch time = new Stopwatch();
         //time.Start();
-        string postsUrl = "https://localhost:7022/posts";
+        string postsUrl = "posts";
         string raw = await _httpClient.GetStringAsync(postsUrl);
         List<PostRead1>? posts = JsonSerializer.Deserialize<List<PostRead1>>(raw);
         

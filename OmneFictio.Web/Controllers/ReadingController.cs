@@ -12,10 +12,10 @@ public class ReadingController : Controller
     private readonly ILogger<HomeController> _logger;
     private readonly HttpClient _httpClient;
 
-    public ReadingController(ILogger<HomeController> logger, HttpClient httpClient)
+    public ReadingController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory)
     {
         _logger = logger;
-        _httpClient = httpClient;
+        _httpClient = httpClientFactory.CreateClient("of");
     }
 
     
@@ -23,7 +23,7 @@ public class ReadingController : Controller
     [HttpGet("p/{postid}")]
     public async Task<IActionResult> Post(string postid)
     {
-        string url = "https://localhost:7022/getpost/" + postid;
+        string url = "getpost/" + postid;
         string raw = await _httpClient.GetStringAsync(url);
 
         PostRead1? post = JsonSerializer.Deserialize<PostRead1>(raw);
@@ -42,7 +42,7 @@ public class ReadingController : Controller
     [HttpGet("g/GetComments/{postid}")]
     public async Task<JsonResult> GetComments(int postid)
     {
-        string url = "https://localhost:7022/getcomments/" + postid;
+        string url = "getcomments/" + postid;
         string apiResponse = await _httpClient.GetStringAsync(url);
         
         List<CommentRead1>? comments = JsonSerializer.Deserialize<List<CommentRead1>>(apiResponse);
@@ -57,7 +57,7 @@ public class ReadingController : Controller
     [HttpGet("g/GetHighlightedReply/{commentId}")]
     public async Task<JsonResult> GetHighlightedReply(int commentId)
     {
-        string url = "https://localhost:7022/get_highlighted_comment/" + commentId;
+        string url = "get_highlighted_comment/" + commentId;
         string apiResponse = await _httpClient.GetStringAsync(url);
 
         //h means highlighted
@@ -75,7 +75,7 @@ public class ReadingController : Controller
     [HttpGet("g/GetComment/{commentId}")]
     public async Task<JsonResult> GetComment(int commentId)
     {
-        string url = "https://localhost:7022/getcomment/" + commentId;
+        string url = "getcomment/" + commentId;
         string apiResponse = await _httpClient.GetStringAsync(url);
         
         CommentRead2? comment = JsonSerializer.Deserialize<CommentRead2>(apiResponse);
