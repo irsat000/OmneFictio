@@ -12,11 +12,11 @@ $(document).ready(function () {
             }
         })
             .then((res) => res.json())
-            .then((data) => {
+            .then(async (data) => {
                 if (data.statusCode === 200) {
                     const instance = document.getElementById('postList-post');
                     console.log(JSON.parse(data.value));
-                    JSON.parse(data.value).forEach(async post => {
+                    for(const post of JSON.parse(data.value)){
                         const clone = instance.content.cloneNode(true);
                         const payload = JSON.stringify({ TargetId: post.id, TargetType: "post" });
                         //Check if user voted this parent
@@ -67,7 +67,7 @@ $(document).ready(function () {
                             clone.querySelector('.p-username').innerText = post.account.username;
                         }
                         postListSection.appendChild(clone);
-                    });
+                    };
                 } else {
                     //Codes that will return an apology instead of post list
                 }

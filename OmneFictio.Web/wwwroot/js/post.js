@@ -202,7 +202,7 @@ $(document).ready(function () {
                 if (data.statusCode === 200) {
                     //console.log(data.value);
                     const instance = document.getElementById('comment_instance');
-                    data.value.forEach(async (comment) => {
+                    for(const comment of JSON.parse(data.value)){
                         const clone = instance.content.cloneNode(true);
                         const payload = JSON.stringify({ TargetId: comment.id, TargetType: "comment" });
                         //Check if user voted this parent
@@ -245,7 +245,7 @@ $(document).ready(function () {
                             clone.querySelector('.reply').remove();
                         }
                         commentSection.appendChild(clone);
-                    });
+                    };
                 }
             })
             .catch(error => {
@@ -314,7 +314,7 @@ $(document).ready(function () {
                     //if it has replies
                     if (comm.replies.length > 0) {
                         const replyInstance = document.getElementById('modalReplies-reply');
-                        comm.replies.forEach(async reply => {
+                        for(const reply of comm.replies){
                             const replyClone = replyInstance.content.cloneNode(true);
                             //Check if user voted this parent
                             const replyPayload = JSON.stringify({ TargetId: reply.id, TargetType: "reply" });
@@ -332,7 +332,7 @@ $(document).ready(function () {
                                 replyClone.querySelector('.mrr-likes').textContent = reply.voteResult;
                             }
                             modalRepliesBody.appendChild(replyClone);
-                        });
+                        };
                     }
                 }
             })
