@@ -22,6 +22,101 @@
     userPicture = User.Claims.FirstOrDefault(claim => claim.Type == "actort")?.Value ?? "none";
 }
 
+<template id="postList-post">
+    <div class="post" data-postid="post.id">
+        <div class="post-detail">
+            <div class="p-header">
+                <div class="p-title">
+                    <a href="">
+                        
+                    </a>
+                    <span class="p-date">
+                        
+                    </span>
+                </div>
+                <div class="p-menu">
+                    <i class="bi bi-caret-left p-menubtn"></i>
+                </div>
+            </div>
+            <div class="p-body">
+                <div class="p-cover">
+                    <img src="" onerror="this.onerror=null; this.closest('.p-cover').remove()">
+                </div>
+                <span>
+                    
+                </span>
+            </div>
+            <div class="p-footer">
+                <div class="p-evaluation">
+                    <i class='bi bi-hand-thumbs-up likebtn' data-action='like' data-target_type='post'></i>
+                    <span class="p-likes vote_count">--</span>
+                    <i class='bi bi-hand-thumbs-down dislikebtn' data-action='dislike' data-target_type='post'></i>
+                    <span class="p-rate">
+                        
+                    </span>
+                </div>
+                <div class="p-user">
+                    <span class="p-username">
+                        
+                    </span>
+                    <!--<span class="p-username p-deleted_user">DeletedUser</span>-->
+                    <img src="" onerror="this.onerror=null; this.src='/images/onerror/user_no_photo_300x300.png'">
+                </div>
+            </div>
+        </div>
+        <div class="post-menu">
+            <div class="pd-details">
+                <span class="pd-heading">
+                    Tags
+                </span>
+                <div class="pd-tags">
+                    <!--<span>Action</span>-->
+                </div>
+                <div class="pd-type">
+                    <span class="pd-heading">Type:</span>
+                    <span class="pd-value">
+                        
+                    </span>
+                </div>
+                <span class="pd-heading">
+                    Based on
+                </span>
+                <div class="pd-series">
+                    <!--<span>Pirates of the Caribbean</span>-->
+                </div>
+                <div class="pd-poststatus">
+                    <span class="pd-heading">Status:</span>
+                    <span class="pd-value">
+                        
+                    </span>
+                </div>
+                <div class="pd-ratedas">
+                    <span class="pd-heading">Rated as:</span>
+                    <span class="pd-value">
+                        
+                    </span>
+                </div>
+                <div class="pd-language">
+                    <span class="pd-heading">Language:</span>
+                    <span class="pd-value">
+                        
+                    </span>
+                </div>
+            </div>
+            <div class="pd-right">
+                <div class="pd-close">
+                    <i class="bi bi-caret-down pd-closebtn"></i>
+                </div>
+                <div class="pd-actions">
+                    <button type="button" class="pd-saved">Save</button>
+                    <button type="button">Share</button>
+                    <button type="button">Report</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
 <div class="orderby-cont" id="orderby-modal">
     <div class="obt-header">
         <div class="obt-title">
@@ -68,10 +163,9 @@
             if(typeQuery == "Fanfiction" || typeQuery == "fanfiction"){
                 <div class="f-fanfiction_settings">
                     <div class="ffs-header">
-                        <button data-button="choose_series" id="fanfic-chooseseries"><i class="bi bi-search"></i> Series <i class="bi bi-plus"></i></button>
-                        <!--<button data-button="add_crossover" id="fanfic-choosecrossover">Crossover<i class="bi bi-plus"></i></button>
-                        <input type="button" class="" value="Series" data-button="choose_series">
-                        <input type="button" class="" value="Crossover +" data-button="add_crossover">-->
+                        <button data-button="choose_series" id="fanfic-chooseseries">
+                            <i class="bi bi-search"></i> Series <i class="bi bi-plus"></i>
+                        </button>
                     </div>
                     <div class="ffs-series_include">
                         <!--
@@ -107,10 +201,6 @@
                 <option value="3">Dropped</option>
                 <option value="4">Finished</option>
             </select>
-            <!--<label class="f-allow18">
-                <span>+18</span>
-                <input type="checkbox" name="allow18" id="allow18checkbox" value="1">
-            </label>-->
             <select name="ratedas">
                 <option value="0">Rated as</option>
                 <option value="1">E - Everyone</option>
@@ -131,10 +221,6 @@
         <div class="f-tagsbtn_cont">
             <button class="f-includetag" id="f-includetagbtn">Tags<i class="bi bi-plus"></i></button>
             <button class="f-excludetag" id="f-excludetagbtn">Tags<i class="bi bi-dash"></i></button>
-            <!--
-            <input type="button" value="Tags +" class="f-includetag" id="f-includetagbtn">
-            <input type="button" value="Tags -" class="f-excludetag" id="f-excludetagbtn">
-            -->
         </div>
         <div class="f-tagsincexc f-tags_include">
             <!--
@@ -262,248 +348,11 @@
             <p class="orderby-btn po-option" id="orderby-btn">Order By</p>
             <p class="orderby-value">(Recent)</p>
         </div>
-        <!--
-        <span class="po-type po-option" id="po-type">
-            Type
-        </span>
-        -->
         <span class="po-filters po-option" id="po-filter">
             Filter
         </span>
     </div>
-    <div class="post-list pl-masonry">
-    @{
-        if(Model.posts != null && Model.posts.Count > 0){
-            foreach(PostRead1 post in Model.posts){
-                /*if(post.id != 5){
-                    continue;
-                    for tests
-                }*/
-                <div class="post" data-postid="@post.id">
-                    <div class="post-detail d-flex">
-                        <div class="p-header">
-                            <div class="p-title">
-                                <a asp-controller="Reading" asp-action="Post" asp-route-postid="@post.id">@post.title</a>
-                                <span class="p-date">@post.publishDate.Date.ToShortDateString()</span>
-                            </div>
-                            <div class="p-menu">
-                                <i class="bi bi-caret-left p-menubtn"></i>
-                            </div>
-                        </div>
-                        <div class="p-body">
-                            @if(post.coverImage != null){
-                                <div class="p-cover">
-                                    <img src="/images/covers/@post.coverImage">
-                                </div>
-                            }
-                            <span>@post.postDescription</span>
-                        </div>
-                        <div class="p-footer">
-                            <div class="p-evaluation">
-                                @{//Required codes
-                                    //Checking if the user logged in and voted the post
-                                    string likeBtnClasses = "bi bi-hand-thumbs-up";
-                                    string dislikeBtnClasses = "bi bi-hand-thumbs-down";
-                                    int votedByUser = -2; // -2 means not logged in
-                                    if(userId != "-1"){
-                                        if(post.votes.SingleOrDefault(p => p.accountId == Convert.ToInt32(userId) && p.body == true) != null){
-                                            votedByUser = 1;
-                                            likeBtnClasses = "bi bi-hand-thumbs-up-fill active likebtn";
-                                            dislikeBtnClasses = "bi bi-hand-thumbs-down dislikebtn";
-                                        }
-                                        else if(post.votes.SingleOrDefault(p => p.accountId == Convert.ToInt32(userId) && p.body == false) != null){
-                                            votedByUser = 0;
-                                            likeBtnClasses = "bi bi-hand-thumbs-up likebtn";
-                                            dislikeBtnClasses = "bi bi-hand-thumbs-down-fill active dislikebtn";
-                                        }
-                                        else{
-                                            likeBtnClasses = "bi bi-hand-thumbs-up likebtn";
-                                            dislikeBtnClasses = "bi bi-hand-thumbs-down dislikebtn";
-                                        }
-                                    }
-                                    else{
-                                        likeBtnClasses = "bi bi-hand-thumbs-up";
-                                        dislikeBtnClasses = "bi bi-hand-thumbs-down";
-                                    }
-                                }
-                                @Html.Raw("<i class='" + @likeBtnClasses + "' data-action='like' data-target_type='post'></i>")
-                                <span class="p-likes vote_count">
-                                    @(post.voteResult >= 0 ? post.voteResult : "--")
-                                </span>
-                                @Html.Raw("<i class='" + @dislikeBtnClasses + "' data-action='dislike' data-target_type='post'></i>")
-                                <span class="p-rate">
-                                    @(post.rateResult >= 0 && post.rateResult <= 10
-                                        ? Math.Round(post.rateResult, 1).ToString() + "/10"
-                                        : "-/10" )
-                                </span>
-                            </div>
-                            <div class="p-user">
-                                @if(post.account != null){
-                                    <span class="p-username">
-                                        @if(post.account.displayName != null)
-                                            @post.account.displayName
-                                        else
-                                            @post.account.username
-                                    </span>
-                                }else{
-                                    <span class="p-username p-deleted_user">DeletedUser</span>
-                                }
-                                <img src="/images/users/@userPicture" onerror="this.onerror=null; this.src='/images/onerror/user_no_photo_300x300.png'">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="post-menu d-none">
-                        <div class="pd-details">
-                            <span class="pd-heading">
-                                Tags
-                            </span>
-                            <div class="pd-tags">
-                                @if(post.tags.Count < 1){
-                                    <span>Empty</span>
-                                } else{
-                                    foreach(Tag tag in post.tags){
-                                        <span>@tag.body</span>
-                                    }
-                                }
-                                <!--<span>Action</span>-->
-                            </div>
-                            <div class="pd-type">
-                                <span class="pd-heading">Type:</span>
-                                <span class="pd-value">
-                                    @if(post.postType != null){
-                                        @post.postType.body
-                                    }else{
-                                        @Html.Raw("---")
-                                    }
-                                </span>
-                            </div>
-                            @if(post.existingStories.Count > 0){
-                                <span class="pd-heading">
-                                    Based on
-                                </span>
-                                <div class="pd-series">
-                                    @foreach(ExistingStory story in post.existingStories){
-                                        <span>@story.body</span>
-                                    }
-                                    <!--<span>Pirates of the Caribbean</span>-->
-                                </div>
-                            }
-                            <div class="pd-poststatus">
-                                <span class="pd-heading">Status:</span>
-                                <span class="pd-value">
-                                    @if(post.postStatus != null){
-                                        @post.postStatus.body
-                                    }else{
-                                        @Html.Raw("---")
-                                    }
-                                </span>
-                            </div>
-                            <div class="pd-ratedas">
-                                <span class="pd-heading">Rated as:</span>
-                                <span class="pd-value">
-                                    @if(post.ratedAs != null){
-                                        @post.ratedAs.body
-                                    }else{
-                                        @Html.Raw("---")
-                                    }
-                                </span>
-                            </div>
-                            <div class="pd-language">
-                                <span class="pd-heading">Language:</span>
-                                <span class="pd-value">
-                                    @if(post.language != null){
-                                        @post.language.body
-                                    }else{
-                                        @Html.Raw("None")
-                                    }
-                                </span>
-                            </div>
-                        </div>
-                        <div class="pd-right">
-                            <div class="pd-close">
-                                <i class="bi bi-caret-down pd-closebtn"></i>
-                            </div>
-                            <div class="pd-actions">
-                                <button type="button" class="pd-saved">Save</button>
-                                <button type="button">Share</button>
-                                <button type="button">Report</button>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            }
-        }
-        else{
-            <div class="read-nopost"><span>We have failed to provide you service :(</span></div>
-        }
-    }
-    </div>
+    <div class="post-list pl-masonry" id="postListSection">
     
-    <!--
-    <div class="post">
-        <div class="post-detail d-flex">
-            <div class="p-header">
-                <div class="p-title">
-                    <span>Davy Jones</span>
-                    <span class="p-date">27/07/022</span>
-                </div>
-                <div class="p-menu">
-                    <i class="bi bi-caret-left p-menubtn"></i>
-                </div>
-            </div>
-            <div class="p-body">
-                Jones fell in love with the goddess Calypso. He agreed to guide the dead but Calypso was a bi*ch. When he returned from duty, she was not there.
-            </div>
-            <div class="p-footer">
-                <div class="p-evaluation">
-                    <i class="bi bi-hand-thumbs-up likebtn"></i>
-                    <span class="p-likes vote_count">5465</span>
-                    <i class="bi bi-hand-thumbs-down dislikebtn"></i>
-                    <span class="p-rate">7.4/10</span>
-                </div>
-                <div class="p-user">
-                    <span class="p-username">MrBombastic</span>
-                    <img src="https://uybor.uz/borless/avtobor/img/user-images/user_no_photo_300x300.png">
-                </div>
-            </div>
-        </div>
-        <div class="post-menu d-none">
-            <div class="pd-details">
-                <span class="pd-heading">
-                    Tags
-                </span>
-                <div class="pd-tags">
-                    <span>Action</span>
-                    <span>Comedy</span>
-                    <span>Mystery</span>
-                    <span>Fantasy</span>
-                    <span>Romance</span>
-                    <span>Western</span>
-                </div>
-                <div class="pd-type">
-                    <span class="pd-heading">Type:</span>
-                    <span class="pd-value">Fanfiction</span>
-                </div>
-                <div class="pd-poststatus">
-                    <span class="pd-heading">Status:</span>
-                    <span class="pd-value">In-progress</span>
-                </div>
-                <div class="pd-language">
-                    <span class="pd-heading">Language:</span>
-                    <span class="pd-value">English</span>
-                </div>
-            </div>
-            <div class="pd-right">
-                <div class="pd-close">
-                    <i class="bi bi-caret-down pd-closebtn"></i>
-                </div>
-                <div class="pd-actions">
-                    <button type="button" class="pd-saved">Save</button>
-                    <button type="button">Share</button>
-                    <button type="button">Report</button>
-                </div>
-            </div>
-        </div>
     </div>
-    -->
 </div>

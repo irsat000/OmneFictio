@@ -18,6 +18,7 @@ $(document).ready(function () {
         });
     });
     async function AddComment(payload) {
+        //Adds a new comment
         await fetch("/HomeAction/AddComment", {
             method: 'POST',
             headers: {
@@ -40,7 +41,7 @@ $(document).ready(function () {
                     } else {
                         clone.querySelector('.c-username').textContent = comment.account.username;
                     }
-                    clone.querySelector('.c-date').textContent = TimeAgo(comment.publishDate);
+                    clone.querySelector('.c-date').textContent = window.TimeAgo(comment.publishDate);
                     clone.querySelector('.c-text > span').textContent = comment.body;
                     if (comment.voteResult >= 0) {
                         clone.querySelector('.c-likes').textContent = comment.voteResult;
@@ -205,7 +206,7 @@ $(document).ready(function () {
                         const clone = instance.content.cloneNode(true);
                         const payload = JSON.stringify({ TargetId: comment.id, TargetType: "comment" });
                         //Check if user voted this parent
-                        await checkVoted_IconStuff(clone, payload);
+                        await window.checkVoted_IconStuff(clone, payload);
 
                         clone.querySelector('.comment').setAttribute('data-commentid', comment.id);
                         if (comment.account.displayName != null) {
@@ -213,7 +214,7 @@ $(document).ready(function () {
                         } else {
                             clone.querySelector('.c-username').textContent = comment.account.username;
                         }
-                        clone.querySelector('.c-date').textContent = TimeAgo(comment.publishDate);
+                        clone.querySelector('.c-date').textContent = window.TimeAgo(comment.publishDate);
                         clone.querySelector('.c-text > span').textContent = comment.body;
                         if (comment.voteResult >= 0) {
                             clone.querySelector('.c-likes').textContent = comment.voteResult;
@@ -227,7 +228,7 @@ $(document).ready(function () {
                         if (hreply.hasOwnProperty('id')) {
                             //Check if user voted this parent
                             const replyPayload = JSON.stringify({ TargetId: hreply.id, TargetType: "reply" });
-                            await checkVoted_IconStuff(clone.querySelector('.reply'), replyPayload);
+                            await window.checkVoted_IconStuff(clone.querySelector('.reply'), replyPayload);
 
                             clone.querySelector('.reply').setAttribute('data-replyid', hreply.id);
                             clone.querySelector('.r-text > span').textContent = hreply.body;
@@ -296,7 +297,7 @@ $(document).ready(function () {
                     const commentClone = commentInstance.content.cloneNode(true);
                     //Check if user voted this parent
                     const commentPayload = JSON.stringify({ TargetId: comm.id, TargetType: "comment" });
-                    await checkVoted_IconStuff(commentClone, commentPayload);
+                    await window.checkVoted_IconStuff(commentClone, commentPayload);
 
                     commentClone.querySelector('.mr-comment').setAttribute('data-commentid', comm.id);
                     if (comm.account.displayName != null) {
@@ -304,7 +305,7 @@ $(document).ready(function () {
                     } else {
                         commentClone.querySelector('.mrc-username').textContent = comm.account.username;
                     }
-                    commentClone.querySelector('.mrc-date').textContent = TimeAgo(comm.publishDate);
+                    commentClone.querySelector('.mrc-date').textContent = window.TimeAgo(comm.publishDate);
                     commentClone.querySelector('.mrc-text > span').textContent = comm.body;
                     if (comm.voteResult >= 0) {
                         commentClone.querySelector('.mrc-likes').textContent = comm.voteResult;
@@ -317,7 +318,7 @@ $(document).ready(function () {
                             const replyClone = replyInstance.content.cloneNode(true);
                             //Check if user voted this parent
                             const replyPayload = JSON.stringify({ TargetId: reply.id, TargetType: "reply" });
-                            await checkVoted_IconStuff(replyClone, replyPayload);
+                            await window.checkVoted_IconStuff(replyClone, replyPayload);
 
                             replyClone.querySelector('.mr-reply').setAttribute('data-replyid', reply.id);
                             if (reply.account.displayName != null) {
@@ -325,7 +326,7 @@ $(document).ready(function () {
                             } else {
                                 replyClone.querySelector('.mrr-username').textContent = reply.account.username;
                             }
-                            replyClone.querySelector('.mrr-date').textContent = TimeAgo(reply.publishDate);
+                            replyClone.querySelector('.mrr-date').textContent = window.TimeAgo(reply.publishDate);
                             replyClone.querySelector('.mrr-text > span').textContent = reply.body;
                             if (reply.voteResult >= 0) {
                                 replyClone.querySelector('.mrr-likes').textContent = reply.voteResult;
@@ -338,46 +339,7 @@ $(document).ready(function () {
             .catch(error => console.log('Fetching reply method is at fault', error));
     }
 
-    async function checkVoted_IconStuff(clone, payload) {
-        await fetch("/HomeAction/CheckVoted", {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: payload
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                if (data.statusCode === 200) {
-                    const likebtn = clone.querySelector('[data-action="like"]');
-                    const dislikebtn = clone.querySelector('[data-action="dislike"]');
-                    likebtn.className = "";
-                    dislikebtn.className = "";
-                    switch (data.value) {
-                        case "true":
-                            likebtn.classList.add('likebtn', 'bi-hand-thumbs-up-fill', 'active');
-                            dislikebtn.classList.add('dislikebtn', 'bi-hand-thumbs-down');
-                            break;
-                        case "false":
-                            likebtn.classList.add('likebtn', 'bi-hand-thumbs-up');
-                            dislikebtn.classList.add('dislikebtn', 'bi-hand-thumbs-down-fill', 'active');
-                            break;
-                        case "none":
-                            likebtn.classList.add('likebtn', 'bi-hand-thumbs-up');
-                            dislikebtn.classList.add('dislikebtn', 'bi-hand-thumbs-down');
-                            break;
-                        default:
-                            likebtn.classList.add('likebtn', 'bi-hand-thumbs-up');
-                            dislikebtn.classList.add('dislikebtn', 'bi-hand-thumbs-down');
-                            break;
-                    }
-                }
-            })
-            .catch(error => {
-                console.log('check_voted failed -> ' + error);
-            });
-    }
+    
 
 
     function openRepliesModal(element) {
@@ -417,60 +379,6 @@ $(document).ready(function () {
     }
 
 
-    var periods = {
-        month: 30 * 24 * 60 * 60 * 1000,
-        week: 7 * 24 * 60 * 60 * 1000,
-        day: 24 * 60 * 60 * 1000,
-        hour: 60 * 60 * 1000,
-        minute: 60 * 1000
-    };
-    function TimeAgo(time) {
-        var diff = Date.now() - new Date(time);
-        var val;
-        if (diff > periods.month) {
-            // it was at least a month ago
-            val = Math.floor(diff / periods.month);
-            if (val > 1) {
-                return val + " months ago";
-            } else if (val === 1) {
-                return val + " month ago";
-            }
-        }
-        else if (diff > periods.week) {
-            val = Math.floor(diff / periods.week);
-            if (val > 1) {
-                return val + " weeks ago";
-            } else if (val === 1) {
-                return val + " week ago";
-            }
-        }
-        else if (diff > periods.day) {
-            val = Math.floor(diff / periods.day);
-            if (val > 1) {
-                return val + " days ago";
-            } else if (val === 1) {
-                return val + " day ago";
-            }
-        }
-        else if (diff > periods.hour) {
-            val = Math.floor(diff / periods.hour);
-            if (val > 1) {
-                return val + " hours ago";
-            } else if (val === 1) {
-                return val + " hour ago";
-            }
-        }
-        else if (diff > periods.minute) {
-            val = Math.floor(diff / periods.minute);
-            if (val > 1) {
-                return val + " minutes ago";
-            } else if (val === 1) {
-                return val + " minute ago";
-            }
-        } else {
-            return "Just now";
-        }
-    }
 
 
 });

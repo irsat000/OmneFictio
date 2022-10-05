@@ -18,6 +18,19 @@ public class ReadingController : Controller
         _httpClient = httpClientFactory.CreateClient("of");
     }
 
+    //fetch api - get posts
+    [HttpGet("g/GetPosts/{pageNumber}")]
+    public async Task<JsonResult> GetPosts(string pageNumber)
+    {
+        string apiResponse = await _httpClient.GetStringAsync("posts");
+        //It returns a list in json format.
+        if(apiResponse == "[]"){
+            //If it's empty, it returns [].
+            return new JsonResult(NotFound());
+        }
+        //return new JsonResult(NotFound());
+        return new JsonResult(Ok(apiResponse));
+    }
     
 
     [HttpGet("p/{postid}")]

@@ -53,7 +53,8 @@ app.MapGet("/posts", async (OmneFictioContext db) =>
 {
     var posts = await mapper.ProjectTo<PostDtoRead_1>(db.Posts.Where(p =>
     p.IsPublished == true &&
-    p.DeletedStatus!.Body == "Default")).ToListAsync();
+    p.DeletedStatus!.Body == "Default" )
+    .OrderBy(p => p.Id)).ToListAsync();
 
     return posts;
 });
@@ -73,9 +74,8 @@ app.MapGet("/getcomments/{postid}", async (OmneFictioContext db, int postid) =>
 {
     var comments = await mapper.ProjectTo<CommentDtoRead_2>(db.Comments.Where(c =>
     c.TargetPostId == postid &&
-    c.DeletedStatus.Body == "Default")).ToListAsync();
-
-    comments = comments.OrderBy(c => c.PublishDate).ToList();
+    c.DeletedStatus.Body == "Default")
+    .OrderBy(c => c.PublishDate)).ToListAsync();
 
     return comments;
 });

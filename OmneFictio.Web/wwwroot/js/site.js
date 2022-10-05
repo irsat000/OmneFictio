@@ -94,25 +94,22 @@ $(document).ready(function () {
         }*/
     });
 
-    //Post menu actions
-    $('.p-menubtn, .pd-closebtn').click(function () {
-        var postwrap = $(this).parent().closest('.post');
-        var postdetail = $(postwrap).find('.post-detail');
-        var postmenu = $(postwrap).find('.post-menu');
-        if ($(postdetail).hasClass('d-flex')) {
-            $(postdetail).removeClass('d-flex');
-            $(postdetail).addClass('d-none');
-            $(postmenu).removeClass('d-none');
-            $(postmenu).addClass('d-flex');
-        }
-        else {
-            $(postdetail).removeClass('d-none');
-            $(postdetail).addClass('d-flex');
-            $(postmenu).removeClass('d-flex');
-            $(postmenu).addClass('d-none');
+    //Post detail-menu button
+    document.addEventListener('click', function (e) {
+        if (e.target.classList.contains("p-menubtn") ||
+            e.target.classList.contains("pd-closebtn")) {
+            const post = e.target.closest('.post');
+            const postDetail = post.querySelector('.post-detail');
+            const postMenu = post.querySelector('.post-menu');
+            if(!postMenu.classList.contains('d-flex')){
+                postMenu.classList.add('d-flex');
+                postDetail.classList.add('d-none');
+            } else {
+                postMenu.classList.remove('d-flex');
+                postDetail.classList.remove('d-none');
+            }
         }
     });
-
 
 
 
@@ -233,28 +230,28 @@ function voting_visual(btn, action) {
     let btnSibling = action === "like"
         ? btn.parentElement.querySelector('.dislikebtn')
         : btn.parentElement.querySelector('.likebtn');
-        
+
     //Increase/Decrease vote count
     const showVoteCount = btn.parentElement.querySelector('.vote_count');
-    let bvInputVal = showVoteCount.innerText !== "--" 
-        ? parseInt(showVoteCount.innerText, 10) 
+    let bvInputVal = showVoteCount.innerText !== "--"
+        ? parseInt(showVoteCount.innerText, 10)
         : "--";
-    if(bvInputVal !== "--"){
-        if(action === "like"){
-            if(btn.classList.contains('active')){
+    if (bvInputVal !== "--") {
+        if (action === "like") {
+            if (btn.classList.contains('active')) {
                 bvInputVal = bvInputVal - 1;
-            } else{
-                if(btnSibling.classList.contains('active')){
+            } else {
+                if (btnSibling.classList.contains('active')) {
                     bvInputVal = bvInputVal + 2;
                 } else {
                     bvInputVal = bvInputVal + 1;
                 }
             }
-        } else if(action === "dislike") {
-            if(btn.classList.contains('active')){
+        } else if (action === "dislike") {
+            if (btn.classList.contains('active')) {
                 bvInputVal = bvInputVal + 1;
             } else {
-                if(btnSibling.classList.contains('active')){
+                if (btnSibling.classList.contains('active')) {
                     bvInputVal = bvInputVal - 2;
                 } else {
                     bvInputVal = bvInputVal - 1;
@@ -343,4 +340,100 @@ modalbg1_click = function () {
         loginModal.classList.remove('d-flex');
         modalbg1.classList.remove('d-block');
     }
+}
+
+function TimeAgo(time) {
+    const periods = {
+        month: 30 * 24 * 60 * 60 * 1000,
+        week: 7 * 24 * 60 * 60 * 1000,
+        day: 24 * 60 * 60 * 1000,
+        hour: 60 * 60 * 1000,
+        minute: 60 * 1000
+    };
+    const diff = Date.now() - new Date(time);
+    let val;
+    if (diff > periods.month) {
+        // it was at least a month ago
+        val = Math.floor(diff / periods.month);
+        if (val > 1) {
+            return val + " months ago";
+        } else if (val === 1) {
+            return val + " month ago";
+        }
+    }
+    else if (diff > periods.week) {
+        val = Math.floor(diff / periods.week);
+        if (val > 1) {
+            return val + " weeks ago";
+        } else if (val === 1) {
+            return val + " week ago";
+        }
+    }
+    else if (diff > periods.day) {
+        val = Math.floor(diff / periods.day);
+        if (val > 1) {
+            return val + " days ago";
+        } else if (val === 1) {
+            return val + " day ago";
+        }
+    }
+    else if (diff > periods.hour) {
+        val = Math.floor(diff / periods.hour);
+        if (val > 1) {
+            return val + " hours ago";
+        } else if (val === 1) {
+            return val + " hour ago";
+        }
+    }
+    else if (diff > periods.minute) {
+        val = Math.floor(diff / periods.minute);
+        if (val > 1) {
+            return val + " minutes ago";
+        } else if (val === 1) {
+            return val + " minute ago";
+        }
+    } else {
+        return "Just now";
+    }
+}
+
+async function checkVoted_IconStuff(clone, payload) {
+    await fetch("/HomeAction/CheckVoted", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: payload
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            if (data.statusCode === 200) {
+                const likebtn = clone.querySelector('[data-action="like"]');
+                const dislikebtn = clone.querySelector('[data-action="dislike"]');
+                likebtn.className = "";
+                dislikebtn.className = "";
+                switch (data.value) {
+                    case "true":
+                        likebtn.classList.add('likebtn', 'bi', 'bi-hand-thumbs-up-fill', 'active');
+                        dislikebtn.classList.add('dislikebtn', 'bi', 'bi-hand-thumbs-down');
+                        break;
+                    case "false":
+                        likebtn.classList.add('likebtn', 'bi', 'bi-hand-thumbs-up');
+                        dislikebtn.classList.add('dislikebtn', 'bi', 'bi-hand-thumbs-down-fill', 'active');
+                        break;
+                    case "none":
+                        likebtn.classList.add('likebtn', 'bi', 'bi-hand-thumbs-up');
+                        dislikebtn.classList.add('dislikebtn', 'bi', 'bi-hand-thumbs-down');
+                        break;
+                    default:
+                        likebtn.classList.add('likebtn', 'bi', 'bi-hand-thumbs-up');
+                        dislikebtn.classList.add('dislikebtn', 'bi', 'bi-hand-thumbs-down');
+                        break;
+                }
+            }
+        })
+        .catch(error => {
+            console.log('check_voted failed -> ' + error);
+        });
 }

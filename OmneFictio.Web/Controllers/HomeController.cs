@@ -31,18 +31,13 @@ public class HomeController : Controller
     [HttpGet("Read/{Type}")]
     public async Task<IActionResult> Read(string Type)
     {
-        //Stopwatch time = new Stopwatch();
-        //time.Start();
-        string postsUrl = "posts";
-        string raw = await _httpClient.GetStringAsync(postsUrl);
+        /*string raw = await _httpClient.GetStringAsync("posts");
         List<PostRead1>? posts = JsonSerializer.Deserialize<List<PostRead1>>(raw);
         
         ReadViewmodel viewModel = new ReadViewmodel{
             posts = posts
-        };
-        //time.Stop();
-        //Console.WriteLine("elapsed time: " + time.Elapsed);
-        return View(viewModel);
+        };*/
+        return View();
     }
 
     [HttpGet("Register")]
