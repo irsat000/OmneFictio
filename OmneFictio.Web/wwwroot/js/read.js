@@ -21,6 +21,7 @@ $(document).ready(function () {
                         const payload = JSON.stringify({ TargetId: post.id, TargetType: "post" });
                         //Check if user voted this parent
                         await window.checkVoted_IconStuff(clone, payload);
+                        
                         clone.querySelector('.post').setAttribute('data-postid', post.id);
                         clone.querySelector('.p-title > a').setAttribute('href', '/p/' + post.id);
                         clone.querySelector('.p-title > a').innerText = post.title;

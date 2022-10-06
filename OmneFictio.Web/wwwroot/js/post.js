@@ -7,6 +7,9 @@ $(document).ready(function () {
     });
     const postId = document.getElementById('postid').value;
     const commentSection = document.getElementById('comment-section');
+    const modalbg1 = document.getElementsByClassName('modalbg1')[0];
+    const repliesModal = document.getElementById('modal-replies');
+    const chaptersModal = document.getElementById('modal-chapters');
     CheckRateByUser();
     fetchComments();
 
@@ -156,9 +159,6 @@ $(document).ready(function () {
         }
     });
 
-    const modalbg1 = document.getElementsByClassName('modalbg1')[0];
-    const repliesModal = document.getElementById('modal-replies');
-    const chaptersModal = document.getElementById('modal-chapters');
 
     document.addEventListener('click', function (e) {
         if (e.target.classList.contains('get_replies') ||
@@ -176,16 +176,19 @@ $(document).ready(function () {
 
     const chapterModalBtns = [document.getElementById('mc-close'), document.getElementById('get_chapters')];
     chapterModalBtns.forEach(function (element) {
-        element.addEventListener("click", function () {
-            if (chaptersModal.classList.contains('d-flex')) {
-                closeChaptersModal();
-            }
-            else {
-                chaptersModal.classList.add('d-flex');
-                modalbg1.classList.add('d-block');
-            }
-        });
+        element.addEventListener("click", open_close_chapters_modal);
+        element.addEventListener("touchstart", open_close_chapters_modal);
     });
+    function open_close_chapters_modal(){
+        alert("deneme");
+        if (chaptersModal.classList.contains('d-flex')) {
+            closeChaptersModal();
+        }
+        else {
+            chaptersModal.classList.add('d-flex');
+            modalbg1.classList.add('d-block');
+        }
+    }
 
 
     async function fetchComments() {
@@ -198,9 +201,7 @@ $(document).ready(function () {
         })
             .then((res) => res.json())
             .then(async (data) => {
-                //console.log(data.statusCode);
                 if (data.statusCode === 200) {
-                    //console.log(data.value);
                     const instance = document.getElementById('comment_instance');
                     for(const comment of JSON.parse(data.value)){
                         const clone = instance.content.cloneNode(true);

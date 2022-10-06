@@ -71,6 +71,13 @@ public class CommentWrite1
 }
 //Adding a comment
 
+public class GetPosts_Options
+{
+    public int Page { get; set; }
+    public int MaxPostPerPage { get; set; }
+}
+//Get posts - Settings
+
 
 
 

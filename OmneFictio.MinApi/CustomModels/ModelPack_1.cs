@@ -1,5 +1,12 @@
 namespace OmneFictio.MinApi.Models;
 
+public class GetPosts_Options
+{
+    public int Page { get; set; }
+    public int MaxPostPerPage { get; set; }
+}
+
+
 public class CheckVoted
 {
     public int AccountId { get; set; }

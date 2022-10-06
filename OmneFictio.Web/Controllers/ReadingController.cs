@@ -18,21 +18,6 @@ public class ReadingController : Controller
         _httpClient = httpClientFactory.CreateClient("of");
     }
 
-    //fetch api - get posts
-    [HttpGet("g/GetPosts/{pageNumber}")]
-    public async Task<JsonResult> GetPosts(string pageNumber)
-    {
-        string apiResponse = await _httpClient.GetStringAsync("posts");
-        //It returns a list in json format.
-        if(apiResponse == "[]"){
-            //If it's empty, it returns [].
-            return new JsonResult(NotFound());
-        }
-        //return new JsonResult(NotFound());
-        return new JsonResult(Ok(apiResponse));
-    }
-    
-
     [HttpGet("p/{postid}")]
     public async Task<IActionResult> Post(string postid)
     {
@@ -51,20 +36,35 @@ public class ReadingController : Controller
     }
 
 
+    //fetch api - get posts
+    [HttpGet("g/GetPosts/{pageNumber}")]
+    public async Task<JsonResult> GetPosts(string pageNumber)
+    {
+        GetPosts_Options opt = new GetPosts_Options();
+        opt.MaxPostPerPage = 20;
+        opt.Page = 1;
+        var apiResponse = await _httpClient.PostAsJsonAsync("posts", opt);
+        string respond = await apiResponse.Content.ReadAsStringAsync();
+        //It returns a list in json format.
+        if(respond == "[]"){
+            //If it's empty, it returns [].
+            return new JsonResult(NotFound());
+        }
+        return new JsonResult(Ok(apiResponse));
+    }
+    
+
     //fetch api - get post's comments
     [HttpGet("g/GetComments/{postid}")]
     public async Task<JsonResult> GetComments(int postid)
     {
         string url = "getcomments/" + postid;
         string apiResponse = await _httpClient.GetStringAsync(url);
-        
-        List<CommentRead1>? comments = JsonSerializer.Deserialize<List<CommentRead1>>(apiResponse);
 
-        if(comments == null || comments.Count() < 1) {
+        if(apiResponse == "[]") {
             return new JsonResult(NotFound());
         }
-        //return new JsonResult(NotFound());
-        return new JsonResult(Ok(comments));
+        return new JsonResult(Ok(apiResponse));
     }
 
     [HttpGet("g/GetHighlightedReply/{commentId}")]

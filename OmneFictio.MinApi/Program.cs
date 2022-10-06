@@ -49,12 +49,16 @@ app.MapGet("/", () =>
 });
 
 //get posts
-app.MapGet("/posts", async (OmneFictioContext db) =>
+app.MapGet("/posts", async (OmneFictioContext db, [FromBody] GetPosts_Options opt) =>
 {
-    var posts = await mapper.ProjectTo<PostDtoRead_1>(db.Posts.Where(p =>
-    p.IsPublished == true &&
-    p.DeletedStatus!.Body == "Default" )
-    .OrderByDescending(p => p.PublishDate)).ToListAsync();
+    var posts = await mapper.ProjectTo<PostDtoRead_1>(db.Posts
+        .Where(p =>
+            p.IsPublished == true &&
+            p.DeletedStatus!.Body == "Default")
+        .OrderByDescending(p => p.PublishDate))
+        .Skip(opt.MaxPostPerPage * (opt.Page - 1))
+        .Take(opt.MaxPostPerPage)
+        .ToListAsync();
 
     return posts;
 });
@@ -511,7 +515,7 @@ app.MapPost("/add_comment", async (OmneFictioContext db, CommentDtoWrite_1 reque
     {
         return Results.StatusCode(580);
     }
-    CommentDtoRead_2? returnComment = 
+    CommentDtoRead_2? returnComment =
         await mapper.ProjectTo<CommentDtoRead_2>
         (db.Comments.Where(p => p.Id == newComment.Id))
         .FirstOrDefaultAsync();
