@@ -49,18 +49,30 @@ app.MapGet("/", () =>
 });
 
 //get posts
-app.MapGet("/posts", async (OmneFictioContext db, [FromBody] GetPosts_Options opt) =>
+app.MapPost("/posts", async (OmneFictioContext db, [FromBody] GetPosts_Options opt) =>
 {
-    var posts = await mapper.ProjectTo<PostDtoRead_1>(db.Posts
+    /*var posts = await mapper.ProjectTo<PostDtoRead_1>(db.Posts
         .Where(p =>
             p.IsPublished == true &&
             p.DeletedStatus!.Body == "Default")
         .OrderByDescending(p => p.PublishDate))
         .Skip(opt.MaxPostPerPage * (opt.Page - 1))
         .Take(opt.MaxPostPerPage)
+        .ToListAsync();*/
+
+    
+    var posts = db.Posts
+        .Where(p =>
+            p.IsPublished == true &&
+            p.DeletedStatus!.Body == "Default")
+        .OrderByDescending(p => p.PublishDate);
+    int pageCount = (posts.Count() + opt.MaxPostPerPage - 1) / opt.MaxPostPerPage;
+    var posts_onepage = await mapper.ProjectTo<PostDtoRead_1>(posts)
+        .Skip(opt.MaxPostPerPage * (opt.Page - 1))
+        .Take(opt.MaxPostPerPage)
         .ToListAsync();
 
-    return posts;
+    return new { posts = posts_onepage, pages = pageCount };
 });
 
 //get post

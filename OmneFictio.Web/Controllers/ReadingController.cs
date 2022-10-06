@@ -41,16 +41,22 @@ public class ReadingController : Controller
     public async Task<JsonResult> GetPosts(string pageNumber)
     {
         GetPosts_Options opt = new GetPosts_Options();
-        opt.MaxPostPerPage = 20;
-        opt.Page = 1;
+        opt.MaxPostPerPage = 2;
+        opt.Page = 2;
         var apiResponse = await _httpClient.PostAsJsonAsync("posts", opt);
-        string respond = await apiResponse.Content.ReadAsStringAsync();
+        string rawString = await apiResponse.Content.ReadAsStringAsync();
+        var respond = JsonSerializer.Deserialize<Dictionary<string, object>>(rawString);
+
+        string posts = respond!.FirstOrDefault(x => x.Key == "posts").Value.ToString()!;
+        string pages = respond!.FirstOrDefault(x => x.Key == "pages").Value.ToString()!;
+        Console.WriteLine("asdfasdf -> " + pages);
+
         //It returns a list in json format.
-        if(respond == "[]"){
+        if(posts == "[]"){
             //If it's empty, it returns [].
             return new JsonResult(NotFound());
         }
-        return new JsonResult(Ok(apiResponse));
+        return new JsonResult(Ok(posts));
     }
     
 
