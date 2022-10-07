@@ -7,7 +7,7 @@ $(document).ready(function () {
 
     fetchPosts();
     async function fetchPosts() {
-        const payload = { MaxPostPerPage: 5, Page: curpage };
+        const payload = { MaxPostPerPage: 2, Page: curpage };
         await fetch("/g/GetPosts", {
             method: 'POST',
             headers: {
@@ -80,13 +80,49 @@ $(document).ready(function () {
                     //PAGINATION
                     const pagInstance = document.getElementById('paginationTemplate');
                     const pagClone = pagInstance.content.cloneNode(true);
+                    const pagSelect = pagClone.querySelector('.page_select');
                     for(let i = 1; i <= data.value.pages; i++){
                         const opt = document.createElement('option');
                         opt.value = i;
                         opt.innerHTML = i;
-                        pagClone.querySelector('.page_select').appendChild(opt);
+                        pagSelect.appendChild(opt);
                     }
-                    pagClone.querySelector('.page_select').value = curpage;
+                    pagSelect.value = curpage;
+                    //----
+                    const params_pag = new URLSearchParams(window.location.search);
+                    let newUrl = new URL(window.location);
+                    let urlPath = newUrl.origin + newUrl.pathname;
+
+                    if(curpage < data.value.pages){
+                        params_pag.set('page', (curpage + 1).toString());
+                        pagClone.querySelector('#nextPageBtn')
+                            .setAttribute('href', urlPath + "?" + params_pag);
+                        if(curpage == 1){
+                            pagClone.querySelector('#prevPageBtn').classList.add('opacity-50');
+                            pagClone.querySelector('.firstPageBtn').classList.add('opacity-50');
+                        }
+                    }
+                    if(curpage > 1){
+                        params_pag.set('page', (curpage - 1).toString());
+                        pagClone.querySelector('#prevPageBtn')
+                            .setAttribute('href', urlPath + "?" + params_pag);
+                        if(curpage == data.value.pages) {
+                            pagClone.querySelector('#nextPageBtn').classList.add('opacity-50');
+                            pagClone.querySelector('.lastPageBtn').classList.add('opacity-50');
+                        }
+                    }
+                    pagClone.querySelector('.firstPageBtn').addEventListener('click', function () {
+                        params_pag.set('page', '1');
+                        window.location.href = urlPath + "?" + params_pag;
+                    });
+                    pagClone.querySelector('.lastPageBtn').addEventListener('click', function () {
+                        params_pag.set('page', data.value.pages.toString());
+                        window.location.href = urlPath + "?" + params_pag;
+                    });
+                    pagSelect.addEventListener('change', function() {
+                        params_pag.set('page', this.value);
+                        window.location.href = urlPath + "?" + params_pag;
+                    });
                     postShowroom.appendChild(pagClone);
                 } else {
                     //Codes that will return an apology instead of post list
