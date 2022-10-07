@@ -180,7 +180,6 @@ $(document).ready(function () {
         element.addEventListener("touchstart", open_close_chapters_modal);
     });
     function open_close_chapters_modal(){
-        alert("deneme");
         if (chaptersModal.classList.contains('d-flex')) {
             closeChaptersModal();
         }

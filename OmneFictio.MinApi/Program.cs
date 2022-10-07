@@ -72,6 +72,9 @@ app.MapPost("/posts", async (OmneFictioContext db, [FromBody] GetPosts_Options o
         .Take(opt.MaxPostPerPage)
         .ToListAsync();
 
+    /*if(posts_onepage.Count() == 0){
+        return new { posts = posts_onepage, pages = pageCount };
+    }*/
     return new { posts = posts_onepage, pages = pageCount };
 });
 

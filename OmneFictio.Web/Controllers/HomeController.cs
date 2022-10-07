@@ -29,14 +29,16 @@ public class HomeController : Controller
     }
 
     [HttpGet("Read/{Type}")]
-    public async Task<IActionResult> Read(string Type)
+    public async Task<IActionResult> Read(string Type, string? page)
     {
-        /*string raw = await _httpClient.GetStringAsync("posts");
-        List<PostRead1>? posts = JsonSerializer.Deserialize<List<PostRead1>>(raw);
-        
-        ReadViewmodel viewModel = new ReadViewmodel{
-            posts = posts
-        };*/
+        /* WORKS
+        if(page != null)
+            Console.WriteLine(" this is the page we are in -> "+ page);
+        else 
+            Console.WriteLine("No querystring so this is first page");
+        */
+
+        /*ReadViewmodel viewModel = new ReadViewmodel{};*/
         return View();
     }
 

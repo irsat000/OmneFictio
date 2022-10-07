@@ -1,22 +1,30 @@
 
 $(document).ready(function () {
+    const postShowroom = document.querySelector('.posts-cont');
     const postListSection = document.getElementById('postListSection');
+    const params = new URLSearchParams(window.location.search);
+    const curpage = params.has('page') ? parseInt(params.get('page'), 10) : 1;
 
     fetchPosts();
     async function fetchPosts() {
-        await fetch("/g/GetPosts/" + 5, {
-            method: 'GET',
+        const payload = { MaxPostPerPage: 5, Page: curpage };
+        await fetch("/g/GetPosts", {
+            method: 'POST',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-            }
+            },
+            body: JSON.stringify(payload)
         })
             .then((res) => res.json())
             .then(async (data) => {
+                //console.log("Number of pages -> " + data.value.pages);
+                //console.log(JSON.parse(data.value.posts));
                 if (data.statusCode === 200) {
+                    //GET THE POSTS
                     const instance = document.getElementById('postList-post');
-                    console.log(JSON.parse(data.value));
-                    for(const post of JSON.parse(data.value)){
+                    //console.log(JSON.parse(data.value.posts));
+                    for(const post of JSON.parse(data.value.posts)){
                         const clone = instance.content.cloneNode(true);
                         const payload = JSON.stringify({ TargetId: post.id, TargetType: "post" });
                         //Check if user voted this parent
@@ -69,6 +77,17 @@ $(document).ready(function () {
                         }
                         postListSection.appendChild(clone);
                     };
+                    //PAGINATION
+                    const pagInstance = document.getElementById('paginationTemplate');
+                    const pagClone = pagInstance.content.cloneNode(true);
+                    for(let i = 1; i <= data.value.pages; i++){
+                        const opt = document.createElement('option');
+                        opt.value = i;
+                        opt.innerHTML = i;
+                        pagClone.querySelector('.page_select').appendChild(opt);
+                    }
+                    pagClone.querySelector('.page_select').value = curpage;
+                    postShowroom.appendChild(pagClone);
                 } else {
                     //Codes that will return an apology instead of post list
                 }
