@@ -313,7 +313,11 @@ app.MapPost("/signin-external", async (OmneFictioContext db, [FromBody] string t
 
 
 
-//-------Actions
+
+
+
+
+//-------ACTIONS----------------
 
 app.MapPost("/vote", async (OmneFictioContext db, VoteDtoWrite_1 request) =>
 {
