@@ -41,7 +41,7 @@ public class MapperConfig : Profile{
         CreateMap<PostGiftDto, PostGift>().ReverseMap();
         CreateMap<PostStatusDto, PostStatus>().ReverseMap();
         CreateMap<PostTypeDto, PostType>().ReverseMap();
-        CreateMap<RatedAsDto, RatedA>().ReverseMap();
+        CreateMap<RatedAsDto, RatedAs>().ReverseMap();
         CreateMap<RateDto, Rate>().ReverseMap();
         CreateMap<TagDto, Tag>().ReverseMap();
         CreateMap<VoteDto, Vote>().ReverseMap();

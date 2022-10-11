@@ -1,5 +1,5 @@
 {
-  "FilePath": "c:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\OmneFictio.Web.csproj",
+  "FilePath": "c:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.WebApi\\OmneFictio.WebApi.csproj",
   "Configuration": {
     "ConfigurationName": "MVC-3.0",
     "LanguageVersion": "6.0",
@@ -16295,63 +16295,7 @@
     ],
     "CSharpLanguageVersion": 1000
   },
-  "RootNamespace": "OmneFictio.Web",
-  "Documents": [
-    {
-      "FilePath": "c:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\Views\\Reading\\Post.cshtml",
-      "TargetPath": "Views\\Reading\\Post.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\Views\\_ViewImports.cshtml",
-      "TargetPath": "Views\\_ViewImports.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\Views\\_ViewStart.cshtml",
-      "TargetPath": "Views\\_ViewStart.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\Views\\Home\\Read.cshtml",
-      "TargetPath": "Views\\Home\\Read.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\Views\\Home\\Index.cshtml",
-      "TargetPath": "Views\\Home\\Index.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\Views\\Shared\\_Layout.cshtml",
-      "TargetPath": "Views\\Shared\\_Layout.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\Views\\Shared\\_ValidationScriptsPartial.cshtml",
-      "TargetPath": "Views\\Shared\\_ValidationScriptsPartial.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\Views\\Shared\\Error.cshtml",
-      "TargetPath": "Views\\Shared\\Error.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\Views\\Home\\Publish.cshtml",
-      "TargetPath": "Views\\Home\\Publish.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\Views\\Home\\Register.cshtml",
-      "TargetPath": "Views\\Home\\Register.cshtml",
-      "FileKind": "mvc"
-    },
-    {
-      "FilePath": "c:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\Views\\Home\\Privacy.cshtml",
-      "TargetPath": "Views\\Home\\Privacy.cshtml",
-      "FileKind": "mvc"
-    }
-  ],
+  "RootNamespace": "OmneFictio.WebApi",
+  "Documents": [],
   "SerializationFormat": "0.2"
 }

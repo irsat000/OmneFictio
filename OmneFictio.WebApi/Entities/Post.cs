@@ -35,7 +35,7 @@ namespace OmneFictio.WebApi.Entities
         public virtual Language? language { get; set; }
         public virtual PostStatus? postStatus { get; set; }
         public virtual PostType? postType { get; set; }
-        public virtual RatedA? ratedAs { get; set; }
+        public virtual RatedAs? ratedAs { get; set; }
         public virtual ICollection<Chapter> Chapters { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<PostGift> PostGifts { get; set; }
