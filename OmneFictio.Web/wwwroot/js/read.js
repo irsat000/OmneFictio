@@ -7,7 +7,7 @@ $(document).ready(function () {
 
     fetchPosts();
     async function fetchPosts() {
-        const payload = { MaxPostPerPage: 2, Page: curpage };
+        const payload = { MaxPostPerPage: 20, Page: curpage };
         await fetch("/g/GetPosts", {
             method: 'POST',
             headers: {

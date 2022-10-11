@@ -48,19 +48,22 @@ app.MapGet("/", () =>
     return "Hello jupiter";
 });
 
-//get posts
-app.MapPost("/posts", async (OmneFictioContext db, [FromBody] GetPosts_Options opt) =>
+
+//get all posts speed test
+/*app.MapGet("/posts_speedtest", async (OmneFictioContext db) =>
 {
-    /*var posts = await mapper.ProjectTo<PostDtoRead_1>(db.Posts
+    var posts = await mapper.ProjectTo<PostDtoRead_1>(db.Posts
         .Where(p =>
             p.IsPublished == true &&
             p.DeletedStatus!.Body == "Default")
         .OrderByDescending(p => p.PublishDate))
-        .Skip(opt.MaxPostPerPage * (opt.Page - 1))
-        .Take(opt.MaxPostPerPage)
-        .ToListAsync();*/
+        .ToListAsync();
+    return posts;
+});*/
 
-    
+//get posts
+app.MapPost("/posts", async (OmneFictioContext db, [FromBody] GetPosts_Options opt) =>
+{
     var posts = db.Posts
         .Where(p =>
             p.IsPublished == true &&

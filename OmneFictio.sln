@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OmneFictio.Web", "OmneFicti
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OmneFictio.MinApi", "OmneFictio.MinApi\OmneFictio.MinApi.csproj", "{78E31603-0F1D-4A23-8046-13503936A335}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OmneFictio.WebApi", "OmneFictio.WebApi\OmneFictio.WebApi.csproj", "{73B1767F-9D46-4429-87A6-D5B3879E139A}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -24,5 +26,9 @@ Global
 		{78E31603-0F1D-4A23-8046-13503936A335}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{78E31603-0F1D-4A23-8046-13503936A335}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{78E31603-0F1D-4A23-8046-13503936A335}.Release|Any CPU.Build.0 = Release|Any CPU
+		{73B1767F-9D46-4429-87A6-D5B3879E139A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{73B1767F-9D46-4429-87A6-D5B3879E139A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{73B1767F-9D46-4429-87A6-D5B3879E139A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{73B1767F-9D46-4429-87A6-D5B3879E139A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal
