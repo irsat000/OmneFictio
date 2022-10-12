@@ -7,34 +7,30 @@ $(document).ready(function () {
 
     fetchPosts();
     async function fetchPosts() {
-        const payload = { MaxPostPerPage: 20, Page: curpage };
-        await fetch("/g/GetPosts", {
-            method: 'POST',
+        await fetch("/g/GetPosts?" + params, {
+            method: 'GET',
             headers: {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
+            }
         })
             .then((res) => res.json())
             .then(async (data) => {
-                //console.log("Number of pages -> " + data.value.pages);
-                //console.log(JSON.parse(data.value.posts));
                 if (data.statusCode === 200) {
                     //GET THE POSTS
                     const instance = document.getElementById('postList-post');
-                    //console.log(JSON.parse(data.value.posts));
-                    for(const post of JSON.parse(data.value.posts)){
+                    const response = JSON.parse(data.value);
+                    for (const post of response.posts) {
                         const clone = instance.content.cloneNode(true);
-                        const payload = JSON.stringify({ TargetId: post.id, TargetType: "post" });
+                        const checkvotepayload = "TargetId=" + post.id + "&TargetType=post";
                         //Check if user voted this parent
-                        await window.checkVoted_IconStuff(clone, payload);
-                        
+                        await window.checkVoted_IconStuff(clone, checkvotepayload);
+
                         clone.querySelector('.post').setAttribute('data-postid', post.id);
                         clone.querySelector('.p-title > a').setAttribute('href', '/p/' + post.id);
                         clone.querySelector('.p-title > a').innerText = post.title;
                         clone.querySelector('.p-date').innerText = window.TimeAgo(post.publishDate);
-                        if(post.coverImage !== null){
+                        if (post.coverImage !== null) {
                             clone.querySelector('.p-cover > img').setAttribute('src', '/images/covers/' + post.coverImage);
                         }
                         clone.querySelector('.p-body > span').innerText = post.postDescription;
@@ -81,7 +77,7 @@ $(document).ready(function () {
                     const pagInstance = document.getElementById('paginationTemplate');
                     const pagClone = pagInstance.content.cloneNode(true);
                     const pagSelect = pagClone.querySelector('.page_select');
-                    for(let i = 1; i <= data.value.pages; i++){
+                    for (let i = 1; i <= response.pages; i++) {
                         const opt = document.createElement('option');
                         opt.value = i;
                         opt.innerHTML = i;
@@ -89,24 +85,24 @@ $(document).ready(function () {
                     }
                     pagSelect.value = curpage;
                     //----
-                    const params_pag = new URLSearchParams(window.location.search);
+                    const params_pag = params;
                     let newUrl = new URL(window.location);
                     let urlPath = newUrl.origin + newUrl.pathname;
 
-                    if(curpage < data.value.pages){
+                    if (curpage < response.pages) {
                         params_pag.set('page', (curpage + 1).toString());
                         pagClone.querySelector('#nextPageBtn')
                             .setAttribute('href', urlPath + "?" + params_pag);
-                        if(curpage == 1){
+                        if (curpage == 1) {
                             pagClone.querySelector('#prevPageBtn').classList.add('opacity-50');
                             pagClone.querySelector('.firstPageBtn').classList.add('opacity-50');
                         }
                     }
-                    if(curpage > 1){
+                    if (curpage > 1) {
                         params_pag.set('page', (curpage - 1).toString());
                         pagClone.querySelector('#prevPageBtn')
                             .setAttribute('href', urlPath + "?" + params_pag);
-                        if(curpage == data.value.pages) {
+                        if (curpage == response.pages) {
                             pagClone.querySelector('#nextPageBtn').classList.add('opacity-50');
                             pagClone.querySelector('.lastPageBtn').classList.add('opacity-50');
                         }
@@ -116,10 +112,10 @@ $(document).ready(function () {
                         window.location.href = urlPath + "?" + params_pag;
                     });
                     pagClone.querySelector('.lastPageBtn').addEventListener('click', function () {
-                        params_pag.set('page', data.value.pages.toString());
+                        params_pag.set('page', response.pages.toString());
                         window.location.href = urlPath + "?" + params_pag;
                     });
-                    pagSelect.addEventListener('change', function() {
+                    pagSelect.addEventListener('change', function () {
                         params_pag.set('page', this.value);
                         window.location.href = urlPath + "?" + params_pag;
                     });

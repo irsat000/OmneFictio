@@ -397,22 +397,21 @@ function TimeAgo(time) {
     }
 }
 
-async function checkVoted_IconStuff(clone, payload) {
-    await fetch("/HomeAction/CheckVoted", {
-        method: 'POST',
+async function checkVoted_IconStuff(clone, checkvotepayload) {
+    await fetch("/g/CheckVoteByUser?" + checkvotepayload, {
+        method: 'GET',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
-        },
-        body: payload
+        }
     })
         .then((res) => res.json())
         .then((data) => {
+            const likebtn = clone.querySelector('[data-action="like"]');
+            const dislikebtn = clone.querySelector('[data-action="dislike"]');
+            likebtn.className = "";
+            dislikebtn.className = "";
             if (data.statusCode === 200) {
-                const likebtn = clone.querySelector('[data-action="like"]');
-                const dislikebtn = clone.querySelector('[data-action="dislike"]');
-                likebtn.className = "";
-                dislikebtn.className = "";
                 switch (data.value) {
                     case "true":
                         likebtn.classList.add('likebtn', 'bi', 'bi-hand-thumbs-up-fill', 'active');
@@ -422,18 +421,14 @@ async function checkVoted_IconStuff(clone, payload) {
                         likebtn.classList.add('likebtn', 'bi', 'bi-hand-thumbs-up');
                         dislikebtn.classList.add('dislikebtn', 'bi', 'bi-hand-thumbs-down-fill', 'active');
                         break;
-                    case "none":
-                        likebtn.classList.add('likebtn', 'bi', 'bi-hand-thumbs-up');
-                        dislikebtn.classList.add('dislikebtn', 'bi', 'bi-hand-thumbs-down');
-                        break;
-                    default:
-                        likebtn.classList.add('likebtn', 'bi', 'bi-hand-thumbs-up');
-                        dislikebtn.classList.add('dislikebtn', 'bi', 'bi-hand-thumbs-down');
-                        break;
                 }
+            }
+            else {
+                likebtn.classList.add('likebtn', 'bi', 'bi-hand-thumbs-up');
+                dislikebtn.classList.add('dislikebtn', 'bi', 'bi-hand-thumbs-down');
             }
         })
         .catch(error => {
-            console.log('check_voted failed -> ' + error);
+            console.log('vote check failed -> ' + error);
         });
 }

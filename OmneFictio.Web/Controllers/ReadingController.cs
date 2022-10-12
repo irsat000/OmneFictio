@@ -39,7 +39,7 @@ public class ReadingController : Controller
 
 
     //fetch api - get posts
-    [HttpPost("g/GetPosts")]
+    [HttpGet("g/GetPosts")]
     public async Task<JsonResult> GetPosts(int? page, int? ppp)
     {
         //Create url (filters)
