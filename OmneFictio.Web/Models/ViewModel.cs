@@ -15,5 +15,9 @@ public class ReadViewmodel
 
 public class GetpostViewmodel
 {
-    public PostRead1? post { get; set; }
+    public PostRead1 post { get; set; }
+    public GetpostViewmodel(PostRead1 post)
+    {
+        this.post = post;
+    }
 }

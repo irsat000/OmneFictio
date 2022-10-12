@@ -1,0 +1,342 @@
+
+.modalbg2{
+    background-color: rgba(0, 0, 0, 0.5) !important;
+}
+
+.createpost{
+    display: flex;
+    flex-direction: column;
+    padding: 0 14px;
+    font-family: 'Itim', cursive;
+    margin-top: 20px;
+    border-radius: 10px;
+    background-color: var(--publish-form-color);
+    color: var(--text-color1);
+
+    .swap_form{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        flex-wrap: wrap;
+        height: 84px;
+        user-select: none;
+        
+        .sf-swapformbtn{
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            cursor: pointer;
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 1.4rem;
+            
+            .sf-icon{
+                display: none;
+                background-color: var(--text-color1);
+                width: 6px;
+                height: 4px;
+                border-radius: 100%;
+            }
+        }
+    }
+}
+.writing_form{
+    display: none;
+    //display: flex;
+    flex-direction: column;
+    .wf-post_body{
+        display: flex;
+        flex-direction: column;
+    }
+    .wf-post_primary{
+        display: flex;
+        flex-direction: column;
+        span{
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 1.2rem;
+            padding-left: 6px;
+            margin-bottom: 8px;
+        }
+        .wf-title, .wf-description{
+            padding: 6px 10px;
+            margin-bottom: 12px;
+            border-radius: 4px;
+            background-color: var(--publish-input-color);
+            color: var(--text-color1);
+            border: none;
+            outline: none;
+        }
+        .wf-title{
+        }
+        .wf-description{
+            height: 200px;
+        }
+        .coverupload_wrap{
+            display: flex;
+            margin-bottom: 20px;
+            input{
+                flex-grow: 1;
+                padding: 4px 4px;
+                max-width: 460px;
+                background-color: var(--publish-input-color);
+                color: var(--text-color1);
+                border: none;
+                outline: none;
+                border-radius: 4px;
+            }
+        }
+    }
+    .wf-post_details{
+        display: flex;
+        flex-direction: column;
+        gap: 4px;
+        padding: 10px 16px;
+
+        .wf-language, .wf-type, .wf-ratedas{
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            align-items: flex-end;
+            margin-bottom: 12px;
+            span{
+                font-family: 'Josefin Sans', sans-serif;
+                font-size: 1.2rem;
+                margin-right: 12px;
+            }
+            select{
+                outline: none;
+                border: none;
+                background-color: var(--publish-input-color);
+                color: var(--text-color1);
+                padding: 4px;
+                border-radius: 5px;
+                font-size: 1.1rem;
+                font-family: 'Gudea';
+                cursor: pointer;
+            }
+        }
+        .wf-addtag, .wf-addseries{
+            margin-bottom: 10px;
+            button{
+                border: none;
+                outline: none;
+                color: #fff;
+                border-radius: 8px;
+                padding: 4px 12px;
+                font-size: 1.3rem;
+                transition: 0.2s ease;
+                i{
+                    -webkit-text-stroke: 1px white;
+                    padding: 0 0 0 4px;
+                }
+            }
+        }
+        .wf-addtag button{
+            background-color: rgb(72, 139, 78);
+            &:hover{
+                background-color: rgb(58, 129, 64);
+            }
+        }
+        .wf-addseries {
+            display: none;
+            button{
+                background-color: rgb(139, 136, 199);
+                &:hover{
+                    background-color: rgb(117, 113, 191);
+                }
+            }
+        }
+        .wf-tags, .wf-fanfic_series{
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px 5px;
+            color: #fff;
+            margin-bottom: 14px;
+            span{
+                border-radius: 12px;
+                padding: 2px 8px;
+                margin: 0 3px 4px;
+                font-size: 0.9rem;
+                cursor: pointer;
+                display: flex;
+                align-items: center;
+                i{
+                    display: flex;
+                    font-size: 1.1rem;
+                    margin-left: 5px;
+                    cursor: pointer;
+                    &:before {
+                        background-color: #be2424;
+                        border-radius: 50%;
+                        transition: 0.1s;
+                    }
+                    &:hover::before{
+                        background-color: #be2424 !important;
+                    }
+                }
+            }
+        }
+        .wf-tags > span{
+            background-color: rgb(91 130 94);
+        }
+        .wf-fanfic_series{
+            display: none;
+            span{
+                background-color: rgb(106 105 138);
+            }
+        }
+    }
+    .wf-submit{
+        display: flex;
+        justify-content: center;
+        padding: 18px;
+        input{
+            border: none;
+            outline: none;
+            color: #fff;
+            border-radius: 8px;
+            padding: 4px 16px;
+            font-size: 1.5rem;
+            transition: 0.2s ease;
+            background-color: rgb(32, 109, 40);
+            &:hover{
+                background-color: rgb(22, 95, 29);
+            }
+        }
+    }
+    .wf-errormessage, .rf-errormessage{
+        text-align: center;
+        color: #b22525;
+    }
+    .wf-successmessage, .rf-successmessage{
+        text-align: center;
+        color: #36914e;
+    }
+}
+
+
+
+
+.request_form{
+    //display: flex;
+    display: none;
+    flex-direction: column;
+
+    .rf-post_primary{
+        display: flex;
+        flex-direction: column;
+        span{
+            font-family: 'Josefin Sans', sans-serif;
+            font-size: 1.2rem;
+            padding-left: 6px;
+            margin-bottom: 8px;
+        }
+        .rf-title{
+            padding: 6px 10px;
+            margin-bottom: 12px;
+        }
+        .rf-description{
+            padding: 6px 10px;
+            width: 100%;
+            height: 300px;
+            margin-bottom: 20px;
+        }
+        .rf-title, .rf-description{
+            border-radius: 4px;
+            background-color: var(--publish-input-color);
+            color: var(--text-color1);
+            font-family: 'Gudea';
+            font-size: 1.1rem;
+            border: none;
+            outline: none;
+        }
+    }
+    .rf-submit{
+        display: flex;
+        justify-content: center;
+        padding: 0 18px 18px;
+        input{
+            border: none;
+            outline: none;
+            color: #fff;
+            border-radius: 8px;
+            padding: 4px 16px;
+            font-size: 1.5rem;
+            transition: 0.2s ease;
+            background-color: rgb(32, 109, 40);
+            &:hover{
+                background-color: rgb(22, 95, 29);
+            }
+        }
+    }
+}
+
+
+
+
+
+
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+    .sf-swapformbtn {
+        font-size: 1.8rem !important;
+        transition: 0.2s;
+    }
+    .sf-swaptowriting:hover{
+        font-size: 2rem !important;
+    }
+    .sf-swaptorequest:hover{
+        font-size: 2rem !important;
+    }
+    .wf-post_primary > span{
+        font-size: 1.4rem !important;
+    }
+    .wf-title, .wf-description{
+        font-size: 1.2rem;
+    }
+    .wf-tags, .wf-fanfic_series{
+        span > i:before {
+            background-color: #c08e8e !important;
+        }
+    }
+    .wf-post_body{
+        flex-direction: row !important;
+        justify-content: space-evenly;
+        .wf-post_primary{
+            width: 45%;
+        }
+        .wf-post_details{
+            width: 45%;
+            padding: 30px 0 10px;
+        }
+    }
+    .request_form{
+        align-items: center;
+        .rf-post_primary{
+            width: 80%;
+        }
+    }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+    .wf-post_body{
+        .wf-post_primary{
+            width: 50%;
+        }
+        .wf-post_details{
+            width: 40%;
+            gap: 10px;
+        }
+    }
+}
+
+// Extra large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+}

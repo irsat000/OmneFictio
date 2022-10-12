@@ -1,0 +1,354 @@
+@using OmneFictio.Web.Models
+@using OmneFictio.Web.PostReadModel
+@using PostModel = OmneFictio.Web.PostReadModel
+@model GetpostViewmodel
+
+@{
+    ViewData["Title"] = "Post";
+    @section Stylesheets {
+        <link rel="stylesheet" href="~/css/post.css" asp-append-version="true" />
+    }
+    @section Scripts {
+        <script src="~/js/post.js" asp-append-version="true" ></script>
+    }
+}
+@{
+    PostModel.PostRead1 post = @Model.post!;
+
+    string userId = "-1";
+    string username = "";
+    string userPicture = "none"; 
+
+    userId = User.Claims.FirstOrDefault(claim => claim.Type == "nameid")?.Value ?? "-1";
+    username = User.Claims.FirstOrDefault(claim => claim.Type == "unique_name")?.Value ?? "";
+    userPicture = User.Claims.FirstOrDefault(claim => claim.Type == "actort")?.Value ?? "none";
+}
+<input type="hidden" value="@post.id" id="postid">
+
+
+
+<template id="comment_instance">
+    <div class="comment-cont">
+        <div class="comment" data-commentid="">
+            <div class="c-header">
+                <img src="/images/users/user_no_photo_300x300.png">
+                <span class="c-username">
+                    
+                </span>
+                <span class="c-date">
+                
+                </span>
+                <div class="c-menu">
+                    <i class="bi bi-three-dots"></i>
+                </div>
+                <ul class="c-menupopup">
+                    <li>Report</li>
+                    <li>Block User</li>
+                </ul>
+            </div>
+            <div class="c-text">
+                <span>
+                    
+                </span>
+            </div>
+            <div class="c-footer">
+                <div class="c-evaluation">
+                    <i class="bi bi-hand-thumbs-up likebtn" data-action="like" data-target_type="comment"></i>
+                    <span class="c-likes vote_count">--</span>
+                    <i class="bi bi-hand-thumbs-down dislikebtn" data-action="dislike" data-target_type="comment"></i>
+                    <a href="#" class="c-replybtn">Reply</a>
+                </div>
+                <div class="get_replies">
+                    <span class="get_replies-text">
+                        
+                    </span>
+                </div>
+            </div>
+        </div>
+        <div class="reply" data-replyid="">
+            <div class="r-text">
+                <span>
+
+                </span>
+            </div>
+            <div class="r-footer">
+                <div class="r-evaluation">
+                    <i class="bi bi-hand-thumbs-up likebtn" data-action="like" data-target_type="reply"></i>
+                    <span class="r-likes vote_count">--</span>
+                    <i class="bi bi-hand-thumbs-down dislikebtn" data-action="dislike" data-target_type="reply"></i>
+                    <span class="r-gotoreply">GO</span>
+                </div>
+                <div class="r-user">
+                    <span class="r-username">
+                        
+                    </span>
+                    <img src="/images/users/user_no_photo_300x300.png">
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template id="modalReplies-comment">
+    <div class="mr-comment" data-commentid="">
+        <div class="mrc-header">
+            <img src="/images/users/user_no_photo_300x300.png" onerror="this.onerror=null; this.src='/images/onerror/user_no_photo_300x300.png'">
+            <span class="mrc-username">
+                
+            </span>
+            <span class="mrc-date">
+                
+            </span>
+            <div class="mrc-menu">
+                <i class="bi bi-three-dots"></i>
+            </div>
+        </div>
+        <div class="mrc-text">
+            <span>
+                
+            </span>
+        </div>
+        <div class="mrc-footer">
+            <div class="mrc-evaluation">
+                <i class="bi bi-hand-thumbs-up likebtn" data-action="like" data-target_type="comment"></i>
+                <span class="mrc-likes vote_count">--</span>
+                <i class="bi bi-hand-thumbs-down dislikebtn" data-action="dislike" data-target_type="comment"></i>
+                <a href="#" class="mrc-replybtn">Reply</a>
+            </div>
+        </div>
+    </div>
+</template>
+<template id="modalReplies-reply">
+    <div class="mr-reply" data-replyid="">
+        <div class="mrr-header">
+            <img src="/images/users/user_no_photo_300x300.png" onerror="this.onerror=null; this.src='/images/onerror/user_no_photo_300x300.png'">
+            <span class="mrr-username">
+                
+            </span>
+            <span class="mrr-date">
+                
+            </span>
+            <div class="mrr-menu">
+                <i class="bi bi-three-dots"></i>
+            </div>
+        </div>
+        <div class="mrr-text">
+            <span>
+                
+            </span>
+        </div>
+        <div class="mrr-footer">
+            <div class="mrr-evaluation">
+                <i class="bi bi-hand-thumbs-up likebtn" data-action="like" data-target_type="reply"></i>
+                <span class="mrr-likes vote_count">--</span>
+                <i class="bi bi-hand-thumbs-down dislikebtn" data-action="dislike" data-target_type="reply"></i>
+                <a href="#" class="mrr-replybtn">Reply</a>
+            </div>
+        </div>
+    </div>
+</template>
+
+
+<div class="modal-chapters" id="modal-chapters">
+    <div class="mc-header">
+        <span>Chapters</span>
+        <div class="mc-close" id="mc-close">
+            <i class="bi bi-x-lg"></i>
+        </div>
+    </div>
+    <div class="mc-body">
+        <ul>
+            @foreach (Chapter chapter in 
+                post.chapters.OrderBy(s => s.chapterIndex).ToList())
+            {
+                <li><a href="#">@chapter.title</a></li>
+            }
+        </ul>
+    </div>
+</div>
+
+<div class="modal-replies" id="modal-replies">
+    <div class="mr-header">
+        <span>Replies</span>
+        <div class="mr-close" id="mr-close">
+            <i class="bi bi-x-lg"></i>
+        </div>
+    </div>
+    <div class="mr-body">
+        
+    </div>
+</div>
+
+<div class="fullsize-cover-cont" id="fullsize-cover">
+    <div class="fsc-wrap" id="fsc-wrap">
+        <div class="fsc-close" id="fsc-close">
+            <i class="bi bi-x-lg"></i>
+        </div>
+        <!--<div style='background-image: url("/images/covers/@post.coverImage");'></div>-->
+    </div>
+    <img src="/images/covers/@post.coverImage">
+</div>
+
+<div class="post-2" data-postid="@post.id">
+    <div class="post-card">
+        <div class="p-body">
+            @if(post.coverImage != null){
+                <div class="p-cover">
+                    <img src="/images/covers/@post.coverImage" class="p-basecover" 
+                        onerror="this.onerror=null; this.closest('.p-cover').remove()">
+                    <div class="p-upscalecover-cont" id="p-upscalecover">
+                        <img src="/images/covers/@post.coverImage" class="p-upscalecover">
+                        <i class="bi bi-zoom-in"></i>
+                    </div>
+                </div>
+            }
+            <div class="p-text">
+                <div class="p-title-cont">
+                    <span class="p-title">@post!.title</span>
+                    <span class="p-date">@post.publishDate.Date.ToShortDateString()</span>
+                </div>
+                <span class="p-description">@post.postDescription</span>
+            </div>
+        </div>
+        <div class="p-footer">
+            <div class="p-footer-wrap">
+                <div class="p-evaluation">
+                    @{//Required codes
+                        //Checking if the user logged in and voted the post
+                        string likeBtnClasses = "bi bi-hand-thumbs-up";
+                        string dislikeBtnClasses = "bi bi-hand-thumbs-down";
+                        if(userId != "-1"){
+                            if(post.votes.SingleOrDefault(p => p.accountId == Convert.ToInt32(userId) && p.body == true) != null){
+                                likeBtnClasses = "bi bi-hand-thumbs-up-fill active likebtn";
+                                dislikeBtnClasses = "bi bi-hand-thumbs-down dislikebtn";
+                            }
+                            else if(post.votes.SingleOrDefault(p => p.accountId == Convert.ToInt32(userId) && p.body == false) != null){
+                                likeBtnClasses = "bi bi-hand-thumbs-up likebtn";
+                                dislikeBtnClasses = "bi bi-hand-thumbs-down-fill active dislikebtn";
+                            }
+                            else{
+                                likeBtnClasses = "bi bi-hand-thumbs-up likebtn";
+                                dislikeBtnClasses = "bi bi-hand-thumbs-down dislikebtn";
+                            }
+                        }
+                        else{
+                            likeBtnClasses = "bi bi-hand-thumbs-up";
+                            dislikeBtnClasses = "bi bi-hand-thumbs-down";
+                        }
+                    }
+                    @Html.Raw("<i class='" + @likeBtnClasses + "' data-action='like' data-target_type='post'></i>")
+                    <span class="p-likes vote_count">
+                        @(post.voteResult >= 0 ? post.voteResult : "--")
+                    </span>
+                    @Html.Raw("<i class='" + @dislikeBtnClasses + "' data-action='dislike' data-target_type='post'></i>")
+                    <span class="p-rate">
+                        @(post.rateResult >= 0 && post.rateResult <= 10
+                            ? Math.Round(post.rateResult, 1).ToString() + "/10"
+                            : "-/10" )
+                    </span>
+                </div>
+                <div class="p-user">
+                    @if(post.account != null){
+                        <span class="p-username">
+                            @(post.account.displayName != null
+                                ? post.account.displayName
+                                : post.account.username )
+                        </span>
+                    }else{
+                        <span class="p-username p-deleted_user">DeletedUser</span>
+                    }
+                    <div class="p-uimg-cont">
+                        <img src="/images/users/@userPicture" onerror="this.onerror=null; this.src='/images/onerror/user_no_photo_300x300.png'">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="post-more">
+        <div class="p-actions">
+            <button type="button" class="pd-saved">Save</button>
+            <button type="button">Share</button>
+            <button type="button">Report</button>
+        </div>
+        <div class="pd-items">
+            @if(post.postType != null){
+                <span>@post.postType.body</span>
+            }
+            @if(post.language != null){
+                <span>@post.language.body</span>
+            }
+            @if(post.postStatus != null){
+                <span>@post.postStatus.body</span>
+            }
+            @if(post.ratedAs != null){
+                <span>@post.ratedAs.body</span>
+            }
+        </div>
+        @if(post.existingStories.Count > 0){
+            <div class="pd-series">
+                @foreach(ExistingStory story in post.existingStories){
+                    <span>@story.body</span>
+                }
+            </div>
+        }
+        <div class="pd-tags">
+            @if(post.tags.Count < 1){
+                <span>No tag</span>
+            } else{
+                foreach(Tag tag in post.tags){
+                    <span>@tag.body</span>
+                }
+            }
+        </div>
+    </div>
+    
+</div>
+
+<div class="start_reading">
+    <a href="#">Start Reading</a>
+</div>
+
+<div class="chapter_selection">
+    <span id="get_chapters">Chapters</span>
+    <a href="#">Open all</a>
+</div>
+
+<!--<div class="rate_it">
+    <button>Rate again</button>
+    <span>8/10</span>
+</div>-->
+<div class="rate_it">
+    <select id="rate_it_select">
+        <option value="0">--</option>
+        <option value="1">1</option>
+        <option value="2">2</option>
+        <option value="3">3</option>
+        <option value="4">4</option>
+        <option value="5">5</option>
+        <option value="6">6</option>
+        <option value="7">7</option>
+        <option value="8">8</option>
+        <option value="9">9</option>
+        <option value="10">10</option>
+    </select>
+    <button id="rate_it_btn">Rate it</button>
+    <span id="rate_by_user">--/10</span>
+</div>
+
+@if(userId != "-1"){ ///images/users/
+    <div class="add_comment-cont">
+        <textarea placeholder="This is where we comment." id="commentBody"></textarea>
+        <div class="ac-footer">
+            <div class="ac-user">
+                <img src="/images/users/@userPicture" onerror="this.onerror=null; this.src='/images/onerror/user_no_photo_300x300.png'">
+                <span class="ac-username">@username</span>
+            </div>
+            <a href="#" class="comment-btn" id="addCommentToPost">Send</a>
+        </div>
+    </div>
+}
+
+<div class="comments" id="comment-section">
+    
+</div>

@@ -11,6 +11,9 @@ var builder = WebApplication.CreateBuilder(args);
 var configuration = builder.Configuration;
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient("of", client => {
+    client.BaseAddress = new Uri("https://localhost:7223/");
+});
+builder.Services.AddHttpClient("minof", client => {
     client.BaseAddress = new Uri("https://localhost:7022/");
 });
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();

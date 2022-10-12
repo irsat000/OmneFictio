@@ -1,0 +1,45 @@
+@{
+    ViewData["Title"] = "Register";
+    @section Stylesheets {
+        <link rel="stylesheet" href="~/css/register.css" asp-append-version="true" />
+    }
+    @section Scripts {
+        <script src="~/js/register.js" asp-append-version="true" ></script>
+    }
+}
+<form method="post" class="register" id="register-form">
+    <div class="register-main">
+        <div class="rm-header">
+            <span>Register</span>
+        </div>
+        <div class="rm-primary">
+            <input type="text" placeholder="Username" name="Username" class="rm-textbox" id="rm-username">
+            <input type="text" placeholder="Email" name="Email" class="rm-textbox" id="rm-email">
+            <input type="password" placeholder="Password" name="Pw" class="rm-textbox" id="rm-pw">
+            <input type="password" placeholder="Confirm Password" class="rm-textbox" id="rm-pwconfirm">
+            <input type="submit" value="Register" class="rm-submit">
+            <span class="rm-message" id="registerform-message"></span>
+            <span class="rm-success" id="registerform-success"></span>
+        </div>
+        <div class="rm-registerwith">
+            <div class="g_id_signin" data-type="standart"></div>
+        </div>
+    </div>
+    <div class="register-extra">
+        <div class="re-header">
+            <span>Extras</span>
+        </div>
+        <div class="re-primary">
+            <label><span>Allow adult content (18+)</span><input type="checkbox" name="AllowAdultContent" value="true" checked></label>
+            <span>Preferred language:</span>
+            <select name="PrefLanguageId">
+                <option value="0">Language</option>
+                <option value="1">Turkish</option>
+                <option value="2">English</option>
+                <option value="3">French</option>
+                <option value="4">German</option>
+                <option value="5">Japanese</option>
+            </select>
+        </div>
+    </div>
+</form>

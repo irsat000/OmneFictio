@@ -21,24 +21,12 @@ public class HomeController : Controller
     [HttpGet("/")]
     public IActionResult Index()
     {
-        /*IndexViewmodel viewModel = new IndexViewmodel{
-            sessionUserId = HttpContext.Session.GetString("userId"),
-            sessionUsername = HttpContext.Session.GetString("username")
-        };*/
         return View();
     }
 
     [HttpGet("Read/{Type}")]
-    public async Task<IActionResult> Read(string Type, string? page)
+    public IActionResult Read(string Type)
     {
-        /* WORKS
-        if(page != null)
-            Console.WriteLine(" this is the page we are in -> "+ page);
-        else 
-            Console.WriteLine("No querystring so this is first page");
-        */
-
-        /*ReadViewmodel viewModel = new ReadViewmodel{};*/
         return View();
     }
 

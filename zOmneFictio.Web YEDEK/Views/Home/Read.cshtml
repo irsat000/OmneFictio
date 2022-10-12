@@ -1,0 +1,371 @@
+@using OmneFictio.Web.Models
+@using OmneFictio.Web.PostReadModel
+@using System.Security.Claims
+@model ReadViewmodel
+@{
+    ViewData["Title"] = "Read";
+    @section Stylesheets {
+        <link rel="stylesheet" href="~/css/read.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/postitem.css" asp-append-version="true" />
+    }
+    @section Scripts {
+        <script src="~/js/read.js" asp-append-version="true" ></script>
+    }
+}
+@{
+    string userId = "-1";
+    string username = "";
+    string userPicture = "none"; 
+
+    userId = User.Claims.FirstOrDefault(claim => claim.Type == "nameid")?.Value ?? "-1";
+    username = User.Claims.FirstOrDefault(claim => claim.Type == "unique_name")?.Value ?? "";
+    userPicture = User.Claims.FirstOrDefault(claim => claim.Type == "actort")?.Value ?? "none";
+}
+
+<template id="postList-post">
+    <div class="post" data-postid="post.id">
+        <div class="post-detail">
+            <div class="p-header">
+                <div class="p-title">
+                    <a href="">
+                        
+                    </a>
+                    <span class="p-date">
+                        
+                    </span>
+                </div>
+                <div class="p-menu">
+                    <i class="bi bi-caret-left p-menubtn"></i>
+                </div>
+            </div>
+            <div class="p-body">
+                <div class="p-cover">
+                    <img src="" onerror="this.onerror=null; this.closest('.p-cover').remove()">
+                </div>
+                <span>
+                    
+                </span>
+            </div>
+            <div class="p-footer">
+                <div class="p-evaluation">
+                    <i class='bi bi-hand-thumbs-up likebtn' data-action='like' data-target_type='post'></i>
+                    <span class="p-likes vote_count">--</span>
+                    <i class='bi bi-hand-thumbs-down dislikebtn' data-action='dislike' data-target_type='post'></i>
+                    <span class="p-rate">
+                        
+                    </span>
+                </div>
+                <div class="p-user">
+                    <span class="p-username">
+                        
+                    </span>
+                    <!--<span class="p-username p-deleted_user">DeletedUser</span>-->
+                    <img src="" onerror="this.onerror=null; this.src='/images/onerror/user_no_photo_300x300.png'">
+                </div>
+            </div>
+        </div>
+        <div class="post-menu">
+            <div class="pd-details">
+                <span class="pd-heading">
+                    Tags
+                </span>
+                <div class="pd-tags">
+                    <!--<span>Action</span>-->
+                </div>
+                <div class="pd-type">
+                    <span class="pd-heading">Type:</span>
+                    <span class="pd-value">
+                        
+                    </span>
+                </div>
+                <span class="pd-heading">
+                    Based on
+                </span>
+                <div class="pd-series">
+                    <!--<span>Pirates of the Caribbean</span>-->
+                </div>
+                <div class="pd-poststatus">
+                    <span class="pd-heading">Status:</span>
+                    <span class="pd-value">
+                        
+                    </span>
+                </div>
+                <div class="pd-ratedas">
+                    <span class="pd-heading">Rated as:</span>
+                    <span class="pd-value">
+                        
+                    </span>
+                </div>
+                <div class="pd-language">
+                    <span class="pd-heading">Language:</span>
+                    <span class="pd-value">
+                        
+                    </span>
+                </div>
+            </div>
+            <div class="pd-right">
+                <div class="pd-close">
+                    <i class="bi bi-caret-down pd-closebtn"></i>
+                </div>
+                <div class="pd-actions">
+                    <button type="button" class="pd-saved">Save</button>
+                    <button type="button">Share</button>
+                    <button type="button">Report</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<template id="paginationTemplate">
+    <div class="pagination">
+        <div class="pagination-cont">
+            <i class="bi bi-chevron-double-left firstPageBtn"></i>
+            <a class="page_link" id="prevPageBtn">Prev</a>
+            <select class="page_select"> </select>
+            <a class="page_link" id="nextPageBtn">Next</a>
+            <i class="bi bi-chevron-double-right lastPageBtn"></i>
+        </div>
+    </div>
+</template>
+
+<div class="orderby-cont" id="orderby-modal">
+    <div class="obt-header">
+        <div class="obt-title">
+            <span>Order By</span>
+        </div>
+        <div class="obt-close" id="sb-close">
+            <i class="bi bi-x-lg"></i>
+        </div>
+    </div>
+    <div class="obt-body">
+        <div class="obt-content">
+            <div class="obt-item">
+                <i class="bi bi-caret-right-fill visible"></i>
+                <span>Recent</span>
+            </div>
+            <div class="obt-item">
+                <i class="bi bi-caret-right-fill"></i>
+                <span>Oldest</span>
+            </div>
+            <div class="obt-item">
+                <i class="bi bi-caret-right-fill"></i>
+                <span>Rate</span>
+            </div>
+            <div class="obt-item">
+                <i class="bi bi-caret-right-fill"></i>
+                <span>Points</span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="filter-cont" id="filter-modal">
+    <div class="f-header">
+        <div class="f-reset_cont">
+            <input type="button" value="Reset" id="f-resetbtn">
+        </div>
+        <div class="f-close" id="f-close">
+            <i class="bi bi-x-lg"></i>
+        </div>
+    </div>
+    <div class="f-body">
+        @{
+            string? typeQuery = Context.Request.RouteValues["Type"]!.ToString();
+            if(typeQuery == "Fanfiction" || typeQuery == "fanfiction"){
+                <div class="f-fanfiction_settings">
+                    <div class="ffs-header">
+                        <button data-button="choose_series" id="fanfic-chooseseries">
+                            <i class="bi bi-search"></i> Series <i class="bi bi-plus"></i>
+                        </button>
+                    </div>
+                    <div class="ffs-series_include">
+                        <!--
+                        <span data-fseries="konosuba">Konosuba<i class="bi bi-x-circle f-removeseriesbtn"></i></span>
+                        <input type="hidden" name="seriesinclude" value="konosuba"/>
+                        -->
+                    </div>
+                </div>
+            }
+        }
+        
+        <div class="f-options">
+            <select name="minrate">
+                <option value="0">Min rate</option>
+                <option value="5">5+</option>
+                <option value="6">6+</option>
+                <option value="7">7+</option>
+                <option value="8">8+</option>
+                <option value="9">9+</option>
+            </select>
+            <select name="language">
+                <option value="0">Language</option>
+                <option value="1">Turkish</option>
+                <option value="2">English</option>
+                <option value="3">French</option>
+                <option value="4">German</option>
+                <option value="5">Japanese</option>
+            </select>
+            <select name="poststatus">
+                <option value="0">Cur. state</option>
+                <option value="1">In-progress</option>
+                <option value="2">Paused</option>
+                <option value="3">Dropped</option>
+                <option value="4">Finished</option>
+            </select>
+            <select name="ratedas">
+                <option value="0">Rated as</option>
+                <option value="1">E - Everyone</option>
+                <option value="2">T - 13+</option>
+                <option value="3">M - 15+</option>
+                <option value="4">A - 18+</option>
+            </select>
+            <select name="lastupdate">
+                <option value="0">Last update</option>
+                <option value="1">&#60; 1 day</option>
+                <option value="2">&#60; 3 day</option>
+                <option value="3">&#60; 1 week</option>
+                <option value="4">&#60; 2 week</option>
+                <option value="5">&#60; 1 month</option>
+                <option value="6">&#60; 2 month</option>
+            </select>
+        </div>
+        <div class="f-tagsbtn_cont">
+            <button class="f-includetag" id="f-includetagbtn">Tags<i class="bi bi-plus"></i></button>
+            <button class="f-excludetag" id="f-excludetagbtn">Tags<i class="bi bi-dash"></i></button>
+        </div>
+        <div class="f-tagsincexc f-tags_include">
+            <!--
+            <span data-ftag="comedy">Comedy<i class="bi bi-x-circle f-removetagbtn"></i></span>
+            <input type="hidden" name="taginclude" value="comedy" data-ftagref="comedy"/>
+            -->
+        </div>
+        <div class="f-tagsincexc f-tags_exclude">
+            <!--
+            <span data-ftag="romance">Romance<i class="bi bi-x-circle f-removetagbtn"></i></span>
+            <input type="hidden" name="tagexclude" value="romance" data-ftagref="romance"/>
+            -->
+        </div>
+    </div>
+    <div class="f-submit_cont">
+        <input type="submit" id="f-submitbtn" value="Filter">
+    </div>
+</div>
+
+<div class="filter-tagdd" id="filter-tagddmodal">
+    <div class="tagdd-header">
+        <input type="text" class="tagdd-searchbar" id="tagdd-searchbar" placeholder="Search tag">
+        <i class="bi bi-x-lg" id="f-taggdd-close"></i>
+    </div>
+    <ul class="" id="f-tagdd-list" data-action="include">
+        <li data-tagddvalue="action">Action</li>
+        <li data-tagddvalue="comedy">Comedy</li>
+        <li data-tagddvalue="fantasy">Fantasy</li>
+        <li data-tagddvalue="romance">Romance</li>
+        <li data-tagddvalue="dram">Dram</li>
+        <li data-tagddvalue="horror">Horror</li>
+        <li data-tagddvalue="adventure">Adventure</li>
+        <li data-tagddvalue="science_fiction">Science fiction</li>
+    </ul>
+</div>
+<div class="filter-addseries" id="filter-addseriesmodal">
+    <div class="fadds-header">
+        <input type="text" class="fadds-searchbar" id="fadds-searchbar" placeholder="Search">
+        <i class="bi bi-x-lg" id="fadds-close"></i>
+    </div>
+    <div class="fadds-dropdowns">
+        <select>
+            <option value="0">Type</option>
+            <option value="1">Movie</option>
+            <option value="2">TV Show</option>
+            <option value="3">Game</option>
+            <option value="4">Book</option>
+            <option value="5">Anime/Manga</option>
+            <option value="6">Cartoon/Comic</option>
+            <option value="7">Other</option>
+        </select>
+        <select>
+            <option value="0">A-Z</option>
+            <option value="Others">Others</option>
+            <option value="A">A</option>
+            <option value="B">B</option>
+            <option value="C">C</option>
+            <option value="D">D</option>
+            <option value="E">E</option>
+            <option value="F">F</option>
+            <option value="G">G</option>
+            <option value="H">H</option>
+            <option value="I">I</option>
+            <option value="J">J</option>
+            <option value="K">K</option>
+            <option value="L">L</option>
+            <option value="M">M</option>
+            <option value="N">N</option>
+            <option value="O">O</option>
+            <option value="P">P</option>
+            <option value="Q">Q</option>
+            <option value="R">R</option>
+            <option value="S">S</option>
+            <option value="T">T</option>
+            <option value="U">U</option>
+            <option value="V">V</option>
+            <option value="W">W</option>
+            <option value="X">X</option>
+            <option value="Y">Y</option>
+            <option value="Z">Z</option>
+        </select>
+    </div>
+    <ul class="fadds-list" id="fadds-list">
+        <li data-seriesval="Overlord">Overlord</li>
+        <li data-seriesval="Harry_Potter">Harry Potter</li>
+        <li data-seriesval="The_Boys">The Boys</li>
+        <li data-seriesval="Stranger_Things">Stranger Things</li>
+        <li data-seriesval="Breaking_Bad">Breaking Bad</li>
+        <li data-seriesval="Game_of_Thrones">Game of Thrones</li>
+        <li data-seriesval="Hunger_Games">Hunger Games</li>
+        <li data-seriesval="Pirates_of_the_Caribbean">Pirates of the Caribbean</li>
+    </ul>
+</div>
+
+<nav class="nav-cont">
+    <div class="nav-primary">
+        <div class="nlink-cont np-readingtime">
+            <a class="navlink_original" asp-controller="Home" asp-action="Read" asp-route-type="Story">Story</a>
+            <a class="navlink_scenario" asp-controller="Home" asp-action="Read" asp-route-type="Scenario">Scenario</a>
+            <a class="navlink_fanfiction" asp-controller="Home" asp-action="Read" asp-route-type="Fanfiction">Fanfiction</a>
+            <a class="navlink_original" asp-controller="Home" asp-action="Read" asp-route-type="Plot">Plot</a>
+        </div>
+        <div class="nlink-cont np-aboutyou">
+            <a class="">Library</a>
+            <a class="">My Stuff</a>
+            <a class="">History</a>
+        </div>
+    </div>
+    <div class="nav-ad1">
+
+    </div>
+    <div class="nav-others">
+        <a class="">Requests</a>
+        <a class="">Community</a>
+        <a class="">Shop</a>
+        <a class="">Customize</a>
+        <a class="">Settings</a>
+        <a class="">News</a>
+        <a class="">Tutorials</a>
+    </div>
+</nav>
+<div class="posts-cont">
+    <div class="post-options">
+        <div class="po-orderby">
+            <p class="orderby-btn po-option" id="orderby-btn">Order By</p>
+            <p class="orderby-value">(Recent)</p>
+        </div>
+        <span class="po-filters po-option" id="po-filter">
+            Filter
+        </span>
+    </div>
+    <div class="post-list pl-masonry-2" id="postListSection">
+    
+    </div>
+    
+</div>

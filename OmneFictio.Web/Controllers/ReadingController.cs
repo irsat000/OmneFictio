@@ -4,9 +4,10 @@ using OmneFictio.Web.CommentReadModel;
 using OmneFictio.Web.CommentReadModel2;
 using System.Text.Json;
 using OmneFictio.Web.PostReadModel;
+using System.Web;
 
 namespace OmneFictio.Web.Controllers;
-
+//ALL REQUESTS WILL GIVE AN API KEY
 public class ReadingController : Controller
 {
     private readonly ILogger<HomeController> _logger;
@@ -21,84 +22,99 @@ public class ReadingController : Controller
     [HttpGet("p/{postid}")]
     public async Task<IActionResult> Post(string postid)
     {
-        string url = "getpost/" + postid;
-        string raw = await _httpClient.GetStringAsync(url);
-
-        PostRead1? post = JsonSerializer.Deserialize<PostRead1>(raw);
-
-        if(post == null){
+        var apiResponse = await _httpClient
+            .GetAsync("Read/GetPost/" + postid);
+        if (apiResponse.StatusCode.ToString() != "OK")
+        {
             return RedirectToAction("Index", "Home");
         }
-        GetpostViewmodel viewModel = new GetpostViewmodel{
-            post = post
-        };
-        return View(viewModel);
+
+        PostRead1? post = JsonSerializer.Deserialize<PostRead1>
+            (await apiResponse.Content.ReadAsStringAsync());
+        if (post != null)
+            return View(new GetpostViewmodel(post));
+        else
+            return RedirectToAction("Index", "Home");
     }
 
 
     //fetch api - get posts
     [HttpPost("g/GetPosts")]
-    public async Task<JsonResult> GetPosts([FromBody] GetPosts_Options opt)
+    public async Task<JsonResult> GetPosts(int? page, int? ppp)
     {
-        var apiResponse = await _httpClient.PostAsJsonAsync("posts", opt);
-        string rawString = await apiResponse.Content.ReadAsStringAsync();
-        var respond = JsonSerializer.Deserialize<Dictionary<string, object>>(rawString);
-
-        string posts = respond!.FirstOrDefault(x => x.Key == "posts").Value.ToString()!;
-        string pages = respond!.FirstOrDefault(x => x.Key == "pages").Value.ToString()!;
-
-        //It returns a list in json format.
-        if(posts == "[]" || posts == null){
-            //If it's empty, it returns [].
+        //Create url (filters)
+        var url = new UriBuilder(_httpClient.BaseAddress!.AbsoluteUri + "Read/GetPosts");
+        var query = HttpUtility.ParseQueryString(url.Query);
+        if (page != null)
+        {
+            query["page"] = page.ToString();
+        }
+        if (ppp != null)
+        {
+            query["ppp"] = ppp.ToString();
+        }
+        query["page"] = "2"; //deneme
+        url.Query = query.ToString();
+        //request
+        var apiResponse = await _httpClient.GetAsync(url.ToString());
+        if (apiResponse.StatusCode.ToString() != "OK")
+        {
             return new JsonResult(NotFound());
         }
-        return new JsonResult(Ok(new { posts, pages }));
+        //return
+        string content = await apiResponse.Content.ReadAsStringAsync();
+        return new JsonResult(Ok(content));
+
+        /*var respond = JsonSerializer.Deserialize<Dictionary<string, object>>(rawString);
+        string posts = respond!.FirstOrDefault(x => x.Key == "posts").Value.ToString()!;
+        string pages = respond!.FirstOrDefault(x => x.Key == "pages").Value.ToString()!;*/
     }
-    
+
 
     //fetch api - get post's comments
     [HttpGet("g/GetComments/{postid}")]
     public async Task<JsonResult> GetComments(int postid)
     {
-        string url = "getcomments/" + postid;
-        string apiResponse = await _httpClient.GetStringAsync(url);
-
-        if(apiResponse == "[]") {
+        string url = "Read/GetComments/" + postid;
+        var apiResponse = await _httpClient.GetAsync(url);
+        if (apiResponse.StatusCode.ToString() != "OK")
+        {
             return new JsonResult(NotFound());
         }
-        return new JsonResult(Ok(apiResponse));
+
+        //return
+        string content = await apiResponse.Content.ReadAsStringAsync();
+        return new JsonResult(Ok(content));
     }
 
     [HttpGet("g/GetHighlightedReply/{commentId}")]
     public async Task<JsonResult> GetHighlightedReply(int commentId)
     {
-        string url = "get_highlighted_comment/" + commentId;
-        string apiResponse = await _httpClient.GetStringAsync(url);
-
-        //h means highlighted
-        CommentReadModel2.Reply? h_reply = JsonSerializer.Deserialize<CommentReadModel2.Reply>(apiResponse);
-         
-        if(h_reply == null) {
+        string url = "Read/GetHighlightedReply/" + commentId;
+        var apiResponse = await _httpClient.GetAsync(url);
+        if (apiResponse.StatusCode.ToString() != "OK")
+        {
             return new JsonResult(NotFound());
-        } else {
-            return new JsonResult(Ok(h_reply));
         }
+        //return
+        string content = await apiResponse.Content.ReadAsStringAsync();
+        return new JsonResult(Ok(content));
     }
 
-    
+
     //fetch api - get comment and its replies
     [HttpGet("g/GetComment/{commentId}")]
     public async Task<JsonResult> GetComment(int commentId)
     {
-        string url = "getcomment/" + commentId;
-        string apiResponse = await _httpClient.GetStringAsync(url);
-        
-        CommentRead2? comment = JsonSerializer.Deserialize<CommentRead2>(apiResponse);
-
-        if(comment == null || comment.deletedStatus.body != "Default") {
+        string url = "Read/GetComment/" + commentId;
+        var apiResponse = await _httpClient.GetAsync(url);
+        if (apiResponse.StatusCode.ToString() != "OK")
+        {
             return new JsonResult(NotFound());
         }
-        return new JsonResult(Ok(comment));
+        //return
+        string content = await apiResponse.Content.ReadAsStringAsync();
+        return new JsonResult(Ok(content));
     }
 
 

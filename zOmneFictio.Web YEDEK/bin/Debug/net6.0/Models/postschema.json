@@ -1,0 +1,88 @@
+[
+  {
+    "id": 0,
+    "title": "string",
+    "postDescription": "string",
+    "publishDate": "2022-08-15T16:02:15.270Z",
+    "updateDate": "2022-08-15T16:02:15.270Z",
+    "account": {
+      "id": 0,
+      "username": "string",
+      "displayName": "string",
+      "profilePic": "string",
+      "selfDesc": "string",
+      "deletedStatus": {
+        "body": "string"
+      },
+      "authorities": [
+        {
+          "body": "string"
+        }
+      ]
+    },
+    "deletedStatus": {
+      "body": "string"
+    },
+    "language": {
+      "lanCode": "string",
+      "body": "string"
+    },
+    "postStatus": {
+      "body": "string"
+    },
+    "postType": {
+      "body": "string"
+    },
+    "chapters": [
+      {
+        "id": 0
+      }
+    ],
+    "comments": [
+      {
+        "id": 0,
+        "replies": [
+          {
+            "id": 0
+          }
+        ]
+      }
+    ],
+    "gifts": [
+      {
+        "sentDate": "2022-08-15T16:02:15.270Z",
+        "item": {
+          "body": "string"
+        }
+      }
+    ],
+    "rates": [
+      {
+        "rate1": 0.0
+      }
+    ],
+    "votes": [
+      {
+        "vote1": true
+      }
+    ],
+    "ratedAs": [
+      {
+        "body": "string"
+      }
+    ],
+    "tags": [
+      {
+        "body": "string"
+      }
+    ],
+    "existingStories": [
+      {
+        "body": "string",
+        "storyType": {
+          "body": "string"
+        }
+      }
+    ]
+  }
+]

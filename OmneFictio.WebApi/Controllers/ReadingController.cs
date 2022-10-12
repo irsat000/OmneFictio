@@ -20,7 +20,7 @@ using static Google.Apis.Auth.GoogleJsonWebSignature;
 namespace OmneFictio.WebApi.Controllers;
 
 [ApiController]
-[Route("Reading")]
+[Route("Read")]
 public class ReadingController : ControllerBase
 {
     private readonly OmneFictioContext _db;
@@ -38,36 +38,7 @@ public class ReadingController : ControllerBase
         _db = db;
     }
 
-    [HttpGet("GetPosts")]
-    public async Task<IActionResult> GetPosts(int Page, int MaxPostPerPage)
-    {
-        //Check filters
-        if (Page < 1 || MaxPostPerPage < 1)
-        {
-            return BadRequest();
-        }
-        //Get with filters
-        var posts = _db.Posts
-            .Where(p =>
-                p.isPublished == true &&
-                p.deletedStatus!.body == "Default")
-            .OrderByDescending(p => p.publishDate);
-        //get page count
-        int pageCount = (posts.Count() + MaxPostPerPage - 1) / MaxPostPerPage;
-        //limit to page
-        var posts_onepage = await _mapper.ProjectTo<PostDtoRead_1>(posts)
-            .Skip(MaxPostPerPage * (Page - 1))
-            .Take(MaxPostPerPage)
-            .ToListAsync();
-
-        if (posts_onepage == null || posts_onepage.Count() == 0)
-        {
-            return NotFound();
-        }
-        return Ok(new { posts = posts_onepage, pages = pageCount });
-    }
-
-    [HttpGet("GetPost")]
+    [HttpGet("GetPost/{commentid}")]
     public async Task<IActionResult> GetPost(int postid)
     {
         var post = await _mapper.ProjectTo<PostDtoRead_1>(_db.Posts.Where(p =>
@@ -82,7 +53,39 @@ public class ReadingController : ControllerBase
         return Ok(post);
     }
 
-    [HttpGet("GetComments")]
+    [HttpGet("GetPosts")]
+    public async Task<IActionResult> GetPosts
+        (int page = 1, int ppp = 20)
+    {
+        //Check filters
+        if (page < 1 || ppp < 1)
+        {
+            return BadRequest();
+        }
+        //Get with filters
+        var posts = _db.Posts
+            .Where(p =>
+                p.isPublished == true &&
+                p.deletedStatus!.body == "Default")
+            .OrderByDescending(p => p.publishDate);
+        //More filters
+        //-----------
+        //get page count
+        int pageCount = (posts.Count() + ppp - 1) / ppp;
+        //limit to page
+        var posts_onepage = await _mapper.ProjectTo<PostDtoRead_1>(posts)
+            .Skip(ppp * (page - 1))
+            .Take(ppp)
+            .ToListAsync();
+        //Return
+        if (posts_onepage == null || posts_onepage.Count() < 1)
+        {
+            return NotFound();
+        }
+        return Ok(new { posts = posts_onepage, pages = pageCount });
+    }
+
+    [HttpGet("GetComments/{postid}")]
     public async Task<IActionResult> GetComments(int postid)
     {
         var comments = await _mapper.ProjectTo<CommentDtoRead_2>(_db.Comments.Where(c =>
@@ -97,7 +100,7 @@ public class ReadingController : ControllerBase
         return Ok(comments);
     }
 
-    [HttpGet("GetHighlightedReply")]
+    [HttpGet("GetHighlightedReply/{commentid}")]
     public async Task<IActionResult> GetHighlightedReply(int commentid)
     {
         //Get the comment's replies
@@ -115,7 +118,7 @@ public class ReadingController : ControllerBase
         return Ok(HighlightedReply);
     }
 
-    [HttpGet("GetComment")]
+    [HttpGet("GetComment/{commentid}")]
     public async Task<IActionResult> GetComment(int commentid)
     {
         var comment = await _mapper.ProjectTo<CommentDtoRead_3>(_db.Comments.Where(c =>
@@ -124,13 +127,16 @@ public class ReadingController : ControllerBase
         {
             return NotFound();
         }
+        else if(comment.DeletedStatus!.Body != "Default"){
+            return Unauthorized();
+        }
+        
         if (comment.Replies != null && comment.Replies.Count() > 0)
         {
             comment.Replies = comment.Replies
                 .Where(r => r.DeletedStatus!.Body == "Default")
                 .OrderBy(r => r.PublishDate).ToList();
         }
-        
         return Ok(comment);
     }
 
@@ -163,7 +169,7 @@ public class ReadingController : ControllerBase
         }
         return Ok(vote.body);
     }
-    
+
     [HttpGet("CheckRateByUser")]
     public async Task<IActionResult> CheckRateByUser(int postid, int accountid)
     {
