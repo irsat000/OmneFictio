@@ -38,7 +38,7 @@ public class ReadingController : ControllerBase
         _db = db;
     }
 
-    [HttpGet("GetPost/{commentid}")]
+    [HttpGet("GetPost/{postid}")]
     public async Task<IActionResult> GetPost(int postid)
     {
         var post = await _mapper.ProjectTo<PostDtoRead_1>(_db.Posts.Where(p =>

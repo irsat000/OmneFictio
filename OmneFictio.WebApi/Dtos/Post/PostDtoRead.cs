@@ -3,36 +3,39 @@ namespace OmneFictio.WebApi.Dtos;
 
 public class PostDtoRead_1
 {
-    public int Id { get; set; }
-    public string Title { get; set; } = null!;
-    public string PostDescription { get; set; } = null!;
-    public DateTime PublishDate { get; set; }
-    public DateTime UpdateDate { get; set; }
-    public string? CoverImage { get; set; }
+    public int id { get; set; }
+    public string title { get; set; } = null!;
+    public string postDescription { get; set; } = null!;
+    public DateTime publishDate { get; set; }
+    public DateTime updateDate { get; set; }
+    public string? coverImage { get; set; }
 
-    public AccountDtoRead_1? Account { get; set; }
-    public DeletedStatusDto? DeletedStatus { get; set; }
-    public LanguageDto? Language { get; set; }
-    public PostStatusDto? PostStatus { get; set; }
-    public PostTypeDto? PostType { get; set; }
-    public RatedAsDto? RatedAs { get; set; }
+    public AccountDtoRead_1? account { get; set; }
+    public DeletedStatusDto? deletedStatus { get; set; }
+    public LanguageDto? language { get; set; }
+    public PostStatusDto? postStatus { get; set; }
+    public PostTypeDto? postType { get; set; }
+    public RatedAsDto? ratedAs { get; set; }
     //-----------
-    public ICollection<ChapterDtoRead_1>? Chapters { get; set; }
+    public ICollection<ChapterDtoRead_1>? chapters { get; set; }
     //-----------
-    public ICollection<PostGiftDto>? PostGifts { get; set; }
-    public ICollection<RateDto>? Rates { get; set; }
-    public ICollection<VoteDto>? Votes { get; set; }
-    public ICollection<TagDto>? Tags { get; set; }
-    public ICollection<ExistingStoryDto>? ExistingStories { get; set; }
+    public ICollection<PostGiftDto>? postGifts { get; set; }
+    public ICollection<VoteDto>? votes { get; set; }
+    public ICollection<TagDto>? tags { get; set; }
+    public ICollection<ExistingStoryDto>? existingStories { get; set; }
 
-    public int VoteResult { get; set; } = 0;
-    public double RateResult { get; set; } = -1;
-    public PostDtoRead_1(ICollection<VoteDto>? Votes, ICollection<RateDto>? Rates)
+    public int voteResult { get; set; } = 0;
+    public double rateResult { get; set; } = -1;
+    public PostDtoRead_1(ICollection<VoteDto>? votes, ICollection<RateDto>? rates)
     {
-        if(Votes != null && Votes.Count > 0)
-            this.VoteResult = Votes.Count(l => l.Body) - Votes.Count(d => !d.Body);
+        if (votes != null && votes.Count > 0)
+        {
+            this.voteResult = votes.Count(l => l.Body) - votes.Count(d => !d.Body);
+            this.votes = votes;
+        }
 
-        if(Rates != null && Rates.Count > 0)
-            this.RateResult = Rates.Average(r => r.Body);
+        if (rates != null && rates.Count > 0)
+            this.rateResult = rates.Average(r => r.Body);
+
     }
 }

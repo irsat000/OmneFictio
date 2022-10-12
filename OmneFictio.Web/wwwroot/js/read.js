@@ -119,7 +119,9 @@ $(document).ready(function () {
                         params_pag.set('page', this.value);
                         window.location.href = urlPath + "?" + params_pag;
                     });
-                    postShowroom.appendChild(pagClone);
+                    if (response.pages !== 1) {
+                        postShowroom.appendChild(pagClone);
+                    }
                 } else {
                     //Codes that will return an apology instead of post list
                 }

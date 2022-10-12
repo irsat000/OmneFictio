@@ -90,7 +90,6 @@ public class PostRead1
     public RatedAs ratedAs { get; set; }
     public List<Chapter> chapters { get; set; }
     public List<PostGift> postGifts { get; set; }
-    public List<Rate> rates { get; set; }
     public List<Vote> votes { get; set; }
     public List<Tag> tags { get; set; }
     public List<ExistingStory> existingStories { get; set; }
