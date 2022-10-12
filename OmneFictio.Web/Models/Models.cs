@@ -28,14 +28,7 @@ public class VoteWrite1
     public int? TargetId { get; set; }
     public string? TargetType { get; set; }
 }
-public class CheckVoted
-{
-    public int? AccountId { get; set; }
-    public int TargetId { get; set; }
-    public string TargetType { get; set; }
-}
 //Voting
-
 
 
 public class PostWrite1

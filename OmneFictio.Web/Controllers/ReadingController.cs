@@ -53,7 +53,6 @@ public class ReadingController : Controller
         {
             query["ppp"] = ppp.ToString();
         }
-        query["page"] = "2"; //deneme
         url.Query = query.ToString();
         //request
         var apiResponse = await _httpClient.GetAsync(url.ToString());
@@ -117,7 +116,51 @@ public class ReadingController : Controller
         return new JsonResult(Ok(content));
     }
 
+    [HttpGet("g/CheckVoteByUser")]
+    public async Task<JsonResult> CheckVoteByUser(int TargetId, string TargetType)
+    {
+        //check account
+        int? AccountId = UserController.checkUserLogin(HttpContext);
+        if(AccountId == null){
+            return new JsonResult(Unauthorized());
+        }
+        //Create url (filters)
+        var url = new UriBuilder(_httpClient.BaseAddress!.AbsoluteUri + "Read/CheckVoteByUser");
+        var query = HttpUtility.ParseQueryString(url.Query);
+        query["AccountId"] = AccountId.ToString();
+        query["TargetId"] = TargetId.ToString();
+        query["TargetType"] = TargetType.ToString();
+        url.Query = query.ToString();
+        //Request
+        var apiResponse = await _httpClient.GetAsync(url.ToString());
+        if (apiResponse.StatusCode.ToString() != "OK")
+        {
+            return new JsonResult(NotFound());
+        }
+        //return
+        string content = await apiResponse.Content.ReadAsStringAsync();
+        return new JsonResult(Ok(content));
+    }
 
 
+    [HttpGet("g/CheckRateByUser/{postid}")]
+    public async Task<JsonResult> CheckRateByUser(string postid)
+    {
+        //check account
+        int? AccountId = UserController.checkUserLogin(HttpContext);
+        if(AccountId == null){
+            return new JsonResult(Unauthorized());
+        }
+        string url = $"Read/CheckRateByUser/{postid}/{AccountId}";
+        //Request
+        var apiResponse = await _httpClient.GetAsync(url);
+        if (apiResponse.StatusCode.ToString() != "OK")
+        {
+            return new JsonResult(NotFound());
+        }
+        //return
+        string content = await apiResponse.Content.ReadAsStringAsync();
+        return new JsonResult(Ok(content));
+    }
 
 }

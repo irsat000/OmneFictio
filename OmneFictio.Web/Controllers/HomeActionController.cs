@@ -19,11 +19,12 @@ public class HomeActionController : Controller
     [HttpPost]
     public async Task<JsonResult> AddComment([FromBody] CommentWrite1 request)
     {
-        int accountid = checkUserLogin();
-        if(accountid == -1){
-            return new JsonResult(StatusCode(499));
+        //check account
+        int? AccountId = UserController.checkUserLogin(HttpContext);
+        if(AccountId == null){
+            return new JsonResult(Unauthorized());
         }
-        request.AccountId = accountid;
+        request.AccountId = AccountId;
 
         var apiResponse = await _httpClient.PostAsJsonAsync("add_comment", request);
         string statusCode = apiResponse.StatusCode.ToString();
@@ -34,18 +35,17 @@ public class HomeActionController : Controller
             return new JsonResult(StatusCode(599));
         }
     }
-
-
-
+    
     //rating the post
     [HttpPost]
     public async Task<JsonResult> RateThePost([FromBody] RateInfo request)
     {
-        int accountid = checkUserLogin();
-        if(accountid == -1){
+        //check account
+        int? AccountId = UserController.checkUserLogin(HttpContext);
+        if(AccountId == null){
             return new JsonResult(Unauthorized());
         }
-        request.AccountId = accountid;
+        request.AccountId = AccountId;
 
         var apiResponse = await _httpClient.PostAsJsonAsync("rate", request);
         string statusCode = apiResponse.StatusCode.ToString();
@@ -62,32 +62,17 @@ public class HomeActionController : Controller
             return new JsonResult(500);
         }
     }
-    [HttpGet("g/CheckRateByUser/{postid}")]
-    public async Task<JsonResult> CheckRateByUser(string postid)
-    {
-        int accountid = checkUserLogin();
-        if(accountid == -1){
-            return new JsonResult(StatusCode(499));
-        }
-        string url = $"check_rate_by_user/{postid}/{accountid}";
-        string apiResponse = await _httpClient.GetStringAsync(url);
-
-        if(apiResponse == "-1"){
-            return new JsonResult(NotFound());
-        } else {
-            return new JsonResult(Ok(apiResponse));
-        }
-    }
 
     //Voting post/chapter/comment/reply
     [HttpPost]
     public async Task<IActionResult> Vote([FromBody] VoteWrite1 request)
     {
-        int accountid = checkUserLogin();
-        if(accountid == -1){
-            return StatusCode(499);
+        //check account
+        int? AccountId = UserController.checkUserLogin(HttpContext);
+        if(AccountId == null){
+            return new JsonResult(Unauthorized());
         }
-        request.AccountId = accountid;
+        request.AccountId = AccountId;
         
         var apiResponse = await _httpClient.PostAsJsonAsync("vote", request);
         string statusCode = apiResponse.StatusCode.ToString();
@@ -105,32 +90,14 @@ public class HomeActionController : Controller
             return StatusCode(599);
         }
     }
-    [HttpPost]
-    public async Task<JsonResult> CheckVoted([FromBody] CheckVoted request){
-        int accountid = checkUserLogin();
-        if(accountid == -1){
-            return new JsonResult(StatusCode(499));
-        }
-        request.AccountId = accountid;
-        var apiResponse = await _httpClient.PostAsJsonAsync("checkvoted", request);
-        string statusCode = apiResponse.StatusCode.ToString();
-
-        string value = await apiResponse.Content.ReadAsStringAsync();
-        if(statusCode == "OK")
-            return new JsonResult(Ok(value));
-        else if(statusCode == "NotFound")
-            return new JsonResult(Ok("none"));
-        else
-            return new JsonResult(StatusCode(580));
-    }
 
     [HttpPost]
-    public async Task<IActionResult> CreatePost([FromBody] PostWrite1 request){
-        int accountid = checkUserLogin();
-        if(accountid == -1){
-            return StatusCode(499);
+    public async Task<IActionResult> CreatePost([FromBody] PostWrite1 request){//check account
+        int? AccountId = UserController.checkUserLogin(HttpContext);
+        if(AccountId == null){
+            return new JsonResult(Unauthorized());
         }
-        request.AccountId = accountid;
+        request.AccountId = AccountId;
 
         var apiResponse = await _httpClient.PostAsJsonAsync("createpost", request);
         string statusCode = apiResponse.StatusCode.ToString();
@@ -167,14 +134,6 @@ public class HomeActionController : Controller
             //Unknown error
             return StatusCode(599);
         }
-    }
-
-
-    public int checkUserLogin(){
-        int accountid = -1;
-        int.TryParse((HttpContext.User.Claims.FirstOrDefault
-            (claim => claim.Type == "nameid")?.Value ?? "-1"), out accountid);
-        return accountid;
     }
 
 }

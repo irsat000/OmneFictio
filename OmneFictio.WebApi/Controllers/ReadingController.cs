@@ -130,7 +130,7 @@ public class ReadingController : ControllerBase
         else if(comment.DeletedStatus!.Body != "Default"){
             return Unauthorized();
         }
-        
+
         if (comment.Replies != null && comment.Replies.Count() > 0)
         {
             comment.Replies = comment.Replies
@@ -170,12 +170,12 @@ public class ReadingController : ControllerBase
         return Ok(vote.body);
     }
 
-    [HttpGet("CheckRateByUser")]
-    public async Task<IActionResult> CheckRateByUser(int postid, int accountid)
+    [HttpGet("CheckRateByUser/{Postid}/{AccountId}")]
+    public async Task<IActionResult> CheckRateByUser(int Postid, int AccountId)
     {
         Rate? rate = await _db.Rates.FirstOrDefaultAsync(r =>
-            r.postId == postid &&
-            r.accountId == accountid);
+            r.postId == Postid &&
+            r.accountId == AccountId);
         if (rate == null)
         {
             return NotFound();
