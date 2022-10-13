@@ -64,10 +64,11 @@ public class CommentWrite1
 }
 //Adding a comment
 
-
-
-
-
+public class AuthToken
+{
+    public string token { get; set; } = null!;
+}
+//To get token from client
 
 
 

@@ -39,29 +39,30 @@ $(document).ready(function(){
             },
             body: payload
         })
-        .then(function (response) {
-            if (response.ok) {
+        .then((res) => res.json())
+        .then((data) => {
+            if (data.statusCode === 200) {
                 success.innerHTML = "SUCCESS";
                 setTimeout(function() {
                     window.location.href = "https://localhost:7067/";
                 }, 500);
             }
-            else if(response.status === 480){
-                message.innerHTML = "Bad username";
+            else if(response.status === 202){
+                success.innerHTML = "Success! You can login now";
+                setTimeout(function() {
+                    window.location.href = "https://localhost:7067/";
+                }, 500);
             }
-            else if(response.status === 481){
-                message.innerHTML = "*Username is taken*";
-            }
-            else if(response.status === 482){
-                message.innerHTML = "*Password is not acceptable*";
-            }
-            else if(response.status === 483){
-                message.innerHTML = "*Server error*";
+            else if(response.status === 400){
+                success.innerHTML = "Check the form again";
+                setTimeout(function() {
+                    window.location.href = "https://localhost:7067/";
+                }, 500);
             }
             else{
-                message.innerHTML = "*Unknown error*";
+                message.innerHTML = "Username already taken";
             }
         })
-        .catch(error => console.log('Login function failed.', error));
+        .catch(error => console.log('Register function failed.', error));
     });
 });

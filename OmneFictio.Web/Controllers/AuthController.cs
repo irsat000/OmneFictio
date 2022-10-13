@@ -25,7 +25,7 @@ public class AuthController : Controller
 
     //fetch api manual login
     [HttpPost]
-    public async Task<IActionResult> UserLogin([FromBody] AccountRead2 account)
+    public async Task<JsonResult> UserLogin([FromBody] AccountRead2 account)
     {
         bool rememberme = true;
         bool.TryParse(account.RememberMe, out rememberme);
@@ -33,44 +33,44 @@ public class AuthController : Controller
         string statusCode = apiResponse.StatusCode.ToString();
 
         if (statusCode != "OK")
-            return NotFound();
+            return new JsonResult(NotFound());
         else
         {
             string newToken = await getJwtFromResponse(apiResponse);
             CreateUserSession(newToken, rememberme: rememberme);
-            return Ok();
+            return new JsonResult(Ok());
         }
     }
 
     [HttpPost]
-    public async Task<IActionResult> UserRegistration([FromBody] AccountWrite1 account)
+    public async Task<JsonResult> UserRegistration([FromBody] AccountWrite1 account)
     {
-        var apiResponse = await _httpClient.PostAsJsonAsync("register", account);
+        var apiResponse = await _httpClient.PostAsJsonAsync("Auth/Register", account);
         string statusCode = apiResponse.StatusCode.ToString();
 
         if (statusCode == "OK")
         {
             string newToken = await getJwtFromResponse(apiResponse);
             CreateUserSession(newToken);
-            return Ok();
+            return new JsonResult(Ok());
         }
         else if(statusCode == "Accepted"){
-            return Accepted(); //created user but failed to get JWT
+            return new JsonResult(Accepted()); //created user but failed to get JWT
         }
         else if (statusCode == "Conflict")
         {
-            return Conflict(); //username exists
+            return new JsonResult(Conflict()); //username exists
         }
         else
         {
-            return BadRequest();
+            return new JsonResult(BadRequest());
         }
     }
 
     [HttpPost]
-    public async Task<JsonResult> GoogleSignin(string googleToken)
+    public async Task<JsonResult> GoogleSignin([FromBody] AuthToken googleToken)
     {
-        var apiResponse = await _httpClient.PostAsJsonAsync("Auth/Signin-External", googleToken);
+        var apiResponse = await _httpClient.PostAsJsonAsync("Auth/Signin-External", googleToken.token);
         string statusCode = apiResponse.StatusCode.ToString();
 
         if (statusCode == "OK")

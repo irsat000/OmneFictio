@@ -101,7 +101,7 @@ $(document).ready(function () {
             const post = e.target.closest('.post');
             const postDetail = post.querySelector('.post-detail');
             const postMenu = post.querySelector('.post-menu');
-            if(!postMenu.classList.contains('d-flex')){
+            if (!postMenu.classList.contains('d-flex')) {
                 postMenu.classList.add('d-flex');
                 postDetail.classList.add('d-none');
             } else {
@@ -144,18 +144,17 @@ $(document).ready(function () {
             },
             body: payload
         })
-            .then(function (response) {
-                if (response.ok) {
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+                if (data.statusCode === 200) {
                     success.innerHTML = "SUCCESS";
                     setTimeout(function () {
                         location.reload();
                     }, 500);
                 }
-                else if (response.status === 404) {
-                    message.innerHTML = "*User not found*";
-                }
                 else {
-                    message.innerHTML = "*Server error*";
+                    message.innerHTML = "*Failed*";
                 }
             })
             .catch(error => console.log('Login function failed.', error));
@@ -303,19 +302,27 @@ function voting_visual(btn, action) {
 }
 
 //google auth
-function googleHandleCredentialResponse(response) {
-    $.ajax({
-        type: "POST",
-        url: "https://localhost:7067/Auth/GoogleSignin",
-        data: { googleToken: response.credential },
-        timeout: 0,
-        success: function () {
-            window.location.replace("https://localhost:7067");
+async function googleHandleCredentialResponse(response) {
+    await fetch("/Auth/GoogleSignin", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
         },
-        error: function () {
-            alert("Login with google failed");
-        }
-    });
+        body: JSON.stringify({ token: response.credential })
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            if (data.statusCode === 200) {
+                setTimeout(function () {
+                    window.location.href = "https://localhost:7067/";
+                }, 500);
+            }
+            else {
+                alert("Login failed");
+            }
+        })
+        .catch(error => console.log('External login failed.', error));
     /*const responsePayload = decodeJwtResponse(response.credential);
     console.log("ID: " + responsePayload.sub);
     console.log('Full Name: ' + responsePayload.name);
