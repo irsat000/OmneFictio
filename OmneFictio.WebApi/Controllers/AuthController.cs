@@ -67,11 +67,14 @@ public class AuthController : ControllerBase
         //Input validation
         Regex usernameRegex = new Regex(@"[A-Za-z0-9_]{3,30}");
         if (!usernameRegex.IsMatch(request.Username) ||
-            await _db.Accounts.AnyAsync(a => a.username == request.Username) ||
             request.Pw!.Contains(" ") ||
             request.Pw!.Length < 6)
         {
             return BadRequest();
+        }
+        if (await _db.Accounts.AnyAsync(a => a.username == request.Username))
+        {
+            return Conflict();
         }
         //Fill an account object
         string passwordHash = BC.HashPassword(request.Pw);
@@ -108,7 +111,7 @@ public class AuthController : ControllerBase
         var createToken = UserController.CreateUserToken(user!, securityToken);
         if (createToken == null)
         {
-            return Ok();
+            return Accepted();
         }
         return Ok(new { jwt = createToken });
     }
@@ -135,6 +138,8 @@ public class AuthController : ControllerBase
         //Gets the Id given by google
         var extId = jwt.Claims.First(claim => claim.Type == "sub").Value;
 
+        /*NOTE: to use other services like google, 
+            we can use query string to find out where the token comes from*/
         //Creates an account if there is no one with this ID from google
         //If there is one already, it skips to login
         if (await _db.Accounts.SingleOrDefaultAsync(a => a.externalId == extId && a.externalType == "google") == null)
@@ -169,19 +174,21 @@ public class AuthController : ControllerBase
             }
             catch (DbEntityValidationException)
             {
-                return BadRequest();
+                return StatusCode(500);
             }
         }
 
         //Gets the user for authorization
         var user = await _db.Accounts.SingleOrDefaultAsync(a => a.externalId == extId && a.externalType == "google");
         if (user == null)
-            return BadRequest();
+        {
+            return StatusCode(500);
+        }
 
         var createToken = UserController.CreateUserToken(user, securityToken);
         if (createToken == null)
         {
-            return BadRequest();
+            return StatusCode(500);
         }
         return Ok(new { jwt = createToken });
     }

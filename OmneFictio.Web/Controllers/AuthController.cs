@@ -25,105 +25,77 @@ public class AuthController : Controller
 
     //fetch api manual login
     [HttpPost]
-    public async Task<ActionResult> UserLogin([FromBody] AccountRead2 account)
+    public async Task<IActionResult> UserLogin([FromBody] AccountRead2 account)
     {
-        if(account == null)
-            return NotFound();
-        bool rememberme;
+        bool rememberme = true;
         bool.TryParse(account.RememberMe, out rememberme);
-        var apiResponse = await _httpClient.PostAsJsonAsync("login", account);
+        var apiResponse = await _httpClient.PostAsJsonAsync("Auth/Login", account);
         string statusCode = apiResponse.StatusCode.ToString();
-        if(statusCode == "NotFound")
+
+        if (statusCode != "OK")
             return NotFound();
-        else{
+        else
+        {
             string newToken = await getJwtFromResponse(apiResponse);
-            if(newToken != null){
-                CreateUserSession(newToken, rememberme: rememberme);
-                return Ok();
-            }
-            else
-                return StatusCode(580);
+            CreateUserSession(newToken, rememberme: rememberme);
+            return Ok();
         }
     }
 
     [HttpPost]
     public async Task<IActionResult> UserRegistration([FromBody] AccountWrite1 account)
     {
-        int prefLan;
-        bool _AllowAdultContent;
-        int.TryParse(account.PrefLanguageId.ToString(), out prefLan);
-        bool.TryParse(account.AllowAdultContent.ToString(), out _AllowAdultContent);
-        AccountWrite1 createAccount = new AccountWrite1{
-            Username = account.Username,
-            Email = account.Email,
-            Pw = account.Pw,
-            PrefLanguageId = prefLan,
-            AllowAdultContent = _AllowAdultContent
-        };
-
-        var apiResponse = await _httpClient.PostAsJsonAsync("register", createAccount);
+        var apiResponse = await _httpClient.PostAsJsonAsync("register", account);
         string statusCode = apiResponse.StatusCode.ToString();
-        if(statusCode == "OK"){
+
+        if (statusCode == "OK")
+        {
             string newToken = await getJwtFromResponse(apiResponse);
-            if(newToken != null)
-                CreateUserSession(newToken);
+            CreateUserSession(newToken);
             return Ok();
         }
-        else if(statusCode == "480"){
-            //Username is bad
-            return StatusCode(480);
+        else if(statusCode == "Accepted"){
+            return Accepted(); //created user but failed to get JWT
         }
-        else if(statusCode == "481"){
-            //Username duplicate
-            return StatusCode(481);
+        else if (statusCode == "Conflict")
+        {
+            return Conflict(); //username exists
         }
-        else if(statusCode == "482"){
-            //Password is bad
-            return StatusCode(482);
-        }
-        else if(statusCode == "483"){
-            //Failed to save the data in database
-            return StatusCode(483);
-        }
-        else{
-            return StatusCode(580);
+        else
+        {
+            return BadRequest();
         }
     }
 
     [HttpPost]
     public async Task<JsonResult> GoogleSignin(string googleToken)
     {
-        var apiResponse = await _httpClient.PostAsJsonAsync("signin-external", googleToken);
+        var apiResponse = await _httpClient.PostAsJsonAsync("Auth/Signin-External", googleToken);
         string statusCode = apiResponse.StatusCode.ToString();
-        if(statusCode == "OK"){
+
+        if (statusCode == "OK")
+        {
             string newToken = await getJwtFromResponse(apiResponse);
-            if(newToken != null){
-                CreateUserSession(newToken);
-                return new JsonResult(Ok());
-            }
-            else
-                return new JsonResult(StatusCode(582));
+            CreateUserSession(newToken);
+            return new JsonResult(Ok());
         }
-        else if(statusCode == "480"){
-            //Token is malicious
-            return new JsonResult(StatusCode(480));
+        else if (statusCode == "BadRequest")
+        {
+            //Bad token
+            return new JsonResult(BadRequest());
         }
-        else if(statusCode == "580"){
-            //Data couldn't be saved in database
-            return new JsonResult(StatusCode(580));
-        }
-        else if(statusCode == "581"){
-            //Couldn't find the user
-            return new JsonResult(StatusCode(581));
-        }
-        else{
-            //Api request utterly failed
-            return new JsonResult(StatusCode(582));
+        else
+        {
+            //Server error
+            return new JsonResult(StatusCode(500));
         }
     }
-    
+
+
+
     [HttpGet]
-    public IActionResult LogOut(){
+    public IActionResult LogOut()
+    {
         //HttpContext.Session.Clear();
         HttpContext.SignOutAsync();
         HttpContext.Response.Cookies.Delete("UserAuth");
@@ -132,30 +104,32 @@ public class AuthController : Controller
 
 
 
-
-
-    
-    public async Task<string> getJwtFromResponse(HttpResponseMessage response){
+    public async Task<string> getJwtFromResponse(HttpResponseMessage response)
+    {
         string raw = await response.Content.ReadAsStringAsync();
         var result = JsonSerializer.Deserialize<Dictionary<string, object>>(raw);
         return result!.FirstOrDefault(x => x.Key == "jwt").Value.ToString()!;
     }
-    public void CreateUserSession(string tokenRaw, bool rememberme = true){
+    public void CreateUserSession(string tokenRaw, bool rememberme = true)
+    {
         //HttpContext.Session.Clear();
         HttpContext.SignOutAsync();
 
         JwtSecurityToken token = _jwtHandler.ReadJwtToken(tokenRaw);
         var principal = new ClaimsPrincipal(new ClaimsIdentity(token.Claims, CookieAuthenticationDefaults.AuthenticationScheme));
-        
-        var sessionSettings = new AuthenticationProperties{
+
+        var sessionSettings = new AuthenticationProperties
+        {
             IsPersistent = true,
             ExpiresUtc = DateTime.UtcNow.AddMonths(1)
         };
-        var coockieSettings = new CookieOptions{
+        var coockieSettings = new CookieOptions
+        {
             IsEssential = true,
             Expires = DateTime.UtcNow.AddMonths(1)
         };
-        if(rememberme == false){
+        if (rememberme == false)
+        {
             sessionSettings.ExpiresUtc = DateTime.UtcNow.AddHours(4);
             coockieSettings.Expires = DateTime.UtcNow.AddHours(4);
         }
@@ -163,73 +137,3 @@ public class AuthController : Controller
         HttpContext.Response.Cookies.Append("UserAuth", "True", coockieSettings);
     }
 }
-
-
-
-
-
-
-
-/* UserLogin backup
-    public async Task<IActionResult> UserLogin(AccountRead2 account)
-    {
-        var apiResponse = await _httpClient.PostAsJsonAsync("login", account);
-        if((int)apiResponse.StatusCode == 404){
-            
-        }
-        string newToken = await getJwtFromResponse(apiResponse);
-        if(newToken != null)
-            CreateUserSession(newToken);
-        return RedirectToAction("Index", "Home");
-    }
-    */
-
-
-/*
-    public async Task<IActionResult> UserRegistration(AccountWrite1 account)
-    {
-        var apiResponse = await _httpClient.PostAsJsonAsync("register", account);
-        string statusCode = apiResponse.StatusCode.ToString();
-        if(statusCode == "OK"){
-            string newToken = await getJwtFromResponse(apiResponse);
-            if(newToken != null)
-                CreateUserSession(newToken);
-        }
-        else if(statusCode == "480"){
-            
-        }
-        else if(statusCode == "481"){
-
-        }
-        else if(statusCode == "422"){
-            
-        }
-        return RedirectToAction("Index", "Home");
-    }
-*/
-
-
-
-    //Trying login endpoint
-    /*
-    public async Task<IActionResult> GoogleSigninDirectly(HttpResponse request)
-    {
-        string text = request.ToString();
-        
-        var apiResponse = await _httpClient.PostAsJsonAsync("signin-external", request);
-        if((int)apiResponse.StatusCode == 480){
-            //Token is malicious
-        }
-        else if((int)apiResponse.StatusCode == 580){
-            //Data couldn't be saved in database
-        }
-        else if((int)apiResponse.StatusCode == 581){
-            //Couldn't find the user
-        }
-        string newToken = await getJwtFromResponse(apiResponse);
-        if(newToken != null){
-            CreateUserSession(newToken);
-        }
-        
-        return RedirectToAction("Index", "Home");
-    }*/
