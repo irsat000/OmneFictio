@@ -165,7 +165,7 @@ $(document).ready(function(){
             payload["CoverImage"] = coverImg;
         }
 
-        await fetch("/HomeAction/CreatePost", {
+        await fetch("/Action/CreatePost", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

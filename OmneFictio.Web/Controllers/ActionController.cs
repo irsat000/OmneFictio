@@ -4,12 +4,12 @@ using OmneFictio.Web.Models;
 
 namespace OmneFictio.Web.Controllers;
 
-public class HomeActionController : Controller
+public class ActionController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly HttpClient _httpClient;
 
-    public HomeActionController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory)
+    public ActionController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory)
     {
         _logger = logger;
         _httpClient = httpClientFactory.CreateClient("of");
@@ -65,7 +65,7 @@ public class HomeActionController : Controller
 
     //Voting post/chapter/comment/reply
     [HttpPost]
-    public async Task<IActionResult> Vote([FromBody] VoteWrite1 request)
+    public async Task<JsonResult> Vote([FromBody] VoteWrite1 request)
     {
         //check account
         int? AccountId = UserController.checkUserLogin(HttpContext);
@@ -74,20 +74,14 @@ public class HomeActionController : Controller
         }
         request.AccountId = AccountId;
         
-        var apiResponse = await _httpClient.PostAsJsonAsync("vote", request);
+        var apiResponse = await _httpClient.PostAsJsonAsync("Action/Vote", request);
         string statusCode = apiResponse.StatusCode.ToString();
         
         if(statusCode == "OK"){
-            return Ok();
-        }
-        else if(statusCode == "480" || statusCode == "580"){
-            //No user
-            //Failed to save the data in database
-            return StatusCode(580);
+            return new JsonResult(Ok());
         }
         else{
-            //Unknown error
-            return StatusCode(599);
+            return new JsonResult(BadRequest());
         }
     }
 

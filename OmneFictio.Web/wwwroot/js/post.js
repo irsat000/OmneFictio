@@ -22,7 +22,7 @@ $(document).ready(function () {
     });
     async function AddComment(payload) {
         //Adds a new comment
-        await fetch("/HomeAction/AddComment", {
+        await fetch("/Action/AddComment", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -98,7 +98,7 @@ $(document).ready(function () {
                     PostId: postId,
                     RateValue: rateVal
                 };
-                await fetch("/HomeAction/RateThePost", {
+                await fetch("/Action/RateThePost", {
                     method: 'POST',
                     headers: {
                         'Accept': 'application/json',

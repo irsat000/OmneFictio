@@ -205,7 +205,7 @@ $(document).ready(function () {
 async function VoteRequest(btn, data) {
     var action = data.Body ? "like" : "dislike";
 
-    await fetch("/HomeAction/Vote", {
+    await fetch("/Action/Vote", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
