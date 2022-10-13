@@ -100,4 +100,142 @@ public class ActionController : ControllerBase
         }
         return Ok();
     }
+
+    [HttpPost("Rate")]
+    public async Task<IActionResult> Rate(RateInfo request)
+    {
+        if (!(request.RateValue >= 1 && request.RateValue <= 10))
+        {
+            return BadRequest();
+        }
+        //check existing rate and replace if it exists
+        Rate? rate = await _db.Rates.FirstOrDefaultAsync(x =>
+            x.accountId == request.AccountId &&
+            x.postId == request.PostId);
+        if (rate != null)
+        {
+            _db.Rates.Remove(_db.Rates.SingleOrDefault(x => x.id == rate.id)!);
+        }
+        //create new rate
+        rate = new Rate
+        {
+            accountId = request.AccountId,
+            postId = request.PostId,
+            body = request.RateValue
+        };
+        await _db.Rates.AddAsync(rate);
+
+        try
+        {
+            await _db.SaveChangesAsync();
+        }
+        catch (Exception)
+        {
+            return BadRequest();
+        }
+        return Ok();
+    }
+
+    [HttpPost("AddComment")]
+    public async Task<IActionResult> AddComment(CommentDtoWrite_1 request)
+    {
+        Comment? newComment = new Comment
+        {
+            accountId = request.AccountId,
+            deletedStatusId = 1,
+            publishDate = DateTime.Now,
+            updateDate = DateTime.Now
+        };
+
+        if (request.TargetPostId != null && request.TargetPostId != 0)
+            newComment.targetPostId = request.TargetPostId;
+        else
+            newComment.targetChapterId = request.TargetChapterId;
+
+        if (request.Body != null &&
+            request.Body.Length > 0 &&
+            String.IsNullOrWhiteSpace(request.Body) == false)
+        {
+            newComment.body = request.Body;
+        }
+
+        try
+        {
+            await _db.Comments.AddAsync(newComment);
+            await _db.SaveChangesAsync();
+        }
+        catch (Exception)
+        {
+            return BadRequest();
+        }
+        CommentDtoRead_2? returnComment =
+            await _mapper.ProjectTo<CommentDtoRead_2>
+            (_db.Comments.Where(p => p.id == newComment.id))
+            .FirstOrDefaultAsync();
+        return Ok(new { returnComment });
+    }
+    
+    [HttpPost("CreatePost")]
+    public async Task<IActionResult> CreatePost(PostDtoWrite_1 request)
+    {
+        if (request.Title.Length > 250 ||
+            request.PostDescription.Length > 2000 ||
+            request.Title.Length == 0 || request.Title == null ||
+            request.PostDescription.Length < 50 || request.PostDescription == null)
+        {
+            return BadRequest();
+        }
+
+        Post newpost = new Post();
+        newpost.title = request.Title;
+        newpost.postDescription = request.PostDescription;
+        newpost.languageId = request.LanguageId;
+        newpost.accountId = request.AccountId;
+        newpost.postTypeId = request.PostTypeId;
+        newpost.ratedAsId = request.RatedAsId;
+        newpost.coverImage = request.CoverImage;
+        newpost.publishDate = DateTime.Now;
+        newpost.updateDate = DateTime.Now;
+        newpost.deletedStatusId = 1;
+        newpost.postStatusId = 1;
+        newpost.isPublished = true;
+        if (request.TagList != null)
+        {
+            foreach (int tagid in request.TagList)
+            {
+                Tag? tag = await _db.Tags.FirstOrDefaultAsync(s => s.id == tagid);
+                if (tag != null)
+                {
+                    newpost.tags.Add(tag);
+                }
+            }
+        }
+        if (request.PostTypeId == 3 && request.SeriesList != null)
+        {
+            foreach (int seriesid in request.SeriesList)
+            {
+                ExistingStory? series = await _db.ExistingStories.FirstOrDefaultAsync(s => s.id == seriesid);
+                if (series != null)
+                {
+                    newpost.existingStories.Add(series);
+                }
+            }
+        }
+        if (request.PostTypeId == 3 && newpost.existingStories.Count < 1)
+        {
+            return BadRequest(); //Fanfiction is chosen but there is no reference to stories
+        }
+
+        try
+        {
+            await _db.Posts.AddAsync(newpost);
+            await _db.SaveChangesAsync();
+        }
+        catch (Exception)
+        {
+            return BadRequest();
+        }
+
+        return Ok();
+    }
 }
