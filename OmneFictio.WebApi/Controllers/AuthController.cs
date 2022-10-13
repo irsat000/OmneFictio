@@ -26,7 +26,7 @@ public class AuthController : ControllerBase
     private readonly OmneFictioContext _db;
     private readonly IMapper _mapper;
     private readonly ILogger<ReadingController> _logger;
-    private readonly IConfiguration configuration;
+    private readonly IConfiguration _configuration;
     JwtSecurityTokenHandler _jwtHandler = new JwtSecurityTokenHandler();
 
     public AuthController(ILogger<ReadingController> logger, IMapper mapper, OmneFictioContext db, IConfiguration iConfig)
@@ -38,13 +38,13 @@ public class AuthController : ControllerBase
             throw new InvalidOperationException("Mapper not found");
         }
         _db = db;
-        configuration = iConfig;
+        _configuration = iConfig;
     }
 
     [HttpPost("Login")]
     public async Task<IActionResult> Login([FromBody] AccountDtoRead_2 request)
     {
-        var securityToken = Encoding.ASCII.GetBytes(configuration.GetSection("Token").Value);
+        var securityToken = Encoding.ASCII.GetBytes(_configuration.GetSection("Token").Value);
         //Authentication
         var checkUser = await _db.Accounts.SingleOrDefaultAsync(x => x.username == request.Username);
         if (checkUser == null || !BC.Verify(request.Pw, checkUser.pw))
@@ -63,7 +63,7 @@ public class AuthController : ControllerBase
     [HttpPost("Register")]
     public async Task<IActionResult> Register([FromBody] AccountDtoWrite_1 request)
     {
-        var securityToken = Encoding.ASCII.GetBytes(configuration.GetSection("Token").Value);
+        var securityToken = Encoding.ASCII.GetBytes(_configuration.GetSection("Token").Value);
         //Input validation
         Regex usernameRegex = new Regex(@"[A-Za-z0-9_]{3,30}");
         if (!usernameRegex.IsMatch(request.Username) ||
@@ -119,7 +119,7 @@ public class AuthController : ControllerBase
     [HttpPost("Signin-External")]
     public async Task<IActionResult> Signin_External([FromBody] string token)
     {
-        var securityToken = Encoding.ASCII.GetBytes(configuration.GetSection("Token").Value);
+        var securityToken = Encoding.ASCII.GetBytes(_configuration.GetSection("Token").Value);
         var validationSettings = new ValidationSettings
         {
             Audience = new string[]

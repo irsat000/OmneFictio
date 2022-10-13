@@ -11,6 +11,10 @@ public class HomeController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly HttpClient _httpClient;
+    public static string GetApiKey()
+    {
+        return "BFvvIFBvyCpIMIxtqLsGqEMExtpsILsFpxzKHwtA";
+    }
 
     public HomeController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory)
     {
