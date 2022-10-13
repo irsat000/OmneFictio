@@ -178,10 +178,10 @@ public class ActionController : ControllerBase
     [HttpPost("CreatePost")]
     public async Task<IActionResult> CreatePost(PostDtoWrite_1 request)
     {
-        if (request.Title.Length > 250 ||
-            request.PostDescription.Length > 2000 ||
-            request.Title.Length == 0 || request.Title == null ||
-            request.PostDescription.Length < 50 || request.PostDescription == null)
+        if (request.Title == null ||
+            request.Title.Length > 250 || request.Title.Length == 0 || 
+            request.PostDescription == null ||
+            request.PostDescription.Length > 2000 || request.PostDescription.Length < 10)
         {
             return BadRequest();
         }

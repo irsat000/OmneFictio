@@ -213,12 +213,12 @@ async function VoteRequest(btn, data) {
         },
         body: JSON.stringify(data)
     })
-        .then(function (response) {
-            if (response.ok) {
+        .then((res) => res.json())
+        .then((data) => {
+            if (data.statusCode === 200) {
                 voting_visual(btn, action);
-            }
-            else {
-                console.log("Server error -> " + response.status);
+            } else {
+                console.log("Server error -> " + response.statusCode);
             }
         })
         .catch(error => console.log('Vote function failed.', error));

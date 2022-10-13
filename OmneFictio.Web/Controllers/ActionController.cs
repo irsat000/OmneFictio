@@ -50,12 +50,10 @@ public class ActionController : Controller
         var apiResponse = await _httpClient.PostAsJsonAsync("Action/Rate", request);
         string statusCode = apiResponse.StatusCode.ToString();
         
-        if(statusCode == "OK"){
-            return new JsonResult(Ok());
-        }
-        else{
+        if(statusCode != "OK"){
             return new JsonResult(BadRequest());
         }
+        return new JsonResult(Ok());
     }
     
     [HttpPost]

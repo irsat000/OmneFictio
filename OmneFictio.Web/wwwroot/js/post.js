@@ -15,10 +15,10 @@ $(document).ready(function () {
 
 
     document.getElementById('addCommentToPost').addEventListener('click', function () {
-        AddComment({
+        AddComment(JSON.stringify({
             Body: document.getElementById('commentBody').value,
             TargetPostId: postId
-        });
+        }));
     });
     async function AddComment(payload) {
         //Adds a new comment
@@ -28,7 +28,7 @@ $(document).ready(function () {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify(payload)
+            body: payload
         })
             .then((res) => res.json())
             .then(async (data) => {
@@ -59,8 +59,6 @@ $(document).ready(function () {
                     commentSection.insertBefore(clone, commentSection.firstChild);
                     //clear commenting body
                     document.getElementById('commentBody').value = "";
-                } else if (data.statusCode === 499) {
-                } else {
                 }
             })
             .catch(error => {
@@ -110,11 +108,11 @@ $(document).ready(function () {
                     .then((data) => {
                         if (data.statusCode === 200) {
                             document.getElementById('rate_by_user').innerText = rateVal + "/10";
+                        } else {
+                            console.log("Server error -> " + data.statusCode);
                         }
                     })
-                    .catch(error => {
-                        console.log('Fetch failed -> ' + error);
-                    });
+                    .catch(error => { console.log('Fetch failed -> ' + error); });
             }
         });
     //-------------
@@ -179,7 +177,7 @@ $(document).ready(function () {
         element.addEventListener("click", open_close_chapters_modal);
         element.addEventListener("touchstart", open_close_chapters_modal);
     });
-    function open_close_chapters_modal(){
+    function open_close_chapters_modal() {
         if (chaptersModal.classList.contains('d-flex')) {
             closeChaptersModal();
         }
@@ -202,7 +200,7 @@ $(document).ready(function () {
             .then(async (data) => {
                 if (data.statusCode === 200) {
                     const instance = document.getElementById('comment_instance');
-                    for(const comment of JSON.parse(data.value)){
+                    for (const comment of JSON.parse(data.value)) {
                         const clone = instance.content.cloneNode(true);
                         const checkvotepayload = "TargetId=" + comment.id + "&TargetType=comment";
                         //Check if user voted this parent
@@ -314,7 +312,7 @@ $(document).ready(function () {
                     //if it has replies
                     if (comm.replies.length > 0) {
                         const replyInstance = document.getElementById('modalReplies-reply');
-                        for(const reply of comm.replies){
+                        for (const reply of comm.replies) {
                             const replyClone = replyInstance.content.cloneNode(true);
                             //Check if user voted this parent
                             const checkvotepayload_reply = "TargetId=" + reply.id + "&TargetType=reply";
@@ -339,7 +337,7 @@ $(document).ready(function () {
             .catch(error => console.log('Fetching reply method is at fault', error));
     }
 
-    
+
 
 
     function openRepliesModal(element) {

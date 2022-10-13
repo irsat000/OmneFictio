@@ -217,7 +217,7 @@
                         //Checking if the user logged in and voted the post
                         string likeBtnClasses = "bi bi-hand-thumbs-up";
                         string dislikeBtnClasses = "bi bi-hand-thumbs-down";
-                        if(userId != "-1"){
+                        if(userId != "-1" && post.votes != null){
                             if(post.votes.SingleOrDefault(p => p.accountId == Convert.ToInt32(userId) && p.body == true) != null){
                                 likeBtnClasses = "bi bi-hand-thumbs-up-fill active likebtn";
                                 dislikeBtnClasses = "bi bi-hand-thumbs-down dislikebtn";
@@ -230,10 +230,6 @@
                                 likeBtnClasses = "bi bi-hand-thumbs-up likebtn";
                                 dislikeBtnClasses = "bi bi-hand-thumbs-down dislikebtn";
                             }
-                        }
-                        else{
-                            likeBtnClasses = "bi bi-hand-thumbs-up";
-                            dislikeBtnClasses = "bi bi-hand-thumbs-down";
                         }
                     }
                     @Html.Raw("<i class='" + @likeBtnClasses + "' data-action='like' data-target_type='post'></i>")

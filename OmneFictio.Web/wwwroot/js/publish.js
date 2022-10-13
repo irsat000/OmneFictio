@@ -173,20 +173,15 @@ $(document).ready(function(){
             },
             body: JSON.stringify(payload)
         })
-        .then(function (response) {
-            if (response.ok) {
+        .then((res) => res.json())
+        .then(async (data) => {
+            if (data.statusCode === 200) {
                 success.innerHTML = "SUCCESS";
                 setTimeout(function() {
                     window.location.replace("https://localhost:7067");
                 }, 500);
             }
-            else if(response.status === 499){ error.innerHTML = "*Login to be able to create your post*"; }
-            else if(response.status === 480){ error.innerHTML = "*Fill the form properly*"; }
-            else if(response.status === 481){ error.innerHTML = "*Title is too long (max 250 character)*"; }
-            else if(response.status === 482){ error.innerHTML = "*Description is too long (max 2000 character)*"; }
-            else if(response.status === 483){ error.innerHTML = "*Title is empty*"; }
-            else if(response.status === 484){ error.innerHTML = "*Description is too short or empty* (min 50 character)"; }
-            else{ error.innerHTML = "*Server error*"; }
+            else{ error.innerHTML = "*Error*"; }
         })
         .catch(error => console.log('Create post submit has failed.', error));
     });
