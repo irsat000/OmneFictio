@@ -36,6 +36,12 @@ public class HomeController : Controller
         return View(new GetpostViewmodel(postid));
     }
 
+    [HttpGet("p/{postid}/{chapterindex}")]
+    public IActionResult Chapter(int postid, int chapterindex)
+    {
+        return View();
+    }
+
     [HttpGet("Register")]
     public IActionResult Register()
     {

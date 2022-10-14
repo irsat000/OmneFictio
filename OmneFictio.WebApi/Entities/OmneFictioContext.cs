@@ -163,6 +163,10 @@ namespace OmneFictio.WebApi.Entities
             {
                 entity.ToTable("Chapter");
 
+                entity.Property(e => e.authorNoteLater).IsUnicode(false);
+
+                entity.Property(e => e.authorNotePrior).IsUnicode(false);
+
                 entity.Property(e => e.body).IsUnicode(false);
 
                 entity.Property(e => e.isPublished).HasDefaultValueSql("((0))");

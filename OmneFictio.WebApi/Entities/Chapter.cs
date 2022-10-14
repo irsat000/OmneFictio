@@ -19,6 +19,8 @@ namespace OmneFictio.WebApi.Entities
         public DateTime publishDate { get; set; }
         public DateTime updateDate { get; set; }
         public bool? isPublished { get; set; }
+        public string? authorNotePrior { get; set; }
+        public string? authorNoteLater { get; set; }
 
         public virtual Post? post { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }

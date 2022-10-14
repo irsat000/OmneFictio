@@ -1,0 +1,21 @@
+
+@{
+    ViewData["Title"] = "Chapter";
+    @section Stylesheets {
+        
+    }
+    @section Scripts {
+        
+    }
+}
+@{
+    string userId = "-1";
+    string username = "";
+    string userPicture = "none"; 
+
+    userId = User.Claims.FirstOrDefault(claim => claim.Type == "nameid")?.Value ?? "-1";
+    username = User.Claims.FirstOrDefault(claim => claim.Type == "unique_name")?.Value ?? "";
+    userPicture = User.Claims.FirstOrDefault(claim => claim.Type == "actort")?.Value ?? "none";
+}
+
+
