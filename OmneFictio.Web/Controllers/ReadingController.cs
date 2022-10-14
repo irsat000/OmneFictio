@@ -12,19 +12,22 @@ public class ReadingController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly HttpClient _httpClient;
+    private readonly IConfiguration _configuration;
 
-    public ReadingController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory)
+    public ReadingController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory, IConfiguration iConfig)
     {
         _logger = logger;
         _httpClient = httpClientFactory.CreateClient("of");
+        _configuration = iConfig;
+
+        _httpClient.DefaultRequestHeaders.Add("ApiKey", _configuration.GetSection("ApiKey").Value);
     }
 
     [HttpGet("p/{postid}")]
     public async Task<IActionResult> Post(string postid)
     {
-        string apikey = HomeController.GetApiKey();
         var apiResponse = await _httpClient
-            .GetAsync("Read/GetPost/" + postid + "?apikey=" + apikey);
+            .GetAsync("Read/GetPost/" + postid);
         if (apiResponse.StatusCode.ToString() != "OK")
         {
             return RedirectToAction("Index", "Home");
@@ -44,10 +47,8 @@ public class ReadingController : Controller
     public async Task<JsonResult> GetPosts(int? page, int? ppp)
     {
         //Create url (filters)
-        string apikey = HomeController.GetApiKey();
         var url = new UriBuilder(_httpClient.BaseAddress!.AbsoluteUri + "Read/GetPosts");
         var query = HttpUtility.ParseQueryString(url.Query);
-        query["apikey"] = HomeController.GetApiKey();
         if (page != null)
         {
             query["page"] = page.ToString();
@@ -77,8 +78,7 @@ public class ReadingController : Controller
     [HttpGet("g/GetComments/{postid}")]
     public async Task<JsonResult> GetComments(int postid)
     {
-        string apikey = HomeController.GetApiKey();
-        string url = "Read/GetComments/" + postid + "?apikey=" + apikey;
+        string url = "Read/GetComments/" + postid;
         var apiResponse = await _httpClient.GetAsync(url);
         if (apiResponse.StatusCode.ToString() != "OK")
         {
@@ -93,8 +93,7 @@ public class ReadingController : Controller
     [HttpGet("g/GetHighlightedReply/{commentId}")]
     public async Task<JsonResult> GetHighlightedReply(int commentId)
     {
-        string apikey = HomeController.GetApiKey();
-        string url = "Read/GetHighlightedReply/" + commentId + "?apikey=" + apikey;
+        string url = "Read/GetHighlightedReply/" + commentId;
         var apiResponse = await _httpClient.GetAsync(url);
         if (apiResponse.StatusCode.ToString() != "OK")
         {
@@ -110,8 +109,7 @@ public class ReadingController : Controller
     [HttpGet("g/GetComment/{commentId}")]
     public async Task<JsonResult> GetComment(int commentId)
     {
-        string apikey = HomeController.GetApiKey();
-        string url = "Read/GetComment/" + commentId + "?apikey=" + apikey;
+        string url = "Read/GetComment/" + commentId;
         var apiResponse = await _httpClient.GetAsync(url);
         if (apiResponse.StatusCode.ToString() != "OK")
         {
@@ -133,7 +131,6 @@ public class ReadingController : Controller
         //Create url (filters)
         var url = new UriBuilder(_httpClient.BaseAddress!.AbsoluteUri + "Read/CheckVoteByUser");
         var query = HttpUtility.ParseQueryString(url.Query);
-        query["apikey"] = HomeController.GetApiKey();
         query["AccountId"] = AccountId.ToString();
         query["TargetId"] = TargetId.ToString();
         query["TargetType"] = TargetType.ToString();

@@ -11,16 +11,6 @@ public class HomeController : ControllerBase
 {
     public HomeController()
     {
-    }
-    public static bool GetApiKey(IConfiguration _configuration, string apikey)
-    {
-        if (_configuration.GetSection("Token").Value == apikey)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+
     }
 }

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using OmneFictio.WebApi.Configurations;
 using OmneFictio.WebApi.Entities;
+using SecuringWebApiUsingApiKey.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -24,6 +25,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseMiddleware<ApiKeyMiddleware>();
 
 app.UseHttpsRedirection();
 

@@ -26,9 +26,8 @@ public class ReadingController : ControllerBase
     private readonly OmneFictioContext _db;
     private readonly IMapper _mapper;
     private readonly ILogger<ReadingController> _logger;
-    private readonly IConfiguration _configuration;
 
-    public ReadingController(ILogger<ReadingController> logger, IMapper mapper, OmneFictioContext db, IConfiguration iConfig)
+    public ReadingController(ILogger<ReadingController> logger, IMapper mapper, OmneFictioContext db)
     {
         _logger = logger;
         _mapper = mapper;
@@ -37,17 +36,12 @@ public class ReadingController : ControllerBase
             throw new InvalidOperationException("Mapper not found");
         }
         _db = db;
-        _configuration = iConfig;
     }
     
 
     [HttpGet("GetPost/{postid}")]
-    public async Task<IActionResult> GetPost(string apikey, int postid)
+    public async Task<IActionResult> GetPost(int postid)
     {
-        if(!HomeController.GetApiKey(_configuration, apikey)){
-            return Unauthorized();
-        }
-
         var post = await _mapper.ProjectTo<PostDtoRead_1>(_db.Posts.Where(p =>
             p.isPublished == true &&
             p.deletedStatus!.body == "Default" &&
@@ -62,12 +56,8 @@ public class ReadingController : ControllerBase
 
     [HttpGet("GetPosts")]
     public async Task<IActionResult> GetPosts
-        (string apikey, int page = 1, int ppp = 20)
+        (int page = 1, int ppp = 20)
     {
-        if(!HomeController.GetApiKey(_configuration, apikey)){
-            return Unauthorized();
-        }
-
         //Check filters
         if (page < 1 || ppp < 1)
         {
@@ -97,12 +87,8 @@ public class ReadingController : ControllerBase
     }
 
     [HttpGet("GetComments/{postid}")]
-    public async Task<IActionResult> GetComments(string apikey, int postid)
+    public async Task<IActionResult> GetComments(int postid)
     {
-        if(!HomeController.GetApiKey(_configuration, apikey)){
-            return Unauthorized();
-        }
-
         var comments = await _mapper.ProjectTo<CommentDtoRead_2>(_db.Comments.Where(c =>
             c.targetPostId == postid &&
             c.deletedStatus!.body == "Default")
@@ -116,12 +102,8 @@ public class ReadingController : ControllerBase
     }
 
     [HttpGet("GetHighlightedReply/{commentid}")]
-    public async Task<IActionResult> GetHighlightedReply(string apikey, int commentid)
+    public async Task<IActionResult> GetHighlightedReply(int commentid)
     {
-        if(!HomeController.GetApiKey(_configuration, apikey)){
-            return Unauthorized();
-        }
-
         //Get the comment's replies
         var replies = await _mapper.ProjectTo<ReplyDtoRead_2>(_db.Replies.Where(r =>
             r.commentId == commentid)).ToListAsync();
@@ -138,12 +120,8 @@ public class ReadingController : ControllerBase
     }
 
     [HttpGet("GetComment/{commentid}")]
-    public async Task<IActionResult> GetComment(string apikey, int commentid)
+    public async Task<IActionResult> GetComment(int commentid)
     {
-        if(!HomeController.GetApiKey(_configuration, apikey)){
-            return Unauthorized();
-        }
-
         var comment = await _mapper.ProjectTo<CommentDtoRead_3>(_db.Comments.Where(c =>
         c.id == commentid)).FirstOrDefaultAsync();
         if (comment == null)
@@ -164,12 +142,8 @@ public class ReadingController : ControllerBase
     }
 
     [HttpGet("CheckVoteByUser")]
-    public async Task<IActionResult> CheckVoteByUser(string apikey, int AccountId, int TargetId, string TargetType)
+    public async Task<IActionResult> CheckVoteByUser(int AccountId, int TargetId, string TargetType)
     {
-        if(!HomeController.GetApiKey(_configuration, apikey)){
-            return Unauthorized();
-        }
-
         Vote? vote = new Vote();
         switch (TargetType)
         {
@@ -198,12 +172,8 @@ public class ReadingController : ControllerBase
     }
 
     [HttpGet("CheckRateByUser/{Postid}/{AccountId}")]
-    public async Task<IActionResult> CheckRateByUser(string apikey, int Postid, int AccountId)
+    public async Task<IActionResult> CheckRateByUser(int Postid, int AccountId)
     {
-        if(!HomeController.GetApiKey(_configuration, apikey)){
-            return Unauthorized();
-        }
-
         Rate? rate = await _db.Rates.FirstOrDefaultAsync(r =>
             r.postId == Postid &&
             r.accountId == AccountId);
