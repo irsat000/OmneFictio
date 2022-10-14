@@ -12,6 +12,7 @@ var configuration = builder.Configuration;
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient("of", client => {
     client.BaseAddress = new Uri("https://localhost:7223/");
+    client.DefaultRequestHeaders.Add("ApiKey", configuration.GetSection("ApiKey").Value);
 });
 builder.Services.AddHttpClient("minof", client => {
     client.BaseAddress = new Uri("https://localhost:7022/");

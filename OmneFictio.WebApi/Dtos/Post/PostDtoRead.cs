@@ -20,7 +20,6 @@ public class PostDtoRead_1
     public ICollection<ChapterDtoRead_1>? chapters { get; set; }
     //-----------
     public ICollection<PostGiftDto>? postGifts { get; set; }
-    public ICollection<VoteDto>? votes { get; set; }
     public ICollection<TagDto>? tags { get; set; }
     public ICollection<ExistingStoryDto>? existingStories { get; set; }
 
@@ -29,10 +28,7 @@ public class PostDtoRead_1
     public PostDtoRead_1(ICollection<VoteDto>? votes, ICollection<RateDto>? rates)
     {
         if (votes != null && votes.Count > 0)
-        {
             this.voteResult = votes.Count(l => l.Body) - votes.Count(d => !d.Body);
-            this.votes = votes;
-        }
 
         if (rates != null && rates.Count > 0)
             this.rateResult = rates.Average(r => r.Body);

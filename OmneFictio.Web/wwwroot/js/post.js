@@ -10,8 +10,99 @@ $(document).ready(function () {
     const modalbg1 = document.getElementsByClassName('modalbg1')[0];
     const repliesModal = document.getElementById('modal-replies');
     const chaptersModal = document.getElementById('modal-chapters');
-    CheckRateByUser();
-    fetchComments();
+
+    GetPost();
+    async function GetPost() {
+        await fetch("/g/GetPost/" + postId, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => res.json())
+            .then(async (data) => {
+                if (data.statusCode === 200) {
+                    CheckRateByUser();
+                    fetchComments();
+
+                    const post = JSON.parse(data.value);
+                    const instance = document.getElementById('getpost_instance');
+                    const clone = instance.content.cloneNode(true);
+                    
+                    const checkvotepayload = "TargetId=" + post.id + "&TargetType=post";
+                    //Check if user voted this parent
+                    await window.checkVoted_IconStuff(clone, checkvotepayload);
+                    clone.querySelector('.post-2').setAttribute('data-postid', post.id);
+                    if (post.coverImage !== null) {
+                        clone.querySelector('.p-basecover').setAttribute('src', '/images/covers/' + post.coverImage);
+                        clone.querySelector('.p-upscalecover').setAttribute('src', '/images/covers/' + post.coverImage);
+                        document.getElementById('fsc-img').setAttribute('src', '/images/covers/' + post.coverImage);
+                    } else {
+                        clone.querySelector('.p-cover').remove();
+                    }
+                    clone.querySelector('.p-title').innerText = post.title;
+                    clone.querySelector('.p-date').innerText = window.TimeAgo(post.publishDate);
+                    clone.querySelector('.p-description').innerText = post.postDescription;
+                    if (post.voteResult >= 0) {
+                        clone.querySelector('.vote_count').innerText = post.voteResult;
+                    }
+                    clone.querySelector('.p-rate').innerText = post.rateResult >= 0 && post.rateResult <= 10
+                        ? Number((post.rateResult).toFixed(1)) + "/10"
+                        : "-/10";
+                    
+                    //user
+                    if (post.account.displayName !== null) {
+                        clone.querySelector('.p-username').innerText = post.account.displayName;
+                    } else {
+                        clone.querySelector('.p-username').innerText = post.account.username;
+                    }
+                    clone.querySelector('.p-uimg-cont > img').setAttribute('src', '/images/users/' + post.account.profilePic);
+
+                    clone.querySelectorAll('.pd-items > span')[0].innerText = post.postType.body;
+                    clone.querySelectorAll('.pd-items > span')[1].innerText = post.language.body;
+                    clone.querySelectorAll('.pd-items > span')[2].innerText = post.postStatus.body;
+                    clone.querySelectorAll('.pd-items > span')[3].innerText = post.ratedAs.body;
+
+                    const tagSection = clone.querySelector('.pd-tags');
+                    const basedOnSection = clone.querySelector('.pd-series');
+                    //tag list
+                    if (post.tags.length > 0) {
+                        post.tags.forEach((tagname) =>
+                            tagSection.innerHTML += "<span>" + tagname.body + "</span>"
+                        );
+                    } else {
+                        tagSection.innerHTML = "<span>Empty</span>";
+                    }
+                    //based on list
+                    if (post.existingStories.length > 0) {
+                        post.existingStories.forEach((storyname) =>
+                            basedOnSection.innerHTML += "<span>" + storyname.body + "</span>"
+                        );
+                    } else {
+                        basedOnSection.remove();
+                    }
+
+                    document.getElementById('post-wrap').appendChild(clone);
+
+                    //get chapter list
+                    const chapterlist = document.getElementById('modalchapters-list');
+                    if (post.chapters.length > 0) {
+                        chapterlist.innerHTML = "";
+                        post.chapters.forEach((chapter) =>
+                            chapterlist.innerHTML += 
+                                "<li><a href=''>" + chapter.title + "</a></li>"
+                        );
+                    }
+                }
+            })
+            //.catch(error => { console.log('Fetch failed -> ' + error); });;
+    }
+
+
+
+
+
 
 
     document.getElementById('addCommentToPost').addEventListener('click', function () {
@@ -34,7 +125,6 @@ $(document).ready(function () {
             .then(async (data) => {
                 if (data.statusCode === 200) {
                     const comment = JSON.parse(data.value).returnComment;
-                    console.log(comment);
                     const instance = document.getElementById('comment_instance');
                     const clone = instance.content.cloneNode(true);
 
@@ -61,9 +151,7 @@ $(document).ready(function () {
                     document.getElementById('commentBody').value = "";
                 }
             })
-            .catch(error => {
-                console.log('Fetch failed -> ' + error);
-            });
+            .catch(error => { console.log('Fetch failed -> ' + error); });
     }
 
 

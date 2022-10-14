@@ -5,6 +5,10 @@ main {
   flex-direction: column;
 }
 
+.post-wrap {
+  min-height: 200px;
+}
+
 .post-2 {
   width: 100%;
   padding-top: 16px;

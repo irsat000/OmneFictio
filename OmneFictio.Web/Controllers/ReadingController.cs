@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using OmneFictio.Web.Models;
-using OmneFictio.Web.CommentReadModel;
-using OmneFictio.Web.CommentReadModel2;
 using System.Text.Json;
-using OmneFictio.Web.PostReadModel;
 using System.Web;
 
 namespace OmneFictio.Web.Controllers;
@@ -12,35 +9,27 @@ public class ReadingController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly HttpClient _httpClient;
-    private readonly IConfiguration _configuration;
 
-    public ReadingController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory, IConfiguration iConfig)
+    public ReadingController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory)
     {
         _logger = logger;
         _httpClient = httpClientFactory.CreateClient("of");
-        _configuration = iConfig;
-
-        _httpClient.DefaultRequestHeaders.Add("ApiKey", _configuration.GetSection("ApiKey").Value);
     }
 
-    [HttpGet("p/{postid}")]
-    public async Task<IActionResult> Post(string postid)
+
+    [HttpGet("g/GetPost/{postid}")]
+    public async Task<IActionResult> GetPost(string postid)
     {
-        var apiResponse = await _httpClient
-            .GetAsync("Read/GetPost/" + postid);
+        string url = "Read/GetPost/" + postid;
+        var apiResponse = await _httpClient.GetAsync(url);
         if (apiResponse.StatusCode.ToString() != "OK")
         {
-            return RedirectToAction("Index", "Home");
+            return new JsonResult(NotFound());
         }
-
-        PostRead1? post = JsonSerializer.Deserialize<PostRead1>
-            (await apiResponse.Content.ReadAsStringAsync());
-        if (post != null)
-            return View(new GetpostViewmodel(post));
-        else
-            return RedirectToAction("Index", "Home");
+        //return
+        string content = await apiResponse.Content.ReadAsStringAsync();
+        return new JsonResult(Ok(content));
     }
-
 
     //fetch api - get posts
     [HttpGet("g/GetPosts")]

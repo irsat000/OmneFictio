@@ -30,6 +30,12 @@ public class HomeController : Controller
         return View();
     }
 
+    [HttpGet("p/{postid}")]
+    public IActionResult Post(int postid)
+    {
+        return View(new GetpostViewmodel(postid));
+    }
+
     [HttpGet("Register")]
     public IActionResult Register()
     {

@@ -40,8 +40,7 @@ $(document).ready(function () {
                         clone.querySelector('.p-rate').innerText = post.rateResult >= 0 && post.rateResult <= 10
                             ? Number((post.rateResult).toFixed(1)) + "/10"
                             : "-/10";
-                        clone.querySelector('.p-user > img').setAttribute('src', '/images/users/' + post.account.profilePic);
-
+                        
                         clone.querySelector('.pd-type > .pd-value').innerText = post.postType.body;
                         clone.querySelector('.pd-poststatus > .pd-value').innerText = post.postStatus.body;
                         clone.querySelector('.pd-ratedas > .pd-value').innerText = post.ratedAs.body;
@@ -50,7 +49,7 @@ $(document).ready(function () {
                         const tagSection = clone.querySelector('.pd-tags');
                         const basedOnSection = clone.querySelector('.pd-series');
                         //tag list
-                        if (post.tags.Length > 0) {
+                        if (post.tags.length > 0) {
                             post.tags.forEach((tagname) =>
                                 tagSection.innerHTML += "<span>" + tagname.body + "</span>"
                             );
@@ -58,19 +57,20 @@ $(document).ready(function () {
                             tagSection.innerHTML = "<span>Empty</span>";
                         }
                         //based on list
-                        if (post.existingStories.Length > 0) {
+                        if (post.existingStories.length > 0) {
                             post.existingStories.forEach((storyname) =>
                                 basedOnSection.innerHTML += "<span>" + storyname.body + "</span>"
                             );
                         } else {
                             basedOnSection.remove();
                         }
-                        //username
+                        //user
                         if (post.account.displayName !== null) {
                             clone.querySelector('.p-username').innerText = post.account.displayName;
                         } else {
                             clone.querySelector('.p-username').innerText = post.account.username;
                         }
+                        clone.querySelector('.p-user > img').setAttribute('src', '/images/users/' + post.account.profilePic);
                         postListSection.appendChild(clone);
                     };
                     //PAGINATION
