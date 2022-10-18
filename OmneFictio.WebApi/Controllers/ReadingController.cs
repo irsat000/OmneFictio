@@ -44,6 +44,7 @@ public class ReadingController : ControllerBase
         var chapter = await _mapper.ProjectTo<ChapterDtoRead_2>(_db.Chapters.Where(c =>
             c.postId == postid &&
             c.chapterIndex == chapterindex &&
+            c.isPublished == true &&
             c.deletedStatus!.body == "Default")).FirstOrDefaultAsync();
 
         if (chapter == null)
@@ -60,10 +61,12 @@ public class ReadingController : ControllerBase
             p.isPublished == true &&
             p.deletedStatus!.body == "Default" &&
             p.id == postid)).FirstOrDefaultAsync();
-
         if (post == null)
         {
             return NotFound();
+        }
+        if(post.chapters != null && post.chapters.Count() > 0){
+            post.chapters = post.chapters.Where(c => c.IsPublished == true).ToList();
         }
         return Ok(post);
     }

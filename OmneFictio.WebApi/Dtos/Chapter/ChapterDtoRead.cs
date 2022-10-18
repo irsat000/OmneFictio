@@ -13,8 +13,8 @@ public class ChapterDtoRead_2
     public int id { get; set; }
     public string? title { get; set; }
     public int? chapterIndex { get; set; }
-    public bool? isPublished { get; set; }
     public string? authorNotePrior { get; set; }
     public string? authorNoteLater { get; set; }
     public string? body { get; set; }
+    public PostDtoRead_2? post { get; set; }
 }

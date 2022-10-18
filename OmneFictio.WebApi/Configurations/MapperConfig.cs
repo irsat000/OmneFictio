@@ -13,6 +13,7 @@ public class MapperConfig : Profile{
         CreateMap<AccountDtoWrite_1, Account>().ReverseMap();
 
         CreateMap<PostDtoRead_1, Post>().ReverseMap();
+        CreateMap<PostDtoRead_2, Post>().ReverseMap();
         CreateMap<PostDtoWrite_1, Post>().ReverseMap();
 
         CreateMap<ChapterDtoRead_1, Chapter>().ReverseMap();

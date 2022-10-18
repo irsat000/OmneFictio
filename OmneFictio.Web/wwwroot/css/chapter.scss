@@ -1,22 +1,22 @@
 
 
 
-.chapter-container{
+main{
     width: 100%;
-    padding: 14px;
+    padding: 10px;
     border-radius: 16px;
     color: var(--text-color1);
     background-color: var(--background-color1);
 }
 
-.c-header{
+.ch-header{
     display: flex;
     flex-direction: column;
     justify-content: space-between;
     gap: 18px;
     font-family: 'Josefin Sans', sans-serif;
     margin: 10px 0 22px;
-    .c-options{
+    .ch-options{
         display: flex;
         justify-content: space-between;
         a, span{
@@ -25,32 +25,52 @@
             cursor: pointer;
         }
     }
-    .c-navigation{
+    .ch-navigation{
         display: flex;
         justify-content: space-between;
         font-family: 'Itim', cursive;
         select{
             color: var(--text-color1);
             background: var(--background-color2);
-            padding: 4px;
+            padding: 4px 8px;
             border-radius: 5px;
             font-size: 1.1rem;
             cursor: pointer;
+            transition: background-color 0.1s;
+            &:hover{
+                background-color: var(--background-color-hover2);
+            }
         }
-        .c-navigationicons{
+        .ch-navigationicons{
             display: flex;
             gap: 10px;
             a{
                 font-size: 1.2rem;
-                padding: 2px 6px;
                 border-radius: 5px;
-                background: var(--background-color2);
+                background-color: var(--background-color2);
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                width: 34px;
+                transition: background-color 0.1s;
+                i{
+                    display: flex;
+                }
+                &:hover{
+                    background-color: var(--background-color-hover2);
+                }
+            }
+            .ch-prevlink{
+                padding-right: 2px;
+            }
+            .ch-nextlink{
+                padding-left: 2px;
             }
         }
     }
 }
 
-.c-author_note{
+.ch-author_note{
     display: flex;
     flex-direction: column; 
     margin-bottom: 26px;
@@ -64,7 +84,7 @@
     }
 }
 
-.c-caption{
+.ch-caption{
     display: flex;
     flex-direction: column;
     gap: 6px;
@@ -78,7 +98,7 @@
     }
 }
 
-.c-end{
+.ch-end{
     text-align: center;
     margin-bottom: 20px;
     span{
@@ -86,25 +106,61 @@
     }
 }
 
-.c-evaluation{
+.ch-footer{
+    font-family: 'Itim', cursive;
     display: flex;
-    flex-direction: row;
-    justify-content: center;
-    align-items: center;
-    color: var(--text-color2);
+    flex-flow: wrap;
+    padding: 0 10px 10px;
     margin-bottom: 20px;
-    i{
-        font-size: 1.4rem;
-        cursor: pointer;
-        transition: color 0.2s ease;
+    justify-content: center;
+    gap: 10px;
+    
+    .ch-evaluation{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        color: var(--text-color2);
+        i{
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: color 0.2s ease;
+        }
+        .ch-likes{
+            padding: 0 8px;
+        }
     }
-    .c-likes{
-        font-size: 1.2rem;
-        padding: 0 8px;
+    .ch-user{
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-start;
+        align-items: center;
+        flex-shrink: 0;
+        .ch-username{
+            font-size: 0.8rem;
+            cursor: pointer;
+            margin-left: 8px;
+            padding-right: 8px;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+            overflow: hidden;
+            max-width: 180px;
+            &:hover{
+                text-decoration: underline;
+            }
+        }
+        img{
+            height: 1.7rem;
+            width: 1.7rem;
+            border-radius: 50%;
+            cursor: pointer;
+        }
     }
 }
 
-.c-body{
+
+
+.ch-body{
     margin-bottom: 16px;
     p{
         margin-bottom: 12px;
@@ -130,10 +186,11 @@
 
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) {
-    .chapter-container{
+    main{
+        padding: 14px 20px;
         margin-top: 14px;
     }
-    .c-header{
+    .ch-header{
         flex-direction: row;
         > *{
            gap: 40px;

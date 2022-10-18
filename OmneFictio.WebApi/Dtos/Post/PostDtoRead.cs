@@ -35,3 +35,11 @@ public class PostDtoRead_1
 
     }
 }
+
+
+public class PostDtoRead_2
+{
+    public string title { get; set; } = null!;
+    public AccountDtoRead_1? account { get; set; }
+    public ICollection<ChapterDtoRead_1>? chapters { get; set; }
+}
