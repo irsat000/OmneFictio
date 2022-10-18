@@ -26,6 +26,11 @@ a:hover {
   color: unset;
 }
 
+select {
+  outline: none;
+  border: none;
+}
+
 .modalbg1 {
   display: none;
   width: 100%;
@@ -42,6 +47,10 @@ a:hover {
   position: fixed;
   background-color: rgba(0, 0, 0, 0.3764705882);
   z-index: 506;
+}
+
+.modal-replies {
+  display: none;
 }
 
 .likebtn:hover {

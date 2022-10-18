@@ -24,6 +24,10 @@ a{
         color: unset;
     }
 }
+select{
+    outline: none;
+    border: none;
+}
 
 //Background clickable shadows
 .modalbg1{
@@ -42,6 +46,9 @@ a{
     position: fixed;
     background-color: #00000060;
     z-index: 506;
+}
+.modal-replies {
+    display: none;
 }
 
 .likebtn:hover{

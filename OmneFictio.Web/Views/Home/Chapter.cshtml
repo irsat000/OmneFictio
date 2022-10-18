@@ -1,6 +1,7 @@
 @{
     ViewData["Title"] = "Chapter";
     @section Stylesheets {
+    <link rel="stylesheet" href="~/css/comment_section.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/chapter.css" asp-append-version="true" />
     }
     @section Scripts {
@@ -36,19 +37,23 @@
                 <option>Chapter 5</option>
                 <option>Epilogue</option>
             </select>
-            <a href="" class="c-prevlink"><i class="bi bi-chevron-left"></i></a>
-            <a href="" class="c-nextlink"><i class="bi bi-chevron-right"></i></a>
+            <div class="c-navigationicons">
+                <a href="" class="c-prevlink"><i class="bi bi-chevron-left"></i></a>
+                <a href="" class="c-nextlink"><i class="bi bi-chevron-right"></i></a>
+            </div>
         </div>
     </div>
 
-    <div class="c-author_note">
+    <div class="c-author_note cnote_1">
         <span class="note_caption">Writer note</span>
-        <p>I hope you enjoy this one.</p>
+        <div class="authornote_body">
+            <p>I hope you enjoy this one.</p>
+        </div>
     </div>
 
     <div class="c-caption">
-        <h2>Odin the Omnipotent</h2>
-        <h4>Chapter 3</h4>
+        <h3>Odin the Omnipotent</h3>
+        <h5>Chapter 3</h5>
     </div>
 
     <div class="c-body">
@@ -71,9 +76,11 @@
         <span>~ End of the Chapter ~</span>
     </div>
 
-    <div class="c-author_note">
+    <div class="c-author_note cnote_2">
         <span class="note_caption">Writer note</span>
-        <p>Please don't forget to feedback.</p>
+        <div class="authornote_body">
+            <p>Please don't forget to feedback.</p>
+        </div>
     </div>
 
     <div class="c-evaluation">

@@ -1,1 +1,121 @@
-/*# sourceMappingURL=chapter.css.map */
+.chapter-container {
+  width: 100%;
+  padding: 14px;
+  border-radius: 16px;
+  color: var(--text-color1);
+  background-color: var(--background-color1);
+}
+
+.c-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+  font-family: "Josefin Sans", sans-serif;
+  margin: 10px 0 22px;
+}
+.c-header .c-options {
+  display: flex;
+  justify-content: space-between;
+}
+.c-header .c-options a, .c-header .c-options span {
+  font-size: 1.2rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.c-header .c-navigation {
+  display: flex;
+  justify-content: space-between;
+  font-family: "Itim", cursive;
+}
+.c-header .c-navigation select {
+  color: var(--text-color1);
+  background: var(--background-color2);
+  padding: 4px;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  cursor: pointer;
+}
+.c-header .c-navigation .c-navigationicons {
+  display: flex;
+  gap: 10px;
+}
+.c-header .c-navigation .c-navigationicons a {
+  font-size: 1.2rem;
+  padding: 2px 6px;
+  border-radius: 5px;
+  background: var(--background-color2);
+}
+
+.c-author_note {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 26px;
+}
+.c-author_note .note_caption {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 1.2rem;
+}
+.c-author_note .authornote_body {
+  font-family: sans-serif;
+  padding: 0 10px;
+}
+
+.c-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+.c-caption h3 {
+  font-family: "Josefin Sans", sans-serif;
+}
+.c-caption h5 {
+  font-family: "Itim", cursive;
+}
+
+.c-end {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.c-end span {
+  font-family: "Itim", cursive;
+}
+
+.c-evaluation {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
+  color: var(--text-color2);
+  margin-bottom: 20px;
+}
+.c-evaluation i {
+  font-size: 1.4rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.c-evaluation .c-likes {
+  font-size: 1.2rem;
+  padding: 0 8px;
+}
+
+.c-body {
+  margin-bottom: 16px;
+}
+.c-body p {
+  margin-bottom: 12px;
+}
+
+@media (min-width: 768px) {
+  .chapter-container {
+    margin-top: 14px;
+  }
+  .c-header {
+    flex-direction: row;
+  }
+  .c-header > * {
+    gap: 40px;
+  }
+}/*# sourceMappingURL=chapter.css.map */

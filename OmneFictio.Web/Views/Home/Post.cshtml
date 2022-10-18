@@ -1,18 +1,18 @@
-
 @model GetpostViewmodel
 @{
     ViewData["Title"] = "Post";
     @section Stylesheets {
-        <link rel="stylesheet" href="~/css/post.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/comment_section.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/post.css" asp-append-version="true" />
     }
     @section Scripts {
-        <script src="~/js/post.js" asp-append-version="true" ></script>
+    <script src="~/js/post.js" asp-append-version="true"></script>
     }
 }
 @{
     string userId = "-1";
     string username = "";
-    string userPicture = "none"; 
+    string userPicture = "none";
 
     userId = User.Claims.FirstOrDefault(claim => claim.Type == "nameid")?.Value ?? "-1";
     username = User.Claims.FirstOrDefault(claim => claim.Type == "unique_name")?.Value ?? "";
@@ -25,7 +25,7 @@
         <div class="post-card">
             <div class="p-body">
                 <div class="p-cover">
-                    <img src="/images/covers/" class="p-basecover" 
+                    <img src="/images/covers/" class="p-basecover"
                         onerror="this.onerror=null; this.closest('.p-cover').remove()">
                     <div class="p-upscalecover-cont" id="p-upscalecover">
                         <img src="/images/covers/" class="p-upscalecover">
@@ -35,14 +35,14 @@
                 <div class="p-text">
                     <div class="p-title-cont">
                         <span class="p-title">
-                            
+
                         </span>
                         <span class="p-date">
-                            
+
                         </span>
                     </div>
                     <span class="p-description">
-                        
+
                     </span>
                 </div>
             </div>
@@ -53,21 +53,22 @@
                         <span class="p-likes vote_count">--</span>
                         <i class="" data-action="dislike" data-target_type="post"></i>
                         <span class="p-rate">
-                            
+
                         </span>
                     </div>
                     <div class="p-user">
                         <span class="p-username">
-                            
+
                         </span>
                         <div class="p-uimg-cont">
-                            <img src="/images/users/" onerror="this.onerror=null; this.src='/images/onerror/user_no_photo_300x300.png'">
+                            <img src="/images/users/"
+                                onerror="this.onerror=null; this.src='/images/onerror/user_no_photo_300x300.png'">
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-        
+
         <div class="post-more">
             <div class="p-actions">
                 <button type="button" class="pd-saved">Save</button>
@@ -104,17 +105,6 @@
     </div>
 </div>
 
-<div class="modal-replies" id="modal-replies">
-    <div class="mr-header">
-        <span>Replies</span>
-        <div class="mr-close" id="mr-close">
-            <i class="bi bi-x-lg"></i>
-        </div>
-    </div>
-    <div class="mr-body">
-        
-    </div>
-</div>
 
 <div class="fullsize-cover-cont" id="fullsize-cover">
     <div class="fsc-wrap" id="fsc-wrap">
@@ -160,12 +150,14 @@
     <span id="rate_by_user">--/10</span>
 </div>
 
-@if(userId != "-1"){ ///images/users/
+@if (userId != "-1")
+{ ///images/users/
     <div class="add_comment-cont">
         <textarea placeholder="This is where we comment." id="commentBody"></textarea>
         <div class="ac-footer">
             <div class="ac-user">
-                <img src="/images/users/@userPicture" onerror="this.onerror=null; this.src='/images/onerror/user_no_photo_300x300.png'">
+                <img src="/images/users/@userPicture"
+                onerror="this.onerror=null; this.src='/images/onerror/user_no_photo_300x300.png'">
                 <span class="ac-username">@username</span>
             </div>
             <a href="#" class="comment-btn" id="addCommentToPost">Send</a>
@@ -174,5 +166,5 @@
 }
 
 <div class="comments" id="comment-section">
-    
+
 </div>
