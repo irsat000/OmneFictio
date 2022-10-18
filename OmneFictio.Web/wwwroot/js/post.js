@@ -93,7 +93,7 @@ $(document).ready(function () {
                         chapterlist.innerHTML = "";
                         post.chapters.forEach((chapter) =>
                             chapterlist.innerHTML +=
-                            "<li><a href=''>" + chapter.title + "</a></li>"
+                            "<li><a href='/p/" + post.id + "/" + chapter.chapterIndex + "'>" + chapter.title + "</a></li>"
                         );
                     }
                 }

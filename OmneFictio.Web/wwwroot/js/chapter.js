@@ -5,8 +5,8 @@ $(document).ready(function () {
 });
 
 async function fetchChapter() {
-    var postid = 12;
-    var index = 1;
+    let postid = parseInt(window.getSlashQuery(2), 10);
+    let index = parseInt(window.getSlashQuery(3), 10);
     await fetch("/g/GetChapter/" + postid + "/" + index, {
         method: 'GET',
         headers: {

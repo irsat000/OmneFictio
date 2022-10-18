@@ -637,3 +637,13 @@ function TimeAgo(time) {
         return "Just now";
     }
 }
+
+function getSlashQuery(index) {
+    const pathname = window.location.pathname;
+    const slashindex = pathname.split('/', index).join('/').length;
+    let getval = pathname.substring(pathname.indexOf('/') + slashindex + 1);
+    if (getval.includes("/")) {
+        getval = getval.substring(0, getval.indexOf('/'));
+    }
+    return getval;
+}
