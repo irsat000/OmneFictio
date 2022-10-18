@@ -8,6 +8,7 @@ namespace OmneFictio.WebApi.Entities
         public DeletedStatus()
         {
             Accounts = new HashSet<Account>();
+            Chapters = new HashSet<Chapter>();
             Comments = new HashSet<Comment>();
             Posts = new HashSet<Post>();
             Replies = new HashSet<Reply>();
@@ -18,6 +19,7 @@ namespace OmneFictio.WebApi.Entities
         public string body { get; set; } = null!;
 
         public virtual ICollection<Account> Accounts { get; set; }
+        public virtual ICollection<Chapter> Chapters { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
         public virtual ICollection<Reply> Replies { get; set; }

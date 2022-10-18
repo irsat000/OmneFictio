@@ -10,10 +10,8 @@ $(document).ready(function () {
         closeChaptersModal();
     }
 
-
     const postId = document.getElementById('postid').value;
     const commentSection = document.getElementById('comment-section');
-    const modalbg1 = document.getElementsByClassName('modalbg1')[0];
 
     GetPost();
     async function GetPost() {

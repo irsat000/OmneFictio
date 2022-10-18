@@ -43,7 +43,8 @@ public class ReadingController : ControllerBase
     {
         var chapter = await _mapper.ProjectTo<ChapterDtoRead_2>(_db.Chapters.Where(c =>
             c.postId == postid &&
-            c.chapterIndex == chapterindex)).FirstOrDefaultAsync();
+            c.chapterIndex == chapterindex &&
+            c.deletedStatus!.body == "Default")).FirstOrDefaultAsync();
 
         if (chapter == null)
         {

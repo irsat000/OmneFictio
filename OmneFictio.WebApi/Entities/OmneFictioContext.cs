@@ -32,7 +32,7 @@ namespace OmneFictio.WebApi.Entities
         public virtual DbSet<PostStatus> PostStatuses { get; set; } = null!;
         public virtual DbSet<PostType> PostTypes { get; set; } = null!;
         public virtual DbSet<Rate> Rates { get; set; } = null!;
-        public virtual DbSet<RatedAs> RatedAs { get; set; } = null!;
+        public virtual DbSet<RatedA> RatedAs { get; set; } = null!;
         public virtual DbSet<Reply> Replies { get; set; } = null!;
         public virtual DbSet<Request> Requests { get; set; } = null!;
         public virtual DbSet<Tag> Tags { get; set; } = null!;
@@ -169,6 +169,8 @@ namespace OmneFictio.WebApi.Entities
 
                 entity.Property(e => e.body).IsUnicode(false);
 
+                entity.Property(e => e.deletedStatusId).HasDefaultValueSql("((1))");
+
                 entity.Property(e => e.isPublished).HasDefaultValueSql("((0))");
 
                 entity.Property(e => e.publishDate).HasColumnType("smalldatetime");
@@ -178,6 +180,12 @@ namespace OmneFictio.WebApi.Entities
                     .IsUnicode(false);
 
                 entity.Property(e => e.updateDate).HasColumnType("smalldatetime");
+
+                entity.HasOne(d => d.deletedStatus)
+                    .WithMany(p => p.Chapters)
+                    .HasForeignKey(d => d.deletedStatusId)
+                    .OnDelete(DeleteBehavior.SetNull)
+                    .HasConstraintName("FK_ChapterDeletedstatus");
 
                 entity.HasOne(d => d.post)
                     .WithMany(p => p.Chapters)
@@ -454,7 +462,7 @@ namespace OmneFictio.WebApi.Entities
                     .HasConstraintName("FK_RatePost");
             });
 
-            modelBuilder.Entity<RatedAs>(entity =>
+            modelBuilder.Entity<RatedA>(entity =>
             {
                 entity.Property(e => e.id).ValueGeneratedNever();
 

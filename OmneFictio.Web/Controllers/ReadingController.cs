@@ -16,6 +16,18 @@ public class ReadingController : Controller
         _httpClient = httpClientFactory.CreateClient("of");
     }
 
+    [HttpGet("g/GetChapter/{postid}/{chapterindex}")]
+    public async Task<IActionResult> GetChapter(int postid, int chapterindex)
+    {
+        string url = $"Read/GetChapter/{postid}/{chapterindex}";
+        var apiResponse = await _httpClient.GetAsync(url);
+        if(apiResponse.StatusCode.ToString() != "OK"){
+            return new JsonResult(NotFound());
+        }
+        //return
+        string content = await apiResponse.Content.ReadAsStringAsync();
+        return new JsonResult(Ok(content));
+    }
 
     [HttpGet("g/GetPost/{postid}")]
     public async Task<IActionResult> GetPost(string postid)

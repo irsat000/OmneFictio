@@ -21,7 +21,9 @@ namespace OmneFictio.WebApi.Entities
         public bool? isPublished { get; set; }
         public string? authorNotePrior { get; set; }
         public string? authorNoteLater { get; set; }
+        public byte? deletedStatusId { get; set; }
 
+        public virtual DeletedStatus? deletedStatus { get; set; }
         public virtual Post? post { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<Vote> Votes { get; set; }

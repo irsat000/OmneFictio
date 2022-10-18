@@ -62,6 +62,7 @@ $(document).ready(function () {
                                 basedOnSection.innerHTML += "<span>" + storyname.body + "</span>"
                             );
                         } else {
+                            clone.querySelector('.pd-series-heading').remove();
                             basedOnSection.remove();
                         }
                         //user
