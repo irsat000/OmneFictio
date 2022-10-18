@@ -64,10 +64,10 @@ public class ReadingController : Controller
 
 
     //fetch api - get post's comments
-    [HttpGet("g/GetComments/{postid}")]
-    public async Task<JsonResult> GetComments(int postid)
+    [HttpGet("g/GetComments/{type}/{parentid}")]
+    public async Task<JsonResult> GetComments(string type, int parentid)
     {
-        string url = "Read/GetComments/" + postid;
+        string url = "Read/GetComments/" + type + "/" + parentid;
         var apiResponse = await _httpClient.GetAsync(url);
         if (apiResponse.StatusCode.ToString() != "OK")
         {
@@ -114,7 +114,8 @@ public class ReadingController : Controller
     {
         //check account
         int? AccountId = UserController.checkUserLogin(HttpContext);
-        if(AccountId == null){
+        if (AccountId == null)
+        {
             return new JsonResult(Unauthorized());
         }
         //Create url (filters)
@@ -141,7 +142,8 @@ public class ReadingController : Controller
     {
         //check account
         int? AccountId = UserController.checkUserLogin(HttpContext);
-        if(AccountId == null){
+        if (AccountId == null)
+        {
             return new JsonResult(Unauthorized());
         }
         string url = $"Read/CheckRateByUser/{postid}/{AccountId}";

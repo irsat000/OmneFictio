@@ -9,6 +9,23 @@ $(document).ready(function () {
     document.querySelector('.modalbg1').addEventListener("click", function () {
         modalbg1_click();
     });
+    //close modals, dropdowns, drawer etc when user click on the dark background
+    modalbg1_click = function () {
+        const modalbg1 = document.querySelector('.modalbg1');
+        const drawer = document.getElementById('drawer');
+        const loginModal = document.getElementById('login-modal');
+
+        if (drawer !== null && drawer.classList.contains('drawer-active')) {
+            drawer.classList.remove('drawer-active');
+            modalbg1.classList.remove('d-block');
+        }
+        if (loginModal !== null && loginModal.classList.contains('d-flex')) {
+            loginModal.classList.remove('d-flex');
+            modalbg1.classList.remove('d-block');
+        }
+
+        window.closeRepliesModal();
+    }
 
     /* 
     $('.modalbg1').click( () => {
@@ -112,6 +129,19 @@ $(document).ready(function () {
     });
 
 
+    //Open close replies modal
+    document.addEventListener('click', function (e) {
+        if (e.target.classList.contains('get_replies') ||
+            (e.target.parentElement != null &&
+                e.target.parentElement.classList.contains('get_replies'))) {
+            window.openRepliesModal(e.target);
+        }
+        else if (e.target.classList.contains('mr-close') ||
+            (e.target.parentElement != null &&
+                e.target.parentElement.classList.contains('mr-close'))) {
+            window.closeRepliesModal();
+        }
+    });
 
 
 
@@ -200,6 +230,189 @@ $(document).ready(function () {
 
 
 });
+
+//--------COMMENT SECTION-------
+function openRepliesModal(element) {
+    const modalbg1 = document.querySelector('.modalbg1');
+    const repliesModal = document.getElementById('modal-replies');
+    if (document.getElementById('comment_instance') == null) {
+        return;
+    }
+    var commentId = element.closest('.comment')
+        .getAttribute('data-commentid');
+    if (!repliesModal.classList.contains('d-flex')) {
+        repliesModal.classList.add('d-flex');
+        modalbg1.classList.add('d-block');
+        const replySection = document.querySelector('#modal-replies > .mr-body');
+        replySection.innerHTML = "";
+        fetchReplies(commentId, replySection);
+    }
+}
+function closeRepliesModal() {
+    const modalbg1 = document.querySelector('.modalbg1');
+    const repliesModal = document.getElementById('modal-replies');
+    if (repliesModal.classList.contains('d-flex')) {
+        repliesModal.classList.remove('d-flex');
+        modalbg1.classList.remove('d-block');
+        if (frController) {
+            frController.abort();
+        }
+    }
+}
+
+async function fetchComments(type, parentid, section) {
+    await fetch("/g/GetComments/" + type + "/" + parentid, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    })
+        .then((res) => res.json())
+        .then(async (data) => {
+            if (data.statusCode === 200) {
+                if (document.getElementById('comment_instance') == null) {
+                    return;
+                }
+                const instance = document.getElementById('comment_instance');
+                for (const comment of JSON.parse(data.value)) {
+                    const clone = instance.content.cloneNode(true);
+                    const checkvotepayload = "TargetId=" + comment.id + "&TargetType=comment";
+                    //Check if user voted this parent
+                    await window.checkVoted_IconStuff(clone, checkvotepayload);
+
+                    clone.querySelector('.comment').setAttribute('data-commentid', comment.id);
+                    if (comment.account.displayName != null) {
+                        clone.querySelector('.c-username').textContent = comment.account.displayName;
+                    } else {
+                        clone.querySelector('.c-username').textContent = comment.account.username;
+                    }
+                    clone.querySelector('.c-date').textContent = window.TimeAgo(comment.publishDate);
+                    clone.querySelector('.c-text > span').textContent = comment.body;
+                    if (comment.voteResult >= 0) {
+                        clone.querySelector('.c-likes').textContent = comment.voteResult;
+                    }
+                    var repliesLengthText = " replies";
+                    if (comment.repliesLength < 2) {
+                        repliesLengthText = " reply";
+                    }
+                    clone.querySelector('.get_replies > span').textContent = comment.repliesLength + repliesLengthText;
+                    const hreply = await fetchHighlightedReply(comment.id);
+                    if (hreply) {
+                        //Check if user voted this parent
+                        const checkvotepayload_reply = "TargetId=" + hreply.id + "&TargetType=reply";
+                        await window.checkVoted_IconStuff(clone.querySelector('.reply'), checkvotepayload_reply);
+
+                        clone.querySelector('.reply').setAttribute('data-replyid', hreply.id);
+                        clone.querySelector('.r-text > span').textContent = hreply.body;
+                        if (hreply.voteResult >= 0) {
+                            clone.querySelector('.r-likes').textContent = hreply.voteResult;
+                        }
+                        if (hreply.account.displayName != null) {
+                            clone.querySelector('.r-username').textContent = hreply.account.displayName;
+                        } else {
+                            clone.querySelector('.r-username').textContent = hreply.account.username;
+                        }
+                    }
+                    else {
+                        clone.querySelector('.reply').remove();
+                    }
+                    section.appendChild(clone);
+                };
+            }
+        })
+        .catch(error => {
+            console.log('Fetch failed -> ' + error);
+        });
+}
+function fetchHighlightedReply(commentId) {
+    return new Promise((resolve, reject) => {
+        fetch("/g/GetHighlightedReply/" + commentId, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                resolve(data.statusCode === 200 ? JSON.parse(data.value) : null);
+            })
+            .catch(error => {
+                console.log("Fetch failed -> " + error);
+            });
+    })
+}
+
+let frController = null;
+async function fetchReplies(commentId, section) {
+    //cancel pending request if there is one
+    if (frController) {
+        frController.abort();
+    }
+    //new controller for new request
+    frController = new AbortController();
+    const frSignal = frController.signal;
+    await fetch("/g/GetComment/" + commentId, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        signal: frSignal
+    })
+        .then((res) => res.json())
+        .then(async (data) => {
+            if (data.statusCode === 200) {
+                const comm = JSON.parse(data.value);
+                const commentInstance = document.getElementById('modalReplies-comment');
+                const commentClone = commentInstance.content.cloneNode(true);
+                //Check if user voted this parent
+                const checkvotepayload = "TargetId=" + comm.id + "&TargetType=comment";
+                await window.checkVoted_IconStuff(commentClone, checkvotepayload);
+
+                commentClone.querySelector('.mr-comment').setAttribute('data-commentid', comm.id);
+                if (comm.account.displayName != null) {
+                    commentClone.querySelector('.mrc-username').textContent = comm.account.displayName;
+                } else {
+                    commentClone.querySelector('.mrc-username').textContent = comm.account.username;
+                }
+                commentClone.querySelector('.mrc-date').textContent = window.TimeAgo(comm.publishDate);
+                commentClone.querySelector('.mrc-text > span').textContent = comm.body;
+                if (comm.voteResult >= 0) {
+                    commentClone.querySelector('.mrc-likes').textContent = comm.voteResult;
+                }
+                section.appendChild(commentClone);
+                //if it has replies
+                if (comm.replies.length > 0) {
+                    const replyInstance = document.getElementById('modalReplies-reply');
+                    for (const reply of comm.replies) {
+                        const replyClone = replyInstance.content.cloneNode(true);
+                        //Check if user voted this parent
+                        const checkvotepayload_reply = "TargetId=" + reply.id + "&TargetType=reply";
+                        await window.checkVoted_IconStuff(replyClone, checkvotepayload_reply);
+
+                        replyClone.querySelector('.mr-reply').setAttribute('data-replyid', reply.id);
+                        if (reply.account.displayName != null) {
+                            replyClone.querySelector('.mrr-username').textContent = reply.account.displayName;
+                        } else {
+                            replyClone.querySelector('.mrr-username').textContent = reply.account.username;
+                        }
+                        replyClone.querySelector('.mrr-date').textContent = window.TimeAgo(reply.publishDate);
+                        replyClone.querySelector('.mrr-text > span').textContent = reply.body;
+                        if (reply.voteResult >= 0) {
+                            replyClone.querySelector('.mrr-likes').textContent = reply.voteResult;
+                        }
+                        section.appendChild(replyClone);
+                    };
+                }
+            }
+        })
+        .catch(error => console.log('Fetching reply method is at fault', error));
+}
+//--------COMMENT SECTION ENDS-------
+
+
 
 
 async function VoteRequest(btn, data) {
@@ -301,6 +514,42 @@ function voting_visual(btn, action) {
     }
 }
 
+async function checkVoted_IconStuff(clone, checkvotepayload) {
+    await fetch("/g/CheckVoteByUser?" + checkvotepayload, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            const likebtn = clone.querySelector('[data-action="like"]');
+            const dislikebtn = clone.querySelector('[data-action="dislike"]');
+            likebtn.className = "";
+            dislikebtn.className = "";
+            if (data.statusCode === 200) {
+                switch (data.value) {
+                    case "true":
+                        likebtn.classList.add('likebtn', 'bi', 'bi-hand-thumbs-up-fill', 'active');
+                        dislikebtn.classList.add('dislikebtn', 'bi', 'bi-hand-thumbs-down');
+                        break;
+                    case "false":
+                        likebtn.classList.add('likebtn', 'bi', 'bi-hand-thumbs-up');
+                        dislikebtn.classList.add('dislikebtn', 'bi', 'bi-hand-thumbs-down-fill', 'active');
+                        break;
+                }
+            }
+            else {
+                likebtn.classList.add('likebtn', 'bi', 'bi-hand-thumbs-up');
+                dislikebtn.classList.add('dislikebtn', 'bi', 'bi-hand-thumbs-down');
+            }
+        })
+        .catch(error => {
+            console.log('vote check failed -> ' + error);
+        });
+}
+
 //google auth
 async function googleHandleCredentialResponse(response) {
     await fetch("/Auth/GoogleSignin", {
@@ -333,21 +582,6 @@ function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-//close modals, dropdowns, drawer etc
-modalbg1_click = function () {
-    const modalbg1 = document.querySelector('.modalbg1');
-    const drawer = document.getElementById('drawer');
-    const loginModal = document.getElementById('login-modal');
-
-    if (drawer !== null && drawer.classList.contains('drawer-active')) {
-        drawer.classList.remove('drawer-active');
-        modalbg1.classList.remove('d-block');
-    }
-    if (loginModal !== null && loginModal.classList.contains('d-flex')) {
-        loginModal.classList.remove('d-flex');
-        modalbg1.classList.remove('d-block');
-    }
-}
 
 function TimeAgo(time) {
     const periods = {
@@ -402,40 +636,4 @@ function TimeAgo(time) {
     } else {
         return "Just now";
     }
-}
-
-async function checkVoted_IconStuff(clone, checkvotepayload) {
-    await fetch("/g/CheckVoteByUser?" + checkvotepayload, {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-    })
-        .then((res) => res.json())
-        .then((data) => {
-            const likebtn = clone.querySelector('[data-action="like"]');
-            const dislikebtn = clone.querySelector('[data-action="dislike"]');
-            likebtn.className = "";
-            dislikebtn.className = "";
-            if (data.statusCode === 200) {
-                switch (data.value) {
-                    case "true":
-                        likebtn.classList.add('likebtn', 'bi', 'bi-hand-thumbs-up-fill', 'active');
-                        dislikebtn.classList.add('dislikebtn', 'bi', 'bi-hand-thumbs-down');
-                        break;
-                    case "false":
-                        likebtn.classList.add('likebtn', 'bi', 'bi-hand-thumbs-up');
-                        dislikebtn.classList.add('dislikebtn', 'bi', 'bi-hand-thumbs-down-fill', 'active');
-                        break;
-                }
-            }
-            else {
-                likebtn.classList.add('likebtn', 'bi', 'bi-hand-thumbs-up');
-                dislikebtn.classList.add('dislikebtn', 'bi', 'bi-hand-thumbs-down');
-            }
-        })
-        .catch(error => {
-            console.log('vote check failed -> ' + error);
-        });
 }

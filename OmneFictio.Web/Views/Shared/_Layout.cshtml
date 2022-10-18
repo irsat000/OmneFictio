@@ -14,14 +14,15 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <!--<meta name="google-signin-client_id" content="589655350334-bdk3rgelbo3i4otkj08f2hvc69g1lql4.apps.googleusercontent.com" />
     -->
-    
+
     <title>@ViewData["Title"] - OmneFictio</title>
-    
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Itim&display=swap" rel="stylesheet">
@@ -37,17 +38,148 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     @RenderSection("Stylesheets", required: false)
 </head>
+
 <body class="darkmode">
     <input type="hidden" id="userid_utility" value="@userId">
-    <div id="g_id_onload"
-         data-client_id="589655350334-bdk3rgelbo3i4otkj08f2hvc69g1lql4.apps.googleusercontent.com"
-         data-ux_mode="popup"
-         data-callback="googleHandleCredentialResponse"
-         data-skip_prompt_cookie="UserAuth">
-         <!--data-login_uri="https://localhost:7067/Auth/GoogleSigninDirectly">-->
+    <div id="g_id_onload" data-client_id="589655350334-bdk3rgelbo3i4otkj08f2hvc69g1lql4.apps.googleusercontent.com"
+        data-ux_mode="popup" data-callback="googleHandleCredentialResponse" data-skip_prompt_cookie="UserAuth">
+        <!--data-login_uri="https://localhost:7067/Auth/GoogleSigninDirectly">-->
     </div>
     <div class="modalbg1"></div>
     <div class="modalbg2"></div>
+
+
+
+    <template id="comment_instance">
+        <div class="comment-cont">
+            <div class="comment" data-commentid="">
+                <div class="c-header">
+                    <img src="/images/users/user_no_photo_300x300.png">
+                    <span class="c-username">
+
+                    </span>
+                    <span class="c-date">
+
+                    </span>
+                    <div class="c-menu">
+                        <i class="bi bi-three-dots"></i>
+                    </div>
+                    <ul class="c-menupopup">
+                        <li>Report</li>
+                        <li>Block User</li>
+                    </ul>
+                </div>
+                <div class="c-text">
+                    <span>
+
+                    </span>
+                </div>
+                <div class="c-footer">
+                    <div class="c-evaluation">
+                        <i class="bi bi-hand-thumbs-up likebtn" data-action="like" data-target_type="comment"></i>
+                        <span class="c-likes vote_count">--</span>
+                        <i class="bi bi-hand-thumbs-down dislikebtn" data-action="dislike"
+                            data-target_type="comment"></i>
+                        <a href="#" class="c-replybtn">Reply</a>
+                    </div>
+                    <div class="get_replies">
+                        <span class="get_replies-text">
+
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="reply" data-replyid="">
+                <div class="r-text">
+                    <span>
+
+                    </span>
+                </div>
+                <div class="r-footer">
+                    <div class="r-evaluation">
+                        <i class="bi bi-hand-thumbs-up likebtn" data-action="like" data-target_type="reply"></i>
+                        <span class="r-likes vote_count">--</span>
+                        <i class="bi bi-hand-thumbs-down dislikebtn" data-action="dislike" data-target_type="reply"></i>
+                        <span class="r-gotoreply">GO</span>
+                    </div>
+                    <div class="r-user">
+                        <span class="r-username">
+
+                        </span>
+                        <img src="/images/users/user_no_photo_300x300.png">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
+
+    <template id="modalReplies-comment">
+        <div class="mr-comment" data-commentid="">
+            <div class="mrc-header">
+                <img src="/images/users/user_no_photo_300x300.png"
+                    onerror="this.onerror=null; this.src='/images/onerror/user_no_photo_300x300.png'">
+                <span class="mrc-username">
+
+                </span>
+                <span class="mrc-date">
+
+                </span>
+                <div class="mrc-menu">
+                    <i class="bi bi-three-dots"></i>
+                </div>
+            </div>
+            <div class="mrc-text">
+                <span>
+
+                </span>
+            </div>
+            <div class="mrc-footer">
+                <div class="mrc-evaluation">
+                    <i class="bi bi-hand-thumbs-up likebtn" data-action="like" data-target_type="comment"></i>
+                    <span class="mrc-likes vote_count">--</span>
+                    <i class="bi bi-hand-thumbs-down dislikebtn" data-action="dislike" data-target_type="comment"></i>
+                    <a href="#" class="mrc-replybtn">Reply</a>
+                </div>
+            </div>
+        </div>
+    </template>
+    <template id="modalReplies-reply">
+        <div class="mr-reply" data-replyid="">
+            <div class="mrr-header">
+                <img src="/images/users/user_no_photo_300x300.png"
+                    onerror="this.onerror=null; this.src='/images/onerror/user_no_photo_300x300.png'">
+                <span class="mrr-username">
+
+                </span>
+                <span class="mrr-date">
+
+                </span>
+                <div class="mrr-menu">
+                    <i class="bi bi-three-dots"></i>
+                </div>
+            </div>
+            <div class="mrr-text">
+                <span>
+
+                </span>
+            </div>
+            <div class="mrr-footer">
+                <div class="mrr-evaluation">
+                    <i class="bi bi-hand-thumbs-up likebtn" data-action="like" data-target_type="reply"></i>
+                    <span class="mrr-likes vote_count">--</span>
+                    <i class="bi bi-hand-thumbs-down dislikebtn" data-action="dislike" data-target_type="reply"></i>
+                    <a href="#" class="mrr-replybtn">Reply</a>
+                </div>
+            </div>
+        </div>
+    </template>
+
+
+
+
+
+
+
     <form class="login-modal" id="login-modal">
         <div class="lm-header">
             <span class="lm-title">Login</span>
@@ -112,9 +244,13 @@
         <div class="dw-top">
             <div class="dw-account">
                 <div class="dw-userimg">
-                    @if(userPicture != "none" && userId != "-1"){
-                        @Html.Raw("<img src='" + userPicture + "'/>");
-                    }else{
+                    @if (userPicture != "none" && userId != "-1")
+                    {
+                        @Html.Raw("<img src='" + userPicture + "'/>")
+                        ;
+                    }
+                    else
+                    {
                         <i class="bi bi-person-square"></i>
                     }
                 </div>
@@ -124,10 +260,12 @@
             </div>
         </div>
         <div class="dw-username">
-            @if(userId != "-1"){
+            @if (userId != "-1")
+            {
                 <span>@username</span>
             }
-            else{
+            else
+            {
                 <span class="dw-username">--</span>
             }
         </div>
@@ -136,24 +274,43 @@
         </div>
         <div class="dw-list">
             <ul>
-                @if(userId != "-1"){
-                    <li><a href="#"><div class="dw-icon-cont"><i class="bi bi-person"></i></div>Profile</a></li>
-                    <li><a href="#"><div class="dw-icon-cont"><i class="bi bi-journals"></i></div>Library</a></li>
-                    <li><a href="#"><div class="dw-icon-cont"><i class="bi bi-people"></i></div>Friends</a></li>
+                @if (userId != "-1")
+                {
+                    <li><a href="#">
+                            <div class="dw-icon-cont"><i class="bi bi-person"></i></div>Profile
+                        </a></li>
+                    <li><a href="#">
+                            <div class="dw-icon-cont"><i class="bi bi-journals"></i></div>Library
+                        </a></li>
+                    <li><a href="#">
+                            <div class="dw-icon-cont"><i class="bi bi-people"></i></div>Friends
+                        </a></li>
                 }
-                else{
-                    <li><a class="login-openbtn"><div class="dw-icon-cont"><i class="bi bi-person"></i></div>Login</a></li>
-                    <li><a asp-controller="Home" asp-action="Register"><div class="dw-icon-cont"><i class="bi bi-person-plus"></i></div>Register</a></li>
+                else
+                {
+                    <li><a class="login-openbtn">
+                            <div class="dw-icon-cont"><i class="bi bi-person"></i></div>Login
+                        </a></li>
+                    <li><a asp-controller="Home" asp-action="Register">
+                            <div class="dw-icon-cont"><i class="bi bi-person-plus"></i></div>Register
+                        </a></li>
                 }
                 <!--<li><a href="#"><div class="dw-icon-cont"><i class="bi bi-person"></i></div>Profile</a></li>
                 <li><a href="#"><div class="dw-icon-cont"><i class="bi bi-journals"></i></div>Library</a></li>
                 <li><a href="#"><div class="dw-icon-cont"><i class="bi bi-people"></i></div>Friends</a></li>-->
-                <li><a href="#"><div class="dw-icon-cont"><i class="bi bi-cart"></i></div>Shop</a></li>
-                <li><a href="#"><div class="dw-icon-cont"><i class="bi bi-gear-fill"></i></div>Settings</a></li>
+                <li><a href="#">
+                        <div class="dw-icon-cont"><i class="bi bi-cart"></i></div>Shop
+                    </a></li>
+                <li><a href="#">
+                        <div class="dw-icon-cont"><i class="bi bi-gear-fill"></i></div>Settings
+                    </a></li>
             </ul>
         </div>
-        @if(userId != "-1"){
-            <a asp-controller="Auth" asp-action="Logout" class="dw-redbutton"><div class="dw-icon-cont"><i class="bi bi-box-arrow-left"></i></div>Logout</a>
+        @if (userId != "-1")
+        {
+            <a asp-controller="Auth" asp-action="Logout" class="dw-redbutton">
+                <div class="dw-icon-cont"><i class="bi bi-box-arrow-left"></i></div>Logout
+            </a>
         }
     </div>
     <header>
@@ -180,9 +337,13 @@
                 <div class="account-cont">
                     <div class="ppic-wrap">
                         @{
-                            if(userId != "-1"){
-                                @Html.Raw("<img src='" + userPicture + "'/>");
-                            }else{
+                            if (userId != "-1")
+                            {
+                                @Html.Raw("<img src='" + userPicture + "'/>")
+                                ;
+                            }
+                            else
+                            {
                                 <i class="bi bi-person-square"></i>
                             }
                         }
@@ -193,13 +354,15 @@
                     </div>
                     <div class="account-dropdown">
                         <ul>
-                            @if(userId != "-1"){
+                            @if (userId != "-1")
+                            {
                                 <li><a class="ad-username">@username</a></li>
                                 <li><a href="#">Profile</a></li>
                                 <li><a href="#">Library</a></li>
                                 <li><a href="#">Friends</a></li>
                             }
-                            else{
+                            else
+                            {
                                 <li><a class="login-openbtn">Login</a></li>
                                 <li><a asp-controller="Home" asp-action="Register">Register</a></li>
                             }
@@ -209,7 +372,8 @@
                             <li><a href="#">Shop</a></li>
                             <li><a href="#">Settings</a></li>
                         </ul>
-                        @if(userId != "-1"){
+                        @if (userId != "-1")
+                        {
                             <a asp-controller="Auth" asp-action="LogOut" class="acc_dd_redbutton">Logout</a>
                         }
                         <!--<a href="#" class="acc_dd_redbutton">Logout</a>-->
@@ -233,4 +397,5 @@
     @await RenderSectionAsync("Scripts", required: false)
     <!--RenderSection("Scripts", required: false)-->
 </body>
+
 </html>

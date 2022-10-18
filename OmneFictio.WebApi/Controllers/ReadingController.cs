@@ -37,7 +37,20 @@ public class ReadingController : ControllerBase
         }
         _db = db;
     }
-    
+
+    [HttpGet("GetChapter/{postid}/{chapterindex}")]
+    public async Task<IActionResult> GetChapter(int postid, int chapterindex)
+    {
+        var chapter = await _mapper.ProjectTo<ChapterDtoRead_2>(_db.Chapters.Where(c =>
+            c.postId == postid &&
+            c.chapterIndex == chapterindex)).FirstOrDefaultAsync();
+
+        if (chapter == null)
+        {
+            return NotFound();
+        }
+        return Ok(chapter);
+    }
 
     [HttpGet("GetPost/{postid}")]
     public async Task<IActionResult> GetPost(int postid)
@@ -86,13 +99,24 @@ public class ReadingController : ControllerBase
         return Ok(new { posts = posts_onepage, pages = pageCount });
     }
 
-    [HttpGet("GetComments/{postid}")]
-    public async Task<IActionResult> GetComments(int postid)
+    [HttpGet("GetComments/{type}/{parentid}")]
+    public async Task<IActionResult> GetComments(string type, int parentid)
     {
-        var comments = await _mapper.ProjectTo<CommentDtoRead_2>(_db.Comments.Where(c =>
-            c.targetPostId == postid &&
-            c.deletedStatus!.body == "Default")
-            .OrderByDescending(c => c.publishDate)).ToListAsync();
+        List<CommentDtoRead_2> comments = new List<CommentDtoRead_2>();
+        if (type == "post")
+        {
+            comments = await _mapper.ProjectTo<CommentDtoRead_2>(_db.Comments.Where(c =>
+                c.targetPostId == parentid &&
+                c.deletedStatus!.body == "Default")
+                .OrderByDescending(c => c.publishDate)).ToListAsync();
+        }
+        else if (type == "chapter")
+        {
+            comments = await _mapper.ProjectTo<CommentDtoRead_2>(_db.Comments.Where(c =>
+                c.targetChapterId == parentid &&
+                c.deletedStatus!.body == "Default")
+                .OrderByDescending(c => c.publishDate)).ToListAsync();
+        }
 
         if (comments == null || comments.Count() == 0)
         {
@@ -128,7 +152,8 @@ public class ReadingController : ControllerBase
         {
             return NotFound();
         }
-        else if(comment.DeletedStatus!.Body != "Default"){
+        else if (comment.DeletedStatus!.Body != "Default")
+        {
             return Unauthorized();
         }
 
