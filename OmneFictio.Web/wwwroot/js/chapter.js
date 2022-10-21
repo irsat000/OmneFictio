@@ -39,6 +39,8 @@ async function fetchChapter() {
                 } else { clone.querySelector('.cnote_2').remove(); }
 
                 //for navigation
+                ch.post.chapters.sort((a, b) => a.chapterIndex - b.chapterIndex);
+                //chapter indexes can be mixed. This is necessary for now.
                 const selectch = clone.querySelector('#ch-selectch');
                 for (const chlistitem of ch.post.chapters) {
                     const opt = document.createElement('option');

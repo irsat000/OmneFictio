@@ -89,8 +89,9 @@ $(document).ready(function () {
 
                     //get chapter list
                     const chapterlist = document.getElementById('modalchapters-list');
+                    chapterlist.innerHTML = "";
                     if (post.chapters.length > 0) {
-                        chapterlist.innerHTML = "";
+                        post.chapters.sort((a, b) => a.chapterIndex - b.chapterIndex);
                         post.chapters.forEach((chapter) =>
                             chapterlist.innerHTML +=
                             "<li><a href='/p/" + post.id + "/" + chapter.chapterIndex + "'>" + chapter.title + "</a></li>"
