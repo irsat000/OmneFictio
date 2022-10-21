@@ -32,9 +32,10 @@ $(document).ready(function () {
                     const instance = document.getElementById('getpost_instance');
                     const clone = instance.content.cloneNode(true);
 
-                    const checkvotepayload = "TargetId=" + post.id + "&TargetType=post";
                     //Check if user voted this parent
+                    const checkvotepayload = "TargetId=" + post.id + "&TargetType=post";
                     await window.checkVoted_IconStuff(clone, checkvotepayload);
+                    
                     clone.querySelector('.post-2').setAttribute('data-postid', post.id);
                     if (post.coverImage !== null) {
                         clone.querySelector('.p-basecover').setAttribute('src', '/images/covers/' + post.coverImage);
@@ -86,6 +87,13 @@ $(document).ready(function () {
                     }
 
                     document.getElementById('post-wrap').appendChild(clone);
+                    
+                    document.getElementById('addCommentToPost').addEventListener('click', function () {
+                        window.AddComment(JSON.stringify({
+                            Body: document.getElementById('commentBody').value,
+                            TargetPostId: postId
+                        }), commentSection);
+                    });
 
                     //get chapter list
                     const chapterlist = document.getElementById('modalchapters-list');
@@ -121,57 +129,6 @@ $(document).ready(function () {
                 console.log('Fetch failed -> ' + error);
             });
     }
-
-    document.getElementById('addCommentToPost').addEventListener('click', function () {
-        AddComment(JSON.stringify({
-            Body: document.getElementById('commentBody').value,
-            TargetPostId: postId
-        }));
-    });
-
-    async function AddComment(payload) {
-        //Adds a new comment
-        await fetch("/Action/AddComment", {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: payload
-        })
-            .then((res) => res.json())
-            .then(async (data) => {
-                if (data.statusCode === 200) {
-                    const comment = JSON.parse(data.value).returnComment;
-                    const instance = document.getElementById('comment_instance');
-                    const clone = instance.content.cloneNode(true);
-
-                    clone.querySelector('.comment').setAttribute('data-commentid', comment.id);
-                    if (comment.account.displayName != null) {
-                        clone.querySelector('.c-username').textContent = comment.account.displayName;
-                    } else {
-                        clone.querySelector('.c-username').textContent = comment.account.username;
-                    }
-                    clone.querySelector('.c-date').textContent = window.TimeAgo(comment.publishDate);
-                    clone.querySelector('.c-text > span').textContent = comment.body;
-                    if (comment.voteResult >= 0) {
-                        clone.querySelector('.c-likes').textContent = comment.voteResult;
-                    }
-                    var repliesLengthText = " replies";
-                    if (comment.repliesLength < 2) {
-                        repliesLengthText = " reply";
-                    }
-                    clone.querySelector('.get_replies > span').textContent = comment.repliesLength + repliesLengthText;
-                    clone.querySelector('.reply').remove();
-                    //add comment to the comment section
-                    commentSection.insertBefore(clone, commentSection.firstChild);
-                    //clear commenting body
-                    document.getElementById('commentBody').value = "";
-                }
-            })
-            .catch(error => { console.log('Fetch failed -> ' + error); });
-    }
-
 
     //----Rating the post---
     document.getElementById('rate_it_btn')

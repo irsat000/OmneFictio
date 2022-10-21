@@ -17,4 +17,11 @@ public class ChapterDtoRead_2
     public string? authorNoteLater { get; set; }
     public string? body { get; set; }
     public PostDtoRead_2? post { get; set; }
+    public int VoteResult { get; set; } = 0;
+    public ChapterDtoRead_2(ICollection<VoteDto>? Votes)
+    {
+        if(Votes != null && Votes.Count > 0) {
+            this.VoteResult = Votes.Count(l => l.Body) - Votes.Count(d => !d.Body);
+        }
+    }
 }

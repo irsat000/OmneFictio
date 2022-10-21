@@ -1,9 +1,12 @@
 main {
   width: 100%;
-  padding: 10px;
   border-radius: 16px;
   color: var(--text-color1);
   background-color: var(--background-color1);
+}
+
+.chapter-container {
+  padding: 10px;
 }
 
 .ch-header {
@@ -107,7 +110,7 @@ main {
   font-family: "Itim", cursive;
   display: flex;
   flex-flow: wrap;
-  padding: 0 10px 10px;
+  padding: 0 10px;
   margin-bottom: 20px;
   justify-content: center;
   gap: 10px;

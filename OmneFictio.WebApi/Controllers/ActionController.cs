@@ -149,8 +149,10 @@ public class ActionController : ControllerBase
 
         if (request.TargetPostId != null && request.TargetPostId != 0)
             newComment.targetPostId = request.TargetPostId;
-        else
+        else if(request.TargetChapterId != null && request.TargetChapterId != 0)
             newComment.targetChapterId = request.TargetChapterId;
+        else
+            return BadRequest();
 
         if (request.Body != null &&
             request.Body.Length > 0 &&

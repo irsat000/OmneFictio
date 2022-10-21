@@ -24,8 +24,9 @@ $(document).ready(function () {
                     const pl_column2 = document.getElementById('pl-column2');
                     for (const post of response.posts) {
                         const clone = instance.content.cloneNode(true);
-                        const checkvotepayload = "TargetId=" + post.id + "&TargetType=post";
+                        
                         //Check if user voted this parent
+                        const checkvotepayload = "TargetId=" + post.id + "&TargetType=post";
                         await window.checkVoted_IconStuff(clone, checkvotepayload);
 
                         clone.querySelector('.post').setAttribute('data-postid', post.id);
