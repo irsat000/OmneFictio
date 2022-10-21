@@ -694,7 +694,7 @@ header .header-wrap {
   background-color: var(--background-color-hover1);
 }
 
-/*-----User card on hover-----*/
+/*-----User card on hover / two modes-----*/
 .belongs_to {
   position: relative;
 }
@@ -709,33 +709,42 @@ header .header-wrap {
   position: absolute;
   bottom: 30px;
   right: 0;
-  display: flex;
   background: #303030;
   border-radius: 8px;
   box-shadow: 0 0 19px -5px rgba(0, 0, 0, 0.5);
+  display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   color: var(--text-color1);
 }
-.belongs_to .usercard-onhover .ucard-username {
+.belongs_to .usercard-onhover .ucard-username, .belongs_to .usercard-onhover .ucard-username-mode2 {
   font-family: "Josefin Sans", sans-serif;
   font-size: 1.1rem;
   text-align: center;
   padding: 6px 20px;
 }
+.belongs_to .usercard-onhover .ucard-username-mode2 {
+  display: none;
+}
 .belongs_to .usercard-onhover > img {
   width: 60px;
   height: auto;
-  margin-bottom: 6px;
   border-radius: 4px;
+  margin-bottom: 6px;
 }
-.belongs_to .usercard-onhover > p {
+.belongs_to .usercard-onhover .ucard-part2 {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.belongs_to .usercard-onhover .ucard-part2 .ucard-description {
   font-size: 0.6rem;
   font-family: "Itim", cursive;
   padding: 0 6px;
 }
-.belongs_to .usercard-onhover .ucard-stats {
+.belongs_to .usercard-onhover .ucard-part2 .ucard-stats {
   display: flex;
   align-items: center;
   justify-content: space-around;
@@ -744,18 +753,34 @@ header .header-wrap {
   padding: 6px 10px;
   gap: 10px;
 }
-.belongs_to .usercard-onhover .ucard-stats > div {
+.belongs_to .usercard-onhover .ucard-part2 .ucard-stats > div {
   display: flex;
   align-items: center;
   gap: 6px;
 }
-.belongs_to .usercard-onhover .ucard-stats i {
+.belongs_to .usercard-onhover .ucard-part2 .ucard-stats i {
   display: flex;
 }
-.belongs_to .usercard-onhover .ucard-stats span {
+.belongs_to .usercard-onhover .ucard-part2 .ucard-stats span {
   font-family: "Josefin Sans", sans-serif;
   padding-top: 2px;
 }
+.belongs_to .ucard-mode2 {
+  flex-direction: row !important;
+  padding: 0 10px;
+}
+.belongs_to .ucard-mode2 .ucard-username {
+  display: none;
+}
+.belongs_to .ucard-mode2 .ucard-username-mode2 {
+  display: block;
+  padding: 6px 0 2px;
+}
+.belongs_to .ucard-mode2 > img {
+  margin-right: 6px;
+  margin-bottom: unset;
+}
+
 @media (min-width: 576px) {
   .drawer-active {
     width: 300px !important;
