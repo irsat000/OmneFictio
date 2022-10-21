@@ -698,26 +698,18 @@ header .header-wrap {
 .belongs_to {
   position: relative;
 }
-.belongs_to .p-username:hover + .usercard-onhover {
-  display: flex;
-}
-.belongs_to .c-username:hover + .usercard-onhover {
-  display: flex;
-}
-.belongs_to .mrc-username:hover + .usercard-onhover {
-  display: flex;
-}
-.belongs_to .mrr-username:hover + .usercard-onhover {
-  display: flex;
-}
-.belongs_to .ch-username:hover + .usercard-onhover {
-  display: flex;
+.belongs_to:hover .usercard-onhover {
+  opacity: 1;
+  visibility: visible;
 }
 .belongs_to .usercard-onhover {
+  opacity: 0;
+  transition: all 0.2s;
+  visibility: hidden;
   position: absolute;
   bottom: 30px;
   right: 0;
-  display: none;
+  display: flex;
   background: #303030;
   border-radius: 8px;
   box-shadow: 0 0 19px -5px rgba(0, 0, 0, 0.5);

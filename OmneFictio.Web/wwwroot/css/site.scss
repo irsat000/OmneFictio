@@ -775,32 +775,19 @@ header {
 .belongs_to {
     position: relative;
 
-    .p-username:hover+.usercard-onhover {
-        display: flex;
+    &:hover .usercard-onhover {
+        opacity: 1;
+        visibility: visible;
     }
-
-    .c-username:hover+.usercard-onhover {
-        display: flex;
-    }
-
-    .mrc-username:hover+.usercard-onhover {
-        display: flex;
-    }
-
-    .mrr-username:hover+.usercard-onhover {
-        display: flex;
-    }
-
-    .ch-username:hover+.usercard-onhover {
-        display: flex;
-    }
-
 
     .usercard-onhover {
+        opacity: 0;
+        transition: all 0.2s;
+        visibility: hidden;
         position: absolute;
         bottom: 30px;
         right: 0;
-        display: none;
+        display: flex;
         background: #303030;
         border-radius: 8px;
         -webkit-box-shadow: 0 0 19px -5px rgba(0, 0, 0, 0.5);
@@ -810,25 +797,28 @@ header {
         align-items: center;
         justify-content: center;
         color: var(--text-color1);
-        
-        .ucard-username{
+
+        .ucard-username {
             font-family: 'Josefin Sans', sans-serif;
             font-size: 1.1rem;
             text-align: center;
             padding: 6px 20px;
         }
-        > img{
+
+        >img {
             width: 60px;
             height: auto;
             margin-bottom: 6px;
             border-radius: 4px;
         }
-        > p{
+
+        >p {
             font-size: 0.6rem;
             font-family: 'Itim', cursive;
             padding: 0 6px;
         }
-        .ucard-stats{
+
+        .ucard-stats {
             display: flex;
             align-items: center;
             justify-content: space-around;
@@ -836,23 +826,25 @@ header {
             font-size: .9rem;
             padding: 6px 10px;
             gap: 10px;
-            > div{
+
+            >div {
                 display: flex;
                 align-items: center;
                 gap: 6px;
             }
-            i{
+
+            i {
                 display: flex;
             }
-            span{
+
+            span {
                 font-family: 'Josefin Sans', sans-serif;
                 padding-top: 2px;
             }
         }
     }
-    .ucard-mode1{
 
-    }
+    .ucard-mode1 {}
 }
 
 

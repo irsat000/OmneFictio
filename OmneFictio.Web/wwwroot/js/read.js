@@ -1,7 +1,6 @@
 
 $(document).ready(function () {
     const postShowroom = document.querySelector('.posts-cont');
-    const postListSection = document.getElementById('postListSection');
     const params = new URLSearchParams(window.location.search);
     const curpage = params.has('page') ? parseInt(params.get('page'), 10) : 1;
 
@@ -20,6 +19,9 @@ $(document).ready(function () {
                     //GET THE POSTS
                     const instance = document.getElementById('postList-post');
                     const response = JSON.parse(data.value);
+                    const postListSection = document.getElementById('postListSection');
+                    const pl_column1 = document.getElementById('pl-column1');
+                    const pl_column2 = document.getElementById('pl-column2');
                     for (const post of response.posts) {
                         const clone = instance.content.cloneNode(true);
                         const checkvotepayload = "TargetId=" + post.id + "&TargetType=post";
@@ -40,7 +42,7 @@ $(document).ready(function () {
                         clone.querySelector('.p-rate').innerText = post.rateResult >= 0 && post.rateResult <= 10
                             ? Number((post.rateResult).toFixed(1)) + "/10"
                             : "-/10";
-                        
+
                         clone.querySelector('.pd-type > .pd-value').innerText = post.postType.body;
                         clone.querySelector('.pd-poststatus > .pd-value').innerText = post.postStatus.body;
                         clone.querySelector('.pd-ratedas > .pd-value').innerText = post.ratedAs.body;
@@ -72,7 +74,12 @@ $(document).ready(function () {
                             clone.querySelector('.p-username').innerText = post.account.username;
                         }
                         clone.querySelector('.p-user > img').setAttribute('src', '/images/users/' + post.account.profilePic);
-                        postListSection.appendChild(clone);
+
+                        if (pl_column1.offsetHeight <= pl_column2.offsetHeight) {
+                            pl_column1.appendChild(clone);
+                        } else {
+                            pl_column2.appendChild(clone);
+                        }
                     };
                     //PAGINATION
                     const pagInstance = document.getElementById('paginationTemplate');
