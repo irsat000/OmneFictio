@@ -156,6 +156,7 @@ main {
 
 .ch-body {
   margin-bottom: 16px;
+  text-align: justify;
 }
 .ch-body p {
   margin-bottom: 12px;

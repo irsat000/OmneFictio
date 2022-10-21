@@ -12,7 +12,17 @@ body {
   height: 100%;
 }
 
-ul, ol, li, b, h1, h2, h3, h4, h6, a, p {
+ul,
+ol,
+li,
+b,
+h1,
+h2,
+h3,
+h4,
+h6,
+a,
+p {
   text-decoration: none;
   padding: 0;
   margin: 0;
@@ -684,6 +694,76 @@ header .header-wrap {
   background-color: var(--background-color-hover1);
 }
 
+/*-----User card on hover-----*/
+.belongs_to {
+  position: relative;
+}
+.belongs_to .p-username:hover + .usercard-onhover {
+  display: flex;
+}
+.belongs_to .c-username:hover + .usercard-onhover {
+  display: flex;
+}
+.belongs_to .mrc-username:hover + .usercard-onhover {
+  display: flex;
+}
+.belongs_to .mrr-username:hover + .usercard-onhover {
+  display: flex;
+}
+.belongs_to .ch-username:hover + .usercard-onhover {
+  display: flex;
+}
+.belongs_to .usercard-onhover {
+  position: absolute;
+  bottom: 30px;
+  right: 0;
+  display: none;
+  background: #303030;
+  border-radius: 8px;
+  box-shadow: 0 0 19px -5px rgba(0, 0, 0, 0.5);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-color1);
+}
+.belongs_to .usercard-onhover .ucard-username {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 1.1rem;
+  text-align: center;
+  padding: 6px 20px;
+}
+.belongs_to .usercard-onhover > img {
+  width: 60px;
+  height: auto;
+  margin-bottom: 6px;
+  border-radius: 4px;
+}
+.belongs_to .usercard-onhover > p {
+  font-size: 0.6rem;
+  font-family: "Itim", cursive;
+  padding: 0 6px;
+}
+.belongs_to .usercard-onhover .ucard-stats {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  width: 100%;
+  font-size: 0.9rem;
+  padding: 6px 10px;
+  gap: 10px;
+}
+.belongs_to .usercard-onhover .ucard-stats > div {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+.belongs_to .usercard-onhover .ucard-stats i {
+  display: flex;
+}
+.belongs_to .usercard-onhover .ucard-stats span {
+  font-family: "Josefin Sans", sans-serif;
+  padding-top: 2px;
+}
 @media (min-width: 576px) {
   .drawer-active {
     width: 300px !important;
@@ -761,8 +841,11 @@ header .header-wrap {
   }
 }
 @media (max-width: 260px) {
-  .filter-tagdd, .filter-addseries, .login-modal,
-.orderby-cont, .filter-cont {
+  .filter-tagdd,
+.filter-addseries,
+.login-modal,
+.orderby-cont,
+.filter-cont {
     width: 100% !important;
   }
 }

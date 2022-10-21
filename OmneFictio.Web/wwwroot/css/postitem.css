@@ -121,7 +121,7 @@
 .post-detail .p-footer .p-user .p-username:hover {
   text-decoration: underline;
 }
-.post-detail .p-footer .p-user img {
+.post-detail .p-footer .p-user > img {
   height: 1.7rem;
   width: 1.7rem;
   border-radius: 50%;

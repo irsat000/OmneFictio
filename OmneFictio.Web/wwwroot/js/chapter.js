@@ -46,11 +46,13 @@ async function fetchChapter() {
                     opt.innerHTML = chlistitem.title;
                     selectch.appendChild(opt);
                 }
+                selectch.value = index;
                 clone.querySelector('.ch-options a').setAttribute('href',
                     "/p/" + postid)
                 //Navigation with select                
                 selectch.addEventListener('change', function () {
-                    window.location.href = "";
+                    window.location.href = new URL(window.location).origin +
+                        "/p/" + postid + "/" + this.value;
                 });
                 //Next / Prev chapter
                 let getNextHighest = ch.chapterIndex;
@@ -62,10 +64,10 @@ async function fetchChapter() {
                     }
                 }
                 for (const y of ch.post.chapters) {
-                    if(y.chapterIndex == ch.chapterIndex){
+                    if (y.chapterIndex == ch.chapterIndex) {
                         break;
                     }
-                    if (y.chapterIndex > getPrevHighest){
+                    if (y.chapterIndex > getPrevHighest) {
                         getPrevHighest = y.chapterIndex;
                     }
                 }
