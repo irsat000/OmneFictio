@@ -35,7 +35,7 @@ $(document).ready(function () {
                     //Check if user voted this parent
                     const checkvotepayload = "TargetId=" + post.id + "&TargetType=post";
                     await window.checkVoted_IconStuff(clone, checkvotepayload);
-                    
+
                     clone.querySelector('.post-2').setAttribute('data-postid', post.id);
                     if (post.coverImage !== null) {
                         clone.querySelector('.p-basecover').setAttribute('src', '/images/covers/' + post.coverImage);
@@ -87,7 +87,7 @@ $(document).ready(function () {
                     }
 
                     document.getElementById('post-wrap').appendChild(clone);
-                    
+
                     document.getElementById('addCommentToPost').addEventListener('click', function () {
                         window.AddComment(JSON.stringify({
                             Body: document.getElementById('commentBody').value,
@@ -107,7 +107,7 @@ $(document).ready(function () {
                     }
                 }
             })
-        //.catch(error => { console.log('Fetch failed -> ' + error); });;
+            .catch(error => { console.log('Fetch failed -> ' + error); });;
     }
 
     //Fetch function that brings me the existing rate.

@@ -51,6 +51,9 @@ public class ReadingController : ControllerBase
         {
             return NotFound();
         }
+        if(chapter.post != null && chapter.post.chapters != null && chapter.post.chapters.Count() > 0){
+            chapter.post.chapters = chapter.post.chapters.Where(c => c.IsPublished == true).ToList();
+        }
         return Ok(chapter);
     }
 

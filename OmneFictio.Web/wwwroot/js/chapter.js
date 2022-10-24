@@ -120,6 +120,6 @@ $(document).ready(function () {
             .catch(error => { console.log('Fetch failed -> ' + error); });
     }
 
-    
+
 
 });

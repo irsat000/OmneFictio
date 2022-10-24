@@ -56,13 +56,13 @@
             }
         }
 
-        //.comment-btn
         .comment-btn {
             font-size: 1.3rem;
             transition: font-size 0.1s ease;
             color: var(--text-color1);
             text-decoration: underline;
             margin-left: auto;
+            cursor: pointer;
 
             &:hover {
                 text-decoration: underline;

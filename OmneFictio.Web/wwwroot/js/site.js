@@ -261,11 +261,15 @@ async function AddComment(payload, commentSection) {
                 if (comment.voteResult >= 0) {
                     clone.querySelector('.c-likes').textContent = comment.voteResult;
                 }
-                var repliesLengthText = " replies";
-                if (comment.repliesLength < 2) {
-                    repliesLengthText = " reply";
+                if (comment.repliesLength === 0) {
+                    clone.querySelector('.get_replies').remove();
+                } else {
+                    let repliesLengthText = " replies";
+                    if (comment.repliesLength === 1) {
+                        repliesLengthText = " reply";
+                    }
+                    clone.querySelector('.get_replies > span').textContent = comment.repliesLength + repliesLengthText;
                 }
-                clone.querySelector('.get_replies > span').textContent = comment.repliesLength + repliesLengthText;
                 clone.querySelector('.reply').remove();
                 //add comment to the comment section
                 commentSection.insertBefore(clone, commentSection.firstChild);
@@ -335,11 +339,15 @@ async function fetchComments(type, parentid, section) {
                     if (comment.voteResult >= 0) {
                         clone.querySelector('.c-likes').textContent = comment.voteResult;
                     }
-                    var repliesLengthText = " replies";
-                    if (comment.repliesLength < 2) {
-                        repliesLengthText = " reply";
+                    if (comment.repliesLength === 0) {
+                        clone.querySelector('.get_replies').remove();
+                    } else {
+                        let repliesLengthText = " replies";
+                        if (comment.repliesLength === 1) {
+                            repliesLengthText = " reply";
+                        }
+                        clone.querySelector('.get_replies > span').textContent = comment.repliesLength + repliesLengthText;
                     }
-                    clone.querySelector('.get_replies > span').textContent = comment.repliesLength + repliesLengthText;
                     const hreply = await fetchHighlightedReply(comment.id);
                     if (hreply) {
                         //Check if user voted this parent
