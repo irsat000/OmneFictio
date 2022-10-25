@@ -116,7 +116,7 @@ $(document).ready(function () {
         if (e.target.classList.contains("p-menubtn") ||
             e.target.classList.contains("pd-closebtn")) {
             const post = e.target.closest('.post');
-            const postDetail = post.querySelector('.post-detail');
+            const postDetail = post.querySelector('.post-body');
             const postMenu = post.querySelector('.post-menu');
             if (!postMenu.classList.contains('d-flex')) {
                 postMenu.classList.add('d-flex');

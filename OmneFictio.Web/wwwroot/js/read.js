@@ -25,7 +25,7 @@ $(document).ready(function () {
                     const pl_column2 = document.getElementById('pl-column2');
                     for (const post of response.posts) {
                         const clone = instance.content.cloneNode(true);
-                        
+
                         //Check if user voted this parent
                         const checkvotepayload = "TargetId=" + post.id + "&TargetType=post";
                         await window.checkVoted_IconStuff(clone, checkvotepayload);
@@ -44,14 +44,17 @@ $(document).ready(function () {
                         clone.querySelector('.p-rate').innerText = post.rateResult >= 0 && post.rateResult <= 10
                             ? Number((post.rateResult).toFixed(1)) + "/10"
                             : "-/10";
-                        /*
-                        clone.querySelector('.pd-type > .pd-value').innerText = post.postType.body;
-                        clone.querySelector('.pd-poststatus > .pd-value').innerText = post.postStatus.body;
-                        clone.querySelector('.pd-ratedas > .pd-value').innerText = post.ratedAs.body;
-                        clone.querySelector('.pd-language > .pd-value').innerText = post.language.body;
 
-                        const tagSection = clone.querySelector('.pd-tags');
-                        const basedOnSection = clone.querySelector('.pd-series');
+                        clone.querySelector('.pi-type').innerText = post.postType.body;
+                        clone.querySelector('.pi-language').innerText = post.language.body;
+                        clone.querySelector('.pi-status').innerText = post.postStatus.body;
+                        clone.querySelector('.pi-rating').innerText = post.ratedAs.body;
+
+                        clone.querySelector('.pi-amount_of_chapters').innerText = post.chapters.length;
+                        clone.querySelector('.pi-last_update').innerText = window.TimeAgo(post.updateDate);
+
+                        const tagSection = clone.querySelector('.pi-tags');
+                        const basedOnSection = clone.querySelector('.pi-series');
                         //tag list
                         if (post.tags.length > 0) {
                             post.tags.forEach((tagname) =>
@@ -66,9 +69,9 @@ $(document).ready(function () {
                                 basedOnSection.innerHTML += "<span>" + storyname.body + "</span>"
                             );
                         } else {
-                            clone.querySelector('.pd-series-heading').remove();
                             basedOnSection.remove();
-                        }*/
+                        }
+
                         //user
                         if (post.account.displayName !== null) {
                             clone.querySelector('.p-username').innerText = post.account.displayName;
@@ -82,7 +85,7 @@ $(document).ready(function () {
                         } else {
                             pl_column2.appendChild(clone);
                         }
-                    };
+                    }
                     //PAGINATION
                     const pagInstance = document.getElementById('paginationTemplate');
                     const pagClone = pagInstance.content.cloneNode(true);

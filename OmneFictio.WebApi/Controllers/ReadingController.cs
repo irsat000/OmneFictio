@@ -103,6 +103,10 @@ public class ReadingController : ControllerBase
         {
             return NotFound();
         }
+        foreach(PostDtoRead_1 post in posts_onepage){
+            if(post.chapters != null && post.chapters.Count() > 0)
+                post.chapters = post.chapters.Where(c => c.IsPublished == true).ToList();
+        }
         return Ok(new { posts = posts_onepage, pages = pageCount });
     }
 
