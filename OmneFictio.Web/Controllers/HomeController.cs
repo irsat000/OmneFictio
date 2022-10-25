@@ -26,13 +26,17 @@ public class HomeController : Controller
     [HttpGet("Read/{Type}")]
     public IActionResult Read(string Type)
     {
+        var location = new Uri($"{Request.Scheme}://{Request.Host}{Request.Path}{Request.QueryString}");
+        HttpContext.Response.Cookies.Append("LastReadPage", location.AbsoluteUri,
+            new CookieOptions { IsEssential = true, Expires = DateTime.UtcNow.AddDays(1) });
         return View();
     }
 
     [HttpGet("p/{postid}")]
     public IActionResult Post(int postid)
     {
-        return View(new GetpostViewmodel(postid));
+        string? LastReadPage = HttpContext.Request.Cookies["LastReadPage"];
+        return View(new GetpostViewmodel(postid, LastReadPage));
     }
 
     [HttpGet("p/{postid}/{chapterindex}")]

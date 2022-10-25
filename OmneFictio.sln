@@ -1,34 +1,31 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.30114.105
+# Visual Studio Version 17
+VisualStudioVersion = 17.2.32526.322
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OmneFictio.Web", "OmneFictio.Web\OmneFictio.Web.csproj", "{51AF2817-E640-4AEE-8788-251796E07B3F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OmneFictio.Web", "OmneFictio.Web\OmneFictio.Web.csproj", "{51AF2817-E640-4AEE-8788-251796E07B3F}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OmneFictio.MinApi", "OmneFictio.MinApi\OmneFictio.MinApi.csproj", "{78E31603-0F1D-4A23-8046-13503936A335}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OmneFictio.WebApi", "OmneFictio.WebApi\OmneFictio.WebApi.csproj", "{73B1767F-9D46-4429-87A6-D5B3879E139A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OmneFictio.WebApi", "OmneFictio.WebApi\OmneFictio.WebApi.csproj", "{73B1767F-9D46-4429-87A6-D5B3879E139A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
-	GlobalSection(SolutionProperties) = preSolution
-		HideSolutionNode = FALSE
-	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{51AF2817-E640-4AEE-8788-251796E07B3F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{51AF2817-E640-4AEE-8788-251796E07B3F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{51AF2817-E640-4AEE-8788-251796E07B3F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{51AF2817-E640-4AEE-8788-251796E07B3F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{78E31603-0F1D-4A23-8046-13503936A335}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{78E31603-0F1D-4A23-8046-13503936A335}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{78E31603-0F1D-4A23-8046-13503936A335}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{78E31603-0F1D-4A23-8046-13503936A335}.Release|Any CPU.Build.0 = Release|Any CPU
 		{73B1767F-9D46-4429-87A6-D5B3879E139A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{73B1767F-9D46-4429-87A6-D5B3879E139A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{73B1767F-9D46-4429-87A6-D5B3879E139A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{73B1767F-9D46-4429-87A6-D5B3879E139A}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {B2A83DD6-9217-48E2-95F8-0398CF86D810}
 	EndGlobalSection
 EndGlobal

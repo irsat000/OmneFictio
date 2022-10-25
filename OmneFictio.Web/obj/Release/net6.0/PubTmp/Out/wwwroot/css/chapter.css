@@ -1,0 +1,179 @@
+main {
+  width: 100%;
+  border-radius: 16px;
+  color: var(--text-color1);
+  background-color: var(--background-color1);
+}
+
+.chapter-container {
+  padding: 10px;
+}
+
+.ch-header {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+  font-family: "Josefin Sans", sans-serif;
+  margin: 10px 0 22px;
+}
+.ch-header .ch-options {
+  display: flex;
+  justify-content: space-between;
+}
+.ch-header .ch-options a, .ch-header .ch-options span {
+  font-size: 1.2rem;
+  text-decoration: underline;
+  cursor: pointer;
+}
+.ch-header .ch-navigation {
+  display: flex;
+  justify-content: space-between;
+  font-family: "Itim", cursive;
+}
+.ch-header .ch-navigation select {
+  color: var(--text-color1);
+  background: var(--background-color2);
+  padding: 4px 8px;
+  border-radius: 5px;
+  font-size: 1.1rem;
+  cursor: pointer;
+  transition: background-color 0.1s;
+}
+.ch-header .ch-navigation select:hover {
+  background-color: var(--background-color-hover2);
+}
+.ch-header .ch-navigation .ch-navigationicons {
+  display: flex;
+  gap: 10px;
+}
+.ch-header .ch-navigation .ch-navigationicons a {
+  font-size: 1.2rem;
+  border-radius: 5px;
+  background-color: var(--background-color2);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  transition: background-color 0.1s;
+}
+.ch-header .ch-navigation .ch-navigationicons a i {
+  display: flex;
+}
+.ch-header .ch-navigation .ch-navigationicons a:hover {
+  background-color: var(--background-color-hover2);
+}
+.ch-header .ch-navigation .ch-navigationicons .ch-prevlink {
+  padding-right: 2px;
+}
+.ch-header .ch-navigation .ch-navigationicons .ch-nextlink {
+  padding-left: 2px;
+}
+
+.ch-author_note {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 26px;
+}
+.ch-author_note .note_caption {
+  font-family: "Josefin Sans", sans-serif;
+  font-size: 1.2rem;
+}
+.ch-author_note .authornote_body {
+  font-family: sans-serif;
+  padding: 0 10px;
+}
+
+.ch-caption {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  margin-bottom: 16px;
+  text-align: center;
+}
+.ch-caption h3 {
+  font-family: "Josefin Sans", sans-serif;
+}
+.ch-caption h5 {
+  font-family: "Itim", cursive;
+}
+
+.ch-end {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.ch-end span {
+  font-family: "Itim", cursive;
+}
+
+.ch-footer {
+  font-family: "Itim", cursive;
+  display: flex;
+  flex-flow: wrap;
+  padding: 0 10px;
+  margin-bottom: 20px;
+  justify-content: center;
+  gap: 10px;
+}
+.ch-footer .ch-evaluation {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  color: var(--text-color2);
+}
+.ch-footer .ch-evaluation i {
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: color 0.2s ease;
+}
+.ch-footer .ch-evaluation .ch-likes {
+  padding: 0 8px;
+}
+.ch-footer .ch-user {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  flex-shrink: 0;
+}
+.ch-footer .ch-user .ch-username {
+  font-size: 0.8rem;
+  cursor: pointer;
+  margin-left: 8px;
+  padding-right: 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 180px;
+}
+.ch-footer .ch-user .ch-username:hover {
+  text-decoration: underline;
+}
+.ch-footer .ch-user img {
+  height: 1.7rem;
+  width: 1.7rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.ch-body {
+  margin-bottom: 16px;
+  text-align: justify;
+}
+.ch-body p {
+  margin-bottom: 12px;
+}
+
+@media (min-width: 768px) {
+  main {
+    padding: 14px 20px;
+    margin-top: 14px;
+  }
+  .ch-header {
+    flex-direction: row;
+  }
+  .ch-header > * {
+    gap: 40px;
+  }
+}/*# sourceMappingURL=chapter.css.map */

@@ -3,15 +3,17 @@ main {
     border-radius: 10px;
     display: flex;
     flex-direction: column;
+    padding-top: 10px;
 }
 
-.post-wrap{
+.post-wrap {
     min-height: 200px;
+    margin-top: 10px;
 }
+
 .post-2 {
     width: 100%;
-    padding-top: 16px;
-    margin: 0 0 12px;
+    margin-bottom: 12px;
     display: flex;
     flex-direction: column;
 
@@ -276,6 +278,24 @@ main {
 
 }
 
+.back-to-read {
+    padding-left: 14px;
+    color: var(--text-color1);
+    font-size: 1.2rem;
+    font-family: 'Josefin Sans', sans-serif;
+    text-decoration: underline;
+
+    a {
+        padding-top: 4px;
+        margin-bottom: -4px;
+
+        &:hover {
+            text-decoration: underline;
+        }
+    }
+}
+
+
 .fullsize-cover-cont {
     display: none;
     position: fixed;
@@ -509,17 +529,18 @@ main {
 @media (min-width: 768px) {
     main {
         margin-top: 10px;
-        padding: 0 16px;
+        padding: 10px 16px 0;
     }
 
     .post-2 {
-        padding: unset;
-        margin: 20px 0 12px;
-
         .post-card {
             align-items: unset;
             padding: unset;
         }
+    }
+
+    .back-to-read {
+        text-decoration: unset;
     }
 
     .p-upscalecover-cont {

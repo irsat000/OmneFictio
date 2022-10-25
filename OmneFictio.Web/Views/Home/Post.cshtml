@@ -115,6 +115,13 @@
     <img src="/images/covers/" id="fsc-img">
 </div>
 
+@if (Model.LastReadPage != null)
+{
+    <div class="back-to-read">
+        <a href="@Model.LastReadPage" id="goBackToReadPage">Go back</a>
+    </div>
+}
+
 <div class="post-wrap" id="post-wrap">
 
 </div>

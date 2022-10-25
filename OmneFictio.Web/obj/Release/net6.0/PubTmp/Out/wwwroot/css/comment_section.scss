@@ -1,0 +1,568 @@
+.add_comment-cont {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    margin-bottom: 20px;
+    padding: 0 6px;
+    align-self: center;
+
+    textarea {
+        background-color: var(--background-color2);
+        color: var(--text-color1);
+        width: 100%;
+        border: none;
+        outline: none;
+        border-radius: 6px;
+        padding: 6px 8px;
+        min-height: 70px;
+        margin-bottom: 10px;
+        font-family: 'Gudea', sans-serif;
+        font-size: 0.8rem;
+    }
+
+    .ac-footer {
+        display: flex;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        align-items: center;
+        width: 100%;
+        padding: 0 6px;
+        font-family: 'Itim', cursive;
+
+        .ac-user {
+            display: flex;
+            align-items: center;
+            flex-shrink: 0;
+
+            .ac-username {
+                font-size: 0.9rem;
+                cursor: pointer;
+                padding: 0 8px;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                max-width: 180px;
+
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+
+            img {
+                height: 1.7rem;
+                width: 1.7rem;
+                border-radius: 50%;
+                cursor: pointer;
+            }
+        }
+
+        .comment-btn {
+            font-size: 1.3rem;
+            transition: font-size 0.1s ease;
+            color: var(--text-color1);
+            text-decoration: underline;
+            margin-left: auto;
+            cursor: pointer;
+
+            &:hover {
+                text-decoration: underline;
+            }
+        }
+    }
+}
+
+.comments {
+    width: 100%;
+
+    .comment-cont {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-end;
+        padding: 6px 0 14px;
+        border-top: 2px solid var(--background-color2);
+
+        .comment {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+
+            //box-shadow: 0px 6px 8px -7px #00000060;
+            .c-header {
+                display: flex;
+                align-items: center;
+                position: relative;
+                padding: 0 6px;
+                font-family: "Itim", cursive;
+
+                img {
+                    height: 1.3rem;
+                    width: 1.3rem;
+                    border-radius: 50%;
+                    cursor: pointer;
+                }
+
+                .c-username {
+                    font-size: 0.8rem;
+                    cursor: pointer;
+                    margin: 0 6px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    max-width: 180px;
+                }
+
+                .c-date {
+                    color: var(--text-color2);
+                    font-size: 0.7rem;
+                    font-family: 'Gudea';
+                }
+
+                .c-menu {
+                    margin-left: auto;
+                    display: flex;
+                    height: 100%;
+                    padding: 0 10px;
+                    font-size: 1.6rem;
+                    cursor: pointer;
+
+                    i {
+                        display: flex;
+                    }
+                }
+
+                .c-menupopup {
+                    display: none;
+                    position: absolute;
+                    top: 30px;
+                    right: 12px;
+                    padding: 6px 4px;
+                    border-radius: 6px;
+                    font-size: 1rem;
+                    background-color: var(--comment-menu-bgcolor);
+                    box-shadow: 0 2px 10px 0px rgb(0 0 0 / 25%);
+
+                    li {
+                        padding: 3px 10px;
+                        border-bottom: 1px solid var(--background-color-hover3);
+                        white-space: nowrap;
+                        transition: background-color 0.1s ease;
+                        cursor: pointer;
+
+                        &:hover {
+                            background-color: var(--background-color-hover2);
+                        }
+
+                        &:first-child {
+                            border-radius: 6px 6px 0 0;
+                        }
+
+                        &:last-child {
+                            border-radius: 0 0 6px 6px;
+                            border-bottom: unset;
+                        }
+                    }
+                }
+
+                .lightmode .c-menupopup {
+                    box-shadow: 0 2px 10px 0px rgb(0 0 0 / 10%) !important;
+                }
+            }
+
+            .c-text {
+                padding: 0px 10px;
+                margin: 6px 0;
+                font-size: 0.9rem;
+                font-family: "Gudea", sans-serif;
+                line-height: 1rem;
+
+                span {
+                    flex-grow: 1;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 10;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                }
+            }
+
+            .c-footer {
+                font-family: "Itim", cursive;
+                display: flex;
+                flex-flow: wrap;
+                align-items: flex-start;
+
+                .c-evaluation {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    padding-left: 10px;
+                    color: var(--text-color2);
+
+                    i {
+                        font-size: 1.2rem;
+                        cursor: pointer;
+                        transition: color 0.2s ease;
+                    }
+
+                    .c-likes {
+                        padding: 0 8px;
+                    }
+
+                    .c-replybtn {
+                        margin-left: 14px;
+                        font-family: 'Josefin Sans', sans-serif;
+                        color: var(--text-color1);
+                        padding: 2px 0 0;
+                        margin-bottom: -1px;
+                    }
+                }
+
+                .get_replies {
+                    background-color: var(--reply-bgcolor);
+                    padding: 4px 26px;
+                    border-radius: 6px 6px 0 0;
+                    text-decoration: underline;
+                    margin-left: auto;
+                    cursor: pointer;
+                }
+            }
+        }
+
+        .reply {
+            display: flex;
+            flex-direction: column;
+            width: 92%;
+            border-radius: 6px 0 6px 6px;
+            background-color: var(--reply-bgcolor);
+            padding: 6px 0;
+
+            .r-text {
+                padding: 0 10px 6px;
+                font-size: 0.9rem;
+                font-family: "Gudea", sans-serif;
+                line-height: 1rem;
+            }
+
+            .r-footer {
+                font-family: "Itim", cursive;
+                display: flex;
+                flex-flow: wrap;
+                align-items: center;
+
+                .r-evaluation {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    padding-left: 6px;
+                    color: var(--text-color2);
+
+                    i {
+                        font-size: 1.1rem;
+                        cursor: pointer;
+                        transition: color 0.2s ease;
+                    }
+
+                    .r-likes {
+                        padding: 0 6px;
+                    }
+
+                    .r-gotoreply {
+                        margin-left: 14px;
+                        font-family: 'Gudea', sans-serif;
+                        color: var(--text-color1);
+                    }
+                }
+
+                .r-user {
+                    display: flex;
+                    align-items: center;
+                    padding-right: 6px;
+                    margin-left: auto;
+
+                    .r-username {
+                        font-size: 0.8rem;
+                        cursor: pointer;
+                        padding: 0 8px;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        max-width: 180px;
+                    }
+
+                    img {
+                        height: 1.3rem;
+                        width: 1.3rem;
+                        border-radius: 50%;
+                        cursor: pointer;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.modal-replies {
+    display: none;
+    //display: flex;
+    flex-direction: column;
+    position: fixed;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -40%);
+    width: 92%;
+    max-width: 500px;
+    max-height: 90%;
+    background-color: var(--background-color2);
+    box-shadow: 0px 0px 14px 4px var(--background-color-boxshadow1);
+    border-radius: 20px 20px 10px 10px;
+    font-family: "Itim", cursive;
+    z-index: 200;
+    padding-bottom: 6px;
+
+    .mr-header {
+        border-bottom: 2px solid var(--background-color-hover4);
+        display: flex;
+        flex-direction: row;
+
+        span {
+            display: flex;
+            align-items: center;
+            padding-left: 20px;
+            font-size: 1.3rem;
+            margin-right: auto;
+        }
+
+        .mr-close {
+            cursor: pointer;
+            padding: 4px 12px 0px;
+            font-size: 1.8rem;
+            text-shadow: 0px 0px 6px var(--text-color-boxshadow1);
+        }
+    }
+
+    .mr-body {
+        display: flex;
+        flex-direction: column;
+        overflow-y: auto;
+        min-height: 200px;
+
+        .mr-comment {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            padding: 10px 6px 15px;
+
+            .mrc-header {
+                display: flex;
+                align-items: center;
+                font-family: "Itim", cursive;
+
+                img {
+                    height: 1.7rem;
+                    width: 1.7rem;
+                    border-radius: 50%;
+                    cursor: pointer;
+                }
+
+                .mrc-username {
+                    font-size: 0.8rem;
+                    cursor: pointer;
+                    margin: 0 8px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    max-width: 180px;
+                }
+
+                .mrc-date {
+                    color: var(--text-color2);
+                    font-size: 0.7rem;
+                    font-family: 'Gudea';
+                }
+
+                .mrc-menu {
+                    margin-left: auto;
+                    display: flex;
+                    height: 100%;
+                    padding: 0 10px;
+                    font-size: 1.6rem;
+                    cursor: pointer;
+
+                    i {
+                        display: flex;
+                    }
+                }
+            }
+
+            .mrc-text {
+                margin: 10px 0;
+                font-size: 0.9rem;
+                font-family: "Gudea", sans-serif;
+                line-height: 1rem;
+
+                span {
+                    flex-grow: 1;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 10;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                }
+            }
+
+            .mrc-footer {
+                .mrc-evaluation {
+                    display: flex;
+                    flex-direction: row;
+                    align-items: center;
+                    color: var(--text-color2);
+
+                    i {
+                        font-size: 1.2rem;
+                        cursor: pointer;
+                        transition: color 0.2s ease;
+                    }
+
+                    .mrc-likes {
+                        padding: 0 8px;
+                    }
+
+                    .mrc-replybtn {
+                        margin-left: 10px;
+                        font-family: "Josefin Sans", sans-serif;
+                        color: var(--text-color1);
+                        padding: 2px 0 0;
+                        margin-bottom: -1px;
+                    }
+                }
+            }
+        }
+
+        .mr-reply {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            margin-bottom: 7px;
+            background-color: var(--replies-bgcolor);
+            padding: 6px 4px 3px;
+
+            .mrr-header {
+                display: flex;
+                align-items: center;
+                flex-wrap: wrap;
+                margin-bottom: 5px;
+
+                img {
+                    height: 1.3rem;
+                    width: 1.3rem;
+                    border-radius: 50%;
+                    cursor: pointer;
+                }
+
+                .mrr-username {
+                    font-size: 0.8rem;
+                    cursor: pointer;
+                    margin: 0 6px;
+                    text-overflow: ellipsis;
+                    white-space: nowrap;
+                    overflow: hidden;
+                    max-width: 180px;
+                }
+
+                .mrr-date {
+                    color: var(--text-color2);
+                    font-size: 0.7rem;
+                    font-family: 'Gudea';
+                }
+
+                .mrr-menu {
+                    margin-left: auto;
+                    display: flex;
+                    height: 100%;
+                    padding: 0 7px;
+                    font-size: 1.6rem;
+                    cursor: pointer;
+
+                    i {
+                        display: flex;
+                    }
+                }
+            }
+
+            .mrr-text {
+                margin-bottom: 4px;
+                font-size: 0.9rem;
+                font-family: "Gudea", sans-serif;
+                line-height: 1rem;
+
+                span {
+                    display: -webkit-box;
+                    -webkit-line-clamp: 10;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+                }
+            }
+
+            .mrr-footer {
+                font-family: "Itim", cursive;
+                display: flex;
+                flex-flow: wrap;
+                align-items: center;
+
+                .mrr-evaluation {
+                    display: flex;
+                    flex-direction: row;
+                    justify-content: flex-start;
+                    align-items: center;
+                    color: var(--text-color2);
+
+                    i {
+                        font-size: 1.1rem;
+                        cursor: pointer;
+                        transition: color 0.2s ease;
+                        display: flex;
+                    }
+
+                    .mrr-likes {
+                        padding: 0 4px;
+                    }
+
+                    .mrr-replybtn {
+                        margin-left: 8px;
+                        font-family: "Josefin Sans", sans-serif;
+                        color: var(--text-color1);
+                        margin-bottom: -3px;
+                        font-size: 0.9rem;
+                    }
+                }
+            }
+        }
+    }
+
+}
+
+
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+    .modal-replies {
+        max-width: 650px;
+        max-height: 60%;
+
+        .mr-comment .mrc-text {
+            padding: 0 10px;
+            font-size: 0.9rem;
+        }
+
+        .mr-body .mr-reply {
+            padding: 6px 10px 3px;
+            font-size: 0.9rem;
+        }
+    }
+}
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+    .modal-replies {
+        max-width: 900px;
+    }
+}
