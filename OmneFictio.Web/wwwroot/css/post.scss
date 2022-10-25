@@ -221,7 +221,14 @@ main {
             }
         }
 
-        .pd-items {
+        span{
+            color: #fff;
+            outline: none;
+            border: none;
+            white-space: nowrap;
+        }
+
+        .pd-primary {
             display: flex;
             flex-direction: row;
             flex-wrap: wrap;
@@ -231,9 +238,6 @@ main {
 
             span {
                 background-color: #447349;
-                color: #fff;
-                outline: none;
-                border: none;
                 border-radius: 4px;
                 padding: 2px 16px;
             }
@@ -255,9 +259,6 @@ main {
 
             span {
                 background-color: rgb(106, 38, 55);
-                color: #fff;
-                outline: none;
-                border: none;
                 border-radius: 4px;
                 padding: 2px 16px;
             }
@@ -272,9 +273,6 @@ main {
 
             span {
                 background-color: rgb(103 138 144);
-                color: #fff;
-                outline: none;
-                border: none;
                 border-radius: 20px;
                 padding: 2px 10px;
                 font-size: 0.8rem;

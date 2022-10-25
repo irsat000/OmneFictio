@@ -50,6 +50,7 @@
         }
 
         .p-menu {
+            position: relative;
             display: flex;
             align-items: center;
             height: 100%;
@@ -61,8 +62,94 @@
                 cursor: pointer;
             }
 
-            .bi-info-circle {
+            .p-infoicon {
                 font-size: 1.4rem;
+
+                &:hover+.p-info {
+                    opacity: 1;
+                    visibility: visible;
+                }
+            }
+
+            .p-info {
+                opacity: 0;
+                visibility: hidden;
+                transition: all 0.2s;
+                transition-delay: 0.2s;
+                position: absolute;
+                z-index: 500;
+                top: 44px;
+                right: 10px;
+                border-radius: 8px;
+                background-color: var(--background-color2);
+                display: flex;
+                flex-direction: column;
+                padding: 10px;
+
+                &:hover {
+                    opacity: 1;
+                    visibility: visible;
+                }
+
+                span {
+                    color: #fff;
+                    outline: none;
+                    border: none;
+                    padding: 2px 10px;
+                    font-size: 0.8rem;
+                    white-space: nowrap;
+                }
+
+                .pi-primary {
+                    display: flex;
+                    flex-direction: row;
+                    gap: 6px 8px;
+                    padding-bottom: 10px;
+                    font-family: 'Gudea';
+
+                    span {
+                        background-color: #447349;
+                        border-radius: 4px;
+                        font-size: 1rem;
+                    }
+
+                    .pi-type {
+                        background-color: #263170;
+                    }
+
+                    .pi-language {
+                        background-color: #3e4f68;
+                    }
+                }
+
+                .pi-tags {
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    gap: 6px;
+                    padding-bottom: 12px;
+
+                    span {
+                        background-color: rgb(103 138 144);
+                        border-radius: 20px;
+                        font-size: 0.7rem;
+                        font-family: 'Gudea', sans-serif;
+                        padding: 1px 10px;
+                    }
+                }
+
+                .pi-series {
+                    display: flex;
+                    flex-direction: row;
+                    flex-wrap: wrap;
+                    gap: 6px 8px;
+                    font-family: 'Gudea';
+
+                    span {
+                        background-color: rgb(106, 38, 55);
+                        border-radius: 4px;
+                    }
+                }
             }
         }
     }
@@ -160,6 +247,7 @@
     }
 }
 
+/*
 .post-menu {
     display: none; //flex
     flex-direction: row;
@@ -255,4 +343,4 @@
             }
         }
     }
-}
+}*/

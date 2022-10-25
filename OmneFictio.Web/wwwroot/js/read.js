@@ -44,7 +44,7 @@ $(document).ready(function () {
                         clone.querySelector('.p-rate').innerText = post.rateResult >= 0 && post.rateResult <= 10
                             ? Number((post.rateResult).toFixed(1)) + "/10"
                             : "-/10";
-
+                        /*
                         clone.querySelector('.pd-type > .pd-value').innerText = post.postType.body;
                         clone.querySelector('.pd-poststatus > .pd-value').innerText = post.postStatus.body;
                         clone.querySelector('.pd-ratedas > .pd-value').innerText = post.ratedAs.body;
@@ -68,7 +68,7 @@ $(document).ready(function () {
                         } else {
                             clone.querySelector('.pd-series-heading').remove();
                             basedOnSection.remove();
-                        }
+                        }*/
                         //user
                         if (post.account.displayName !== null) {
                             clone.querySelector('.p-username').innerText = post.account.displayName;

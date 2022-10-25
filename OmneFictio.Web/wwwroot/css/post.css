@@ -191,7 +191,13 @@ main {
 .post-2 .post-more .p-actions button:hover {
   background-color: var(--pd-actionbtns-color-hover2);
 }
-.post-2 .post-more .pd-items {
+.post-2 .post-more span {
+  color: #fff;
+  outline: none;
+  border: none;
+  white-space: nowrap;
+}
+.post-2 .post-more .pd-primary {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
@@ -199,18 +205,15 @@ main {
   padding-bottom: 10px;
   font-family: "Gudea";
 }
-.post-2 .post-more .pd-items span {
+.post-2 .post-more .pd-primary span {
   background-color: #447349;
-  color: #fff;
-  outline: none;
-  border: none;
   border-radius: 4px;
   padding: 2px 16px;
 }
-.post-2 .post-more .pd-items .pd-type {
+.post-2 .post-more .pd-primary .pd-type {
   background-color: #263170;
 }
-.post-2 .post-more .pd-items .pd-language {
+.post-2 .post-more .pd-primary .pd-language {
   background-color: #3e4f68;
 }
 .post-2 .post-more .pd-series {
@@ -223,9 +226,6 @@ main {
 }
 .post-2 .post-more .pd-series span {
   background-color: rgb(106, 38, 55);
-  color: #fff;
-  outline: none;
-  border: none;
   border-radius: 4px;
   padding: 2px 16px;
 }
@@ -238,9 +238,6 @@ main {
 }
 .post-2 .post-more .pd-tags span {
   background-color: rgb(103, 138, 144);
-  color: #fff;
-  outline: none;
-  border: none;
   border-radius: 20px;
   padding: 2px 10px;
   font-size: 0.8rem;

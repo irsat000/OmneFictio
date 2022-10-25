@@ -62,10 +62,10 @@ $(document).ready(function () {
                     }
                     clone.querySelector('.p-uimg-cont > img').setAttribute('src', '/images/users/' + post.account.profilePic);
 
-                    clone.querySelectorAll('.pd-items > span')[0].innerText = post.postType.body;
-                    clone.querySelectorAll('.pd-items > span')[1].innerText = post.language.body;
-                    clone.querySelectorAll('.pd-items > span')[2].innerText = post.postStatus.body;
-                    clone.querySelectorAll('.pd-items > span')[3].innerText = post.ratedAs.body;
+                    clone.querySelectorAll('.pd-primary > span')[0].innerText = post.postType.body;
+                    clone.querySelectorAll('.pd-primary > span')[1].innerText = post.language.body;
+                    clone.querySelectorAll('.pd-primary > span')[2].innerText = post.postStatus.body;
+                    clone.querySelectorAll('.pd-primary > span')[3].innerText = post.ratedAs.body;
 
                     const tagSection = clone.querySelector('.pd-tags');
                     const basedOnSection = clone.querySelector('.pd-series');
