@@ -26,7 +26,7 @@ $(document).ready(function () {
 
         window.closeRepliesModal();
     }
-
+    
     /* 
     $('.modalbg1').click( () => {
         Maybe I use it

@@ -230,12 +230,18 @@ main {
             font-family: 'Gudea';
 
             span {
-                background-color: rgb(36 83 41);
+                background-color: #447349;
                 color: #fff;
                 outline: none;
                 border: none;
                 border-radius: 4px;
                 padding: 2px 16px;
+            }
+            .pd-type{
+                background-color: #263170;
+            }
+            .pd-language{
+                background-color: #3e4f68;
             }
         }
 

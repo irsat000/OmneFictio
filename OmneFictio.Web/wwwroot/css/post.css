@@ -200,12 +200,18 @@ main {
   font-family: "Gudea";
 }
 .post-2 .post-more .pd-items span {
-  background-color: rgb(36, 83, 41);
+  background-color: #447349;
   color: #fff;
   outline: none;
   border: none;
   border-radius: 4px;
   padding: 2px 16px;
+}
+.post-2 .post-more .pd-items .pd-type {
+  background-color: #263170;
+}
+.post-2 .post-more .pd-items .pd-language {
+  background-color: #3e4f68;
 }
 .post-2 .post-more .pd-series {
   display: flex;

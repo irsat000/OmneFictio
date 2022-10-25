@@ -26,9 +26,10 @@
   padding: 10px;
   font-family: "Josefin Sans", sans-serif;
   font-weight: 600;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
+  width: 100%;
+}
+.post-detail .p-header .p-title a {
+  display: inline-block;
 }
 .post-detail .p-header .p-title a:hover {
   text-decoration: underline;
@@ -41,12 +42,17 @@
 }
 .post-detail .p-header .p-menu {
   display: flex;
+  align-items: center;
   height: 100%;
   padding: 0 10px;
-  font-size: 2rem;
+  font-size: 1.7rem;
+  gap: 10px;
 }
 .post-detail .p-header .p-menu i {
   cursor: pointer;
+}
+.post-detail .p-header .p-menu .bi-info-circle {
+  font-size: 1.4rem;
 }
 .post-detail .p-body {
   padding: 0 14px;
@@ -137,8 +143,10 @@
   display: flex;
   flex-direction: column;
   padding: 10px;
+  color: #5ca264;
 }
 .post-menu .pd-details .pd-heading {
+  color: var(--text-color1);
   font-size: 1.1rem;
   font-family: "Josefin Sans", sans-serif;
   font-weight: 600;
@@ -148,13 +156,11 @@
 .post-menu .pd-details .pd-value {
   font-size: 0.9rem;
   font-family: "Itim", cursive;
-  color: #d45e24;
 }
 .post-menu .pd-details .pd-tags {
   display: flex;
   flex-wrap: wrap;
   padding: 0 4px;
-  color: #d45e24;
   gap: 6px;
   font-size: 0.7rem;
   font-family: "Gudea", sans-serif;
@@ -163,7 +169,6 @@
   display: flex;
   flex-wrap: wrap;
   padding: 0 4px;
-  color: #d45e24;
   gap: 10px;
   font-size: 0.9rem;
   font-family: "Itim", cursive;
