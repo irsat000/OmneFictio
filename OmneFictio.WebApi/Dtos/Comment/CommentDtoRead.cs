@@ -20,6 +20,7 @@ public class CommentDtoRead_2
     public DeletedStatusDto? DeletedStatus { get; set; }
     public int VoteResult { get; set; } = 0;
     public int RepliesLength { get; set; } = 0;
+    public bool? VotedByUser { get; set; } = null;
     public CommentDtoRead_2(ICollection<VoteDto>? Votes, ICollection<ReplyDtoRead_1>? Replies)
     {
         if(Votes != null && Votes.Count > 0) {

@@ -22,7 +22,7 @@ public class UserController : Controller
             (claim => claim.Type == "nameid")?.Value);
             return accountid;
         }
-        catch (System.Exception)
+        catch (Exception)
         {
             return null;
         } 

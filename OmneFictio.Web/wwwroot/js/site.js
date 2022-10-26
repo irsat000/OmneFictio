@@ -26,7 +26,7 @@ $(document).ready(function () {
 
         window.closeRepliesModal();
     }
-    
+
     /* 
     $('.modalbg1').click( () => {
         Maybe I use it
@@ -291,7 +291,6 @@ function openRepliesModal(element) {
         repliesModal.classList.add('d-flex');
         modalbg1.classList.add('d-block');
         const replySection = document.querySelector('#modal-replies > .mr-body');
-        replySection.innerHTML = "";
         fetchReplies(commentId, replySection);
     }
 }
@@ -304,6 +303,7 @@ function closeRepliesModal() {
         if (frController) {
             frController.abort();
         }
+        document.querySelector('#modal-replies > .mr-body').innerHTML = "";
     }
 }
 
@@ -318,6 +318,7 @@ async function fetchComments(type, parentid, section) {
         .then((res) => res.json())
         .then(async (data) => {
             if (data.statusCode === 200) {
+                console.log(JSON.parse(data.value));
                 if (document.getElementById('comment_instance') == null) {
                     return;
                 }
@@ -397,26 +398,28 @@ function fetchHighlightedReply(commentId) {
 
 let frController = null;
 async function fetchReplies(commentId, section) {
+    section.innerHTML = "";
     //cancel pending request if there is one
     if (frController) {
         frController.abort();
+        frController = null;
     }
     //new controller for new request
     frController = new AbortController();
-    const frSignal = frController.signal;
-    await fetch("/g/GetComment/" + commentId, {
+    fetch("/g/GetComment/" + commentId, {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json'
         },
-        signal: frSignal
+        signal: frController.signal
     })
         .then((res) => res.json())
         .then(async (data) => {
             if (data.statusCode === 200) {
                 const comm = JSON.parse(data.value);
                 const commentInstance = document.getElementById('modalReplies-comment');
+                const replyInstance = document.getElementById('modalReplies-reply');
                 const commentClone = commentInstance.content.cloneNode(true);
                 //Check if user voted this parent
                 const checkvotepayload = "TargetId=" + comm.id + "&TargetType=comment";
@@ -434,9 +437,24 @@ async function fetchReplies(commentId, section) {
                     commentClone.querySelector('.mrc-likes').textContent = comm.voteResult;
                 }
                 section.appendChild(commentClone);
+
+                
                 //if it has replies
+
                 if (comm.replies.length > 0) {
-                    const replyInstance = document.getElementById('modalReplies-reply');
+                    /*commentClone.querySelector('.mr-comment').setAttribute('data-commentid', comm.id);
+                    if (comm.account.displayName != null) {
+                        commentClone.querySelector('.mrc-username').textContent = comm.account.displayName;
+                    } else {
+                        commentClone.querySelector('.mrc-username').textContent = comm.account.username;
+                    }
+                    commentClone.querySelector('.mrc-date').textContent = window.TimeAgo(comm.publishDate);
+                    commentClone.querySelector('.mrc-text > span').textContent = comm.body;
+                    if (comm.voteResult >= 0) {
+                        commentClone.querySelector('.mrc-likes').textContent = comm.voteResult;
+                    }
+                    section.appendChild(commentClone);*/
+
                     for (const reply of comm.replies) {
                         const replyClone = replyInstance.content.cloneNode(true);
                         //Check if user voted this parent
@@ -455,11 +473,13 @@ async function fetchReplies(commentId, section) {
                             replyClone.querySelector('.mrr-likes').textContent = reply.voteResult;
                         }
                         section.appendChild(replyClone);
-                    };
+                    }
                 }
             }
         })
-        .catch(error => console.log('Fetching reply method is at fault', error));
+        .catch(error => {
+            console.log('Fetching reply method is at fault', error)
+        });
 }
 //--------COMMENT SECTION ENDS-------
 
@@ -600,6 +620,23 @@ async function checkVoted_IconStuff(clone, checkvotepayload) {
             console.log('vote check failed -> ' + error);
         });
 }
+/*
+async function checkVotedList(checkvotepayload) {
+    await fetch("/g/checkVotedListByUser?" + checkvotepayload, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            console.log(JSON.parse(data.value));
+        })
+        .catch(error => {
+            console.log('vote check failed -> ' + error);
+        });
+}*/
 
 //google auth
 async function googleHandleCredentialResponse(response) {

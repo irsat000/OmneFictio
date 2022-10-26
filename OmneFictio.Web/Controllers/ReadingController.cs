@@ -79,7 +79,13 @@ public class ReadingController : Controller
     [HttpGet("g/GetComments/{type}/{parentid}")]
     public async Task<JsonResult> GetComments(string type, int parentid)
     {
-        string url = "Read/GetComments/" + type + "/" + parentid;
+        string url = $"Read/GetComments/{type}/{parentid}";
+        //check account
+        int? AccountId = UserController.checkUserLogin(HttpContext);
+        if(AccountId != null){
+            url += "/" + AccountId;
+        }
+        
         var apiResponse = await _httpClient.GetAsync(url);
         if (apiResponse.StatusCode.ToString() != "OK")
         {

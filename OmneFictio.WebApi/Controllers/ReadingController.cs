@@ -51,7 +51,8 @@ public class ReadingController : ControllerBase
         {
             return NotFound();
         }
-        if(chapter.post != null && chapter.post.chapters != null && chapter.post.chapters.Count() > 0){
+        if (chapter.post != null && chapter.post.chapters != null && chapter.post.chapters.Count() > 0)
+        {
             chapter.post.chapters = chapter.post.chapters.Where(c => c.IsPublished == true).ToList();
         }
         return Ok(chapter);
@@ -68,7 +69,8 @@ public class ReadingController : ControllerBase
         {
             return NotFound();
         }
-        if(post.chapters != null && post.chapters.Count() > 0){
+        if (post.chapters != null && post.chapters.Count() > 0)
+        {
             post.chapters = post.chapters.Where(c => c.IsPublished == true).ToList();
         }
         return Ok(post);
@@ -103,17 +105,19 @@ public class ReadingController : ControllerBase
         {
             return NotFound();
         }
-        foreach(PostDtoRead_1 post in posts_onepage){
-            if(post.chapters != null && post.chapters.Count() > 0)
+        foreach (PostDtoRead_1 post in posts_onepage)
+        {
+            if (post.chapters != null && post.chapters.Count() > 0)
                 post.chapters = post.chapters.Where(c => c.IsPublished == true).ToList();
         }
         return Ok(new { posts = posts_onepage, pages = pageCount });
     }
 
-    [HttpGet("GetComments/{type}/{parentid}")]
-    public async Task<IActionResult> GetComments(string type, int parentid)
+    [HttpGet("GetComments/{type}/{parentid}/{userId?}")]
+    public async Task<IActionResult> GetComments(string type, int parentid, int? userId)
     {
         List<CommentDtoRead_2> comments = new List<CommentDtoRead_2>();
+
         if (type == "post")
         {
             comments = await _mapper.ProjectTo<CommentDtoRead_2>(_db.Comments.Where(c =>
@@ -127,6 +131,18 @@ public class ReadingController : ControllerBase
                 c.targetChapterId == parentid &&
                 c.deletedStatus!.body == "Default")
                 .OrderByDescending(c => c.publishDate)).ToListAsync();
+        }
+
+        if (userId != null)
+        {
+            foreach (var x in comments)
+            {
+                Vote? vote = await _db.Votes.SingleOrDefaultAsync(v =>
+                    v.accountId == userId && 
+                    v.targetCommentId == x.Id);
+                if(vote != null)
+                    x.VotedByUser = vote.body;
+            }
         }
 
         if (comments == null || comments.Count() == 0)

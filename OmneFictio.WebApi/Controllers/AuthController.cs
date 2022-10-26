@@ -149,9 +149,13 @@ public class AuthController : ControllerBase
             var profilePic = jwt.Claims.First(claim => claim.Type == "picture").Value;
             var name = Regex.Replace(jwt.Claims.First(claim => claim.Type == "name").Value, @"\s+", "");
             var username = name;
-            while (await _db.Accounts.AnyAsync(a => a.username == username))
+            for (int i = 0; i < 500; i++)
             {
-                username = name + random.Next(100, 1000).ToString();
+                if (await _db.Accounts.AnyAsync(a => a.username == username))
+                {
+                    username = name + random.Next(100, 1000).ToString();
+                }
+                else { break; }
             }
             string passwordHash = BC.HashPassword(UserController.GeneratePassword(16, 8));
 
