@@ -101,6 +101,12 @@ public class ReadingController : Controller
     public async Task<JsonResult> GetHighlightedReply(int commentId)
     {
         string url = "Read/GetHighlightedReply/" + commentId;
+        //check account
+        int? AccountId = UserController.checkUserLogin(HttpContext);
+        if(AccountId != null){
+            url += "/" + AccountId;
+        }
+
         var apiResponse = await _httpClient.GetAsync(url);
         if (apiResponse.StatusCode.ToString() != "OK")
         {
@@ -117,6 +123,12 @@ public class ReadingController : Controller
     public async Task<JsonResult> GetComment(int commentId)
     {
         string url = "Read/GetComment/" + commentId;
+        //check account
+        int? AccountId = UserController.checkUserLogin(HttpContext);
+        if(AccountId != null){
+            url += "/" + AccountId;
+        }
+        
         var apiResponse = await _httpClient.GetAsync(url);
         if (apiResponse.StatusCode.ToString() != "OK")
         {

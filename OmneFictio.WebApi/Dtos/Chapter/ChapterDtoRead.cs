@@ -18,6 +18,7 @@ public class ChapterDtoRead_2
     public string? body { get; set; }
     public PostDtoRead_2? post { get; set; }
     public int VoteResult { get; set; } = 0;
+    public bool? VotedByUser { get; set; } = null;
     public ChapterDtoRead_2(ICollection<VoteDto>? Votes)
     {
         if(Votes != null && Votes.Count > 0) {

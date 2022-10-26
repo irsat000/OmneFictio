@@ -48,6 +48,7 @@ public class CommentDtoRead_3
     public DeletedStatusDto? DeletedStatus { get; set; }
     public int VoteResult { get; set; } = 0;
     public int RepliesLength { get; set; } = 0;
+    public bool? VotedByUser { get; set; } = null;
     public ICollection<ReplyDtoRead_2>? Replies { get; set; }
     public CommentDtoRead_3(ICollection<VoteDto>? Votes, ICollection<ReplyDtoRead_2>? Replies)
     {

@@ -25,6 +25,7 @@ public class PostDtoRead_1
 
     public int voteResult { get; set; } = 0;
     public double rateResult { get; set; } = -1;
+    public bool? VotedByUser { get; set; } = null;
     public PostDtoRead_1(ICollection<VoteDto>? votes, ICollection<RateDto>? rates)
     {
         if (votes != null && votes.Count > 0)

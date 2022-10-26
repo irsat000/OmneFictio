@@ -38,8 +38,8 @@ public class ReadingController : ControllerBase
         _db = db;
     }
 
-    [HttpGet("GetChapter/{postid}/{chapterindex}")]
-    public async Task<IActionResult> GetChapter(int postid, int chapterindex)
+    [HttpGet("GetChapter/{postid}/{chapterindex}/{userId?}")]
+    public async Task<IActionResult> GetChapter(int postid, int chapterindex, int? userId)
     {
         var chapter = await _mapper.ProjectTo<ChapterDtoRead_2>(_db.Chapters.Where(c =>
             c.postId == postid &&
@@ -55,11 +55,20 @@ public class ReadingController : ControllerBase
         {
             chapter.post.chapters = chapter.post.chapters.Where(c => c.IsPublished == true).ToList();
         }
+        //check vote by user
+        if (userId != null)
+        {
+            Vote? checkVoteByUser = await _db.Votes.SingleOrDefaultAsync(v =>
+                v.accountId == userId &&
+                v.targetChapterId == chapter.id);
+            if (checkVoteByUser != null)
+                chapter.VotedByUser = checkVoteByUser.body;
+        }
         return Ok(chapter);
     }
 
-    [HttpGet("GetPost/{postid}")]
-    public async Task<IActionResult> GetPost(int postid)
+    [HttpGet("GetPost/{postid}/{userId?}")]
+    public async Task<IActionResult> GetPost(int postid, int? userId)
     {
         var post = await _mapper.ProjectTo<PostDtoRead_1>(_db.Posts.Where(p =>
             p.isPublished == true &&
@@ -73,12 +82,21 @@ public class ReadingController : ControllerBase
         {
             post.chapters = post.chapters.Where(c => c.IsPublished == true).ToList();
         }
+        //check vote by user
+        if (userId != null)
+        {
+            Vote? checkVoteByUser = await _db.Votes.SingleOrDefaultAsync(v =>
+                v.accountId == userId &&
+                v.targetPostId == post.id);
+            if (checkVoteByUser != null)
+                post.VotedByUser = checkVoteByUser.body;
+        }
         return Ok(post);
     }
 
-    [HttpGet("GetPosts")]
+    [HttpGet("GetPosts/{userId?}")]
     public async Task<IActionResult> GetPosts
-        (int page = 1, int ppp = 20)
+        (int? userId, int page = 1, int ppp = 20)
     {
         //Check filters
         if (page < 1 || ppp < 1)
@@ -109,6 +127,15 @@ public class ReadingController : ControllerBase
         {
             if (post.chapters != null && post.chapters.Count() > 0)
                 post.chapters = post.chapters.Where(c => c.IsPublished == true).ToList();
+            //check vote by user
+            if (userId != null)
+            {
+                Vote? checkVoteByUser = await _db.Votes.SingleOrDefaultAsync(v =>
+                    v.accountId == userId &&
+                    v.targetPostId == post.id);
+                if (checkVoteByUser != null)
+                    post.VotedByUser = checkVoteByUser.body;
+            }
         }
         return Ok(new { posts = posts_onepage, pages = pageCount });
     }
@@ -133,48 +160,58 @@ public class ReadingController : ControllerBase
                 .OrderByDescending(c => c.publishDate)).ToListAsync();
         }
 
-        if (userId != null)
-        {
-            foreach (var x in comments)
-            {
-                Vote? vote = await _db.Votes.SingleOrDefaultAsync(v =>
-                    v.accountId == userId && 
-                    v.targetCommentId == x.Id);
-                if(vote != null)
-                    x.VotedByUser = vote.body;
-            }
-        }
-
         if (comments == null || comments.Count() == 0)
         {
             return NotFound();
         }
+        //check vote by user
+        if (userId != null)
+        {
+            foreach (var x in comments)
+            {
+                Vote? checkVoteByUser = await _db.Votes.SingleOrDefaultAsync(v =>
+                    v.accountId == userId &&
+                    v.targetCommentId == x.Id);
+                if (checkVoteByUser != null)
+                    x.VotedByUser = checkVoteByUser.body;
+            }
+        }
         return Ok(comments);
     }
 
-    [HttpGet("GetHighlightedReply/{commentid}")]
-    public async Task<IActionResult> GetHighlightedReply(int commentid)
+    [HttpGet("GetHighlightedReply/{commentid}/{userId?}")]
+    public async Task<IActionResult> GetHighlightedReply(int commentid, int? userId)
     {
         //Get the comment's replies
         var replies = await _mapper.ProjectTo<ReplyDtoRead_2>(_db.Replies.Where(r =>
             r.commentId == commentid)).ToListAsync();
         //get highlighted
-        ReplyDtoRead_2? HighlightedReply =
+        ReplyDtoRead_2? hReply =
                     replies.OrderByDescending(r => r.VoteResult)
                         .ThenBy(r => r.PublishDate).FirstOrDefault();
 
-        if (HighlightedReply == null)
+        if (hReply == null)
         {
             return NotFound();
         }
-        return Ok(HighlightedReply);
+        //check vote by user
+        if (userId != null)
+        {
+            Vote? checkVoteByUser = await _db.Votes.SingleOrDefaultAsync(v =>
+                v.accountId == userId &&
+                v.targetReplyId == hReply.Id);
+            if (checkVoteByUser != null)
+                hReply.VotedByUser = checkVoteByUser.body;
+        }
+        return Ok(hReply);
     }
 
-    [HttpGet("GetComment/{commentid}")]
-    public async Task<IActionResult> GetComment(int commentid)
+    [HttpGet("GetComment/{commentid}/{userId?}")]
+    public async Task<IActionResult> GetComment(int commentid, int? userId)
     {
         var comment = await _mapper.ProjectTo<CommentDtoRead_3>(_db.Comments.Where(c =>
         c.id == commentid)).FirstOrDefaultAsync();
+        //checking integrity
         if (comment == null)
         {
             return NotFound();
@@ -183,12 +220,31 @@ public class ReadingController : ControllerBase
         {
             return Unauthorized();
         }
-
-        if (comment.Replies != null && comment.Replies.Count() > 0)
+        if (comment.Replies == null || comment.Replies.Count() < 1)
         {
-            comment.Replies = comment.Replies
-                .Where(r => r.DeletedStatus!.Body == "Default")
-                .OrderBy(r => r.PublishDate).ToList();
+            return NotFound();
+        }
+        //filtering deleted replies
+        comment.Replies = comment.Replies
+            .Where(r => r.DeletedStatus!.Body == "Default")
+            .OrderBy(r => r.PublishDate).ToList();
+        //check vote by user
+        if (userId != null)
+        {
+            Vote? checkVoteByUser_c = await _db.Votes.SingleOrDefaultAsync(v =>
+                v.accountId == userId &&
+                v.targetCommentId == comment.Id);
+            if (checkVoteByUser_c != null)
+                comment.VotedByUser = checkVoteByUser_c.body;
+
+            foreach (var x in comment.Replies)
+            {
+                Vote? checkVoteByUser_r = await _db.Votes.SingleOrDefaultAsync(v =>
+                    v.accountId == userId &&
+                    v.targetReplyId == x.Id);
+                if (checkVoteByUser_r != null)
+                    x.VotedByUser = checkVoteByUser_r.body;
+            }
         }
         return Ok(comment);
     }
