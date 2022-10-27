@@ -5,12 +5,13 @@ using OmneFictio.WebApi.Configurations;
 //basic
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
-//tools
+using System.Linq;
+using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Text.RegularExpressions;
+//tools
 using System.IdentityModel.Tokens.Jwt;
-using System.Text;
 using AutoMapper;
 using BC = BCrypt.Net.BCrypt;
 using System.Data.Entity.Validation;
@@ -133,6 +134,20 @@ public class ReadingController : ControllerBase
         {
             if (post.chapters != null && post.chapters.Count() > 0)
                 post.chapters = post.chapters.Where(c => c.IsPublished == true).ToList();
+
+            var commentIds = _db.Comments
+                .Where(x => x.targetPostId == post.id &&
+                        x.deletedStatus.body == "Default")
+                .Select(x => x.id);
+            var replyIds = _db.Replies
+                .Where(x => commentIds.Contains(x.commentId ?? 0) &&
+                        x.deletedStatus.body == "Default")
+                .Select(x => x.id);
+            post.comRepLength = commentIds.Count() + replyIds.Count(); //_db.Comments.Where(c => c.targetPostId == post.id).Count();
+
+            char[] delimiters = new char[] {' ', '\r', '\n' };
+            post.wordsLength = "aaa asdf asdf".Split(delimiters, StringSplitOptions.RemoveEmptyEntries).Length;
+
             //check vote by user
             if (userId != null)
             {
@@ -254,36 +269,36 @@ public class ReadingController : ControllerBase
         }
         return Ok(comment);
     }
-/*
-OUTDATED. But I might use this for special occasions.
-    [HttpGet("CheckVoteByUser")]
-    public async Task<IActionResult> CheckVoteByUser(int AccountId, int TargetId, string TargetType)
-    {
-        Vote? vote = new Vote();
-        switch (TargetType)
+    /*
+    OUTDATED. But I might use this for special occasions.
+        [HttpGet("CheckVoteByUser")]
+        public async Task<IActionResult> CheckVoteByUser(int AccountId, int TargetId, string TargetType)
         {
-            case "post":
-                vote = await _db.Votes.FirstOrDefaultAsync(v =>
-                v.accountId == AccountId && v.targetPostId == TargetId);
-                break;
-            case "comment":
-                vote = await _db.Votes.FirstOrDefaultAsync(v =>
-                v.accountId == AccountId && v.targetCommentId == TargetId);
-                break;
-            case "reply":
-                vote = await _db.Votes.FirstOrDefaultAsync(v =>
-                v.accountId == AccountId && v.targetReplyId == TargetId);
-                break;
-            case "chapter":
-                vote = await _db.Votes.FirstOrDefaultAsync(v =>
-                v.accountId == AccountId && v.targetChapterId == TargetId);
-                break;
+            Vote? vote = new Vote();
+            switch (TargetType)
+            {
+                case "post":
+                    vote = await _db.Votes.FirstOrDefaultAsync(v =>
+                    v.accountId == AccountId && v.targetPostId == TargetId);
+                    break;
+                case "comment":
+                    vote = await _db.Votes.FirstOrDefaultAsync(v =>
+                    v.accountId == AccountId && v.targetCommentId == TargetId);
+                    break;
+                case "reply":
+                    vote = await _db.Votes.FirstOrDefaultAsync(v =>
+                    v.accountId == AccountId && v.targetReplyId == TargetId);
+                    break;
+                case "chapter":
+                    vote = await _db.Votes.FirstOrDefaultAsync(v =>
+                    v.accountId == AccountId && v.targetChapterId == TargetId);
+                    break;
+            }
+            if (vote == null)
+            {
+                return NotFound();
+            }
+            return Ok(vote.body);
         }
-        if (vote == null)
-        {
-            return NotFound();
-        }
-        return Ok(vote.body);
-    }
-*/
+    */
 }

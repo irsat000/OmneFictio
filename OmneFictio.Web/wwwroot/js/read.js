@@ -50,6 +50,7 @@ $(document).ready(function () {
                         clone.querySelector('.pi-rating').innerText = post.ratedAs.body;
 
                         clone.querySelector('.pi-amount_of_chapters').innerText = post.chapters.length;
+                        clone.querySelector('.pi-amount_of_comments').innerText = post.comRepLength;
                         clone.querySelector('.pi-last_update').innerText = window.TimeAgo(post.updateDate);
 
                         const tagSection = clone.querySelector('.pi-tags');

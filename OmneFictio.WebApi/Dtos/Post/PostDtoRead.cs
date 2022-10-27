@@ -25,6 +25,8 @@ public class PostDtoRead_1
 
     public int voteResult { get; set; } = 0;
     public double rateResult { get; set; } = -1;
+    public int comRepLength { get; set; } = 0;
+    public int wordsLength { get; set; } = 0;
     public bool? VotedByUser { get; set; } = null;
     public double? RatedByUser { get; set; } = null;
     public PostDtoRead_1(ICollection<VoteDto>? votes, ICollection<RateDto>? rates)
