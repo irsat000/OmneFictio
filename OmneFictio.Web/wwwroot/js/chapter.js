@@ -25,8 +25,7 @@ $(document).ready(function () {
                     const instance = document.getElementById("chapter_instance");
                     const clone = instance.content.cloneNode(true);
                     //Check if user voted this parent
-                    const checkvotepayload = "TargetId=" + ch.id + "&TargetType=chapter";
-                    await window.checkVoted_IconStuff(clone, checkvotepayload);
+                    window.checkVoted_icons(clone, ch.votedByUser);
 
                     clone.querySelector('.ch-caption h3').innerText = ch.post.title;
                     clone.querySelector('.ch-caption h5').innerText = ch.title;

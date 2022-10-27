@@ -8,11 +8,14 @@ public class ActionController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly HttpClient _httpClient;
+    private int? AccountId = null;
 
-    public ActionController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory)
+    public ActionController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory, IHttpContextAccessor IHttpContextAccessor)
     {
         _logger = logger;
         _httpClient = httpClientFactory.CreateClient("of");
+        //check account
+        AccountId = UserController.checkUserLogin(IHttpContextAccessor.HttpContext);
     }
 
 
@@ -20,8 +23,6 @@ public class ActionController : Controller
     [HttpPost]
     public async Task<JsonResult> Vote([FromBody] VoteWrite1 request)
     {
-        //check account
-        int? AccountId = UserController.checkUserLogin(HttpContext);
         if(AccountId == null){
             return new JsonResult(Unauthorized());
         }
@@ -40,8 +41,6 @@ public class ActionController : Controller
     [HttpPost]
     public async Task<JsonResult> RateThePost([FromBody] RateInfo request)
     {
-        //check account
-        int? AccountId = UserController.checkUserLogin(HttpContext);
         if(AccountId == null){
             return new JsonResult(Unauthorized());
         }
@@ -59,8 +58,6 @@ public class ActionController : Controller
     [HttpPost]
     public async Task<JsonResult> AddComment([FromBody] CommentWrite1 request)
     {
-        //check account
-        int? AccountId = UserController.checkUserLogin(HttpContext);
         if(AccountId == null){
             return new JsonResult(Unauthorized());
         }
@@ -77,8 +74,6 @@ public class ActionController : Controller
 
     [HttpPost]
     public async Task<JsonResult> CreatePost([FromBody] PostWrite1 request){
-        //check account
-        int? AccountId = UserController.checkUserLogin(HttpContext);
         if(AccountId == null){
             return new JsonResult(Unauthorized());
         }

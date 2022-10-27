@@ -9,17 +9,24 @@ public class ReadingController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly HttpClient _httpClient;
+    private int? AccountId = null;
 
-    public ReadingController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory)
+    public ReadingController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory, IHttpContextAccessor IHttpContextAccessor)
     {
         _logger = logger;
         _httpClient = httpClientFactory.CreateClient("of");
+        //check account
+        AccountId = UserController.checkUserLogin(IHttpContextAccessor.HttpContext);
     }
 
     [HttpGet("g/GetChapter/{postid}/{chapterindex}")]
     public async Task<IActionResult> GetChapter(int postid, int chapterindex)
     {
         string url = $"Read/GetChapter/{postid}/{chapterindex}";
+        if(AccountId != null){
+            url += "/" + AccountId;
+        }
+
         var apiResponse = await _httpClient.GetAsync(url);
         if(apiResponse.StatusCode.ToString() != "OK"){
             return new JsonResult(NotFound());
@@ -33,6 +40,10 @@ public class ReadingController : Controller
     public async Task<IActionResult> GetPost(string postid)
     {
         string url = "Read/GetPost/" + postid;
+        if(AccountId != null){
+            url += "/" + AccountId;
+        }
+
         var apiResponse = await _httpClient.GetAsync(url);
         if (apiResponse.StatusCode.ToString() != "OK")
         {
@@ -47,8 +58,12 @@ public class ReadingController : Controller
     [HttpGet("g/GetPosts")]
     public async Task<JsonResult> GetPosts(int? page, int? ppp)
     {
+        string urlpath = "Read/GetPosts";
+        if(AccountId != null){
+            urlpath += "/" + AccountId;
+        }
         //Create url (filters)
-        var url = new UriBuilder(_httpClient.BaseAddress!.AbsoluteUri + "Read/GetPosts");
+        var url = new UriBuilder(_httpClient.BaseAddress!.AbsoluteUri + urlpath);
         var query = HttpUtility.ParseQueryString(url.Query);
         if (page != null)
         {
@@ -80,8 +95,6 @@ public class ReadingController : Controller
     public async Task<JsonResult> GetComments(string type, int parentid)
     {
         string url = $"Read/GetComments/{type}/{parentid}";
-        //check account
-        int? AccountId = UserController.checkUserLogin(HttpContext);
         if(AccountId != null){
             url += "/" + AccountId;
         }
@@ -101,8 +114,6 @@ public class ReadingController : Controller
     public async Task<JsonResult> GetHighlightedReply(int commentId)
     {
         string url = "Read/GetHighlightedReply/" + commentId;
-        //check account
-        int? AccountId = UserController.checkUserLogin(HttpContext);
         if(AccountId != null){
             url += "/" + AccountId;
         }
@@ -123,8 +134,6 @@ public class ReadingController : Controller
     public async Task<JsonResult> GetComment(int commentId)
     {
         string url = "Read/GetComment/" + commentId;
-        //check account
-        int? AccountId = UserController.checkUserLogin(HttpContext);
         if(AccountId != null){
             url += "/" + AccountId;
         }
@@ -138,12 +147,11 @@ public class ReadingController : Controller
         string content = await apiResponse.Content.ReadAsStringAsync();
         return new JsonResult(Ok(content));
     }
-
+/*
+OUTDATED. But I might use this for special occasions.
     [HttpGet("g/CheckVoteByUser")]
     public async Task<JsonResult> CheckVoteByUser(int TargetId, string TargetType)
     {
-        //check account
-        int? AccountId = UserController.checkUserLogin(HttpContext);
         if (AccountId == null)
         {
             return new JsonResult(Unauthorized());
@@ -165,27 +173,6 @@ public class ReadingController : Controller
         string content = await apiResponse.Content.ReadAsStringAsync();
         return new JsonResult(Ok(content));
     }
-
-
-    [HttpGet("g/CheckRateByUser/{postid}")]
-    public async Task<JsonResult> CheckRateByUser(string postid)
-    {
-        //check account
-        int? AccountId = UserController.checkUserLogin(HttpContext);
-        if (AccountId == null)
-        {
-            return new JsonResult(Unauthorized());
-        }
-        string url = $"Read/CheckRateByUser/{postid}/{AccountId}";
-        //Request
-        var apiResponse = await _httpClient.GetAsync(url);
-        if (apiResponse.StatusCode.ToString() != "OK")
-        {
-            return new JsonResult(NotFound());
-        }
-        //return
-        string content = await apiResponse.Content.ReadAsStringAsync();
-        return new JsonResult(Ok(content));
-    }
+*/
 
 }

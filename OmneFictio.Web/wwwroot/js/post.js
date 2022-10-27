@@ -25,7 +25,6 @@ $(document).ready(function () {
             .then((res) => res.json())
             .then(async (data) => {
                 if (data.statusCode === 200) {
-                    CheckRateByUser();
                     window.fetchComments("post", postId, commentSection);
 
                     const post = JSON.parse(data.value);
@@ -33,10 +32,10 @@ $(document).ready(function () {
                     const clone = instance.content.cloneNode(true);
 
                     //Check if user voted this parent
-                    const checkvotepayload = "TargetId=" + post.id + "&TargetType=post";
-                    await window.checkVoted_IconStuff(clone, checkvotepayload);
+                    window.checkVoted_icons(clone, post.votedByUser);
 
                     clone.querySelector('.post-2').setAttribute('data-postid', post.id);
+
                     if (post.coverImage !== null) {
                         clone.querySelector('.p-basecover').setAttribute('src', '/images/covers/' + post.coverImage);
                         clone.querySelector('.p-upscalecover').setAttribute('src', '/images/covers/' + post.coverImage);
@@ -51,9 +50,7 @@ $(document).ready(function () {
                         clone.querySelector('.vote_count').innerText = post.voteResult;
                     }
                     clone.querySelector('.p-rate').innerText = post.rateResult >= 0 && post.rateResult <= 10
-                        ? Number((post.rateResult).toFixed(1)) + "/10"
-                        : "-/10";
-
+                        ? post.rateResult + "/10" : "-/10";
                     //user
                     if (post.account.displayName !== null) {
                         clone.querySelector('.p-username').innerText = post.account.displayName;
@@ -66,6 +63,11 @@ $(document).ready(function () {
                     clone.querySelectorAll('.pd-primary > span')[1].innerText = post.language.body;
                     clone.querySelectorAll('.pd-primary > span')[2].innerText = post.postStatus.body;
                     clone.querySelectorAll('.pd-primary > span')[3].innerText = post.ratedAs.body;
+
+                    //get user's rate
+                    if(post.ratedByUser != null){
+                        document.getElementById('rate_by_user').innerText = post.ratedByUser + "/10";
+                    }
 
                     const tagSection = clone.querySelector('.pd-tags');
                     const basedOnSection = clone.querySelector('.pd-series');
@@ -110,31 +112,11 @@ $(document).ready(function () {
             .catch(error => { console.log('Fetch failed -> ' + error); });;
     }
 
-    //Fetch function that brings me the existing rate.
-    async function CheckRateByUser() {
-        await fetch("/g/CheckRateByUser/" + postId, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                if (data.statusCode === 200) {
-                    document.getElementById('rate_by_user').innerText = data.value + "/10";
-                }
-            })
-            .catch(error => {
-                console.log('Fetch failed -> ' + error);
-            });
-    }
-
     //----Rating the post---
     document.getElementById('rate_it_btn')
         .addEventListener('click', async function () {
             const rateVal = document.getElementById('rate_it_select').value;
-            if (rateVal >= 1 && rateVal <= 10) {
+            if (rateVal >= 0 && rateVal <= 10) {
                 const ratePayload = {
                     PostId: postId,
                     RateValue: rateVal
@@ -150,7 +132,11 @@ $(document).ready(function () {
                     .then((res) => res.json())
                     .then((data) => {
                         if (data.statusCode === 200) {
-                            document.getElementById('rate_by_user').innerText = rateVal + "/10";
+                            if(rateVal != 0){
+                                document.getElementById('rate_by_user').innerText = rateVal + "/10";
+                            } else {
+                                document.getElementById('rate_by_user').innerText = "--/10";
+                            }
                         } else {
                             console.log("Server error -> " + data.statusCode);
                         }

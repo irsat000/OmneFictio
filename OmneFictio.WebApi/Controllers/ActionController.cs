@@ -104,7 +104,7 @@ public class ActionController : ControllerBase
     [HttpPost("Rate")]
     public async Task<IActionResult> Rate(RateInfo request)
     {
-        if (!(request.RateValue >= 1 && request.RateValue <= 10))
+        if (!(request.RateValue >= 0 && request.RateValue <= 10))
         {
             return BadRequest();
         }
@@ -116,15 +116,18 @@ public class ActionController : ControllerBase
         {
             _db.Rates.Remove(_db.Rates.SingleOrDefault(x => x.id == rate.id)!);
         }
-        //create new rate
-        rate = new Rate
+        
+        if (request.RateValue != 0)
         {
-            accountId = request.AccountId,
-            postId = request.PostId,
-            body = request.RateValue
-        };
-        await _db.Rates.AddAsync(rate);
-
+            //create new rate
+            rate = new Rate
+            {
+                accountId = request.AccountId,
+                postId = request.PostId,
+                body = request.RateValue
+            };
+            await _db.Rates.AddAsync(rate);
+        }
         try
         {
             await _db.SaveChangesAsync();
@@ -149,7 +152,7 @@ public class ActionController : ControllerBase
 
         if (request.TargetPostId != null && request.TargetPostId != 0)
             newComment.targetPostId = request.TargetPostId;
-        else if(request.TargetChapterId != null && request.TargetChapterId != 0)
+        else if (request.TargetChapterId != null && request.TargetChapterId != 0)
             newComment.targetChapterId = request.TargetChapterId;
         else
             return BadRequest();
@@ -176,12 +179,12 @@ public class ActionController : ControllerBase
             .FirstOrDefaultAsync();
         return Ok(new { returnComment });
     }
-    
+
     [HttpPost("CreatePost")]
     public async Task<IActionResult> CreatePost(PostDtoWrite_1 request)
     {
         if (request.Title == null ||
-            request.Title.Length > 250 || request.Title.Length == 0 || 
+            request.Title.Length > 250 || request.Title.Length == 0 ||
             request.PostDescription == null ||
             request.PostDescription.Length > 2000 || request.PostDescription.Length < 10)
         {

@@ -15,17 +15,16 @@ public class UserController : Controller
         _httpClient = httpClientFactory.CreateClient("of");
     }
 
-    public static int? checkUserLogin(HttpContext HttpContext){
+    public static int? checkUserLogin(HttpContext? context){
         try
         {
-            int? accountid = Convert.ToInt32(HttpContext.User.Claims.FirstOrDefault
+            if(context == null)
+                return null;
+            int? accountid = Convert.ToInt32(context.User.Claims.FirstOrDefault
             (claim => claim.Type == "nameid")?.Value);
             return accountid;
         }
-        catch (Exception)
-        {
-            return null;
-        } 
+        catch (Exception) { return null; } 
     }
 
 }

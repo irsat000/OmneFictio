@@ -325,10 +325,8 @@ async function fetchComments(type, parentid, section) {
                 const instance = document.getElementById('comment_instance');
                 for (const comment of JSON.parse(data.value)) {
                     const clone = instance.content.cloneNode(true);
-                    const checkvotepayload = "TargetId=" + comment.id + "&TargetType=comment";
                     //Check if user voted this parent
-                    //await window.checkVoted_IconStuff(clone, checkvotepayload);
-                    checkVoted_icons(clone, comment.votedByUser);
+                    window.checkVoted_icons(clone, comment.votedByUser);
 
                     clone.querySelector('.comment').setAttribute('data-commentid', comment.id);
                     if (comment.account.displayName != null) {
@@ -353,9 +351,7 @@ async function fetchComments(type, parentid, section) {
                     const hreply = await fetchHighlightedReply(comment.id);
                     if (hreply) {
                         //Check if user voted this parent
-                        const checkvotepayload_reply = "TargetId=" + hreply.id + "&TargetType=reply";
-                        //await window.checkVoted_IconStuff(clone.querySelector('.reply'), checkvotepayload_reply);
-                        checkVoted_icons(clone.querySelector('.reply'), hreply.votedByUser);
+                        window.checkVoted_icons(clone.querySelector('.reply'), hreply.votedByUser);
 
                         clone.querySelector('.reply').setAttribute('data-replyid', hreply.id);
                         clone.querySelector('.r-text > span').textContent = hreply.body;
@@ -425,9 +421,7 @@ async function fetchReplies(commentId, section) {
                 const replyInstance = document.getElementById('modalReplies-reply');
                 const commentClone = commentInstance.content.cloneNode(true);
                 //Check if user voted this parent
-                const checkvotepayload = "TargetId=" + comm.id + "&TargetType=comment";
-                //await window.checkVoted_IconStuff(commentClone, checkvotepayload);
-                checkVoted_icons(commentClone, comm.votedByUser);
+                window.checkVoted_icons(commentClone, comm.votedByUser);
 
                 commentClone.querySelector('.mr-comment').setAttribute('data-commentid', comm.id);
                 if (comm.account.displayName != null) {
@@ -442,29 +436,12 @@ async function fetchReplies(commentId, section) {
                 }
                 section.appendChild(commentClone);
 
-
                 //if it has replies
-
                 if (comm.replies.length > 0) {
-                    /*commentClone.querySelector('.mr-comment').setAttribute('data-commentid', comm.id);
-                    if (comm.account.displayName != null) {
-                        commentClone.querySelector('.mrc-username').textContent = comm.account.displayName;
-                    } else {
-                        commentClone.querySelector('.mrc-username').textContent = comm.account.username;
-                    }
-                    commentClone.querySelector('.mrc-date').textContent = window.TimeAgo(comm.publishDate);
-                    commentClone.querySelector('.mrc-text > span').textContent = comm.body;
-                    if (comm.voteResult >= 0) {
-                        commentClone.querySelector('.mrc-likes').textContent = comm.voteResult;
-                    }
-                    section.appendChild(commentClone);*/
-
                     for (const reply of comm.replies) {
                         const replyClone = replyInstance.content.cloneNode(true);
                         //Check if user voted this parent
-                        const checkvotepayload_reply = "TargetId=" + reply.id + "&TargetType=reply";
-                        //await window.checkVoted_IconStuff(replyClone, checkvotepayload_reply);
-                        checkVoted_icons(replyClone, reply.votedByUser);
+                        window.checkVoted_icons(replyClone, reply.votedByUser);
 
                         replyClone.querySelector('.mr-reply').setAttribute('data-replyid', reply.id);
                         if (reply.account.displayName != null) {
@@ -589,7 +566,8 @@ function voting_visual(btn, action) {
         }
     }
 }
-
+/*
+OUTDATED. But I might use this for special occasions.
 async function checkVoted_IconStuff(clone, checkvotepayload) {
     await fetch("/g/CheckVoteByUser?" + checkvotepayload, {
         method: 'GET',
@@ -625,7 +603,7 @@ async function checkVoted_IconStuff(clone, checkvotepayload) {
             console.log('vote check failed -> ' + error);
         });
 }
-
+*/
 function checkVoted_icons(clone, val) {
     const likebtn = clone.querySelector('[data-action="like"]');
     const dislikebtn = clone.querySelector('[data-action="dislike"]');

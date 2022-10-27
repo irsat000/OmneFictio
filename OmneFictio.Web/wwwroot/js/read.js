@@ -27,8 +27,7 @@ $(document).ready(function () {
                         const clone = instance.content.cloneNode(true);
 
                         //Check if user voted this parent
-                        const checkvotepayload = "TargetId=" + post.id + "&TargetType=post";
-                        await window.checkVoted_IconStuff(clone, checkvotepayload);
+                        window.checkVoted_icons(clone, post.votedByUser);
 
                         clone.querySelector('.post').setAttribute('data-postid', post.id);
                         clone.querySelector('.p-title > a').setAttribute('href', '/p/' + post.id);

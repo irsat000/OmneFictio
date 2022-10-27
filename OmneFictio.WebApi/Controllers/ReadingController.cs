@@ -90,6 +90,12 @@ public class ReadingController : ControllerBase
                 v.targetPostId == post.id);
             if (checkVoteByUser != null)
                 post.VotedByUser = checkVoteByUser.body;
+
+            Rate? checkRateByUser = await _db.Rates.FirstOrDefaultAsync(r =>
+                r.accountId == userId &&
+                r.postId == post.id);
+            if (checkRateByUser != null)
+                post.RatedByUser = System.Math.Round(checkRateByUser.body, 1);
         }
         return Ok(post);
     }
@@ -248,7 +254,8 @@ public class ReadingController : ControllerBase
         }
         return Ok(comment);
     }
-
+/*
+OUTDATED. But I might use this for special occasions.
     [HttpGet("CheckVoteByUser")]
     public async Task<IActionResult> CheckVoteByUser(int AccountId, int TargetId, string TargetType)
     {
@@ -278,17 +285,5 @@ public class ReadingController : ControllerBase
         }
         return Ok(vote.body);
     }
-
-    [HttpGet("CheckRateByUser/{Postid}/{AccountId}")]
-    public async Task<IActionResult> CheckRateByUser(int Postid, int AccountId)
-    {
-        Rate? rate = await _db.Rates.FirstOrDefaultAsync(r =>
-            r.postId == Postid &&
-            r.accountId == AccountId);
-        if (rate == null)
-        {
-            return NotFound();
-        }
-        return Ok(rate.body);
-    }
+*/
 }
