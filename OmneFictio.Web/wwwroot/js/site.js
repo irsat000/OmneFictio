@@ -658,7 +658,7 @@ function capitalizeFirstLetter(string) {
 }
 
 
-function TimeAgo(time) {
+function TimeAgo(time, wordType = "long") {
     const periods = {
         month: 30 * 24 * 60 * 60 * 1000,
         week: 7 * 24 * 60 * 60 * 1000,
@@ -668,49 +668,61 @@ function TimeAgo(time) {
     };
     const diff = Date.now() - new Date(time);
     let val;
+    let attachment = "";
     if (diff > periods.month) {
-        // it was at least a month ago
         val = Math.floor(diff / periods.month);
-        if (val > 1) {
-            return val + " months ago";
-        } else if (val === 1) {
-            return val + " month ago";
+        if (wordType === "long") {
+            attachment = "month"
+        } else {
+            attachment = "mo"
         }
     }
     else if (diff > periods.week) {
         val = Math.floor(diff / periods.week);
-        if (val > 1) {
-            return val + " weeks ago";
-        } else if (val === 1) {
-            return val + " week ago";
+        if (wordType === "long") {
+            attachment = "week"
+        } else {
+            attachment = "w"
         }
     }
     else if (diff > periods.day) {
         val = Math.floor(diff / periods.day);
-        if (val > 1) {
-            return val + " days ago";
-        } else if (val === 1) {
-            return val + " day ago";
+        if (wordType === "long") {
+            attachment = "day"
+        } else {
+            attachment = "d"
         }
     }
     else if (diff > periods.hour) {
         val = Math.floor(diff / periods.hour);
-        if (val > 1) {
-            return val + " hours ago";
-        } else if (val === 1) {
-            return val + " hour ago";
+        if (wordType === "long") {
+            attachment = "h"
+        } else {
+            attachment = "h"
         }
     }
     else if (diff > periods.minute) {
         val = Math.floor(diff / periods.minute);
-        if (val > 1) {
-            return val + " minutes ago";
-        } else if (val === 1) {
-            return val + " minute ago";
+        if (wordType === "long") {
+            attachment = "m"
+        } else {
+            attachment = "m"
         }
     } else {
-        return "Just now";
+        if (wordType === "long") {
+            return "Just now";
+        } else {
+            return "Now";
+        }
     }
+    
+    if(val > 1 && wordType === "long"){
+        attachment += "s ago";
+    } else if(val === 1 && wordType === "long"){
+        attachment += "ago";
+    }
+
+    return val + " " + attachment;
 }
 
 function getSlashQuery(index) {

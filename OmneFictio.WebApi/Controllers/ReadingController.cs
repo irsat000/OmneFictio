@@ -132,9 +132,12 @@ public class ReadingController : ControllerBase
         }
         foreach (PostDtoRead_1 post in posts_onepage)
         {
+            //remove if the chapters are not published
+            //Maybe I can fix this from the root later
             if (post.chapters != null && post.chapters.Count() > 0)
                 post.chapters = post.chapters.Where(c => c.IsPublished == true).ToList();
-
+                
+            //Get comment and reply count
             var commentIds = _db.Comments
                 .Where(x => x.targetPostId == post.id &&
                         x.deletedStatus.body == "Default")
@@ -143,10 +146,19 @@ public class ReadingController : ControllerBase
                 .Where(x => commentIds.Contains(x.commentId ?? 0) &&
                         x.deletedStatus.body == "Default")
                 .Select(x => x.id);
-            post.comRepLength = commentIds.Count() + replyIds.Count(); //_db.Comments.Where(c => c.targetPostId == post.id).Count();
+            post.comRepLength = commentIds.Count() + replyIds.Count();
 
-            char[] delimiters = new char[] {' ', '\r', '\n' };
-            post.wordsLength = "aaa asdf asdf".Split(delimiters, StringSplitOptions.RemoveEmptyEntries).Length;
+            //Get the sum of words in chapters of the post
+            char[] wordSeparator = new char[] {' ', '\r', '\n' };
+            var chbodyList = _db.Chapters
+                .Where(x => x.postId == post.id &&
+                        x.deletedStatus.body == "Default" &&
+                        x.isPublished == true)
+                .Select(x => x.body);
+            foreach(string? chbody in chbodyList){
+                post.wordsLength += chbody != null
+                    ? chbody.Split(wordSeparator, StringSplitOptions.RemoveEmptyEntries).Length : 0;
+            }
 
             //check vote by user
             if (userId != null)
