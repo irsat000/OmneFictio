@@ -74,15 +74,22 @@ public class ReadingController : Controller
             query["ppp"] = ppp.ToString();
         }
         url.Query = query.ToString();
-        //request
-        var apiResponse = await _httpClient.GetAsync(url.ToString());
-        if (apiResponse.StatusCode.ToString() != "OK")
+        try
         {
-            return new JsonResult(NotFound());
+            //request
+            var apiResponse = await _httpClient.GetAsync(url.ToString());
+            if (apiResponse.StatusCode.ToString() != "OK")
+            {
+                return new JsonResult(NotFound());
+            }
+            //return
+            string content = await apiResponse.Content.ReadAsStringAsync();
+            return new JsonResult(Ok(content));
         }
-        //return
-        string content = await apiResponse.Content.ReadAsStringAsync();
-        return new JsonResult(Ok(content));
+        catch (System.Exception)
+        {
+            return new JsonResult(StatusCode(500));
+        }
 
         /*var respond = JsonSerializer.Deserialize<Dictionary<string, object>>(rawString);
         string posts = respond!.FirstOrDefault(x => x.Key == "posts").Value.ToString()!;

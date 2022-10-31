@@ -3,6 +3,10 @@ $(document).ready(function () {
     const postShowroom = document.querySelector('.posts-cont');
     const params = new URLSearchParams(window.location.search);
     const curpage = params.has('page') ? parseInt(params.get('page'), 10) : 1;
+    //Error message references
+    const plwarning = document.getElementById('plwarning');
+    const plw_message = plwarning.querySelector('.plwarning-message');
+    const plw_img = plwarning.querySelector('.plwarning-img');
 
     fetchPosts();
     async function fetchPosts() {
@@ -141,15 +145,23 @@ $(document).ready(function () {
                     if (response.pages !== 1) {
                         postShowroom.appendChild(pagClone);
                     }
+                } else if (data.statusCode === 404) {
+                    plw_message.innerText = "In terms of posts, we have no posts.";
+                    plw_img.setAttribute("src", "/images/onerror/noposts.webp");
+                    plwarning.style.display = "flex";
                 } else {
-                    alert("NOO");
+                    plw_message.querySelector('.plwarning-message').innerText = "Couldn't connect to API.";
+                    plw_img.setAttribute("src", "/images/onerror/connectionerror.png");
+                    plwarning.style.display = "flex";
                     //Codes that will return an apology instead of post list
                 }
             })
             .catch(error => {
                 pl_column1.innerHTML = "";
                 pl_column2.innerHTML = "";
-                alert("NOO");
+                plw_message.innerText = "Unknown error.";
+                plw_img.setAttribute("src", "/images/onerror/connectionerror.png");
+                plwarning.style.display = "flex";
                 console.log('Fetch failed -> ' + error);
             });
     }

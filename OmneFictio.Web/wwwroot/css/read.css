@@ -62,6 +62,25 @@ main {
   margin-left: auto;
   margin-right: 36px;
 }
+.posts-cont .post-list-warnings #plwarning {
+  margin-top: 16px;
+  display: none;
+  flex-direction: column;
+  gap: 10px;
+  color: var(--text-color1);
+  text-align: center;
+}
+.posts-cont .post-list-warnings #plwarning h1 {
+  font-family: "Josefin Sans";
+}
+.posts-cont .post-list-warnings #plwarning h3 {
+  font-family: "Raleway", sans-serif;
+}
+.posts-cont .post-list-warnings #plwarning img {
+  width: 40%;
+  height: auto;
+  margin: 0 auto;
+}
 .posts-cont .post-list {
   width: 100%;
   display: flex;
@@ -633,6 +652,9 @@ main {
   }
   .pagination {
     background-color: var(--background-color1);
+  }
+  .post-list-warnings img {
+    width: 25% !important;
   }
 }
 @media (min-width: 992px) {

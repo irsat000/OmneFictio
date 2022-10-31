@@ -71,6 +71,28 @@ main {
             margin-right: 36px;
         }
     }
+    
+    .post-list-warnings{
+        #plwarning {
+            margin-top: 16px;
+            display: none;
+            flex-direction: column;
+            gap: 10px;
+            color: var(--text-color1);
+            text-align: center;
+            h1{
+                font-family: 'Josefin Sans';
+            }
+            h3{
+                font-family: 'Raleway', sans-serif;
+            }
+            img{
+                width: 40%;
+                height: auto;
+                margin: 0 auto;
+            }
+        }
+    }
 
     .post-list {
         width: 100%;
@@ -715,6 +737,10 @@ main {
 
     .pagination {
         background-color: var(--background-color1);
+    }
+    
+    .post-list-warnings img{
+        width: 25% !important;
     }
 }
 
