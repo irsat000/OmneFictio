@@ -2,8 +2,9 @@
 namespace OmneFictio.WebApi.Dtos;
 public class CommentDtoRead_1
 {
-    public int Id { get; set; }
-    public ICollection<ReplyDtoRead_1>? Replies { get; set; }
+    public int id { get; set; }
+    public DeletedStatusDto? deletedStatus { get; set; }
+    public ICollection<ReplyDtoRead_1>? replies { get; set; }
 }
 
 
@@ -27,7 +28,7 @@ public class CommentDtoRead_2
             this.VoteResult = Votes.Count(l => l.Body) - Votes.Count(d => !d.Body);
         }
         if(Replies != null && Replies.Count > 0) {
-            this.RepliesLength = Replies.Count(r => r.DeletedStatus!.Body == "Default");
+            this.RepliesLength = Replies.Count(r => r.deletedStatus!.Body == "Default");
         }
     }
 }

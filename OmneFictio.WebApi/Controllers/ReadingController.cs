@@ -17,6 +17,7 @@ using BC = BCrypt.Net.BCrypt;
 using System.Data.Entity.Validation;
 using Google.Apis.Auth;
 using static Google.Apis.Auth.GoogleJsonWebSignature;
+using System.Diagnostics;
 
 namespace OmneFictio.WebApi.Controllers;
 
@@ -130,23 +131,25 @@ public class ReadingController : ControllerBase
         {
             return NotFound();
         }
+        //Stopwatch elapsedTimeForExtras = new Stopwatch();
         foreach (PostDtoRead_1 post in posts_onepage)
         {
             //remove if the chapters are not published
             //Maybe I can fix this from the root later
             if (post.chapters != null && post.chapters.Count() > 0)
                 post.chapters = post.chapters.Where(c => c.IsPublished == true).ToList();
-                
+            
+            //elapsedTimeForExtras.Start();
             //Get comment and reply count
             var commentIds = _db.Comments
                 .Where(x => x.targetPostId == post.id &&
                         x.deletedStatus.body == "Default")
                 .Select(x => x.id);
-            var replyIds = _db.Replies
-                .Where(x => commentIds.Contains(x.commentId ?? 0) &&
-                        x.deletedStatus.body == "Default")
-                .Select(x => x.id);
-            post.comRepLength = commentIds.Count() + replyIds.Count();
+            var replyCount = _db.Replies
+                .Count(x => commentIds.Contains(x.commentId ?? -1) &&
+                        x.deletedStatus.body == "Default");
+            post.comRepLength = commentIds.Count() + replyCount;
+            //elapsedTimeForExtras.Stop();
 
             //Get the sum of words in chapters of the post
             char[] wordSeparator = new char[] {' ', '\r', '\n' };
@@ -170,7 +173,7 @@ public class ReadingController : ControllerBase
                     post.VotedByUser = checkVoteByUser.body;
             }
         }
-        return Ok(new { posts = posts_onepage, pages = pageCount });
+        return Ok(new { posts = posts_onepage, pages = pageCount});
     }
 
     [HttpGet("GetComments/{type}/{parentid}/{userId?}")]

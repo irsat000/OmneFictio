@@ -2,8 +2,8 @@
 namespace OmneFictio.WebApi.Dtos;
 public partial class ReplyDtoRead_1
 {
-    public int Id { get; set; }
-    public DeletedStatusDto? DeletedStatus { get; set; }
+    public int id { get; set; }
+    public DeletedStatusDto? deletedStatus { get; set; }
 }
 //to get the number of replies
 

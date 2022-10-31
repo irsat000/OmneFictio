@@ -6,6 +6,9 @@ $(document).ready(function () {
 
     fetchPosts();
     async function fetchPosts() {
+        //I use columns for masonry design.
+        const pl_column1 = document.getElementById('pl-column1');
+        const pl_column2 = document.getElementById('pl-column2');
         await fetch("/g/GetPosts?" + params, {
             method: 'GET',
             headers: {
@@ -15,14 +18,16 @@ $(document).ready(function () {
         })
             .then((res) => res.json())
             .then(async (data) => {
+                /*const delay = ms => new Promise(res => setTimeout(res, ms));
+                await delay(10000);*/
+                pl_column1.innerHTML = "";
+                pl_column2.innerHTML = "";
                 if (data.statusCode === 200) {
+                    //const postListSection = document.getElementById('postListSection');
+
                     //GET THE POSTS
                     const instance = document.getElementById('postList-post');
                     const response = JSON.parse(data.value);
-                    //const postListSection = document.getElementById('postListSection');
-                    //I use columns for masonry design.
-                    const pl_column1 = document.getElementById('pl-column1');
-                    const pl_column2 = document.getElementById('pl-column2');
                     for (const post of response.posts) {
                         const clone = instance.content.cloneNode(true);
 
@@ -137,10 +142,14 @@ $(document).ready(function () {
                         postShowroom.appendChild(pagClone);
                     }
                 } else {
+                    alert("NOO");
                     //Codes that will return an apology instead of post list
                 }
             })
             .catch(error => {
+                pl_column1.innerHTML = "";
+                pl_column2.innerHTML = "";
+                alert("NOO");
                 console.log('Fetch failed -> ' + error);
             });
     }

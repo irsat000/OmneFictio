@@ -8,6 +8,15 @@
     <link rel="stylesheet" href="~/css/postitem.css" asp-append-version="true" />
     }
     @section Scripts {
+    <script asp-append-version="true">
+        const pl_column1 = document.getElementById('pl-column1');
+        const pl_column2 = document.getElementById('pl-column2');
+        const postSkelTemplate = document.getElementById("postSkeleton");
+        for (let i = 0; i < 6; i++) {
+            pl_column1.appendChild(postSkelTemplate.content.cloneNode(true));
+            pl_column2.appendChild(postSkelTemplate.content.cloneNode(true));
+        }
+    </script>
     <script src="~/js/read.js" asp-append-version="true"></script>
     }
 }
@@ -21,6 +30,23 @@
     userPicture = User.Claims.FirstOrDefault(claim => claim.Type == "actort")?.Value ?? "none";
 }
 
+<template id="postSkeleton">
+    <div class="post post-skel">
+        <div class="pskel-header">
+            <div class="pskel-title psk-item"></div>
+            <i class="bi bi-three-dots psk-item"></i>
+        </div>
+        <div class="pskel-body">
+            <div class="pskel-desc psk-item"></div>
+            <div class="pskel-desc psk-item"></div>
+        </div>
+        <div class="pskel-footer">
+            <div class="pskel-evaluation psk-item"></div>
+            <div class="pskel-uname psk-item"></div>
+            <i class="bi bi-person-circle psk-item"></i>
+        </div>
+    </div>
+</template>
 <template id="postList-post">
     <div class="post" data-postid="post.id">
         <div class="post-body">
@@ -68,7 +94,7 @@
                             <div class="pi-detail-column">
                                 <i class="bi bi-body-text"></i>
                                 <span class="pi-amount_of_words">
-                                    
+
                                 </span>
                             </div>
                             <div class="pi-detail-column">
@@ -203,11 +229,9 @@
                         </button>
                     </div>
                     <div class="ffs-series_include">
-                        <!--
-                                <span data-fseries="konosuba">Konosuba<i class="bi bi-x-circle f-removeseriesbtn"></i></span>
-                                <input type="hidden" name="seriesinclude" value="konosuba"/>
-                                -->
-                </div>
+                        <!-- <span data-fseries="konosuba">Konosuba<i class="bi bi-x-circle f-removeseriesbtn"></i></span>
+                        <input type="hidden" name="seriesinclude" value="konosuba"/> -->
+                    </div>
                 </div>
             }
         }
@@ -390,10 +414,8 @@
     </div>
     <div class="post-list pl-masonry" id="postListSection">
         <div id="pl-column1">
-
         </div>
         <div id="pl-column2">
-
         </div>
     </div>
 
