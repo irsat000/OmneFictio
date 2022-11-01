@@ -414,7 +414,6 @@ header .header-wrap {
   border: none;
   outline: none;
   width: 100%;
-  margin: 0 auto;
   border-radius: 4px;
 }
 .searchbar-cont .searchbar-wrap .searchbar ::-moz-placeholder {

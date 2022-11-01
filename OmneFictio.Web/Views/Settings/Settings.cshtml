@@ -1,0 +1,54 @@
+@{
+    ViewData["Title"] = "Settings";
+    @section Stylesheets {
+    <link rel="stylesheet" href="~/css/Settings.css" asp-append-version="true" />
+    }
+    @section Scripts {
+    <script src="~/js/Settings.js" asp-append-version="true"></script>
+    }
+}
+@{
+    string userId = "-1";
+    string username = "";
+    string userPicture = "none";
+
+    userId = User.Claims.FirstOrDefault(claim => claim.Type == "nameid")?.Value ?? "-1";
+    username = User.Claims.FirstOrDefault(claim => claim.Type == "unique_name")?.Value ?? "";
+    userPicture = User.Claims.FirstOrDefault(claim => claim.Type == "actort")?.Value ?? "none";
+}
+
+<nav>
+    <ul class="">
+        <li><a href="/settings/profile">Profile</a></li>
+        <li><a href="/settings/library">Library</a></li>
+        <li><a href="/settings/friends">Friends</a></li>
+        <li><a href="/settings">Settings</a></li>
+        <li><a href="/settings/customize">Customize</a></li>
+    </ul>
+</nav>
+<div class="settings_body">
+    <div class="s-friends">
+        <div class="sf-header">
+            <div class="searchF-wrap">
+                <i class="bi bi-search"></i>
+                <input type="text" placeholder="Search friend" class="searchF">
+            </div>
+            <button class="addfriend">
+                Friend <i class="bi bi-plus"></i>
+            </button>
+        </div>
+        <div class="sf-list">
+            <div class="sf-usercont">
+                <div class="userpic">
+                    <img src="/images/users/user_no_photo_300x300.png">
+                </div>
+                <div class="username">
+                    <a href="#">MrBombastic</a>
+                </div>
+                <div class="usermenubtn">
+                    <i class="bi bi-caret-down-fill"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
