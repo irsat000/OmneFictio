@@ -3,35 +3,79 @@ main {
   gap: 20px;
   color: var(--text-color1);
   align-items: flex-start;
+  padding-top: 8px;
+  flex-direction: column;
 }
 
 nav {
   flex-shrink: 0;
-  background-color: var(--background-color1);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
   font-family: "Gudea";
-  border-radius: 8px;
-  padding: 40px 0 70px;
-  margin-top: 20px;
-}
-nav ul {
   width: 100%;
 }
-nav ul li a {
+nav .settings-goback {
+  display: none;
+  width: 100%;
+}
+nav .settings-goback a {
+  max-width: 160px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 6px;
+  border-radius: 8px;
+  text-align: center;
+  background-color: var(--goback-button);
+  transition: all 0.1s;
+  color: #fff;
+}
+nav .settings-goback a:hover {
+  background-color: var(--goback-button-hover);
+}
+nav .settings-link_cont {
+  background-color: var(--background-color1);
+  border-radius: 8px;
+}
+nav .settings-link_cont .mobile_nav {
+  display: flex;
+  justify-content: space-around;
+}
+nav .settings-link_cont .mobile_nav a {
+  padding: 10px;
+  flex-grow: 1;
+}
+nav .settings-link_cont .mobile_nav a i {
+  display: flex;
+  justify-content: center;
+  font-size: 2rem;
+}
+nav .settings-link_cont .mobile_nav a:first-child {
+  border-bottom: 1px solid #fff;
+}
+nav .settings-link_cont ul {
+  display: none;
+  width: 100%;
+  padding: 10px 0 30px;
+}
+nav .settings-link_cont ul li a {
   cursor: pointer;
   padding: 7px 40px 7px 20px;
   font-size: 1.5rem;
   transition: all 0.2s ease 0s;
   border-bottom: 1px solid var(--background-color-hover1);
 }
-nav ul li a:hover {
+nav .settings-link_cont ul li a:hover {
   background-color: var(--background-color-hover1);
+}
+nav .settings-link_cont ul li a.active {
+  background-color: var(--settings-activetab);
 }
 
 .settings_body {
   flex-grow: 1;
   background-color: var(--background-color1);
   min-height: 600px;
-  margin-top: 20px;
   border-radius: 8px;
 }
 
@@ -94,14 +138,12 @@ nav ul li a:hover {
 .settings_body .s-friends .sf-list {
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-evenly;
   gap: 10px;
   padding: 20px;
 }
 .settings_body .s-friends .sf-list .sf-usercont {
   background-color: var(--background-color2);
   display: flex;
-  border-radius: 6px;
 }
 .settings_body .s-friends .sf-list .sf-usercont .userpic {
   display: flex;
@@ -145,4 +187,14 @@ nav ul li a:hover {
 }
 .settings_body .s-friends .sf-list .sf-usercont .usermenubtn:hover {
   background-color: var(--background-color-hover1);
+}
+
+@media (min-width: 768px) {
+  main {
+    flex-direction: row;
+    padding-top: 20px;
+  }
+  nav {
+    width: unset;
+  }
 }/*# sourceMappingURL=settings.css.map */

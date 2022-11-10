@@ -4,26 +4,75 @@ main{
     gap: 20px;
     color: var(--text-color1);
     align-items: flex-start;
+    padding-top: 8px;
+    flex-direction: column;
 }
 
 nav{
     flex-shrink: 0;
-    background-color: var(--background-color1);
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
     font-family: 'Gudea';
-    border-radius: 8px;
-    padding: 40px 0 70px;
-    margin-top: 20px;
-    ul{
+    width: 100%;
+
+    .settings-goback{
+        display: none;
         width: 100%;
-        li{
+        a{
+            max-width: 160px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 6px;
+            border-radius: 8px;
+            text-align: center;
+            background-color: var(--goback-button);
+            transition: all 0.1s;
+            color: #fff;
+            &:hover{
+                background-color: var(--goback-button-hover);
+            }
+        }
+    }
+
+    .settings-link_cont{
+        background-color: var(--background-color1);
+        border-radius: 8px;
+
+        .mobile_nav{
+            display: flex;
+            justify-content: space-around;
+            //padding: 0 20px;
             a{
-                cursor: pointer;
-                padding: 7px 40px 7px 20px;
-                font-size: 1.5rem;
-                transition: all 0.2s ease 0s;
-                border-bottom: 1px solid var(--background-color-hover1);
-                &:hover{
-                    background-color: var(--background-color-hover1);
+                padding: 10px;
+                flex-grow: 1;
+                i{
+                    display: flex;
+                    justify-content: center;
+                    font-size: 2rem;
+                }
+                &:first-child{
+                    border-bottom: 1px solid #fff;
+                }
+            }
+        }
+        ul{
+            display: none;
+            width: 100%;
+            padding: 10px 0 30px;
+            li{
+                a{
+                    cursor: pointer;
+                    padding: 7px 40px 7px 20px;
+                    font-size: 1.5rem;
+                    transition: all 0.2s ease 0s;
+                    border-bottom: 1px solid var(--background-color-hover1);
+                    &:hover{
+                        background-color: var(--background-color-hover1);
+                    }
+                }
+                a.active{
+                    background-color: var(--settings-activetab);
                 }
             }
         }
@@ -34,12 +83,11 @@ nav{
     flex-grow: 1;
     background-color: var(--background-color1);
     min-height: 600px;
-    margin-top: 20px;
     border-radius: 8px;
 }
 
 .settings_body .s-friends{
-    display: flex;
+    display: flex; //flex
     flex-direction: column;
     width: 100%;
     .sf-header{
@@ -96,13 +144,13 @@ nav{
     .sf-list{
         display: flex;
         flex-wrap: wrap;
-        justify-content: space-evenly;
+        //justify-content: space-evenly;
         gap: 10px;
         padding: 20px;
         .sf-usercont{
             background-color: var(--background-color2);
             display: flex;
-            border-radius: 6px;
+            //border-radius: 6px;
             .userpic{
                 display: flex;
                 align-items: center;
@@ -133,6 +181,7 @@ nav{
                 }
             }
             .usermenubtn{
+                //border-radius: 0 6px 6px 0;
                 display: flex;
                 justify-content: center;
                 align-items: center;
@@ -148,4 +197,37 @@ nav{
             }
         }
     }
+}
+
+
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {
+
+}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {
+    main{
+        flex-direction: row;
+        padding-top: 20px;
+    }
+    nav{
+        width: unset;
+    }
+}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+    
+}
+
+// X-Large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {
+    
+}
+
+// XX-Large devices (larger desktops, 1400px and up)
+@media (min-width: 1400px) {
+    
 }

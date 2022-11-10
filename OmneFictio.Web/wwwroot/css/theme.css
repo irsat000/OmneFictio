@@ -21,6 +21,9 @@
   --navlink-aboutyou-color-hover: #6c5959;
   --navlink-others-color: #494152;
   --navlink-others-color-hover: #5f5a66;
+  --settings-activetab: #373846;
+  --postskeleton-itemcolor-start: #434343;
+  --postskeleton-itemcolor-end: #686868;
   --register-form-color: #404040;
   --register-input-color: #1d1d1d;
   --publish-form-color: #404040;
@@ -32,9 +35,9 @@
   --comment-menu-bgcolor: #3b3b3b;
   --reply-bgcolor: #313131;
   --replies-bgcolor: #424242;
+  --goback-button: #963a3a;
+  --goback-button-hover: #a34a4a;
   --searchplaceholder-color: #939393;
-  --postskeleton-itemcolor-start: #434343;
-  --postskeleton-itemcolor-end: #686868;
 }
 
 .lightmode {
@@ -60,6 +63,9 @@
   --navlink-aboutyou-color-hover: #8d6767;
   --navlink-others-color: #9a90a6;
   --navlink-others-color-hover: #816f96;
+  --settings-activetab: #d8dbff;
+  --postskeleton-itemcolor-start: #d1d5db;
+  --postskeleton-itemcolor-end: #b9cdec;
   --register-form-color: #f0f0f0;
   --register-input-color: #dcdcdc;
   --publish-form-color: #f0f0f0;
@@ -71,8 +77,8 @@
   --comment-menu-bgcolor: #e3e3e3;
   --reply-bgcolor: #dcdcdc;
   --replies-bgcolor: #cfcfcf;
-  --postskeleton-itemcolor-start: #d1d5db;
-  --postskeleton-itemcolor-end: #b9cdec;
+  --goback-button: #ec7373;
+  --goback-button-hover: #e05050;
 }
 
 /*
