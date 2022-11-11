@@ -206,15 +206,6 @@
         </div>
         <div class="lm-loginwith">
             <div class="g_id_signin" data-type="standart"></div>
-            <!--<div class="facebook">
-                <i class="bi bi-facebook"></i>
-            </div>
-            <div class="twitter">
-                <i class="bi bi-twitter"></i>
-            </div>
-            <div class="google">
-                <i class="bi bi-google"></i>
-            </div>-->
         </div>
         <div class="lm-forgot">
             <span>I forgot <a href="#">something</a></span>
@@ -224,32 +215,6 @@
             <a asp-controller="Home" asp-action="Register">Sign Up</a>
         </div>
     </form>
-    <!--<form class="register-modal" id="register-modal">
-        <div class="rm-header">
-            <span class="rm-title">Register</span>
-            <div class="rm-closebtn">
-                <i class="bi bi-x-lg"></i>
-            </div>
-        </div>
-        <div class="rm-primary">
-            <input type="text" placeholder="Username" name="username" class="rm-textbox">
-            <input type="text" placeholder="Email" name="email" class="rm-textbox">
-            <input type="password" placeholder="Password" name="password" class="rm-textbox">
-            <input type="password" placeholder="Confirm Password" class="rm-textbox">
-            <input type="submit" value="Register" class="rm-submit">
-        </div>
-        <div class="rm-registerwith">
-            <div class="facebook">
-                <i class="bi bi-facebook"></i>
-            </div>
-            <div class="twitter">
-                <i class="bi bi-twitter"></i>
-            </div>
-            <div class="google">
-                <i class="bi bi-google"></i>
-            </div>
-        </div>
-    </form>-->
     <div class="drawer" id="drawer">
         <div class="dw-top">
             <div class="dw-account">
@@ -257,7 +222,6 @@
                     @if (userPicture != "none" && userId != "-1")
                     {
                         @Html.Raw("<img src='" + userPicture + "'/>")
-                        ;
                     }
                     else
                     {
@@ -280,19 +244,19 @@
             }
         </div>
         <div class="dw-mainpage">
-            <a asp-controller="Home" asp-action="Index">OmneFictio</a>
+            <a href="/">OmneFictio</a>
         </div>
         <div class="dw-list">
             <ul>
                 @if (userId != "-1")
                 {
-                    <li><a href="#">
+                    <li><a href="/settings/profile">
                             <div class="dw-icon-cont"><i class="bi bi-person"></i></div>Profile
                         </a></li>
-                    <li><a href="#">
-                            <div class="dw-icon-cont"><i class="bi bi-journals"></i></div>Library
+                    <li><a href="/settings/library">
+                            <div class="dw-icon-cont"><i class="bi bi-collection"></i></div>Library
                         </a></li>
-                    <li><a href="#">
+                    <li><a href="/settings/friends">
                             <div class="dw-icon-cont"><i class="bi bi-people"></i></div>Friends
                         </a></li>
                 }
@@ -301,17 +265,14 @@
                     <li><a class="login-openbtn">
                             <div class="dw-icon-cont"><i class="bi bi-person"></i></div>Login
                         </a></li>
-                    <li><a asp-controller="Home" asp-action="Register">
+                    <li><a href="/Register">
                             <div class="dw-icon-cont"><i class="bi bi-person-plus"></i></div>Register
                         </a></li>
                 }
-                <!--<li><a href="#"><div class="dw-icon-cont"><i class="bi bi-person"></i></div>Profile</a></li>
-                <li><a href="#"><div class="dw-icon-cont"><i class="bi bi-journals"></i></div>Library</a></li>
-                <li><a href="#"><div class="dw-icon-cont"><i class="bi bi-people"></i></div>Friends</a></li>-->
                 <li><a href="#">
                         <div class="dw-icon-cont"><i class="bi bi-cart"></i></div>Shop
                     </a></li>
-                <li><a href="#">
+                <li><a href="/settings">
                         <div class="dw-icon-cont"><i class="bi bi-gear"></i></div>Settings
                     </a></li>
             </ul>
@@ -341,7 +302,7 @@
                 <div class="shortcuts-cont">
                     <i class="bi bi-search search-shortcut"></i>
                     <i class="bi bi-chat-dots chat-shortcut"></i>
-                    <a asp-controller="Home" asp-action="Publish"><i class="bi bi-plus-circle"></i></a>
+                    <a href="/Publish"><i class="bi bi-plus-circle"></i></a>
                     <i class="bi bi-bell notifications-shortcut"></i>
                 </div>
                 <div class="account-cont">
@@ -350,7 +311,6 @@
                             if (userId != "-1")
                             {
                                 @Html.Raw("<img src='" + userPicture + "'/>")
-                                ;
                             }
                             else
                             {
@@ -363,30 +323,32 @@
                         <i class="bi bi-caret-down-fill"></i>
                     </div>
                     <div class="account-dropdown">
+                        <div class="ad-theme-cont">
+                            <label class="theme-switch">
+                                <input type="checkbox" id="theme-check">
+                                <span class="theme-slider"></span>
+                            </label>
+                        </div>
                         <ul>
                             @if (userId != "-1")
                             {
                                 <li><a class="ad-username">@username</a></li>
-                                <li><a href="#">Profile</a></li>
-                                <li><a href="#">Library</a></li>
-                                <li><a href="#">Friends</a></li>
+                                <li><a href="/settings/profile">Profile</a></li>
+                                <li><a href="/settings/library">Library</a></li>
+                                <li><a href="/settings/friends">Friends</a></li>
                             }
                             else
                             {
                                 <li><a class="login-openbtn">Login</a></li>
-                                <li><a asp-controller="Home" asp-action="Register">Register</a></li>
+                                <li><a href="/Register">Register</a></li>
                             }
-                            <!--<li><a href="#">Profile</a></li>
-                            <li><a href="#">Library</a></li>
-                            <li><a href="#">Friends</a></li>-->
                             <li><a href="#">Shop</a></li>
-                            <li><a href="#">Settings</a></li>
+                            <li><a href="/settings">Settings</a></li>
                         </ul>
                         @if (userId != "-1")
                         {
                             <a asp-controller="Auth" asp-action="LogOut" class="acc_dd_redbutton">Logout</a>
                         }
-                        <!--<a href="#" class="acc_dd_redbutton">Logout</a>-->
                     </div>
                 </div>
             </div>

@@ -578,6 +578,50 @@ header {
         -moz-box-shadow: -1px 1px 6px 0px rgba(0, 0, 0, 0.2);
         box-shadow: -1px 1px 6px 0px rgba(0, 0, 0, 0.2);
 
+
+        .ad-theme-cont{
+            width: 100%;
+            padding: 8px 0 10px;
+            display: flex;
+            justify-content: center;
+            .theme-switch{
+                position: relative;
+                display: inline-block;
+                width: 54px;
+                height: 30px;
+                #theme-check{ display: none; }
+                .theme-slider{
+                    position: absolute;
+                    cursor: pointer;
+                    top: 0;
+                    bottom: 0;
+                    left: 0;
+                    right: 0;
+                    transition: 0.4s;
+                    border-radius: 34px;
+                    background-color: #fff;
+                }
+                #theme-check:checked + .theme-slider{
+                    background-color: #000;
+                }
+                .theme-slider:before{
+                    position: absolute;
+                    content: "";
+                    height: 24px;
+                    width: 22px;
+                    top: 3px;
+                    left: 4px;
+                    border-radius: 22px;
+                    transition: all 0.5s;
+                    background-color: #000;
+                }
+                #theme-check:checked + .theme-slider:before{
+                    transform: translateX(24px);
+                    background-color: #fff;
+                }
+            }
+        }
+
         >ul>li {
             &:last-child {
                 border-bottom: none;

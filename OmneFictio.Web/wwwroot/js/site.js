@@ -39,6 +39,17 @@ $(document).ready(function () {
     });}
     */
 
+    //Theme switch
+    document.getElementById("theme-check").addEventListener("change", (event) => {
+        const body = document.getElementsByTagName("body")[0];
+        body.className = "";
+        if (event.currentTarget.checked) {
+            body.classList.add("lightmode");
+        } else {
+            body.classList.add("darkmode");
+        }
+    });
+
     //Top-right account dropdown menu
     $('.ppic-wrap, .dropdown_icon-wrap').click(function () {
         if ($('.account-dropdown').hasClass('d-block')) {

@@ -21,6 +21,7 @@
   --navlink-aboutyou-color-hover: #6c5959;
   --navlink-others-color: #494152;
   --navlink-others-color-hover: #5f5a66;
+  --settings-hovernav: #252525;
   --settings-activetab: #373846;
   --postskeleton-itemcolor-start: #434343;
   --postskeleton-itemcolor-end: #686868;
@@ -63,7 +64,8 @@
   --navlink-aboutyou-color-hover: #8d6767;
   --navlink-others-color: #9a90a6;
   --navlink-others-color-hover: #816f96;
-  --settings-activetab: #d8dbff;
+  --settings-hovernav: #e3e3e3;
+  --settings-activetab: #3899a6;
   --postskeleton-itemcolor-start: #d1d5db;
   --postskeleton-itemcolor-end: #b9cdec;
   --register-form-color: #f0f0f0;

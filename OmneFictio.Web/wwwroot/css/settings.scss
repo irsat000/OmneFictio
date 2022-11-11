@@ -1,7 +1,7 @@
 
 main{
     display: flex;
-    gap: 20px;
+    gap: 6px;
     color: var(--text-color1);
     align-items: flex-start;
     padding-top: 8px;
@@ -36,12 +36,11 @@ nav{
     }
 
     .settings-link_cont{
-        background-color: var(--background-color1);
-        border-radius: 8px;
 
         .mobile_nav{
             display: flex;
             justify-content: space-around;
+            flex-wrap: wrap;
             //padding: 0 20px;
             a{
                 padding: 10px;
@@ -51,16 +50,21 @@ nav{
                     justify-content: center;
                     font-size: 2rem;
                 }
-                &:first-child{
-                    border-bottom: 1px solid #fff;
-                }
+            }
+            a.active{
+                border-bottom: 1px solid #fff;
             }
         }
-        ul{
+        .desktop_nav{
             display: none;
             width: 100%;
-            padding: 10px 0 30px;
+            background-color: var(--background-color1);
+            padding: 10px 0 20px;
+            border-radius: 8px;
             li{
+                /*&:first-child a { border-radius: 8px 8px 0 0; }
+                &:last-child a { border-radius: 0 0 8px 8px; }*/
+                &:last-child a { border-bottom: unset; }
                 a{
                     cursor: pointer;
                     padding: 7px 40px 7px 20px;
@@ -68,11 +72,12 @@ nav{
                     transition: all 0.2s ease 0s;
                     border-bottom: 1px solid var(--background-color-hover1);
                     &:hover{
-                        background-color: var(--background-color-hover1);
+                        background-color: var(--settings-hovernav);
                     }
                 }
                 a.active{
                     background-color: var(--settings-activetab);
+                    color: #fff;
                 }
             }
         }
@@ -80,7 +85,7 @@ nav{
 }
 
 .settings_body{
-    flex-grow: 1;
+    width: 100%;
     background-color: var(--background-color1);
     min-height: 600px;
     border-radius: 8px;
@@ -93,6 +98,7 @@ nav{
     .sf-header{
         display: flex;
         justify-content: space-between;
+        flex-wrap: wrap;
         gap: 10px;
         align-items: center;
         padding: 14px;
@@ -150,6 +156,7 @@ nav{
         .sf-usercont{
             background-color: var(--background-color2);
             display: flex;
+            width: 100%;
             //border-radius: 6px;
             .userpic{
                 display: flex;
@@ -163,6 +170,7 @@ nav{
                 }
             }
             .username{
+                flex-grow: 1;
                 display: flex;
                 align-items: center;
                 height: 100%;
@@ -170,11 +178,12 @@ nav{
                 font-family: 'Itim', cursive;
                 font-size: 1.2rem;
                 transition: 0.1s ease;
+                overflow: hidden;
                 a{
                     height: 100%;
                     display: flex;
                     align-items: center;
-                    padding: 0 24px 0 10px;
+                    padding: 0 10px;
                     &:hover{
                         background-color: var(--background-color-hover1);
                     }
@@ -214,12 +223,23 @@ nav{
     }
     nav{
         width: unset;
+        .settings-link_cont{
+            .mobile_nav{
+                display: none;
+            }
+            .desktop_nav{
+                display: block;
+            }
+        }
     }
+
 }
 
 // Large devices (desktops, 992px and up)
 @media (min-width: 992px) {
-    
+    .settings_body .s-friends .sf-list .sf-usercont{
+        width: unset;
+    }
 }
 
 // X-Large devices (large desktops, 1200px and up)
@@ -230,4 +250,13 @@ nav{
 // XX-Large devices (larger desktops, 1400px and up)
 @media (min-width: 1400px) {
     
+}
+
+
+//extra
+
+@media (max-width: 280px) {
+    .settings_body .s-friends .sf-list .sf-usercont .userpic{
+        display: none;
+    }
 }
