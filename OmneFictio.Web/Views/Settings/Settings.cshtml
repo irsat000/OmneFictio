@@ -1,10 +1,10 @@
 @{
     ViewData["Title"] = "Settings";
     @section Stylesheets {
-    <link rel="stylesheet" href="~/css/Settings.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/settings.css" asp-append-version="true" />
     }
     @section Scripts {
-    <script src="~/js/Settings.js" asp-append-version="true"></script>
+    <script src="~/js/settings.js" asp-append-version="true"></script>
     }
 }
 @{
@@ -25,14 +25,14 @@
         <div class="mobile_nav">
             <a href="/settings/profile"><i class="bi bi-person"></i></a>
             <a href="/settings/library"><i class="bi bi-collection"></i></a>
-            <a href="/settings/friends" class="active"><i class="bi bi-people"></i></a>
+            <a href="/settings/friends"><i class="bi bi-people"></i></a>
             <a href="/settings"><i class="bi bi-gear"></i></a>
             <a href="/settings/customize"><i class="bi bi-sliders2"></i></a>
         </div>
         <ul class="desktop_nav">
             <li><a href="/settings/profile">Profile</a></li>
             <li><a href="/settings/library">Library</a></li>
-            <li><a href="/settings/friends" class="active">Friends</a></li>
+            <li><a href="/settings/friends">Friends</a></li>
             <li><a href="/settings">Settings</a></li>
             <li><a href="/settings/customize">Customize</a></li>
         </ul>

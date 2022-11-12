@@ -238,7 +238,7 @@ nav .settings-link_cont .desktop_nav li a.active {
   background-color: var(--background-color2);
   margin-bottom: 10px;
 }
-.settings_body .s-profile_settings .ps-preferences, .settings_body .s-profile_settings h2 {
+.settings_body .s-profile_settings .ps-preferences {
   margin: 10px 0;
   padding-left: 16px;
   font-family: "Josefin Sans", sans-serif;
