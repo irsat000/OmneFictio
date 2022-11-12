@@ -87,7 +87,7 @@ nav .settings-link_cont .desktop_nav li a.active {
 }
 
 .settings_body .s-friends {
-  display: flex;
+  display: none;
   flex-direction: column;
   width: 100%;
 }
@@ -200,6 +200,61 @@ nav .settings-link_cont .desktop_nav li a.active {
   background-color: var(--background-color-hover1);
 }
 
+.settings_body .s-profile_settings {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 12px;
+}
+.settings_body .s-profile_settings .ps-row {
+  display: flex;
+  flex-direction: column;
+  gap: 6%;
+}
+.settings_body .s-profile_settings .ps-row .ps-cell {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.settings_body .s-profile_settings .ps-row .ps-cell span {
+  font-size: 1.2rem;
+  font-family: "Gudea";
+}
+.settings_body .s-profile_settings .ps-row .ps-cell input, .settings_body .s-profile_settings .ps-row .ps-cell textarea, .settings_body .s-profile_settings .ps-row .ps-cell select {
+  flex-grow: 1;
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  padding: 8px 8px;
+  background-color: var(--background-color2);
+  color: var(--text-color1);
+  margin-bottom: 10px;
+  font-family: "Itim", cursive;
+}
+.settings_body .s-profile_settings .ps-ppic_cont {
+  width: 120px;
+  height: 120px;
+  border-radius: 8px;
+  background-color: var(--background-color2);
+  margin-bottom: 10px;
+}
+.settings_body .s-profile_settings .ps-preferences, .settings_body .s-profile_settings h2 {
+  margin: 10px 0;
+  padding-left: 16px;
+  font-family: "Josefin Sans", sans-serif;
+}
+
+@media (min-width: 576px) {
+  .s-profile_settings {
+    padding: 16px !important;
+  }
+  .s-profile_settings .ps-row {
+    flex-direction: row !important;
+  }
+  .s-profile_settings .ps-row .ps-cell {
+    width: 50%;
+  }
+}
 @media (min-width: 768px) {
   main {
     flex-direction: row;

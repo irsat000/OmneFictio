@@ -92,7 +92,7 @@ nav{
 }
 
 .settings_body .s-friends{
-    display: flex; //flex
+    display: none; //flex
     flex-direction: column;
     width: 100%;
     .sf-header{
@@ -207,12 +207,65 @@ nav{
         }
     }
 }
+.settings_body .s-profile_settings{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 12px;
+    .ps-row{
+        display: flex;
+        flex-direction: column;
+        gap: 6%;
+        .ps-cell{
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            span{
+                font-size: 1.2rem;
+                font-family: 'Gudea';
+            }
+            input, textarea, select{
+                //width: 100%;
+                flex-grow: 1; //might cause problems
+                border: none;
+                outline: none;
+                border-radius: 6px;
+                padding: 8px 8px;
+                background-color: var(--background-color2);
+                color: var(--text-color1);
+                margin-bottom: 10px;
+                font-family: 'Itim', cursive;
+            }
+        }
+    }
+
+    .ps-ppic_cont{
+        width: 120px;
+        height: 120px;
+        border-radius: 8px;
+        background-color: var(--background-color2);
+        margin-bottom: 10px; //to align with textarea
+    }
+    .ps-preferences, h2{
+        margin: 10px 0;
+        padding-left: 16px;
+        font-family: 'Josefin Sans', sans-serif;
+    }
+}
 
 
 
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) {
-
+    .s-profile_settings{
+        padding: 16px !important;
+        .ps-row{
+            flex-direction: row !important;
+            .ps-cell{
+                width: 50%;
+            }
+        }
+    }
 }
 
 // Medium devices (tablets, 768px and up)
