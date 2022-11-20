@@ -1,5 +1,4 @@
-
-main{
+main {
     display: flex;
     gap: 6px;
     color: var(--text-color1);
@@ -8,7 +7,7 @@ main{
     flex-direction: column;
 }
 
-nav{
+nav {
     flex-shrink: 0;
     display: flex;
     flex-direction: column;
@@ -16,10 +15,11 @@ nav{
     font-family: 'Gudea';
     width: 100%;
 
-    .settings-goback{
+    .settings-goback {
         display: none;
         width: 100%;
-        a{
+
+        a {
             max-width: 160px;
             margin: 0 auto;
             width: 100%;
@@ -29,53 +29,65 @@ nav{
             background-color: var(--goback-button);
             transition: all 0.1s;
             color: #fff;
-            &:hover{
+
+            &:hover {
                 background-color: var(--goback-button-hover);
             }
         }
     }
 
-    .settings-link_cont{
+    .settings-link_cont {
 
-        .mobile_nav{
+        .mobile_nav {
             display: flex;
             justify-content: space-around;
             flex-wrap: wrap;
+
             //padding: 0 20px;
-            a{
+            a {
                 padding: 10px;
                 flex-grow: 1;
-                i{
+
+                i {
                     display: flex;
                     justify-content: center;
                     font-size: 2rem;
                 }
             }
-            a.active{
+
+            a.active {
                 border-bottom: 1px solid #fff;
             }
         }
-        .desktop_nav{
+
+        .desktop_nav {
             display: none;
             width: 100%;
             background-color: var(--background-color1);
             padding: 10px 0 20px;
             border-radius: 8px;
-            li{
+
+            li {
+
                 /*&:first-child a { border-radius: 8px 8px 0 0; }
                 &:last-child a { border-radius: 0 0 8px 8px; }*/
-                &:last-child a { border-bottom: unset; }
-                a{
+                &:last-child a {
+                    border-bottom: unset;
+                }
+
+                a {
                     cursor: pointer;
                     padding: 7px 40px 7px 20px;
                     font-size: 1.5rem;
                     transition: all 0.2s ease 0s;
                     border-bottom: 1px solid var(--background-color-hover1);
-                    &:hover{
+
+                    &:hover {
                         background-color: var(--settings-hovernav);
                     }
                 }
-                a.active{
+
+                a.active {
                     background-color: var(--settings-activetab);
                     color: #fff;
                 }
@@ -84,18 +96,19 @@ nav{
     }
 }
 
-.settings_body{
+.settings_body {
     width: 100%;
     background-color: var(--background-color1);
     min-height: 600px;
     border-radius: 8px;
 }
 
-.settings_body .s-friends{
+.settings_body .s-friends {
     display: none; //flex
     flex-direction: column;
     width: 100%;
-    .sf-header{
+
+    .sf-header {
         display: flex;
         justify-content: space-between;
         flex-wrap: wrap;
@@ -103,11 +116,13 @@ nav{
         align-items: center;
         padding: 14px;
         border-bottom: 1px solid var(--background-color-hover1);
-        .searchF-wrap{
+
+        .searchF-wrap {
             width: 70%;
             max-width: 340px;
             position: relative;
-            i{
+
+            i {
                 position: absolute;
                 color: var(--text-color1);
                 font-size: 1.4rem;
@@ -115,7 +130,8 @@ nav{
                 top: 50%;
                 transform: translateY(-50%) rotateY(180deg);
             }
-            .searchF{
+
+            .searchF {
                 font-size: 1.2rem;
                 color: var(--text-color1);
                 background-color: var(--background-color2);
@@ -127,7 +143,8 @@ nav{
                 border-radius: 4px;
             }
         }
-        .addfriend{
+
+        .addfriend {
             font-size: 1.1rem;
             background-color: #2e7f39;
             color: #fff;
@@ -137,39 +154,46 @@ nav{
             border-radius: 5px;
             padding: 4px 8px 4px 16px;
             white-space: nowrap;
+
             &:hover {
                 background-color: #4a9b55;
             }
-            i{
+
+            i {
                 font-size: 0.9rem;
                 padding: 0 4px;
                 -webkit-text-stroke: 1px white;
             }
         }
     }
-    .sf-list{
+
+    .sf-list {
         display: flex;
         flex-wrap: wrap;
         //justify-content: space-evenly;
         gap: 10px;
         padding: 20px;
-        .sf-usercont{
+
+        .sf-usercont {
             background-color: var(--background-color2);
             display: flex;
             width: 100%;
+
             //border-radius: 6px;
-            .userpic{
+            .userpic {
                 display: flex;
                 align-items: center;
                 width: 60px;
                 max-height: 60px;
                 padding: 6px 10px;
-                img{
+
+                img {
                     width: 100%;
                     height: 100%;
                 }
             }
-            .username{
+
+            .username {
                 flex-grow: 1;
                 display: flex;
                 align-items: center;
@@ -179,17 +203,20 @@ nav{
                 font-size: 1.2rem;
                 transition: 0.1s ease;
                 overflow: hidden;
-                a{
+
+                a {
                     height: 100%;
                     display: flex;
                     align-items: center;
                     padding: 0 10px;
-                    &:hover{
+
+                    &:hover {
                         background-color: var(--background-color-hover1);
                     }
                 }
             }
-            .usermenubtn{
+
+            .usermenubtn {
                 //border-radius: 0 6px 6px 0;
                 display: flex;
                 justify-content: center;
@@ -200,37 +227,46 @@ nav{
                 font-size: 1.2rem;
                 color: var(--text-color1);
                 transition: 0.1s ease;
-                &:hover{
+
+                &:hover {
                     background-color: var(--background-color-hover1);
                 }
             }
         }
     }
 }
-.settings_body .s-profile_settings{
+
+.settings_body .s-profile_settings {
     display: flex;
     flex-direction: column;
     width: 100%;
     padding: 12px;
-    .ps-row{
+
+    .ps-row {
         display: flex;
         flex-direction: column;
-        gap: 6%;
-        .ps-cell{
+        gap: 8px 30px;
+
+        .ps-cell {
             display: flex;
             flex-direction: column;
             gap: 6px;
-            span{
+
+            >span,
+            label {
                 font-size: 1.2rem;
                 font-family: 'Gudea';
             }
-            input, textarea, select{
+
+            >input,
+            textarea,
+            select {
                 //width: 100%;
                 flex-grow: 1; //might cause problems
                 border: none;
                 outline: none;
                 border-radius: 6px;
-                padding: 8px 8px;
+                padding: 8px;
                 background-color: var(--background-color2);
                 color: var(--text-color1);
                 margin-bottom: 10px;
@@ -239,17 +275,59 @@ nav{
         }
     }
 
-    .ps-ppic_cont{
+    .ps-ppic_cont {
         width: 120px;
         height: 120px;
         border-radius: 8px;
         background-color: var(--background-color2);
         margin-bottom: 10px; //to align with textarea
     }
-    .ps-preferences{
+
+    .ps-preferences {
         margin: 10px 0;
         padding-left: 16px;
         font-family: 'Josefin Sans', sans-serif;
+    }
+
+    .psr-preferences {
+        label {
+            display: flex;
+            align-items: center;
+
+            input[type=checkbox] {
+                height: 16px;
+                width: 16px;
+                margin-left: 10px;
+            }
+        }
+    }
+    .psr-actions{
+        flex-direction: row;
+        justify-content: center;
+        margin-top: 36px;
+        gap: 20%;
+        > button{
+            border: none;
+            outline: none;
+            border-radius: 6px;
+            padding: 8px 26px 6px;
+            color: #fff;
+            transition: all 0.2s;
+            font-family: 'Gudea', cursive;
+            font-size: 1.2rem;
+            &:first-child{
+                background-color: var(--revert-botton);
+                &:hover{
+                    background-color: var(--revert-botton-hover);
+                }
+            }
+            &:last-child{
+                background-color: var(--save-botton);
+                &:hover{
+                    background-color: var(--save-botton-hover);
+                }
+            }
+        }
     }
 }
 
@@ -257,11 +335,12 @@ nav{
 
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) {
-    .s-profile_settings{
+    .s-profile_settings {
         padding: 16px !important;
-        .ps-row{
+
+        .ps-row {
             flex-direction: row !important;
-            .ps-cell{
+            .ps-cell {
                 width: 50%;
             }
         }
@@ -270,17 +349,20 @@ nav{
 
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) {
-    main{
+    main {
         flex-direction: row;
         padding-top: 20px;
     }
-    nav{
+
+    nav {
         width: unset;
-        .settings-link_cont{
-            .mobile_nav{
+
+        .settings-link_cont {
+            .mobile_nav {
                 display: none;
             }
-            .desktop_nav{
+
+            .desktop_nav {
                 display: block;
             }
         }
@@ -290,26 +372,25 @@ nav{
 
 // Large devices (desktops, 992px and up)
 @media (min-width: 992px) {
-    .settings_body .s-friends .sf-list .sf-usercont{
+    .settings_body .s-friends .sf-list .sf-usercont {
         width: unset;
     }
 }
 
 // X-Large devices (large desktops, 1200px and up)
-@media (min-width: 1200px) {
-    
-}
+@media (min-width: 1200px) {}
 
 // XX-Large devices (larger desktops, 1400px and up)
-@media (min-width: 1400px) {
-    
-}
+@media (min-width: 1400px) {}
 
 
 //extra
 
-@media (max-width: 280px) {
-    .settings_body .s-friends .sf-list .sf-usercont .userpic{
+@media (max-width: 279px) {
+    .settings_body .s-friends .sf-list .sf-usercont .userpic {
         display: none;
+    }
+    .s-profile_settings .psr-actions button{
+        padding: 8px 3% !important;
     }
 }

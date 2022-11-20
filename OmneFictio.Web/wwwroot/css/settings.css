@@ -209,23 +209,26 @@ nav .settings-link_cont .desktop_nav li a.active {
 .settings_body .s-profile_settings .ps-row {
   display: flex;
   flex-direction: column;
-  gap: 6%;
+  gap: 8px 30px;
 }
 .settings_body .s-profile_settings .ps-row .ps-cell {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
-.settings_body .s-profile_settings .ps-row .ps-cell span {
+.settings_body .s-profile_settings .ps-row .ps-cell > span,
+.settings_body .s-profile_settings .ps-row .ps-cell label {
   font-size: 1.2rem;
   font-family: "Gudea";
 }
-.settings_body .s-profile_settings .ps-row .ps-cell input, .settings_body .s-profile_settings .ps-row .ps-cell textarea, .settings_body .s-profile_settings .ps-row .ps-cell select {
+.settings_body .s-profile_settings .ps-row .ps-cell > input,
+.settings_body .s-profile_settings .ps-row .ps-cell textarea,
+.settings_body .s-profile_settings .ps-row .ps-cell select {
   flex-grow: 1;
   border: none;
   outline: none;
   border-radius: 6px;
-  padding: 8px 8px;
+  padding: 8px;
   background-color: var(--background-color2);
   color: var(--text-color1);
   margin-bottom: 10px;
@@ -242,6 +245,43 @@ nav .settings-link_cont .desktop_nav li a.active {
   margin: 10px 0;
   padding-left: 16px;
   font-family: "Josefin Sans", sans-serif;
+}
+.settings_body .s-profile_settings .psr-preferences label {
+  display: flex;
+  align-items: center;
+}
+.settings_body .s-profile_settings .psr-preferences label input[type=checkbox] {
+  height: 16px;
+  width: 16px;
+  margin-left: 10px;
+}
+.settings_body .s-profile_settings .psr-actions {
+  flex-direction: row;
+  justify-content: center;
+  margin-top: 36px;
+  gap: 20%;
+}
+.settings_body .s-profile_settings .psr-actions > button {
+  border: none;
+  outline: none;
+  border-radius: 6px;
+  padding: 8px 26px 6px;
+  color: #fff;
+  transition: all 0.2s;
+  font-family: "Gudea", cursive;
+  font-size: 1.2rem;
+}
+.settings_body .s-profile_settings .psr-actions > button:first-child {
+  background-color: var(--revert-botton);
+}
+.settings_body .s-profile_settings .psr-actions > button:first-child:hover {
+  background-color: var(--revert-botton-hover);
+}
+.settings_body .s-profile_settings .psr-actions > button:last-child {
+  background-color: var(--save-botton);
+}
+.settings_body .s-profile_settings .psr-actions > button:last-child:hover {
+  background-color: var(--save-botton-hover);
 }
 
 @media (min-width: 576px) {
@@ -275,8 +315,11 @@ nav .settings-link_cont .desktop_nav li a.active {
     width: unset;
   }
 }
-@media (max-width: 280px) {
+@media (max-width: 279px) {
   .settings_body .s-friends .sf-list .sf-usercont .userpic {
     display: none;
+  }
+  .s-profile_settings .psr-actions button {
+    padding: 8px 3% !important;
   }
 }/*# sourceMappingURL=settings.css.map */
