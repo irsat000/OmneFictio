@@ -48,7 +48,7 @@ nav .settings-link_cont .mobile_nav a i {
   font-size: 2rem;
 }
 nav .settings-link_cont .mobile_nav a.active {
-  border-bottom: 1px solid #fff;
+  border-bottom: 1px solid var(--text-color1);
 }
 nav .settings-link_cont .desktop_nav {
   display: none;
@@ -284,6 +284,50 @@ nav .settings-link_cont .desktop_nav li a.active {
   background-color: var(--save-botton-hover);
 }
 
+.settings_body .s-about_you {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 12px;
+}
+.settings_body .s-about_you .ay-header {
+  display: flex;
+  flex-direction: column;
+  color: var(--text-color1);
+}
+.settings_body .s-about_you .ay-header .ay-tabs {
+  display: flex;
+  justify-content: space-around;
+}
+.settings_body .s-about_you .ay-header .ay-tabs a {
+  font-size: 1.4rem;
+  font-family: "Josefin Sans", sans-serif;
+  cursor: pointer;
+  border-radius: 25px;
+  padding: 7px 20px 4px;
+}
+.settings_body .s-about_you .ay-header .ay-tabs a.active {
+  background: var(--settings-activetab);
+  color: #fff;
+}
+.settings_body .s-about_you .ay-header .ay-subtabs {
+  display: none;
+  justify-content: space-evenly;
+  padding: 20px 10% 10px;
+}
+.settings_body .s-about_you .ay-header .ay-subtabs a {
+  font-size: 1.2rem;
+  font-family: "Itim", cursive;
+  cursor: pointer;
+  padding: 4px 10px;
+}
+.settings_body .s-about_you .ay-header .ay-subtabs a.active {
+  border-bottom: 1px solid var(--text-color1);
+}
+.settings_body .s-about_you .ay-body {
+  display: flex;
+}
+
 @media (min-width: 576px) {
   .s-profile_settings {
     padding: 16px !important;
@@ -308,6 +352,9 @@ nav .settings-link_cont .desktop_nav li a.active {
   }
   nav .settings-link_cont .desktop_nav {
     display: block;
+  }
+  .settings_body .s-about_you {
+    padding-top: 18px;
   }
 }
 @media (min-width: 992px) {

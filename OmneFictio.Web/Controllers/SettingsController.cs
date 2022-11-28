@@ -19,8 +19,8 @@ public class SettingsController : Controller
         AccountId = UserController.checkUserLogin(IHttpContextAccessor.HttpContext);
     }
 
-    [HttpGet("settings/{path?}")]
-    public IActionResult Settings(string path)
+    [HttpGet("settings/{path?}/{subtab?}")]
+    public IActionResult Settings(string path, string subtab)
     {
         
         return View();

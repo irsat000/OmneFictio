@@ -56,7 +56,7 @@ nav {
             }
 
             a.active {
-                border-bottom: 1px solid #fff;
+                border-bottom: 1px solid var(--text-color1);
             }
         }
 
@@ -301,12 +301,14 @@ nav {
             }
         }
     }
-    .psr-actions{
+
+    .psr-actions {
         flex-direction: row;
         justify-content: center;
         margin-top: 36px;
         gap: 20%;
-        > button{
+
+        >button {
             border: none;
             outline: none;
             border-radius: 6px;
@@ -315,21 +317,72 @@ nav {
             transition: all 0.2s;
             font-family: 'Gudea', cursive;
             font-size: 1.2rem;
-            &:first-child{
+
+            &:first-child {
                 background-color: var(--revert-botton);
-                &:hover{
+
+                &:hover {
                     background-color: var(--revert-botton-hover);
                 }
             }
-            &:last-child{
+
+            &:last-child {
                 background-color: var(--save-botton);
-                &:hover{
+
+                &:hover {
                     background-color: var(--save-botton-hover);
                 }
             }
         }
     }
 }
+
+.settings_body .s-about_you {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 12px;
+
+    .ay-header {
+        display: flex;
+        flex-direction: column;
+        color: var(--text-color1);
+        .ay-tabs {
+            display: flex;
+            justify-content: space-around;
+            a {
+                font-size: 1.4rem;
+                font-family: 'Josefin Sans', sans-serif;
+                cursor: pointer;
+                border-radius: 25px;
+                padding: 7px 20px 4px;
+            }
+            a.active{
+                background: var(--settings-activetab);
+                color: #fff;
+            }
+        }
+        .ay-subtabs{
+            display: none;
+            justify-content: space-evenly;
+            padding: 20px 10% 10px;
+            a {
+                font-size: 1.2rem;
+                font-family: 'Itim', cursive;
+                cursor: pointer;
+                padding: 4px 10px;
+            }
+            a.active{
+                border-bottom: 1px solid var(--text-color1);
+            }
+        }
+    }
+
+    .ay-body {
+        display: flex;
+    }
+}
+
 
 
 
@@ -340,6 +393,7 @@ nav {
 
         .ps-row {
             flex-direction: row !important;
+
             .ps-cell {
                 width: 50%;
             }
@@ -367,7 +421,9 @@ nav {
             }
         }
     }
-
+    .settings_body .s-about_you{
+        padding-top: 18px;
+    }
 }
 
 // Large devices (desktops, 992px and up)
@@ -390,7 +446,8 @@ nav {
     .settings_body .s-friends .sf-list .sf-usercont .userpic {
         display: none;
     }
-    .s-profile_settings .psr-actions button{
+
+    .s-profile_settings .psr-actions button {
         padding: 8px 3% !important;
     }
 }

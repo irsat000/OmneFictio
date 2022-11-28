@@ -253,6 +253,7 @@ main {
 .back-to-read a {
   padding-top: 4px;
   margin-bottom: -4px;
+  float: left;
 }
 .back-to-read a:hover {
   text-decoration: underline;

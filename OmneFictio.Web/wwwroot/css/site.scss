@@ -831,7 +831,7 @@ header {
         position: absolute;
         bottom: 30px;
         right: 0;
-        background: #303030;
+        background: var(--background-color1);
         border-radius: 8px;
         -webkit-box-shadow: 0 0 19px -5px rgba(0, 0, 0, 0.5);
         -moz-box-shadow: 0 0 19px -5px rgba(0, 0, 0, 0.5);
