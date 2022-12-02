@@ -2,6 +2,7 @@
     ViewData["Title"] = "Settings";
     @section Stylesheets {
     <link rel="stylesheet" href="~/css/settings.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/postitem.css" asp-append-version="true" />
     }
     @section Scripts {
     <script src="~/js/settings.js" asp-append-version="true"></script>
@@ -24,15 +25,11 @@
     <div class="settings-link_cont">
         <div class="mobile_nav">
             <a data-href="/settings/profile"><i class="bi bi-person"></i></a>
-            <a data-href="/settings/library"><i class="bi bi-collection"></i></a>
-            <a data-href="/settings/friends"><i class="bi bi-people"></i></a>
             <a data-href="/settings"><i class="bi bi-gear"></i></a>
             <a data-href="/settings/customize"><i class="bi bi-sliders2"></i></a>
         </div>
         <ul class="desktop_nav">
             <li><a data-href="/settings/profile">Profile</a></li>
-            <li><a data-href="/settings/library">Library</a></li>
-            <li><a data-href="/settings/friends">Friends</a></li>
             <li><a data-href="/settings">Settings</a></li>
             <li><a data-href="/settings/customize">Customize</a></li>
         </ul>
@@ -113,26 +110,6 @@
         <div class="ps-row psr-actions">
             <button>Revert</button>
             <button>Save</button>
-        </div>
-    </div>
-    <div class="s-about_you">
-        <div class="ay-header">
-            <div class="ay-tabs">
-                <a data-href="/settings/library">Library</a>
-                <a data-href="/settings/mystuff">My Stuff</a>
-                <a data-href="/settings/history">History</a>
-            </div>
-            <div class="ay-subtabs l-subtabs">
-                <a data-subtab="favorites" class="active">Favorites</a>
-                <a data-subtab="liked">Liked</a>
-            </div>
-            <div class="ay-subtabs ms-subtabs">
-                <a data-subtab="myposts" class="active">My posts</a>
-                <a data-subtab="mycomments">My comments</a>
-            </div>
-        </div>
-        <div class="ay-body">
-
         </div>
     </div>
 </div>

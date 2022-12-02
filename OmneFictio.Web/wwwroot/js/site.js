@@ -736,7 +736,7 @@ function TimeAgo(time, wordType = "long") {
     return val + " " + attachment;
 }
 
-function getSlashQuery(index) {
+function getPathPart(index) {
     const pathname = window.location.pathname;
     const slashindex = pathname.split('/', index).join('/').length;
     let getval = pathname.substring(pathname.indexOf('/') + slashindex + 1);

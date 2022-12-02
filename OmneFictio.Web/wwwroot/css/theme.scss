@@ -14,29 +14,28 @@
     --text-color-boxshadow1: #ffffff50;
     --text-color-boxshadow2: #ffffff70;
 
-    //individual
+    //layout
     --headericon-color: #ffffff;
     --accountdropdown-icon-hover: #ffffff10;
     --dropdownbg-color: #313131;
     --shortcuticons-color: #ffffff;
+    //nav
     --navlink-readingtime-color: #415050;
     --navlink-readingtime-color-hover: #607d7d;
     --navlink-aboutyou-color: #473c3c;
     --navlink-aboutyou-color-hover: #6c5959;
     --navlink-others-color: #494152;
     --navlink-others-color-hover: #5f5a66;
-    --settings-hovernav: #252525;
-    --settings-activetab: #373846;
+    //read
     --postskeleton-itemcolor-start: #434343;
     --postskeleton-itemcolor-end: #686868;
-
-        //register
+    //register
     --register-form-color: #404040;
     --register-input-color: #1d1d1d;
-        //publish
+    //publish
     --publish-form-color: #404040;
     --publish-input-color: #1d1d1d;
-        //post
+    //post
     --pd-actionbtns-color: #444444;
     --pd-actionbtns-color-hover1: #5e5e5e;
     --pd-actionbtns-color2: #444444;
@@ -44,17 +43,21 @@
     --comment-menu-bgcolor: #3b3b3b;
     --reply-bgcolor: #313131;
     --replies-bgcolor: #424242;
-        //settings
+    //settings
     --goback-button: #963a3a;
     --goback-button-hover: #a34a4a;
-            //profile settings
-            --revert-botton: #a02d2d;
-            --revert-botton-hover: #9f4e4e;
-            --save-botton: #247b31;
-            --save-botton-hover: #4c8d56;
+    --settings-hovernav: #252525;
+    --settings-activetab: #3e6e7a;
+        //profile settings
+        --revert-botton: #a02d2d;
+        --revert-botton-hover: #9f4e4e;
+        --save-botton: #247b31;
+        --save-botton-hover: #4c8d56;
+    //profile
+    --profile-activetab: #3e6e7a;
+    
     //----------
 
-    --searchplaceholder-color: #939393;
 }
 .lightmode{
     --background-color1: #f0f0f0;
@@ -71,29 +74,28 @@
     --text-color-boxshadow1: #00000050;
     --text-color-boxshadow2: #00000070;
 
-    //individual
+    //layout
     --headericon-color: #ffffff;
     --accountdropdown-icon-hover:#00000010;
     --dropdownbg-color: #e7e7e7;
     --shortcuticons-color: #626262;
+    //nav
     --navlink-readingtime-color: #9298b9;
     --navlink-readingtime-color-hover: #777ea8;
     --navlink-aboutyou-color: #a08888;
     --navlink-aboutyou-color-hover: #8d6767;
     --navlink-others-color: #9a90a6;
     --navlink-others-color-hover: #816f96;
-    --settings-hovernav: #e3e3e3;
-    --settings-activetab: #3899a6;
+    //read
     --postskeleton-itemcolor-start: #d1d5db;
     --postskeleton-itemcolor-end: #b9cdec;
-
-        //register
+    //register
     --register-form-color: #f0f0f0;
     --register-input-color: #dcdcdc;
-        //publish
+    //publish
     --publish-form-color: #f0f0f0;
     --publish-input-color: #dcdcdc;
-        //post
+    //post
     --pd-actionbtns-color: #c7c7c7;
     --pd-actionbtns-color-hover1: #c5c5c5;
     --pd-actionbtns-color2: #c7c7c7;
@@ -101,14 +103,18 @@
     --comment-menu-bgcolor: #e3e3e3;
     --reply-bgcolor: #dcdcdc;
     --replies-bgcolor: #cfcfcf;
-        //settings
+    //settings
     --goback-button: #ec7373;
     --goback-button-hover: #e05050;
-            //profile settings
-            --revert-botton: #c46969;
-            --revert-botton-hover: #9f4e4e;
-            --save-botton: #61b96e;
-            --save-botton-hover: #4c9156;
+    --settings-hovernav: #e3e3e3;
+    --settings-activetab: #32a1bc;
+        //profile settings
+        --revert-botton: #c46969;
+        --revert-botton-hover: #9f4e4e;
+        --save-botton: #61b96e;
+        --save-botton-hover: #4c9156;
+    //profile
+    --profile-activetab: #32a1bc;
     //----------
 
     //#bda952

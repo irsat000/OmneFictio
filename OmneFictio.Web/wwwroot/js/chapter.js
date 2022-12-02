@@ -5,8 +5,8 @@ $(document).ready(function () {
     const commentSection = document.getElementById('comment-section');
 
     async function fetchChapter() {
-        let postid = parseInt(window.getSlashQuery(2), 10);
-        let index = parseInt(window.getSlashQuery(3), 10);
+        let postid = parseInt(window.getPathPart(2), 10);
+        let index = parseInt(window.getPathPart(3), 10);
         await fetch("/g/GetChapter/" + postid + "/" + index, {
             method: 'GET',
             headers: {

@@ -129,6 +129,7 @@
   margin-top: 10px;
 }
 .post-body .p-header .p-menu .p-info .pi-series span {
+  color: #fff;
   background-color: rgb(106, 38, 55);
   border-radius: 4px;
 }
@@ -230,4 +231,10 @@
   width: 1.7rem;
   border-radius: 50%;
   cursor: pointer;
+}
+
+@media (min-width: 768px) {
+  .post {
+    border-radius: 10px;
+  }
 }/*# sourceMappingURL=postitem.css.map */

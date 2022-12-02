@@ -79,7 +79,7 @@ nav {
                     cursor: pointer;
                     padding: 7px 40px 7px 20px;
                     font-size: 1.5rem;
-                    transition: all 0.2s ease 0s;
+                    transition: all 0.1s ease;
                     border-bottom: 1px solid var(--background-color-hover1);
 
                     &:hover {
@@ -237,7 +237,7 @@ nav {
 }
 
 .settings_body .s-profile_settings {
-    display: none; //flex
+    display: flex; //flex
     flex-direction: column;
     width: 100%;
     padding: 12px;
@@ -337,49 +337,62 @@ nav {
     }
 }
 
-.settings_body .s-about_you {
-    display: flex;
+.settings_body .s-library {
+    display: none;
     flex-direction: column;
     width: 100%;
-    padding: 12px;
+    padding: 12px 0 20px;
 
-    .ay-header {
+    .lib-header {
         display: flex;
-        flex-direction: column;
         color: var(--text-color1);
-        .ay-tabs {
+
+        .lib-tabs {
             display: flex;
             justify-content: space-around;
+            align-items: center;
+            border-bottom: 1px solid var(--background-color2);
+            padding-bottom: 8px;
+
             a {
-                font-size: 1.4rem;
+                font-size: 1.1rem;
                 font-family: 'Josefin Sans', sans-serif;
                 cursor: pointer;
                 border-radius: 25px;
-                padding: 7px 20px 4px;
+                padding: 8px 5% 3px;
+                transition: all 0.1s ease;
             }
-            a.active{
+
+            a.active {
                 background: var(--settings-activetab);
                 color: #fff;
             }
         }
-        .ay-subtabs{
+
+        /*.lib-subtabs {
             display: none;
             justify-content: space-evenly;
-            padding: 20px 10% 10px;
+            padding: 6px 10% 14px;
+
             a {
-                font-size: 1.2rem;
+                font-size: 1rem;
                 font-family: 'Itim', cursive;
                 cursor: pointer;
                 padding: 4px 10px;
             }
-            a.active{
+
+            a.active {
                 border-bottom: 1px solid var(--text-color1);
             }
-        }
+        }*/
     }
 
-    .ay-body {
+    .lib-body {
         display: flex;
+        flex-direction: column;
+        > div{
+            width: 49.5%;
+        }
     }
 }
 
@@ -398,6 +411,16 @@ nav {
                 width: 50%;
             }
         }
+    }
+
+    .s-library {
+        .lib-tabs a {
+            font-size: 1.3rem !important;
+        }
+
+        /*.lib-subtabs a {
+            font-size: 1.2rem !important;
+        }*/
     }
 }
 
@@ -421,8 +444,12 @@ nav {
             }
         }
     }
-    .settings_body .s-about_you{
+
+    .settings_body .s-library {
         padding-top: 18px;
+        .lib-body{
+            padding: 0 12px;
+        }
     }
 }
 
@@ -430,6 +457,10 @@ nav {
 @media (min-width: 992px) {
     .settings_body .s-friends .sf-list .sf-usercont {
         width: unset;
+    }
+    .s-library .lib-body.lib-masonry{
+        flex-direction: row !important;
+        gap: 1%;
     }
 }
 

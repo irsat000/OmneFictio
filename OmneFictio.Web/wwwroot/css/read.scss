@@ -715,7 +715,6 @@ main {
 
     .post {
         background-color: var(--background-color1) !important;
-        border-radius: 10px;
     }
 
     .post-options {
@@ -750,7 +749,7 @@ main {
         width: 240px;
     }
 
-    .pl-masonry {
+    .post-list.pl-masonry {
         flex-direction: row !important;
         gap: 1%;
 

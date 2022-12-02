@@ -1,0 +1,40 @@
+@{
+    ViewData["Title"] = "Profile";
+    @section Stylesheets {
+    <link rel="stylesheet" href="~/css/profile.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/postitem.css" asp-append-version="true" />
+    }
+    @section Scripts {
+    <script src="~/js/profile.js" asp-append-version="true"></script>
+    }
+}
+@{
+    string userId = "-1";
+    string username = "";
+    string userPicture = "none";
+
+    userId = User.Claims.FirstOrDefault(claim => claim.Type == "nameid")?.Value ?? "-1";
+    username = User.Claims.FirstOrDefault(claim => claim.Type == "unique_name")?.Value ?? "";
+    userPicture = User.Claims.FirstOrDefault(claim => claim.Type == "actort")?.Value ?? "none";
+}
+<div class="profile-cont">
+    <div class="profile-details">
+        <div class="pr-img_cont">
+            <img src="" alt="">
+        </div>
+        <span class="pr-username">(mrathletic)</span>
+        <span class="pr-displayname">MrBombastic</span>
+        <span class="pr-bio">This is my bio. Lalala, no one can change this lalala, camon lazy irşat come here and change this shit when you are than. When is that? Probably next year!</span>
+    </div>
+    <div class="profile-tabs">
+        <a data-tab="stats"><i class="bi bi-info-square"></i></a>
+        <a data-tab="posts"><i class="bi bi-card-text"></i></a>
+        <a data-tab="comments"><i class="bi bi-chat-right"></i></a>
+        <a data-tab="saved"><i class="bi bi-heart"></i></a>
+        <a data-tab="liked"><i class="bi bi-hand-thumbs-up"></i></a>
+        <a data-tab="friends"><i class="bi bi-people"></i></a>
+    </div>
+    <div class="profile-body">
+        
+    </div>
+</div>

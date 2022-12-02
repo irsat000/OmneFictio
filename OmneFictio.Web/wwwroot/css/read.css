@@ -636,7 +636,6 @@ main {
   }
   .post {
     background-color: var(--background-color1) !important;
-    border-radius: 10px;
   }
   .post-options {
     padding: 20px 10px 10px !important;
@@ -661,11 +660,11 @@ main {
   .nav-cont {
     width: 240px;
   }
-  .pl-masonry {
+  .post-list.pl-masonry {
     flex-direction: row !important;
     gap: 1%;
   }
-  .pl-masonry > div {
+  .post-list.pl-masonry > div {
     width: 49.5%;
   }
 }

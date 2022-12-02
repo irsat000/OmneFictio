@@ -417,19 +417,19 @@ header .header-wrap {
   border-radius: 4px;
 }
 .searchbar-cont .searchbar-wrap .searchbar ::-moz-placeholder {
-  color: var(--searchplaceholder-color);
+  color: #939393;
   opacity: 1;
 }
 .searchbar-cont .searchbar-wrap .searchbar :-ms-input-placeholder {
-  color: var(--searchplaceholder-color);
+  color: #939393;
   opacity: 1;
 }
 .searchbar-cont .searchbar-wrap .searchbar ::placeholder {
-  color: var(--searchplaceholder-color);
+  color: #939393;
   opacity: 1;
 }
 .searchbar-cont .searchbar-wrap .searchbar ::-ms-input-placeholder {
-  color: var(--searchplaceholder-color);
+  color: #939393;
 }
 
 .header_right_section {

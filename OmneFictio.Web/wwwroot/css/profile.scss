@@ -1,0 +1,72 @@
+.main-cont {
+    background-color: var(--background-color1);
+    margin-top: 10px;
+    border-radius: 8px;
+}
+
+.profile-cont {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.profile-tabs {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    padding: 0 20px;
+    gap: 6px 0;
+    margin-bottom: 14px;
+
+    a {
+        border-radius: 4px;
+        padding: 4px 8px;
+        font-size: 1.6rem;
+        color: var(--text-color1);
+        transition: background-color 0.1s ease;
+    }
+
+    a.active {
+        background-color: var(--profile-activetab);
+        color: #fff;
+    }
+}
+
+.profile-body {
+    padding: 10px 10px;
+}
+
+
+
+
+
+// Small devices (landscape phones, 576px and up)
+@media (min-width: 576px) {}
+
+// Medium devices (tablets, 768px and up)
+@media (min-width: 768px) {}
+
+// Large devices (desktops, 992px and up)
+@media (min-width: 992px) {
+    .profile-cont {
+        flex-direction: row;
+
+        .profile-tabs {
+            padding: 0 6px;
+        }
+    }
+}
+
+// X-Large devices (large desktops, 1200px and up)
+@media (min-width: 1200px) {}
+
+// XX-Large devices (larger desktops, 1400px and up)
+@media (min-width: 1400px) {}
+
+
+//extra
+@media (max-width: 300px) {
+    .profile-tabs {
+        padding: 0 6px;
+    }
+}
