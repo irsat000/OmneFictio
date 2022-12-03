@@ -26,12 +26,12 @@ nav .settings-goback a {
   padding: 6px;
   border-radius: 8px;
   text-align: center;
-  background-color: var(--goback-button);
+  background-color: var(--button-red);
   transition: all 0.1s;
   color: #fff;
 }
 nav .settings-goback a:hover {
-  background-color: var(--goback-button-hover);
+  background-color: var(--button-red-hover);
 }
 nav .settings-link_cont .mobile_nav {
   display: flex;
@@ -272,16 +272,16 @@ nav .settings-link_cont .desktop_nav li a.active {
   font-size: 1.2rem;
 }
 .settings_body .s-profile_settings .psr-actions > button:first-child {
-  background-color: var(--revert-botton);
+  background-color: var(--button-red);
 }
 .settings_body .s-profile_settings .psr-actions > button:first-child:hover {
-  background-color: var(--revert-botton-hover);
+  background-color: var(--button-red-hover);
 }
 .settings_body .s-profile_settings .psr-actions > button:last-child {
-  background-color: var(--save-botton);
+  background-color: var(--button-green);
 }
 .settings_body .s-profile_settings .psr-actions > button:last-child:hover {
-  background-color: var(--save-botton-hover);
+  background-color: var(--button-green-hover);
 }
 
 .settings_body .s-library {

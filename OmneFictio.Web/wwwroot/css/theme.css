@@ -34,15 +34,15 @@
   --comment-menu-bgcolor: #3b3b3b;
   --reply-bgcolor: #313131;
   --replies-bgcolor: #424242;
-  --goback-button: #963a3a;
-  --goback-button-hover: #a34a4a;
   --settings-hovernav: #252525;
   --settings-activetab: #3e6e7a;
-  --revert-botton: #a02d2d;
-  --revert-botton-hover: #9f4e4e;
-  --save-botton: #247b31;
-  --save-botton-hover: #4c8d56;
   --profile-activetab: #3e6e7a;
+  --button-red: #963a3a;
+  --button-red-hover: #a34a4a;
+  --button-blue: #3d779e;
+  --button-blue-hover: #6799ba;
+  --button-green: #247b31;
+  --button-green-hover: #4c8d56;
 }
 
 .lightmode {
@@ -81,15 +81,15 @@
   --comment-menu-bgcolor: #e3e3e3;
   --reply-bgcolor: #dcdcdc;
   --replies-bgcolor: #cfcfcf;
-  --goback-button: #ec7373;
-  --goback-button-hover: #e05050;
   --settings-hovernav: #e3e3e3;
   --settings-activetab: #32a1bc;
-  --revert-botton: #c46969;
-  --revert-botton-hover: #9f4e4e;
-  --save-botton: #61b96e;
-  --save-botton-hover: #4c9156;
   --profile-activetab: #32a1bc;
+  --button-red: #c76363;
+  --button-red-hover: #e05050;
+  --button-blue: #63a3cf;
+  --button-blue-hover: #5685a3;
+  --button-green: #61b96e;
+  --button-green-hover: #4c9156;
 }
 
 /*

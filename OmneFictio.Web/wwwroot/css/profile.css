@@ -10,40 +10,251 @@
   gap: 20px;
 }
 
-.profile-tabs {
+.profile-details {
   display: flex;
-  justify-content: space-between;
-  flex-wrap: wrap;
-  padding: 0 20px;
-  gap: 6px 0;
-  margin-bottom: 14px;
+  flex-direction: column;
+  padding: 0 10px;
+  gap: 10px 0;
 }
-.profile-tabs a {
-  border-radius: 4px;
+.profile-details .pr-header {
+  display: flex;
+  justify-content: center;
+  gap: 10%;
+  flex-wrap: wrap;
+}
+.profile-details .pr-header .pr-img_cont {
+  display: flex;
+  justify-content: center;
+  padding: 10px 0;
+}
+.profile-details .pr-header .pr-img_cont img {
+  height: 100px;
+  width: 100px;
+  border-radius: 10px;
+}
+.profile-details .pr-header .pr-name {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 6px;
+}
+.profile-details .pr-header .pr-name .pr-username {
+  font-family: "Itim", cursive;
+  font-size: 1.2rem;
+  text-align: center;
+}
+.profile-details .pr-header .pr-name .pr-displayname {
+  font-family: "Itim", cursive;
+  font-size: 1.4rem;
+  text-align: center;
+}
+.profile-details span {
+  font-family: "Gudea", Arial, Helvetica, sans-serif;
+}
+.profile-details .pr-bio {
+  text-indent: 10px;
+  text-align: left;
+  font-size: 0.9rem;
+  font-family: "Times New Roman", Arial, Helvetica, sans-serif;
+}
+.profile-details .pr-properties {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 8px;
+}
+.profile-details .pr-properties span {
+  padding: 4px 16px;
+  color: #fff;
+  border-radius: 8px;
+  font-size: 1rem;
+}
+.profile-details .pr-properties span i {
+  font-size: 0.8rem;
+  margin-left: 2px;
+}
+.profile-details .pr-properties .pr-nsfw_warning {
+  background-color: var(--button-red);
+}
+.profile-details .pr-properties .pr-moderator {
+  background-color: var(--button-blue);
+}
+.profile-details .pr-email_cont {
+  margin-top: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.profile-details .pr-email_cont span {
+  font-size: 0.9rem;
+}
+.profile-details .pr-email_cont a {
+  font-size: 0.7rem;
+  cursor: pointer;
+}
+.profile-details .pr-email_cont a:hover {
+  text-decoration: underline;
+}
+.profile-details .pr-gold {
+  text-align: center;
+}
+.profile-details .pr-gold i {
+  color: #c5c93d;
+}
+.profile-details .pr-stats {
+  display: flex;
+  flex-direction: column;
+}
+.profile-details .pr-stats > span {
+  font-size: 1.4rem;
+  text-align: center;
+  font-family: "Itim", cursive;
+}
+.profile-details .pr-stats .prs-userstats {
+  border-bottom: 1px solid var(--background-color2);
+  padding-bottom: 10px;
+  margin-bottom: 4px;
+}
+.profile-details .pr-stats .prs-userstats,
+.profile-details .pr-stats .pr-postingstats {
+  padding: 6px;
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+.profile-details .pr-stats .prs-userstats .prs-column,
+.profile-details .pr-stats .pr-postingstats .prs-column {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-width: 33.3%;
+}
+.profile-details .pr-stats .prs-userstats .prs-column span,
+.profile-details .pr-stats .pr-postingstats .prs-column span {
+  font-size: 1.4rem;
+}
+.profile-details .pr-stats .prs-userstats .prs-column span:last-child,
+.profile-details .pr-stats .pr-postingstats .prs-column span:last-child {
+  font-size: 0.9rem;
+}
+
+.profile-tabs-cont {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+.profile-tabs-cont .profile-tabs-mobile,
+.profile-tabs-cont .profile-tabs-desktop {
+  justify-content: space-evenly;
+  flex-wrap: wrap;
+  padding: 0 6px;
+  gap: 6px 0;
+  margin-bottom: 10px;
+}
+.profile-tabs-cont .profile-tabs-mobile a[data-tab=posts] i,
+.profile-tabs-cont .profile-tabs-mobile a[data-tab=saved] i,
+.profile-tabs-cont .profile-tabs-mobile a[data-tab=friends] i,
+.profile-tabs-cont .profile-tabs-desktop a[data-tab=posts] i,
+.profile-tabs-cont .profile-tabs-desktop a[data-tab=saved] i,
+.profile-tabs-cont .profile-tabs-desktop a[data-tab=friends] i {
+  display: flex;
+  font-size: 1.8rem;
+}
+.profile-tabs-cont .profile-tabs-mobile a,
+.profile-tabs-cont .profile-tabs-desktop a {
   padding: 4px 8px;
-  font-size: 1.6rem;
   color: var(--text-color1);
   transition: background-color 0.1s ease;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
 }
-.profile-tabs a.active {
+.profile-tabs-cont .profile-tabs-mobile a:hover,
+.profile-tabs-cont .profile-tabs-desktop a:hover {
+  border-bottom: 1px solid var(--text-color1);
+}
+.profile-tabs-cont .profile-tabs-mobile a span,
+.profile-tabs-cont .profile-tabs-desktop a span {
+  font-size: 1.2rem;
+}
+.profile-tabs-cont .profile-tabs-mobile a i,
+.profile-tabs-cont .profile-tabs-desktop a i {
+  font-size: 1.6rem;
+}
+.profile-tabs-cont .profile-tabs-mobile a.active,
+.profile-tabs-cont .profile-tabs-desktop a.active {
+  border-radius: 4px;
   background-color: var(--profile-activetab);
   color: #fff;
 }
+.profile-tabs-cont .profile-tabs-mobile a.active:hover,
+.profile-tabs-cont .profile-tabs-desktop a.active:hover {
+  border-bottom: unset;
+}
+
+.profile-tabs-mobile {
+  display: flex;
+  height: 48px;
+}
+
+.profile-tabs-desktop {
+  display: none;
+  height: 38px;
+}
 
 .profile-body {
+  width: 100%;
   padding: 10px 10px;
+  border-top: 1px solid var(--background-color2);
 }
 
 @media (min-width: 992px) {
   .profile-cont {
+    padding-top: 10px;
     flex-direction: row;
+    align-items: flex-start;
   }
-  .profile-cont .profile-tabs {
-    padding: 0 6px;
+  .profile-cont .profile-details {
+    width: 300px;
+  }
+  .profile-cont .profile-details .pr-header {
+    flex-direction: column;
+  }
+  .profile-cont .profile-details .pr-header .pr-img_cont img {
+    width: 80%;
+    height: auto;
+  }
+  .profile-cont .profile-details .pr-header .pr-name {
+    gap: unset;
+  }
+  .profile-cont .profile-details .pr-header .pr-name .pr-username {
+    font-size: 0.8rem;
+  }
+  .profile-cont .profile-details .pr-header .pr-name .pr-displayname {
+    font-size: 1rem;
+  }
+  .profile-cont .profile-details .pr-bio {
+    font-size: 0.7rem;
+  }
+  .profile-cont .profile-tabs-cont {
+    padding: 10px 6px;
+    min-width: 560px;
+  }
+  .profile-tabs-mobile {
+    display: none;
+  }
+  .profile-tabs-desktop {
+    display: flex;
   }
 }
-@media (max-width: 300px) {
-  .profile-tabs {
-    padding: 0 6px;
+@media (min-width: 1200px) {
+  .profile-cont .profile-details .pr-header .pr-username {
+    font-size: 1rem;
+  }
+  .profile-cont .profile-details .pr-header .pr-displayname {
+    font-size: 1.2rem;
+  }
+  .profile-cont .profile-details .pr-bio {
+    font-size: 0.9rem;
   }
 }/*# sourceMappingURL=profile.css.map */

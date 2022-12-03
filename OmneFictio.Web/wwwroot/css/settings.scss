@@ -26,12 +26,12 @@ nav {
             padding: 6px;
             border-radius: 8px;
             text-align: center;
-            background-color: var(--goback-button);
+            background-color: var(--button-red);
             transition: all 0.1s;
             color: #fff;
 
             &:hover {
-                background-color: var(--goback-button-hover);
+                background-color: var(--button-red-hover);
             }
         }
     }
@@ -319,18 +319,18 @@ nav {
             font-size: 1.2rem;
 
             &:first-child {
-                background-color: var(--revert-botton);
+                background-color: var(--button-red);
 
                 &:hover {
-                    background-color: var(--revert-botton-hover);
+                    background-color: var(--button-red-hover);
                 }
             }
 
             &:last-child {
-                background-color: var(--save-botton);
+                background-color: var(--button-green);
 
                 &:hover {
-                    background-color: var(--save-botton-hover);
+                    background-color: var(--button-green-hover);
                 }
             }
         }
