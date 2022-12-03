@@ -10,13 +10,9 @@
     }
 }
 @{
-    string userId = "-1";
-    string username = "";
-    string userPicture = "none";
-
-    userId = User.Claims.FirstOrDefault(claim => claim.Type == "nameid")?.Value ?? "-1";
-    username = User.Claims.FirstOrDefault(claim => claim.Type == "unique_name")?.Value ?? "";
-    userPicture = User.Claims.FirstOrDefault(claim => claim.Type == "actort")?.Value ?? "none";
+    string? userId = User.FindFirst("nameid")?.Value ?? null;
+    string? username = User.FindFirst("unique_name")?.Value ?? null;
+    string? userPicture = User.FindFirst("actort")?.Value ?? null;
 }
 <input type="hidden" value="@Model.postid" id="postid">
 
@@ -157,7 +153,7 @@
     <span id="rate_by_user">--/10</span>
 </div>
 
-@if (userId != "-1")
+@if (userId != null)
 { ///images/users/
     <div class="add_comment-cont">
         <textarea placeholder="This is where we comment." id="commentBody"></textarea>

@@ -8,6 +8,7 @@ using Google.Apis.Auth.OAuth2;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using System.Security.Claims;
+using System.Net;
 
 namespace OmneFictio.Web.Controllers;
 
@@ -15,12 +16,14 @@ public class AuthController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly HttpClient _httpClient;
+    //private readonly WebClient _webClient;
     JwtSecurityTokenHandler _jwtHandler = new JwtSecurityTokenHandler();
 
-    public AuthController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory)
+    public AuthController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory/*, WebClient webClient*/)
     {
         _logger = logger;
         _httpClient = httpClientFactory.CreateClient("of");
+        //_webClient = webClient;
     }
 
     //fetch api manual login
@@ -36,8 +39,9 @@ public class AuthController : Controller
             return new JsonResult(NotFound());
         else
         {
-            string newToken = await getJwtFromResponse(apiResponse);
-            CreateUserSession(newToken, rememberme: rememberme);
+            var dictResult = await getDictFromResponse(apiResponse);
+            dictResult!.TryGetValue("jwt", out var newToken);
+            CreateUserSession(newToken!, rememberme: rememberme);
             return new JsonResult(Ok());
         }
     }
@@ -50,11 +54,13 @@ public class AuthController : Controller
 
         if (statusCode == "OK")
         {
-            string newToken = await getJwtFromResponse(apiResponse);
-            CreateUserSession(newToken);
+            var dictResult = await getDictFromResponse(apiResponse);
+            dictResult!.TryGetValue("jwt", out var newToken);
+            CreateUserSession(newToken!);
             return new JsonResult(Ok());
         }
-        else if(statusCode == "Accepted"){
+        else if (statusCode == "Accepted")
+        {
             return new JsonResult(Accepted()); //created user but failed to get JWT
         }
         else if (statusCode == "Conflict")
@@ -75,8 +81,21 @@ public class AuthController : Controller
 
         if (statusCode == "OK")
         {
-            string newToken = await getJwtFromResponse(apiResponse);
-            CreateUserSession(newToken);
+            var dictResult = await getDictFromResponse(apiResponse);
+            dictResult!.TryGetValue("jwt", out var newToken);
+            dictResult!.TryGetValue("pic", out var pPicUrl);
+
+            ClaimsPrincipal session = CreateUserSession(newToken!);
+            string? permaPic = session.FindFirst("actort")!.Value ?? null;
+
+            if (pPicUrl != null && permaPic != null &&
+                !System.IO.File.Exists($"wwwroot/images/users/{permaPic}"))
+            {
+                var picRes = await _httpClient.GetAsync(pPicUrl);
+                byte[] picBytes = await picRes.Content.ReadAsByteArrayAsync();
+                await System.IO.File.WriteAllBytesAsync($"wwwroot/images/users/{permaPic}", picBytes);
+            }
+
             return new JsonResult(Ok());
         }
         else if (statusCode == "BadRequest")
@@ -104,13 +123,13 @@ public class AuthController : Controller
 
 
 
-    public async Task<string> getJwtFromResponse(HttpResponseMessage response)
+    public async Task<Dictionary<string, string>> getDictFromResponse(HttpResponseMessage response)
     {
         string raw = await response.Content.ReadAsStringAsync();
-        var result = JsonSerializer.Deserialize<Dictionary<string, object>>(raw);
-        return result!.FirstOrDefault(x => x.Key == "jwt").Value.ToString()!;
+        var result = JsonSerializer.Deserialize<Dictionary<string, string>>(raw);
+        return result!;
     }
-    public void CreateUserSession(string tokenRaw, bool rememberme = true)
+    public ClaimsPrincipal CreateUserSession(string tokenRaw, bool rememberme = true)
     {
         //HttpContext.Session.Clear();
         HttpContext.SignOutAsync();
@@ -135,5 +154,6 @@ public class AuthController : Controller
         }
         HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal, sessionSettings);
         HttpContext.Response.Cookies.Append("UserAuth", "True", coockieSettings);
+        return principal;
     }
 }

@@ -119,6 +119,7 @@ public class AuthController : ControllerBase
     [HttpPost("Signin-External")]
     public async Task<IActionResult> Signin_External([FromBody] string token)
     {
+        //validating token
         var securityToken = Encoding.ASCII.GetBytes(_configuration.GetSection("Token").Value);
         var validationSettings = new ValidationSettings
         {
@@ -134,6 +135,7 @@ public class AuthController : ControllerBase
         catch (InvalidJwtException) { return BadRequest(); }
 
         var jwt = _jwtHandler.ReadJwtToken(token);
+        string? profilePic = jwt.Claims.First(claim => claim.Type == "picture").Value;
 
         //Gets the Id given by google
         var extId = jwt.Claims.First(claim => claim.Type == "sub").Value;
@@ -146,7 +148,6 @@ public class AuthController : ControllerBase
         {
             Random random = new Random();
             var email = jwt.Claims.First(claim => claim.Type == "email").Value;
-            var profilePic = jwt.Claims.First(claim => claim.Type == "picture").Value;
             var name = Regex.Replace(jwt.Claims.First(claim => claim.Type == "name").Value, @"\s+", "");
             var username = name;
             for (int i = 0; i < 500; i++)
@@ -163,7 +164,7 @@ public class AuthController : ControllerBase
             newAccount.username = username;
             newAccount.email = email;
             newAccount.externalId = extId;
-            newAccount.profilePic = profilePic;
+            newAccount.profilePic = profilePic; //.Replace("https://lh3.googleusercontent.com/a/", "");
             newAccount.displayName = name;
             newAccount.pw = passwordHash;
             newAccount.externalType = "google";
@@ -174,6 +175,8 @@ public class AuthController : ControllerBase
             try
             {
                 await _db.Accounts.AddAsync(newAccount);
+                await _db.SaveChangesAsync();
+                newAccount.profilePic = "user" + newAccount.id.ToString() + ".png";
                 await _db.SaveChangesAsync();
             }
             catch (DbEntityValidationException)
@@ -194,6 +197,6 @@ public class AuthController : ControllerBase
         {
             return StatusCode(500);
         }
-        return Ok(new { jwt = createToken });
+        return Ok(new { jwt = createToken, pic = profilePic});
     }
 }

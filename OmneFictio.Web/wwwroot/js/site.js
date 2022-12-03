@@ -262,6 +262,7 @@ async function AddComment(payload, commentSection) {
                 const clone = instance.content.cloneNode(true);
 
                 clone.querySelector('.comment').setAttribute('data-commentid', comment.id);
+                clone.querySelector('.c-header > img').setAttribute('src', '/images/users/' + comment.account.profilePic);
                 if (comment.account.displayName != null) {
                     clone.querySelector('.c-username').textContent = comment.account.displayName;
                 } else {
@@ -340,6 +341,7 @@ async function fetchComments(type, parentid, section) {
                     window.checkVoted_icons(clone, comment.votedByUser);
 
                     clone.querySelector('.comment').setAttribute('data-commentid', comment.id);
+                    clone.querySelector('.c-header > img').setAttribute('src', '/images/users/' + comment.account.profilePic);
                     if (comment.account.displayName != null) {
                         clone.querySelector('.c-username').textContent = comment.account.displayName;
                     } else {
@@ -369,6 +371,8 @@ async function fetchComments(type, parentid, section) {
                         if (hreply.voteResult >= 0) {
                             clone.querySelector('.r-likes').textContent = hreply.voteResult;
                         }
+
+                        clone.querySelector('.r-user > img').setAttribute('src', '/images/users/' + hreply.account.profilePic);
                         if (hreply.account.displayName != null) {
                             clone.querySelector('.r-username').textContent = hreply.account.displayName;
                         } else {
@@ -435,6 +439,7 @@ async function fetchReplies(commentId, section) {
                 window.checkVoted_icons(commentClone, comm.votedByUser);
 
                 commentClone.querySelector('.mr-comment').setAttribute('data-commentid', comm.id);
+                commentClone.querySelector('.mrc-header > img').setAttribute('src', '/images/users/' + comm.account.profilePic);
                 if (comm.account.displayName != null) {
                     commentClone.querySelector('.mrc-username').textContent = comm.account.displayName;
                 } else {
@@ -455,6 +460,7 @@ async function fetchReplies(commentId, section) {
                         window.checkVoted_icons(replyClone, reply.votedByUser);
 
                         replyClone.querySelector('.mr-reply').setAttribute('data-replyid', reply.id);
+                        replyClone.querySelector('.mrr-header > img').setAttribute('src', '/images/users/' + reply.account.profilePic);
                         if (reply.account.displayName != null) {
                             replyClone.querySelector('.mrr-username').textContent = reply.account.displayName;
                         } else {

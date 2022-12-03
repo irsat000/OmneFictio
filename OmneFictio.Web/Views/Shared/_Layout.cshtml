@@ -2,15 +2,10 @@
 
 @inject IHttpContextAccessor Accessor
 @{
-    string userId = "-1";
-    string username = "";
-    string userPicture = "none";
-
-    userId = User.Claims.FirstOrDefault(claim => claim.Type == "nameid")?.Value ?? "-1";
-    username = User.Claims.FirstOrDefault(claim => claim.Type == "unique_name")?.Value ?? "";
-    userPicture = User.Claims.FirstOrDefault(claim => claim.Type == "actort")?.Value ?? "none";
+    string? userId = User.FindFirst("nameid")?.Value ?? null;
+    string? username = User.FindFirst("unique_name")?.Value ?? null;
+    string? userPicture = User.FindFirst("actort")?.Value ?? null;
 }
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -219,9 +214,9 @@
         <div class="dw-top">
             <div class="dw-account">
                 <div class="dw-userimg">
-                    @if (userPicture != "none" && userId != "-1")
+                    @if (userPicture != null && userId != null)
                     {
-                        @Html.Raw("<img src='" + userPicture + "'/>")
+                        @Html.Raw("<img src='/images/users/" + userPicture + "'/>")
                     }
                     else
                     {
@@ -234,7 +229,7 @@
             </div>
         </div>
         <div class="dw-username">
-            @if (userId != "-1")
+            @if (userId != null)
             {
                 <span>@username</span>
             }
@@ -248,7 +243,7 @@
         </div>
         <div class="dw-list">
             <ul>
-                @if (userId != "-1")
+                @if (userId != null)
                 {
                     <li><a href="/u/@username">
                             <div class="dw-icon-cont"><i class="bi bi-person"></i></div>Profile
@@ -277,7 +272,7 @@
                     </a></li>
             </ul>
         </div>
-        @if (userId != "-1")
+        @if (userId != null)
         {
             <a asp-controller="Auth" asp-action="Logout" class="dw-redbutton">
                 <div class="dw-icon-cont"><i class="bi bi-box-arrow-left"></i></div>Logout
@@ -308,9 +303,9 @@
                 <div class="account-cont">
                     <div class="ppic-wrap">
                         @{
-                            if (userId != "-1")
+                            if (userId != null)
                             {
-                                @Html.Raw("<img src='" + userPicture + "'/>")
+                                @Html.Raw("<img src='/images/users/" + userPicture + "'/>")
                             }
                             else
                             {
@@ -330,7 +325,7 @@
                             </label>
                         </div>
                         <ul>
-                            @if (userId != "-1")
+                            @if (userId != null)
                             {
                                 <li><a class="ad-username">@username</a></li>
                                 <li><a href="/u/@username">Profile</a></li>
@@ -345,7 +340,7 @@
                             <li><a href="#">Shop</a></li>
                             <li><a href="/settings">Settings</a></li>
                         </ul>
-                        @if (userId != "-1")
+                        @if (userId != null)
                         {
                             <a asp-controller="Auth" asp-action="LogOut" class="acc_dd_redbutton">Logout</a>
                         }
