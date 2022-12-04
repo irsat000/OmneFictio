@@ -27,14 +27,11 @@ $(document).ready(function () {
                 pl_column1.innerHTML = "";
                 pl_column2.innerHTML = "";
                 if (data.statusCode === 200) {
-                    //const postListSection = document.getElementById('postListSection');
-
                     //GET THE POSTS
                     const instance = document.getElementById('postList-post');
                     const response = JSON.parse(data.value);
                     for (const post of response.posts) {
-                        const clone = fillPostTemplate(post, instance);
-
+                        const clone = window.fillPostTemplate(post, instance);
                         if (pl_column1.offsetHeight <= pl_column2.offsetHeight) {
                             pl_column1.appendChild(clone);
                         } else {
@@ -58,71 +55,11 @@ $(document).ready(function () {
             .catch(error => {
                 pl_column1.innerHTML = "";
                 pl_column2.innerHTML = "";
-                plw_message.innerText = "Unknown error.";
+                plw_message.innerText = "Please report, this was not supposed to happen.";
                 plw_img.setAttribute("src", "/images/onerror/connectionerror.png");
                 plwarning.style.display = "flex";
-                console.log('Fetch failed -> ' + error);
+                console.log('Fetch failed -> ' + error); //MUST NOT BE GIVEN TO USERS
             });
-    }
-
-    function fillPostTemplate(post, instance){
-        const clone = instance.content.cloneNode(true);
-
-        //Check if user voted this parent
-        window.checkVoted_icons(clone, post.votedByUser);
-
-        clone.querySelector('.post').setAttribute('data-postid', post.id);
-        clone.querySelector('.p-title > a').setAttribute('href', '/p/' + post.id);
-        clone.querySelector('.p-title > a').innerText = post.title;
-        clone.querySelector('.p-date').innerText = window.TimeAgo(post.publishDate);
-        if (post.coverImage !== null) {
-            clone.querySelector('.p-cover > img').setAttribute('src', '/images/covers/' + post.coverImage);
-        }
-        clone.querySelector('.p-body > span').innerText = post.postDescription;
-        if (post.voteResult >= 0) {
-            clone.querySelector('.vote_count').innerText = post.voteResult;
-        }
-        clone.querySelector('.p-rate').innerText = post.rateResult >= 0 && post.rateResult <= 10
-            ? Number((post.rateResult).toFixed(1)) + "/10"
-            : "-/10";
-
-        clone.querySelector('.pi-type').innerText = post.postType.body;
-        clone.querySelector('.pi-language').innerText = post.language.body;
-        clone.querySelector('.pi-status').innerText = post.postStatus.body;
-        clone.querySelector('.pi-rating').innerText = post.ratedAs.body;
-
-        clone.querySelector('.pi-amount_of_chapters').innerText = post.chapters.length;
-        clone.querySelector('.pi-amount_of_words').innerText = post.wordsLength
-        clone.querySelector('.pi-amount_of_comments').innerText = post.comRepLength;
-        clone.querySelector('.pi-last_update').innerText = window.TimeAgo(post.updateDate, "short");
-
-        const tagSection = clone.querySelector('.pi-tags');
-        const basedOnSection = clone.querySelector('.pi-series');
-        //tag list
-        if (post.tags.length > 0) {
-            post.tags.forEach((tagname) =>
-                tagSection.innerHTML += "<span>" + tagname.body + "</span>"
-            );
-        } else {
-            tagSection.innerHTML = "<span>Empty</span>";
-        }
-        //based on list
-        if (post.existingStories.length > 0) {
-            post.existingStories.forEach((storyname) =>
-                basedOnSection.innerHTML += "<span>" + storyname.body + "</span>"
-            );
-        } else {
-            basedOnSection.remove();
-        }
-
-        //user
-        if (post.account.displayName !== null) {
-            clone.querySelector('.p-username').innerText = post.account.displayName;
-        } else {
-            clone.querySelector('.p-username').innerText = post.account.username;
-        }
-        clone.querySelector('.p-user > img').setAttribute('src', '/images/users/' + post.account.profilePic);
-        return clone;
     }
 
     function createPaginationForPosts(appendLocation, pageCount){

@@ -24,4 +24,30 @@ public class ProfileController : Controller
         
         return View();
     }
+
+    [HttpGet("u/GetPosts/{targetUsername}")]
+    public async Task<JsonResult> GetPosts(string targetUsername)
+    {
+        string url = $"Profile/GetPosts/{targetUsername}";
+        if(AccountId != null){
+            url += $"/{AccountId}";
+        }
+        try
+        {
+            //request
+            var apiResponse = await _httpClient.GetAsync(url.ToString());
+            int deneme = (int)apiResponse.StatusCode;
+            if ((int)apiResponse.StatusCode != 200)
+            {
+                return new JsonResult(NotFound());
+            }
+            //return
+            string content = await apiResponse.Content.ReadAsStringAsync();
+            return new JsonResult(Ok(content));
+        }
+        catch (System.Exception)
+        {
+            return new JsonResult(StatusCode(500));
+        }
+    }
 }

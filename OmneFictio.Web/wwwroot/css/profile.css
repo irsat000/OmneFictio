@@ -15,6 +15,7 @@
   flex-direction: column;
   padding: 0 10px;
   gap: 10px 0;
+  flex-shrink: 0;
 }
 .profile-details .pr-header {
   display: flex;
@@ -203,12 +204,24 @@
 }
 
 #profile-body {
-  width: 100%;
+  min-height: 100vh;
   padding: 20px 0;
   border-top: 1px solid var(--background-color2);
 }
 #profile-body .post {
   background-color: var(--profile-post-color);
+}
+#profile-body .post .p-info {
+  background-color: var(--profile-post-color);
+}
+#profile-body .post .usercard-onhover {
+  background-color: var(--profile-post-color) !important;
+}
+#profile-body > div {
+  display: none;
+}
+#profile-body > div.active {
+  display: block;
 }
 
 @media (min-width: 992px) {

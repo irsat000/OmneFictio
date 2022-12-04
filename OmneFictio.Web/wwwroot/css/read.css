@@ -94,6 +94,9 @@ main {
 .posts-cont .post-list #pl-column1 .post, .posts-cont .post-list #pl-column2 .post {
   background-color: var(--background-color2);
 }
+.posts-cont .post-list #pl-column1 .post .p-info, .posts-cont .post-list #pl-column2 .post .p-info {
+  background-color: var(--background-color2);
+}
 
 .nav-cont {
   display: none;

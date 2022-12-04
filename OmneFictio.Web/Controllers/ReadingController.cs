@@ -90,10 +90,6 @@ public class ReadingController : Controller
         {
             return new JsonResult(StatusCode(500));
         }
-
-        /*var respond = JsonSerializer.Deserialize<Dictionary<string, object>>(rawString);
-        string posts = respond!.FirstOrDefault(x => x.Key == "posts").Value.ToString()!;
-        string pages = respond!.FirstOrDefault(x => x.Key == "pages").Value.ToString()!;*/
     }
 
 

@@ -844,7 +844,7 @@ header .header-wrap {
   position: absolute;
   bottom: 30px;
   right: 0;
-  background: var(--background-color1);
+  background: var(--background-color2);
   border-radius: 8px;
   box-shadow: 0 0 19px -5px rgba(0, 0, 0, 0.5);
   display: flex;
