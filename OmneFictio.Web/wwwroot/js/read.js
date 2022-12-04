@@ -1,13 +1,13 @@
 
 $(document).ready(function () {
-    const postShowroom = document.querySelector('.posts-cont');
     const params = new URLSearchParams(window.location.search);
-    const curpage = params.has('page') ? parseInt(params.get('page'), 10) : 1;
     //Error message references
     const plwarning = document.getElementById('plwarning');
     const plw_message = plwarning.querySelector('.plwarning-message');
     const plw_img = plwarning.querySelector('.plwarning-img');
-
+    
+    //-----fetch post START--------------
+    window.createPostSkeletons("read");
     fetchPosts();
     async function fetchPosts() {
         //I use columns for masonry design.
@@ -33,62 +33,7 @@ $(document).ready(function () {
                     const instance = document.getElementById('postList-post');
                     const response = JSON.parse(data.value);
                     for (const post of response.posts) {
-                        const clone = instance.content.cloneNode(true);
-
-                        //Check if user voted this parent
-                        window.checkVoted_icons(clone, post.votedByUser);
-
-                        clone.querySelector('.post').setAttribute('data-postid', post.id);
-                        clone.querySelector('.p-title > a').setAttribute('href', '/p/' + post.id);
-                        clone.querySelector('.p-title > a').innerText = post.title;
-                        clone.querySelector('.p-date').innerText = window.TimeAgo(post.publishDate);
-                        if (post.coverImage !== null) {
-                            clone.querySelector('.p-cover > img').setAttribute('src', '/images/covers/' + post.coverImage);
-                        }
-                        clone.querySelector('.p-body > span').innerText = post.postDescription;
-                        if (post.voteResult >= 0) {
-                            clone.querySelector('.vote_count').innerText = post.voteResult;
-                        }
-                        clone.querySelector('.p-rate').innerText = post.rateResult >= 0 && post.rateResult <= 10
-                            ? Number((post.rateResult).toFixed(1)) + "/10"
-                            : "-/10";
-
-                        clone.querySelector('.pi-type').innerText = post.postType.body;
-                        clone.querySelector('.pi-language').innerText = post.language.body;
-                        clone.querySelector('.pi-status').innerText = post.postStatus.body;
-                        clone.querySelector('.pi-rating').innerText = post.ratedAs.body;
-
-                        clone.querySelector('.pi-amount_of_chapters').innerText = post.chapters.length;
-                        clone.querySelector('.pi-amount_of_words').innerText = post.wordsLength
-                        clone.querySelector('.pi-amount_of_comments').innerText = post.comRepLength;
-                        clone.querySelector('.pi-last_update').innerText = window.TimeAgo(post.updateDate, "short");
-
-                        const tagSection = clone.querySelector('.pi-tags');
-                        const basedOnSection = clone.querySelector('.pi-series');
-                        //tag list
-                        if (post.tags.length > 0) {
-                            post.tags.forEach((tagname) =>
-                                tagSection.innerHTML += "<span>" + tagname.body + "</span>"
-                            );
-                        } else {
-                            tagSection.innerHTML = "<span>Empty</span>";
-                        }
-                        //based on list
-                        if (post.existingStories.length > 0) {
-                            post.existingStories.forEach((storyname) =>
-                                basedOnSection.innerHTML += "<span>" + storyname.body + "</span>"
-                            );
-                        } else {
-                            basedOnSection.remove();
-                        }
-
-                        //user
-                        if (post.account.displayName !== null) {
-                            clone.querySelector('.p-username').innerText = post.account.displayName;
-                        } else {
-                            clone.querySelector('.p-username').innerText = post.account.username;
-                        }
-                        clone.querySelector('.p-user > img').setAttribute('src', '/images/users/' + post.account.profilePic);
+                        const clone = fillPostTemplate(post, instance);
 
                         if (pl_column1.offsetHeight <= pl_column2.offsetHeight) {
                             pl_column1.appendChild(clone);
@@ -97,60 +42,14 @@ $(document).ready(function () {
                         }
                     }
                     //PAGINATION
-                    const pagInstance = document.getElementById('paginationTemplate');
-                    const pagClone = pagInstance.content.cloneNode(true);
-                    const pagSelect = pagClone.querySelector('.page_select');
-                    for (let i = 1; i <= response.pages; i++) {
-                        const opt = document.createElement('option');
-                        opt.value = i;
-                        opt.innerHTML = i;
-                        pagSelect.appendChild(opt);
-                    }
-                    pagSelect.value = curpage;
-                    //----
-                    const params_pag = params;
-                    let newUrl = new URL(window.location);
-                    let urlPath = newUrl.origin + newUrl.pathname;
-
-                    if (curpage < response.pages) {
-                        params_pag.set('page', (curpage + 1).toString());
-                        pagClone.querySelector('#nextPageBtn')
-                            .setAttribute('href', urlPath + "?" + params_pag);
-                        if (curpage == 1) {
-                            pagClone.querySelector('#prevPageBtn').classList.add('opacity-50');
-                            pagClone.querySelector('.firstPageBtn').classList.add('opacity-50');
-                        }
-                    }
-                    if (curpage > 1) {
-                        params_pag.set('page', (curpage - 1).toString());
-                        pagClone.querySelector('#prevPageBtn')
-                            .setAttribute('href', urlPath + "?" + params_pag);
-                        if (curpage == response.pages) {
-                            pagClone.querySelector('#nextPageBtn').classList.add('opacity-50');
-                            pagClone.querySelector('.lastPageBtn').classList.add('opacity-50');
-                        }
-                    }
-                    pagClone.querySelector('.firstPageBtn').addEventListener('click', function () {
-                        params_pag.set('page', '1');
-                        window.location.href = urlPath + "?" + params_pag;
-                    });
-                    pagClone.querySelector('.lastPageBtn').addEventListener('click', function () {
-                        params_pag.set('page', response.pages.toString());
-                        window.location.href = urlPath + "?" + params_pag;
-                    });
-                    pagSelect.addEventListener('change', function () {
-                        params_pag.set('page', this.value);
-                        window.location.href = urlPath + "?" + params_pag;
-                    });
-                    if (response.pages !== 1) {
-                        postShowroom.appendChild(pagClone);
-                    }
+                    const postShowroom = document.querySelector('.posts-cont');
+                    createPaginationForPosts(postShowroom, response.pages);
                 } else if (data.statusCode === 404) {
                     plw_message.innerText = "In terms of posts, we have no posts.";
                     plw_img.setAttribute("src", "/images/onerror/noposts.webp");
                     plwarning.style.display = "flex";
                 } else {
-                    plw_message.querySelector('.plwarning-message').innerText = "Couldn't connect to API.";
+                    plw_message.querySelector('.plwarning-message').innerText = "Couldn't connect to servers.";
                     plw_img.setAttribute("src", "/images/onerror/connectionerror.png");
                     plwarning.style.display = "flex";
                     //Codes that will return an apology instead of post list
@@ -165,6 +64,120 @@ $(document).ready(function () {
                 console.log('Fetch failed -> ' + error);
             });
     }
+
+    function fillPostTemplate(post, instance){
+        const clone = instance.content.cloneNode(true);
+
+        //Check if user voted this parent
+        window.checkVoted_icons(clone, post.votedByUser);
+
+        clone.querySelector('.post').setAttribute('data-postid', post.id);
+        clone.querySelector('.p-title > a').setAttribute('href', '/p/' + post.id);
+        clone.querySelector('.p-title > a').innerText = post.title;
+        clone.querySelector('.p-date').innerText = window.TimeAgo(post.publishDate);
+        if (post.coverImage !== null) {
+            clone.querySelector('.p-cover > img').setAttribute('src', '/images/covers/' + post.coverImage);
+        }
+        clone.querySelector('.p-body > span').innerText = post.postDescription;
+        if (post.voteResult >= 0) {
+            clone.querySelector('.vote_count').innerText = post.voteResult;
+        }
+        clone.querySelector('.p-rate').innerText = post.rateResult >= 0 && post.rateResult <= 10
+            ? Number((post.rateResult).toFixed(1)) + "/10"
+            : "-/10";
+
+        clone.querySelector('.pi-type').innerText = post.postType.body;
+        clone.querySelector('.pi-language').innerText = post.language.body;
+        clone.querySelector('.pi-status').innerText = post.postStatus.body;
+        clone.querySelector('.pi-rating').innerText = post.ratedAs.body;
+
+        clone.querySelector('.pi-amount_of_chapters').innerText = post.chapters.length;
+        clone.querySelector('.pi-amount_of_words').innerText = post.wordsLength
+        clone.querySelector('.pi-amount_of_comments').innerText = post.comRepLength;
+        clone.querySelector('.pi-last_update').innerText = window.TimeAgo(post.updateDate, "short");
+
+        const tagSection = clone.querySelector('.pi-tags');
+        const basedOnSection = clone.querySelector('.pi-series');
+        //tag list
+        if (post.tags.length > 0) {
+            post.tags.forEach((tagname) =>
+                tagSection.innerHTML += "<span>" + tagname.body + "</span>"
+            );
+        } else {
+            tagSection.innerHTML = "<span>Empty</span>";
+        }
+        //based on list
+        if (post.existingStories.length > 0) {
+            post.existingStories.forEach((storyname) =>
+                basedOnSection.innerHTML += "<span>" + storyname.body + "</span>"
+            );
+        } else {
+            basedOnSection.remove();
+        }
+
+        //user
+        if (post.account.displayName !== null) {
+            clone.querySelector('.p-username').innerText = post.account.displayName;
+        } else {
+            clone.querySelector('.p-username').innerText = post.account.username;
+        }
+        clone.querySelector('.p-user > img').setAttribute('src', '/images/users/' + post.account.profilePic);
+        return clone;
+    }
+
+    function createPaginationForPosts(appendLocation, pageCount){
+        const curpage = params.has('page') ? parseInt(params.get('page'), 10) : 1;
+        //PAGINATION
+        const pagInstance = document.getElementById('paginationTemplate');
+        const pagClone = pagInstance.content.cloneNode(true);
+        const pagSelect = pagClone.querySelector('.page_select');
+        for (let i = 1; i <= pageCount; i++) {
+            const opt = document.createElement('option');
+            opt.value = i;
+            opt.innerHTML = i;
+            pagSelect.appendChild(opt);
+        }
+        pagSelect.value = curpage;
+        //----
+        const params_pag = params;
+        let newUrl = new URL(window.location);
+        let urlPath = newUrl.origin + newUrl.pathname;
+
+        if (curpage < pageCount) {
+            params_pag.set('page', (curpage + 1).toString());
+            pagClone.querySelector('#nextPageBtn')
+                .setAttribute('href', urlPath + "?" + params_pag);
+            if (curpage == 1) {
+                pagClone.querySelector('#prevPageBtn').classList.add('opacity-50');
+                pagClone.querySelector('.firstPageBtn').classList.add('opacity-50');
+            }
+        }
+        if (curpage > 1) {
+            params_pag.set('page', (curpage - 1).toString());
+            pagClone.querySelector('#prevPageBtn')
+                .setAttribute('href', urlPath + "?" + params_pag);
+            if (curpage == pageCount) {
+                pagClone.querySelector('#nextPageBtn').classList.add('opacity-50');
+                pagClone.querySelector('.lastPageBtn').classList.add('opacity-50');
+            }
+        }
+        pagClone.querySelector('.firstPageBtn').addEventListener('click', function () {
+            params_pag.set('page', '1');
+            window.location.href = urlPath + "?" + params_pag;
+        });
+        pagClone.querySelector('.lastPageBtn').addEventListener('click', function () {
+            params_pag.set('page', pageCount.toString());
+            window.location.href = urlPath + "?" + params_pag;
+        });
+        pagSelect.addEventListener('change', function () {
+            params_pag.set('page', this.value);
+            window.location.href = urlPath + "?" + params_pag;
+        });
+        if (pageCount !== 1) {
+            appendLocation.appendChild(pagClone);
+        }
+    }
+    //-------fetch post END----------------------
 
 
     document.querySelector('.modalbg1').addEventListener("click", function () {

@@ -37,6 +37,7 @@
   --settings-hovernav: #252525;
   --settings-activetab: #3e6e7a;
   --profile-activetab: #3e6e7a;
+  --profile-post-color: #272727;
   --button-red: #963a3a;
   --button-red-hover: #a34a4a;
   --button-blue: #3d779e;
@@ -84,6 +85,7 @@
   --settings-hovernav: #e3e3e3;
   --settings-activetab: #32a1bc;
   --profile-activetab: #32a1bc;
+  --profile-post-color: #ffffff;
   --button-red: #c76363;
   --button-red-hover: #e05050;
   --button-blue: #63a3cf;

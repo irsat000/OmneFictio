@@ -751,3 +751,21 @@ function getPathPart(index) {
     }
     return getval;
 }
+
+function createPostSkeletons(page){
+    const postSkelTemplate = document.getElementById("postSkeleton");
+    if(page === "read"){
+        const pl_column1 = document.getElementById('pl-column1');
+        const pl_column2 = document.getElementById('pl-column2');
+        for (let i = 0; i < 6; i++) {
+            pl_column1.appendChild(postSkelTemplate.content.cloneNode(true));
+            pl_column2.appendChild(postSkelTemplate.content.cloneNode(true));
+        }
+    }
+    else if(page === "profile") {
+        const body = document.getElementById('profile-body');
+        for (let i = 0; i < 10; i++) {
+            body.appendChild(postSkelTemplate.content.cloneNode(true));
+        }
+    }
+}

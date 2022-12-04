@@ -28,6 +28,8 @@ $(document).ready(function () {
         //Filling the tabs
         switch (tab) {
             case "posts":
+                window.createPostSkeletons("profile");
+                getProfileBody_posts();
                 break;
             case "comments":
                 break;
@@ -41,6 +43,16 @@ $(document).ready(function () {
                 break;
         }
     }
+
+    function getProfileBody_posts(){
+
+    }
+
+
+
+
+
+
 
     
     $(window).resize(function () {

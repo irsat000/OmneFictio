@@ -46,6 +46,140 @@
     <div class="modalbg2"></div>
 
 
+    <template id="postSkeleton">
+        <div class="post post-skel">
+            <div class="pskel-header">
+                <div class="pskel-title psk-item"></div>
+                <i class="bi bi-three-dots psk-item"></i>
+            </div>
+            <div class="pskel-body">
+                <div class="pskel-desc psk-item"></div>
+                <div class="pskel-desc psk-item"></div>
+            </div>
+            <div class="pskel-footer">
+                <div class="pskel-evaluation psk-item"></div>
+                <div class="pskel-uname psk-item"></div>
+                <i class="bi bi-person-circle psk-item"></i>
+            </div>
+        </div>
+    </template>
+    <template id="postList-post">
+        <div class="post" data-postid="post.id">
+            <div class="post-body">
+                <div class="p-header">
+                    <div class="p-title">
+                        <a href="">
+
+                        </a>
+                        <span class="p-date">
+
+                        </span>
+                    </div>
+                    <div class="p-menu">
+                        <!--<i class="bi bi-caret-left p-menubtn"></i>-->
+                        <i class="bi bi-three-dots p-menuicon"></i>
+                        <i class="bi bi-info-circle p-infoicon"></i>
+                        <div class="p-info">
+                            <div class="pi-primary">
+                                <span class="pi-type">
+
+                                </span>
+                                <span class="pi-language">
+
+                                </span>
+                                <span class="pi-status">
+
+                                </span>
+                                <span class="pi-rating">
+
+                                </span>
+                            </div>
+                            <div class="pi-tags">
+
+                            </div>
+                            <div class="pi-series">
+
+                            </div>
+                            <div class="pi-details">
+                                <div class="pi-detail-column">
+                                    <i class="bi bi-card-text"></i>
+                                    <span class="pi-amount_of_chapters">
+
+                                    </span>
+                                </div>
+                                <div class="pi-detail-column">
+                                    <i class="bi bi-body-text"></i>
+                                    <span class="pi-amount_of_words">
+
+                                    </span>
+                                </div>
+                                <div class="pi-detail-column">
+                                    <i class="bi bi-chat-right"></i>
+                                    <span class="pi-amount_of_comments">
+
+                                    </span>
+                                </div>
+                                <div class="pi-detail-column">
+                                    <i class="bi bi-clock"></i>
+                                    <span class="pi-last_update">
+
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-body">
+                    <div class="p-cover">
+                        <img src="" onerror="this.onerror=null; this.closest('.p-cover').remove()">
+                    </div>
+                    <span>
+
+                    </span>
+                </div>
+                <div class="p-footer">
+                    <div class="p-evaluation">
+                        <i class='bi bi-hand-thumbs-up likebtn' data-action='like' data-target_type='post'></i>
+                        <span class="p-likes vote_count">--</span>
+                        <i class='bi bi-hand-thumbs-down dislikebtn' data-action='dislike' data-target_type='post'></i>
+                        <span class="p-rate">
+
+                        </span>
+                    </div>
+                    <div class="p-user belongs_to">
+                        <span class="p-username">
+
+                        </span>
+                        <div class="usercard-onhover ucard-mode2">
+                            <span class="ucard-username">MrBombastic</span>
+                            <img src='/images/onerror/user_no_photo_300x300.png'>
+                            <div class="ucard-part2">
+                                <span class="ucard-username-mode2">MrBombastic</span>
+                                <p class="ucard-description">Hello, this is my default description. I give information here.
+                                </p>
+                                <div class="ucard-stats">
+                                    <div class="ucard-likes">
+                                        <i class="bi bi-hand-thumbs-up"></i>
+                                        <span>90K</span>
+                                    </div>
+                                    <div class="ucard-follows">
+                                        <i class="bi bi-heart"></i>
+                                        <span>600</span>
+                                    </div>
+                                    <div class="ucard-published">
+                                        <i class="bi bi-card-text"></i>
+                                        <span>14</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!--<span class="p-username p-deleted_user">DeletedUser</span>-->
+                        <img src="" onerror="this.onerror=null; this.src='/images/onerror/user_no_photo_300x300.png'">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </template>
 
     <template id="comment_instance">
         <div class="comment-cont">
