@@ -2,6 +2,7 @@ using OmneFictio.WebApi.Entities;
 using OmneFictio.WebApi.Dtos;
 using OmneFictio.WebApi.Models;
 using OmneFictio.WebApi.Configurations;
+using OmneFictio.WebApi.Infrastructure;
 //basic
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
@@ -28,8 +29,9 @@ public class ReadingController : ControllerBase
     private readonly OmneFictioContext _db;
     private readonly IMapper _mapper;
     private readonly ILogger<ReadingController> _logger;
+    private readonly IFetchServices _fetchServices;
 
-    public ReadingController(ILogger<ReadingController> logger, IMapper mapper, OmneFictioContext db)
+    public ReadingController(ILogger<ReadingController> logger, IMapper mapper, OmneFictioContext db, IFetchServices fetchServices)
     {
         _logger = logger;
         _mapper = mapper;
@@ -38,6 +40,7 @@ public class ReadingController : ControllerBase
             throw new InvalidOperationException("Mapper not found");
         }
         _db = db;
+        _fetchServices = fetchServices;
     }
 
     [HttpGet("GetChapter/{postid}/{chapterindex}/{userId?}")]
@@ -131,48 +134,8 @@ public class ReadingController : ControllerBase
         {
             return NotFound();
         }
-        //Stopwatch elapsedTimeForExtras = new Stopwatch();
-        foreach (PostDtoRead_1 post in posts_onepage)
-        {
-            //remove if the chapters are not published
-            //Maybe I can fix this from the root later
-            if (post.chapters != null && post.chapters.Count() > 0)
-                post.chapters = post.chapters.Where(c => c.IsPublished == true).ToList();
-            
-            //elapsedTimeForExtras.Start();
-            //Get comment and reply count
-            var commentIds = _db.Comments
-                .Where(x => x.targetPostId == post.id &&
-                        x.deletedStatus.body == "Default")
-                .Select(x => x.id);
-            var replyCount = _db.Replies
-                .Count(x => commentIds.Contains(x.commentId ?? -1) &&
-                        x.deletedStatus.body == "Default");
-            post.comRepLength = commentIds.Count() + replyCount;
-            //elapsedTimeForExtras.Stop();
-
-            //Get the sum of words in chapters of the post
-            char[] wordSeparator = new char[] {' ', '\r', '\n' };
-            var chbodyList = _db.Chapters
-                .Where(x => x.postId == post.id &&
-                        x.deletedStatus.body == "Default" &&
-                        x.isPublished == true)
-                .Select(x => x.body);
-            foreach(string? chbody in chbodyList){
-                post.wordsLength += chbody != null
-                    ? chbody.Split(wordSeparator, StringSplitOptions.RemoveEmptyEntries).Length : 0;
-            }
-
-            //check vote by user
-            if (userId != null)
-            {
-                Vote? checkVoteByUser = await _db.Votes.SingleOrDefaultAsync(v =>
-                    v.accountId == userId &&
-                    v.targetPostId == post.id);
-                if (checkVoteByUser != null)
-                    post.VotedByUser = checkVoteByUser.body;
-            }
-        }
+        posts_onepage = await _fetchServices.GetPosts_Details(posts_onepage, userId);
+        
         return Ok(new { posts = posts_onepage, pages = pageCount});
     }
 
@@ -316,4 +279,7 @@ public class ReadingController : ControllerBase
             return Ok(vote.body);
         }
     */
+
+
+    
 }

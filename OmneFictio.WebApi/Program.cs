@@ -2,11 +2,13 @@ using Microsoft.EntityFrameworkCore;
 using OmneFictio.WebApi.Configurations;
 using OmneFictio.WebApi.Entities;
 using SecuringWebApiUsingApiKey.Middleware;
+using OmneFictio.WebApi.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
-
+var services = builder.Services;
 // Add services to the container.
 
+services.AddTransient<IFetchServices, FetchServices>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
