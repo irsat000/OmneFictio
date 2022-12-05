@@ -16,6 +16,7 @@ using BC = BCrypt.Net.BCrypt;
 using System.Data.Entity.Validation;
 using Google.Apis.Auth;
 using static Google.Apis.Auth.GoogleJsonWebSignature;
+using OmneFictio.WebApi.Infrastructure;
 
 namespace OmneFictio.WebApi.Controllers;
 
@@ -24,12 +25,13 @@ namespace OmneFictio.WebApi.Controllers;
 public class AuthController : ControllerBase
 {
     private readonly OmneFictioContext _db;
+    private readonly IHelperServices _helperServices;
     private readonly IMapper _mapper;
     private readonly ILogger<ReadingController> _logger;
     private readonly IConfiguration _configuration;
     JwtSecurityTokenHandler _jwtHandler = new JwtSecurityTokenHandler();
 
-    public AuthController(ILogger<ReadingController> logger, IMapper mapper, OmneFictioContext db, IConfiguration iConfig)
+    public AuthController(ILogger<ReadingController> logger, IMapper mapper, OmneFictioContext db, IHelperServices helperServices, IConfiguration iConfig)
     {
         _logger = logger;
         _mapper = mapper;
@@ -38,6 +40,7 @@ public class AuthController : ControllerBase
             throw new InvalidOperationException("Mapper not found");
         }
         _db = db;
+        _helperServices = helperServices;
         _configuration = iConfig;
     }
 
@@ -52,7 +55,7 @@ public class AuthController : ControllerBase
             return NotFound();
         }
         //Login
-        var createToken = UserController.CreateUserToken(checkUser, securityToken);
+        var createToken = _helperServices.CreateUserToken(checkUser, securityToken);
         if (createToken == null)
         {
             return NotFound();
@@ -108,7 +111,7 @@ public class AuthController : ControllerBase
         }
         //Login
         var user = await _db.Accounts.SingleOrDefaultAsync(x => x.username == request.Username);
-        var createToken = UserController.CreateUserToken(user!, securityToken);
+        var createToken = _helperServices.CreateUserToken(user!, securityToken);
         if (createToken == null)
         {
             return Accepted();
@@ -158,7 +161,7 @@ public class AuthController : ControllerBase
                 }
                 else { break; }
             }
-            string passwordHash = BC.HashPassword(UserController.GeneratePassword(16, 8));
+            string passwordHash = BC.HashPassword(_helperServices.GeneratePassword(16, 8));
 
             Account newAccount = new Account();
             newAccount.username = username;
@@ -192,7 +195,7 @@ public class AuthController : ControllerBase
             return StatusCode(500);
         }
 
-        var createToken = UserController.CreateUserToken(user, securityToken);
+        var createToken = _helperServices.CreateUserToken(user, securityToken);
         if (createToken == null)
         {
             return StatusCode(500);

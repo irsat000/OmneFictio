@@ -1,5 +1,6 @@
 using System.Text.Json;
 using Microsoft.AspNetCore.Mvc;
+using OmneFictio.Web.Infrastructure;
 using OmneFictio.Web.Models;
 
 namespace OmneFictio.Web.Controllers;
@@ -8,14 +9,18 @@ public class ActionController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly HttpClient _httpClient;
+    private readonly IHelperServices _helperServices;
     private int? AccountId = null;
 
-    public ActionController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory, IHttpContextAccessor IHttpContextAccessor)
+    public ActionController(ILogger<HomeController> logger,
+                            IHttpClientFactory httpClientFactory,
+                            IHelperServices helperServices)
     {
         _logger = logger;
         _httpClient = httpClientFactory.CreateClient("of");
+        _helperServices = helperServices;
         //check account
-        AccountId = UserController.checkUserLogin(IHttpContextAccessor.HttpContext);
+        AccountId = _helperServices.checkUserLogin();
     }
 
 

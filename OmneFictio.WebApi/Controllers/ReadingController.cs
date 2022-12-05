@@ -29,9 +29,9 @@ public class ReadingController : ControllerBase
     private readonly OmneFictioContext _db;
     private readonly IMapper _mapper;
     private readonly ILogger<ReadingController> _logger;
-    private readonly IFetchServices _fetchServices;
+    private readonly IHelperServices _helperServices;
 
-    public ReadingController(ILogger<ReadingController> logger, IMapper mapper, OmneFictioContext db, IFetchServices fetchServices)
+    public ReadingController(ILogger<ReadingController> logger, IMapper mapper, OmneFictioContext db, IHelperServices helperServices)
     {
         _logger = logger;
         _mapper = mapper;
@@ -40,7 +40,7 @@ public class ReadingController : ControllerBase
             throw new InvalidOperationException("Mapper not found");
         }
         _db = db;
-        _fetchServices = fetchServices;
+        _helperServices = helperServices;
     }
 
     [HttpGet("GetChapter/{postid}/{chapterindex}/{userId?}")]
@@ -134,7 +134,7 @@ public class ReadingController : ControllerBase
         {
             return NotFound();
         }
-        posts_onepage = await _fetchServices.GetPosts_Details(posts_onepage, userId);
+        posts_onepage = await _helperServices.GetPosts_Details(posts_onepage, userId);
         
         return Ok(new { posts = posts_onepage, pages = pageCount});
     }

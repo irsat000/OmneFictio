@@ -16,14 +16,12 @@ public class AuthController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly HttpClient _httpClient;
-    //private readonly WebClient _webClient;
     JwtSecurityTokenHandler _jwtHandler = new JwtSecurityTokenHandler();
 
-    public AuthController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory/*, WebClient webClient*/)
+    public AuthController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory)
     {
         _logger = logger;
         _httpClient = httpClientFactory.CreateClient("of");
-        //_webClient = webClient;
     }
 
     //fetch api manual login

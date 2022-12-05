@@ -30,9 +30,9 @@ public class ProfileController : ControllerBase
     private readonly OmneFictioContext _db;
     private readonly IMapper _mapper;
     private readonly ILogger<ProfileController> _logger;
-    private readonly IFetchServices _fetchServices;
+    private readonly IHelperServices _helperServices;
 
-    public ProfileController(ILogger<ProfileController> logger, IMapper mapper, OmneFictioContext db, IFetchServices fetchServices)
+    public ProfileController(ILogger<ProfileController> logger, IMapper mapper, OmneFictioContext db, IHelperServices helperServices)
     {
         _logger = logger;
         _mapper = mapper;
@@ -41,7 +41,7 @@ public class ProfileController : ControllerBase
             throw new InvalidOperationException("Mapper not found");
         }
         _db = db;
-        _fetchServices = fetchServices;
+        _helperServices = helperServices;
     }
 
     [HttpGet("GetPosts/{targetUsername}/{userId?}")]
@@ -59,7 +59,7 @@ public class ProfileController : ControllerBase
         var postList = await _mapper.ProjectTo<PostDtoRead_1>(posts)
             .ToListAsync();
 
-        postList = await _fetchServices.GetPosts_Details(postList, userId);
+        postList = await _helperServices.GetPosts_Details(postList, userId);
         return Ok(new { posts = postList});
     }
 }

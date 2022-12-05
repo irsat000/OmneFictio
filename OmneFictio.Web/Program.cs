@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using OmneFictio.Web.Infrastructure;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,6 +10,10 @@ var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 var configuration = builder.Configuration;
+var services = builder.Services;
+
+services.AddTransient<IHelperServices, HelperServices>();
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddHttpClient("of", client => {
     client.BaseAddress = new Uri("https://localhost:7223/");

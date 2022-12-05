@@ -8,7 +8,7 @@ var builder = WebApplication.CreateBuilder(args);
 var services = builder.Services;
 // Add services to the container.
 
-services.AddTransient<IFetchServices, FetchServices>();
+services.AddTransient<IHelperServices, HelperServices>();
 
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle

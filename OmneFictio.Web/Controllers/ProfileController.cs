@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using OmneFictio.Web.Infrastructure;
 using OmneFictio.Web.Models;
 using System.Text.Json;
 using System.Web;
@@ -8,14 +9,18 @@ public class ProfileController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly HttpClient _httpClient;
+    private readonly IHelperServices _helperServices;
     private int? AccountId = null;
 
-    public ProfileController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory, IHttpContextAccessor IHttpContextAccessor)
+    public ProfileController(ILogger<HomeController> logger,
+                            IHttpClientFactory httpClientFactory,
+                            IHelperServices helperServices)
     {
         _logger = logger;
         _httpClient = httpClientFactory.CreateClient("of");
+        _helperServices = helperServices;
         //check account
-        AccountId = UserController.checkUserLogin(IHttpContextAccessor.HttpContext);
+        AccountId = _helperServices.checkUserLogin();
     }
 
     [HttpGet("u/{username?}/{path?}")]

@@ -1,19 +1,77 @@
-using Microsoft.AspNetCore.Mvc;
+
+using Microsoft.EntityFrameworkCore;
+using Microsoft.IdentityModel.Tokens;
+using OmneFictio.WebApi.Dtos;
+using OmneFictio.WebApi.Entities;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
-using Microsoft.IdentityModel.Tokens;
-using OmneFictio.WebApi.Entities;
 
-namespace OmneFictio.WebApi.Controllers;
-
-public class UserController : ControllerBase
+namespace OmneFictio.WebApi.Infrastructure;
+public interface IHelperServices
 {
-    public UserController()
+    //repetitive
+    Task<List<PostDtoRead_1>> GetPosts_Details(List<PostDtoRead_1> postList, int? userId);
+    //helper
+    string? CreateUserToken(Account user, byte[] securityToken);
+    string GeneratePassword(int length, int numberOfNonAlphanumericCharacters);
+}
+public class HelperServices : IHelperServices
+{
+    private readonly OmneFictioContext _db;
+    public HelperServices(OmneFictioContext db)
     {
-        
+        _db = db;
     }
-    public static string? CreateUserToken(Account user, byte[] securityToken){
+
+    //------ REPETITIVE ---------
+    public async Task<List<PostDtoRead_1>> GetPosts_Details(List<PostDtoRead_1> postList, int? userId)
+    {
+        foreach (PostDtoRead_1 post in postList)
+        {
+            //remove if the chapters are not published
+            //Maybe I can fix this from the root later
+            if (post.chapters != null && post.chapters.Count() > 0)
+                post.chapters = post.chapters.Where(c => c.IsPublished == true).ToList();
+
+            //Get comment and reply count
+            var commentIds = _db.Comments
+                .Where(x => x.targetPostId == post.id &&
+                        x.deletedStatus!.body == "Default")
+                .Select(x => x.id);
+            var replyCount = _db.Replies
+                .Count(x => commentIds.Contains(x.commentId ?? -1) &&
+                        x.deletedStatus!.body == "Default");
+            post.comRepLength = commentIds.Count() + replyCount;
+
+            //Get the sum of words in chapters of the post
+            char[] wordSeparator = new char[] { ' ', '\r', '\n' };
+            var chbodyList = _db.Chapters
+                .Where(x => x.postId == post.id &&
+                        x.deletedStatus!.body == "Default" &&
+                        x.isPublished == true)
+                .Select(x => x.body);
+            foreach (string? chbody in chbodyList)
+            {
+                post.wordsLength += chbody != null
+                    ? chbody.Split(wordSeparator, StringSplitOptions.RemoveEmptyEntries).Length : 0;
+            }
+
+            //check vote by user
+            if (userId != null)
+            {
+                Vote? checkVoteByUser = await _db.Votes.SingleOrDefaultAsync(v =>
+                    v.accountId == userId &&
+                    v.targetPostId == post.id);
+                if (checkVoteByUser != null)
+                    post.VotedByUser = checkVoteByUser.body;
+            }
+        }
+        return postList;
+    }
+
+    //------ HELPER functions -------------
+    public string? CreateUserToken(Account user, byte[] securityToken){
         var tokenHandler = new JwtSecurityTokenHandler();
         var tokenDescriptor = new SecurityTokenDescriptor {
             Subject = new ClaimsIdentity(new List<Claim>(){
@@ -30,7 +88,7 @@ public class UserController : ControllerBase
         return token;
     }
 
-    public static string GeneratePassword(int length, int numberOfNonAlphanumericCharacters)
+    public string GeneratePassword(int length, int numberOfNonAlphanumericCharacters)
     {
         char[] Punctuations = "!@#$%^&*()_-+=[{]};:>|./?".ToCharArray();
         if (length < 1 || length > 128)
@@ -99,3 +157,4 @@ public class UserController : ControllerBase
         }
     }
 }
+
