@@ -18,6 +18,7 @@ public class CommentDtoRead_2
     public DateTime UpdateDate { get; set; }
 
     public AccountDtoRead_1? Account { get; set; }
+    public int? targetPostId { get; set; }
     public DeletedStatusDto? DeletedStatus { get; set; }
     public int VoteResult { get; set; } = 0;
     public int RepliesLength { get; set; } = 0;

@@ -62,4 +62,24 @@ public class ProfileController : ControllerBase
         postList = await _helperServices.GetPosts_Details(postList, userId);
         return Ok(new { posts = postList});
     }
+    
+    [HttpGet("GetReviews/{targetUsername}/{userId?}")]
+    public async Task<IActionResult> GetReviews
+        (string targetUsername, int? userId)
+    {
+        List<CommentDtoRead_2> comments = new List<CommentDtoRead_2>();
+
+        comments = await _mapper.ProjectTo<CommentDtoRead_2>(_db.Comments.Where(c =>
+            c.targetPostId != null &&
+            c.deletedStatus!.body == "Default" &&
+            c.account!.username == targetUsername)
+            .OrderByDescending(c => c.publishDate)).ToListAsync();
+
+        if (comments == null || comments.Count() == 0)
+        {
+            return NotFound();
+        }
+        comments = await _helperServices.GetComments_Details(comments, userId);
+        return Ok(comments);
+    }
 }

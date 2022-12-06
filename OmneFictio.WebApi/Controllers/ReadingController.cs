@@ -163,18 +163,7 @@ public class ReadingController : ControllerBase
         {
             return NotFound();
         }
-        //check vote by user
-        if (userId != null)
-        {
-            foreach (var x in comments)
-            {
-                Vote? checkVoteByUser = await _db.Votes.SingleOrDefaultAsync(v =>
-                    v.accountId == userId &&
-                    v.targetCommentId == x.Id);
-                if (checkVoteByUser != null)
-                    x.VotedByUser = checkVoteByUser.body;
-            }
-        }
+        comments = await _helperServices.GetComments_Details(comments, userId);
         return Ok(comments);
     }
 

@@ -55,4 +55,22 @@ public class ProfileController : Controller
             return new JsonResult(StatusCode(500));
         }
     }
+
+    [HttpGet("u/GetReviews/{targetUsername}")]
+    public async Task<JsonResult> GetReviews(string targetUsername){
+        string url = $"Profile/GetReviews/{targetUsername}";
+        if(AccountId != null){
+            url += "/" + AccountId;
+        }
+        
+        var apiResponse = await _httpClient.GetAsync(url);
+        if (apiResponse.StatusCode.ToString() != "OK")
+        {
+            return new JsonResult(NotFound());
+        }
+
+        //return
+        string content = await apiResponse.Content.ReadAsStringAsync();
+        return new JsonResult(Ok(content));
+    }
 }

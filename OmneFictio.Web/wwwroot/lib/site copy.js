@@ -330,8 +330,55 @@ async function fetchComments(type, parentid, section) {
         .then((res) => res.json())
         .then(async (data) => {
             if (data.statusCode === 200) {
+                const instance = document.getElementById('comment_instance');
                 for (const comment of JSON.parse(data.value)) {
-                    section.appendChild(await fillCommentTemplate(comment));
+                    const clone = instance.content.cloneNode(true);
+                    //Check if user voted this parent
+                    window.checkVoted_icons(clone, comment.votedByUser);
+
+                    clone.querySelector('.comment').setAttribute('data-commentid', comment.id);
+                    clone.querySelector('.c-header > img').setAttribute('src', '/images/users/' + comment.account.profilePic);
+                    if (comment.account.displayName != null) {
+                        clone.querySelector('.c-username').textContent = comment.account.displayName;
+                    } else {
+                        clone.querySelector('.c-username').textContent = comment.account.username;
+                    }
+                    clone.querySelector('.c-date').textContent = window.TimeAgo(comment.publishDate);
+                    clone.querySelector('.c-text > span').textContent = comment.body;
+                    if (comment.voteResult >= 0) {
+                        clone.querySelector('.c-likes').textContent = comment.voteResult;
+                    }
+                    if (comment.repliesLength === 0) {
+                        clone.querySelector('.get_replies').remove();
+                    } else {
+                        let repliesLengthText = " replies";
+                        if (comment.repliesLength === 1) {
+                            repliesLengthText = " reply";
+                        }
+                        clone.querySelector('.get_replies > span').textContent = comment.repliesLength + repliesLengthText;
+                    }
+                    const hreply = await fetchHighlightedReply(comment.id);
+                    if (hreply) {
+                        //Check if user voted this parent
+                        window.checkVoted_icons(clone.querySelector('.reply'), hreply.votedByUser);
+
+                        clone.querySelector('.reply').setAttribute('data-replyid', hreply.id);
+                        clone.querySelector('.r-text > span').textContent = hreply.body;
+                        if (hreply.voteResult >= 0) {
+                            clone.querySelector('.r-likes').textContent = hreply.voteResult;
+                        }
+
+                        clone.querySelector('.r-user > img').setAttribute('src', '/images/users/' + hreply.account.profilePic);
+                        if (hreply.account.displayName != null) {
+                            clone.querySelector('.r-username').textContent = hreply.account.displayName;
+                        } else {
+                            clone.querySelector('.r-username').textContent = hreply.account.username;
+                        }
+                    }
+                    else {
+                        clone.querySelector('.reply').remove();
+                    }
+                    section.appendChild(clone);
                 };
             }
         })
@@ -339,7 +386,6 @@ async function fetchComments(type, parentid, section) {
             console.log('Fetch failed -> ' + error);
         });
 }
-
 function fetchHighlightedReply(commentId) {
     return new Promise((resolve, reject) => {
         fetch("/g/GetHighlightedReply/" + commentId, {
@@ -682,11 +728,11 @@ function TimeAgo(time, wordType = "long") {
             return "Now";
         }
     }
-
-    if (val > 1 && wordType === "long") {
+    
+    if(val > 1 && wordType === "long"){
         attachment += "s ago";
-    } else if (val === 1 && wordType === "long") {
-        attachment += " ago";
+    } else if(val === 1 && wordType === "long"){
+        attachment += "ago";
     }
 
     return val + " " + attachment;
@@ -702,9 +748,9 @@ function getPathPart(index) {
     return getval;
 }
 
-function createPostSkeletons(page) {
+function createPostSkeletons(page){
     const postSkelTemplate = document.getElementById("postSkeleton");
-    if (page === "read") {
+    if(page === "read"){
         const pl_column1 = document.getElementById('pl-column1');
         const pl_column2 = document.getElementById('pl-column2');
         for (let i = 0; i < 6; i++) {
@@ -712,7 +758,7 @@ function createPostSkeletons(page) {
             pl_column2.appendChild(postSkelTemplate.content.cloneNode(true));
         }
     }
-    else if (page === "profile") {
+    else if(page === "profile") {
         const body = document.getElementById('profile-posts');
         for (let i = 0; i < 10; i++) {
             body.appendChild(postSkelTemplate.content.cloneNode(true));
@@ -720,8 +766,7 @@ function createPostSkeletons(page) {
     }
 }
 
-function fillPostTemplate(post) {
-    const instance = document.getElementById('postList-post');
+function fillPostTemplate(post, instance){
     const clone = instance.content.cloneNode(true);
 
     //Check if user voted this parent
@@ -781,8 +826,7 @@ function fillPostTemplate(post) {
     return clone;
 }
 
-
-async function fillCommentTemplate(comment, page) {
+async function fillCommentTemplate(comment){
     const instance = document.getElementById('comment_instance');
     const clone = instance.content.cloneNode(true);
     //Check if user voted this parent
@@ -830,13 +874,4 @@ async function fillCommentTemplate(comment, page) {
     else {
         clone.querySelector('.reply').remove();
     }
-    if(page === "profile"){
-        clone.querySelector('.c-replybtn').remove();
-        let linkToPost = document.createElement('a');
-        linkToPost.href = "/p/" + comment.targetPostId; //This is nullable but reviews are only post comments anyway
-        linkToPost.innerText = "Post";
-        clone.querySelector('.c-evaluation').appendChild(linkToPost);
-    }
-    
-    return clone;
 }

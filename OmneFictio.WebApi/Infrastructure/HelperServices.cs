@@ -12,6 +12,7 @@ public interface IHelperServices
 {
     //repetitive
     Task<List<PostDtoRead_1>> GetPosts_Details(List<PostDtoRead_1> postList, int? userId);
+    Task<List<CommentDtoRead_2>> GetComments_Details(List<CommentDtoRead_2> comments, int? userId);
     //helper
     string? CreateUserToken(Account user, byte[] securityToken);
     string GeneratePassword(int length, int numberOfNonAlphanumericCharacters);
@@ -68,6 +69,18 @@ public class HelperServices : IHelperServices
             }
         }
         return postList;
+    }
+
+    public async Task<List<CommentDtoRead_2>> GetComments_Details(List<CommentDtoRead_2> comments, int? userId){
+        foreach (var x in comments)
+        {
+            Vote? checkVoteByUser = await _db.Votes.SingleOrDefaultAsync(v =>
+                v.accountId == userId &&
+                v.targetCommentId == x.Id);
+            if (checkVoteByUser != null)
+                x.VotedByUser = checkVoteByUser.body;
+        }
+        return comments;
     }
 
     //------ HELPER functions -------------

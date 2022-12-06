@@ -8,12 +8,12 @@ $(document).ready(function () {
 
     const profileBody = document.getElementById('profile-body');
     const profileBody_posts = document.getElementById('profile-posts');
-    const profileBody_comments = document.getElementById('profile-comments');
+    const profileBody_reviews = document.getElementById('profile-reviews');
     const profileBody_saved = document.getElementById('profile-saved');
     const profileBody_followed = document.getElementById('profile-followed');
     const profileBody_friends = document.getElementById('profile-friends');
     let loadedOnce_posts = 0;
-    let loadedOnce_comments = 0;
+    let loadedOnce_reviews = 0;
     let loadedOnce_saved = 0;
     let loadedOnce_followed = 0;
     let loadedOnce_friends = 0;
@@ -34,7 +34,7 @@ $(document).ready(function () {
                 a.classList.remove("active");
             }
         });
-        Array.from(profileBody.children).forEach(function (body){
+        Array.from(profileBody.children).forEach(function (body) {
             if (body.classList.contains("active")) {
                 body.classList.remove("active");
             }
@@ -46,13 +46,16 @@ $(document).ready(function () {
         switch (tab) {
             case "posts":
                 profileBody_posts.classList.add("active");
-                if(loadedOnce_posts !== 1){
+                if (loadedOnce_posts !== 1) {
                     window.createPostSkeletons("profile");
                     createProfileBody_posts();
                 }
                 break;
-            case "comments":
-                profileBody_comments.classList.add("active");
+            case "reviews":
+                profileBody_reviews.classList.add("active");
+                if (loadedOnce_reviews !== 1) {
+                    createProfileBody_reviews();
+                }
                 break;
             case "saved":
                 profileBody_saved.classList.add("active");
@@ -68,7 +71,7 @@ $(document).ready(function () {
         }
     }
 
-    async function createProfileBody_posts(){
+    async function createProfileBody_posts() {
         await fetch("/u/GetPosts/" + targetUsername, {
             method: 'GET',
             headers: {
@@ -81,16 +84,14 @@ $(document).ready(function () {
                 profileBody_posts.innerHTML = "";
                 if (data.statusCode === 200) {
                     //GET THE POSTS
-                    const instance = document.getElementById('postList-post');
                     const response = JSON.parse(data.value);
-                    console.log(response);
                     for (const post of response.posts) {
-                        const clone = window.fillPostTemplate(post, instance);
+                        const clone = window.fillPostTemplate(post);
                         profileBody_posts.appendChild(clone);
                     }
                     loadedOnce_posts = 1;
                 } else if (data.statusCode === 404) {
-                    
+
                 } else {
                     console.log();
                 }
@@ -101,13 +102,40 @@ $(document).ready(function () {
             });
     }
 
+    async function createProfileBody_reviews() {
+        await fetch("/u/GetReviews/" + targetUsername, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => res.json())
+            .then(async (data) => {
+                profileBody_reviews.innerHTML = "";
+                if (data.statusCode === 200) {
+                    //GET THE COMMENTS
+                    for (const comment of JSON.parse(data.value)) {
+                        profileBody_reviews.appendChild(await fillCommentTemplate(comment, "profile"));
+                    };
+                    loadedOnce_reviews = 1;
+                } else if(data.statusCode === 404){
+
+                } else {
+
+                }
+            })
+            .catch(error => {
+                console.log('Fetch failed -> ' + error);
+            });
+    }
 
 
 
 
 
 
-    
+
     $(window).resize(function () {
         /*if ($(window).width() > 991) {
             //check if user clicked stats in mobile design and got back to desktop

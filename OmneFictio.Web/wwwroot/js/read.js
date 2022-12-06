@@ -28,10 +28,9 @@ $(document).ready(function () {
                 pl_column2.innerHTML = "";
                 if (data.statusCode === 200) {
                     //GET THE POSTS
-                    const instance = document.getElementById('postList-post');
                     const response = JSON.parse(data.value);
                     for (const post of response.posts) {
-                        const clone = window.fillPostTemplate(post, instance);
+                        const clone = window.fillPostTemplate(post);
                         if (pl_column1.offsetHeight <= pl_column2.offsetHeight) {
                             pl_column1.appendChild(clone);
                         } else {

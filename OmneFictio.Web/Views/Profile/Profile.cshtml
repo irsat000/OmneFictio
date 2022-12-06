@@ -1,8 +1,9 @@
 @{
     ViewData["Title"] = "Profile";
     @section Stylesheets {
-    <link rel="stylesheet" href="~/css/profile.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/comment_section.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/postitem.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/profile.css" asp-append-version="true" />
     }
     @section Scripts {
     <script src="~/js/profile.js" asp-append-version="true"></script>
@@ -70,14 +71,14 @@
     <div class="profile-tabs-cont">
         <div class="profile-tabs-mobile">
             <a data-tab="posts"><i class="bi bi-card-text"></i></a>
-            <a data-tab="comments"><i class="bi bi-chat-right"></i></a>
+            <a data-tab="reviews"><i class="bi bi-chat-right"></i></a>
             <a data-tab="saved"><i class="bi bi-star"></i></a>
             <a data-tab="followed"><i class="bi bi-heart"></i></a>
             <a data-tab="friends"><i class="bi bi-people"></i></a>
         </div>
         <div class="profile-tabs-desktop">
             <a data-tab="posts"><span>Posts</span></a>
-            <a data-tab="comments"><span>Comments</span></a>
+            <a data-tab="reviews"><span>Reviews</span></a>
             <a data-tab="saved"><span>Saved</span></a>
             <a data-tab="followed"><span>Followed</span></a>
             <a data-tab="friends"><span>Friends</span></a>
@@ -86,7 +87,7 @@
             <div id="profile-posts">
 
             </div>
-            <div id="profile-comments">
+            <div id="profile-reviews">
                 
             </div>
             <div id="profile-saved">
