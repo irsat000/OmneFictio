@@ -1,9 +1,11 @@
 
 
 $(document).ready(function () {
-    fetchChapter();
     const commentSection = document.getElementById('comment-section');
 
+
+    fetchChapter();
+    window.createSkeletons("chapter-commentsection");
     async function fetchChapter() {
         let postid = parseInt(window.getPathPart(2), 10);
         let index = parseInt(window.getPathPart(3), 10);
@@ -18,8 +20,6 @@ $(document).ready(function () {
             .then(async (data) => {
                 if (data.statusCode === 200) {
                     const ch = JSON.parse(data.value);
-                    console.log(ch);
-                    window.fetchComments("chapter", ch.id, commentSection);
                     document.querySelector('.chapter-container')
                         .setAttribute('data-chid', ch.id);
                     const instance = document.getElementById("chapter_instance");
@@ -104,6 +104,9 @@ $(document).ready(function () {
                         .setAttribute('src', '/images/users/' + ch.post.account.profilePic);
 
                     document.querySelector('.chapter-container').appendChild(clone);
+                    //get comments right after loading the chapter(which is important part)
+                    commentSection.innerHTML = "";
+                    window.fetchComments("chapter", ch.id, commentSection);
 
                     document.getElementById('addCommentToChapter').addEventListener('click', function () {
                         window.AddComment(JSON.stringify({

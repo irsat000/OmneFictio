@@ -7,7 +7,7 @@ $(document).ready(function () {
     const plw_img = plwarning.querySelector('.plwarning-img');
     
     //-----fetch post START--------------
-    window.createPostSkeletons("read");
+    window.createSkeletons("read-posts");
     fetchPosts();
     async function fetchPosts() {
         //I use columns for masonry design.

@@ -1,3 +1,98 @@
+@-webkit-keyframes cskel-loading-div {
+  0% {
+    background-color: var(--commentskeleton-itemcolor-start);
+  }
+  100% {
+    background-color: var(--commentskeleton-itemcolor-end);
+  }
+}
+@keyframes cskel-loading-div {
+  0% {
+    background-color: var(--commentskeleton-itemcolor-start);
+  }
+  100% {
+    background-color: var(--commentskeleton-itemcolor-end);
+  }
+}
+@-webkit-keyframes cskel-loading-i {
+  0% {
+    color: var(--commentskeleton-itemcolor-start);
+  }
+  100% {
+    color: var(--commentskeleton-itemcolor-end);
+  }
+}
+@keyframes cskel-loading-i {
+  0% {
+    color: var(--commentskeleton-itemcolor-start);
+  }
+  100% {
+    color: var(--commentskeleton-itemcolor-end);
+  }
+}
+.comment-skel {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 10px;
+  border-top: 2px solid var(--background-color2);
+}
+.comment-skel div.csk-item {
+  height: 16px;
+  border-radius: 10px;
+  opacity: 0.5;
+  -webkit-animation: cskel-loading-div 1s linear infinite alternate;
+          animation: cskel-loading-div 1s linear infinite alternate;
+}
+.comment-skel i.csk-item {
+  opacity: 0.7;
+  -webkit-animation: cskel-loading-i 1s linear infinite alternate;
+          animation: cskel-loading-i 1s linear infinite alternate;
+}
+.comment-skel .cskel-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.comment-skel .cskel-header .cskel-user {
+  width: 120px;
+  max-width: 60%;
+}
+.comment-skel .cskel-header i {
+  display: flex;
+}
+.comment-skel .cskel-header i:first-of-type {
+  font-size: 2rem;
+  margin-right: 10px;
+}
+.comment-skel .cskel-header i:last-of-type {
+  margin: -20px 0 -20px auto;
+  font-size: 3rem;
+}
+.comment-skel .cskel-body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.comment-skel .cskel-body > div:last-child {
+  width: 80%;
+}
+.comment-skel .cskel-footer {
+  display: flex;
+  align-items: center;
+}
+.comment-skel .cskel-footer .cskel-evaluation {
+  height: 20px;
+  width: 130px;
+  max-width: 40%;
+}
+.comment-skel .cskel-footer .cskel-btn {
+  margin-left: 16px;
+  width: 70px;
+  max-width: 30%;
+  height: 20px;
+}
+
 .add_comment-cont {
   display: flex;
   flex-direction: column;

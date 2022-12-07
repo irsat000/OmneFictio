@@ -14,6 +14,7 @@ $(document).ready(function () {
     const commentSection = document.getElementById('comment-section');
 
     GetPost();
+    window.createSkeletons("post-commentsection");
     async function GetPost() {
         await fetch("/g/GetPost/" + postId, {
             method: 'GET',
@@ -25,7 +26,6 @@ $(document).ready(function () {
             .then((res) => res.json())
             .then(async (data) => {
                 if (data.statusCode === 200) {
-                    window.fetchComments("post", postId, commentSection);
 
                     const post = JSON.parse(data.value);
                     const instance = document.getElementById('getpost_instance');
@@ -89,6 +89,9 @@ $(document).ready(function () {
                     }
 
                     document.getElementById('post-wrap').appendChild(clone);
+                    //get comments right after loading the post(which is important part)
+                    commentSection.innerHTML = "";
+                    window.fetchComments("post", postId, commentSection);
 
                     document.getElementById('addCommentToPost').addEventListener('click', function () {
                         window.AddComment(JSON.stringify({

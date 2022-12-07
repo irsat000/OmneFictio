@@ -702,21 +702,44 @@ function getPathPart(index) {
     return getval;
 }
 
-function createPostSkeletons(page) {
+function createSkeletons(page) {
     const postSkelTemplate = document.getElementById("postSkeleton");
-    if (page === "read") {
-        const pl_column1 = document.getElementById('pl-column1');
-        const pl_column2 = document.getElementById('pl-column2');
-        for (let i = 0; i < 6; i++) {
-            pl_column1.appendChild(postSkelTemplate.content.cloneNode(true));
-            pl_column2.appendChild(postSkelTemplate.content.cloneNode(true));
-        }
-    }
-    else if (page === "profile") {
-        const body = document.getElementById('profile-posts');
-        for (let i = 0; i < 10; i++) {
-            body.appendChild(postSkelTemplate.content.cloneNode(true));
-        }
+    const commentSkelTemplate = document.getElementById("commentSkeleton");
+    switch (page) {
+        case "read-posts":
+            //Creates post skeletons for read page
+            const pl_column1 = document.getElementById('pl-column1');
+            const pl_column2 = document.getElementById('pl-column2');
+            for (let i = 0; i < 6; i++) {
+                pl_column1.appendChild(postSkelTemplate.content.cloneNode(true));
+                pl_column2.appendChild(postSkelTemplate.content.cloneNode(true));
+            }
+            break;
+        case "post-commentsection":
+        case "chapter-commentsection":
+            //Creates comment skeletons for post or chapter's comment section
+            const post_commentsection = document.getElementById("comment-section");
+            for (let i = 0; i < 10; i++) {
+                post_commentsection.appendChild(commentSkelTemplate.content.cloneNode(true));
+            }
+            break;
+        case "profile-posts":
+        case "profile-saved":
+            //Creates post skeletons for the user posts or saved posts in profile
+            const profilebody_forpost = document.getElementById(page);
+            for (let i = 0; i < 10; i++) {
+                profilebody_forpost.appendChild(postSkelTemplate.content.cloneNode(true));
+            }
+            break;
+        case "profile-reviews":
+            //Creates review(comment to posts) skeletons in profile
+            const profilebody_forreviews = document.getElementById(page);
+            for (let i = 0; i < 10; i++) {
+                profilebody_forreviews.appendChild(commentSkelTemplate.content.cloneNode(true));
+            }
+            break;
+        default:
+            break;
     }
 }
 

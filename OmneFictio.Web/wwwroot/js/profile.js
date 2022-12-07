@@ -47,18 +47,23 @@ $(document).ready(function () {
             case "posts":
                 profileBody_posts.classList.add("active");
                 if (loadedOnce_posts !== 1) {
-                    window.createPostSkeletons("profile");
+                    window.createSkeletons("profile-posts");
                     createProfileBody_posts();
                 }
                 break;
             case "reviews":
                 profileBody_reviews.classList.add("active");
                 if (loadedOnce_reviews !== 1) {
+                    window.createSkeletons("profile-reviews");
                     createProfileBody_reviews();
                 }
                 break;
             case "saved":
                 profileBody_saved.classList.add("active");
+                if (loadedOnce_saved !== 1) {
+                    window.createSkeletons("profile-saved");
+                    loadedOnce_saved = 1;
+                }
                 break;
             case "followed":
                 profileBody_followed.classList.add("active");

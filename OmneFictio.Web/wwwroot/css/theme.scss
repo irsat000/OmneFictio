@@ -27,8 +27,6 @@
     --navlink-others-color: #494152;
     --navlink-others-color-hover: #5f5a66;
     //read
-    --postskeleton-itemcolor-start: #434343;
-    --postskeleton-itemcolor-end: #686868;
     //register
     --register-form-color: #404040;
     --register-input-color: #1d1d1d;
@@ -49,8 +47,15 @@
     //profile
     --profile-activetab: #3e6e7a;
     --profile-post-color: #272727;
-    
     //----------
+    //skeleton
+    --postskeleton-itemcolor-start: #434343;
+    --postskeleton-itemcolor-end: #686868;
+    --commentskeleton-itemcolor-start: #434343;
+    --commentskeleton-itemcolor-end: #686868;
+
+
+
     --button-red: #963a3a;
     --button-red-hover: #a34a4a;
     --button-blue: #3d779e;
@@ -88,8 +93,6 @@
     --navlink-others-color: #9a90a6;
     --navlink-others-color-hover: #816f96;
     //read
-    --postskeleton-itemcolor-start: #d1d5db;
-    --postskeleton-itemcolor-end: #b9cdec;
     //register
     --register-form-color: #f0f0f0;
     --register-input-color: #dcdcdc;
@@ -111,7 +114,11 @@
     --profile-activetab: #32a1bc;
     --profile-post-color: #ffffff;
     //----------
-
+    //skeleton
+    --postskeleton-itemcolor-start: #d1d5db;
+    --postskeleton-itemcolor-end: #b9cdec;
+    --commentskeleton-itemcolor-start: #d1d5db;
+    --commentskeleton-itemcolor-end: #b9cdec;
 
     --button-red: #c76363;
     --button-red-hover: #e05050;
