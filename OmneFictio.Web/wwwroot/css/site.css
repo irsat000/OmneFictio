@@ -41,6 +41,26 @@ select {
   border: none;
 }
 
+.dblock {
+  display: block;
+}
+
+.dflex {
+  display: flex;
+}
+
+.dnone {
+  display: none;
+}
+
+.opacity1 {
+  opacity: 1;
+}
+
+.opacity0 {
+  opacity: 0;
+}
+
 .modalbg1 {
   display: none;
   width: 100%;
@@ -470,7 +490,10 @@ header .header-wrap {
   margin: 0 16px 0 30px;
   position: relative;
 }
-.account-cont .ppic-wrap {
+.account-cont .account_btn-cont {
+  display: flex;
+}
+.account-cont .account_btn-cont .ppic-wrap {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -480,15 +503,15 @@ header .header-wrap {
   overflow: hidden;
   cursor: pointer;
 }
-.account-cont .ppic-wrap img {
+.account-cont .account_btn-cont .ppic-wrap img {
   width: 100%;
   height: 100%;
 }
-.account-cont .ppic-wrap i {
+.account-cont .account_btn-cont .ppic-wrap i {
   color: var(--shortcuticons-color);
   font-size: 2.3rem;
 }
-.account-cont .dropdown_icon-wrap {
+.account-cont .account_btn-cont .dropdown_icon-wrap {
   height: 50px;
   padding: 0 2px;
   background-color: transparent;
@@ -499,7 +522,7 @@ header .header-wrap {
   cursor: pointer;
   transition: 0.1s ease;
 }
-.account-cont .dropdown_icon-wrap i {
+.account-cont .account_btn-cont .dropdown_icon-wrap i {
   font-size: 1rem;
   color: var(--text-color1);
 }
@@ -510,6 +533,7 @@ header .header-wrap {
   z-index: 900;
   display: none;
   opacity: 0;
+  flex-direction: column;
   transition: opacity 0.1s ease;
   position: absolute;
   top: 52px;
@@ -762,7 +786,8 @@ header .header-wrap {
   justify-content: center;
   color: var(--text-color1);
 }
-.belongs_to .usercard-onhover .ucard-username, .belongs_to .usercard-onhover .ucard-username-mode2 {
+.belongs_to .usercard-onhover .ucard-username,
+.belongs_to .usercard-onhover .ucard-username-mode2 {
   font-family: "Josefin Sans", sans-serif;
   font-size: 1.1rem;
   text-align: center;

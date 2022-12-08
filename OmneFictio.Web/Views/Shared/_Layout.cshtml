@@ -452,22 +452,25 @@
                     <i class="bi bi-bell notifications-shortcut"></i>
                 </div>
                 <div class="account-cont">
-                    <div class="ppic-wrap">
-                        @{
-                            if (userId != null)
-                            {
-                                @Html.Raw("<img src='/images/users/" + userPicture + "'/>")
+                    <div class="account_btn-cont">
+                        <div class="ppic-wrap">
+                            @{
+                                if (userId != null)
+                                {
+                                    @Html.Raw("<img src='/images/users/" + userPicture + "'/>")
+                                }
+                                else
+                                {
+                                    <i class="bi bi-person-square"></i>
+                                }
                             }
-                            else
-                            {
-                                <i class="bi bi-person-square"></i>
-                            }
-                        }
-                        <!--<img src="https://icon-library.com/images/no-user-image-icon/no-user-image-icon-0.jpg">-->
+                            <!--<img src="https://icon-library.com/images/no-user-image-icon/no-user-image-icon-0.jpg">-->
+                        </div>
+                        <div class="dropdown_icon-wrap">
+                            <i class="bi bi-caret-down-fill"></i>
+                        </div>
                     </div>
-                    <div class="dropdown_icon-wrap">
-                        <i class="bi bi-caret-down-fill"></i>
-                    </div>
+                    
                     <div class="account-dropdown">
                         <div class="ad-theme-cont">
                             <label class="theme-switch">

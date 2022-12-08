@@ -44,6 +44,25 @@ select {
     border: none;
 }
 
+//utility
+.dblock {
+    display: block;
+}
+
+.dflex {
+    display: flex;
+}
+
+.dnone {
+    display: none;
+}
+.opacity1{
+    opacity: 1;
+}
+.opacity0{
+    opacity: 0;
+}
+
 
 //Background clickable shadows
 .modalbg1 {
@@ -520,43 +539,48 @@ header {
     margin: 0 16px 0 30px;
     position: relative;
 
-    .ppic-wrap {
+    .account_btn-cont {
         display: flex;
-        justify-content: center;
-        align-items: center;
-        width: 50px;
-        height: 50px;
-        border-radius: 6px;
-        overflow: hidden;
-        cursor: pointer;
 
-        img {
-            width: 100%;
-            height: 100%;
+        .ppic-wrap {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            width: 50px;
+            height: 50px;
+            border-radius: 6px;
+            overflow: hidden;
+            cursor: pointer;
+
+            img {
+                width: 100%;
+                height: 100%;
+            }
+
+            i {
+                color: var(--shortcuticons-color);
+                font-size: 2.3rem;
+            }
         }
 
-        i {
-            color: var(--shortcuticons-color);
-            font-size: 2.3rem;
+        .dropdown_icon-wrap {
+            height: 50px;
+            padding: 0 2px;
+            background-color: transparent;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: 0.1s ease;
+
+            i {
+                font-size: 1rem;
+                color: var(--text-color1);
+            }
         }
     }
 
-    .dropdown_icon-wrap {
-        height: 50px;
-        padding: 0 2px;
-        background-color: transparent;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        border-radius: 4px;
-        cursor: pointer;
-        transition: 0.1s ease;
-
-        i {
-            font-size: 1rem;
-            color: var(--text-color1);
-        }
-    }
 
     &:hover .dropdown_icon-wrap {
         background-color: var(--accountdropdown-icon-hover);
@@ -566,6 +590,7 @@ header {
         z-index: 900;
         display: none;
         opacity: 0;
+        flex-direction: column;
         transition: opacity 0.1s ease;
         position: absolute;
         top: 52px;
@@ -580,18 +605,23 @@ header {
         box-shadow: -1px 1px 6px 0px rgba(0, 0, 0, 0.2);
 
 
-        .ad-theme-cont{
+        .ad-theme-cont {
             width: 100%;
             padding: 8px 0 10px;
             display: flex;
             justify-content: center;
-            .theme-switch{
+
+            .theme-switch {
                 position: relative;
                 display: inline-block;
                 width: 54px;
                 height: 30px;
-                #theme-check{ display: none; }
-                .theme-slider{
+
+                #theme-check {
+                    display: none;
+                }
+
+                .theme-slider {
                     position: absolute;
                     cursor: pointer;
                     top: 0;
@@ -602,10 +632,12 @@ header {
                     border-radius: 34px;
                     background-color: #fff;
                 }
-                #theme-check:checked + .theme-slider{
+
+                #theme-check:checked+.theme-slider {
                     background-color: #000;
                 }
-                .theme-slider:before{
+
+                .theme-slider:before {
                     position: absolute;
                     content: "";
                     height: 24px;
@@ -616,7 +648,8 @@ header {
                     transition: all 0.5s;
                     background-color: #000;
                 }
-                #theme-check:checked + .theme-slider:before{
+
+                #theme-check:checked+.theme-slider:before {
                     transform: translateX(24px);
                     background-color: #fff;
                 }
@@ -823,7 +856,7 @@ header {
         opacity: 1;
         visibility: visible;
     }
-    
+
     .usercard-onhover {
         opacity: 0;
         visibility: hidden;
@@ -843,13 +876,15 @@ header {
         justify-content: center;
         color: var(--text-color1);
 
-        .ucard-username, .ucard-username-mode2 {
+        .ucard-username,
+        .ucard-username-mode2 {
             font-family: 'Josefin Sans', sans-serif;
             font-size: 1.1rem;
             text-align: center;
             padding: 6px 20px;
         }
-        .ucard-username-mode2{
+
+        .ucard-username-mode2 {
             display: none;
         }
 
@@ -859,17 +894,19 @@ header {
             border-radius: 4px;
             margin-bottom: 6px;
         }
-        .ucard-part2{
+
+        .ucard-part2 {
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+
             .ucard-description {
                 font-size: 0.6rem;
                 font-family: 'Itim', cursive;
                 padding: 0 6px;
             }
-    
+
             .ucard-stats {
                 display: flex;
                 align-items: center;
@@ -878,17 +915,17 @@ header {
                 font-size: .9rem;
                 padding: 6px 10px;
                 gap: 10px;
-    
+
                 >div {
                     display: flex;
                     align-items: center;
                     gap: 6px;
                 }
-    
+
                 i {
                     display: flex;
                 }
-    
+
                 span {
                     font-family: 'Josefin Sans', sans-serif;
                     padding-top: 2px;
@@ -900,13 +937,16 @@ header {
     .ucard-mode2 {
         flex-direction: row !important;
         padding: 0 10px;
-        .ucard-username{
+
+        .ucard-username {
             display: none;
         }
-        .ucard-username-mode2{
+
+        .ucard-username-mode2 {
             display: block;
             padding: 6px 0 2px;
         }
+
         >img {
             margin-right: 6px;
             margin-bottom: unset;
