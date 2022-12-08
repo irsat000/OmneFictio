@@ -46,21 +46,21 @@ select {
 
 //utility
 .dblock {
-    display: block;
+    display: block !important;
 }
 
 .dflex {
-    display: flex;
+    display: flex !important;
 }
 
 .dnone {
-    display: none;
+    display: none !important;
 }
 .opacity1{
-    opacity: 1;
+    opacity: 1 !important;
 }
 .opacity0{
-    opacity: 0;
+    opacity: 0 !important;
 }
 
 

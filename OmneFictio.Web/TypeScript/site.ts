@@ -3,18 +3,13 @@
 
 // Write your JavaScript code.
 
-class LoginFormData {
-    Username!: string;
-    Pw!: string;
-    RememberMe!: boolean;
-}
-
 document.addEventListener("DOMContentLoaded", function () {
-    const dombody = document.getElementsByTagName("BODY")[0];
-    const modalbg1 = document.querySelector('.modalbg1')!;
-    const drawer = document.getElementById('drawer')!;
-    const loginModal: HTMLFormElement = <HTMLFormElement>document.getElementById('login-modal');
-    const acDropdown = document.querySelector('.account-dropdown')!;
+    const dombody = document.getElementsByTagName("BODY")[0] as HTMLBodyElement;
+    const modalbg1 = document.querySelector('.modalbg1') as HTMLDivElement;
+    const drawer = document.getElementById('drawer') as HTMLDivElement;
+    const loginModal = document.getElementById('login-modal') as HTMLFormElement;
+    const acDropdown = document.querySelector('.account-dropdown') as HTMLDivElement;
+    const repliesModal = document.getElementById('modal-replies') as HTMLDivElement;
 
     modalbg1.addEventListener("click", function () {
         modalbg1_click();
@@ -64,64 +59,67 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //Drawer for mobile
     [document.querySelector('.drawerbtn-cont > i'),
-    document.querySelector('.dw-close > i')].forEach(function () {
-        if (drawer.classList.contains('drawer-active')) {
-            drawer.classList.remove('drawer-active');
-            modalbg1.classList.remove('dblock');
-        }
-        else {
-            drawer.classList.add('drawer-active');
-            modalbg1.classList.add('dblock');
-        }
+    document.querySelector('.dw-close > i')].forEach(btn => {
+        btn?.addEventListener('click', function (){
+            if (drawer.classList.contains('drawer-active')) {
+                drawer.classList.remove('drawer-active');
+                modalbg1.classList.remove('dblock');
+            }
+            else {
+                drawer.classList.add('drawer-active');
+                modalbg1.classList.add('dblock');
+            }
+        })
     });
 
-    //Open/close login modal
-    [document.querySelector('.login-openbtn'),
-    document.querySelector('.lm-closebtn')].forEach(function () {
+    //Open login modal
+    document.querySelectorAll('.login-openbtn').forEach(btn => {
+        btn.addEventListener('click', function(){
+            if (loginModal.classList.contains('dflex') === false) {
+                loginModal.classList.add('dflex');
+                modalbg1.classList.add('dblock');
+                setTimeout(function () {
+                    loginModal.classList.add('opacity1');
+                }, 100);
+                //Close others after opening login modal
+                if (acDropdown.classList.contains('dflex')) {
+                    acDropdown.classList.remove('opacity1');
+                    setTimeout(function () {
+                        acDropdown.classList.remove('dflex');
+                    }, 100);
+                }
+                if (drawer.classList.contains('drawer-active')) {
+                    drawer.classList.remove('drawer-active');
+                }
+            }
+        });
+    });
+    //Close login modal
+    document.querySelector('.lm-closebtn')?.addEventListener('click', function(){
         if (loginModal.classList.contains('dflex')) {
             loginModal.classList.remove('dflex');
             loginModal.classList.remove('opacity1');
             modalbg1.classList.remove('dblock');
         }
-        else {
-            loginModal.classList.add('dflex');
-            modalbg1.classList.add('dblock');
-            setTimeout(function () {
-                loginModal.classList.add('opacity1');
-            }, 100);
-        }
-        //Close others after opening login modal
-        if (acDropdown.classList.contains('dblock')) {
-            acDropdown.classList.remove('opacity1');
-            setTimeout(function () {
-                acDropdown.classList.remove('dblock');
-            }, 100);
-        }
-
-
-        if (drawer.classList.contains('drawer-active')) {
-            drawer.classList.remove('drawer-active');
-        }
     });
-
 
     dombody.addEventListener("click", function (e) {
         //Close dropdown of account container in header if clicked somewhere else
-        if (acDropdown.classList.contains('dblock') &&
+        if (acDropdown.classList.contains('dflex') &&
             (<HTMLElement>e.target).closest('.account-cont') == null) {
             acDropdown.classList.remove('opacity1');
             setTimeout(function () {
-                acDropdown.classList.remove('dblock');
+                acDropdown.classList.remove('dflex');
             }, 100);
         }
     });
 
     //Open replies modal
     document.querySelector('.get_replies')?.addEventListener('click', function (e) {
-        window.openRepliesModal(e.target);
+        window.openRepliesModal(e.target!);
     });
     //Open close modal
-    document.querySelector('.mr-close')?.addEventListener('click', function (e) {
+    document.querySelector('.mr-close')?.addEventListener('click', function () {
         window.closeRepliesModal();
     });
 
@@ -166,34 +164,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     //Vote - fetch api
-    document.addEventListener('click', function (e) {
-        if (e.target.classList.contains('likebtn') ||
-            e.target.classList.contains('dislikebtn')) {
-            const btn = e.target;
+    dombody.addEventListener('click', function (e) {
+        if ((<HTMLElement>e.target).classList.contains('likebtn') ||
+            (<HTMLElement>e.target).classList.contains('dislikebtn')) {
+            const btn = e.target as HTMLElement;
             const action = btn.getAttribute('data-action');
             const targetType = btn.getAttribute('data-target_type');
-            let targetId = -1;
+            let targetIdValue: string;
             switch (targetType) {
                 case "post":
-                    targetId = parseInt(btn.closest('[data-postid]')
-                        .getAttribute('data-postid'), 10);
+                    targetIdValue = btn.closest('[data-postid]')!
+                        .getAttribute('data-postid')!;
                     break;
                 case "comment":
-                    targetId = parseInt(btn.closest('[data-commentid]')
-                        .getAttribute('data-commentid'), 10);
+                    targetIdValue = btn.closest('[data-commentid]')!
+                        .getAttribute('data-commentid')!;
                     break;
                 case "reply":
-                    targetId = parseInt(btn.closest('[data-replyid]')
-                        .getAttribute('data-replyid'), 10);
+                    targetIdValue = btn.closest('[data-replyid]')!
+                        .getAttribute('data-replyid')!;
                     break;
                 case "chapter":
-                    targetId = parseInt(btn.closest('[data-chid]')
-                        .getAttribute('data-chid'), 10);
+                    targetIdValue = btn.closest('[data-chid]')!
+                        .getAttribute('data-chid')!;
                     break;
                 default:
                     return;
             }
-            if (targetId !== -1) {
+            if(targetIdValue !== null){
+                const targetId = parseInt(targetIdValue, 10);
                 let vote = false;
                 if (action === "like") { vote = true; }
                 const data = { TargetId: targetId, Body: vote, TargetType: targetType };
@@ -205,9 +204,11 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
+
+
 //--------COMMENT SECTION-------
 
-async function AddComment(payload, commentSection) {
+async function AddComment(payload: string, commentSection: HTMLDivElement) {
     //Adds a new comment
     await fetch("/Action/AddComment", {
         method: 'POST',
@@ -221,68 +222,68 @@ async function AddComment(payload, commentSection) {
         .then(async (data) => {
             if (data.statusCode === 200) {
                 const comment = JSON.parse(data.value).returnComment;
-                const instance = document.getElementById('comment_instance');
-                const clone = instance.content.cloneNode(true);
+                const instance = document.getElementById('comment_instance') as HTMLMetaElement;
+                const clone = (<DocumentFragment><any>instance.content).cloneNode(true) as HTMLElement;
 
-                clone.querySelector('.comment').setAttribute('data-commentid', comment.id);
-                clone.querySelector('.c-header > img').setAttribute('src', '/images/users/' + comment.account.profilePic);
+                clone.querySelector('.comment')!.setAttribute('data-commentid', comment.id);
+                clone.querySelector('.c-header > img')!.setAttribute('src', '/images/users/' + comment.account.profilePic);
                 if (comment.account.displayName != null) {
-                    clone.querySelector('.c-username').textContent = comment.account.displayName;
+                    clone.querySelector('.c-username')!.textContent = comment.account.displayName;
                 } else {
-                    clone.querySelector('.c-username').textContent = comment.account.username;
+                    clone.querySelector('.c-username')!.textContent = comment.account.username;
                 }
-                clone.querySelector('.c-date').textContent = window.TimeAgo(comment.publishDate);
-                clone.querySelector('.c-text > span').textContent = comment.body;
+                clone.querySelector('.c-date')!.textContent = window.TimeAgo(comment.publishDate);
+                clone.querySelector('.c-text > span')!.textContent = comment.body;
                 if (comment.voteResult >= 0) {
-                    clone.querySelector('.c-likes').textContent = comment.voteResult;
+                    clone.querySelector('.c-likes')!.textContent = comment.voteResult;
                 }
                 if (comment.repliesLength === 0) {
-                    clone.querySelector('.get_replies').remove();
+                    clone.querySelector('.get_replies')!.remove();
                 } else {
                     let repliesLengthText = " replies";
                     if (comment.repliesLength === 1) {
                         repliesLengthText = " reply";
                     }
-                    clone.querySelector('.get_replies > span').textContent = comment.repliesLength + repliesLengthText;
+                    clone.querySelector('.get_replies > span')!.textContent = comment.repliesLength + repliesLengthText;
                 }
-                clone.querySelector('.reply').remove();
+                clone.querySelector('.reply')!.remove();
                 //add comment to the comment section
                 commentSection.insertBefore(clone, commentSection.firstChild);
                 //clear commenting body
-                document.getElementById('commentBody').value = "";
+                (<HTMLInputElement>document.getElementById('commentBody')).value = "";
             }
         })
         .catch(error => { console.log('Fetch failed -> ' + error); });
 }
-function openRepliesModal(element) {
-    const modalbg1 = document.querySelector('.modalbg1');
-    const repliesModal = document.getElementById('modal-replies');
+function openRepliesModal(element: EventTarget) {
+    const modalbg1 = document.querySelector('.modalbg1') as HTMLDivElement;
+    const repliesModal = document.getElementById('modal-replies') as HTMLDivElement;
     if (document.getElementById('comment_instance') == null) {
         return;
     }
-    var commentId = element.closest('.comment')
-        .getAttribute('data-commentid');
-    if (!repliesModal.classList.contains('d-flex')) {
-        repliesModal.classList.add('d-flex');
-        modalbg1.classList.add('d-block');
-        const replySection = document.querySelector('#modal-replies > .mr-body');
+    const commentId = (<HTMLElement>element).closest('.comment')!
+        .getAttribute('data-commentid') as string;
+    if (!repliesModal.classList.contains('dflex')) {
+        repliesModal.classList.add('dflex');
+        modalbg1.classList.add('dblock');
+        const replySection = repliesModal.querySelector('.mr-body') as HTMLElement;
         fetchReplies(commentId, replySection);
     }
 }
 function closeRepliesModal() {
-    const modalbg1 = document.querySelector('.modalbg1');
-    const repliesModal = document.getElementById('modal-replies');
-    if (repliesModal.classList.contains('d-flex')) {
-        repliesModal.classList.remove('d-flex');
-        modalbg1.classList.remove('d-block');
+    const modalbg1 = document.querySelector('.modalbg1') as HTMLDivElement;
+    const repliesModal = document.getElementById('modal-replies') as HTMLDivElement;
+    if (repliesModal.classList.contains('dflex')) {
+        repliesModal.classList.remove('dflex');
+        modalbg1.classList.remove('dblock');
         if (frController) {
             frController.abort();
         }
-        document.querySelector('#modal-replies > .mr-body').innerHTML = "";
+        repliesModal.querySelector('.mr-body')!.innerHTML = "";
     }
 }
 
-async function fetchComments(type, parentid, section) {
+async function fetchComments(type: string, parentid: string, section: HTMLElement) {
     await fetch("/g/GetComments/" + type + "/" + parentid, {
         method: 'GET',
         headers: {
@@ -294,7 +295,7 @@ async function fetchComments(type, parentid, section) {
         .then(async (data) => {
             if (data.statusCode === 200) {
                 for (const comment of JSON.parse(data.value)) {
-                    section.appendChild(await fillCommentTemplate(comment));
+                    section.appendChild(await fillCommentTemplate(comment, null));
                 };
             }
         })
@@ -303,7 +304,7 @@ async function fetchComments(type, parentid, section) {
         });
 }
 
-function fetchHighlightedReply(commentId) {
+function fetchHighlightedReply(commentId: string) {
     return new Promise((resolve, reject) => {
         fetch("/g/GetHighlightedReply/" + commentId, {
             method: 'GET',
@@ -322,8 +323,8 @@ function fetchHighlightedReply(commentId) {
     })
 }
 
-let frController = null;
-async function fetchReplies(commentId, section) {
+let frController: AbortController | null;
+async function fetchReplies(commentId: string, section: HTMLElement) {
     section.innerHTML = "";
     //cancel pending request if there is one
     if (frController) {
@@ -345,44 +346,45 @@ async function fetchReplies(commentId, section) {
             if (data.statusCode === 200) {
                 const comm = JSON.parse(data.value);
                 console.log(comm);
-                const commentInstance = document.getElementById('modalReplies-comment');
-                const replyInstance = document.getElementById('modalReplies-reply');
-                const commentClone = commentInstance.content.cloneNode(true);
+                const commentInstance = document.getElementById('modalReplies-comment') as HTMLMetaElement;
+                const replyInstance = document.getElementById('modalReplies-reply') as HTMLMetaElement;
+                const commentClone = (<DocumentFragment><any>commentInstance.content).cloneNode(true) as HTMLElement;
+
                 //Check if user voted this parent
                 window.checkVoted_icons(commentClone, comm.votedByUser);
 
-                commentClone.querySelector('.mr-comment').setAttribute('data-commentid', comm.id);
-                commentClone.querySelector('.mrc-header > img').setAttribute('src', '/images/users/' + comm.account.profilePic);
+                commentClone.querySelector('.mr-comment')!.setAttribute('data-commentid', comm.id);
+                commentClone.querySelector('.mrc-header > img')!.setAttribute('src', '/images/users/' + comm.account.profilePic);
                 if (comm.account.displayName != null) {
-                    commentClone.querySelector('.mrc-username').textContent = comm.account.displayName;
+                    commentClone.querySelector('.mrc-username')!.textContent = comm.account.displayName;
                 } else {
-                    commentClone.querySelector('.mrc-username').textContent = comm.account.username;
+                    commentClone.querySelector('.mrc-username')!.textContent = comm.account.username;
                 }
-                commentClone.querySelector('.mrc-date').textContent = window.TimeAgo(comm.publishDate);
-                commentClone.querySelector('.mrc-text > span').textContent = comm.body;
+                commentClone.querySelector('.mrc-date')!.textContent = window.TimeAgo(comm.publishDate);
+                commentClone.querySelector('.mrc-text > span')!.textContent = comm.body;
                 if (comm.voteResult >= 0) {
-                    commentClone.querySelector('.mrc-likes').textContent = comm.voteResult;
+                    commentClone.querySelector('.mrc-likes')!.textContent = comm.voteResult;
                 }
                 section.appendChild(commentClone);
 
                 //if it has replies
                 if (comm.replies.length > 0) {
                     for (const reply of comm.replies) {
-                        const replyClone = replyInstance.content.cloneNode(true);
+                        const replyClone = (<DocumentFragment><any>replyInstance.content).cloneNode(true) as HTMLElement;
                         //Check if user voted this parent
                         window.checkVoted_icons(replyClone, reply.votedByUser);
 
-                        replyClone.querySelector('.mr-reply').setAttribute('data-replyid', reply.id);
-                        replyClone.querySelector('.mrr-header > img').setAttribute('src', '/images/users/' + reply.account.profilePic);
+                        replyClone.querySelector('.mr-reply')!.setAttribute('data-replyid', reply.id);
+                        replyClone.querySelector('.mrr-header > img')!.setAttribute('src', '/images/users/' + reply.account.profilePic);
                         if (reply.account.displayName != null) {
-                            replyClone.querySelector('.mrr-username').textContent = reply.account.displayName;
+                            replyClone.querySelector('.mrr-username')!.textContent = reply.account.displayName;
                         } else {
-                            replyClone.querySelector('.mrr-username').textContent = reply.account.username;
+                            replyClone.querySelector('.mrr-username')!.textContent = reply.account.username;
                         }
-                        replyClone.querySelector('.mrr-date').textContent = window.TimeAgo(reply.publishDate);
-                        replyClone.querySelector('.mrr-text > span').textContent = reply.body;
+                        replyClone.querySelector('.mrr-date')!.textContent = window.TimeAgo(reply.publishDate);
+                        replyClone.querySelector('.mrr-text > span')!.textContent = reply.body;
                         if (reply.voteResult >= 0) {
-                            replyClone.querySelector('.mrr-likes').textContent = reply.voteResult;
+                            replyClone.querySelector('.mrr-likes')!.textContent = reply.voteResult;
                         }
                         section.appendChild(replyClone);
                     }
@@ -398,7 +400,7 @@ async function fetchReplies(commentId, section) {
 
 
 
-async function VoteRequest(btn, data) {
+async function VoteRequest(btn: HTMLElement, data: any) {
     var action = data.Body ? "like" : "dislike";
 
     await fetch("/Action/Vote", {
@@ -414,24 +416,25 @@ async function VoteRequest(btn, data) {
             if (data.statusCode === 200) {
                 voting_visual(btn, action);
             } else {
-                console.log("Server error -> " + response.statusCode);
+                console.log("Vote error status -> " + data.statusCode);
             }
         })
         .catch(error => console.log('Vote function failed.', error));
 }
 
 
-function voting_visual(btn, action) {
+function voting_visual(btn: HTMLElement, action: string) {
     let btnSibling = action === "like"
-        ? btn.parentElement.querySelector('.dislikebtn')
-        : btn.parentElement.querySelector('.likebtn');
+        ? btn.parentElement!.querySelector('.dislikebtn') as HTMLElement
+        : btn.parentElement!.querySelector('.likebtn') as HTMLElement;
 
     //Increase/Decrease vote count
-    const showVoteCount = btn.parentElement.querySelector('.vote_count');
-    let bvInputVal = showVoteCount.innerText !== "--"
-        ? parseInt(showVoteCount.innerText, 10)
-        : "--";
-    if (bvInputVal !== "--") {
+    const showVoteCount = btn.parentElement!.querySelector('.vote_count') as HTMLElement;
+    //bv = base vote
+    let bvInputVal = showVoteCount.textContent !== "--"
+        ? parseInt(showVoteCount.textContent!, 10) as number
+        : null;
+    if (bvInputVal !== null) {
         if (action === "like") {
             if (btn.classList.contains('active')) {
                 bvInputVal = bvInputVal - 1;
@@ -453,7 +456,7 @@ function voting_visual(btn, action) {
                 }
             }
         }
-        showVoteCount.innerText = bvInputVal;
+        showVoteCount.textContent = bvInputVal.toString();
     }
 
 
@@ -496,47 +499,10 @@ function voting_visual(btn, action) {
         }
     }
 }
-/*
-OUTDATED. But I might use this for special occasions.
-async function checkVoted_IconStuff(clone, checkvotepayload) {
-    await fetch("/g/CheckVoteByUser?" + checkvotepayload, {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-    })
-        .then((res) => res.json())
-        .then((data) => {
-            const likebtn = clone.querySelector('[data-action="like"]');
-            const dislikebtn = clone.querySelector('[data-action="dislike"]');
-            likebtn.className = "";
-            dislikebtn.className = "";
-            if (data.statusCode === 200) {
-                switch (data.value) {
-                    case "true":
-                        likebtn.classList.add('likebtn', 'bi', 'bi-hand-thumbs-up-fill', 'active');
-                        dislikebtn.classList.add('dislikebtn', 'bi', 'bi-hand-thumbs-down');
-                        break;
-                    case "false":
-                        likebtn.classList.add('likebtn', 'bi', 'bi-hand-thumbs-up');
-                        dislikebtn.classList.add('dislikebtn', 'bi', 'bi-hand-thumbs-down-fill', 'active');
-                        break;
-                }
-            }
-            else {
-                likebtn.classList.add('likebtn', 'bi', 'bi-hand-thumbs-up');
-                dislikebtn.classList.add('dislikebtn', 'bi', 'bi-hand-thumbs-down');
-            }
-        })
-        .catch(error => {
-            console.log('vote check failed -> ' + error);
-        });
-}
-*/
-function checkVoted_icons(clone, val) {
-    const likebtn = clone.querySelector('[data-action="like"]');
-    const dislikebtn = clone.querySelector('[data-action="dislike"]');
+
+function checkVoted_icons(clone: HTMLElement, val: boolean | null) {
+    const likebtn = clone.querySelector('[data-action="like"]') as HTMLElement;
+    const dislikebtn = clone.querySelector('[data-action="dislike"]') as HTMLElement;
     likebtn.className = "";
     dislikebtn.className = "";
     switch (val) {
@@ -556,7 +522,7 @@ function checkVoted_icons(clone, val) {
 }
 
 //google auth
-async function googleHandleCredentialResponse(response) {
+async function googleHandleCredentialResponse(response: any) {
     await fetch("/Auth/GoogleSignin", {
         method: 'POST',
         headers: {
@@ -577,18 +543,191 @@ async function googleHandleCredentialResponse(response) {
             }
         })
         .catch(error => console.log('External login failed.', error));
-    /*const responsePayload = decodeJwtResponse(response.credential);
-    console.log("ID: " + responsePayload.sub);
-    console.log('Full Name: ' + responsePayload.name);
-    console.log("Email: " + responsePayload.email);*/
 }
 
-function capitalizeFirstLetter(string) {
+function createSkeletons(page: string) {
+    const postSkelTemplate = document.getElementById("postSkeleton") as HTMLMetaElement;
+    const postSkelClone = (<DocumentFragment><any>postSkelTemplate.content).cloneNode(true) as HTMLElement;
+    const commentSkelTemplate = document.getElementById("commentSkeleton") as HTMLMetaElement;
+    const commentSkelClone = (<DocumentFragment><any>postSkelTemplate.content).cloneNode(true) as HTMLElement;
+    switch (page) {
+        case "read-posts":
+            //Creates post skeletons for read page
+            const pl_column1 = document.getElementById('pl-column1') as HTMLDivElement;
+            const pl_column2 = document.getElementById('pl-column2') as HTMLDivElement;
+            for (let i = 0; i < 6; i++) {
+                pl_column1.appendChild(postSkelClone);
+                pl_column2.appendChild(postSkelClone);
+            }
+            break;
+        case "post-commentsection":
+        case "chapter-commentsection":
+            //Creates comment skeletons for post or chapter's comment section
+            const post_commentsection = document.getElementById("comment-section") as HTMLDivElement;
+            for (let i = 0; i < 10; i++) {
+                post_commentsection.appendChild(commentSkelClone);
+            }
+            break;
+        case "profile-posts":
+        case "profile-saved":
+            //Creates post skeletons for the user posts or saved posts in profile
+            const profilebody_forpost = document.getElementById(page) as HTMLDivElement;
+            for (let i = 0; i < 10; i++) {
+                profilebody_forpost.appendChild(postSkelClone);
+            }
+            break;
+        case "profile-reviews":
+            //Creates review(comment to posts) skeletons in profile
+            const profilebody_forreviews = document.getElementById(page) as HTMLDivElement;
+            for (let i = 0; i < 10; i++) {
+                profilebody_forreviews.appendChild(commentSkelClone);
+            }
+            break;
+        default:
+            break;
+    }
+}
+
+function fillPostTemplate(post: any) {
+    const instance = document.getElementById('postList-post') as HTMLMetaElement;
+    const clone = (<DocumentFragment><any>instance.content).cloneNode(true) as HTMLElement;
+
+    //Check if user voted this parent
+    window.checkVoted_icons(clone, post.votedByUser);
+
+    clone.querySelector('.post')!.setAttribute('data-postid', post.id);
+    clone.querySelector('.p-title > a')!.setAttribute('href', '/p/' + post.id);
+    clone.querySelector('.p-title > a')!.textContent = post.title;
+    clone.querySelector('.p-date')!.textContent = window.TimeAgo(post.publishDate);
+    if (post.coverImage !== null) {
+        clone.querySelector('.p-cover > img')!.setAttribute('src', '/images/covers/' + post.coverImage);
+    }
+    clone.querySelector('.p-body > span')!.textContent = post.postDescription;
+    if (post.voteResult >= 0) {
+        clone.querySelector('.vote_count')!.textContent = post.voteResult;
+    }
+    clone.querySelector('.p-rate')!.textContent = post.rateResult >= 0 && post.rateResult <= 10
+        ? Number((post.rateResult).toFixed(1)) + "/10"
+        : "-/10";
+
+    clone.querySelector('.pi-type')!.textContent = post.postType.body;
+    clone.querySelector('.pi-language')!.textContent = post.language.body;
+    clone.querySelector('.pi-status')!.textContent = post.postStatus.body;
+    clone.querySelector('.pi-rating')!.textContent = post.ratedAs.body;
+
+    clone.querySelector('.pi-amount_of_chapters')!.textContent = post.chapters.length;
+    clone.querySelector('.pi-amount_of_words')!.textContent = post.wordsLength
+    clone.querySelector('.pi-amount_of_comments')!.textContent = post.comRepLength;
+    clone.querySelector('.pi-last_update')!.textContent = window.TimeAgo(post.updateDate, "short");
+
+    const tagSection = clone.querySelector('.pi-tags') as HTMLElement;
+    const basedOnSection = clone.querySelector('.pi-series') as HTMLElement;
+    //tag list
+    if (post.tags.length > 0) {
+        post.tags.forEach((tagname: any) =>
+            tagSection.innerHTML += "<span>" + tagname.body + "</span>"
+        );
+    } else {
+        tagSection.innerHTML = "<span>Empty</span>";
+    }
+    //based on list
+    if (post.existingStories.length > 0) {
+        post.existingStories.forEach((storyname: any) =>
+            basedOnSection.innerHTML += "<span>" + storyname.body + "</span>"
+        );
+    } else {
+        basedOnSection.remove();
+    }
+
+    //user
+    if (post.account.displayName !== null) {
+        clone.querySelector('.p-username')!.textContent = post.account.displayName;
+    } else {
+        clone.querySelector('.p-username')!.textContent = post.account.username;
+    }
+    clone.querySelector('.p-user > img')!.setAttribute('src', '/images/users/' + post.account.profilePic);
+    return clone;
+}
+
+
+async function fillCommentTemplate(comment: any, page: string | null) {
+    const instance = document.getElementById('comment_instance') as HTMLMetaElement;
+    const clone = (<DocumentFragment><any>instance.content).cloneNode(true) as HTMLElement;
+    //Check if user voted this parent
+    window.checkVoted_icons(clone, comment.votedByUser);
+
+    clone.querySelector('.comment')!.setAttribute('data-commentid', comment.id);
+    clone.querySelector('.c-header > img')!.setAttribute('src', '/images/users/' + comment.account.profilePic);
+    if (comment.account.displayName != null) {
+        clone.querySelector('.c-username')!.textContent = comment.account.displayName;
+    } else {
+        clone.querySelector('.c-username')!.textContent = comment.account.username;
+    }
+    clone.querySelector('.c-date')!.textContent = window.TimeAgo(comment.publishDate);
+    clone.querySelector('.c-text > span')!.textContent = comment.body;
+    if (comment.voteResult >= 0) {
+        clone.querySelector('.c-likes')!.textContent = comment.voteResult;
+    }
+    if (comment.repliesLength === 0) {
+        clone.querySelector('.get_replies')!.remove();
+    } else {
+        let repliesLengthText = " replies";
+        if (comment.repliesLength === 1) {
+            repliesLengthText = " reply";
+        }
+        clone.querySelector('.get_replies > span')!.textContent = comment.repliesLength + repliesLengthText;
+    }
+    const hreply = await fetchHighlightedReply(comment.id) as any;
+    if (hreply) {
+        //Check if user voted this parent
+        window.checkVoted_icons(clone.querySelector('.reply')!, hreply.votedByUser);
+
+        clone.querySelector('.reply')!.setAttribute('data-replyid', hreply.id);
+        clone.querySelector('.r-text > span')!.textContent = hreply.body;
+        if (hreply.voteResult >= 0) {
+            clone.querySelector('.r-likes')!.textContent = hreply.voteResult;
+        }
+
+        clone.querySelector('.r-user > img')!.setAttribute('src', '/images/users/' + hreply.account.profilePic);
+        if (hreply.account.displayName != null) {
+            clone.querySelector('.r-username')!.textContent = hreply.account.displayName;
+        } else {
+            clone.querySelector('.r-username')!.textContent = hreply.account.username;
+        }
+    }
+    else {
+        clone.querySelector('.reply')!.remove();
+    }
+    if (page === "profile") {
+        clone.querySelector('.c-replybtn')!.remove();
+        let linkToPost = document.createElement('a');
+        linkToPost.href = "/p/" + comment.targetPostId; //This is nullable but reviews are only post comments anyway
+        linkToPost.textContent = "Post";
+        clone.querySelector('.c-evaluation')!.appendChild(linkToPost);
+    }
+
+    return clone;
+}
+
+
+
+
+//UTILITY
+
+function stringifyFormData(form: HTMLFormElement): string {
+    const formData = new FormData(form);
+    var object: { [key: string]: string } = {};
+    formData.forEach(function (value, key) {
+        object[key] = <string>value;
+    });
+    return JSON.stringify(object);
+}
+
+function capitalizeFirstLetter(string: string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-
-function TimeAgo(time, wordType = "long") {
+function TimeAgo(time: any, wordType: string = "long") { //Date MIGHT NOT BE THE RIGHT TYPE
     const periods = {
         month: 30 * 24 * 60 * 60 * 1000,
         week: 7 * 24 * 60 * 60 * 1000,
@@ -596,7 +735,7 @@ function TimeAgo(time, wordType = "long") {
         hour: 60 * 60 * 1000,
         minute: 60 * 1000
     };
-    const diff = Date.now() - new Date(time);
+    const diff = Date.now() - <any>new Date(time);
     let val;
     let attachment = "";
     if (diff > periods.month) {
@@ -655,7 +794,7 @@ function TimeAgo(time, wordType = "long") {
     return val + " " + attachment;
 }
 
-function getPathPart(index) {
+function getPathPart(index: number) {
     const pathname = window.location.pathname;
     const slashindex = pathname.split('/', index).join('/').length;
     let getval = pathname.substring(pathname.indexOf('/') + slashindex + 1);
@@ -665,173 +804,41 @@ function getPathPart(index) {
     return getval;
 }
 
-function createSkeletons(page) {
-    const postSkelTemplate = document.getElementById("postSkeleton");
-    const commentSkelTemplate = document.getElementById("commentSkeleton");
-    switch (page) {
-        case "read-posts":
-            //Creates post skeletons for read page
-            const pl_column1 = document.getElementById('pl-column1');
-            const pl_column2 = document.getElementById('pl-column2');
-            for (let i = 0; i < 6; i++) {
-                pl_column1.appendChild(postSkelTemplate.content.cloneNode(true));
-                pl_column2.appendChild(postSkelTemplate.content.cloneNode(true));
-            }
-            break;
-        case "post-commentsection":
-        case "chapter-commentsection":
-            //Creates comment skeletons for post or chapter's comment section
-            const post_commentsection = document.getElementById("comment-section");
-            for (let i = 0; i < 10; i++) {
-                post_commentsection.appendChild(commentSkelTemplate.content.cloneNode(true));
-            }
-            break;
-        case "profile-posts":
-        case "profile-saved":
-            //Creates post skeletons for the user posts or saved posts in profile
-            const profilebody_forpost = document.getElementById(page);
-            for (let i = 0; i < 10; i++) {
-                profilebody_forpost.appendChild(postSkelTemplate.content.cloneNode(true));
-            }
-            break;
-        case "profile-reviews":
-            //Creates review(comment to posts) skeletons in profile
-            const profilebody_forreviews = document.getElementById(page);
-            for (let i = 0; i < 10; i++) {
-                profilebody_forreviews.appendChild(commentSkelTemplate.content.cloneNode(true));
-            }
-            break;
-        default:
-            break;
-    }
-}
 
-function fillPostTemplate(post) {
-    const instance = document.getElementById('postList-post');
-    const clone = instance.content.cloneNode(true);
-
-    //Check if user voted this parent
-    window.checkVoted_icons(clone, post.votedByUser);
-
-    clone.querySelector('.post').setAttribute('data-postid', post.id);
-    clone.querySelector('.p-title > a').setAttribute('href', '/p/' + post.id);
-    clone.querySelector('.p-title > a').innerText = post.title;
-    clone.querySelector('.p-date').innerText = window.TimeAgo(post.publishDate);
-    if (post.coverImage !== null) {
-        clone.querySelector('.p-cover > img').setAttribute('src', '/images/covers/' + post.coverImage);
-    }
-    clone.querySelector('.p-body > span').innerText = post.postDescription;
-    if (post.voteResult >= 0) {
-        clone.querySelector('.vote_count').innerText = post.voteResult;
-    }
-    clone.querySelector('.p-rate').innerText = post.rateResult >= 0 && post.rateResult <= 10
-        ? Number((post.rateResult).toFixed(1)) + "/10"
-        : "-/10";
-
-    clone.querySelector('.pi-type').innerText = post.postType.body;
-    clone.querySelector('.pi-language').innerText = post.language.body;
-    clone.querySelector('.pi-status').innerText = post.postStatus.body;
-    clone.querySelector('.pi-rating').innerText = post.ratedAs.body;
-
-    clone.querySelector('.pi-amount_of_chapters').innerText = post.chapters.length;
-    clone.querySelector('.pi-amount_of_words').innerText = post.wordsLength
-    clone.querySelector('.pi-amount_of_comments').innerText = post.comRepLength;
-    clone.querySelector('.pi-last_update').innerText = window.TimeAgo(post.updateDate, "short");
-
-    const tagSection = clone.querySelector('.pi-tags');
-    const basedOnSection = clone.querySelector('.pi-series');
-    //tag list
-    if (post.tags.length > 0) {
-        post.tags.forEach((tagname) =>
-            tagSection.innerHTML += "<span>" + tagname.body + "</span>"
-        );
-    } else {
-        tagSection.innerHTML = "<span>Empty</span>";
-    }
-    //based on list
-    if (post.existingStories.length > 0) {
-        post.existingStories.forEach((storyname) =>
-            basedOnSection.innerHTML += "<span>" + storyname.body + "</span>"
-        );
-    } else {
-        basedOnSection.remove();
-    }
-
-    //user
-    if (post.account.displayName !== null) {
-        clone.querySelector('.p-username').innerText = post.account.displayName;
-    } else {
-        clone.querySelector('.p-username').innerText = post.account.username;
-    }
-    clone.querySelector('.p-user > img').setAttribute('src', '/images/users/' + post.account.profilePic);
-    return clone;
-}
-
-
-async function fillCommentTemplate(comment, page) {
-    const instance = document.getElementById('comment_instance');
-    const clone = instance.content.cloneNode(true);
-    //Check if user voted this parent
-    window.checkVoted_icons(clone, comment.votedByUser);
-
-    clone.querySelector('.comment').setAttribute('data-commentid', comment.id);
-    clone.querySelector('.c-header > img').setAttribute('src', '/images/users/' + comment.account.profilePic);
-    if (comment.account.displayName != null) {
-        clone.querySelector('.c-username').textContent = comment.account.displayName;
-    } else {
-        clone.querySelector('.c-username').textContent = comment.account.username;
-    }
-    clone.querySelector('.c-date').textContent = window.TimeAgo(comment.publishDate);
-    clone.querySelector('.c-text > span').textContent = comment.body;
-    if (comment.voteResult >= 0) {
-        clone.querySelector('.c-likes').textContent = comment.voteResult;
-    }
-    if (comment.repliesLength === 0) {
-        clone.querySelector('.get_replies').remove();
-    } else {
-        let repliesLengthText = " replies";
-        if (comment.repliesLength === 1) {
-            repliesLengthText = " reply";
+/* OUTDATED. Check vote with request.
+async function checkVoted_IconStuff(clone, checkvotepayload) {
+    await fetch("/g/CheckVoteByUser?" + checkvotepayload, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
         }
-        clone.querySelector('.get_replies > span').textContent = comment.repliesLength + repliesLengthText;
-    }
-    const hreply = await fetchHighlightedReply(comment.id);
-    if (hreply) {
-        //Check if user voted this parent
-        window.checkVoted_icons(clone.querySelector('.reply'), hreply.votedByUser);
-
-        clone.querySelector('.reply').setAttribute('data-replyid', hreply.id);
-        clone.querySelector('.r-text > span').textContent = hreply.body;
-        if (hreply.voteResult >= 0) {
-            clone.querySelector('.r-likes').textContent = hreply.voteResult;
-        }
-
-        clone.querySelector('.r-user > img').setAttribute('src', '/images/users/' + hreply.account.profilePic);
-        if (hreply.account.displayName != null) {
-            clone.querySelector('.r-username').textContent = hreply.account.displayName;
-        } else {
-            clone.querySelector('.r-username').textContent = hreply.account.username;
-        }
-    }
-    else {
-        clone.querySelector('.reply').remove();
-    }
-    if (page === "profile") {
-        clone.querySelector('.c-replybtn').remove();
-        let linkToPost = document.createElement('a');
-        linkToPost.href = "/p/" + comment.targetPostId; //This is nullable but reviews are only post comments anyway
-        linkToPost.innerText = "Post";
-        clone.querySelector('.c-evaluation').appendChild(linkToPost);
-    }
-
-    return clone;
+    })
+        .then((res) => res.json())
+        .then((data) => {
+            const likebtn = clone.querySelector('[data-action="like"]');
+            const dislikebtn = clone.querySelector('[data-action="dislike"]');
+            likebtn.className = "";
+            dislikebtn.className = "";
+            if (data.statusCode === 200) {
+                switch (data.value) {
+                    case "true":
+                        likebtn.classList.add('likebtn', 'bi', 'bi-hand-thumbs-up-fill', 'active');
+                        dislikebtn.classList.add('dislikebtn', 'bi', 'bi-hand-thumbs-down');
+                        break;
+                    case "false":
+                        likebtn.classList.add('likebtn', 'bi', 'bi-hand-thumbs-up');
+                        dislikebtn.classList.add('dislikebtn', 'bi', 'bi-hand-thumbs-down-fill', 'active');
+                        break;
+                }
+            }
+            else {
+                likebtn.classList.add('likebtn', 'bi', 'bi-hand-thumbs-up');
+                dislikebtn.classList.add('dislikebtn', 'bi', 'bi-hand-thumbs-down');
+            }
+        })
+        .catch(error => {
+            console.log('vote check failed -> ' + error);
+        });
 }
-
-function stringifyFormData(form: HTMLFormElement): string {
-    const formData = new FormData(form);
-    var object: { [key: string]: string } = {};
-    formData.forEach(function (value, key) {
-        object[key] = <string>value;
-    });
-    return JSON.stringify(object);
-}
+*/
