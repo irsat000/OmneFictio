@@ -1,18 +1,28 @@
 
-$(document).ready(function () {
+document.addEventListener("DOMContentLoaded", function () {
+    const modalbg1 = document.querySelector('.modalbg1') as HTMLDivElement;
+    const modalbg2 = document.querySelector('.modalbg2') as HTMLDivElement;
+    const orderbyModal = document.getElementById('orderby-modal') as HTMLDivElement;
+    const filterModal = document.getElementById('filter-modal') as HTMLDivElement;
+    const filterTagddModal = document.getElementById('filter-tagddmodal') as HTMLDivElement;
+    const filterAddseriesModal = document.getElementById('filter-addseriesmodal') as HTMLDivElement;
+    const filterTagList = document.getElementById('f-tagdd-list') as HTMLUListElement;
+    
+    
+    
     const params = new URLSearchParams(window.location.search);
     //Error message references
-    const plwarning = document.getElementById('plwarning');
-    const plw_message = plwarning.querySelector('.plwarning-message');
-    const plw_img = plwarning.querySelector('.plwarning-img');
-    
+    const plwarning = document.getElementById('plwarning') as HTMLDivElement;
+    const plw_message = plwarning.querySelector('.plwarning-message') as HTMLHeadingElement;
+    const plw_img = plwarning.querySelector('.plwarning-img') as HTMLImageElement;
+
     //-----fetch post START--------------
     window.createSkeletons("read-posts");
     fetchPosts();
     async function fetchPosts() {
         //I use columns for masonry design.
-        const pl_column1 = document.getElementById('pl-column1');
-        const pl_column2 = document.getElementById('pl-column2');
+        const pl_column1 = document.getElementById('pl-column1') as HTMLDivElement;
+        const pl_column2 = document.getElementById('pl-column2') as HTMLDivElement;
         await fetch("/g/GetPosts?" + params, {
             method: 'GET',
             headers: {
@@ -22,8 +32,6 @@ $(document).ready(function () {
         })
             .then((res) => res.json())
             .then(async (data) => {
-                /*const delay = ms => new Promise(res => setTimeout(res, ms));
-                await delay(10000);*/
                 pl_column1.innerHTML = "";
                 pl_column2.innerHTML = "";
                 if (data.statusCode === 200) {
@@ -38,14 +46,14 @@ $(document).ready(function () {
                         }
                     }
                     //PAGINATION
-                    const postShowroom = document.querySelector('.posts-cont');
+                    const postShowroom = document.querySelector('.posts-cont') as HTMLDivElement;
                     createPaginationForPosts(postShowroom, response.pages);
                 } else if (data.statusCode === 404) {
-                    plw_message.innerText = "In terms of posts, we have no posts.";
+                    plw_message.textContent = "In terms of posts, we have no posts.";
                     plw_img.setAttribute("src", "/images/onerror/noposts.webp");
                     plwarning.style.display = "flex";
                 } else {
-                    plw_message.querySelector('.plwarning-message').innerText = "Couldn't connect to servers.";
+                    plw_message.textContent = "Couldn't connect to servers.";
                     plw_img.setAttribute("src", "/images/onerror/connectionerror.png");
                     plwarning.style.display = "flex";
                     //Codes that will return an apology instead of post list
@@ -54,54 +62,57 @@ $(document).ready(function () {
             .catch(error => {
                 pl_column1.innerHTML = "";
                 pl_column2.innerHTML = "";
-                plw_message.innerText = "Please report, this was not supposed to happen.";
+                plw_message.textContent = "Please feedback, this was not supposed to happen.";
                 plw_img.setAttribute("src", "/images/onerror/connectionerror.png");
                 plwarning.style.display = "flex";
                 console.log('Fetch failed -> ' + error); //MUST NOT BE GIVEN TO USERS
             });
     }
 
-    function createPaginationForPosts(appendLocation, pageCount){
-        const curpage = params.has('page') ? parseInt(params.get('page'), 10) : 1;
+    function createPaginationForPosts(appendLocation: HTMLElement, pageCount: number) {
+        const curpage = params.has('page')
+            ? parseInt(params.get('page')!, 10)
+            : 1;
         //PAGINATION
-        const pagInstance = document.getElementById('paginationTemplate');
-        const pagClone = pagInstance.content.cloneNode(true);
-        const pagSelect = pagClone.querySelector('.page_select');
+        const pagInstance = document.getElementById('paginationTemplate') as HTMLMetaElement;
+        const pagClone = window.cloneFromTemplate(pagInstance);
+
+        const pagSelect = pagClone.querySelector('.page_select') as HTMLSelectElement;
         for (let i = 1; i <= pageCount; i++) {
             const opt = document.createElement('option');
-            opt.value = i;
-            opt.innerHTML = i;
+            opt.value = i.toString();
+            opt.textContent = i.toString();
             pagSelect.appendChild(opt);
         }
-        pagSelect.value = curpage;
+        pagSelect.value = curpage.toString();
         //----
         const params_pag = params;
-        let newUrl = new URL(window.location);
+        let newUrl = new URL(window.location.toString());
         let urlPath = newUrl.origin + newUrl.pathname;
 
         if (curpage < pageCount) {
             params_pag.set('page', (curpage + 1).toString());
-            pagClone.querySelector('#nextPageBtn')
+            pagClone.querySelector('#nextPageBtn')!
                 .setAttribute('href', urlPath + "?" + params_pag);
             if (curpage == 1) {
-                pagClone.querySelector('#prevPageBtn').classList.add('opacity-50');
-                pagClone.querySelector('.firstPageBtn').classList.add('opacity-50');
+                pagClone.querySelector('#prevPageBtn')!.classList.add('opacity-50');
+                pagClone.querySelector('.firstPageBtn')!.classList.add('opacity-50');
             }
         }
         if (curpage > 1) {
             params_pag.set('page', (curpage - 1).toString());
-            pagClone.querySelector('#prevPageBtn')
+            pagClone.querySelector('#prevPageBtn')!
                 .setAttribute('href', urlPath + "?" + params_pag);
             if (curpage == pageCount) {
-                pagClone.querySelector('#nextPageBtn').classList.add('opacity-50');
-                pagClone.querySelector('.lastPageBtn').classList.add('opacity-50');
+                pagClone.querySelector('#nextPageBtn')!.classList.add('opacity-50');
+                pagClone.querySelector('.lastPageBtn')!.classList.add('opacity-50');
             }
         }
-        pagClone.querySelector('.firstPageBtn').addEventListener('click', function () {
+        pagClone.querySelector('.firstPageBtn')!.addEventListener('click', function () {
             params_pag.set('page', '1');
             window.location.href = urlPath + "?" + params_pag;
         });
-        pagClone.querySelector('.lastPageBtn').addEventListener('click', function () {
+        pagClone.querySelector('.lastPageBtn')!.addEventListener('click', function () {
             params_pag.set('page', pageCount.toString());
             window.location.href = urlPath + "?" + params_pag;
         });
@@ -116,97 +127,88 @@ $(document).ready(function () {
     //-------fetch post END----------------------
 
 
-    document.querySelector('.modalbg1').addEventListener("click", function () {
-        return modalbg1_click_read();
+    modalbg1.addEventListener("click", function () {
+        return modalbg1_click_readpage();
     });
-    document.querySelector('.modalbg2').addEventListener("click", function () {
-        return modalbg2_click_read();
+    modalbg2.addEventListener("click", function () {
+        return modalbg2_click_readpage();
     });
 
     //Close second modals on the page
-    $('#f-taggdd-close').click(function () {
+    document.getElementById('f-taggdd-close')?.addEventListener('click', function () {
         closeTagModal();
     });
-    $('#fadds-close').click(function () {
+    document.getElementById('fadds-close')?.addEventListener('click', function () {
         closeSeriesModal();
     });
-
-    function modalbg1_click_read() {
-        const modalbg1 = document.querySelector('.modalbg1');
-        const orderbyModal = document.getElementById('orderby-modal');
-        const filterModal = document.getElementById('filter-modal');
-        if (orderbyModal !== null && orderbyModal.classList.contains('d-flex')) {
-            orderbyModal.classList.remove('d-flex');
-            orderbyModal.classList.remove('opacity-100');
-            modalbg1.classList.remove('d-block');
-        }
-        if (filterModal !== null && filterModal.classList.contains('d-flex')) {
-            filterModal.classList.remove('d-flex');
-            filterModal.classList.remove('opacity-100');
-            modalbg1.classList.remove('d-block');
-        }
-    }
-    function modalbg2_click_read() {
-        closeTagModal();
-        closeSeriesModal();
-    }
-
-    $('#orderby-btn, #sb-close').click(function () {
-        if ($('#orderby-modal').hasClass('d-flex')) {
-            $('#orderby-modal').removeClass('d-flex');
-            $('#orderby-modal').removeClass('opacity-100');
-            $('.modalbg1').removeClass('d-block');
-        }
-        else {
-            $('#orderby-modal').addClass('d-flex');
-            $('.modalbg1').addClass('d-block');
-            setTimeout(function () {
-                $('#orderby-modal').addClass('opacity-100');
-            }, 100);
-        }
-    });
-    $('#po-type, #t-close').click(function () {
-        if ($('#type-modal').hasClass('d-flex')) {
-            $('#type-modal').removeClass('d-flex');
-            $('#type-modal').removeClass('opacity-100');
-            $('.modalbg1').removeClass('d-block');
-        }
-        else {
-            $('#type-modal').addClass('d-flex');
-            $('.modalbg1').addClass('d-block');
-            setTimeout(function () {
-                $('#type-modal').addClass('opacity-100');
-            }, 100);
-        }
+    
+    //Open-close orderby modal
+    [document.getElementById('orderby-btn'),
+    document.getElementById('sb-close')].forEach(element => {
+        element?.addEventListener('click', function(){
+            if (orderbyModal.classList.contains('dflex')) {
+                orderbyModal.classList.remove('dflex');
+                orderbyModal.classList.remove('opacity1');
+                modalbg1.classList.remove('dblock');
+            }
+            else {
+                orderbyModal.classList.add('dflex');
+                modalbg1.classList.add('dblock');
+                setTimeout(function () {
+                    orderbyModal.classList.add('opacity1');
+                }, 100);
+            }
+        })
     });
 
-    $('#po-filter, #f-close').click(function () {
-        if ($('#filter-modal').hasClass('d-flex')) {
-            $('#filter-modal').removeClass('d-flex');
-            $('#filter-modal').removeClass('opacity-100');
-            $('.modalbg1').removeClass('d-block');
-        }
-        else {
-            $('#filter-modal').addClass('d-flex');
-            $('.modalbg1').addClass('d-block');
-            setTimeout(function () {
-                $('#filter-modal').addClass('opacity-100');
-            }, 100);
-        }
+    //Open-close filter modal
+    [document.getElementById('po-filter'),
+    document.getElementById('f-close')].forEach(element => {
+        element?.addEventListener('click', function(){
+            if (filterModal.classList.contains('dflex')) {
+                filterModal.classList.remove('dflex');
+                filterModal.classList.remove('opacity1');
+                modalbg1.classList.remove('dblock');
+            }
+            else {
+                filterModal.classList.add('dflex');
+                modalbg1.classList.add('dblock');
+                setTimeout(function () {
+                    filterModal.classList.add('opacity1');
+                }, 100);
+            }
+        })
     });
 
     //----------Modals----------------------------------------
 
+
+    function modalbg1_click_readpage() {
+        if (orderbyModal.classList.contains('dflex')) {
+            orderbyModal.classList.remove('dflex');
+            orderbyModal.classList.remove('opacity1');
+            modalbg1.classList.remove('dblock');
+        }
+        if (filterModal.classList.contains('dflex')) {
+            filterModal.classList.remove('dflex');
+            filterModal.classList.remove('opacity1');
+            modalbg1.classList.remove('dblock');
+        }
+    }
+    function modalbg2_click_readpage() {
+        closeTagModal();
+        closeSeriesModal();
+    }
     function closeTagModal() {
-        if ($('#filter-tagddmodal').hasClass('d-flex')) {
-            $('#filter-tagddmodal').removeClass('d-flex');
-            $('.modalbg2').removeClass('d-block');
+        if (filterTagddModal.classList.contains('dflex')) {
+            filterTagddModal.classList.remove('dflex');
+            modalbg2.classList.remove('dblock');
         }
     }
     function closeSeriesModal() {
-        if ($("#filter-addseriesmodal").hasClass('d-flex')) {
-            $("#filter-addseriesmodal").removeClass('d-flex');
-            $('.modalbg2').removeClass('d-block');
+        if (filterAddseriesModal.classList.contains('dflex')) {
+            filterAddseriesModal.classList.remove('dflex');
+            modalbg2.classList.remove('dblock');
         }
     }
 
@@ -214,7 +216,7 @@ $(document).ready(function () {
     $('#f-resetbtn').click(function () {
         //type
         if ($('.f-typebtns').length) {
-            $('.f-typebtns').removeClass('f-type_active');
+            $('.f-typebtns').classList.remove('f-type_active');
             $('.f-typebtns').each(function (i, x) {
                 var buttontext = $(x).val();
                 $(x).val(buttontext.replace('-', '+'));
@@ -243,28 +245,32 @@ $(document).ready(function () {
 
     //open tag include and exclude menus.
     //closes modal if it's open
-    $('#f-includetagbtn').click(function () {
+    document.getElementById('f-includetagbtn')?.addEventListener('click', function () {
         openFilterTagDD("include");
     });
-    $('#f-excludetagbtn').click(function () {
+    document.getElementById('f-excludetagbtn')?.addEventListener('click', function () {
         openFilterTagDD("exclude");
     });
-    function openFilterTagDD(action) {
-        $('#filter-tagddmodal').addClass('d-flex');
-        $('.modalbg2').addClass('d-block');
+    function openFilterTagDD(action: string) {
+        filterTagddModal.classList.add('dflex');
+        modalbg2.classList.add('dblock');
 
         if (action == "include") {
-            $('#f-tagdd-list').attr('data-action', 'include');
+            filterTagList.setAttribute('data-action', 'include');
         }
         else if (action == "exclude") {
-            $('#f-tagdd-list').attr('data-action', 'exclude');
+            filterTagList.setAttribute('data-action', 'exclude');
         }
     }
     //adding tags to the filter modal
-    $('#f-tagdd-list > li').click(function () {
-        var tagname = $(this).attr('data-tagddvalue');
-        var tagnamedisplay = capitalizeFirstLetter(tagname.replaceAll('_', ' '));
-        if ($('#f-tagdd-list').attr('data-action') == 'include') {
+    $('#f-tagdd-list > li').click(function (e) {
+        const li = e.currentTarget as HTMLLIElement;
+        const tagname = li.getAttribute('data-tagddvalue')!;
+        if(tagname === null){
+            return;
+        }
+        const tagnamedisplay = capitalizeFirstLetter(tagname.replaceAll('_', ' '));
+        if (filterTagList.getAttribute('data-action') == 'include') {
             $('.f-tagsincexc span[data-ftag="' + tagname + '"]').remove();
             $('.f-tagsincexc input[data-ftagref="' + tagname + '"]').remove();
             $(".f-tags_include").append(`<span data-ftag="` + tagname + `">` + tagnamedisplay + `<i class="bi bi-x-circle f-removetagbtn"></i></span>
@@ -280,8 +286,12 @@ $(document).ready(function () {
         $("#f-tagdd-list > li").show();
         closeTagModal();
     });
+    
+    
     //searchbar that works with keyup. it's for finding the option more easily.
-    $("#tagdd-searchbar").keyup(function () {
+    //WE WILL HAVE TO FIND VANILLA JS VERSION
+    /*
+    $("#tagdd-searchbar").keyup(function (bar: HTMLInputElement) {
         var filter = $(this).val();
         $("#f-tagdd-list > li").each(function () {
             if ($(this).text().search(new RegExp(filter, "i")) < 0) {
@@ -291,29 +301,42 @@ $(document).ready(function () {
             }
         });
     });
+    
+    $("#fadds-searchbar").keyup(function () {
+        var filter = $(this).val();
+        $("#fadds-list > li").each(function () {
+            if ($(this).text().search(new RegExp(filter, "i")) < 0) {
+                $(this).hide();
+            } else {
+                $(this).show()
+            }
+        });
+    });
+    */ 
+
+
     //Hides the tag X icon when clicked outside
     $(document).on('click', '.filter-cont *', function (event) {
         var target = $(event.target);
-        if ($('#filter-modal').hasClass('d-flex') && !target.parents('.f-tagsincexc').length && $('.f-removetagbtn').hasClass('d-flex')) {
-            $('.f-removetagbtn').removeClass('d-flex');
+        if (filterModal.classList.contains('dflex') && !target.parents('.f-tagsincexc').length && $('.f-removetagbtn').classList.contains('dflex')) {
+            $('.f-removetagbtn').classList.remove('dflex');
         }
     });
-
-
 
     //--------FANFICTION SERIES OPTIONS-----------
 
     //choose series or add crossover menu for fanfictions
     //closes modal if it's open
-    $("#fanfic-chooseseries").click(function () {
-        $("#filter-addseriesmodal").addClass('d-flex');
-        $('.modalbg2').addClass('d-block');
+    document.getElementById('fanfic-chooseseries')?.addEventListener('click', function () {
+        filterAddseriesModal.classList.add('dflex');
+        modalbg2.classList.add('dblock');
     });
 
     //adding series to the filter modal / fanfiction
     //fadds = fanfiction add series
-    $('#fadds-list > li').click(function () {
-        var name = $(this).attr('data-seriesval');
+    $('#fadds-list > li').click(function (e) {
+        const li = e.currentTarget as HTMLLIElement;
+        var name = li.getAttribute('data-seriesval')!;
         var namedisplay = capitalizeFirstLetter(name.replaceAll('_', ' '));
         //delete if span-input already exist
         $('.ffs-series_include span[data-fseries="' + name + '"]').remove();
@@ -325,16 +348,6 @@ $(document).ready(function () {
         $("#fadds-list > li").show();
         closeSeriesModal();
     });
-    $("#fadds-searchbar").keyup(function () {
-        var filter = $(this).val();
-        $("#fadds-list > li").each(function () {
-            if ($(this).text().search(new RegExp(filter, "i")) < 0) {
-                $(this).hide();
-            } else {
-                $(this).show()
-            }
-        });
-    });
 
     //--------------------
 
@@ -342,26 +355,26 @@ $(document).ready(function () {
     //appended elements require this method
     $(document).on('click', '.f-tagsincexc span', function (event) {
         var target = $(event.target);
-        if (target.hasClass('f-removetagbtn')) {
+        if (target.classList.contains('f-removetagbtn')) {
             var tagname = $(this).attr('data-ftag');
             this.remove();
             $('.f-tagsincexc > input[data-ftagref="' + tagname + '"]').remove();
         }
         else {
             var removetagbtn = $(this).children('.f-removetagbtn');
-            if (!removetagbtn.hasClass('d-flex')) {
-                $('.f-removetagbtn').removeClass('d-flex');
-                removetagbtn.addClass('d-flex');
+            if (!removetagbtn.classList.contains('dflex')) {
+                $('.f-removetagbtn').classList.remove('dflex');
+                removetagbtn.classList.add('dflex');
             }
             else {
-                removetagbtn.removeClass('d-flex');
+                removetagbtn.classList.remove('dflex');
             }
         }
     });
     //this is for removing series from filters
     $(document).on('click', '.ffs-series_include span', function (event) {
         var target = $(event.target);
-        if (target.hasClass('f-removeseriesbtn')) {
+        if (target.classList.contains('f-removeseriesbtn')) {
             var seriesname = $(this).attr('data-fseries');
             this.remove();
             $('.ffs-series_include > input[value="' + seriesname + '"]').remove();

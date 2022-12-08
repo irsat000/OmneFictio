@@ -3,6 +3,10 @@
 
 // Write your JavaScript code.
 
+interface String {
+    replaceAll(input: string, output : string): any;
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     const dombody = document.getElementsByTagName("BODY")[0] as HTMLBodyElement;
     const modalbg1 = document.querySelector('.modalbg1') as HTMLDivElement;
@@ -223,7 +227,7 @@ async function AddComment(payload: string, commentSection: HTMLDivElement) {
             if (data.statusCode === 200) {
                 const comment = JSON.parse(data.value).returnComment;
                 const instance = document.getElementById('comment_instance') as HTMLMetaElement;
-                const clone = (<DocumentFragment><any>instance.content).cloneNode(true) as HTMLElement;
+                const clone = window.cloneFromTemplate(instance);
 
                 clone.querySelector('.comment')!.setAttribute('data-commentid', comment.id);
                 clone.querySelector('.c-header > img')!.setAttribute('src', '/images/users/' + comment.account.profilePic);
@@ -348,7 +352,7 @@ async function fetchReplies(commentId: string, section: HTMLElement) {
                 console.log(comm);
                 const commentInstance = document.getElementById('modalReplies-comment') as HTMLMetaElement;
                 const replyInstance = document.getElementById('modalReplies-reply') as HTMLMetaElement;
-                const commentClone = (<DocumentFragment><any>commentInstance.content).cloneNode(true) as HTMLElement;
+                const commentClone = window.cloneFromTemplate(commentInstance);
 
                 //Check if user voted this parent
                 window.checkVoted_icons(commentClone, comm.votedByUser);
@@ -370,7 +374,7 @@ async function fetchReplies(commentId: string, section: HTMLElement) {
                 //if it has replies
                 if (comm.replies.length > 0) {
                     for (const reply of comm.replies) {
-                        const replyClone = (<DocumentFragment><any>replyInstance.content).cloneNode(true) as HTMLElement;
+                        const replyClone = window.cloneFromTemplate(replyInstance);
                         //Check if user voted this parent
                         window.checkVoted_icons(replyClone, reply.votedByUser);
 
@@ -547,9 +551,9 @@ async function googleHandleCredentialResponse(response: any) {
 
 function createSkeletons(page: string) {
     const postSkelTemplate = document.getElementById("postSkeleton") as HTMLMetaElement;
-    const postSkelClone = (<DocumentFragment><any>postSkelTemplate.content).cloneNode(true) as HTMLElement;
+    const postSkelClone = window.cloneFromTemplate(postSkelTemplate);
     const commentSkelTemplate = document.getElementById("commentSkeleton") as HTMLMetaElement;
-    const commentSkelClone = (<DocumentFragment><any>postSkelTemplate.content).cloneNode(true) as HTMLElement;
+    const commentSkelClone = window.cloneFromTemplate(commentSkelTemplate);
     switch (page) {
         case "read-posts":
             //Creates post skeletons for read page
@@ -590,7 +594,7 @@ function createSkeletons(page: string) {
 
 function fillPostTemplate(post: any) {
     const instance = document.getElementById('postList-post') as HTMLMetaElement;
-    const clone = (<DocumentFragment><any>instance.content).cloneNode(true) as HTMLElement;
+    const clone = window.cloneFromTemplate(instance);
 
     //Check if user voted this parent
     window.checkVoted_icons(clone, post.votedByUser);
@@ -652,7 +656,7 @@ function fillPostTemplate(post: any) {
 
 async function fillCommentTemplate(comment: any, page: string | null) {
     const instance = document.getElementById('comment_instance') as HTMLMetaElement;
-    const clone = (<DocumentFragment><any>instance.content).cloneNode(true) as HTMLElement;
+    const clone = window.cloneFromTemplate(instance);
     //Check if user voted this parent
     window.checkVoted_icons(clone, comment.votedByUser);
 
@@ -802,6 +806,10 @@ function getPathPart(index: number) {
         getval = getval.substring(0, getval.indexOf('/'));
     }
     return getval;
+}
+
+function cloneFromTemplate(instance: HTMLMetaElement){
+    return (<DocumentFragment><any>instance.content).cloneNode(true) as HTMLElement;
 }
 
 
