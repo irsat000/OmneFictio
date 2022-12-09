@@ -34,11 +34,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
 
     //Theme switch
-    document.getElementById("theme-check")?.addEventListener("change", (event) => {
+    document.getElementById("theme-check")?.addEventListener("change", (e) => {
         const body = document.getElementsByTagName("body")[0];
         body.className = "";
 
-        if ((<HTMLInputElement>event.currentTarget).checked) {
+        if ((<HTMLInputElement>e.currentTarget).checked) {
             body.classList.add("lightmode");
         } else {
             body.classList.add("darkmode");
@@ -120,7 +120,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //Open replies modal
     document.querySelector('.get_replies')?.addEventListener('click', function (e) {
-        window.openRepliesModal(e.target!);
+        window.openRepliesModal(e.currentTarget!);
     });
     //Open close modal
     document.querySelector('.mr-close')?.addEventListener('click', function () {
@@ -226,7 +226,7 @@ async function AddComment(payload: string, commentSection: HTMLDivElement) {
         .then(async (data) => {
             if (data.statusCode === 200) {
                 const comment = JSON.parse(data.value).returnComment;
-                const instance = document.getElementById('comment_instance') as HTMLMetaElement;
+                const instance = document.getElementById('comment_instance') as HTMLTemplateElement;
                 const clone = window.cloneFromTemplate(instance);
 
                 clone.querySelector('.comment')!.setAttribute('data-commentid', comment.id);
@@ -350,8 +350,8 @@ async function fetchReplies(commentId: string, section: HTMLElement) {
             if (data.statusCode === 200) {
                 const comm = JSON.parse(data.value);
                 console.log(comm);
-                const commentInstance = document.getElementById('modalReplies-comment') as HTMLMetaElement;
-                const replyInstance = document.getElementById('modalReplies-reply') as HTMLMetaElement;
+                const commentInstance = document.getElementById('modalReplies-comment') as HTMLTemplateElement;
+                const replyInstance = document.getElementById('modalReplies-reply') as HTMLTemplateElement;
                 const commentClone = window.cloneFromTemplate(commentInstance);
 
                 //Check if user voted this parent
@@ -550,18 +550,17 @@ async function googleHandleCredentialResponse(response: any) {
 }
 
 function createSkeletons(page: string) {
-    const postSkelTemplate = document.getElementById("postSkeleton") as HTMLMetaElement;
-    const postSkelClone = window.cloneFromTemplate(postSkelTemplate);
-    const commentSkelTemplate = document.getElementById("commentSkeleton") as HTMLMetaElement;
-    const commentSkelClone = window.cloneFromTemplate(commentSkelTemplate);
+    const postSkelTemplate = document.getElementById("postSkeleton") as HTMLTemplateElement;
+    const commentSkelTemplate = document.getElementById("commentSkeleton") as HTMLTemplateElement;
+
     switch (page) {
         case "read-posts":
             //Creates post skeletons for read page
             const pl_column1 = document.getElementById('pl-column1') as HTMLDivElement;
             const pl_column2 = document.getElementById('pl-column2') as HTMLDivElement;
             for (let i = 0; i < 6; i++) {
-                pl_column1.appendChild(postSkelClone);
-                pl_column2.appendChild(postSkelClone);
+                pl_column1.appendChild(window.cloneFromTemplate(postSkelTemplate));
+                pl_column2.appendChild(window.cloneFromTemplate(postSkelTemplate));
             }
             break;
         case "post-commentsection":
@@ -569,7 +568,8 @@ function createSkeletons(page: string) {
             //Creates comment skeletons for post or chapter's comment section
             const post_commentsection = document.getElementById("comment-section") as HTMLDivElement;
             for (let i = 0; i < 10; i++) {
-                post_commentsection.appendChild(commentSkelClone);
+                const clone = window.cloneFromTemplate(commentSkelTemplate);
+                post_commentsection.appendChild(clone);
             }
             break;
         case "profile-posts":
@@ -577,14 +577,16 @@ function createSkeletons(page: string) {
             //Creates post skeletons for the user posts or saved posts in profile
             const profilebody_forpost = document.getElementById(page) as HTMLDivElement;
             for (let i = 0; i < 10; i++) {
-                profilebody_forpost.appendChild(postSkelClone);
+                const clone = window.cloneFromTemplate(postSkelTemplate);
+                profilebody_forpost.appendChild(clone);
             }
             break;
         case "profile-reviews":
             //Creates review(comment to posts) skeletons in profile
             const profilebody_forreviews = document.getElementById(page) as HTMLDivElement;
             for (let i = 0; i < 10; i++) {
-                profilebody_forreviews.appendChild(commentSkelClone);
+                const clone = window.cloneFromTemplate(commentSkelTemplate);
+                profilebody_forreviews.appendChild(clone);
             }
             break;
         default:
@@ -593,7 +595,7 @@ function createSkeletons(page: string) {
 }
 
 function fillPostTemplate(post: any) {
-    const instance = document.getElementById('postList-post') as HTMLMetaElement;
+    const instance = document.getElementById('postList-post') as HTMLTemplateElement;
     const clone = window.cloneFromTemplate(instance);
 
     //Check if user voted this parent
@@ -655,7 +657,7 @@ function fillPostTemplate(post: any) {
 
 
 async function fillCommentTemplate(comment: any, page: string | null) {
-    const instance = document.getElementById('comment_instance') as HTMLMetaElement;
+    const instance = document.getElementById('comment_instance') as HTMLTemplateElement;
     const clone = window.cloneFromTemplate(instance);
     //Check if user voted this parent
     window.checkVoted_icons(clone, comment.votedByUser);
@@ -808,8 +810,8 @@ function getPathPart(index: number) {
     return getval;
 }
 
-function cloneFromTemplate(instance: HTMLMetaElement){
-    return (<DocumentFragment><any>instance.content).cloneNode(true) as HTMLElement;
+function cloneFromTemplate(instance: HTMLTemplateElement){
+    return instance.content.cloneNode(true) as HTMLElement;
 }
 
 

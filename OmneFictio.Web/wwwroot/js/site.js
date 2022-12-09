@@ -10,7 +10,6 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-// Write your JavaScript code.
 document.addEventListener("DOMContentLoaded", function () {
     var _a, _b, _c, _d, _e;
     const dombody = document.getElementsByTagName("BODY")[0];
@@ -35,10 +34,10 @@ document.addEventListener("DOMContentLoaded", function () {
         window.closeRepliesModal();
     };
     //Theme switch
-    (_a = document.getElementById("theme-check")) === null || _a === void 0 ? void 0 : _a.addEventListener("change", (event) => {
+    (_a = document.getElementById("theme-check")) === null || _a === void 0 ? void 0 : _a.addEventListener("change", (e) => {
         const body = document.getElementsByTagName("body")[0];
         body.className = "";
-        if (event.currentTarget.checked) {
+        if (e.currentTarget.checked) {
             body.classList.add("lightmode");
         }
         else {
@@ -116,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     //Open replies modal
     (_d = document.querySelector('.get_replies')) === null || _d === void 0 ? void 0 : _d.addEventListener('click', function (e) {
-        window.openRepliesModal(e.target);
+        window.openRepliesModal(e.currentTarget);
     });
     //Open close modal
     (_e = document.querySelector('.mr-close')) === null || _e === void 0 ? void 0 : _e.addEventListener('click', function () {
@@ -213,7 +212,7 @@ function AddComment(payload, commentSection) {
             if (data.statusCode === 200) {
                 const comment = JSON.parse(data.value).returnComment;
                 const instance = document.getElementById('comment_instance');
-                const clone = instance.content.cloneNode(true);
+                const clone = window.cloneFromTemplate(instance);
                 clone.querySelector('.comment').setAttribute('data-commentid', comment.id);
                 clone.querySelector('.c-header > img').setAttribute('src', '/images/users/' + comment.account.profilePic);
                 if (comment.account.displayName != null) {
@@ -341,7 +340,7 @@ function fetchReplies(commentId, section) {
                 console.log(comm);
                 const commentInstance = document.getElementById('modalReplies-comment');
                 const replyInstance = document.getElementById('modalReplies-reply');
-                const commentClone = commentInstance.content.cloneNode(true);
+                const commentClone = window.cloneFromTemplate(commentInstance);
                 //Check if user voted this parent
                 window.checkVoted_icons(commentClone, comm.votedByUser);
                 commentClone.querySelector('.mr-comment').setAttribute('data-commentid', comm.id);
@@ -361,7 +360,7 @@ function fetchReplies(commentId, section) {
                 //if it has replies
                 if (comm.replies.length > 0) {
                     for (const reply of comm.replies) {
-                        const replyClone = replyInstance.content.cloneNode(true);
+                        const replyClone = window.cloneFromTemplate(replyInstance);
                         //Check if user voted this parent
                         window.checkVoted_icons(replyClone, reply.votedByUser);
                         replyClone.querySelector('.mr-reply').setAttribute('data-replyid', reply.id);
@@ -536,17 +535,15 @@ function googleHandleCredentialResponse(response) {
 }
 function createSkeletons(page) {
     const postSkelTemplate = document.getElementById("postSkeleton");
-    const postSkelClone = postSkelTemplate.content.cloneNode(true);
     const commentSkelTemplate = document.getElementById("commentSkeleton");
-    const commentSkelClone = postSkelTemplate.content.cloneNode(true);
     switch (page) {
         case "read-posts":
             //Creates post skeletons for read page
             const pl_column1 = document.getElementById('pl-column1');
             const pl_column2 = document.getElementById('pl-column2');
             for (let i = 0; i < 6; i++) {
-                pl_column1.appendChild(postSkelClone);
-                pl_column2.appendChild(postSkelClone);
+                pl_column1.appendChild(window.cloneFromTemplate(postSkelTemplate));
+                pl_column2.appendChild(window.cloneFromTemplate(postSkelTemplate));
             }
             break;
         case "post-commentsection":
@@ -554,7 +551,8 @@ function createSkeletons(page) {
             //Creates comment skeletons for post or chapter's comment section
             const post_commentsection = document.getElementById("comment-section");
             for (let i = 0; i < 10; i++) {
-                post_commentsection.appendChild(commentSkelClone);
+                const clone = window.cloneFromTemplate(commentSkelTemplate);
+                post_commentsection.appendChild(clone);
             }
             break;
         case "profile-posts":
@@ -562,14 +560,16 @@ function createSkeletons(page) {
             //Creates post skeletons for the user posts or saved posts in profile
             const profilebody_forpost = document.getElementById(page);
             for (let i = 0; i < 10; i++) {
-                profilebody_forpost.appendChild(postSkelClone);
+                const clone = window.cloneFromTemplate(postSkelTemplate);
+                profilebody_forpost.appendChild(clone);
             }
             break;
         case "profile-reviews":
             //Creates review(comment to posts) skeletons in profile
             const profilebody_forreviews = document.getElementById(page);
             for (let i = 0; i < 10; i++) {
-                profilebody_forreviews.appendChild(commentSkelClone);
+                const clone = window.cloneFromTemplate(commentSkelTemplate);
+                profilebody_forreviews.appendChild(clone);
             }
             break;
         default:
@@ -578,7 +578,7 @@ function createSkeletons(page) {
 }
 function fillPostTemplate(post) {
     const instance = document.getElementById('postList-post');
-    const clone = instance.content.cloneNode(true);
+    const clone = window.cloneFromTemplate(instance);
     //Check if user voted this parent
     window.checkVoted_icons(clone, post.votedByUser);
     clone.querySelector('.post').setAttribute('data-postid', post.id);
@@ -632,7 +632,7 @@ function fillPostTemplate(post) {
 function fillCommentTemplate(comment, page) {
     return __awaiter(this, void 0, void 0, function* () {
         const instance = document.getElementById('comment_instance');
-        const clone = instance.content.cloneNode(true);
+        const clone = window.cloneFromTemplate(instance);
         //Check if user voted this parent
         window.checkVoted_icons(clone, comment.votedByUser);
         clone.querySelector('.comment').setAttribute('data-commentid', comment.id);
@@ -780,6 +780,9 @@ function getPathPart(index) {
         getval = getval.substring(0, getval.indexOf('/'));
     }
     return getval;
+}
+function cloneFromTemplate(instance) {
+    return instance.content.cloneNode(true);
 }
 /* OUTDATED. Check vote with request.
 async function checkVoted_IconStuff(clone, checkvotepayload) {
