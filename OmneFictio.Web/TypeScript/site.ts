@@ -3,10 +3,6 @@
 
 // Write your JavaScript code.
 
-interface String {
-    replaceAll(input: string, output : string): any;
-}
-
 document.addEventListener("DOMContentLoaded", function () {
     const dombody = document.getElementsByTagName("BODY")[0] as HTMLBodyElement;
     const modalbg1 = document.querySelector('.modalbg1') as HTMLDivElement;
@@ -148,7 +144,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json'
             },
-            body: stringifyFormData(loginModal)
+            body: strfForm(loginModal)
         })
             .then((res) => res.json())
             .then((data) => {
@@ -720,11 +716,17 @@ async function fillCommentTemplate(comment: any, page: string | null) {
 
 //UTILITY
 
-function stringifyFormData(form: HTMLFormElement): string {
+function strfForm(form: HTMLFormElement): string {
     const formData = new FormData(form);
-    var object: { [key: string]: string } = {};
+    const object = Object.fromEntries(formData);
+    console.log(JSON.stringify(object));
+    return JSON.stringify(object);
+}
+function strfForm2(form: HTMLFormElement): string {
+    const formData = new FormData(form);
+    let object: any = {};
     formData.forEach(function (value, key) {
-        object[key] = <string>value;
+        object[key] = value;
     });
     return JSON.stringify(object);
 }

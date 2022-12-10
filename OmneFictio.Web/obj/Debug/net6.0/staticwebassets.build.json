@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "W2NxfFwNR07B6eXH8iXNIP0hwHwedIP4B9DmYtcGWlA=",
+  "Hash": "yHdJ7L8JJkYEA1n4u1D5MLy4095UhPyD0jXNa8SRTC8=",
   "Source": "OmneFictio.Web",
   "BasePath": "_content/OmneFictio.Web",
   "Mode": "Default",
@@ -882,6 +882,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\read.js"
+    },
+    {
+      "Identity": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\wwwroot\\js\\register.js",
+      "SourceId": "OmneFictio.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\wwwroot\\",
+      "BasePath": "_content/OmneFictio.Web",
+      "RelativePath": "js/register.js",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\js\\register.js"
     },
     {
       "Identity": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\wwwroot\\js\\site.js",

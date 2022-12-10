@@ -70,10 +70,6 @@
 .register .register-main .rm-primary span {
   margin-top: 6px;
   text-align: center;
-  color: #b22525;
-}
-.register .register-main .rm-primary .rm-success {
-  color: #36914e !important;
 }
 .register .register-main .rm-registerwith {
   display: flex;

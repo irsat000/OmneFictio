@@ -67,7 +67,7 @@ public class AuthController : Controller
         }
         else
         {
-            return new JsonResult(BadRequest());
+            return new JsonResult(BadRequest()); //bad payload
         }
     }
 

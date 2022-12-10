@@ -1,17 +1,8 @@
 "use strict";
 // Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
-var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, generator) {
-    function adopt(value) { return value instanceof P ? value : new P(function (resolve) { resolve(value); }); }
-    return new (P || (P = Promise))(function (resolve, reject) {
-        function fulfilled(value) { try { step(generator.next(value)); } catch (e) { reject(e); } }
-        function rejected(value) { try { step(generator["throw"](value)); } catch (e) { reject(e); } }
-        function step(result) { result.done ? resolve(result.value) : adopt(result.value).then(fulfilled, rejected); }
-        step((generator = generator.apply(thisArg, _arguments || [])).next());
-    });
-};
+// Write your JavaScript code.
 document.addEventListener("DOMContentLoaded", function () {
-    var _a, _b, _c, _d, _e;
     const dombody = document.getElementsByTagName("BODY")[0];
     const modalbg1 = document.querySelector('.modalbg1');
     const drawer = document.getElementById('drawer');
@@ -34,7 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
         window.closeRepliesModal();
     };
     //Theme switch
-    (_a = document.getElementById("theme-check")) === null || _a === void 0 ? void 0 : _a.addEventListener("change", (e) => {
+    document.getElementById("theme-check")?.addEventListener("change", (e) => {
         const body = document.getElementsByTagName("body")[0];
         body.className = "";
         if (e.currentTarget.checked) {
@@ -45,7 +36,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
     //Top-right account dropdown menu
-    (_b = document.querySelector('.account_btn-cont')) === null || _b === void 0 ? void 0 : _b.addEventListener("click", function () {
+    document.querySelector('.account_btn-cont')?.addEventListener("click", function () {
         if (acDropdown.classList.contains('dflex')) {
             acDropdown.classList.remove('opacity1');
             setTimeout(function () {
@@ -62,7 +53,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //Drawer for mobile
     [document.querySelector('.drawerbtn-cont > i'),
         document.querySelector('.dw-close > i')].forEach(btn => {
-        btn === null || btn === void 0 ? void 0 : btn.addEventListener('click', function () {
+        btn?.addEventListener('click', function () {
             if (drawer.classList.contains('drawer-active')) {
                 drawer.classList.remove('drawer-active');
                 modalbg1.classList.remove('dblock');
@@ -96,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
     //Close login modal
-    (_c = document.querySelector('.lm-closebtn')) === null || _c === void 0 ? void 0 : _c.addEventListener('click', function () {
+    document.querySelector('.lm-closebtn')?.addEventListener('click', function () {
         if (loginModal.classList.contains('dflex')) {
             loginModal.classList.remove('dflex');
             loginModal.classList.remove('opacity1');
@@ -114,46 +105,44 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
     //Open replies modal
-    (_d = document.querySelector('.get_replies')) === null || _d === void 0 ? void 0 : _d.addEventListener('click', function (e) {
+    document.querySelector('.get_replies')?.addEventListener('click', function (e) {
         window.openRepliesModal(e.currentTarget);
     });
     //Open close modal
-    (_e = document.querySelector('.mr-close')) === null || _e === void 0 ? void 0 : _e.addEventListener('click', function () {
+    document.querySelector('.mr-close')?.addEventListener('click', function () {
         window.closeRepliesModal();
     });
     //login modal - fetch api
-    loginModal.addEventListener('submit', function (event) {
-        return __awaiter(this, void 0, void 0, function* () {
-            //disables redirection of form element
-            event.preventDefault();
-            //Get message elements
-            const message = loginModal.querySelector('#loginmodal-message');
-            const success = loginModal.querySelector('#loginmodal-success');
-            message.innerHTML = "";
-            //Request
-            yield fetch("/Auth/UserLogin", {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: stringifyFormData(loginModal)
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                console.log(data);
-                if (data.statusCode === 200) {
-                    success.innerHTML = "SUCCESS";
-                    setTimeout(function () {
-                        location.reload();
-                    }, 500);
-                }
-                else {
-                    message.innerHTML = "*Failed*";
-                }
-            })
-                .catch(error => console.log('Login function failed.', error));
-        });
+    loginModal.addEventListener('submit', async function (event) {
+        //disables redirection of form element
+        event.preventDefault();
+        //Get message elements
+        const message = loginModal.querySelector('#loginmodal-message');
+        const success = loginModal.querySelector('#loginmodal-success');
+        message.innerHTML = "";
+        //Request
+        await fetch("/Auth/UserLogin", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: strfForm(loginModal)
+        })
+            .then((res) => res.json())
+            .then((data) => {
+            console.log(data);
+            if (data.statusCode === 200) {
+                success.innerHTML = "SUCCESS";
+                setTimeout(function () {
+                    location.reload();
+                }, 500);
+            }
+            else {
+                message.innerHTML = "*Failed*";
+            }
+        })
+            .catch(error => console.log('Login function failed.', error));
     });
     //Vote - fetch api
     dombody.addEventListener('click', function (e) {
@@ -196,55 +185,53 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 });
 //--------COMMENT SECTION-------
-function AddComment(payload, commentSection) {
-    return __awaiter(this, void 0, void 0, function* () {
-        //Adds a new comment
-        yield fetch("/Action/AddComment", {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: payload
-        })
-            .then((res) => res.json())
-            .then((data) => __awaiter(this, void 0, void 0, function* () {
-            if (data.statusCode === 200) {
-                const comment = JSON.parse(data.value).returnComment;
-                const instance = document.getElementById('comment_instance');
-                const clone = window.cloneFromTemplate(instance);
-                clone.querySelector('.comment').setAttribute('data-commentid', comment.id);
-                clone.querySelector('.c-header > img').setAttribute('src', '/images/users/' + comment.account.profilePic);
-                if (comment.account.displayName != null) {
-                    clone.querySelector('.c-username').textContent = comment.account.displayName;
-                }
-                else {
-                    clone.querySelector('.c-username').textContent = comment.account.username;
-                }
-                clone.querySelector('.c-date').textContent = window.TimeAgo(comment.publishDate);
-                clone.querySelector('.c-text > span').textContent = comment.body;
-                if (comment.voteResult >= 0) {
-                    clone.querySelector('.c-likes').textContent = comment.voteResult;
-                }
-                if (comment.repliesLength === 0) {
-                    clone.querySelector('.get_replies').remove();
-                }
-                else {
-                    let repliesLengthText = " replies";
-                    if (comment.repliesLength === 1) {
-                        repliesLengthText = " reply";
-                    }
-                    clone.querySelector('.get_replies > span').textContent = comment.repliesLength + repliesLengthText;
-                }
-                clone.querySelector('.reply').remove();
-                //add comment to the comment section
-                commentSection.insertBefore(clone, commentSection.firstChild);
-                //clear commenting body
-                document.getElementById('commentBody').value = "";
+async function AddComment(payload, commentSection) {
+    //Adds a new comment
+    await fetch("/Action/AddComment", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: payload
+    })
+        .then((res) => res.json())
+        .then(async (data) => {
+        if (data.statusCode === 200) {
+            const comment = JSON.parse(data.value).returnComment;
+            const instance = document.getElementById('comment_instance');
+            const clone = window.cloneFromTemplate(instance);
+            clone.querySelector('.comment').setAttribute('data-commentid', comment.id);
+            clone.querySelector('.c-header > img').setAttribute('src', '/images/users/' + comment.account.profilePic);
+            if (comment.account.displayName != null) {
+                clone.querySelector('.c-username').textContent = comment.account.displayName;
             }
-        }))
-            .catch(error => { console.log('Fetch failed -> ' + error); });
-    });
+            else {
+                clone.querySelector('.c-username').textContent = comment.account.username;
+            }
+            clone.querySelector('.c-date').textContent = window.TimeAgo(comment.publishDate);
+            clone.querySelector('.c-text > span').textContent = comment.body;
+            if (comment.voteResult >= 0) {
+                clone.querySelector('.c-likes').textContent = comment.voteResult;
+            }
+            if (comment.repliesLength === 0) {
+                clone.querySelector('.get_replies').remove();
+            }
+            else {
+                let repliesLengthText = " replies";
+                if (comment.repliesLength === 1) {
+                    repliesLengthText = " reply";
+                }
+                clone.querySelector('.get_replies > span').textContent = comment.repliesLength + repliesLengthText;
+            }
+            clone.querySelector('.reply').remove();
+            //add comment to the comment section
+            commentSection.insertBefore(clone, commentSection.firstChild);
+            //clear commenting body
+            document.getElementById('commentBody').value = "";
+        }
+    })
+        .catch(error => { console.log('Fetch failed -> ' + error); });
 }
 function openRepliesModal(element) {
     const modalbg1 = document.querySelector('.modalbg1');
@@ -273,27 +260,25 @@ function closeRepliesModal() {
         repliesModal.querySelector('.mr-body').innerHTML = "";
     }
 }
-function fetchComments(type, parentid, section) {
-    return __awaiter(this, void 0, void 0, function* () {
-        yield fetch("/g/GetComments/" + type + "/" + parentid, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
+async function fetchComments(type, parentid, section) {
+    await fetch("/g/GetComments/" + type + "/" + parentid, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        }
+    })
+        .then((res) => res.json())
+        .then(async (data) => {
+        if (data.statusCode === 200) {
+            for (const comment of JSON.parse(data.value)) {
+                section.appendChild(await fillCommentTemplate(comment, null));
             }
-        })
-            .then((res) => res.json())
-            .then((data) => __awaiter(this, void 0, void 0, function* () {
-            if (data.statusCode === 200) {
-                for (const comment of JSON.parse(data.value)) {
-                    section.appendChild(yield fillCommentTemplate(comment, null));
-                }
-                ;
-            }
-        }))
-            .catch(error => {
-            console.log('Fetch failed -> ' + error);
-        });
+            ;
+        }
+    })
+        .catch(error => {
+        console.log('Fetch failed -> ' + error);
     });
 }
 function fetchHighlightedReply(commentId) {
@@ -315,100 +300,96 @@ function fetchHighlightedReply(commentId) {
     });
 }
 let frController;
-function fetchReplies(commentId, section) {
-    return __awaiter(this, void 0, void 0, function* () {
-        section.innerHTML = "";
-        //cancel pending request if there is one
-        if (frController) {
-            frController.abort();
-            frController = null;
-        }
-        //new controller for new request
-        frController = new AbortController();
-        fetch("/g/GetComment/" + commentId, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            signal: frController.signal
-        })
-            .then((res) => res.json())
-            .then((data) => __awaiter(this, void 0, void 0, function* () {
-            if (data.statusCode === 200) {
-                const comm = JSON.parse(data.value);
-                console.log(comm);
-                const commentInstance = document.getElementById('modalReplies-comment');
-                const replyInstance = document.getElementById('modalReplies-reply');
-                const commentClone = window.cloneFromTemplate(commentInstance);
-                //Check if user voted this parent
-                window.checkVoted_icons(commentClone, comm.votedByUser);
-                commentClone.querySelector('.mr-comment').setAttribute('data-commentid', comm.id);
-                commentClone.querySelector('.mrc-header > img').setAttribute('src', '/images/users/' + comm.account.profilePic);
-                if (comm.account.displayName != null) {
-                    commentClone.querySelector('.mrc-username').textContent = comm.account.displayName;
-                }
-                else {
-                    commentClone.querySelector('.mrc-username').textContent = comm.account.username;
-                }
-                commentClone.querySelector('.mrc-date').textContent = window.TimeAgo(comm.publishDate);
-                commentClone.querySelector('.mrc-text > span').textContent = comm.body;
-                if (comm.voteResult >= 0) {
-                    commentClone.querySelector('.mrc-likes').textContent = comm.voteResult;
-                }
-                section.appendChild(commentClone);
-                //if it has replies
-                if (comm.replies.length > 0) {
-                    for (const reply of comm.replies) {
-                        const replyClone = window.cloneFromTemplate(replyInstance);
-                        //Check if user voted this parent
-                        window.checkVoted_icons(replyClone, reply.votedByUser);
-                        replyClone.querySelector('.mr-reply').setAttribute('data-replyid', reply.id);
-                        replyClone.querySelector('.mrr-header > img').setAttribute('src', '/images/users/' + reply.account.profilePic);
-                        if (reply.account.displayName != null) {
-                            replyClone.querySelector('.mrr-username').textContent = reply.account.displayName;
-                        }
-                        else {
-                            replyClone.querySelector('.mrr-username').textContent = reply.account.username;
-                        }
-                        replyClone.querySelector('.mrr-date').textContent = window.TimeAgo(reply.publishDate);
-                        replyClone.querySelector('.mrr-text > span').textContent = reply.body;
-                        if (reply.voteResult >= 0) {
-                            replyClone.querySelector('.mrr-likes').textContent = reply.voteResult;
-                        }
-                        section.appendChild(replyClone);
+async function fetchReplies(commentId, section) {
+    section.innerHTML = "";
+    //cancel pending request if there is one
+    if (frController) {
+        frController.abort();
+        frController = null;
+    }
+    //new controller for new request
+    frController = new AbortController();
+    fetch("/g/GetComment/" + commentId, {
+        method: 'GET',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        signal: frController.signal
+    })
+        .then((res) => res.json())
+        .then(async (data) => {
+        if (data.statusCode === 200) {
+            const comm = JSON.parse(data.value);
+            console.log(comm);
+            const commentInstance = document.getElementById('modalReplies-comment');
+            const replyInstance = document.getElementById('modalReplies-reply');
+            const commentClone = window.cloneFromTemplate(commentInstance);
+            //Check if user voted this parent
+            window.checkVoted_icons(commentClone, comm.votedByUser);
+            commentClone.querySelector('.mr-comment').setAttribute('data-commentid', comm.id);
+            commentClone.querySelector('.mrc-header > img').setAttribute('src', '/images/users/' + comm.account.profilePic);
+            if (comm.account.displayName != null) {
+                commentClone.querySelector('.mrc-username').textContent = comm.account.displayName;
+            }
+            else {
+                commentClone.querySelector('.mrc-username').textContent = comm.account.username;
+            }
+            commentClone.querySelector('.mrc-date').textContent = window.TimeAgo(comm.publishDate);
+            commentClone.querySelector('.mrc-text > span').textContent = comm.body;
+            if (comm.voteResult >= 0) {
+                commentClone.querySelector('.mrc-likes').textContent = comm.voteResult;
+            }
+            section.appendChild(commentClone);
+            //if it has replies
+            if (comm.replies.length > 0) {
+                for (const reply of comm.replies) {
+                    const replyClone = window.cloneFromTemplate(replyInstance);
+                    //Check if user voted this parent
+                    window.checkVoted_icons(replyClone, reply.votedByUser);
+                    replyClone.querySelector('.mr-reply').setAttribute('data-replyid', reply.id);
+                    replyClone.querySelector('.mrr-header > img').setAttribute('src', '/images/users/' + reply.account.profilePic);
+                    if (reply.account.displayName != null) {
+                        replyClone.querySelector('.mrr-username').textContent = reply.account.displayName;
                     }
+                    else {
+                        replyClone.querySelector('.mrr-username').textContent = reply.account.username;
+                    }
+                    replyClone.querySelector('.mrr-date').textContent = window.TimeAgo(reply.publishDate);
+                    replyClone.querySelector('.mrr-text > span').textContent = reply.body;
+                    if (reply.voteResult >= 0) {
+                        replyClone.querySelector('.mrr-likes').textContent = reply.voteResult;
+                    }
+                    section.appendChild(replyClone);
                 }
             }
-        }))
-            .catch(error => {
-            console.log('Fetching reply method is at fault', error);
-        });
+        }
+    })
+        .catch(error => {
+        console.log('Fetching reply method is at fault', error);
     });
 }
 //--------COMMENT SECTION ENDS-------
-function VoteRequest(btn, data) {
-    return __awaiter(this, void 0, void 0, function* () {
-        var action = data.Body ? "like" : "dislike";
-        yield fetch("/Action/Vote", {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-            .then((res) => res.json())
-            .then((data) => {
-            if (data.statusCode === 200) {
-                voting_visual(btn, action);
-            }
-            else {
-                console.log("Vote error status -> " + data.statusCode);
-            }
-        })
-            .catch(error => console.log('Vote function failed.', error));
-    });
+async function VoteRequest(btn, data) {
+    var action = data.Body ? "like" : "dislike";
+    await fetch("/Action/Vote", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(data)
+    })
+        .then((res) => res.json())
+        .then((data) => {
+        if (data.statusCode === 200) {
+            voting_visual(btn, action);
+        }
+        else {
+            console.log("Vote error status -> " + data.statusCode);
+        }
+    })
+        .catch(error => console.log('Vote function failed.', error));
 }
 function voting_visual(btn, action) {
     let btnSibling = action === "like"
@@ -509,29 +490,27 @@ function checkVoted_icons(clone, val) {
     }
 }
 //google auth
-function googleHandleCredentialResponse(response) {
-    return __awaiter(this, void 0, void 0, function* () {
-        yield fetch("/Auth/GoogleSignin", {
-            method: 'POST',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({ token: response.credential })
-        })
-            .then((res) => res.json())
-            .then((data) => {
-            if (data.statusCode === 200) {
-                setTimeout(function () {
-                    window.location.href = "https://localhost:7067/";
-                }, 500);
-            }
-            else {
-                alert("Login failed");
-            }
-        })
-            .catch(error => console.log('External login failed.', error));
-    });
+async function googleHandleCredentialResponse(response) {
+    await fetch("/Auth/GoogleSignin", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ token: response.credential })
+    })
+        .then((res) => res.json())
+        .then((data) => {
+        if (data.statusCode === 200) {
+            setTimeout(function () {
+                window.location.href = "https://localhost:7067/";
+            }, 500);
+        }
+        else {
+            alert("Login failed");
+        }
+    })
+        .catch(error => console.log('External login failed.', error));
 }
 function createSkeletons(page) {
     const postSkelTemplate = document.getElementById("postSkeleton");
@@ -629,69 +608,73 @@ function fillPostTemplate(post) {
     clone.querySelector('.p-user > img').setAttribute('src', '/images/users/' + post.account.profilePic);
     return clone;
 }
-function fillCommentTemplate(comment, page) {
-    return __awaiter(this, void 0, void 0, function* () {
-        const instance = document.getElementById('comment_instance');
-        const clone = window.cloneFromTemplate(instance);
+async function fillCommentTemplate(comment, page) {
+    const instance = document.getElementById('comment_instance');
+    const clone = window.cloneFromTemplate(instance);
+    //Check if user voted this parent
+    window.checkVoted_icons(clone, comment.votedByUser);
+    clone.querySelector('.comment').setAttribute('data-commentid', comment.id);
+    clone.querySelector('.c-header > img').setAttribute('src', '/images/users/' + comment.account.profilePic);
+    if (comment.account.displayName != null) {
+        clone.querySelector('.c-username').textContent = comment.account.displayName;
+    }
+    else {
+        clone.querySelector('.c-username').textContent = comment.account.username;
+    }
+    clone.querySelector('.c-date').textContent = window.TimeAgo(comment.publishDate);
+    clone.querySelector('.c-text > span').textContent = comment.body;
+    if (comment.voteResult >= 0) {
+        clone.querySelector('.c-likes').textContent = comment.voteResult;
+    }
+    if (comment.repliesLength === 0) {
+        clone.querySelector('.get_replies').remove();
+    }
+    else {
+        let repliesLengthText = " replies";
+        if (comment.repliesLength === 1) {
+            repliesLengthText = " reply";
+        }
+        clone.querySelector('.get_replies > span').textContent = comment.repliesLength + repliesLengthText;
+    }
+    const hreply = await fetchHighlightedReply(comment.id);
+    if (hreply) {
         //Check if user voted this parent
-        window.checkVoted_icons(clone, comment.votedByUser);
-        clone.querySelector('.comment').setAttribute('data-commentid', comment.id);
-        clone.querySelector('.c-header > img').setAttribute('src', '/images/users/' + comment.account.profilePic);
-        if (comment.account.displayName != null) {
-            clone.querySelector('.c-username').textContent = comment.account.displayName;
+        window.checkVoted_icons(clone.querySelector('.reply'), hreply.votedByUser);
+        clone.querySelector('.reply').setAttribute('data-replyid', hreply.id);
+        clone.querySelector('.r-text > span').textContent = hreply.body;
+        if (hreply.voteResult >= 0) {
+            clone.querySelector('.r-likes').textContent = hreply.voteResult;
+        }
+        clone.querySelector('.r-user > img').setAttribute('src', '/images/users/' + hreply.account.profilePic);
+        if (hreply.account.displayName != null) {
+            clone.querySelector('.r-username').textContent = hreply.account.displayName;
         }
         else {
-            clone.querySelector('.c-username').textContent = comment.account.username;
+            clone.querySelector('.r-username').textContent = hreply.account.username;
         }
-        clone.querySelector('.c-date').textContent = window.TimeAgo(comment.publishDate);
-        clone.querySelector('.c-text > span').textContent = comment.body;
-        if (comment.voteResult >= 0) {
-            clone.querySelector('.c-likes').textContent = comment.voteResult;
-        }
-        if (comment.repliesLength === 0) {
-            clone.querySelector('.get_replies').remove();
-        }
-        else {
-            let repliesLengthText = " replies";
-            if (comment.repliesLength === 1) {
-                repliesLengthText = " reply";
-            }
-            clone.querySelector('.get_replies > span').textContent = comment.repliesLength + repliesLengthText;
-        }
-        const hreply = yield fetchHighlightedReply(comment.id);
-        if (hreply) {
-            //Check if user voted this parent
-            window.checkVoted_icons(clone.querySelector('.reply'), hreply.votedByUser);
-            clone.querySelector('.reply').setAttribute('data-replyid', hreply.id);
-            clone.querySelector('.r-text > span').textContent = hreply.body;
-            if (hreply.voteResult >= 0) {
-                clone.querySelector('.r-likes').textContent = hreply.voteResult;
-            }
-            clone.querySelector('.r-user > img').setAttribute('src', '/images/users/' + hreply.account.profilePic);
-            if (hreply.account.displayName != null) {
-                clone.querySelector('.r-username').textContent = hreply.account.displayName;
-            }
-            else {
-                clone.querySelector('.r-username').textContent = hreply.account.username;
-            }
-        }
-        else {
-            clone.querySelector('.reply').remove();
-        }
-        if (page === "profile") {
-            clone.querySelector('.c-replybtn').remove();
-            let linkToPost = document.createElement('a');
-            linkToPost.href = "/p/" + comment.targetPostId; //This is nullable but reviews are only post comments anyway
-            linkToPost.textContent = "Post";
-            clone.querySelector('.c-evaluation').appendChild(linkToPost);
-        }
-        return clone;
-    });
+    }
+    else {
+        clone.querySelector('.reply').remove();
+    }
+    if (page === "profile") {
+        clone.querySelector('.c-replybtn').remove();
+        let linkToPost = document.createElement('a');
+        linkToPost.href = "/p/" + comment.targetPostId; //This is nullable but reviews are only post comments anyway
+        linkToPost.textContent = "Post";
+        clone.querySelector('.c-evaluation').appendChild(linkToPost);
+    }
+    return clone;
 }
 //UTILITY
-function stringifyFormData(form) {
+function strfForm(form) {
     const formData = new FormData(form);
-    var object = {};
+    const object = Object.fromEntries(formData);
+    console.log(JSON.stringify(object));
+    return JSON.stringify(object);
+}
+function strfForm2(form) {
+    const formData = new FormData(form);
+    let object = {};
     formData.forEach(function (value, key) {
         object[key] = value;
     });
