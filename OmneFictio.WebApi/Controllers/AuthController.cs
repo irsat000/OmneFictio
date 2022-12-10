@@ -87,6 +87,7 @@ public class AuthController : ControllerBase
         newAccount.email = request.Email;
         newAccount.externalType = "native";
         newAccount.emailValid = false;
+        newAccount.profilePic = "/images/onerror/user_no_photo_300x300.png";
         if (request.AllowAdultContent != null)
         {
             newAccount.allowAdultContent = request.AllowAdultContent;

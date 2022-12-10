@@ -28,49 +28,55 @@ public class ActionController : Controller
     [HttpPost]
     public async Task<JsonResult> Vote([FromBody] VoteWrite1 request)
     {
-        if(AccountId == null){
+        if (AccountId == null)
+        {
             return new JsonResult(Unauthorized());
         }
         request.AccountId = AccountId;
-        
+
         var apiResponse = await _httpClient.PostAsJsonAsync("Action/Vote", request);
         string statusCode = apiResponse.StatusCode.ToString();
-        
-        if(statusCode != "OK"){
+
+        if (statusCode != "OK")
+        {
             return new JsonResult(BadRequest());
         }
         return new JsonResult(Ok());
     }
-    
+
     //rating the post
     [HttpPost]
     public async Task<JsonResult> RateThePost([FromBody] RateInfo request)
     {
-        if(AccountId == null){
+        if (AccountId == null)
+        {
             return new JsonResult(Unauthorized());
         }
         request.AccountId = AccountId;
 
         var apiResponse = await _httpClient.PostAsJsonAsync("Action/Rate", request);
         string statusCode = apiResponse.StatusCode.ToString();
-        
-        if(statusCode != "OK"){
+
+        if (statusCode != "OK")
+        {
             return new JsonResult(BadRequest());
         }
         return new JsonResult(Ok());
     }
-    
+
     [HttpPost]
     public async Task<JsonResult> AddComment([FromBody] CommentWrite1 request)
     {
-        if(AccountId == null){
+        if (AccountId == null)
+        {
             return new JsonResult(Unauthorized());
         }
         request.AccountId = AccountId;
 
         var apiResponse = await _httpClient.PostAsJsonAsync("Action/AddComment", request);
         string statusCode = apiResponse.StatusCode.ToString();
-        if(statusCode != "OK"){
+        if (statusCode != "OK")
+        {
             return new JsonResult(BadRequest());
         }
         string returnedContent = await apiResponse.Content.ReadAsStringAsync();
@@ -78,17 +84,27 @@ public class ActionController : Controller
     }
 
     [HttpPost]
-    public async Task<JsonResult> CreatePost([FromBody] PostWrite1 request){
-        if(AccountId == null){
+    public async Task<JsonResult> CreatePost([FromBody] PostWrite1 request)
+    {
+        if (AccountId == null)
+        {
             return new JsonResult(Unauthorized());
         }
         request.AccountId = AccountId;
+
+        request.PostTypeId = byte.TryParse((string)request.PostTypeId, out byte postTypeId)
+            ? postTypeId : 1;
+        request.LanguageId = int.TryParse((string)request.LanguageId, out int languageId)
+            ? languageId : 1;
+        request.RatedAsId = int.TryParse((string?)request.RatedAsId, out int ratedAsId)
+            ? ratedAsId : 1;
 
         var apiResponse = await _httpClient.PostAsJsonAsync("Action/CreatePost", request);
         string statusCode = apiResponse.StatusCode.ToString();
 
         //reminder: client side errors will be handled with js only
-        if(statusCode != "OK"){
+        if (statusCode != "OK")
+        {
             return new JsonResult(BadRequest());
         }
         return new JsonResult(Ok());

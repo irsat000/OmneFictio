@@ -14,8 +14,8 @@ public class AccountWrite1
     public string Username { get; set; } = null!;
     public string Pw { get; set; } = null!;
     public string Email { get; set; } = null!;
-    public bool? AllowAdultContent { get; set; }
-    public int? PrefLanguageId { get; set; }
+    public object? AllowAdultContent { get; set; } //bool
+    public object? PrefLanguageId { get; set; } //int
 }
 //Getting payload from registration form
 //sending payload to api
@@ -35,10 +35,10 @@ public class PostWrite1
 {
     public string Title { get; set; } = null!;
     public string PostDescription { get; set; } = null!;
-    public byte PostTypeId { get; set; }
-    public int LanguageId { get; set; }
+    public object PostTypeId { get; set; } = null!; //byte
+    public object LanguageId { get; set; } = null!; //int
     public int? AccountId { get; set; }
-    public int? RatedAsId { get; set; }
+    public object? RatedAsId { get; set; } //int?
     public string? CoverImage { get; set; }
     public List<int>? TagList { get; set; }
     public List<int>? SeriesList { get; set; }

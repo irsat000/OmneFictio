@@ -668,11 +668,14 @@ async function fillCommentTemplate(comment, page) {
 //UTILITY
 function strfForm(form) {
     const formData = new FormData(form);
-    const object = Object.fromEntries(formData);
-    console.log(JSON.stringify(object));
+    const object = Object.fromEntries(formData.entries());
     return JSON.stringify(object);
 }
-function strfForm2(form) {
+function strfForm2(formData) {
+    const object = Object.fromEntries(formData);
+    return JSON.stringify(object);
+}
+function strfForm3(form) {
     const formData = new FormData(form);
     let object = {};
     formData.forEach(function (value, key) {

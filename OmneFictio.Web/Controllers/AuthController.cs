@@ -47,6 +47,11 @@ public class AuthController : Controller
     [HttpPost]
     public async Task<JsonResult> UserRegistration([FromBody] AccountWrite1 account)
     {
+        account.AllowAdultContent = account.AllowAdultContent?.ToString() == "true"
+            ? true : false;
+        account.PrefLanguageId = int.TryParse((string?)account.PrefLanguageId, out int prefLan)
+            ? prefLan : 0; //or null
+
         var apiResponse = await _httpClient.PostAsJsonAsync("Auth/Register", account);
         string statusCode = apiResponse.StatusCode.ToString();
 
