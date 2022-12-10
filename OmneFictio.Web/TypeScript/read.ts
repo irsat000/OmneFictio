@@ -267,7 +267,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //adding tags to the filter modal
     filterTagList.querySelectorAll('li').forEach(li => {
         li.addEventListener('click', function () {
-            const tagname = li.getAttribute('data-tagddvalue')!;
+            const tagname = li.getAttribute('data-tagddvalue') as string;
             if (tagname === null) {
                 return;
             }
@@ -373,8 +373,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     filterSeriesList.querySelectorAll('li').forEach(li => {
         li.addEventListener('click', function () {
-            var name = li.getAttribute('data-seriesval')!;
-            var namedisplay = capitalizeFirstLetter(name.replaceAll('_', ' '));
+            const name = li.getAttribute('data-seriesval') as string;
+            const namedisplay = capitalizeFirstLetter(name.replaceAll('_', ' '));
 
             //delete if span-input already exist
             filterSeriesInclude.querySelector('span[data-fseries="' + name + '"]')?.remove();

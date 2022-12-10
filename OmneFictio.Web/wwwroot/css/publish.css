@@ -202,13 +202,8 @@
 .writing_form .wf-submit input:hover {
   background-color: rgb(22, 95, 29);
 }
-.writing_form .wf-errormessage, .writing_form .rf-errormessage {
+.writing_form .wf-message, .writing_form .rf-message {
   text-align: center;
-  color: #b22525;
-}
-.writing_form .wf-successmessage, .writing_form .rf-successmessage {
-  text-align: center;
-  color: #36914e;
 }
 
 .request_form {

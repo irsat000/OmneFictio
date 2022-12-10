@@ -343,8 +343,8 @@ document.addEventListener("DOMContentLoaded", function () {
     //fadds = fanfiction add series
     filterSeriesList.querySelectorAll('li').forEach(li => {
         li.addEventListener('click', function () {
-            var name = li.getAttribute('data-seriesval');
-            var namedisplay = capitalizeFirstLetter(name.replaceAll('_', ' '));
+            const name = li.getAttribute('data-seriesval');
+            const namedisplay = capitalizeFirstLetter(name.replaceAll('_', ' '));
             //delete if span-input already exist
             filterSeriesInclude.querySelector('span[data-fseries="' + name + '"]')?.remove();
             filterSeriesInclude.querySelector('input[value="' + name + '"]')?.remove();

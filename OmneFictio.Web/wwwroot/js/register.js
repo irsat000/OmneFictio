@@ -31,8 +31,6 @@ document.addEventListener("DOMContentLoaded", function () {
             message.innerHTML = "*Passwords don't match*";
             return;
         }
-        console.log(window.strfForm(register_form));
-        return; /**/
         //Request
         await fetch("/Auth/UserRegistration", {
             method: 'POST',
