@@ -1,7 +1,4 @@
 "use strict";
-// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
-// for details on configuring this project to bundle and minify static web assets.
-// Write your JavaScript code.
 document.addEventListener("DOMContentLoaded", function () {
     const dombody = document.getElementsByTagName("BODY")[0];
     const modalbg1 = document.querySelector('.modalbg1');
@@ -10,10 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const acDropdown = document.querySelector('.account-dropdown');
     const repliesModal = document.getElementById('modal-replies');
     modalbg1.addEventListener("click", function () {
-        modalbg1_click();
-    });
-    //close modals, dropdowns, drawer etc when user click on the dark background
-    const modalbg1_click = function () {
         if (drawer !== null && drawer.classList.contains('drawer-active')) {
             drawer.classList.remove('drawer-active');
             modalbg1.classList.remove('dblock');
@@ -23,8 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
             modalbg1.classList.remove('dblock');
         }
         window.closeRepliesModal();
-    };
-    //Theme switch
+    });
     document.getElementById("theme-check")?.addEventListener("change", (e) => {
         const body = document.getElementsByTagName("body")[0];
         body.className = "";
@@ -35,7 +27,6 @@ document.addEventListener("DOMContentLoaded", function () {
             body.classList.add("darkmode");
         }
     });
-    //Top-right account dropdown menu
     document.querySelector('.account_btn-cont')?.addEventListener("click", function () {
         if (acDropdown.classList.contains('dflex')) {
             acDropdown.classList.remove('opacity1');
@@ -50,10 +41,8 @@ document.addEventListener("DOMContentLoaded", function () {
             }, 100);
         }
     });
-    //Drawer for mobile
-    [document.querySelector('.drawerbtn-cont > i'),
-        document.querySelector('.dw-close > i')].forEach(btn => {
-        btn?.addEventListener('click', function () {
+    document.querySelectorAll('.drawerbtn-cont, .dw-close').forEach(btn => {
+        btn.addEventListener('click', function () {
             if (drawer.classList.contains('drawer-active')) {
                 drawer.classList.remove('drawer-active');
                 modalbg1.classList.remove('dblock');
@@ -64,7 +53,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
-    //Open login modal
     document.querySelectorAll('.login-openbtn').forEach(btn => {
         btn.addEventListener('click', function () {
             if (loginModal.classList.contains('dflex') === false) {
@@ -73,7 +61,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 setTimeout(function () {
                     loginModal.classList.add('opacity1');
                 }, 100);
-                //Close others after opening login modal
                 if (acDropdown.classList.contains('dflex')) {
                     acDropdown.classList.remove('opacity1');
                     setTimeout(function () {
@@ -86,7 +73,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
-    //Close login modal
     document.querySelector('.lm-closebtn')?.addEventListener('click', function () {
         if (loginModal.classList.contains('dflex')) {
             loginModal.classList.remove('dflex');
@@ -94,8 +80,7 @@ document.addEventListener("DOMContentLoaded", function () {
             modalbg1.classList.remove('dblock');
         }
     });
-    dombody.addEventListener("click", function (e) {
-        //Close dropdown of account container in header if clicked somewhere else
+    document.addEventListener("click", function (e) {
         if (acDropdown.classList.contains('dflex') &&
             e.target.closest('.account-cont') == null) {
             acDropdown.classList.remove('opacity1');
@@ -104,23 +89,17 @@ document.addEventListener("DOMContentLoaded", function () {
             }, 100);
         }
     });
-    //Open replies modal
     document.querySelector('.get_replies')?.addEventListener('click', function (e) {
         window.openRepliesModal(e.currentTarget);
     });
-    //Open close modal
     document.querySelector('.mr-close')?.addEventListener('click', function () {
         window.closeRepliesModal();
     });
-    //login modal - fetch api
     loginModal.addEventListener('submit', async function (event) {
-        //disables redirection of form element
         event.preventDefault();
-        //Get message elements
         const message = loginModal.querySelector('#loginmodal-message');
         const success = loginModal.querySelector('#loginmodal-success');
         message.innerHTML = "";
-        //Request
         await fetch("/Auth/UserLogin", {
             method: 'POST',
             headers: {
@@ -144,8 +123,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .catch(error => console.log('Login function failed.', error));
     });
-    //Vote - fetch api
-    dombody.addEventListener('click', function (e) {
+    document.addEventListener('click', function (e) {
         if (e.target.classList.contains('likebtn') ||
             e.target.classList.contains('dislikebtn')) {
             const btn = e.target;
@@ -184,9 +162,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
-//--------COMMENT SECTION-------
 async function AddComment(payload, commentSection) {
-    //Adds a new comment
     await fetch("/Action/AddComment", {
         method: 'POST',
         headers: {
@@ -225,9 +201,7 @@ async function AddComment(payload, commentSection) {
                 clone.querySelector('.get_replies > span').textContent = comment.repliesLength + repliesLengthText;
             }
             clone.querySelector('.reply').remove();
-            //add comment to the comment section
             commentSection.insertBefore(clone, commentSection.firstChild);
-            //clear commenting body
             document.getElementById('commentBody').value = "";
         }
     })
@@ -271,6 +245,7 @@ async function fetchComments(type, parentid, section) {
         .then((res) => res.json())
         .then(async (data) => {
         if (data.statusCode === 200) {
+            section.innerHTML = "";
             for (const comment of JSON.parse(data.value)) {
                 section.appendChild(await fillCommentTemplate(comment, null));
             }
@@ -302,12 +277,10 @@ function fetchHighlightedReply(commentId) {
 let frController;
 async function fetchReplies(commentId, section) {
     section.innerHTML = "";
-    //cancel pending request if there is one
     if (frController) {
         frController.abort();
         frController = null;
     }
-    //new controller for new request
     frController = new AbortController();
     fetch("/g/GetComment/" + commentId, {
         method: 'GET',
@@ -325,7 +298,6 @@ async function fetchReplies(commentId, section) {
             const commentInstance = document.getElementById('modalReplies-comment');
             const replyInstance = document.getElementById('modalReplies-reply');
             const commentClone = window.cloneFromTemplate(commentInstance);
-            //Check if user voted this parent
             window.checkVoted_icons(commentClone, comm.votedByUser);
             commentClone.querySelector('.mr-comment').setAttribute('data-commentid', comm.id);
             commentClone.querySelector('.mrc-header > img').setAttribute('src', '/images/users/' + comm.account.profilePic);
@@ -341,11 +313,9 @@ async function fetchReplies(commentId, section) {
                 commentClone.querySelector('.mrc-likes').textContent = comm.voteResult;
             }
             section.appendChild(commentClone);
-            //if it has replies
             if (comm.replies.length > 0) {
                 for (const reply of comm.replies) {
                     const replyClone = window.cloneFromTemplate(replyInstance);
-                    //Check if user voted this parent
                     window.checkVoted_icons(replyClone, reply.votedByUser);
                     replyClone.querySelector('.mr-reply').setAttribute('data-replyid', reply.id);
                     replyClone.querySelector('.mrr-header > img').setAttribute('src', '/images/users/' + reply.account.profilePic);
@@ -369,7 +339,6 @@ async function fetchReplies(commentId, section) {
         console.log('Fetching reply method is at fault', error);
     });
 }
-//--------COMMENT SECTION ENDS-------
 async function VoteRequest(btn, data) {
     var action = data.Body ? "like" : "dislike";
     await fetch("/Action/Vote", {
@@ -395,9 +364,7 @@ function voting_visual(btn, action) {
     let btnSibling = action === "like"
         ? btn.parentElement.querySelector('.dislikebtn')
         : btn.parentElement.querySelector('.likebtn');
-    //Increase/Decrease vote count
     const showVoteCount = btn.parentElement.querySelector('.vote_count');
-    //bv = base vote
     let bvInputVal = showVoteCount.textContent !== "--"
         ? parseInt(showVoteCount.textContent, 10)
         : null;
@@ -430,7 +397,6 @@ function voting_visual(btn, action) {
         }
         showVoteCount.textContent = bvInputVal.toString();
     }
-    //Vote
     if (btn.classList.contains("active")) {
         btn.classList.remove("active");
         if (action === "like") {
@@ -442,7 +408,6 @@ function voting_visual(btn, action) {
             btn.classList.add("bi-hand-thumbs-down");
         }
     }
-    //Take the vote back
     else {
         btn.classList.add("active");
         if (action === "like") {
@@ -454,10 +419,7 @@ function voting_visual(btn, action) {
             btn.classList.add("bi-hand-thumbs-down-fill");
         }
     }
-    //Voting again - Opposite vote
     if (btnSibling.classList.contains("active")) {
-        //removes the active status of old one
-        //doesn't add something to the current action btn
         btnSibling.classList.remove("active");
         if (btnSibling.classList.contains("dislikebtn")) {
             btnSibling.classList.remove("bi-hand-thumbs-down-fill");
@@ -489,7 +451,6 @@ function checkVoted_icons(clone, val) {
             break;
     }
 }
-//google auth
 async function googleHandleCredentialResponse(response) {
     await fetch("/Auth/GoogleSignin", {
         method: 'POST',
@@ -517,7 +478,6 @@ function createSkeletons(page) {
     const commentSkelTemplate = document.getElementById("commentSkeleton");
     switch (page) {
         case "read-posts":
-            //Creates post skeletons for read page
             const pl_column1 = document.getElementById('pl-column1');
             const pl_column2 = document.getElementById('pl-column2');
             for (let i = 0; i < 6; i++) {
@@ -527,7 +487,6 @@ function createSkeletons(page) {
             break;
         case "post-commentsection":
         case "chapter-commentsection":
-            //Creates comment skeletons for post or chapter's comment section
             const post_commentsection = document.getElementById("comment-section");
             for (let i = 0; i < 10; i++) {
                 const clone = window.cloneFromTemplate(commentSkelTemplate);
@@ -536,7 +495,6 @@ function createSkeletons(page) {
             break;
         case "profile-posts":
         case "profile-saved":
-            //Creates post skeletons for the user posts or saved posts in profile
             const profilebody_forpost = document.getElementById(page);
             for (let i = 0; i < 10; i++) {
                 const clone = window.cloneFromTemplate(postSkelTemplate);
@@ -544,7 +502,6 @@ function createSkeletons(page) {
             }
             break;
         case "profile-reviews":
-            //Creates review(comment to posts) skeletons in profile
             const profilebody_forreviews = document.getElementById(page);
             for (let i = 0; i < 10; i++) {
                 const clone = window.cloneFromTemplate(commentSkelTemplate);
@@ -558,7 +515,6 @@ function createSkeletons(page) {
 function fillPostTemplate(post) {
     const instance = document.getElementById('postList-post');
     const clone = window.cloneFromTemplate(instance);
-    //Check if user voted this parent
     window.checkVoted_icons(clone, post.votedByUser);
     clone.querySelector('.post').setAttribute('data-postid', post.id);
     clone.querySelector('.p-title > a').setAttribute('href', '/p/' + post.id);
@@ -584,21 +540,18 @@ function fillPostTemplate(post) {
     clone.querySelector('.pi-last_update').textContent = window.TimeAgo(post.updateDate, "short");
     const tagSection = clone.querySelector('.pi-tags');
     const basedOnSection = clone.querySelector('.pi-series');
-    //tag list
     if (post.tags.length > 0) {
         post.tags.forEach((tagname) => tagSection.innerHTML += "<span>" + tagname.body + "</span>");
     }
     else {
         tagSection.innerHTML = "<span>Empty</span>";
     }
-    //based on list
     if (post.existingStories.length > 0) {
         post.existingStories.forEach((storyname) => basedOnSection.innerHTML += "<span>" + storyname.body + "</span>");
     }
     else {
         basedOnSection.remove();
     }
-    //user
     if (post.account.displayName !== null) {
         clone.querySelector('.p-username').textContent = post.account.displayName;
     }
@@ -611,7 +564,6 @@ function fillPostTemplate(post) {
 async function fillCommentTemplate(comment, page) {
     const instance = document.getElementById('comment_instance');
     const clone = window.cloneFromTemplate(instance);
-    //Check if user voted this parent
     window.checkVoted_icons(clone, comment.votedByUser);
     clone.querySelector('.comment').setAttribute('data-commentid', comment.id);
     clone.querySelector('.c-header > img').setAttribute('src', '/images/users/' + comment.account.profilePic);
@@ -638,7 +590,6 @@ async function fillCommentTemplate(comment, page) {
     }
     const hreply = await fetchHighlightedReply(comment.id);
     if (hreply) {
-        //Check if user voted this parent
         window.checkVoted_icons(clone.querySelector('.reply'), hreply.votedByUser);
         clone.querySelector('.reply').setAttribute('data-replyid', hreply.id);
         clone.querySelector('.r-text > span').textContent = hreply.body;
@@ -659,13 +610,12 @@ async function fillCommentTemplate(comment, page) {
     if (page === "profile") {
         clone.querySelector('.c-replybtn').remove();
         let linkToPost = document.createElement('a');
-        linkToPost.href = "/p/" + comment.targetPostId; //This is nullable but reviews are only post comments anyway
+        linkToPost.href = "/p/" + comment.targetPostId;
         linkToPost.textContent = "Post";
         clone.querySelector('.c-evaluation').appendChild(linkToPost);
     }
     return clone;
 }
-//UTILITY
 function strfForm(form) {
     const formData = new FormData(form);
     const object = Object.fromEntries(formData.entries());
@@ -770,40 +720,3 @@ function getPathPart(index) {
 function cloneFromTemplate(instance) {
     return instance.content.cloneNode(true);
 }
-/* OUTDATED. Check vote with request.
-async function checkVoted_IconStuff(clone, checkvotepayload) {
-    await fetch("/g/CheckVoteByUser?" + checkvotepayload, {
-        method: 'GET',
-        headers: {
-            'Accept': 'application/json',
-            'Content-Type': 'application/json'
-        }
-    })
-        .then((res) => res.json())
-        .then((data) => {
-            const likebtn = clone.querySelector('[data-action="like"]');
-            const dislikebtn = clone.querySelector('[data-action="dislike"]');
-            likebtn.className = "";
-            dislikebtn.className = "";
-            if (data.statusCode === 200) {
-                switch (data.value) {
-                    case "true":
-                        likebtn.classList.add('likebtn', 'bi', 'bi-hand-thumbs-up-fill', 'active');
-                        dislikebtn.classList.add('dislikebtn', 'bi', 'bi-hand-thumbs-down');
-                        break;
-                    case "false":
-                        likebtn.classList.add('likebtn', 'bi', 'bi-hand-thumbs-up');
-                        dislikebtn.classList.add('dislikebtn', 'bi', 'bi-hand-thumbs-down-fill', 'active');
-                        break;
-                }
-            }
-            else {
-                likebtn.classList.add('likebtn', 'bi', 'bi-hand-thumbs-up');
-                dislikebtn.classList.add('dislikebtn', 'bi', 'bi-hand-thumbs-down');
-            }
-        })
-        .catch(error => {
-            console.log('vote check failed -> ' + error);
-        });
-}
-*/

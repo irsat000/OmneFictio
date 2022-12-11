@@ -10,7 +10,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const addseriesbtn = document.getElementById('wf-addseriesbtn');
     const chosenSeries = document.querySelector('.wf-fanfic_series');
     const seriesSearchbar = document.getElementById('wf-addseries-searchbar');
-    //swapping between request form and writing form
     const swapToWrite = document.getElementById('sf-swapToWriting');
     const swapToRequest = document.getElementById('sf-swapToRequest');
     swapToWrite.addEventListener('click', function () {
@@ -19,7 +18,6 @@ document.addEventListener("DOMContentLoaded", function () {
     swapToRequest.addEventListener('click', function () {
         swapForm('request');
     });
-    //---TAG AND SERIES OPTIONS----
     function closeTagAndSeriesDD() {
         if (tagmenu.classList.contains('dflex')) {
             tagmenu.classList.remove('dflex');
@@ -30,19 +28,15 @@ document.addEventListener("DOMContentLoaded", function () {
             modalbg2.classList.remove('dblock');
         }
     }
-    //Close modals on the page
-    [modalbg2, document.getElementById('wf-taggdd-close'),
-        document.getElementById('wf-addseries-close')].forEach(e => {
-        e?.addEventListener('click', () => closeTagAndSeriesDD());
+    [modalbg2, ...document.querySelectorAll('#wf-taggdd-close, #wf-addseries-close')].forEach(e => {
+        e.addEventListener('click', () => closeTagAndSeriesDD());
     });
-    //removing selected tags and series
     document.querySelector('.wf-post_details').addEventListener('click', (e) => {
         const target = e.target;
         if (target.classList.contains('wf-removespanbtn')) {
             target.parentElement.remove();
         }
     });
-    //activate/deactivate adding series option depending on post type
     const seriesbtndiv = document.querySelector('.wf-addseries');
     document.getElementById('wf-posttype')?.addEventListener('change', (e) => {
         if (e.currentTarget.selectedIndex === 3) {
@@ -54,31 +48,15 @@ document.addEventListener("DOMContentLoaded", function () {
             chosenSeries.style.display = 'none';
         }
     });
-    //-----TAG SELECTIONS------
-    //open/close 'add tag' modal
     addtagbtn.addEventListener('click', function () {
         tagmenu.classList.add('dflex');
         modalbg2.classList.add('dblock');
     });
-    //searchbar for tags
-    //Will be used vanilla instead
-    /*$("#wf-addtag-searchbar").keyup(function(){
-        var filter = $(this).val();
-        $("#wf-addtag-list > li").each(function () {
-            if ($(this).text().search(new RegExp(filter, "i")) < 0) {
-                $(this).hide();
-            } else {
-                $(this).show()
-            }
-        });
-    });*/
-    //adding tags
     document.getElementById('wf-addtag-list').addEventListener('click', (e) => {
         const target = e.target;
         if (target.parentElement.id = "wf-addtag-list") {
             const name = target.getAttribute('data-tagvalue');
             const id = target.getAttribute('data-id');
-            //delete if span already exist
             chosenTags.querySelector('span[data-id="' + id + '"]')?.remove();
             let newTagSpan = document.createElement("span");
             newTagSpan.classList.add('wf-taglist');
@@ -89,30 +67,15 @@ document.addEventListener("DOMContentLoaded", function () {
             closeTagAndSeriesDD();
         }
     });
-    //--------FANFICTION SERIES OPTIONS-----------
     addseriesbtn.addEventListener('click', function () {
         seriesmenu.classList.add('dflex');
         modalbg2.classList.add('dblock');
     });
-    //searchbar for choosing series
-    //Will be vanilla
-    /*$("#wf-addseries-searchbar").keyup(function(){
-        var filter = $(this).val();
-        $("#wf-addseries-list > li").each(function () {
-            if ($(this).text().search(new RegExp(filter, "i")) < 0) {
-                $(this).hide();
-            } else {
-                $(this).show()
-            }
-        });
-    });*/
-    //adding series to the filter modal / fanfiction
     document.getElementById('wf-addseries-list').addEventListener('click', (e) => {
         const target = e.target;
         if (target.parentElement.id = "wf-addseries-list") {
             const name = target.getAttribute('data-seriesval');
             const id = target.getAttribute('data-id');
-            //delete if span already exist
             chosenSeries.querySelector('span[data-id="' + id + '"]')?.remove();
             let newSeriesSpan = document.createElement("span");
             newSeriesSpan.classList.add('wf-serieslist');
@@ -123,25 +86,11 @@ document.addEventListener("DOMContentLoaded", function () {
             closeTagAndSeriesDD();
         }
     });
-    //create post form - fetch api
     createpost_form.addEventListener('submit', async function (event) {
-        //disables redirection of form element
         event.preventDefault();
-        //Get message elements
         let message = document.querySelector('.wf-message');
         message.innerHTML = "";
         message.style.color = "#b22525";
-        /*const payload = JSON.stringify(Object.fromEntries(new FormData(createpost_form)));
-        const payload = {
-            Title: 'Post title from fetch api',
-            PostDescription: 'Post description from fetch api',
-            PostTypeId: 3,
-            LanguageId: 1,
-            RatedAsId: 2,
-            CoverImage: null,
-            TagList: null
-        };*/
-        //Request
         let payload = Object.fromEntries(new FormData(createpost_form));
         let tagsList = [];
         Array.from(document.getElementsByClassName('wf-taglist')).forEach(tag => {

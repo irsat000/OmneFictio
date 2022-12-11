@@ -1,6 +1,5 @@
 "use strict";
 document.addEventListener("DOMContentLoaded", function () {
-    const dombody = document.getElementsByTagName("BODY")[0];
     const modalbg1 = document.querySelector('.modalbg1');
     const modalbg2 = document.querySelector('.modalbg2');
     const orderbyModal = document.getElementById('orderby-modal');
@@ -14,15 +13,12 @@ document.addEventListener("DOMContentLoaded", function () {
     const seriesSearchbar = document.getElementById('fadds-searchbar');
     const filterSeriesList = document.getElementById('fadds-list');
     const params = new URLSearchParams(window.location.search);
-    //Error message references
     const plwarning = document.getElementById('plwarning');
     const plw_message = plwarning.querySelector('.plwarning-message');
     const plw_img = plwarning.querySelector('.plwarning-img');
-    //-----fetch post START--------------
     window.createSkeletons("read-posts");
     fetchPosts();
     async function fetchPosts() {
-        //I use columns for masonry design.
         const pl_column1 = document.getElementById('pl-column1');
         const pl_column2 = document.getElementById('pl-column2');
         await fetch("/g/GetPosts?" + params, {
@@ -37,7 +33,6 @@ document.addEventListener("DOMContentLoaded", function () {
             pl_column1.innerHTML = "";
             pl_column2.innerHTML = "";
             if (data.statusCode === 200) {
-                //GET THE POSTS
                 const response = JSON.parse(data.value);
                 for (const post of response.posts) {
                     const clone = window.fillPostTemplate(post);
@@ -48,7 +43,6 @@ document.addEventListener("DOMContentLoaded", function () {
                         pl_column2.appendChild(clone);
                     }
                 }
-                //PAGINATION
                 const postShowroom = document.querySelector('.posts-cont');
                 createPaginationForPosts(postShowroom, response.pages);
             }
@@ -61,7 +55,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 plw_message.textContent = "Couldn't connect to servers.";
                 plw_img.setAttribute("src", "/images/onerror/connectionerror.png");
                 plwarning.style.display = "flex";
-                //Codes that will return an apology instead of post list
             }
         })
             .catch(error => {
@@ -70,14 +63,13 @@ document.addEventListener("DOMContentLoaded", function () {
             plw_message.textContent = "Please feedback, this was not supposed to happen.";
             plw_img.setAttribute("src", "/images/onerror/connectionerror.png");
             plwarning.style.display = "flex";
-            console.log('Fetch failed -> ' + error); //MUST NOT BE GIVEN TO USERS
+            console.log('Fetch failed -> ' + error);
         });
     }
     function createPaginationForPosts(appendLocation, pageCount) {
         const curpage = params.has('page')
             ? parseInt(params.get('page'), 10)
             : 1;
-        //PAGINATION
         const pagInstance = document.getElementById('paginationTemplate');
         const pagClone = window.cloneFromTemplate(pagInstance);
         const pagSelect = pagClone.querySelector('.page_select');
@@ -88,7 +80,6 @@ document.addEventListener("DOMContentLoaded", function () {
             pagSelect.appendChild(opt);
         }
         pagSelect.value = curpage.toString();
-        //----
         const params_pag = params;
         let newUrl = new URL(window.location.toString());
         let urlPath = newUrl.origin + newUrl.pathname;
@@ -126,24 +117,20 @@ document.addEventListener("DOMContentLoaded", function () {
             appendLocation.appendChild(pagClone);
         }
     }
-    //-------fetch post END----------------------
     modalbg1.addEventListener("click", function () {
         return modalbg1_click_readpage();
     });
     modalbg2.addEventListener("click", function () {
         return modalbg2_click_readpage();
     });
-    //Close second modals on the page
     document.getElementById('f-taggdd-close')?.addEventListener('click', function () {
         closeTagModal();
     });
     document.getElementById('fadds-close')?.addEventListener('click', function () {
         closeSeriesModal();
     });
-    //Open-close orderby modal
-    [document.getElementById('orderby-btn'),
-        document.getElementById('sb-close')].forEach(element => {
-        element?.addEventListener('click', function () {
+    document.querySelectorAll('#orderby-btn, #sb-close').forEach(element => {
+        element.addEventListener('click', function () {
             if (orderbyModal.classList.contains('dflex')) {
                 orderbyModal.classList.remove('dflex');
                 orderbyModal.classList.remove('opacity1');
@@ -158,10 +145,8 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
-    //Open-close filter modal
-    [document.getElementById('po-filter'),
-        document.getElementById('f-close')].forEach(element => {
-        element?.addEventListener('click', function () {
+    document.querySelectorAll('#po-filter, #f-close').forEach(element => {
+        element.addEventListener('click', function () {
             if (filterModal.classList.contains('dflex')) {
                 filterModal.classList.remove('dflex');
                 filterModal.classList.remove('opacity1');
@@ -176,7 +161,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
-    //----------Modals----------------------------------------
     function modalbg1_click_readpage() {
         if (orderbyModal.classList.contains('dflex')) {
             orderbyModal.classList.remove('dflex');
@@ -205,29 +189,20 @@ document.addEventListener("DOMContentLoaded", function () {
             modalbg2.classList.remove('dblock');
         }
     }
-    //Resets the filters
     filterModal.querySelector('#f-resetbtn')?.addEventListener('click', function () {
-        //tags
         ftagsIncExc.forEach(body => {
             body.innerHTML = "";
         });
-        //fanfiction series
         filterSeriesInclude.innerHTML = "";
-        //options
         filterModal.querySelectorAll(".f-options > select").forEach(select => {
             select.value = "0";
         });
-        //tag modal
         tagSearchbar.value = "";
-        //fanfiction modal
         seriesSearchbar.value = "";
         filterAddseriesModal.querySelectorAll(".fadds-dropdowns > select").forEach(select => {
             select.value = "0";
         });
     });
-    //-----TAG SELECTIONS------
-    //open tag include and exclude menus.
-    //closes modal if it's open
     document.getElementById('f-includetagbtn')?.addEventListener('click', function () {
         openFilterTagDD("include");
     });
@@ -244,7 +219,6 @@ document.addEventListener("DOMContentLoaded", function () {
             filterTagList.setAttribute('data-action', 'exclude');
         }
     }
-    //adding tags to the filter modal
     filterTagList.querySelectorAll('li').forEach(li => {
         li.addEventListener('click', function () {
             const tagname = li.getAttribute('data-tagddvalue');
@@ -279,7 +253,6 @@ document.addEventListener("DOMContentLoaded", function () {
             closeTagModal();
         });
     });
-    //Hides the tag X icon when clicked outside
     filterModal.addEventListener('click', function (e) {
         if (e.target.getAttribute('data-ftag') === null) {
             filterModal.querySelectorAll('.f-removetagbtn').forEach(btn => {
@@ -289,7 +262,6 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
     });
-    //this hides, shows X and removes the tag if clicked on the X
     filterModal.addEventListener('click', function (e) {
         const target = e.target;
         if (target.classList.contains('f-removetagbtn')) {
@@ -307,45 +279,14 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         }
     });
-    //searchbar that works with keyup. it's for finding the option more easily.
-    //WE WILL HAVE TO FIND VANILLA JS VERSION
-    /*
-    $("#tagdd-searchbar").keyup(function (bar: HTMLInputElement) {
-        var filter = $(this).val();
-        $("#f-tagdd-list > li").each(function () {
-            if ($(this).text().search(new RegExp(filter, "i")) < 0) {
-                $(this).hide();
-            } else {
-                $(this).show()
-            }
-        });
-    });
-    
-    $("#fadds-searchbar").keyup(function () {
-        var filter = $(this).val();
-        $("#fadds-list > li").each(function () {
-            if ($(this).text().search(new RegExp(filter, "i")) < 0) {
-                $(this).hide();
-            } else {
-                $(this).show()
-            }
-        });
-    });
-    */
-    //--------FANFICTION SERIES OPTIONS-----------
-    //choose series or add crossover menu for fanfictions
-    //closes modal if it's open
     document.getElementById('fanfic-chooseseries')?.addEventListener('click', function () {
         filterAddseriesModal.classList.add('dflex');
         modalbg2.classList.add('dblock');
     });
-    //adding series to the filter modal / fanfiction
-    //fadds = fanfiction add series
     filterSeriesList.querySelectorAll('li').forEach(li => {
         li.addEventListener('click', function () {
             const name = li.getAttribute('data-seriesval');
             const namedisplay = capitalizeFirstLetter(name.replaceAll('_', ' '));
-            //delete if span-input already exist
             filterSeriesInclude.querySelector('span[data-fseries="' + name + '"]')?.remove();
             filterSeriesInclude.querySelector('input[value="' + name + '"]')?.remove();
             const newSeriesSpan = document.createElement("span");
@@ -361,7 +302,6 @@ document.addEventListener("DOMContentLoaded", function () {
             closeSeriesModal();
         });
     });
-    //this is for removing series from filters
     filterSeriesInclude.addEventListener('click', function (e) {
         const target = e.target;
         if (target.classList.contains('f-removeseriesbtn')) {
@@ -370,5 +310,4 @@ document.addEventListener("DOMContentLoaded", function () {
             target.parentElement.remove();
         }
     });
-    //--------------------
 });

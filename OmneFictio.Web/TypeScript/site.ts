@@ -2,6 +2,7 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+//let modalbg1_click_site: () => void;
 
 document.addEventListener("DOMContentLoaded", function () {
     const dombody = document.getElementsByTagName("BODY")[0] as HTMLBodyElement;
@@ -11,12 +12,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const acDropdown = document.querySelector('.account-dropdown') as HTMLDivElement;
     const repliesModal = document.getElementById('modal-replies') as HTMLDivElement;
 
-    modalbg1.addEventListener("click", function () {
-        modalbg1_click();
-    });
     //close modals, dropdowns, drawer etc when user click on the dark background
-    const modalbg1_click = function () {
-
+    modalbg1.addEventListener("click", function () {
         if (drawer !== null && drawer.classList.contains('drawer-active')) {
             drawer.classList.remove('drawer-active');
             modalbg1.classList.remove('dblock');
@@ -25,9 +22,8 @@ document.addEventListener("DOMContentLoaded", function () {
             loginModal.classList.remove('dflex');
             modalbg1.classList.remove('dblock');
         }
-
         window.closeRepliesModal();
-    }
+    });
 
     //Theme switch
     document.getElementById("theme-check")?.addEventListener("change", (e) => {
@@ -58,9 +54,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     //Drawer for mobile
-    [document.querySelector('.drawerbtn-cont > i'),
-    document.querySelector('.dw-close > i')].forEach(btn => {
-        btn?.addEventListener('click', function (){
+    document.querySelectorAll('.drawerbtn-cont, .dw-close').forEach(btn => {
+        btn.addEventListener('click', function () {
             if (drawer.classList.contains('drawer-active')) {
                 drawer.classList.remove('drawer-active');
                 modalbg1.classList.remove('dblock');
@@ -74,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //Open login modal
     document.querySelectorAll('.login-openbtn').forEach(btn => {
-        btn.addEventListener('click', function(){
+        btn.addEventListener('click', function () {
             if (loginModal.classList.contains('dflex') === false) {
                 loginModal.classList.add('dflex');
                 modalbg1.classList.add('dblock');
@@ -95,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
     //Close login modal
-    document.querySelector('.lm-closebtn')?.addEventListener('click', function(){
+    document.querySelector('.lm-closebtn')?.addEventListener('click', function () {
         if (loginModal.classList.contains('dflex')) {
             loginModal.classList.remove('dflex');
             loginModal.classList.remove('opacity1');
@@ -103,7 +98,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    dombody.addEventListener("click", function (e) {
+    document.addEventListener("click", function (e) {
         //Close dropdown of account container in header if clicked somewhere else
         if (acDropdown.classList.contains('dflex') &&
             (<HTMLElement>e.target).closest('.account-cont') == null) {
@@ -164,7 +159,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     //Vote - fetch api
-    dombody.addEventListener('click', function (e) {
+    document.addEventListener('click', function (e) {
         if ((<HTMLElement>e.target).classList.contains('likebtn') ||
             (<HTMLElement>e.target).classList.contains('dislikebtn')) {
             const btn = e.target as HTMLElement;
@@ -191,7 +186,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 default:
                     return;
             }
-            if(targetIdValue !== null){
+            if (targetIdValue !== null) {
                 const targetId = parseInt(targetIdValue, 10);
                 let vote = false;
                 if (action === "like") { vote = true; }
@@ -294,6 +289,7 @@ async function fetchComments(type: string, parentid: string, section: HTMLElemen
         .then((res) => res.json())
         .then(async (data) => {
             if (data.statusCode === 200) {
+                section.innerHTML = "";
                 for (const comment of JSON.parse(data.value)) {
                     section.appendChild(await fillCommentTemplate(comment, null));
                 };
@@ -815,7 +811,7 @@ function getPathPart(index: number) {
     return getval;
 }
 
-function cloneFromTemplate(instance: HTMLTemplateElement){
+function cloneFromTemplate(instance: HTMLTemplateElement) {
     return instance.content.cloneNode(true) as HTMLElement;
 }
 

@@ -37,9 +37,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
     //Close modals on the page
-    [modalbg2, document.getElementById('wf-taggdd-close'),
-    document.getElementById('wf-addseries-close')].forEach(e => {
-        e?.addEventListener('click', () => closeTagAndSeriesDD());
+    [modalbg2, ...document.querySelectorAll('#wf-taggdd-close, #wf-addseries-close')].forEach(e => {
+        e.addEventListener('click', () => closeTagAndSeriesDD());
     });
     
     //removing selected tags and series

@@ -1,13 +1,9 @@
 "use strict";
 document.addEventListener("DOMContentLoaded", function () {
-    //register form - fetch api
     const register_form = document.getElementById('register-form');
     register_form.addEventListener('submit', async function (event) {
-        //disables redirection of form element
         event.preventDefault();
-        //Get message elements
         const message = document.getElementById('registerform-message');
-        //Input validation
         const usernameRegex = new RegExp("[A-Za-z0-9_]{3,30}");
         const username = document.getElementById("rm-username").value;
         const email = document.getElementById("rm-email").value;
@@ -31,7 +27,6 @@ document.addEventListener("DOMContentLoaded", function () {
             message.innerHTML = "*Passwords don't match*";
             return;
         }
-        //Request
         await fetch("/Auth/UserRegistration", {
             method: 'POST',
             headers: {
@@ -59,10 +54,6 @@ document.addEventListener("DOMContentLoaded", function () {
             else {
                 message.innerHTML = "Error";
             }
-            /*setTimeout(function() {
-                window.location.href = "https://localhost:7067/";
-                I will send the user to previous page if it's a success
-            }, 500);*/
         })
             .catch(error => console.log('Register function failed.', error));
     });

@@ -25,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     changeProfileTab(pTab);
     function changeProfileTab(tab) {
-        //Deactivates all tabs
         profileTabLinks.forEach(function (a) {
             if (a.classList.contains("active")) {
                 a.classList.remove("active");
@@ -36,10 +35,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 body.classList.remove("active");
             }
         });
-        //Activating new tab (Button only)
         document.querySelector('.profile-tabs-mobile a[data-tab="' + tab + '"]').classList.add('active');
         document.querySelector('.profile-tabs-desktop a[data-tab="' + tab + '"]').classList.add('active');
-        //Filling the tabs
         switch (tab) {
             case "posts":
                 profileBody_posts.classList.add("active");
@@ -84,7 +81,6 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(async (data) => {
             profileBody_posts.innerHTML = "";
             if (data.statusCode === 200) {
-                //GET THE POSTS
                 const response = JSON.parse(data.value);
                 for (const post of response.posts) {
                     const clone = window.fillPostTemplate(post);
@@ -100,7 +96,7 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .catch(error => {
             profileBody_posts.innerHTML = "Fetch fail";
-            console.log('Profile post fetch failed -> ' + error); //MUST NOT BE GIVEN TO USERS
+            console.log('Profile post fetch failed -> ' + error);
         });
     }
     async function createProfileBody_reviews() {
@@ -115,7 +111,6 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(async (data) => {
             profileBody_reviews.innerHTML = "";
             if (data.statusCode === 200) {
-                //GET THE COMMENTS
                 for (const comment of JSON.parse(data.value)) {
                     profileBody_reviews.appendChild(await fillCommentTemplate(comment, "profile"));
                 }
@@ -131,20 +126,4 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log('Fetch failed -> ' + error);
         });
     }
-    /*$(window).resize(function () {
-        if ($(window).width() > 991) {
-            //check if user clicked stats in mobile design and got back to desktop
-            //(desktop doesn't have stats button, stats are on the left)
-            const a = document.querySelector('.profile-tabs-mobile a[data-tab="stats"]');
-            if (a.classList.contains("active")) {
-                a.classList.remove("active");
-                document.querySelector('.profile-tabs-mobile a[data-tab="posts"]').classList.add('active');
-                document.querySelector('.profile-tabs-desktop a[data-tab="posts"]').classList.add('active');
-                changeProfileTab("posts");
-            }
-        }
-        else {
-
-        }
-    });*/
 });

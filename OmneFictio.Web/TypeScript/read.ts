@@ -1,6 +1,5 @@
 
 document.addEventListener("DOMContentLoaded", function () {
-    const dombody = document.getElementsByTagName("BODY")[0] as HTMLBodyElement;
     const modalbg1 = document.querySelector('.modalbg1') as HTMLDivElement;
     const modalbg2 = document.querySelector('.modalbg2') as HTMLDivElement;
 
@@ -152,9 +151,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     //Open-close orderby modal
-    [document.getElementById('orderby-btn'),
-    document.getElementById('sb-close')].forEach(element => {
-        element?.addEventListener('click', function () {
+    document.querySelectorAll('#orderby-btn, #sb-close').forEach(element => {
+        element.addEventListener('click', function () {
             if (orderbyModal.classList.contains('dflex')) {
                 orderbyModal.classList.remove('dflex');
                 orderbyModal.classList.remove('opacity1');
@@ -171,9 +169,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     //Open-close filter modal
-    [document.getElementById('po-filter'),
-    document.getElementById('f-close')].forEach(element => {
-        element?.addEventListener('click', function () {
+    document.querySelectorAll('#po-filter, #f-close').forEach(element => {
+        element.addEventListener('click', function () {
             if (filterModal.classList.contains('dflex')) {
                 filterModal.classList.remove('dflex');
                 filterModal.classList.remove('opacity1');
