@@ -244,8 +244,8 @@ async function fetchComments(type, parentid, section) {
     })
         .then((res) => res.json())
         .then(async (data) => {
+        section.innerHTML = "";
         if (data.statusCode === 200) {
-            section.innerHTML = "";
             for (const comment of JSON.parse(data.value)) {
                 section.appendChild(await fillCommentTemplate(comment, null));
             }
@@ -253,6 +253,7 @@ async function fetchComments(type, parentid, section) {
         }
     })
         .catch(error => {
+        section.innerHTML = "";
         console.log('Fetch failed -> ' + error);
     });
 }

@@ -288,14 +288,15 @@ async function fetchComments(type: string, parentid: string, section: HTMLElemen
     })
         .then((res) => res.json())
         .then(async (data) => {
+            section.innerHTML = "";
             if (data.statusCode === 200) {
-                section.innerHTML = "";
                 for (const comment of JSON.parse(data.value)) {
                     section.appendChild(await fillCommentTemplate(comment, null));
                 };
             }
         })
         .catch(error => {
+            section.innerHTML = "";
             console.log('Fetch failed -> ' + error);
         });
 }

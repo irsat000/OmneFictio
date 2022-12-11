@@ -25,7 +25,6 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     const postId = window.getPathPart(2);
     GetPost();
-    window.createSkeletons("post-commentsection");
     async function GetPost() {
         if (isNaN(Number(postId))) {
             return;
@@ -90,6 +89,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     seriesSection.remove();
                 }
                 document.getElementById('post-wrap').appendChild(clone);
+                window.createSkeletons("post-commentsection");
                 window.fetchComments("post", postId, commentSection);
                 document.getElementById('addCommentToPost').addEventListener('click', function () {
                     window.AddComment(JSON.stringify({
