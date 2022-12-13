@@ -35,6 +35,7 @@ namespace OmneFictio.WebApi.Entities
         public virtual DbSet<RatedA> RatedAs { get; set; } = null!;
         public virtual DbSet<Reply> Replies { get; set; } = null!;
         public virtual DbSet<Request> Requests { get; set; } = null!;
+        public virtual DbSet<SavedPost> SavedPosts { get; set; } = null!;
         public virtual DbSet<Tag> Tags { get; set; } = null!;
         public virtual DbSet<Vote> Votes { get; set; } = null!;
 
@@ -53,10 +54,11 @@ namespace OmneFictio.WebApi.Entities
             {
                 entity.ToTable("Account");
 
-                entity.HasIndex(e => e.username, "UQ__Account__F3DBC572E3DF65B8")
+                entity.HasIndex(e => e.username, "UQ_Account_username")
                     .IsUnique();
 
-                entity.Property(e => e.allowAdultContent).HasDefaultValueSql("((0))");
+                entity.HasIndex(e => e.username, "UQ__Account__F3DBC572E3DF65B8")
+                    .IsUnique();
 
                 entity.Property(e => e.deletedStatusId).HasDefaultValueSql("((1))");
 
@@ -103,12 +105,6 @@ namespace OmneFictio.WebApi.Entities
                     .HasForeignKey(d => d.deletedStatusId)
                     .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_AccountDeletedstatus");
-
-                entity.HasOne(d => d.prefLanguage)
-                    .WithMany(p => p.Accounts)
-                    .HasForeignKey(d => d.prefLanguageId)
-                    .OnDelete(DeleteBehavior.SetNull)
-                    .HasConstraintName("FK_UserLanguage");
 
                 entity.HasMany(d => d.authorities)
                     .WithMany(p => p.accounts)
@@ -527,6 +523,23 @@ namespace OmneFictio.WebApi.Entities
                     .HasForeignKey(d => d.deletedStatusId)
                     .OnDelete(DeleteBehavior.SetNull)
                     .HasConstraintName("FK_RequestDeletedstatus");
+            });
+
+            modelBuilder.Entity<SavedPost>(entity =>
+            {
+                entity.ToTable("SavedPost");
+
+                entity.HasOne(d => d.account)
+                    .WithMany(p => p.SavedPosts)
+                    .HasForeignKey(d => d.accountId)
+                    .OnDelete(DeleteBehavior.SetNull)
+                    .HasConstraintName("FK_SavedpostAccount");
+
+                entity.HasOne(d => d.targetPost)
+                    .WithMany(p => p.SavedPosts)
+                    .HasForeignKey(d => d.targetPostId)
+                    .OnDelete(DeleteBehavior.SetNull)
+                    .HasConstraintName("FK_SavedpostPost");
             });
 
             modelBuilder.Entity<Tag>(entity =>

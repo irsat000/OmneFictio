@@ -15,6 +15,7 @@ namespace OmneFictio.WebApi.Entities
             Rates = new HashSet<Rate>();
             Replies = new HashSet<Reply>();
             Requests = new HashSet<Request>();
+            SavedPosts = new HashSet<SavedPost>();
             Votes = new HashSet<Vote>();
             authorities = new HashSet<Authority>();
             inventoryItems = new HashSet<InventoryItem>();
@@ -33,11 +34,8 @@ namespace OmneFictio.WebApi.Entities
         public string? selfDesc { get; set; }
         public int? gold { get; set; }
         public byte? deletedStatusId { get; set; }
-        public int? prefLanguageId { get; set; }
-        public bool? allowAdultContent { get; set; }
 
         public virtual DeletedStatus? deletedStatus { get; set; }
-        public virtual Language? prefLanguage { get; set; }
         public virtual ICollection<ChatMessage> ChatMessageaccounts { get; set; }
         public virtual ICollection<ChatMessage> ChatMessagetargetAccounts { get; set; }
         public virtual ICollection<Comment> Comments { get; set; }
@@ -46,6 +44,7 @@ namespace OmneFictio.WebApi.Entities
         public virtual ICollection<Rate> Rates { get; set; }
         public virtual ICollection<Reply> Replies { get; set; }
         public virtual ICollection<Request> Requests { get; set; }
+        public virtual ICollection<SavedPost> SavedPosts { get; set; }
         public virtual ICollection<Vote> Votes { get; set; }
 
         public virtual ICollection<Authority> authorities { get; set; }

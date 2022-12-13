@@ -7,7 +7,6 @@ namespace OmneFictio.WebApi.Entities
     {
         public Language()
         {
-            Accounts = new HashSet<Account>();
             Posts = new HashSet<Post>();
         }
 
@@ -15,7 +14,6 @@ namespace OmneFictio.WebApi.Entities
         public string? lanCode { get; set; }
         public string body { get; set; } = null!;
 
-        public virtual ICollection<Account> Accounts { get; set; }
         public virtual ICollection<Post> Posts { get; set; }
     }
 }

@@ -11,6 +11,7 @@ namespace OmneFictio.WebApi.Entities
             Comments = new HashSet<Comment>();
             PostGifts = new HashSet<PostGift>();
             Rates = new HashSet<Rate>();
+            SavedPosts = new HashSet<SavedPost>();
             Votes = new HashSet<Vote>();
             existingStories = new HashSet<ExistingStory>();
             tags = new HashSet<Tag>();
@@ -40,6 +41,7 @@ namespace OmneFictio.WebApi.Entities
         public virtual ICollection<Comment> Comments { get; set; }
         public virtual ICollection<PostGift> PostGifts { get; set; }
         public virtual ICollection<Rate> Rates { get; set; }
+        public virtual ICollection<SavedPost> SavedPosts { get; set; }
         public virtual ICollection<Vote> Votes { get; set; }
 
         public virtual ICollection<ExistingStory> existingStories { get; set; }

@@ -87,7 +87,8 @@ public class AuthController : ControllerBase
         newAccount.email = request.Email;
         newAccount.externalType = "native";
         newAccount.emailValid = false;
-        newAccount.profilePic = "/images/onerror/user_no_photo_300x300.png";
+        newAccount.profilePic = "/images/onerror/user_no_photo.png";
+        /* WILL BE USED FOR Preferences TABLE
         if (request.AllowAdultContent != null)
         {
             newAccount.allowAdultContent = request.AllowAdultContent;
@@ -99,7 +100,7 @@ public class AuthController : ControllerBase
         if (await _db.Languages.AnyAsync(l => l.id == request.PrefLanguageId))
         {
             newAccount.prefLanguageId = request.PrefLanguageId;
-        }
+        }*/
         //Save user in the database
         try
         {
@@ -172,9 +173,9 @@ public class AuthController : ControllerBase
             newAccount.displayName = name;
             newAccount.pw = passwordHash;
             newAccount.externalType = "google";
-            newAccount.allowAdultContent = false;
-            newAccount.prefLanguageId = null;
             newAccount.emailValid = true;
+            //newAccount.allowAdultContent = false; will be in preferences table
+            //newAccount.prefLanguageId = null;
 
             try
             {
