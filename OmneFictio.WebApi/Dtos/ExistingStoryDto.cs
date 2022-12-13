@@ -3,6 +3,6 @@ namespace OmneFictio.WebApi.Dtos;
 
 public class ExistingStoryDto
 {
-    public string Body { get; set; } = null!;
-    public ExistingStoryTypeDto? StoryType { get; set; }
+    public string body { get; set; } = null!;
+    public ExistingStoryTypeDto? storyType { get; set; }
 }

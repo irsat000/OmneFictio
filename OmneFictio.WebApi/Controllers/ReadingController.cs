@@ -58,7 +58,7 @@ public class ReadingController : ControllerBase
         }
         if (chapter.post != null && chapter.post.chapters != null && chapter.post.chapters.Count() > 0)
         {
-            chapter.post.chapters = chapter.post.chapters.Where(c => c.IsPublished == true).ToList();
+            chapter.post.chapters = chapter.post.chapters.Where(c => c.isPublished == true).ToList();
         }
         //check vote by user
         if (userId != null)
@@ -67,7 +67,7 @@ public class ReadingController : ControllerBase
                 v.accountId == userId &&
                 v.targetChapterId == chapter.id);
             if (checkVoteByUser != null)
-                chapter.VotedByUser = checkVoteByUser.body;
+                chapter.votedByUser = checkVoteByUser.body;
         }
         return Ok(chapter);
     }
@@ -85,7 +85,7 @@ public class ReadingController : ControllerBase
         }
         if (post.chapters != null && post.chapters.Count() > 0)
         {
-            post.chapters = post.chapters.Where(c => c.IsPublished == true).ToList();
+            post.chapters = post.chapters.Where(c => c.isPublished == true).ToList();
         }
         //check vote by user
         if (userId != null)
@@ -94,7 +94,7 @@ public class ReadingController : ControllerBase
                 v.accountId == userId &&
                 v.targetPostId == post.id);
             if (checkVoteByUser != null)
-                post.VotedByUser = checkVoteByUser.body;
+                post.votedByUser = checkVoteByUser.body;
 
             Rate? checkRateByUser = await _db.Rates.FirstOrDefaultAsync(r =>
                 r.accountId == userId &&
@@ -124,7 +124,7 @@ public class ReadingController : ControllerBase
         //-----------
         //get page count
         int pageCount = (posts.Count() + ppp - 1) / ppp;
-        //limit to page
+        //post per page
         var posts_onepage = await _mapper.ProjectTo<PostDtoRead_1>(posts)
             .Skip(ppp * (page - 1))
             .Take(ppp)
@@ -175,8 +175,8 @@ public class ReadingController : ControllerBase
             r.commentId == commentid)).ToListAsync();
         //get highlighted
         ReplyDtoRead_2? hReply =
-                    replies.OrderByDescending(r => r.VoteResult)
-                        .ThenBy(r => r.PublishDate).FirstOrDefault();
+                    replies.OrderByDescending(r => r.voteResult)
+                        .ThenBy(r => r.publishDate).FirstOrDefault();
 
         if (hReply == null)
         {
@@ -187,9 +187,9 @@ public class ReadingController : ControllerBase
         {
             Vote? checkVoteByUser = await _db.Votes.SingleOrDefaultAsync(v =>
                 v.accountId == userId &&
-                v.targetReplyId == hReply.Id);
+                v.targetReplyId == hReply.id);
             if (checkVoteByUser != null)
-                hReply.VotedByUser = checkVoteByUser.body;
+                hReply.votedByUser = checkVoteByUser.body;
         }
         return Ok(hReply);
     }
@@ -204,7 +204,7 @@ public class ReadingController : ControllerBase
         {
             return NotFound();
         }
-        else if (comment.DeletedStatus!.Body != "Default")
+        else if (comment.DeletedStatus!.body != "Default")
         {
             return Unauthorized();
         }
@@ -214,8 +214,8 @@ public class ReadingController : ControllerBase
         }
         //filtering deleted replies
         comment.Replies = comment.Replies
-            .Where(r => r.DeletedStatus!.Body == "Default")
-            .OrderBy(r => r.PublishDate).ToList();
+            .Where(r => r.deletedStatus!.body == "Default")
+            .OrderBy(r => r.publishDate).ToList();
         //check vote by user
         if (userId != null)
         {
@@ -223,15 +223,15 @@ public class ReadingController : ControllerBase
                 v.accountId == userId &&
                 v.targetCommentId == comment.Id);
             if (checkVoteByUser_c != null)
-                comment.VotedByUser = checkVoteByUser_c.body;
+                comment.votedByUser = checkVoteByUser_c.body;
 
             foreach (var x in comment.Replies)
             {
                 Vote? checkVoteByUser_r = await _db.Votes.SingleOrDefaultAsync(v =>
                     v.accountId == userId &&
-                    v.targetReplyId == x.Id);
+                    v.targetReplyId == x.id);
                 if (checkVoteByUser_r != null)
-                    x.VotedByUser = checkVoteByUser_r.body;
+                    x.votedByUser = checkVoteByUser_r.body;
             }
         }
         return Ok(comment);

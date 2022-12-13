@@ -43,32 +43,32 @@ public class ActionController : ControllerBase
     {
         //checks if it's already voted
         Vote? checkVote = null;
-        switch (request.TargetType)
+        switch (request.targetType)
         {
             case "post":
-                checkVote = await _db.Votes.FirstOrDefaultAsync(x => x.accountId == request.AccountId &&
-                    x.targetPostId == request.TargetId); break;
+                checkVote = await _db.Votes.FirstOrDefaultAsync(x => x.accountId == request.accountId &&
+                    x.targetPostId == request.targetId); break;
             case "chapter":
-                checkVote = await _db.Votes.FirstOrDefaultAsync(x => x.accountId == request.AccountId &&
-                    x.targetChapterId == request.TargetId); break;
+                checkVote = await _db.Votes.FirstOrDefaultAsync(x => x.accountId == request.accountId &&
+                    x.targetChapterId == request.targetId); break;
             case "comment":
-                checkVote = await _db.Votes.FirstOrDefaultAsync(x => x.accountId == request.AccountId &&
-                    x.targetCommentId == request.TargetId); break;
+                checkVote = await _db.Votes.FirstOrDefaultAsync(x => x.accountId == request.accountId &&
+                    x.targetCommentId == request.targetId); break;
             case "reply":
-                checkVote = await _db.Votes.FirstOrDefaultAsync(x => x.accountId == request.AccountId &&
-                    x.targetReplyId == request.TargetId); break;
+                checkVote = await _db.Votes.FirstOrDefaultAsync(x => x.accountId == request.accountId &&
+                    x.targetReplyId == request.targetId); break;
             default:
                 return BadRequest();
         }
 
         //it's already voted and it's the opposite value
-        if (checkVote != null && checkVote.body != request.Body)
+        if (checkVote != null && checkVote.body != request.body)
         {
             _db.Votes.Remove(_db.Votes.SingleOrDefault(x => x.id == checkVote.id)!);
         }
         //if user clicks on the same button to take their vote back
         //else, votes the post normally
-        if (checkVote != null && checkVote.body == request.Body)
+        if (checkVote != null && checkVote.body == request.body)
         {
             _db.Votes.Remove(_db.Votes.SingleOrDefault(x => x.id == checkVote.id)!);
         }
@@ -76,16 +76,16 @@ public class ActionController : ControllerBase
         {
             Vote newVote = new Vote
             {
-                accountId = request.AccountId,
-                body = request.Body
+                accountId = request.accountId,
+                body = request.body
             };
 
-            switch (request.TargetType)
+            switch (request.targetType)
             {
-                case "post": newVote.targetPostId = request.TargetId; break;
-                case "chapter": newVote.targetChapterId = request.TargetId; break;
-                case "comment": newVote.targetCommentId = request.TargetId; break;
-                case "reply": newVote.targetReplyId = request.TargetId; break;
+                case "post": newVote.targetPostId = request.targetId; break;
+                case "chapter": newVote.targetChapterId = request.targetId; break;
+                case "comment": newVote.targetCommentId = request.targetId; break;
+                case "reply": newVote.targetReplyId = request.targetId; break;
             }
             await _db.Votes.AddAsync(newVote);
         }
@@ -104,27 +104,27 @@ public class ActionController : ControllerBase
     [HttpPost("Rate")]
     public async Task<IActionResult> Rate(RateInfo request)
     {
-        if (!(request.RateValue >= 0 && request.RateValue <= 10))
+        if (!(request.rateValue >= 0 && request.rateValue <= 10))
         {
             return BadRequest();
         }
         //check existing rate and replace if it exists
         Rate? rate = await _db.Rates.FirstOrDefaultAsync(x =>
-            x.accountId == request.AccountId &&
-            x.postId == request.PostId);
+            x.accountId == request.accountId &&
+            x.postId == request.postId);
         if (rate != null)
         {
             _db.Rates.Remove(_db.Rates.SingleOrDefault(x => x.id == rate.id)!);
         }
         
-        if (request.RateValue != 0)
+        if (request.rateValue != 0)
         {
             //create new rate
             rate = new Rate
             {
-                accountId = request.AccountId,
-                postId = request.PostId,
-                body = request.RateValue
+                accountId = request.accountId,
+                postId = request.postId,
+                body = request.rateValue
             };
             await _db.Rates.AddAsync(rate);
         }
@@ -144,24 +144,24 @@ public class ActionController : ControllerBase
     {
         Comment? newComment = new Comment
         {
-            accountId = request.AccountId,
+            accountId = request.accountId,
             deletedStatusId = 1,
             publishDate = DateTime.Now,
             updateDate = DateTime.Now
         };
 
-        if (request.TargetPostId != null && request.TargetPostId != 0)
-            newComment.targetPostId = request.TargetPostId;
-        else if (request.TargetChapterId != null && request.TargetChapterId != 0)
-            newComment.targetChapterId = request.TargetChapterId;
+        if (request.targetPostId != null && request.targetPostId != 0)
+            newComment.targetPostId = request.targetPostId;
+        else if (request.targetChapterId != null && request.targetChapterId != 0)
+            newComment.targetChapterId = request.targetChapterId;
         else
             return BadRequest();
 
-        if (request.Body != null &&
-            request.Body.Length > 0 &&
-            String.IsNullOrWhiteSpace(request.Body) == false)
+        if (request.body != null &&
+            request.body.Length > 0 &&
+            String.IsNullOrWhiteSpace(request.body) == false)
         {
-            newComment.body = request.Body;
+            newComment.body = request.body;
         }
 
         try
@@ -183,30 +183,30 @@ public class ActionController : ControllerBase
     [HttpPost("CreatePost")]
     public async Task<IActionResult> CreatePost(PostDtoWrite_1 request)
     {
-        if (request.Title == null ||
-            request.Title.Length > 250 || request.Title.Length == 0 ||
-            request.PostDescription == null ||
-            request.PostDescription.Length > 2000 || request.PostDescription.Length < 10)
+        if (request.title == null ||
+            request.title.Length > 250 || request.title.Length == 0 ||
+            request.postDescription == null ||
+            request.postDescription.Length > 2000 || request.postDescription.Length < 10)
         {
             return BadRequest();
         }
 
         Post newpost = new Post();
-        newpost.title = request.Title;
-        newpost.postDescription = request.PostDescription;
-        newpost.languageId = request.LanguageId;
-        newpost.accountId = request.AccountId;
-        newpost.postTypeId = request.PostTypeId;
-        newpost.ratedAsId = request.RatedAsId;
-        newpost.coverImage = request.CoverImage;
+        newpost.title = request.title;
+        newpost.postDescription = request.postDescription;
+        newpost.languageId = request.languageId;
+        newpost.accountId = request.accountId;
+        newpost.postTypeId = request.postTypeId;
+        newpost.ratedAsId = request.ratedAsId;
+        newpost.coverImage = request.coverImage;
         newpost.publishDate = DateTime.Now;
         newpost.updateDate = DateTime.Now;
         newpost.deletedStatusId = 1;
         newpost.postStatusId = 1;
         newpost.isPublished = true;
-        if (request.TagList != null)
+        if (request.tagList != null)
         {
-            foreach (int tagid in request.TagList)
+            foreach (int tagid in request.tagList)
             {
                 Tag? tag = await _db.Tags.FirstOrDefaultAsync(s => s.id == tagid);
                 if (tag != null)
@@ -215,9 +215,9 @@ public class ActionController : ControllerBase
                 }
             }
         }
-        if (request.PostTypeId == 3 && request.SeriesList != null)
+        if (request.postTypeId == 3 && request.seriesList != null)
         {
-            foreach (int seriesid in request.SeriesList)
+            foreach (int seriesid in request.seriesList)
             {
                 ExistingStory? series = await _db.ExistingStories.FirstOrDefaultAsync(s => s.id == seriesid);
                 if (series != null)
@@ -226,7 +226,7 @@ public class ActionController : ControllerBase
                 }
             }
         }
-        if (request.PostTypeId == 3 && newpost.existingStories.Count < 1)
+        if (request.postTypeId == 3 && newpost.existingStories.Count < 1)
         {
             return BadRequest(); //Fanfiction is chosen but there is no reference to stories
         }

@@ -2,6 +2,6 @@
 namespace OmneFictio.WebApi.Dtos;
 public partial class RateDto
 {
-    public double Body { get; set; }
+    public double body { get; set; }
 }
 

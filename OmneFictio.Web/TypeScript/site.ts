@@ -2,6 +2,76 @@
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
+
+class Posts_Read{
+    posts!: {
+        id: number;
+        title: string;
+        postDescription: string;
+        publishDate: Date;
+        updateDate: Date;
+        coverImage?: string;
+        account?: {
+            id: number;
+            username: string;
+            displayName?: string;
+            profilePic?: string;
+            selfDesc?: string;
+            deletedStatus?: {
+                body: string;
+            };
+            authorities?: {
+                body: string;
+            }[];
+        };
+        deletedStatus?: {
+            body: string;
+        };
+        language?: {
+            lanCode?: string;
+            body: string;
+        };
+        postStatus?: {
+            body: string;
+        };
+        postType?: {
+            body: string;
+        };
+        ratedAs?: {
+            body: string;
+        };
+        chapters?: {
+            id: number;
+            title: string;
+            chapterIndex: string;
+            isPublished: string;
+        }[];
+        postGifts?: {
+            sentDate: Date;
+            item: {
+                body: string;
+            };
+        }[];
+        tags: {
+            id: number;
+            body: string;
+        }[];
+        existingStories: {
+            body: string;
+            storyType: {
+                body: string;
+            }
+        }[];
+        voteResult: number;
+        rateResult: number;
+        comRepLength: number;
+        wordsLength: number;
+        votedByUser: boolean
+        RatedByUser: number;
+    };
+    pages!: number;
+};
+
 //let modalbg1_click_site: () => void;
 
 document.addEventListener("DOMContentLoaded", function () {

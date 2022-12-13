@@ -2,6 +2,6 @@
 namespace OmneFictio.WebApi.Dtos;
 public partial class PostGiftDto
 {
-    public DateTime SentDate { get; set; }
-    public InventoryItemDto? Item { get; set; }
+    public DateTime sentDate { get; set; }
+    public InventoryItemDto? item { get; set; }
 }

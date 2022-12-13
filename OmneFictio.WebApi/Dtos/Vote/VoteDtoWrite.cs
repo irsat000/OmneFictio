@@ -3,9 +3,9 @@ namespace OmneFictio.WebApi.Dtos;
 
 public partial class VoteDtoWrite_1
 {
-    public int? AccountId { get; set; }
-    public bool Body { get; set; }
-    public int? TargetId { get; set; }
-    public string? TargetType { get; set; }
+    public int? accountId { get; set; }
+    public bool body { get; set; }
+    public int? targetId { get; set; }
+    public string? targetType { get; set; }
 }
 //Voting

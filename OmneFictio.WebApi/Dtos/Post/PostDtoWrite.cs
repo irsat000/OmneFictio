@@ -3,15 +3,15 @@ namespace OmneFictio.WebApi.Dtos;
 
 public class PostDtoWrite_1
 {
-    public string Title { get; set; } = null!;
-    public string PostDescription { get; set; } = null!;
-    public byte? PostTypeId { get; set; }
-    public int? LanguageId { get; set; }
-    public int? AccountId { get; set; }
-    public int? RatedAsId { get; set; }
-    public string? CoverImage { get; set; }
-    public List<int>? TagList { get; set; }
-    public List<int>? SeriesList { get; set; }
+    public string title { get; set; } = null!;
+    public string postDescription { get; set; } = null!;
+    public byte? postTypeId { get; set; }
+    public int? languageId { get; set; }
+    public int? accountId { get; set; }
+    public int? ratedAsId { get; set; }
+    public string? coverImage { get; set; }
+    public List<int>? tagList { get; set; }
+    public List<int>? seriesList { get; set; }
 }
 //for creating the post
 //The model that comes from the controller

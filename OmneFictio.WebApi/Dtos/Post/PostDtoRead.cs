@@ -27,15 +27,15 @@ public class PostDtoRead_1
     public double rateResult { get; set; } = -1;
     public int comRepLength { get; set; } = 0;
     public int wordsLength { get; set; } = 0;
-    public bool? VotedByUser { get; set; } = null;
+    public bool? votedByUser { get; set; } = null;
     public double? RatedByUser { get; set; } = null;
     public PostDtoRead_1(ICollection<VoteDto>? votes, ICollection<RateDto>? rates)
     {
         if (votes != null && votes.Count > 0)
-            this.voteResult = votes.Count(l => l.Body) - votes.Count(d => !d.Body);
+            this.voteResult = votes.Count(l => l.body) - votes.Count(d => !d.body);
 
         if (rates != null && rates.Count > 0)
-            this.rateResult = System.Math.Round(rates.Average(r => r.Body), 1);
+            this.rateResult = System.Math.Round(rates.Average(r => r.body), 1);
     }
 }
 

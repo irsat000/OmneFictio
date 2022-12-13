@@ -2,17 +2,17 @@ namespace OmneFictio.WebApi.Models;
 
 public class CheckVoted
 {
-    public int AccountId { get; set; }
-    public int TargetId { get; set; }
-    public string? TargetType { get; set; }
+    public int accountId { get; set; }
+    public int targetId { get; set; }
+    public string? targetType { get; set; }
 }
 
 public class RateInfo : CheckRateInfo
 {
-    public int RateValue { get; set; }
+    public int rateValue { get; set; }
 }
 public class CheckRateInfo
 {
-    public int AccountId { get; set; }
-    public int PostId { get; set; }
+    public int accountId { get; set; }
+    public int postId { get; set; }
 }

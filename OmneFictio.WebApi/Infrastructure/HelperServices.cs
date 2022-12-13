@@ -33,7 +33,7 @@ public class HelperServices : IHelperServices
             //remove if the chapters are not published
             //Maybe I can fix this from the root later
             if (post.chapters != null && post.chapters.Count() > 0)
-                post.chapters = post.chapters.Where(c => c.IsPublished == true).ToList();
+                post.chapters = post.chapters.Where(c => c.isPublished == true).ToList();
 
             //Get comment and reply count
             var commentIds = _db.Comments
@@ -65,7 +65,7 @@ public class HelperServices : IHelperServices
                     v.accountId == userId &&
                     v.targetPostId == post.id);
                 if (checkVoteByUser != null)
-                    post.VotedByUser = checkVoteByUser.body;
+                    post.votedByUser = checkVoteByUser.body;
             }
         }
         return postList;
@@ -76,9 +76,9 @@ public class HelperServices : IHelperServices
         {
             Vote? checkVoteByUser = await _db.Votes.SingleOrDefaultAsync(v =>
                 v.accountId == userId &&
-                v.targetCommentId == x.Id);
+                v.targetCommentId == x.id);
             if (checkVoteByUser != null)
-                x.VotedByUser = checkVoteByUser.body;
+                x.votedByUser = checkVoteByUser.body;
         }
         return comments;
     }

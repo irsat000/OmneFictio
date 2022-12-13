@@ -2,6 +2,6 @@
 namespace OmneFictio.WebApi.Dtos;
 public partial class TagDto
 {
-    public int Id { get; set; }
-    public string Body { get; set; } = null!;
+    public int id { get; set; }
+    public string body { get; set; } = null!;
 }
