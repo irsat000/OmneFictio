@@ -1,4 +1,66 @@
 "use strict";
+class JustBody {
+    body;
+}
+class Tag {
+    id;
+    body;
+}
+class ExistingStories {
+    body;
+    storyType;
+}
+class Language {
+    lanCode;
+    body;
+}
+class PostGift {
+    sentDate;
+    item;
+}
+class Account {
+    id;
+    username;
+    displayName;
+    profilePic;
+    selfDesc;
+    deletedStatus;
+    authorities;
+}
+class Chapter {
+    id;
+    title;
+    chapterIndex;
+    isPublished;
+}
+class Post_1 {
+    id;
+    title;
+    postDescription;
+    publishDate;
+    updateDate;
+    coverImage;
+    account;
+    deletedStatus;
+    language;
+    postStatus;
+    postType;
+    ratedAs;
+    chapters;
+    postGifts;
+    tags;
+    existingStories;
+    voteResult;
+    rateResult;
+    comRepLength;
+    wordsLength;
+    votedByUser;
+    RatedByUser;
+}
+class Read_GetPosts {
+    posts;
+    pages;
+}
 document.addEventListener("DOMContentLoaded", function () {
     const dombody = document.getElementsByTagName("BODY")[0];
     const modalbg1 = document.querySelector('.modalbg1');
@@ -6,6 +68,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const loginModal = document.getElementById('login-modal');
     const acDropdown = document.querySelector('.account-dropdown');
     const repliesModal = document.getElementById('modal-replies');
+    document.addEventListener("click", function (e) {
+        if (acDropdown.classList.contains('dflex') &&
+            e.target.closest('.account-cont') == null) {
+            acDropdown.classList.remove('opacity1');
+            setTimeout(function () {
+                acDropdown.classList.remove('dflex');
+            }, 100);
+        }
+    });
     modalbg1.addEventListener("click", function () {
         if (drawer !== null && drawer.classList.contains('drawer-active')) {
             drawer.classList.remove('drawer-active');
@@ -79,18 +150,6 @@ document.addEventListener("DOMContentLoaded", function () {
             loginModal.classList.remove('opacity1');
             modalbg1.classList.remove('dblock');
         }
-    });
-    document.addEventListener("click", function (e) {
-        if (acDropdown.classList.contains('dflex') &&
-            e.target.closest('.account-cont') == null) {
-            acDropdown.classList.remove('opacity1');
-            setTimeout(function () {
-                acDropdown.classList.remove('dflex');
-            }, 100);
-        }
-    });
-    document.querySelector('.get_replies')?.addEventListener('click', function (e) {
-        window.openRepliesModal(e.currentTarget);
     });
     document.querySelector('.mr-close')?.addEventListener('click', function () {
         window.closeRepliesModal();
@@ -207,14 +266,12 @@ async function AddComment(payload, commentSection) {
     })
         .catch(error => { console.log('Fetch failed -> ' + error); });
 }
-function openRepliesModal(element) {
+function openRepliesModal(commentId) {
     const modalbg1 = document.querySelector('.modalbg1');
     const repliesModal = document.getElementById('modal-replies');
     if (document.getElementById('comment_instance') == null) {
         return;
     }
-    const commentId = element.closest('.comment')
-        .getAttribute('data-commentid');
     if (!repliesModal.classList.contains('dflex')) {
         repliesModal.classList.add('dflex');
         modalbg1.classList.add('dblock');
@@ -517,30 +574,50 @@ function fillPostTemplate(post) {
     const instance = document.getElementById('postList-post');
     const clone = window.cloneFromTemplate(instance);
     window.checkVoted_icons(clone, post.votedByUser);
-    clone.querySelector('.post').setAttribute('data-postid', post.id);
-    clone.querySelector('.p-title > a').setAttribute('href', '/p/' + post.id);
-    clone.querySelector('.p-title > a').textContent = post.title;
-    clone.querySelector('.p-date').textContent = window.TimeAgo(post.publishDate);
+    const container = clone.querySelector('.post');
+    const title = clone.querySelector('.p-title > a');
+    const publishDate = clone.querySelector('.p-date');
+    const coverImg = clone.querySelector('.p-cover > img');
+    const body = clone.querySelector('.p-body > span');
+    const voteCount = clone.querySelector('.vote_count');
+    const rate = clone.querySelector('.p-rate');
+    const username = clone.querySelector('.p-username');
+    const userImg = clone.querySelector('.p-user > img');
+    const type = clone.querySelector('.pi-type');
+    const language = clone.querySelector('.pi-language');
+    const status = clone.querySelector('.pi-status');
+    const readerRating = clone.querySelector('.pi-rating');
+    const tagSection = clone.querySelector('.pi-tags');
+    const seriesSection = clone.querySelector('.pi-series');
+    const chapterAmount = clone.querySelector('.pi-amount_of_chapters');
+    const wordAmount = clone.querySelector('.pi-amount_of_words');
+    const commentAmount = clone.querySelector('.pi-amount_of_comments');
+    const updateDate = clone.querySelector('.pi-last_update');
+    container.setAttribute('data-postid', post.id.toString());
+    title.href = '/p/' + post.id;
+    title.textContent = post.title;
+    publishDate.textContent = window.TimeAgo(post.publishDate);
+    body.textContent = post.postDescription;
     if (post.coverImage !== null) {
-        clone.querySelector('.p-cover > img').setAttribute('src', '/images/covers/' + post.coverImage);
+        coverImg.src = '/images/covers/' + post.coverImage;
     }
-    clone.querySelector('.p-body > span').textContent = post.postDescription;
+    else {
+        coverImg.parentElement.remove();
+    }
     if (post.voteResult >= 0) {
-        clone.querySelector('.vote_count').textContent = post.voteResult;
+        voteCount.textContent = post.voteResult.toString();
     }
-    clone.querySelector('.p-rate').textContent = post.rateResult >= 0 && post.rateResult <= 10
+    rate.textContent = post.rateResult >= 0 && post.rateResult <= 10
         ? Number((post.rateResult).toFixed(1)) + "/10"
         : "-/10";
-    clone.querySelector('.pi-type').textContent = post.postType.body;
-    clone.querySelector('.pi-language').textContent = post.language.body;
-    clone.querySelector('.pi-status').textContent = post.postStatus.body;
-    clone.querySelector('.pi-rating').textContent = post.ratedAs.body;
-    clone.querySelector('.pi-amount_of_chapters').textContent = post.chapters.length;
-    clone.querySelector('.pi-amount_of_words').textContent = post.wordsLength;
-    clone.querySelector('.pi-amount_of_comments').textContent = post.comRepLength;
-    clone.querySelector('.pi-last_update').textContent = window.TimeAgo(post.updateDate, "short");
-    const tagSection = clone.querySelector('.pi-tags');
-    const basedOnSection = clone.querySelector('.pi-series');
+    type.textContent = post.postType.body;
+    language.textContent = post.language.body;
+    status.textContent = post.postStatus.body;
+    readerRating.textContent = post.ratedAs.body;
+    chapterAmount.textContent = post.chapters.length.toString();
+    wordAmount.textContent = post.wordsLength.toString();
+    commentAmount.textContent = post.comRepLength.toString();
+    updateDate.textContent = window.TimeAgo(post.updateDate, "short");
     if (post.tags.length > 0) {
         post.tags.forEach((tagname) => tagSection.innerHTML += "<span>" + tagname.body + "</span>");
     }
@@ -548,18 +625,20 @@ function fillPostTemplate(post) {
         tagSection.innerHTML = "<span>Empty</span>";
     }
     if (post.existingStories.length > 0) {
-        post.existingStories.forEach((storyname) => basedOnSection.innerHTML += "<span>" + storyname.body + "</span>");
+        post.existingStories.forEach((storyname) => seriesSection.innerHTML += "<span>" + storyname.body + "</span>");
     }
     else {
-        basedOnSection.remove();
+        seriesSection.remove();
     }
-    if (post.account.displayName !== null) {
-        clone.querySelector('.p-username').textContent = post.account.displayName;
+    username.textContent = post.account.displayName !== null
+        ? post.account.displayName
+        : post.account.username;
+    if (post.account.profilePic !== null) {
+        userImg.src = '/images/users/' + post.account.profilePic;
     }
     else {
-        clone.querySelector('.p-username').textContent = post.account.username;
+        userImg.remove();
     }
-    clone.querySelector('.p-user > img').setAttribute('src', '/images/users/' + post.account.profilePic);
     return clone;
 }
 async function fillCommentTemplate(comment, page) {
@@ -588,6 +667,9 @@ async function fillCommentTemplate(comment, page) {
             repliesLengthText = " reply";
         }
         clone.querySelector('.get_replies > span').textContent = comment.repliesLength + repliesLengthText;
+        clone.querySelector('.get_replies').addEventListener('click', function (e) {
+            window.openRepliesModal(comment.id.toString());
+        });
     }
     const hreply = await fetchHighlightedReply(comment.id);
     if (hreply) {

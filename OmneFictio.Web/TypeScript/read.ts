@@ -39,12 +39,12 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         })
             .then((res) => res.json())
-            .then(async (data) => {
+            .then(async (data: any) => {
                 pl_column1.innerHTML = "";
                 pl_column2.innerHTML = "";
                 if (data.statusCode === 200) {
                     //GET THE POSTS
-                    const response = JSON.parse(data.value);
+                    const response = JSON.parse(data.value) as Read_GetPosts;
                     for (const post of response.posts) {
                         const clone = window.fillPostTemplate(post);
                         if (pl_column1.offsetHeight <= pl_column2.offsetHeight) {

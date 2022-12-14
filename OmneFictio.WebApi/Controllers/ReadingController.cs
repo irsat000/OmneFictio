@@ -100,7 +100,7 @@ public class ReadingController : ControllerBase
                 r.accountId == userId &&
                 r.postId == post.id);
             if (checkRateByUser != null)
-                post.RatedByUser = System.Math.Round(checkRateByUser.body, 1);
+                post.ratedByUser = System.Math.Round(checkRateByUser.body, 1);
         }
         return Ok(post);
     }
