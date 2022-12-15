@@ -18,14 +18,16 @@
     <div class="profile-details">
         <div class="pr-header">
             <div class="pr-img_cont">
-                <img src="/images/users/user_no_photo.png" alt="" onerror="this.onerror=null; this.closest('.pr-img_cont').remove()">
+                <img src="/images/users/user_no_photo.png" alt=""
+                    onerror="this.onerror=null; this.closest('.pr-img_cont').remove()">
             </div>
             <div class="pr-name">
                 <span class="pr-username">(mrathletic)</span>
                 <span class="pr-displayname">MrBombastic</span>
             </div>
         </div>
-        <span class="pr-bio">This is my bio. Lalala, no one can change this lalala, camon lazy irşat come here and change this shit when you are ready. When is that? Probably next year!</span>
+        <span class="pr-bio">This is my bio. Lalala, no one can change this lalala, camon lazy irşat come here and
+            change this shit when you are ready. When is that? Probably next year!</span>
         <div class="pr-properties">
             <span class="pr-nsfw_warning">NSFW <i class="bi bi-exclamation-circle"></i></span>
             <span class="pr-moderator">Moderator <i class="bi bi-shield"></i></span>
@@ -88,16 +90,55 @@
 
             </div>
             <div id="profile-reviews">
-                
+
             </div>
             <div id="profile-saved">
-                
+
             </div>
             <div id="profile-followed">
-                
+
             </div>
             <div id="profile-friends">
-                
+                <div class="s-friends">
+                    <div class="sf-header">
+                        <div class="searchF-wrap">
+                            <i class="bi bi-search"></i>
+                            <input type="text" placeholder="Search friend" class="searchF">
+                        </div>
+                        <button class="addfriend">
+                            Friend <i class="bi bi-plus"></i>
+                        </button>
+                    </div>
+                    <div class="sf-list">
+                        @{
+                            char[] chars = {'a','b','c','d','f','g','h','i','j','k'};
+                            Random random = new Random();
+                            string name = "";
+                            int x = 0;
+                            int y = 0;
+                            int z = random.Next(10, 30);
+                        }
+                        @for(int i = 0; i < z; i++){
+                            name = "";
+                            y = random.Next(5, 15);
+                            @for(int f = 0; f < y; f++){
+                                x = random.Next(0,10);
+                                name += chars[x];
+                            }
+                            <div class="sf-usercont">
+                                <div class="userpic">
+                                    <img src="/images/users/user_no_photo.png">
+                                </div>
+                                <div class="username">
+                                    <a href="#">@name</a>
+                                </div>
+                                <div class="usermenubtn">
+                                    <i class="bi bi-caret-down-fill"></i>
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -18,7 +18,7 @@ class PostGift {
     sentDate;
     item;
 }
-class Account {
+class ofAccount {
     id;
     username;
     displayName;
@@ -27,13 +27,13 @@ class Account {
     deletedStatus;
     authorities;
 }
-class Chapter {
+class ofChapter {
     id;
     title;
     chapterIndex;
     isPublished;
 }
-class Post_1 {
+class ofPost_1 {
     id;
     title;
     postDescription;
@@ -57,7 +57,28 @@ class Post_1 {
     votedByUser;
     RatedByUser;
 }
-class Read_GetPosts {
+class ofComment_1 {
+    id;
+    body;
+    publishDate;
+    updateDate;
+    account;
+    targetPostId;
+    deletedStatus;
+    repliesLength;
+    voteResult;
+    votedByUser;
+}
+class ofReply_1 {
+    id;
+    body;
+    publishDate;
+    updateDate;
+    account;
+    voteResult;
+    votedByUser;
+}
+class ofRead_GetPosts {
     posts;
     pages;
 }
@@ -630,13 +651,19 @@ function fillPostTemplate(post) {
     else {
         seriesSection.remove();
     }
-    username.textContent = post.account.displayName !== null
-        ? post.account.displayName
-        : post.account.username;
-    if (post.account.profilePic !== null) {
-        userImg.src = '/images/users/' + post.account.profilePic;
+    if (post.account !== undefined) {
+        username.textContent = post.account.displayName !== undefined
+            ? post.account.displayName
+            : post.account.username;
+        if (post.account.profilePic !== undefined) {
+            userImg.src = '/images/users/' + post.account.profilePic;
+        }
+        else {
+            userImg.remove();
+        }
     }
     else {
+        username.textContent = "[Deleted]";
         userImg.remove();
     }
     return clone;
@@ -645,57 +672,63 @@ async function fillCommentTemplate(comment, page) {
     const instance = document.getElementById('comment_instance');
     const clone = window.cloneFromTemplate(instance);
     window.checkVoted_icons(clone, comment.votedByUser);
-    clone.querySelector('.comment').setAttribute('data-commentid', comment.id);
-    clone.querySelector('.c-header > img').setAttribute('src', '/images/users/' + comment.account.profilePic);
-    if (comment.account.displayName != null) {
-        clone.querySelector('.c-username').textContent = comment.account.displayName;
-    }
-    else {
-        clone.querySelector('.c-username').textContent = comment.account.username;
-    }
-    clone.querySelector('.c-date').textContent = window.TimeAgo(comment.publishDate);
-    clone.querySelector('.c-text > span').textContent = comment.body;
+    const cContainer = clone.querySelector('.comment');
+    const cUserImg = clone.querySelector('.c-header > img');
+    const cUsername = clone.querySelector('.c-username');
+    const cPublishDate = clone.querySelector('.c-date');
+    const cBody = clone.querySelector('.c-text > span');
+    const cEvaluation = clone.querySelector('.c-evaluation');
+    const cVoteCount = clone.querySelector('.c-likes');
+    const cGetRepliesBtn = clone.querySelector('.get_replies');
+    const cReplyBtn = clone.querySelector('.c-replybtn');
+    const rContainer = clone.querySelector('.reply');
+    const rBody = clone.querySelector('.r-text > span');
+    const rVoteCount = clone.querySelector('.r-likes');
+    const rUserImg = clone.querySelector('.r-user > img');
+    const rUsername = clone.querySelector('.r-username');
+    cContainer.setAttribute('data-commentid', comment.id.toString());
+    cUserImg.src = '/images/users/' + comment.account.profilePic;
+    cUsername.textContent = comment.account.displayName !== undefined
+        ? comment.account.displayName
+        : comment.account.username;
+    cPublishDate.textContent = window.TimeAgo(comment.publishDate);
+    cBody.textContent = comment.body;
     if (comment.voteResult >= 0) {
-        clone.querySelector('.c-likes').textContent = comment.voteResult;
+        cVoteCount.textContent = comment.voteResult.toString();
     }
     if (comment.repliesLength === 0) {
-        clone.querySelector('.get_replies').remove();
+        cGetRepliesBtn.remove();
     }
     else {
         let repliesLengthText = " replies";
         if (comment.repliesLength === 1) {
             repliesLengthText = " reply";
         }
-        clone.querySelector('.get_replies > span').textContent = comment.repliesLength + repliesLengthText;
-        clone.querySelector('.get_replies').addEventListener('click', function (e) {
-            window.openRepliesModal(comment.id.toString());
-        });
+        cGetRepliesBtn.firstChild.textContent = comment.repliesLength + repliesLengthText;
+        cGetRepliesBtn.addEventListener('click', () => window.openRepliesModal(comment.id.toString()));
     }
-    const hreply = await fetchHighlightedReply(comment.id);
+    const hreply = await fetchHighlightedReply(comment.id.toString());
     if (hreply) {
-        window.checkVoted_icons(clone.querySelector('.reply'), hreply.votedByUser);
-        clone.querySelector('.reply').setAttribute('data-replyid', hreply.id);
-        clone.querySelector('.r-text > span').textContent = hreply.body;
+        window.checkVoted_icons(rContainer, hreply.votedByUser);
+        rContainer.setAttribute('data-replyid', hreply.id.toString());
+        rBody.textContent = hreply.body;
         if (hreply.voteResult >= 0) {
-            clone.querySelector('.r-likes').textContent = hreply.voteResult;
+            rVoteCount.textContent = hreply.voteResult.toString();
         }
-        clone.querySelector('.r-user > img').setAttribute('src', '/images/users/' + hreply.account.profilePic);
-        if (hreply.account.displayName != null) {
-            clone.querySelector('.r-username').textContent = hreply.account.displayName;
-        }
-        else {
-            clone.querySelector('.r-username').textContent = hreply.account.username;
-        }
+        rUserImg.src = '/images/users/' + hreply.account.profilePic;
+        rUsername.textContent = hreply.account.displayName != undefined
+            ? hreply.account.displayName
+            : hreply.account.username;
     }
     else {
         clone.querySelector('.reply').remove();
     }
     if (page === "profile") {
-        clone.querySelector('.c-replybtn').remove();
+        cReplyBtn.remove();
         let linkToPost = document.createElement('a');
-        linkToPost.href = "/p/" + comment.targetPostId;
+        linkToPost.href = "/p/" + comment.targetPostId + "?cid=" + comment.id;
         linkToPost.textContent = "Post";
-        clone.querySelector('.c-evaluation').appendChild(linkToPost);
+        cEvaluation.appendChild(linkToPost);
     }
     return clone;
 }

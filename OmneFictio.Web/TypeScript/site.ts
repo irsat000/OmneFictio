@@ -4,26 +4,27 @@
 // Write your JavaScript code.
 
 //Utility classes
-class JustBody{
+class JustBody {
     body!: string;
 }
-class Tag{
+class Tag {
     id!: number;
     body!: string;
 }
-class ExistingStories{
+class ExistingStories {
     body!: string;
     storyType!: JustBody;
 }
-class Language{
+class Language {
     lanCode?: string;
     body!: string;
 }
-class PostGift{
+class PostGift {
     sentDate!: Date;
     item!: JustBody;
 }
-class Account{
+//-----
+class ofAccount {
     id!: number;
     username!: string;
     displayName?: string;
@@ -32,27 +33,26 @@ class Account{
     deletedStatus?: JustBody;
     authorities?: JustBody[];
 }
-//-----
-class Chapter{
+class ofChapter {
     id!: number;
     title!: string;
     chapterIndex!: string;
     isPublished!: string;
 }
-class Post_1 {
+class ofPost_1 {
     id!: number;
     title!: string;
     postDescription!: string;
     publishDate!: Date;
     updateDate!: Date;
     coverImage?: string;
-    account?: Account;
+    account?: ofAccount;
     deletedStatus?: JustBody;
     language?: Language;
     postStatus?: JustBody;
     postType?: JustBody;
     ratedAs?: JustBody;
-    chapters?: Chapter[];
+    chapters?: ofChapter[];
     postGifts?: PostGift[];
     tags?: Tag[];
     existingStories?: ExistingStories[];
@@ -63,8 +63,30 @@ class Post_1 {
     votedByUser?: boolean;
     RatedByUser?: number;
 }
-class Read_GetPosts {
-    posts!: Post_1[];
+class ofComment_1 {
+    id!: number;
+    body!: string;
+    publishDate!: Date;
+    updateDate!: Date;
+    account?: ofAccount;
+    targetPostId?: number;
+    deletedStatus?: JustBody;
+    repliesLength!: number;
+    voteResult!: number;
+    votedByUser?: boolean;
+}
+class ofReply_1 {
+    id!: number;
+    body!: string;
+    publishDate!: Date;
+    updateDate!: Date;
+    account?: ofAccount;
+    voteResult!: number;
+    votedByUser?: boolean;
+}
+
+class ofRead_GetPosts {
+    posts!: ofPost_1[];
     pages!: number;
 }
 
@@ -559,7 +581,7 @@ function voting_visual(btn: HTMLElement, action: string) {
     }
 }
 
-function checkVoted_icons(clone: HTMLElement, val: boolean | null) {
+function checkVoted_icons(clone: HTMLElement, val: boolean | undefined) {
     const likebtn = clone.querySelector('[data-action="like"]') as HTMLElement;
     const dislikebtn = clone.querySelector('[data-action="dislike"]') as HTMLElement;
     likebtn.className = "";
@@ -649,7 +671,7 @@ function createSkeletons(page: string) {
     }
 }
 
-function fillPostTemplate(post: Post_1) {
+function fillPostTemplate(post: ofPost_1) {
     const instance = document.getElementById('postList-post') as HTMLTemplateElement;
     const clone = window.cloneFromTemplate(instance);
 
@@ -719,127 +741,94 @@ function fillPostTemplate(post: Post_1) {
         seriesSection.remove();
     }
     //user
-    username.textContent = post.account!.displayName !== null
-        ? post.account!.displayName!
-        : post.account!.username;
-    if (post.account!.profilePic !== null) {
-        userImg.src = '/images/users/' + post.account!.profilePic;
+    if (post.account !== undefined) {
+        username.textContent = post.account.displayName !== undefined
+            ? post.account.displayName!
+            : post.account.username;
+        if (post.account.profilePic !== undefined) {
+            userImg.src = '/images/users/' + post.account.profilePic;
+        } else {
+            userImg.remove();
+        }
     } else {
+        username.textContent = "[Deleted]";
         userImg.remove();
     }
 
     return clone;
-
-    /* OLD
-        clone.querySelector('.post')!.setAttribute('data-postid', post.id.toString());
-        clone.querySelector('.p-title > a')!.setAttribute('href', '/p/' + post.id);
-        clone.querySelector('.p-title > a')!.textContent = post.title;
-        clone.querySelector('.p-date')!.textContent = window.TimeAgo(post.publishDate);
-        if (post.coverImage !== null) {
-            clone.querySelector('.p-cover > img')!.setAttribute('src', '/images/covers/' + post.coverImage);
-        }
-        clone.querySelector('.p-body > span')!.textContent = post.postDescription;
-        if (post.voteResult >= 0) {
-            clone.querySelector('.vote_count')!.textContent = post.voteResult.toString();
-        }
-        clone.querySelector('.p-rate')!.textContent = post.rateResult >= 0 && post.rateResult <= 10
-            ? Number((post.rateResult).toFixed(1)) + "/10"
-            : "-/10";
-    
-        clone.querySelector('.pi-type')!.textContent = post.postType!.body;
-        clone.querySelector('.pi-language')!.textContent = post.language!.body;
-        clone.querySelector('.pi-status')!.textContent = post.postStatus!.body;
-        clone.querySelector('.pi-rating')!.textContent = post.ratedAs!.body;
-    
-        clone.querySelector('.pi-amount_of_chapters')!.textContent = post.chapters!.length.toString();
-        clone.querySelector('.pi-amount_of_words')!.textContent = post.wordsLength.toString();
-        clone.querySelector('.pi-amount_of_comments')!.textContent = post.comRepLength.toString();
-        clone.querySelector('.pi-last_update')!.textContent = window.TimeAgo(post.updateDate, "short");
-        //tag list
-        if (post.tags!.length > 0) {
-            post.tags!.forEach((tagname: any) =>
-                tagSection.innerHTML += "<span>" + tagname.body + "</span>"
-            );
-        } else {
-            tagSection.innerHTML = "<span>Empty</span>";
-        }
-        //based on list
-        if (post.existingStories!.length > 0) {
-            post.existingStories!.forEach((storyname: any) =>
-                seriesSection.innerHTML += "<span>" + storyname.body + "</span>"
-            );
-        } else {
-            seriesSection.remove();
-        }
-    
-        //user
-        if (post.account!.displayName !== null) {
-            clone.querySelector('.p-username')!.textContent = post.account!.displayName!;
-        } else {
-            clone.querySelector('.p-username')!.textContent = post.account!.username;
-        }
-        clone.querySelector('.p-user > img')!.setAttribute('src', '/images/users/' + post.account!.profilePic);
-    */
 }
 
 
-async function fillCommentTemplate(comment: any, page: string | null) {
+async function fillCommentTemplate(comment: ofComment_1, page: string | null) {
     const instance = document.getElementById('comment_instance') as HTMLTemplateElement;
     const clone = window.cloneFromTemplate(instance);
     //Check if user voted this parent
     window.checkVoted_icons(clone, comment.votedByUser);
-    clone.querySelector('.comment')!.setAttribute('data-commentid', comment.id);
-    clone.querySelector('.c-header > img')!.setAttribute('src', '/images/users/' + comment.account.profilePic);
-    if (comment.account.displayName != null) {
-        clone.querySelector('.c-username')!.textContent = comment.account.displayName;
-    } else {
-        clone.querySelector('.c-username')!.textContent = comment.account.username;
-    }
-    clone.querySelector('.c-date')!.textContent = window.TimeAgo(comment.publishDate);
-    clone.querySelector('.c-text > span')!.textContent = comment.body;
+
+    //Comment elements
+    const cContainer = clone.querySelector('.comment') as HTMLDivElement;
+    const cUserImg = clone.querySelector('.c-header > img') as HTMLImageElement;
+    const cUsername = clone.querySelector('.c-username') as HTMLSpanElement;
+    const cPublishDate = clone.querySelector('.c-date') as HTMLSpanElement;
+    const cBody = clone.querySelector('.c-text > span') as HTMLSpanElement;
+    const cEvaluation = clone.querySelector('.c-evaluation') as HTMLDivElement;
+    const cVoteCount = clone.querySelector('.c-likes') as HTMLSpanElement;
+    const cGetRepliesBtn = clone.querySelector('.get_replies') as HTMLDivElement;
+    const cReplyBtn = clone.querySelector('.c-replybtn') as HTMLAnchorElement;
+    //Highlighted reply elements
+    const rContainer = clone.querySelector('.reply') as HTMLDivElement;
+    const rBody = clone.querySelector('.r-text > span') as HTMLSpanElement;
+    const rVoteCount = clone.querySelector('.r-likes') as HTMLSpanElement;
+    const rUserImg = clone.querySelector('.r-user > img') as HTMLImageElement;
+    const rUsername = clone.querySelector('.r-username') as HTMLSpanElement;
+
+    //Populate comment
+    cContainer.setAttribute('data-commentid', comment.id.toString());
+    cUserImg.src = '/images/users/' + comment.account!.profilePic;
+    cUsername.textContent = comment.account!.displayName !== undefined
+        ? comment.account!.displayName
+        : comment.account!.username;
+    cPublishDate.textContent = window.TimeAgo(comment.publishDate);
+    cBody.textContent = comment.body;
     if (comment.voteResult >= 0) {
-        clone.querySelector('.c-likes')!.textContent = comment.voteResult;
+        cVoteCount.textContent = comment.voteResult.toString();
     }
     if (comment.repliesLength === 0) {
-        clone.querySelector('.get_replies')!.remove();
-    } else {
+        cGetRepliesBtn.remove();
+    }
+    else {
         let repliesLengthText = " replies";
         if (comment.repliesLength === 1) {
             repliesLengthText = " reply";
         }
-        clone.querySelector('.get_replies > span')!.textContent = comment.repliesLength + repliesLengthText;
-        clone.querySelector('.get_replies')!.addEventListener('click', function (e) {
-            //window.openRepliesModal(<HTMLElement>e.currentTarget);
-            window.openRepliesModal(comment.id.toString());
-        });
+        cGetRepliesBtn.firstChild!.textContent = comment.repliesLength + repliesLengthText;
+        cGetRepliesBtn.addEventListener('click', () => window.openRepliesModal(comment.id.toString()));
     }
-    const hreply = await fetchHighlightedReply(comment.id) as any;
+    //Get and populate highlighted reply
+    const hreply = await fetchHighlightedReply(comment.id.toString()) as ofReply_1 | null;
     if (hreply) {
         //Check if user voted this parent
-        window.checkVoted_icons(clone.querySelector('.reply')!, hreply.votedByUser);
-
-        clone.querySelector('.reply')!.setAttribute('data-replyid', hreply.id);
-        clone.querySelector('.r-text > span')!.textContent = hreply.body;
+        window.checkVoted_icons(rContainer, hreply.votedByUser);
+        rContainer.setAttribute('data-replyid', hreply.id.toString());
+        rBody.textContent = hreply.body;
         if (hreply.voteResult >= 0) {
-            clone.querySelector('.r-likes')!.textContent = hreply.voteResult;
+            rVoteCount.textContent = hreply.voteResult.toString();
         }
-
-        clone.querySelector('.r-user > img')!.setAttribute('src', '/images/users/' + hreply.account.profilePic);
-        if (hreply.account.displayName != null) {
-            clone.querySelector('.r-username')!.textContent = hreply.account.displayName;
-        } else {
-            clone.querySelector('.r-username')!.textContent = hreply.account.username;
-        }
+        rUserImg.src = '/images/users/' + hreply.account!.profilePic;
+        rUsername.textContent = hreply.account!.displayName != undefined
+            ? hreply.account!.displayName
+            : hreply.account!.username;
     }
     else {
         clone.querySelector('.reply')!.remove();
     }
+    //If the comments in the context are in profile page, then show "link to post"
     if (page === "profile") {
-        clone.querySelector('.c-replybtn')!.remove();
+        cReplyBtn.remove();
         let linkToPost = document.createElement('a');
-        linkToPost.href = "/p/" + comment.targetPostId; //This is nullable but reviews are only post comments anyway
+        linkToPost.href = "/p/" + comment.targetPostId + "?cid=" + comment.id; //targetPostId can be empty normally but reviews are only post comments so there is no chance of fail
         linkToPost.textContent = "Post";
-        clone.querySelector('.c-evaluation')!.appendChild(linkToPost);
+        cEvaluation.appendChild(linkToPost);
     }
 
     return clone;

@@ -44,7 +44,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 pl_column2.innerHTML = "";
                 if (data.statusCode === 200) {
                     //GET THE POSTS
-                    const response = JSON.parse(data.value) as Read_GetPosts;
+                    const response = JSON.parse(data.value) as ofRead_GetPosts;
                     for (const post of response.posts) {
                         const clone = window.fillPostTemplate(post);
                         if (pl_column1.offsetHeight <= pl_column2.offsetHeight) {
