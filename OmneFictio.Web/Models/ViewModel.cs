@@ -13,10 +13,8 @@ public class ReadViewmodel
 public class GetpostViewmodel
 {
     public int postid { get; set; }
-    public string? LastReadPage { get; set; }
-    public GetpostViewmodel(int postid, string? LastReadPage)
+    public GetpostViewmodel(int postid)
     {
         this.postid = postid;
-        this.LastReadPage = LastReadPage;
     }
 }

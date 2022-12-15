@@ -615,7 +615,8 @@ function fillPostTemplate(post) {
     const commentAmount = clone.querySelector('.pi-amount_of_comments');
     const updateDate = clone.querySelector('.pi-last_update');
     container.setAttribute('data-postid', post.id.toString());
-    title.href = '/p/' + post.id;
+    title.href = '/p/' + post.id + '?lp=' + window.location.href;
+    ;
     title.textContent = post.title;
     publishDate.textContent = window.TimeAgo(post.publishDate);
     body.textContent = post.postDescription;

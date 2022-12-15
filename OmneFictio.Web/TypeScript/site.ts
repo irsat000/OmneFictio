@@ -701,7 +701,7 @@ function fillPostTemplate(post: ofPost_1) {
     const updateDate = clone.querySelector('.pi-last_update') as HTMLSpanElement;
     //Populating
     container.setAttribute('data-postid', post.id.toString());
-    title.href = '/p/' + post.id;
+    title.href = '/p/' + post.id + '?lp=' + window.location.href;;
     title.textContent = post.title;
     publishDate.textContent = window.TimeAgo(post.publishDate);
     body.textContent = post.postDescription;

@@ -1,10 +1,12 @@
 "use strict";
 document.addEventListener("DOMContentLoaded", function () {
+    const params = new URLSearchParams(window.location.search);
     const modalbg1 = document.querySelector('.modalbg1');
     const commentSection = document.getElementById('comment-section');
     const rateByUser = document.getElementById('rate_by_user');
     const chaptersModal = document.getElementById('modal-chapters');
     const fullsizecover = document.getElementById('fullsize-cover');
+    const previousPageBtn = document.getElementById('goBackToReadPage');
     modalbg1.addEventListener("click", function () {
         closeChaptersModal();
     });
@@ -23,6 +25,23 @@ document.addEventListener("DOMContentLoaded", function () {
             closeAllCommentMenus();
         }
     });
+    if (params.get('lp') !== null) {
+        const lastPage = params.get('lp');
+        previousPageBtn.href = lastPage;
+        params.delete('lp');
+        let newUrl = window.location.href.split('?')[0];
+        if ([...params.keys()].length > 0) {
+            newUrl += "?" + params.toString();
+        }
+        window.sessionStorage.setItem(newUrl, lastPage);
+        window.history.replaceState({}, document.title, newUrl);
+    }
+    else if (sessionStorage.getItem(window.location.href) !== null) {
+        previousPageBtn.href = sessionStorage.getItem(window.location.href);
+    }
+    else {
+        previousPageBtn.remove();
+    }
     const postId = window.getPathPart(2);
     GetPost();
     async function GetPost() {

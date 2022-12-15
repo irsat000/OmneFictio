@@ -1,11 +1,13 @@
 
 
 document.addEventListener("DOMContentLoaded", function () {
+    const params = new URLSearchParams(window.location.search);
     const modalbg1 = document.querySelector('.modalbg1') as HTMLDivElement;
     const commentSection = document.getElementById('comment-section') as HTMLDivElement;
     const rateByUser = document.getElementById('rate_by_user') as HTMLSpanElement;
     const chaptersModal = document.getElementById('modal-chapters') as HTMLDivElement;
     const fullsizecover = document.getElementById('fullsize-cover') as HTMLDivElement;
+    const previousPageBtn = document.getElementById('goBackToReadPage') as HTMLAnchorElement;
 
     modalbg1.addEventListener("click", function () {
         closeChaptersModal();
@@ -27,6 +29,26 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    if(params.get('lp') !== null){
+        const lastPage = params.get('lp')!;
+        previousPageBtn.href = lastPage;
+        params.delete('lp');
+
+        let newUrl: string = window.location.href.split('?')[0];
+        if([...params.keys()].length > 0){
+            newUrl += "?" + params.toString();
+        }
+        
+        window.sessionStorage.setItem(newUrl, lastPage);
+        window.history.replaceState({}, document.title, newUrl);
+    }
+    else if(sessionStorage.getItem(window.location.href) !== null){
+        previousPageBtn.href = sessionStorage.getItem(window.location.href)!;
+    } 
+    else{
+        previousPageBtn.remove();
+    }
+    
     const postId = window.getPathPart(2);
     GetPost();
     async function GetPost() {
