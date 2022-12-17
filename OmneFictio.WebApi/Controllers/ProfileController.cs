@@ -44,6 +44,48 @@ public class ProfileController : ControllerBase
         _helperServices = helperServices;
     }
 
+    [HttpGet("GetProfileDetails/{targetUsername}/{userId?}")]
+    public async Task<IActionResult> ProfileDetails
+        (string targetUsername, int? userId)
+    {
+        var account = await _mapper.ProjectTo<AccountDtoRead_3>(_db.Accounts
+            .Where(a =>
+                a.username == targetUsername &&
+                a.deletedStatus!.body == "Default"
+            )).FirstOrDefaultAsync();
+        if (account == null)
+        {
+            return NotFound();
+        }
+        if (userId == null || userId != account.id)
+        {
+            account.email = null;
+            account.emailValid = null;
+            account.gold = null;
+        }
+
+        //Get the user's posts for other calculations
+        var postsPublished = _db.Posts
+            .Where(p => p.accountId == account.id &&
+                    p.deletedStatus!.body == "Default")
+            .Select(p => p.id);
+        //Get stat_postsPublished
+        account.stat_postsPublished = postsPublished.Count();
+        //Get stat_likes
+        int likesSum = _db.Votes
+            .Where(v => postsPublished.Contains(v.id) && v.body == true)
+            .Sum(v => 1);
+        int dislikesSum = _db.Votes
+            .Where(v => postsPublished.Contains(v.id) && v.body == false)
+            .Sum(v => 1);
+        account.stat_likes = likesSum - dislikesSum;
+        //Get stat_saved
+        account.stat_saved = _db.SavedPosts
+            .Count(sp => postsPublished.Contains(sp.targetPostId ?? -1));
+        
+        return Ok(account);
+    }
+
     [HttpGet("GetPosts/{targetUsername}/{userId?}")]
     public async Task<IActionResult> GetPosts
         (string targetUsername, int? userId)
@@ -60,9 +102,9 @@ public class ProfileController : ControllerBase
             .ToListAsync();
 
         postList = await _helperServices.GetPosts_Details(postList, userId);
-        return Ok(new { posts = postList});
+        return Ok(new { posts = postList });
     }
-    
+
     [HttpGet("GetReviews/{targetUsername}/{userId?}")]
     public async Task<IActionResult> GetReviews
         (string targetUsername, int? userId)

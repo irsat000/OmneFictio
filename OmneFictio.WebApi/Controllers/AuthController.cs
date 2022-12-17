@@ -49,8 +49,8 @@ public class AuthController : ControllerBase
     {
         var securityToken = Encoding.ASCII.GetBytes(_configuration.GetSection("Token").Value);
         //Authentication
-        var checkUser = await _db.Accounts.SingleOrDefaultAsync(x => x.username == request.Username);
-        if (checkUser == null || !BC.Verify(request.Pw, checkUser.pw))
+        var checkUser = await _db.Accounts.SingleOrDefaultAsync(x => x.username == request.username);
+        if (checkUser == null || !BC.Verify(request.pw, checkUser.pw))
         {
             return NotFound();
         }

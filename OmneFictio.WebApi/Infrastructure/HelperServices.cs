@@ -30,8 +30,8 @@ public class HelperServices : IHelperServices
     {
         foreach (PostDtoRead_1 post in postList)
         {
-            //remove if the chapters are not published
-            //Maybe I can fix this from the root later
+            //remove non-published chapters
+            //Maybe I can do this from the root later
             if (post.chapters != null && post.chapters.Count() > 0)
                 post.chapters = post.chapters.Where(c => c.isPublished == true).ToList();
 
