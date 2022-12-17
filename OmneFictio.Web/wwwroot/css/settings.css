@@ -86,30 +86,30 @@ nav .settings-link_cont .desktop_nav li a.active {
   border-radius: 8px;
 }
 
-.settings_body .settings_body .s-profile_settings {
+.settings_body .s-profile_settings {
   display: flex;
   flex-direction: column;
   width: 100%;
   padding: 12px;
 }
-.settings_body .settings_body .s-profile_settings .ps-row {
+.settings_body .s-profile_settings .ps-row {
   display: flex;
   flex-direction: column;
   gap: 8px 30px;
 }
-.settings_body .settings_body .s-profile_settings .ps-row .ps-cell {
+.settings_body .s-profile_settings .ps-row .ps-cell {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
-.settings_body .settings_body .s-profile_settings .ps-row .ps-cell > span,
-.settings_body .settings_body .s-profile_settings .ps-row .ps-cell label {
+.settings_body .s-profile_settings .ps-row .ps-cell > span,
+.settings_body .s-profile_settings .ps-row .ps-cell label {
   font-size: 1.2rem;
   font-family: "Gudea";
 }
-.settings_body .settings_body .s-profile_settings .ps-row .ps-cell > input,
-.settings_body .settings_body .s-profile_settings .ps-row .ps-cell textarea,
-.settings_body .settings_body .s-profile_settings .ps-row .ps-cell select {
+.settings_body .s-profile_settings .ps-row .ps-cell > input,
+.settings_body .s-profile_settings .ps-row .ps-cell textarea,
+.settings_body .s-profile_settings .ps-row .ps-cell select {
   flex-grow: 1;
   border: none;
   outline: none;
@@ -120,34 +120,34 @@ nav .settings-link_cont .desktop_nav li a.active {
   margin-bottom: 10px;
   font-family: "Itim", cursive;
 }
-.settings_body .settings_body .s-profile_settings .ps-ppic_cont {
+.settings_body .s-profile_settings .ps-ppic_cont {
   width: 120px;
   height: 120px;
   border-radius: 8px;
   background-color: var(--background-color2);
   margin-bottom: 10px;
 }
-.settings_body .settings_body .s-profile_settings .ps-preferences {
+.settings_body .s-profile_settings .ps-preferences {
   margin: 10px 0;
   padding-left: 16px;
   font-family: "Josefin Sans", sans-serif;
 }
-.settings_body .settings_body .s-profile_settings .psr-preferences label {
+.settings_body .s-profile_settings .psr-preferences label {
   display: flex;
   align-items: center;
 }
-.settings_body .settings_body .s-profile_settings .psr-preferences label input[type=checkbox] {
+.settings_body .s-profile_settings .psr-preferences label input[type=checkbox] {
   height: 16px;
   width: 16px;
   margin-left: 10px;
 }
-.settings_body .settings_body .s-profile_settings .psr-actions {
+.settings_body .s-profile_settings .psr-actions {
   flex-direction: row;
   justify-content: center;
   margin-top: 36px;
   gap: 20%;
 }
-.settings_body .settings_body .s-profile_settings .psr-actions > button {
+.settings_body .s-profile_settings .psr-actions > button {
   border: none;
   outline: none;
   border-radius: 6px;
@@ -157,16 +157,16 @@ nav .settings-link_cont .desktop_nav li a.active {
   font-family: "Gudea", cursive;
   font-size: 1.2rem;
 }
-.settings_body .settings_body .s-profile_settings .psr-actions > button:first-child {
+.settings_body .s-profile_settings .psr-actions > button:first-child {
   background-color: var(--button-red);
 }
-.settings_body .settings_body .s-profile_settings .psr-actions > button:first-child:hover {
+.settings_body .s-profile_settings .psr-actions > button:first-child:hover {
   background-color: var(--button-red-hover);
 }
-.settings_body .settings_body .s-profile_settings .psr-actions > button:last-child {
+.settings_body .s-profile_settings .psr-actions > button:last-child {
   background-color: var(--button-green);
 }
-.settings_body .settings_body .s-profile_settings .psr-actions > button:last-child:hover {
+.settings_body .s-profile_settings .psr-actions > button:last-child:hover {
   background-color: var(--button-green-hover);
 }
 
