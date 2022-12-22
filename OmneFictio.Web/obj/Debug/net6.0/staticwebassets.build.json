@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "KlrOlYQvM1BAinmhfSYDDq99KEZ1bUMLjZzYTQll7b8=",
+  "Hash": "g6B61mRdxhQn8f8T70lWXRDWrn8ngdwwAz7cqRTx9Fo=",
   "Source": "OmneFictio.Web",
   "BasePath": "_content/OmneFictio.Web",
   "Mode": "Default",
@@ -780,6 +780,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\users\\user_no_photo.png"
+    },
+    {
+      "Identity": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\wwwroot\\images\\users\\user1.png",
+      "SourceId": "OmneFictio.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\wwwroot\\",
+      "BasePath": "_content/OmneFictio.Web",
+      "RelativePath": "images/users/user1.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\users\\user1.png"
     },
     {
       "Identity": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\wwwroot\\images\\users\\user4.png",

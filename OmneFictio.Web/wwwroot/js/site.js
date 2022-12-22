@@ -5,6 +5,7 @@ class JustBody {
 class Tag {
     id;
     body;
+    userGenerated;
 }
 class ExistingStories {
     body;
@@ -17,6 +18,10 @@ class Language {
 class PostGift {
     sentDate;
     item;
+}
+class Authority {
+    code;
+    body;
 }
 class ofAccount {
     id;
@@ -46,7 +51,7 @@ class ofPost_1 {
     postStatus;
     postType;
     ratedAs;
-    chapters;
+    Chapters;
     postGifts;
     tags;
     existingStories;
@@ -55,7 +60,7 @@ class ofPost_1 {
     comRepLength;
     wordsLength;
     votedByUser;
-    RatedByUser;
+    ratedByUser;
 }
 class ofComment_1 {
     id;
@@ -64,7 +69,6 @@ class ofComment_1 {
     updateDate;
     account;
     targetPostId;
-    deletedStatus;
     repliesLength;
     voteResult;
     votedByUser;
@@ -636,7 +640,7 @@ function fillPostTemplate(post) {
     language.textContent = post.language.body;
     status.textContent = post.postStatus.body;
     readerRating.textContent = post.ratedAs.body;
-    chapterAmount.textContent = post.chapters.length.toString();
+    chapterAmount.textContent = post.Chapters.length.toString();
     wordAmount.textContent = post.wordsLength.toString();
     commentAmount.textContent = post.comRepLength.toString();
     updateDate.textContent = window.TimeAgo(post.updateDate, "short");

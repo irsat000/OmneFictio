@@ -12,12 +12,12 @@ public class PostDtoRead_1
 
     public AccountDtoRead_1? account { get; set; }
     public DeletedStatusDto? deletedStatus { get; set; }
-    public LanguageDto? language { get; set; }
-    public PostStatusDto? postStatus { get; set; }
-    public PostTypeDto? postType { get; set; }
-    public RatedAsDto? ratedAs { get; set; }
+    public LanguageDto language { get; set; } = null!;
+    public PostStatusDto postStatus { get; set; } = null!;
+    public PostTypeDto postType { get; set; } = null!;
+    public RatedAsDto ratedAs { get; set; } = null!;
     //-----------
-    public ICollection<ChapterDtoRead_1>? chapters { get; set; }
+    public ICollection<ChapterDtoRead_1>? Chapters { get; set; }
     //-----------
     public ICollection<PostGiftDto>? postGifts { get; set; }
     public ICollection<TagDto>? tags { get; set; }
@@ -44,5 +44,5 @@ public class PostDtoRead_2
 {
     public string title { get; set; } = null!;
     public AccountDtoRead_1? account { get; set; }
-    public ICollection<ChapterDtoRead_1>? chapters { get; set; }
+    public ICollection<ChapterDtoRead_1>? Chapters { get; set; }
 }

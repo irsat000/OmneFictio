@@ -17,10 +17,16 @@ public partial class AccountDtoRead_1
 public partial class AccountDtoRead_2
 {
     public string username { get; set; } = null!;
-    public string? pw { get; set; }
+    public string pw { get; set; } = null!;
 }
 //Authentication
 
+public partial class AccountDtoRead_4
+{
+    public int id { get; set; }
+    public string username { get; set; } = null!;
+    public virtual ICollection<PreferenceDto> Preferences { get; set; } = null!;
+} //Might be necessary
 
 
 public partial class AccountDtoRead_3
@@ -30,7 +36,7 @@ public partial class AccountDtoRead_3
     public string? displayName { get; set; }
     public string? profilePic { get; set; }
     public string? selfDesc { get; set; }
-    public byte? deletedStatusId { get; set; }
+    public DeletedStatusDto? deletedStatus { get; set; }
     public ICollection<AuthorityDto>? authorities { get; set; }
 
     //user stats
@@ -42,8 +48,8 @@ public partial class AccountDtoRead_3
     public int stat_saved { get; set; } = 0;
     public int stat_postsPublished { get; set; } = 0;
     //If it's the user's own profile
-    public string? email { get; set; } = null!;
-    public bool? emailValid { get; set; }
-    public int? gold { get; set; }
+    public string email { get; set; } = null!;
+    public bool emailValid { get; set; }
+    public int gold { get; set; }
 }
 //To get the profile details

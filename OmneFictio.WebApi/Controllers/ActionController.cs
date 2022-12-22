@@ -114,7 +114,8 @@ public class ActionController : ControllerBase
             x.postId == request.postId);
         if (rate != null)
         {
-            _db.Rates.Remove(_db.Rates.SingleOrDefault(x => x.id == rate.id)!);
+            //_db.Rates.Remove(_db.Rates.SingleOrDefault(x => x.id == rate.id)!);
+            _db.Rates.Remove(rate); //MIGHT WORK, I WILL TRY IT
         }
         
         if (request.rateValue != 0)
@@ -145,7 +146,7 @@ public class ActionController : ControllerBase
         Comment? newComment = new Comment
         {
             accountId = request.accountId,
-            deletedStatusId = 1,
+            deletedStatusId = 1, // Default  //Might try -> _db.DeletedStatuses.FirstOrDefault(d => d.body == "Default")
             publishDate = DateTime.Now,
             updateDate = DateTime.Now
         };
@@ -168,16 +169,15 @@ public class ActionController : ControllerBase
         {
             await _db.Comments.AddAsync(newComment);
             await _db.SaveChangesAsync();
+            CommentDtoRead_2? returnComment = await _mapper.ProjectTo<CommentDtoRead_2>
+                    (_db.Comments.Where(p => p.id == newComment.id))
+                .FirstOrDefaultAsync();
+            return Ok(new { returnComment });
         }
         catch (Exception)
         {
             return BadRequest();
         }
-        CommentDtoRead_2? returnComment =
-            await _mapper.ProjectTo<CommentDtoRead_2>
-            (_db.Comments.Where(p => p.id == newComment.id))
-            .FirstOrDefaultAsync();
-        return Ok(new { returnComment });
     }
 
     [HttpPost("CreatePost")]
@@ -194,16 +194,16 @@ public class ActionController : ControllerBase
         Post newpost = new Post();
         newpost.title = request.title;
         newpost.postDescription = request.postDescription;
-        newpost.languageId = request.languageId;
         newpost.accountId = request.accountId;
+        newpost.languageId = request.languageId;
         newpost.postTypeId = request.postTypeId;
         newpost.ratedAsId = request.ratedAsId;
         newpost.coverImage = request.coverImage;
         newpost.publishDate = DateTime.Now;
         newpost.updateDate = DateTime.Now;
-        newpost.deletedStatusId = 1;
-        newpost.postStatusId = 1;
-        newpost.isPublished = true;
+        newpost.deletedStatusId = 1; // Default
+        newpost.postStatusId = 1; // In-Progress
+        newpost.isPublished = true; // <- User will decide when creating
         if (request.tagList != null)
         {
             foreach (int tagid in request.tagList)
@@ -235,12 +235,11 @@ public class ActionController : ControllerBase
         {
             await _db.Posts.AddAsync(newpost);
             await _db.SaveChangesAsync();
+            return Ok();
         }
         catch (Exception)
         {
             return BadRequest();
         }
-
-        return Ok();
     }
 }

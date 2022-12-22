@@ -12,9 +12,9 @@ namespace OmneFictio.WebApi.Entities
 
         public int id { get; set; }
         public string body { get; set; } = null!;
-        public int? storyTypeId { get; set; }
+        public int storyTypeId { get; set; }
 
-        public virtual ExistingStoryType? storyType { get; set; }
+        public virtual ExistingStoryType storyType { get; set; } = null!;
 
         public virtual ICollection<Post> posts { get; set; }
     }

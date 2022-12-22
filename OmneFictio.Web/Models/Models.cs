@@ -3,19 +3,19 @@ namespace OmneFictio.Web.Models;
 
 public class AccountRead2
 {
-    public string Username { get; set; } = null!;
-    public string Pw { get; set; } = null!;
-    public string RememberMe { get; set; } = null!;
+    public string username { get; set; } = null!;
+    public string pw { get; set; } = null!;
+    public string rememberMe { get; set; } = null!;
 }
 //Authentication
 
 public class AccountWrite1
 {
-    public string Username { get; set; } = null!;
-    public string Pw { get; set; } = null!;
-    public string Email { get; set; } = null!;
-    public object? AllowAdultContent { get; set; } //bool
-    public object? PrefLanguageId { get; set; } //int
+    public string username { get; set; } = null!;
+    public string pw { get; set; } = null!;
+    public string email { get; set; } = null!;
+    public object? allowAdultContent { get; set; } //bool
+    public object? prefLanguageId { get; set; } //int
 }
 //Getting payload from registration form
 //sending payload to api
@@ -23,44 +23,44 @@ public class AccountWrite1
 
 public class VoteWrite1
 {
-    public int? AccountId { get; set; }
-    public bool Body { get; set; }
-    public int? TargetId { get; set; }
-    public string? TargetType { get; set; }
+    public int? accountId { get; set; }
+    public bool body { get; set; }
+    public int? targetId { get; set; }
+    public string? targetType { get; set; }
 }
 //Voting
 
 
 public class PostWrite1
 {
-    public string Title { get; set; } = null!;
-    public string PostDescription { get; set; } = null!;
-    public object PostTypeId { get; set; } = null!; //byte
-    public object LanguageId { get; set; } = null!; //int
-    public int? AccountId { get; set; }
-    public object? RatedAsId { get; set; } //int?
-    public string? CoverImage { get; set; }
-    public List<int>? TagList { get; set; }
-    public List<int>? SeriesList { get; set; }
+    public string title { get; set; } = null!;
+    public string postDescription { get; set; } = null!;
+    public object postTypeId { get; set; } = null!; //byte
+    public object languageId { get; set; } = null!; //int
+    public int? accountId { get; set; }
+    public object ratedAsId { get; set; } = null!; //int
+    public string? coverImage { get; set; }
+    public List<int>? tagList { get; set; }
+    public List<int>? seriesList { get; set; }
 }
 //create post request
 
 
 public class RateInfo
 {
-    public int? AccountId { get; set; }
-    public int PostId { get; set; }
-    public int RateValue { get; set; }
+    public int? accountId { get; set; }
+    public int postId { get; set; }
+    public int rateValue { get; set; }
 }
 //rate the post
 
 
 public class CommentWrite1
 {
-    public int? AccountId { get; set; }
-    public string Body { get; set; } = null!;
-    public int? TargetPostId { get; set; }
-    public int? TargetChapterId { get; set; }
+    public int? accountId { get; set; }
+    public string body { get; set; } = null!;
+    public int? targetPostId { get; set; }
+    public int? targetChapterId { get; set; }
 }
 //Adding a comment
 

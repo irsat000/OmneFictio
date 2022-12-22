@@ -23,30 +23,39 @@ public class MapperConfig : Profile{
         CreateMap<CommentDtoRead_3, Comment>().ReverseMap();
         CreateMap<CommentDtoWrite_1, Comment>().ReverseMap();
         
-        
         CreateMap<ReplyDtoRead_1, Reply>().ReverseMap();
         CreateMap<ReplyDtoRead_2, Reply>().ReverseMap();
 
-        CreateMap<VoteDtoWrite_1, Vote>().ReverseMap();
-        
-        CreateMap<TagDtoWrite_1, Tag>().ReverseMap();
-        
+        CreateMap<RequestDto, Request>().ReverseMap();
 
+
+        CreateMap<VoteDto, Vote>().ReverseMap();
+        CreateMap<VoteDtoWrite_1, Vote>().ReverseMap();
+
+        CreateMap<TagDto, Tag>().ReverseMap();
+        CreateMap<TagDtoWrite_1, Tag>().ReverseMap();
+
+        CreateMap<PreferenceDto, Preference>().ReverseMap();
+        CreateMap<AccountIPDto, AccountIP>().ReverseMap();
+        CreateMap<AccountThemeSelectionsDto, AccountThemeSelections_MM>().ReverseMap();
+        CreateMap<ChatMessageDto, ChatMessage>().ReverseMap();
         CreateMap<AuthorityDto, Authority>().ReverseMap();
-        CreateMap<DeletedStatusDto, DeletedStatus>().ReverseMap();
-        CreateMap<ExistingStoryDto, ExistingStory>().ReverseMap();
-        CreateMap<ExistingStoryTypeDto, ExistingStoryType>().ReverseMap();
-        CreateMap<InventoryItemDto, InventoryItem>().ReverseMap();
-        CreateMap<IpDto, IP>().ReverseMap();
-        CreateMap<LanguageDto, Language>().ReverseMap();
+        CreateMap<FollowedUserDto, FollowedUser>().ReverseMap();
+        CreateMap<SavedPostDto, SavedPost>().ReverseMap();
+
+        CreateMap<RateDto, Rate>().ReverseMap();
         CreateMap<PostGiftDto, PostGift>().ReverseMap();
+        CreateMap<RatedAsDto, RatedA>().ReverseMap();
+        CreateMap<DeletedStatusDto, DeletedStatus>().ReverseMap();
         CreateMap<PostStatusDto, PostStatus>().ReverseMap();
         CreateMap<PostTypeDto, PostType>().ReverseMap();
-        CreateMap<RatedAsDto, RatedA>().ReverseMap();
-        CreateMap<RateDto, Rate>().ReverseMap();
-        CreateMap<TagDto, Tag>().ReverseMap();
-        CreateMap<VoteDto, Vote>().ReverseMap();
-        CreateMap<SavedPostDto, SavedPost>().ReverseMap();
+
+        CreateMap<ThemeDto, Theme>().ReverseMap();
+        CreateMap<InventoryItemDto, InventoryItem>().ReverseMap();
+        CreateMap<LanguageDto, Language>().ReverseMap();
+        CreateMap<ExistingStoryDto, ExistingStory>().ReverseMap();
+        CreateMap<ExistingStoryTypeDto, ExistingStoryType>().ReverseMap();
+
         
     }
 }

@@ -29,7 +29,7 @@ public class AuthController : Controller
     public async Task<JsonResult> UserLogin([FromBody] AccountRead2 account)
     {
         bool rememberme = true;
-        bool.TryParse(account.RememberMe, out rememberme);
+        bool.TryParse(account.rememberMe, out rememberme);
         var apiResponse = await _httpClient.PostAsJsonAsync("Auth/Login", account);
         string statusCode = apiResponse.StatusCode.ToString();
 
@@ -47,9 +47,9 @@ public class AuthController : Controller
     [HttpPost]
     public async Task<JsonResult> UserRegistration([FromBody] AccountWrite1 account)
     {
-        account.AllowAdultContent = account.AllowAdultContent?.ToString() == "true"
+        account.allowAdultContent = account.allowAdultContent?.ToString() == "true"
             ? true : false;
-        account.PrefLanguageId = int.TryParse((string?)account.PrefLanguageId, out int prefLan)
+        account.prefLanguageId = int.TryParse((string?)account.prefLanguageId, out int prefLan)
             ? prefLan : 0; //or null
 
         var apiResponse = await _httpClient.PostAsJsonAsync("Auth/Register", account);

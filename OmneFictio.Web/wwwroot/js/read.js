@@ -34,17 +34,7 @@ document.addEventListener("DOMContentLoaded", function () {
             pl_column2.innerHTML = "";
             if (data.statusCode === 200) {
                 const response = JSON.parse(data.value);
-                for (const post of response.posts) {
-                    const clone = window.fillPostTemplate(post);
-                    if (pl_column1.offsetHeight <= pl_column2.offsetHeight) {
-                        pl_column1.appendChild(clone);
-                    }
-                    else {
-                        pl_column2.appendChild(clone);
-                    }
-                }
-                const postShowroom = document.querySelector('.posts-cont');
-                createPaginationForPosts(postShowroom, response.pages);
+                console.log(response);
             }
             else if (data.statusCode === 404) {
                 plw_message.textContent = "In terms of posts, we have no posts.";

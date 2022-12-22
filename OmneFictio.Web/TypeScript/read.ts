@@ -45,7 +45,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (data.statusCode === 200) {
                     //GET THE POSTS
                     const response = JSON.parse(data.value) as ofRead_GetPosts;
-                    for (const post of response.posts) {
+                    console.log(response);
+                    /*for (const post of response.posts) {
                         const clone = window.fillPostTemplate(post);
                         if (pl_column1.offsetHeight <= pl_column2.offsetHeight) {
                             pl_column1.appendChild(clone);
@@ -55,7 +56,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                     //PAGINATION
                     const postShowroom = document.querySelector('.posts-cont') as HTMLDivElement;
-                    createPaginationForPosts(postShowroom, response.pages);
+                    createPaginationForPosts(postShowroom, response.pages);*/
                 } else if (data.statusCode === 404) {
                     plw_message.textContent = "In terms of posts, we have no posts.";
                     plw_img.setAttribute("src", "/images/onerror/noposts.webp");

@@ -50,15 +50,16 @@ public class ReadingController : ControllerBase
             c.postId == postid &&
             c.chapterIndex == chapterindex &&
             c.isPublished == true &&
-            c.deletedStatus!.body == "Default")).FirstOrDefaultAsync();
+            c.deletedStatus != null &&
+            c.deletedStatus.body == "Default")).FirstOrDefaultAsync();
 
         if (chapter == null)
         {
             return NotFound();
         }
-        if (chapter.post != null && chapter.post.chapters != null && chapter.post.chapters.Count() > 0)
+        if (chapter.post.Chapters != null && chapter.post.Chapters.Count() > 0)
         {
-            chapter.post.chapters = chapter.post.chapters.Where(c => c.isPublished == true).ToList();
+            chapter.post.Chapters = chapter.post.Chapters.Where(c => c.isPublished == true).ToList();
         }
         //check vote by user
         if (userId != null)
@@ -77,15 +78,16 @@ public class ReadingController : ControllerBase
     {
         var post = await _mapper.ProjectTo<PostDtoRead_1>(_db.Posts.Where(p =>
             p.isPublished == true &&
-            p.deletedStatus!.body == "Default" &&
+            p.deletedStatus != null &&
+            p.deletedStatus.body == "Default" &&
             p.id == postid)).FirstOrDefaultAsync();
         if (post == null)
         {
             return NotFound();
         }
-        if (post.chapters != null && post.chapters.Count() > 0)
+        if (post.Chapters != null && post.Chapters.Count() > 0)
         {
-            post.chapters = post.chapters.Where(c => c.isPublished == true).ToList();
+            post.Chapters = post.Chapters.Where(c => c.isPublished == true).ToList();
         }
         //check vote by user
         if (userId != null)
@@ -118,7 +120,8 @@ public class ReadingController : ControllerBase
         var posts = _db.Posts
             .Where(p =>
                 p.isPublished == true &&
-                p.deletedStatus!.body == "Default")
+                p.deletedStatus != null &&
+                p.deletedStatus.body == "Default")
             .OrderByDescending(p => p.publishDate);
         //More filters
         //-----------
@@ -135,8 +138,8 @@ public class ReadingController : ControllerBase
             return NotFound();
         }
         posts_onepage = await _helperServices.GetPosts_Details(posts_onepage, userId);
-        
-        return Ok(new { posts = posts_onepage, pages = pageCount});
+
+        return Ok(new { posts = posts_onepage, pages = pageCount });
     }
 
     [HttpGet("GetComments/{type}/{parentid}/{userId?}")]
@@ -148,14 +151,16 @@ public class ReadingController : ControllerBase
         {
             comments = await _mapper.ProjectTo<CommentDtoRead_2>(_db.Comments.Where(c =>
                 c.targetPostId == parentid &&
-                c.deletedStatus!.body == "Default")
+                c.deletedStatus != null &&
+                c.deletedStatus.body == "Default")
                 .OrderByDescending(c => c.publishDate)).ToListAsync();
         }
         else if (type == "chapter")
         {
             comments = await _mapper.ProjectTo<CommentDtoRead_2>(_db.Comments.Where(c =>
                 c.targetChapterId == parentid &&
-                c.deletedStatus!.body == "Default")
+                c.deletedStatus != null &&
+                c.deletedStatus.body == "Default")
                 .OrderByDescending(c => c.publishDate)).ToListAsync();
         }
 
@@ -174,9 +179,8 @@ public class ReadingController : ControllerBase
         var replies = await _mapper.ProjectTo<ReplyDtoRead_2>(_db.Replies.Where(r =>
             r.commentId == commentid)).ToListAsync();
         //get highlighted
-        ReplyDtoRead_2? hReply =
-                    replies.OrderByDescending(r => r.voteResult)
-                        .ThenBy(r => r.publishDate).FirstOrDefault();
+        ReplyDtoRead_2? hReply = replies.OrderByDescending(r => r.voteResult)
+            .ThenBy(r => r.publishDate).FirstOrDefault();
 
         if (hReply == null)
         {
@@ -198,30 +202,26 @@ public class ReadingController : ControllerBase
     public async Task<IActionResult> GetComment(int commentid, int? userId)
     {
         var comment = await _mapper.ProjectTo<CommentDtoRead_3>(_db.Comments.Where(c =>
-        c.id == commentid)).FirstOrDefaultAsync();
+                c.id == commentid &&
+                c.deletedStatus != null &&
+                c.deletedStatus.body == "Default"
+            )).FirstOrDefaultAsync();
         //checking integrity
-        if (comment == null)
-        {
-            return NotFound();
-        }
-        else if (comment.DeletedStatus!.body != "Default")
-        {
-            return Unauthorized();
-        }
-        if (comment.Replies == null || comment.Replies.Count() < 1)
+        if (comment == null || comment.Replies == null || comment.Replies.Count() < 1)
         {
             return NotFound();
         }
         //filtering deleted replies
         comment.Replies = comment.Replies
-            .Where(r => r.deletedStatus!.body == "Default")
+            .Where(r => r.deletedStatus != null &&
+                r.deletedStatus.body == "Default")
             .OrderBy(r => r.publishDate).ToList();
-        //check vote by user
+        //check vote by logged in user
         if (userId != null)
         {
             Vote? checkVoteByUser_c = await _db.Votes.SingleOrDefaultAsync(v =>
                 v.accountId == userId &&
-                v.targetCommentId == comment.Id);
+                v.targetCommentId == comment.id);
             if (checkVoteByUser_c != null)
                 comment.votedByUser = checkVoteByUser_c.body;
 
@@ -270,5 +270,5 @@ public class ReadingController : ControllerBase
     */
 
 
-    
+
 }

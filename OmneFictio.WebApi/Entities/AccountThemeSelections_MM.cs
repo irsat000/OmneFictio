@@ -3,14 +3,13 @@ using System.Collections.Generic;
 
 namespace OmneFictio.WebApi.Entities
 {
-    public partial class Rate
+    public partial class AccountThemeSelections_MM
     {
-        public int id { get; set; }
         public int accountId { get; set; }
-        public int postId { get; set; }
-        public double body { get; set; }
+        public int themeId { get; set; }
+        public bool? themeSelected { get; set; }
 
         public virtual Account account { get; set; } = null!;
-        public virtual Post post { get; set; } = null!;
+        public virtual Theme theme { get; set; } = null!;
     }
 }

@@ -69,22 +69,22 @@ public class AuthController : ControllerBase
         var securityToken = Encoding.ASCII.GetBytes(_configuration.GetSection("Token").Value);
         //Input validation
         Regex usernameRegex = new Regex(@"[A-Za-z0-9_]{3,30}");
-        if (!usernameRegex.IsMatch(request.Username) ||
-            request.Pw!.Contains(" ") ||
-            request.Pw!.Length < 6)
+        if (!usernameRegex.IsMatch(request.username) ||
+            request.pw!.Contains(" ") ||
+            request.pw!.Length < 6)
         {
             return BadRequest();
         }
-        if (await _db.Accounts.AnyAsync(a => a.username == request.Username))
+        if (await _db.Accounts.AnyAsync(a => a.username == request.username))
         {
             return Conflict();
         }
         //Fill an account object
-        string passwordHash = BC.HashPassword(request.Pw);
+        string passwordHash = BC.HashPassword(request.pw);
         Account newAccount = new Account();
-        newAccount.username = request.Username;
+        newAccount.username = request.username;
         newAccount.pw = passwordHash;
-        newAccount.email = request.Email;
+        newAccount.email = request.email;
         newAccount.externalType = "native";
         newAccount.emailValid = false;
         newAccount.profilePic = "/images/onerror/user_no_photo.png";
@@ -112,8 +112,8 @@ public class AuthController : ControllerBase
             return BadRequest();
         }
         //Login
-        var user = await _db.Accounts.SingleOrDefaultAsync(x => x.username == request.Username);
-        var createToken = _helperServices.CreateUserToken(user!, securityToken);
+        //OUTDATED Account user = await _db.Accounts.SingleOrDefaultAsync(x => x.username == request.username);
+        var createToken = _helperServices.CreateUserToken(newAccount, securityToken);
         if (createToken == null)
         {
             return Accepted();
@@ -155,7 +155,7 @@ public class AuthController : ControllerBase
             var email = jwt.Claims.First(claim => claim.Type == "email").Value;
             var name = Regex.Replace(jwt.Claims.First(claim => claim.Type == "name").Value, @"\s+", "");
             var username = name;
-            for (int i = 0; i < 500; i++)
+            for (int i = 0; i < 10; i++)
             {
                 if (await _db.Accounts.AnyAsync(a => a.username == username))
                 {
@@ -163,13 +163,17 @@ public class AuthController : ControllerBase
                 }
                 else { break; }
             }
+            if (await _db.Accounts.AnyAsync(a => a.username == username)){
+                //Might give them an option to choose a username
+                return StatusCode(500);
+            }
             string passwordHash = BC.HashPassword(_helperServices.GeneratePassword(16, 8));
 
             Account newAccount = new Account();
             newAccount.username = username;
             newAccount.email = email;
             newAccount.externalId = extId;
-            newAccount.profilePic = profilePic; //.Replace("https://lh3.googleusercontent.com/a/", "");
+            newAccount.profilePic = profilePic;
             newAccount.displayName = name;
             newAccount.pw = passwordHash;
             newAccount.externalType = "google";

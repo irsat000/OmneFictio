@@ -32,7 +32,7 @@ public class ActionController : Controller
         {
             return new JsonResult(Unauthorized());
         }
-        request.AccountId = AccountId;
+        request.accountId = AccountId;
 
         var apiResponse = await _httpClient.PostAsJsonAsync("Action/Vote", request);
         string statusCode = apiResponse.StatusCode.ToString();
@@ -52,7 +52,7 @@ public class ActionController : Controller
         {
             return new JsonResult(Unauthorized());
         }
-        request.AccountId = AccountId;
+        request.accountId = AccountId;
 
         var apiResponse = await _httpClient.PostAsJsonAsync("Action/Rate", request);
         string statusCode = apiResponse.StatusCode.ToString();
@@ -71,7 +71,7 @@ public class ActionController : Controller
         {
             return new JsonResult(Unauthorized());
         }
-        request.AccountId = AccountId;
+        request.accountId = AccountId;
 
         var apiResponse = await _httpClient.PostAsJsonAsync("Action/AddComment", request);
         string statusCode = apiResponse.StatusCode.ToString();
@@ -90,13 +90,13 @@ public class ActionController : Controller
         {
             return new JsonResult(Unauthorized());
         }
-        request.AccountId = AccountId;
+        request.accountId = AccountId;
 
-        request.PostTypeId = byte.TryParse((string)request.PostTypeId, out byte postTypeId)
+        request.postTypeId = byte.TryParse(request.postTypeId?.ToString(), out byte postTypeId)
             ? postTypeId : 1;
-        request.LanguageId = int.TryParse((string)request.LanguageId, out int languageId)
+        request.languageId = int.TryParse(request.languageId?.ToString(), out int languageId)
             ? languageId : 1;
-        request.RatedAsId = int.TryParse((string?)request.RatedAsId, out int ratedAsId)
+        request.ratedAsId = int.TryParse(request.ratedAsId?.ToString(), out int ratedAsId)
             ? ratedAsId : 1;
 
         var apiResponse = await _httpClient.PostAsJsonAsync("Action/CreatePost", request);

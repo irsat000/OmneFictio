@@ -12,14 +12,14 @@ namespace OmneFictio.WebApi.Entities
 
         public int id { get; set; }
         public int? accountId { get; set; }
-        public int? commentId { get; set; }
+        public int commentId { get; set; }
         public string body { get; set; } = null!;
-        public byte? deletedStatusId { get; set; }
         public DateTime publishDate { get; set; }
         public DateTime updateDate { get; set; }
+        public byte? deletedStatusId { get; set; }
 
         public virtual Account? account { get; set; }
-        public virtual Comment? comment { get; set; }
+        public virtual Comment comment { get; set; } = null!;
         public virtual DeletedStatus? deletedStatus { get; set; }
         public virtual ICollection<Vote> Votes { get; set; }
     }

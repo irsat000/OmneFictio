@@ -1,7 +1,7 @@
 
 namespace OmneFictio.WebApi.Dtos;
 
-public class IpDto
+public partial class AccountIPDto
 {
     public string body { get; set; } = null!;
 }

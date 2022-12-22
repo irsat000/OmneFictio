@@ -12,6 +12,7 @@ namespace OmneFictio.WebApi.Entities
 
         public int id { get; set; }
         public string body { get; set; } = null!;
+        public bool userGenerated { get; set; }
 
         public virtual ICollection<Post> posts { get; set; }
     }

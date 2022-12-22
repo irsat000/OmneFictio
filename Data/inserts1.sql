@@ -8,53 +8,53 @@ INSERT INTO PostType VALUES(4, 'Plot')
 
 
 INSERT INTO DeletedStatus VALUES(1, 'Default')
-INSERT INTO DeletedStatus VALUES(2, 'Temporary Removal')
-INSERT INTO DeletedStatus VALUES(3, 'Removed')
+INSERT INTO DeletedStatus VALUES(2, 'Removed')
+INSERT INTO DeletedStatus VALUES(3, 'TempRemove')
 
 
 INSERT INTO PostStatus VALUES(1, 'In-progress')
-INSERT INTO PostStatus VALUES(2, 'Pause')
-INSERT INTO PostStatus VALUES(3, 'Dropped')
-INSERT INTO PostStatus VALUES(4, 'Finished')
+INSERT INTO PostStatus VALUES(2, 'Finished')
+INSERT INTO PostStatus VALUES(3, 'Paused')
+INSERT INTO PostStatus VALUES(4, 'Dropped')
 
 
 INSERT INTO RatedAs VALUES(1, 'E - Everyone')
 INSERT INTO RatedAs VALUES(2, 'T - 13+')
 INSERT INTO RatedAs VALUES(3, 'M - 15+')
 INSERT INTO RatedAs VALUES(4, 'A - 18+')
+INSERT INTO RatedAs VALUES(5, 'X - Disturbing')
 
 
-INSERT INTO Authority VALUES('Admin')
-INSERT INTO Authority VALUES('Moderator')
-INSERT INTO Authority VALUES('a45Bl3Kw7S$!3D2g')
-INSERT INTO Authority VALUES('X!xv#cJ1*@Lh3S3f')
-INSERT INTO Authority VALUES('$G^3z53M6s&u8O7v')
-INSERT INTO Authority VALUES('*Q5e1i6X9!##$Ypw')
+INSERT INTO Authority VALUES('Developer', 'DEV')
+INSERT INTO Authority VALUES('Admin', 'ADMIN')
+INSERT INTO Authority VALUES('Moderator', 'MOD')
 
 
-INSERT INTO InventoryItem VALUES('Bronz')
-INSERT INTO InventoryItem VALUES('Iron')
-INSERT INTO InventoryItem VALUES('Silver')
-INSERT INTO InventoryItem VALUES('Gold')
-INSERT INTO InventoryItem VALUES('Platinum')
+INSERT INTO InventoryItem VALUES('bronze', 'Bronze', 5)
+INSERT INTO InventoryItem VALUES('copper', 'Copper', 7)
+INSERT INTO InventoryItem VALUES('iron', 'Iron', 10)
+INSERT INTO InventoryItem VALUES('silver', 'Silver', 14)
+INSERT INTO InventoryItem VALUES('gold', 'Gold', 19)
+INSERT INTO InventoryItem VALUES('platinum', 'Platinum', 25)
+INSERT INTO InventoryItem VALUES('diamond', 'Diamond', 32)
 
 
-INSERT INTO Tag VALUES('Sci-Fi')
-INSERT INTO Tag VALUES('Tragedy')
-INSERT INTO Tag VALUES('Spiritual')
-INSERT INTO Tag VALUES('Mystery')
-INSERT INTO Tag VALUES('Parody')
-INSERT INTO Tag VALUES('Horror')
-INSERT INTO Tag VALUES('Fantasy')
-INSERT INTO Tag VALUES('Crime')
-INSERT INTO Tag VALUES('Western')
-INSERT INTO Tag VALUES('Supernatural')
-INSERT INTO Tag VALUES('Poetry')
-INSERT INTO Tag VALUES('Adventure')
-INSERT INTO Tag VALUES('Humor')
-INSERT INTO Tag VALUES('Romance')
-INSERT INTO Tag VALUES('Family')
-INSERT INTO Tag VALUES('Drama')
+INSERT INTO Tag VALUES('Sci-Fi', 0)
+INSERT INTO Tag VALUES('Tragedy', 0)
+INSERT INTO Tag VALUES('Spiritual', 0)
+INSERT INTO Tag VALUES('Mystery', 0)
+INSERT INTO Tag VALUES('Parody', 0)
+INSERT INTO Tag VALUES('Horror', 0)
+INSERT INTO Tag VALUES('Fantasy', 0)
+INSERT INTO Tag VALUES('Crime', 0)
+INSERT INTO Tag VALUES('Western', 0)
+INSERT INTO Tag VALUES('Supernatural', 0)
+INSERT INTO Tag VALUES('Poetry', 0)
+INSERT INTO Tag VALUES('Adventure', 0)
+INSERT INTO Tag VALUES('Humor', 0)
+INSERT INTO Tag VALUES('Romance', 0)
+INSERT INTO Tag VALUES('Family', 0)
+INSERT INTO Tag VALUES('Drama', 0)
 
 
 /*--------------*/
@@ -103,6 +103,99 @@ INSERT INTO ExistingStory VALUES('Caillou', 6)
 /*--------------*/
 
 
+
+INSERT INTO Language VALUES('EN', 'English');
+INSERT INTO Language VALUES('TR', 'Turkish');
+INSERT INTO Language VALUES('AF', 'Afrikaans');
+INSERT INTO Language VALUES('AM', 'Amharic');
+INSERT INTO Language VALUES('AR', 'Arabic');
+INSERT INTO Language VALUES('AZ', 'Azerbaijani');
+INSERT INTO Language VALUES('BE', 'Belarusian');
+INSERT INTO Language VALUES('BG', 'Bulgarian');
+INSERT INTO Language VALUES('BN', 'Bengali');
+INSERT INTO Language VALUES('BO', 'Tibetan Standard');
+INSERT INTO Language VALUES('CA', 'Catalan');
+INSERT INTO Language VALUES('CS', 'Czech');
+INSERT INTO Language VALUES('CY', 'Welsh');
+INSERT INTO Language VALUES('DA', 'Danish');
+INSERT INTO Language VALUES('DE', 'German');
+INSERT INTO Language VALUES('EE', 'Ewe');
+INSERT INTO Language VALUES('EL', 'Greek');
+INSERT INTO Language VALUES('EO', 'Esperanto');
+INSERT INTO Language VALUES('ES', 'Spanish');
+INSERT INTO Language VALUES('ET', 'Estonian');
+INSERT INTO Language VALUES('EU', 'Basque');
+INSERT INTO Language VALUES('FA', 'Persian');
+INSERT INTO Language VALUES('FI', 'Finnish');
+INSERT INTO Language VALUES('FO', 'Faroese');
+INSERT INTO Language VALUES('FR', 'French');
+INSERT INTO Language VALUES('GA', 'Irish');
+INSERT INTO Language VALUES('GL', 'Galician');
+INSERT INTO Language VALUES('GU', 'Gujarati');
+INSERT INTO Language VALUES('HE', 'Hebrew');
+INSERT INTO Language VALUES('HI', 'Hindi');
+INSERT INTO Language VALUES('HR', 'Croatian');
+INSERT INTO Language VALUES('HU', 'Hungarian');
+INSERT INTO Language VALUES('HY', 'Armenian');
+INSERT INTO Language VALUES('IA', 'Interlingua');
+INSERT INTO Language VALUES('ID', 'Indonesian');
+INSERT INTO Language VALUES('IS', 'Icelandic');
+INSERT INTO Language VALUES('IT', 'Italian');
+INSERT INTO Language VALUES('JA', 'Japanese');
+INSERT INTO Language VALUES('KA', 'Georgian');
+INSERT INTO Language VALUES('KI', 'Kikuyu');
+INSERT INTO Language VALUES('KM', 'Khmer');
+INSERT INTO Language VALUES('KN', 'Kannada');
+INSERT INTO Language VALUES('KO', 'Korean');
+INSERT INTO Language VALUES('LG', 'Ganda');
+INSERT INTO Language VALUES('LO', 'Lao');
+INSERT INTO Language VALUES('LT', 'Lithuanian');
+INSERT INTO Language VALUES('LV', 'Latvian');
+INSERT INTO Language VALUES('MK', 'Macedonian');
+INSERT INTO Language VALUES('ML', 'Malayalam');
+INSERT INTO Language VALUES('MR', 'Marathi');
+INSERT INTO Language VALUES('MS', 'Malay');
+INSERT INTO Language VALUES('MT', 'Maltese');
+INSERT INTO Language VALUES('MY', 'Burmese');
+INSERT INTO Language VALUES('NB', 'Norwegian Bokmal');
+INSERT INTO Language VALUES('NE', 'Nepali');
+INSERT INTO Language VALUES('NL', 'Dutch');
+INSERT INTO Language VALUES('NN', 'Norwegian Nynorsk');
+INSERT INTO Language VALUES('NO', 'Norwegian');
+INSERT INTO Language VALUES('OR', 'Oriya');
+INSERT INTO Language VALUES('PL', 'Polish');
+INSERT INTO Language VALUES('PT', 'Portuguese');
+INSERT INTO Language VALUES('RM', 'Romansh');
+INSERT INTO Language VALUES('RO', 'Romanian');
+INSERT INTO Language VALUES('RU', 'Russian');
+INSERT INTO Language VALUES('SE', 'Northern Sami');
+INSERT INTO Language VALUES('SK', 'Slovak');
+INSERT INTO Language VALUES('SL', 'Slovene');
+INSERT INTO Language VALUES('SN', 'Shona');
+INSERT INTO Language VALUES('SQ', 'Albanian');
+INSERT INTO Language VALUES('SR', 'Serbian');
+INSERT INTO Language VALUES('SV', 'Swedish');
+INSERT INTO Language VALUES('TA', 'Tamil');
+INSERT INTO Language VALUES('TE', 'Telugu');
+INSERT INTO Language VALUES('TH', 'Thai');
+INSERT INTO Language VALUES('TI', 'Tigrinya');
+INSERT INTO Language VALUES('TL', 'Tagalog');
+INSERT INTO Language VALUES('UK', 'Ukrainian');
+INSERT INTO Language VALUES('UR', 'Urdu');
+INSERT INTO Language VALUES('VI', 'Vietnamese');
+INSERT INTO Language VALUES('ZH-CN', 'Chinese Simplified');
+INSERT INTO Language VALUES('ZH-TW', 'Chinese Traditional');
+
+
+
+
+
+
+
+
+
+
+/*
 INSERT INTO Language VALUES('EN', 'ENGLISH')
 INSERT INTO Language VALUES('TR', 'TURKISH')
 INSERT INTO Language VALUES('AF', 'AFRIKAANS')
@@ -184,3 +277,4 @@ INSERT INTO Language VALUES('UR', 'URDU')
 INSERT INTO Language VALUES('VI', 'VIETNAMESE')
 INSERT INTO Language VALUES('ZH-CN', 'CHINESE SIMPLIFIED')
 INSERT INTO Language VALUES('ZH-TW', 'CHINESE TRADITIONAL')
+*/

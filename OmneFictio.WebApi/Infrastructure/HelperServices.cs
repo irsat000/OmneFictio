@@ -32,8 +32,8 @@ public class HelperServices : IHelperServices
         {
             //remove non-published chapters
             //Maybe I can do this from the root later
-            if (post.chapters != null && post.chapters.Count() > 0)
-                post.chapters = post.chapters.Where(c => c.isPublished == true).ToList();
+            if (post.Chapters != null && post.Chapters.Count() > 0)
+                post.Chapters = post.Chapters.Where(c => c.isPublished == true).ToList();
 
             //Get comment and reply count
             var commentIds = _db.Comments
@@ -41,7 +41,7 @@ public class HelperServices : IHelperServices
                         x.deletedStatus!.body == "Default")
                 .Select(x => x.id);
             var replyCount = _db.Replies
-                .Count(x => commentIds.Contains(x.commentId ?? -1) &&
+                .Count(x => commentIds.Contains(x.commentId) &&
                         x.deletedStatus!.body == "Default");
             post.comRepLength = commentIds.Count() + replyCount;
 
@@ -52,10 +52,9 @@ public class HelperServices : IHelperServices
                         x.deletedStatus!.body == "Default" &&
                         x.isPublished == true)
                 .Select(x => x.body);
-            foreach (string? chbody in chbodyList)
+            foreach (string chbody in chbodyList)
             {
-                post.wordsLength += chbody != null
-                    ? chbody.Split(wordSeparator, StringSplitOptions.RemoveEmptyEntries).Length : 0;
+                post.wordsLength += chbody.Split(wordSeparator, StringSplitOptions.RemoveEmptyEntries).Length;
             }
 
             //check vote by user

@@ -8,6 +8,8 @@ namespace OmneFictio.WebApi.Entities
         public Language()
         {
             Posts = new HashSet<Post>();
+            PreferenceprefLanguageId_2Navigations = new HashSet<Preference>();
+            PreferenceprefLanguages = new HashSet<Preference>();
         }
 
         public int id { get; set; }
@@ -15,5 +17,7 @@ namespace OmneFictio.WebApi.Entities
         public string body { get; set; } = null!;
 
         public virtual ICollection<Post> Posts { get; set; }
+        public virtual ICollection<Preference> PreferenceprefLanguageId_2Navigations { get; set; }
+        public virtual ICollection<Preference> PreferenceprefLanguages { get; set; }
     }
 }

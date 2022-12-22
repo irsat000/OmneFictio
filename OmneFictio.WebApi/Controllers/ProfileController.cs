@@ -51,23 +51,25 @@ public class ProfileController : ControllerBase
         var account = await _mapper.ProjectTo<AccountDtoRead_3>(_db.Accounts
             .Where(a =>
                 a.username == targetUsername &&
-                a.deletedStatus!.body == "Default"
+                a.deletedStatus != null &&
+                a.deletedStatus.body == "Default"
             )).FirstOrDefaultAsync();
         if (account == null)
         {
             return NotFound();
         }
-        if (userId == null || userId != account.id)
+        /*if (userId == null || userId != account.id)
         {
             account.email = null;
             account.emailValid = null;
             account.gold = null;
-        }
+        } Classified information.*/
 
         //Get the user's posts for other calculations
         var postsPublished = _db.Posts
             .Where(p => p.accountId == account.id &&
-                    p.deletedStatus!.body == "Default")
+                p.deletedStatus != null &&
+                p.deletedStatus.body == "Default")
             .Select(p => p.id);
         //Get stat_postsPublished
         account.stat_postsPublished = postsPublished.Count();
@@ -81,8 +83,8 @@ public class ProfileController : ControllerBase
         account.stat_likes = likesSum - dislikesSum;
         //Get stat_saved
         account.stat_saved = _db.SavedPosts
-            .Count(sp => postsPublished.Contains(sp.targetPostId ?? -1));
-        
+            .Count(sp => postsPublished.Contains(sp.targetPostId));
+
         return Ok(account);
     }
 
@@ -94,8 +96,10 @@ public class ProfileController : ControllerBase
         var posts = _db.Posts
             .Where(p =>
                 p.isPublished == true &&
-                p.deletedStatus!.body == "Default" &&
-                p.account!.username == targetUsername)
+                p.deletedStatus != null &&
+                p.deletedStatus.body == "Default" &&
+                p.account != null &&
+                p.account.username == targetUsername)
             .OrderByDescending(p => p.publishDate);
         //-----------
         var postList = await _mapper.ProjectTo<PostDtoRead_1>(posts)
@@ -112,9 +116,11 @@ public class ProfileController : ControllerBase
         List<CommentDtoRead_2> comments = new List<CommentDtoRead_2>();
 
         comments = await _mapper.ProjectTo<CommentDtoRead_2>(_db.Comments.Where(c =>
-            c.targetPostId != null &&
-            c.deletedStatus!.body == "Default" &&
-            c.account!.username == targetUsername)
+                c.targetPostId != null &&
+                c.deletedStatus != null &&
+                c.deletedStatus.body == "Default" &&
+                c.account != null &&
+                c.account.username == targetUsername)
             .OrderByDescending(c => c.publishDate)).ToListAsync();
 
         if (comments == null || comments.Count() == 0)

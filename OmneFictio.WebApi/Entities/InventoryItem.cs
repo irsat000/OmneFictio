@@ -12,7 +12,9 @@ namespace OmneFictio.WebApi.Entities
         }
 
         public int id { get; set; }
+        public string code { get; set; } = null!;
         public string body { get; set; } = null!;
+        public int itemValue { get; set; }
 
         public virtual ICollection<PostGift> PostGifts { get; set; }
 

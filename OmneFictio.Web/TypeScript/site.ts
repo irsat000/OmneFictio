@@ -10,18 +10,23 @@ class JustBody {
 class Tag {
     id!: number;
     body!: string;
+    userGenerated!: boolean;
 }
 class ExistingStories {
     body!: string;
     storyType!: JustBody;
 }
 class Language {
-    lanCode?: string;
+    lanCode!: string;
     body!: string;
 }
 class PostGift {
     sentDate!: Date;
     item!: JustBody;
+}
+class Authority {
+    code!: string;
+    body!: string;
 }
 //-----
 class ofAccount {
@@ -31,7 +36,7 @@ class ofAccount {
     profilePic?: string;
     selfDesc?: string;
     deletedStatus?: JustBody;
-    authorities?: JustBody[];
+    authorities?: Authority[];
 }
 class ofChapter {
     id!: number;
@@ -48,11 +53,11 @@ class ofPost_1 {
     coverImage?: string;
     account?: ofAccount;
     deletedStatus?: JustBody;
-    language?: Language;
-    postStatus?: JustBody;
-    postType?: JustBody;
-    ratedAs?: JustBody;
-    chapters?: ofChapter[];
+    language!: Language;
+    postStatus!: JustBody;
+    postType!: JustBody;
+    ratedAs!: JustBody;
+    Chapters?: ofChapter[];
     postGifts?: PostGift[];
     tags?: Tag[];
     existingStories?: ExistingStories[];
@@ -61,7 +66,7 @@ class ofPost_1 {
     comRepLength!: number;
     wordsLength!: number;
     votedByUser?: boolean;
-    RatedByUser?: number;
+    ratedByUser?: number;
 }
 class ofComment_1 {
     id!: number;
@@ -70,7 +75,6 @@ class ofComment_1 {
     updateDate!: Date;
     account?: ofAccount;
     targetPostId?: number;
-    deletedStatus?: JustBody;
     repliesLength!: number;
     voteResult!: number;
     votedByUser?: boolean;
@@ -720,7 +724,7 @@ function fillPostTemplate(post: ofPost_1) {
     language.textContent = post.language!.body;
     status.textContent = post.postStatus!.body;
     readerRating.textContent = post.ratedAs!.body;
-    chapterAmount.textContent = post.chapters!.length.toString();
+    chapterAmount.textContent = post.Chapters!.length.toString();
     wordAmount.textContent = post.wordsLength.toString();
     commentAmount.textContent = post.comRepLength.toString();
     updateDate.textContent = window.TimeAgo(post.updateDate, "short");
