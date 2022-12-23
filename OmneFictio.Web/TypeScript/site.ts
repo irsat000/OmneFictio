@@ -32,11 +32,11 @@ class Authority {
 class ofAccount {
     id!: number;
     username!: string;
-    displayName?: string;
-    profilePic?: string;
-    selfDesc?: string;
-    deletedStatus?: JustBody;
-    authorities?: Authority[];
+    displayName!: string | null;
+    profilePic!: string | null;
+    selfDesc!: string | null;
+    deletedStatus!: JustBody | null;
+    authorities!: Authority[] | null;
 }
 class ofChapter {
     id!: number;
@@ -50,43 +50,43 @@ class ofPost_1 {
     postDescription!: string;
     publishDate!: Date;
     updateDate!: Date;
-    coverImage?: string;
-    account?: ofAccount;
-    deletedStatus?: JustBody;
+    coverImage!: string | null;
+    account!: ofAccount | null;
+    deletedStatus!: JustBody | null;
     language!: Language;
     postStatus!: JustBody;
     postType!: JustBody;
     ratedAs!: JustBody;
-    Chapters?: ofChapter[];
-    postGifts?: PostGift[];
-    tags?: Tag[];
-    existingStories?: ExistingStories[];
+    chapters!: ofChapter[] | null;
+    postGifts!: PostGift[] | null;
+    tags!: Tag[] | null;
+    existingStories!: ExistingStories[] | null;
     voteResult!: number;
     rateResult!: number;
     comRepLength!: number;
     wordsLength!: number;
-    votedByUser?: boolean;
-    ratedByUser?: number;
+    votedByUser!: boolean | null;
+    ratedByUser!: number | null;
 }
 class ofComment_1 {
     id!: number;
     body!: string;
     publishDate!: Date;
     updateDate!: Date;
-    account?: ofAccount;
-    targetPostId?: number;
+    account!: ofAccount | null;
+    targetPostId!: number | null;
     repliesLength!: number;
     voteResult!: number;
-    votedByUser?: boolean;
+    votedByUser!: boolean | null;
 }
 class ofReply_1 {
     id!: number;
     body!: string;
     publishDate!: Date;
     updateDate!: Date;
-    account?: ofAccount;
+    account!: ofAccount | null;
     voteResult!: number;
-    votedByUser?: boolean;
+    votedByUser!: boolean | null;
 }
 
 class ofRead_GetPosts {
@@ -248,6 +248,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
 
+    //I might give this function to the like-dislike buttons when I create them from template
     //Vote - fetch api
     document.addEventListener('click', function (e) {
         if ((<HTMLElement>e.target).classList.contains('likebtn') ||
@@ -585,7 +586,7 @@ function voting_visual(btn: HTMLElement, action: string) {
     }
 }
 
-function checkVoted_icons(clone: HTMLElement, val: boolean | undefined) {
+function checkVoted_icons(clone: HTMLElement, val: boolean | null) {
     const likebtn = clone.querySelector('[data-action="like"]') as HTMLElement;
     const dislikebtn = clone.querySelector('[data-action="dislike"]') as HTMLElement;
     likebtn.className = "";
@@ -720,24 +721,29 @@ function fillPostTemplate(post: ofPost_1) {
     rate.textContent = post.rateResult >= 0 && post.rateResult <= 10
         ? Number((post.rateResult).toFixed(1)) + "/10"
         : "-/10";
-    type.textContent = post.postType!.body;
-    language.textContent = post.language!.body;
-    status.textContent = post.postStatus!.body;
-    readerRating.textContent = post.ratedAs!.body;
-    chapterAmount.textContent = post.Chapters!.length.toString();
+    type.textContent = post.postType.body;
+    language.textContent = post.language.body;
+    status.textContent = post.postStatus.body;
+    readerRating.textContent = post.ratedAs.body;
+    if(post.chapters !== null){
+        chapterAmount.textContent = post.chapters.length.toString();
+    }
+    else {
+        chapterAmount.textContent = "0";
+    }
     wordAmount.textContent = post.wordsLength.toString();
     commentAmount.textContent = post.comRepLength.toString();
     updateDate.textContent = window.TimeAgo(post.updateDate, "short");
     //tag list
-    if (post.tags!.length > 0) {
-        post.tags!.forEach((tagname: any) =>
+    if (post.tags !== null && post.tags.length > 0) {
+        post.tags.forEach((tagname: Tag) =>
             tagSection.innerHTML += "<span>" + tagname.body + "</span>"
         );
     } else {
         tagSection.innerHTML = "<span>Empty</span>";
     }
     //based on list
-    if (post.existingStories!.length > 0) {
+    if (post.existingStories !== null && post.existingStories.length > 0) {
         post.existingStories!.forEach((storyname: any) =>
             seriesSection.innerHTML += "<span>" + storyname.body + "</span>"
         );
@@ -745,11 +751,11 @@ function fillPostTemplate(post: ofPost_1) {
         seriesSection.remove();
     }
     //user
-    if (post.account !== undefined) {
-        username.textContent = post.account.displayName !== undefined
+    if (post.account !== null) {
+        username.textContent = post.account.displayName !== null
             ? post.account.displayName!
             : post.account.username;
-        if (post.account.profilePic !== undefined) {
+        if (post.account.profilePic !== null) {
             userImg.src = '/images/users/' + post.account.profilePic;
         } else {
             userImg.remove();
@@ -789,7 +795,9 @@ async function fillCommentTemplate(comment: ofComment_1, page: string | null) {
     //Populate comment
     cContainer.setAttribute('data-commentid', comment.id.toString());
     cUserImg.src = '/images/users/' + comment.account!.profilePic;
-    cUsername.textContent = comment.account!.displayName !== undefined
+
+    //NULL CHECK FOR ACCOUNT WILL BE CODED
+    cUsername.textContent = comment.account!.displayName !== null
         ? comment.account!.displayName
         : comment.account!.username;
     cPublishDate.textContent = window.TimeAgo(comment.publishDate);
@@ -819,7 +827,9 @@ async function fillCommentTemplate(comment: ofComment_1, page: string | null) {
             rVoteCount.textContent = hreply.voteResult.toString();
         }
         rUserImg.src = '/images/users/' + hreply.account!.profilePic;
-        rUsername.textContent = hreply.account!.displayName != undefined
+
+        //NULL CHECK FOR ACCOUNT WILL BE CODED
+        rUsername.textContent = hreply.account!.displayName != null
             ? hreply.account!.displayName
             : hreply.account!.username;
     }

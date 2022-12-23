@@ -87,24 +87,26 @@ public class AuthController : ControllerBase
         newAccount.email = request.email;
         newAccount.externalType = "native";
         newAccount.emailValid = false;
-        newAccount.profilePic = "/images/onerror/user_no_photo.png";
-        /* WILL BE USED FOR Preferences TABLE
-        if (request.AllowAdultContent != null)
+        newAccount.profilePic = "user_no_photo.png";
+
+        Preference preferences = new Preference();
+        preferences.allowAdultContent = bool.TryParse(request.allowAdultContent?.ToString(), out bool allowAdultContent)
+            ? allowAdultContent
+            : false;
+        if (int.TryParse(request.prefLanguageId?.ToString(), out int prefLanguageId)
+            && prefLanguageId != 0
+            && await _db.Languages.AnyAsync(l => l.id == prefLanguageId))
         {
-            newAccount.allowAdultContent = request.AllowAdultContent;
+            preferences.prefLanguageId = prefLanguageId;
         }
-        else
-        {
-            newAccount.allowAdultContent = false;
-        }
-        if (await _db.Languages.AnyAsync(l => l.id == request.PrefLanguageId))
-        {
-            newAccount.prefLanguageId = request.PrefLanguageId;
-        }*/
-        //Save user in the database
         try
         {
+            //create account
             await _db.Accounts.AddAsync(newAccount);
+            await _db.SaveChangesAsync();
+            //create preferences
+            preferences.accountId = newAccount.id;
+            await _db.Preferences.AddAsync(preferences);
             await _db.SaveChangesAsync();
         }
         catch (Exception)
@@ -112,7 +114,6 @@ public class AuthController : ControllerBase
             return BadRequest();
         }
         //Login
-        //OUTDATED Account user = await _db.Accounts.SingleOrDefaultAsync(x => x.username == request.username);
         var createToken = _helperServices.CreateUserToken(newAccount, securityToken);
         if (createToken == null)
         {
@@ -173,19 +174,22 @@ public class AuthController : ControllerBase
             newAccount.username = username;
             newAccount.email = email;
             newAccount.externalId = extId;
-            newAccount.profilePic = profilePic;
-            newAccount.displayName = name;
             newAccount.pw = passwordHash;
             newAccount.externalType = "google";
             newAccount.emailValid = true;
-            //newAccount.allowAdultContent = false; will be in preferences table
-            //newAccount.prefLanguageId = null;
 
+            Preference preferences = new Preference();
+            preferences.allowAdultContent = false;
             try
             {
+                //create account
                 await _db.Accounts.AddAsync(newAccount);
                 await _db.SaveChangesAsync();
                 newAccount.profilePic = "user" + newAccount.id.ToString() + ".png";
+                await _db.SaveChangesAsync();
+                //create preferences
+                preferences.accountId = newAccount.id;
+                await _db.Preferences.AddAsync(preferences);
                 await _db.SaveChangesAsync();
             }
             catch (DbEntityValidationException)

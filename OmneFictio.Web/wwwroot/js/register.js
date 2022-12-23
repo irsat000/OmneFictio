@@ -27,6 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
             message.innerHTML = "*Passwords don't match*";
             return;
         }
+        console.log(JSON.parse(window.strfForm(register_form)));
         await fetch("/Auth/UserRegistration", {
             method: 'POST',
             headers: {

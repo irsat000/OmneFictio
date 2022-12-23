@@ -49,8 +49,8 @@ public class AuthController : Controller
     {
         account.allowAdultContent = account.allowAdultContent?.ToString() == "true"
             ? true : false;
-        account.prefLanguageId = int.TryParse((string?)account.prefLanguageId, out int prefLan)
-            ? prefLan : 0; //or null
+        account.prefLanguageId = int.TryParse(account.prefLanguageId?.ToString(), out int prefLan)
+            ? prefLan : null;
 
         var apiResponse = await _httpClient.PostAsJsonAsync("Auth/Register", account);
         string statusCode = apiResponse.StatusCode.ToString();

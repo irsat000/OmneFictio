@@ -51,7 +51,7 @@ class ofPost_1 {
     postStatus;
     postType;
     ratedAs;
-    Chapters;
+    chapters;
     postGifts;
     tags;
     existingStories;
@@ -640,27 +640,32 @@ function fillPostTemplate(post) {
     language.textContent = post.language.body;
     status.textContent = post.postStatus.body;
     readerRating.textContent = post.ratedAs.body;
-    chapterAmount.textContent = post.Chapters.length.toString();
+    if (post.chapters !== null) {
+        chapterAmount.textContent = post.chapters.length.toString();
+    }
+    else {
+        chapterAmount.textContent = "0";
+    }
     wordAmount.textContent = post.wordsLength.toString();
     commentAmount.textContent = post.comRepLength.toString();
     updateDate.textContent = window.TimeAgo(post.updateDate, "short");
-    if (post.tags.length > 0) {
+    if (post.tags !== null && post.tags.length > 0) {
         post.tags.forEach((tagname) => tagSection.innerHTML += "<span>" + tagname.body + "</span>");
     }
     else {
         tagSection.innerHTML = "<span>Empty</span>";
     }
-    if (post.existingStories.length > 0) {
+    if (post.existingStories !== null && post.existingStories.length > 0) {
         post.existingStories.forEach((storyname) => seriesSection.innerHTML += "<span>" + storyname.body + "</span>");
     }
     else {
         seriesSection.remove();
     }
-    if (post.account !== undefined) {
-        username.textContent = post.account.displayName !== undefined
+    if (post.account !== null) {
+        username.textContent = post.account.displayName !== null
             ? post.account.displayName
             : post.account.username;
-        if (post.account.profilePic !== undefined) {
+        if (post.account.profilePic !== null) {
             userImg.src = '/images/users/' + post.account.profilePic;
         }
         else {
@@ -693,7 +698,7 @@ async function fillCommentTemplate(comment, page) {
     const rUsername = clone.querySelector('.r-username');
     cContainer.setAttribute('data-commentid', comment.id.toString());
     cUserImg.src = '/images/users/' + comment.account.profilePic;
-    cUsername.textContent = comment.account.displayName !== undefined
+    cUsername.textContent = comment.account.displayName !== null
         ? comment.account.displayName
         : comment.account.username;
     cPublishDate.textContent = window.TimeAgo(comment.publishDate);
@@ -721,7 +726,7 @@ async function fillCommentTemplate(comment, page) {
             rVoteCount.textContent = hreply.voteResult.toString();
         }
         rUserImg.src = '/images/users/' + hreply.account.profilePic;
-        rUsername.textContent = hreply.account.displayName != undefined
+        rUsername.textContent = hreply.account.displayName != null
             ? hreply.account.displayName
             : hreply.account.username;
     }
