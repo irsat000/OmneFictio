@@ -1,10 +1,10 @@
 
 document.addEventListener("DOMContentLoaded", function () {
     let profileTabLinks = document.querySelectorAll('.profile-tabs-cont a') as NodeListOf<HTMLAnchorElement>;
-    const targetUsername:string = getPathPart(2);
-    const pPath:string = "/u/" + targetUsername + "/";
-    const getTab:string = getPathPart(3);
-    let pTab:string = getTab === "" ? "posts" : getTab;
+    const targetUsername: string = getPathPart(2);
+    const pPath: string = "/u/" + targetUsername + "/";
+    const getTab: string = getPathPart(3);
+    let pTab: string = getTab === "" ? "posts" : getTab;
 
     const profileBody = document.getElementById('profile-body') as HTMLDivElement;
     const profileBody_posts = document.getElementById('profile-posts') as HTMLDivElement;
@@ -12,11 +12,11 @@ document.addEventListener("DOMContentLoaded", function () {
     const profileBody_saved = document.getElementById('profile-saved') as HTMLDivElement;
     const profileBody_followed = document.getElementById('profile-followed') as HTMLDivElement;
     const profileBody_friends = document.getElementById('profile-friends') as HTMLDivElement;
-    let loadedOnce_posts:number = 0;
-    let loadedOnce_reviews:number = 0;
-    let loadedOnce_saved:number = 0;
-    let loadedOnce_followed:number = 0;
-    let loadedOnce_friends:number = 0;
+    let loadedOnce_posts: number = 0;
+    let loadedOnce_reviews: number = 0;
+    let loadedOnce_saved: number = 0;
+    let loadedOnce_followed: number = 0;
+    let loadedOnce_friends: number = 0;
 
     profileTabLinks.forEach(function (a) {
         a.addEventListener("click", function () {
@@ -25,6 +25,33 @@ document.addEventListener("DOMContentLoaded", function () {
             changeProfileTab(pTab);
         });
     });
+
+    getProfileInfo();
+    function getProfileInfo() {
+        fetch("/u/GetUserInfo/" + targetUsername, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => res.json())
+            .then(async (data) => {
+                if (data.statusCode === 200) {
+                    //GET THE POSTS
+                    const response = JSON.parse(data.value);
+                    console.log(response.accountInfo);
+                } else if (data.statusCode === 404) {
+                } else {
+                }
+            })
+            .catch(error => {
+                console.log('Profile info fetch failed -> ' + error);
+            });
+    }
+
+
+
 
     changeProfileTab(pTab);
     function changeProfileTab(tab: string) {
@@ -76,8 +103,8 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    async function createProfileBody_posts() {
-        await fetch("/u/GetPosts/" + targetUsername, {
+    function createProfileBody_posts() {
+        fetch("/u/GetPosts/" + targetUsername, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -96,19 +123,19 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                     loadedOnce_posts = 1;
                 } else if (data.statusCode === 404) {
-
+                    loadedOnce_posts = 1;
                 } else {
                     console.log();
                 }
             })
             .catch(error => {
                 profileBody_posts.innerHTML = "Fetch fail";
-                console.log('Profile post fetch failed -> ' + error); //MUST NOT BE GIVEN TO USERS
+                console.log('Profile post fetch failed -> ' + error);
             });
     }
 
-    async function createProfileBody_reviews() {
-        await fetch("/u/GetReviews/" + targetUsername, {
+    function createProfileBody_reviews() {
+        fetch("/u/GetReviews/" + targetUsername, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -124,8 +151,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         profileBody_reviews.appendChild(await fillCommentTemplate(comment, "profile"));
                     };
                     loadedOnce_reviews = 1;
-                } else if(data.statusCode === 404){
-
+                } else if (data.statusCode === 404) {
+                    loadedOnce_reviews = 1;
                 } else {
 
                 }

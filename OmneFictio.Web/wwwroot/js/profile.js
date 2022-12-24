@@ -23,6 +23,30 @@ document.addEventListener("DOMContentLoaded", function () {
             changeProfileTab(pTab);
         });
     });
+    getProfileInfo();
+    function getProfileInfo() {
+        fetch("/u/GetUserInfo/" + targetUsername, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => res.json())
+            .then(async (data) => {
+            if (data.statusCode === 200) {
+                const response = JSON.parse(data.value);
+                console.log(response.accountInfo);
+            }
+            else if (data.statusCode === 404) {
+            }
+            else {
+            }
+        })
+            .catch(error => {
+            console.log('Profile info fetch failed -> ' + error);
+        });
+    }
     changeProfileTab(pTab);
     function changeProfileTab(tab) {
         profileTabLinks.forEach(function (a) {
@@ -69,8 +93,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 break;
         }
     }
-    async function createProfileBody_posts() {
-        await fetch("/u/GetPosts/" + targetUsername, {
+    function createProfileBody_posts() {
+        fetch("/u/GetPosts/" + targetUsername, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -89,6 +113,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 loadedOnce_posts = 1;
             }
             else if (data.statusCode === 404) {
+                loadedOnce_posts = 1;
             }
             else {
                 console.log();
@@ -99,8 +124,8 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log('Profile post fetch failed -> ' + error);
         });
     }
-    async function createProfileBody_reviews() {
-        await fetch("/u/GetReviews/" + targetUsername, {
+    function createProfileBody_reviews() {
+        fetch("/u/GetReviews/" + targetUsername, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -118,6 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 loadedOnce_reviews = 1;
             }
             else if (data.statusCode === 404) {
+                loadedOnce_reviews = 1;
             }
             else {
             }

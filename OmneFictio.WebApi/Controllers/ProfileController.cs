@@ -58,34 +58,42 @@ public class ProfileController : ControllerBase
         {
             return NotFound();
         }
-        /*if (userId == null || userId != account.id)
+        //Check if it's someone else's profile
+        if (userId != null && userId == account.id)
         {
+            account.ownProfile = true;
+        }
+        else
+        {
+            account.ownProfile = false;
             account.email = null;
             account.emailValid = null;
             account.gold = null;
-        } Classified information.*/
+        }
 
         //Get the user's posts for other calculations
         var postsPublished = _db.Posts
             .Where(p => p.accountId == account.id &&
                 p.deletedStatus != null &&
                 p.deletedStatus.body == "Default")
-            .Select(p => p.id);
+            .Select(p => p.id).ToList();
+
+
         //Get stat_postsPublished
         account.stat_postsPublished = postsPublished.Count();
         //Get stat_likes
         int likesSum = _db.Votes
-            .Where(v => postsPublished.Contains(v.id) && v.body == true)
+            .Where(v => v.targetPostId != null && postsPublished.Contains((int)v.targetPostId) && v.body == true)
             .Sum(v => 1);
         int dislikesSum = _db.Votes
-            .Where(v => postsPublished.Contains(v.id) && v.body == false)
+            .Where(v => v.targetPostId != null && postsPublished.Contains((int)v.targetPostId) && v.body == false)
             .Sum(v => 1);
         account.stat_likes = likesSum - dislikesSum;
         //Get stat_saved
         account.stat_saved = _db.SavedPosts
             .Count(sp => postsPublished.Contains(sp.targetPostId));
 
-        return Ok(account);
+        return Ok(new { accountInfo = account });
     }
 
     [HttpGet("GetPosts/{targetUsername}/{userId?}")]
@@ -93,29 +101,29 @@ public class ProfileController : ControllerBase
         (string targetUsername, int? userId)
     {
         //Get the user's posts
-        var posts = _db.Posts
+        var posts = await _mapper.ProjectTo<PostDtoRead_1>(_db.Posts
             .Where(p =>
                 p.isPublished == true &&
                 p.deletedStatus != null &&
                 p.deletedStatus.body == "Default" &&
                 p.account != null &&
                 p.account.username == targetUsername)
-            .OrderByDescending(p => p.publishDate);
-        //-----------
-        var postList = await _mapper.ProjectTo<PostDtoRead_1>(posts)
+            .OrderByDescending(p => p.publishDate))
             .ToListAsync();
 
-        postList = await _helperServices.GetPosts_Details(postList, userId);
-        return Ok(new { posts = postList });
+        if (posts.Count() == 0)
+        {
+            return NotFound();
+        }
+        posts = await _helperServices.GetPosts_Details(posts, userId);
+        return Ok(new { posts = posts });
     }
 
     [HttpGet("GetReviews/{targetUsername}/{userId?}")]
     public async Task<IActionResult> GetReviews
         (string targetUsername, int? userId)
     {
-        List<CommentDtoRead_2> comments = new List<CommentDtoRead_2>();
-
-        comments = await _mapper.ProjectTo<CommentDtoRead_2>(_db.Comments.Where(c =>
+        var comments = await _mapper.ProjectTo<CommentDtoRead_2>(_db.Comments.Where(c =>
                 c.targetPostId != null &&
                 c.deletedStatus != null &&
                 c.deletedStatus.body == "Default" &&
@@ -123,7 +131,7 @@ public class ProfileController : ControllerBase
                 c.account.username == targetUsername)
             .OrderByDescending(c => c.publishDate)).ToListAsync();
 
-        if (comments == null || comments.Count() == 0)
+        if (comments.Count() == 0)
         {
             return NotFound();
         }

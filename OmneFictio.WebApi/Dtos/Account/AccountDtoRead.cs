@@ -47,9 +47,10 @@ public partial class AccountDtoRead_3
     public int stat_likes { get; set; } = 0;
     public int stat_saved { get; set; } = 0;
     public int stat_postsPublished { get; set; } = 0;
-    //If it's the user's own profile
-    public string email { get; set; } = null!;
-    public bool emailValid { get; set; }
-    public int gold { get; set; }
+    //If it's the user's own profile (must be nullable)
+    public bool ownProfile { get; set; }
+    public string? email { get; set; }
+    public bool? emailValid { get; set; }
+    public int? gold { get; set; }
 }
 //To get the profile details
