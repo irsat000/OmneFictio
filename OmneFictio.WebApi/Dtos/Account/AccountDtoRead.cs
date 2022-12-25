@@ -52,5 +52,7 @@ public partial class AccountDtoRead_3
     public string? email { get; set; }
     public bool? emailValid { get; set; }
     public int? gold { get; set; }
+    //extra
+    public bool isNSFW { get; set; }
 }
 //To get the profile details

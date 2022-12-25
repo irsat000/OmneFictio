@@ -23,7 +23,7 @@ class Authority {
     code;
     body;
 }
-class ofAccount {
+class ofAccount_P {
     id;
     username;
     displayName;

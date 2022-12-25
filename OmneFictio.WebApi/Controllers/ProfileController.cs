@@ -70,6 +70,7 @@ public class ProfileController : ControllerBase
             account.emailValid = null;
             account.gold = null;
         }
+        account.isNSFW = true;
 
         //Get the user's posts for other calculations
         var postsPublished = _db.Posts

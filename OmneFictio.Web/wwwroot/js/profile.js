@@ -1,10 +1,31 @@
 "use strict";
+class ofAccount_I {
+    id;
+    username;
+    displayName;
+    profilePic;
+    selfDesc;
+    deletedStatus;
+    authorities;
+    stat_reputation;
+    stat_follows;
+    stat_giftsReceived;
+    stat_likes;
+    stat_saved;
+    stat_postsPublished;
+    isNSFW;
+    ownProfile;
+    email;
+    emailValid;
+    gold;
+}
 document.addEventListener("DOMContentLoaded", function () {
     let profileTabLinks = document.querySelectorAll('.profile-tabs-cont a');
     const targetUsername = getPathPart(2);
     const pPath = "/u/" + targetUsername + "/";
     const getTab = getPathPart(3);
     let pTab = getTab === "" ? "posts" : getTab;
+    const profileInfoCont = document.querySelector('.profile_details-cont');
     const profileBody = document.getElementById('profile-body');
     const profileBody_posts = document.getElementById('profile-posts');
     const profileBody_reviews = document.getElementById('profile-reviews');
@@ -35,15 +56,78 @@ document.addEventListener("DOMContentLoaded", function () {
             .then((res) => res.json())
             .then(async (data) => {
             if (data.statusCode === 200) {
-                const response = JSON.parse(data.value);
-                console.log(response.accountInfo);
+                const Info = JSON.parse(data.value).accountInfo;
+                const instance = document.getElementById('profileInfoInstance');
+                const clone = window.cloneFromTemplate(instance);
+                const userImg = clone.querySelector('.pr-img_cont > img');
+                const username = clone.querySelector('.pr-username');
+                const displayName = clone.querySelector('.pr-displayname');
+                const bio = clone.querySelector('.pr-bio');
+                if (Info.profilePic !== null) {
+                    userImg.src = '/images/users/' + Info.profilePic;
+                }
+                else {
+                    userImg.src = '/images/users/not_available.png';
+                }
+                if (Info.displayName === null) {
+                    displayName.textContent = Info.username;
+                    username.remove();
+                }
+                else {
+                    username.textContent = '(' + Info.username + ')';
+                    displayName.textContent = Info.displayName;
+                }
+                if (Info.selfDesc !== null) {
+                    bio.textContent = Info.selfDesc;
+                }
+                else {
+                    bio.textContent = "There is no bio :(";
+                }
+                clone.querySelector('.stat-reputation').textContent = Info.stat_reputation;
+                clone.querySelector('.stat-follow').textContent = Info.stat_follows;
+                clone.querySelector('.stat-gifts').textContent = Info.stat_giftsReceived;
+                clone.querySelector('.stat-likes').textContent = Info.stat_likes;
+                clone.querySelector('.stat-saved').textContent = Info.stat_saved;
+                clone.querySelector('.stat-posts').textContent = Info.stat_postsPublished;
+                const propertiesCont = clone.querySelector('.pr-properties');
+                if (Info.isNSFW === true) {
+                    propertiesCont.innerHTML += `<span class="pr-nsfw_warning">NSFW <i class="bi bi-exclamation-circle"></i></span>`;
+                }
+                if (Info.authorities.find(a => a.code === "DEV")) {
+                    propertiesCont.innerHTML += '<span class="pr-developer">Developer <i class="bi bi-gear"></i></span>';
+                }
+                if (Info.authorities.find(a => a.code === "ADMIN")) {
+                    propertiesCont.innerHTML += '<span class="pr-officer">Admin <i class="bi bi-shield"></i></span>';
+                }
+                if (Info.authorities.find(a => a.code === "MOD")) {
+                    propertiesCont.innerHTML += '<span class="pr-officer">Moderator <i class="bi bi-shield"></i></span>';
+                }
+                const verifyEmailLink = clone.querySelector('.pr-verifyemail');
+                const gold = clone.querySelector('.pr-gold');
+                if (Info.ownProfile === true) {
+                    clone.querySelector('.pr-email').textContent = Info.email;
+                    if (Info.emailValid === true) {
+                        verifyEmailLink.remove();
+                    }
+                    gold.textContent = Info.gold.toString();
+                    gold.innerHTML += '<i class="bi bi-coin"></i>';
+                }
+                else {
+                    clone.querySelector('.pr-email_cont').remove();
+                    gold.remove();
+                }
+                profileInfoCont.innerHTML = "";
+                profileInfoCont.appendChild(clone);
             }
             else if (data.statusCode === 404) {
+                profileInfoCont.innerHTML = "USER COULDN'T BE FOUND";
             }
             else {
+                profileInfoCont.innerHTML = "AND ERROUR OCCURRED";
             }
         })
             .catch(error => {
+            profileInfoCont.innerHTML = "AND ERROUR OCCURRED";
             console.log('Profile info fetch failed -> ' + error);
         });
     }

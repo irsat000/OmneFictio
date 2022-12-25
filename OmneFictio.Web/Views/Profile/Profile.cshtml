@@ -14,8 +14,64 @@
     string? username = User.FindFirst("unique_name")?.Value ?? null;
     string? userPicture = User.FindFirst("actort")?.Value ?? null;
 }
+<template id="profileInfoInstance">
+    <div class="profile_details">
+        <div class="pr-header">
+            <div class="pr-img_cont">
+                <img src="" alt=""
+                    onerror="this.onerror=null; this.closest('.pr-img_cont').remove()">
+            </div>
+            <div class="pr-name">
+                <span class="pr-username"></span>
+                <span class="pr-displayname"></span>
+            </div>
+        </div>
+        <span class="pr-bio"></span>
+        <div class="pr-properties">
+
+        </div>
+        <div class="pr-email_cont">
+            <span class="pr-email"></span>
+            <a class="pr-verifyemail">(Verify)</a>
+        </div>
+        <span class="pr-gold"></span>
+        <div class="pr-stats">
+            <span>User stats</span>
+            <div class="prs-userstats">
+                <div class="prs-column">
+                    <span class="stat-reputation"></span>
+                    <span>REP</span>
+                </div>
+                <div class="prs-column">
+                    <span class="stat-follow"></span>
+                    <span>Follows</span>
+                </div>
+                <div class="prs-column">
+                    <span class="stat-gifts"></span>
+                    <span>Gifts</span>
+                </div>
+            </div>
+            <span>Post stats</span>
+            <div class="pr-postingstats">
+                <div class="prs-column">
+                    <span class="stat-likes"></span>
+                    <span>Likes</span>
+                </div>
+                <div class="prs-column">
+                    <span class="stat-saved"></span>
+                    <span>Saved</span>
+                </div>
+                <div class="prs-column">
+                    <span class="stat-posts"></span>
+                    <span>Posts</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
 <div class="profile-cont">
     <div class="profile_details-cont">
+        <!--
         <div class="profile_details">
             <div class="pr-header">
                 <div class="pr-img_cont">
@@ -31,7 +87,7 @@
                 change this shit when you are ready. When is that? Probably next year!</span>
             <div class="pr-properties">
                 <span class="pr-nsfw_warning">NSFW <i class="bi bi-exclamation-circle"></i></span>
-                <span class="pr-moderator">Moderator <i class="bi bi-shield"></i></span>
+                <span class="pr-officer">Moderator <i class="bi bi-shield"></i></span>
             </div>
             <div class="pr-email_cont">
                 <span class="pr-email">irsat000@gmail.com</span>
@@ -71,6 +127,7 @@
                 </div>
             </div>
         </div>
+        -->
         <div class="profile_details-skel">
             <div class="prskel-header">
                 <div class="prskel-img_cont"></div>

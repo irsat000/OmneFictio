@@ -168,16 +168,16 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 6px;
+  gap: 8px;
 }
 .profile_details .pr-header .pr-name .pr-username {
-  font-family: "Itim", cursive;
-  font-size: 1.2rem;
+  font-family: Arial, Helvetica, sans-serif;
+  font-size: 0.8rem;
   text-align: center;
 }
 .profile_details .pr-header .pr-name .pr-displayname {
   font-family: "Itim", cursive;
-  font-size: 1.4rem;
+  font-size: 1.1rem;
   text-align: center;
 }
 .profile_details span {
@@ -208,8 +208,11 @@
 .profile_details .pr-properties .pr-nsfw_warning {
   background-color: var(--button-red);
 }
-.profile_details .pr-properties .pr-moderator {
+.profile_details .pr-properties .pr-officer {
   background-color: var(--button-blue);
+}
+.profile_details .pr-properties .pr-developer {
+  background-color: var(--button-green);
 }
 .profile_details .pr-email_cont {
   margin-top: 6px;
@@ -228,10 +231,14 @@
   text-decoration: underline;
 }
 .profile_details .pr-gold {
-  text-align: center;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
 }
 .profile_details .pr-gold i {
   color: #c5c93d;
+  display: flex;
+  align-items: center;
 }
 .profile_details .pr-stats {
   display: flex;
@@ -500,10 +507,10 @@
     gap: unset;
   }
   .profile-cont .profile_details-cont .pr-header .pr-name .pr-username {
-    font-size: 0.8rem;
+    font-size: 0.9rem;
   }
   .profile-cont .profile_details-cont .pr-header .pr-name .pr-displayname {
-    font-size: 1rem;
+    font-size: 1.3rem;
   }
   .profile-cont .profile_details-cont .pr-bio {
     font-size: 0.7rem;
@@ -528,12 +535,6 @@
   }
 }
 @media (min-width: 1200px) {
-  .profile-cont .profile_details-cont .profile_details .pr-header .pr-username {
-    font-size: 1rem;
-  }
-  .profile-cont .profile_details-cont .profile_details .pr-header .pr-displayname {
-    font-size: 1.2rem;
-  }
   .profile-cont .profile_details-cont .profile_details .pr-bio {
     font-size: 0.9rem;
   }

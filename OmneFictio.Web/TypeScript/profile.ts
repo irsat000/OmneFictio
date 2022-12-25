@@ -1,4 +1,26 @@
 
+class ofAccount_I {
+    id!: number;
+    username!: string;
+    displayName!: string | null;
+    profilePic!: string | null;
+    selfDesc!: string | null;
+    deletedStatus!: JustBody | null;
+    authorities!: Authority[];
+
+    stat_reputation!: string;
+    stat_follows!: string;
+    stat_giftsReceived!: string;
+    stat_likes!: string;
+    stat_saved!: string;
+    stat_postsPublished!: string;
+
+    isNSFW!: boolean;
+    ownProfile!: boolean;
+    email!: string | null;
+    emailValid!: boolean | null;
+    gold!: number | null;
+}
 document.addEventListener("DOMContentLoaded", function () {
     let profileTabLinks = document.querySelectorAll('.profile-tabs-cont a') as NodeListOf<HTMLAnchorElement>;
     const targetUsername: string = getPathPart(2);
@@ -6,6 +28,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const getTab: string = getPathPart(3);
     let pTab: string = getTab === "" ? "posts" : getTab;
 
+    const profileInfoCont = document.querySelector('.profile_details-cont') as HTMLDivElement;
     const profileBody = document.getElementById('profile-body') as HTMLDivElement;
     const profileBody_posts = document.getElementById('profile-posts') as HTMLDivElement;
     const profileBody_reviews = document.getElementById('profile-reviews') as HTMLDivElement;
@@ -39,13 +62,82 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(async (data) => {
                 if (data.statusCode === 200) {
                     //GET THE POSTS
-                    const response = JSON.parse(data.value);
-                    console.log(response.accountInfo);
+                    const Info = JSON.parse(data.value).accountInfo as ofAccount_I;
+                    const instance = document.getElementById('profileInfoInstance') as HTMLTemplateElement;
+                    const clone = window.cloneFromTemplate(instance);
+
+                    //primary info
+                    const userImg = clone.querySelector('.pr-img_cont > img') as HTMLImageElement;
+                    const username = clone.querySelector('.pr-username') as HTMLSpanElement;
+                    const displayName = clone.querySelector('.pr-displayname') as HTMLSpanElement;
+                    const bio = clone.querySelector('.pr-bio') as HTMLSpanElement;
+
+                    if (Info.profilePic !== null) {
+                        userImg.src = '/images/users/' + Info.profilePic;
+                    } else {
+                        userImg.src = '/images/users/not_available.png';
+                    }
+                    if (Info.displayName === null) {
+                        displayName.textContent = Info.username;
+                        username.remove();
+                    } else {
+                        username.textContent = '(' + Info.username + ')';
+                        displayName.textContent = Info.displayName;
+                    }
+                    if (Info.selfDesc !== null) {
+                        bio.textContent = Info.selfDesc;
+                    } else {
+                        bio.textContent = "There is no bio :(";
+                    }
+
+                    //stats
+                    clone.querySelector('.stat-reputation')!.textContent = Info.stat_reputation;
+                    clone.querySelector('.stat-follow')!.textContent = Info.stat_follows;
+                    clone.querySelector('.stat-gifts')!.textContent = Info.stat_giftsReceived;
+                    clone.querySelector('.stat-likes')!.textContent = Info.stat_likes;
+                    clone.querySelector('.stat-saved')!.textContent = Info.stat_saved;
+                    clone.querySelector('.stat-posts')!.textContent = Info.stat_postsPublished;
+
+                    //Properties
+                    const propertiesCont = clone.querySelector('.pr-properties') as HTMLDivElement;
+                    if (Info.isNSFW === true) {
+                        propertiesCont.innerHTML += `<span class="pr-nsfw_warning">NSFW <i class="bi bi-exclamation-circle"></i></span>`;
+                    }
+                    if (Info.authorities.find(a => a.code === "DEV")) {
+                        propertiesCont.innerHTML += '<span class="pr-developer">Developer <i class="bi bi-gear"></i></span>';
+                    }
+                    if (Info.authorities.find(a => a.code === "ADMIN")) {
+                        propertiesCont.innerHTML += '<span class="pr-officer">Admin <i class="bi bi-shield"></i></span>';
+                    }
+                    if (Info.authorities.find(a => a.code === "MOD")) {
+                        propertiesCont.innerHTML += '<span class="pr-officer">Moderator <i class="bi bi-shield"></i></span>';
+                    }
+
+                    const verifyEmailLink = clone.querySelector('.pr-verifyemail') as HTMLAnchorElement;
+                    const gold = clone.querySelector('.pr-gold') as HTMLSpanElement;
+                    //profile owner only
+                    if (Info.ownProfile === true) {
+                        clone.querySelector('.pr-email')!.textContent = Info.email;
+                        if (Info.emailValid === true) {
+                            verifyEmailLink.remove();
+                            //Will send verification link to email
+                        }
+                        gold.textContent = Info.gold!.toString();
+                        gold.innerHTML += '<i class="bi bi-coin"></i>';
+                    } else {
+                        clone.querySelector('.pr-email_cont')!.remove();
+                        gold.remove();
+                    }
+                    profileInfoCont.innerHTML = "";
+                    profileInfoCont.appendChild(clone);
                 } else if (data.statusCode === 404) {
+                    profileInfoCont.innerHTML = "USER COULDN'T BE FOUND";
                 } else {
+                    profileInfoCont.innerHTML = "AND ERROUR OCCURRED";
                 }
             })
             .catch(error => {
+                profileInfoCont.innerHTML = "AND ERROUR OCCURRED";
                 console.log('Profile info fetch failed -> ' + error);
             });
     }

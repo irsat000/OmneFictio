@@ -29,7 +29,7 @@ class Authority {
     body!: string;
 }
 //-----
-class ofAccount {
+class ofAccount_P {
     id!: number;
     username!: string;
     displayName!: string | null;
@@ -51,7 +51,7 @@ class ofPost_1 {
     publishDate!: Date;
     updateDate!: Date;
     coverImage!: string | null;
-    account!: ofAccount | null;
+    account!: ofAccount_P | null;
     deletedStatus!: JustBody | null;
     language!: Language;
     postStatus!: JustBody;
@@ -73,7 +73,7 @@ class ofComment_1 {
     body!: string;
     publishDate!: Date;
     updateDate!: Date;
-    account!: ofAccount | null;
+    account!: ofAccount_P | null;
     targetPostId!: number | null;
     repliesLength!: number;
     voteResult!: number;
@@ -84,7 +84,7 @@ class ofReply_1 {
     body!: string;
     publishDate!: Date;
     updateDate!: Date;
-    account!: ofAccount | null;
+    account!: ofAccount_P | null;
     voteResult!: number;
     votedByUser!: boolean | null;
 }
