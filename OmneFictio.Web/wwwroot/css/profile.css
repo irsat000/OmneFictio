@@ -284,10 +284,8 @@
 }
 .profile-tabs-cont .profile-tabs-mobile,
 .profile-tabs-cont .profile-tabs-desktop {
-  justify-content: space-evenly;
   flex-wrap: wrap;
   padding: 0 6px;
-  gap: 6px 0;
   margin-bottom: 10px;
 }
 .profile-tabs-cont .profile-tabs-mobile a[data-tab=posts] i,
@@ -308,37 +306,38 @@
   display: flex;
   align-items: center;
 }
-.profile-tabs-cont .profile-tabs-mobile a:hover,
-.profile-tabs-cont .profile-tabs-desktop a:hover {
-  border-bottom: 1px solid var(--text-color1);
-}
-.profile-tabs-cont .profile-tabs-mobile a span,
-.profile-tabs-cont .profile-tabs-desktop a span {
-  font-size: 1.2rem;
-}
 .profile-tabs-cont .profile-tabs-mobile a i,
 .profile-tabs-cont .profile-tabs-desktop a i {
   font-size: 1.6rem;
-}
-.profile-tabs-cont .profile-tabs-mobile a.active,
-.profile-tabs-cont .profile-tabs-desktop a.active {
-  border-radius: 4px;
-  background-color: var(--profile-activetab);
-  color: #fff;
-}
-.profile-tabs-cont .profile-tabs-mobile a.active:hover,
-.profile-tabs-cont .profile-tabs-desktop a.active:hover {
-  border-bottom: unset;
 }
 
 .profile-tabs-mobile {
   display: flex;
   min-height: 48px;
+  justify-content: space-evenly;
+  gap: 6px 0;
+}
+.profile-tabs-mobile a.active {
+  border-radius: 4px;
+  background-color: var(--profile-activetab);
+  color: #fff;
 }
 
 .profile-tabs-desktop {
   display: none;
   min-height: 38px;
+  gap: 6px 3%;
+  font-size: 1.1rem;
+}
+.profile-tabs-desktop a:hover {
+  border-bottom: 1px solid var(--text-color1);
+}
+.profile-tabs-desktop a span {
+  font-size: 1.2rem;
+}
+.profile-tabs-desktop a.active {
+  border-bottom: 1px solid var(--text-color1);
+  color: var(--text-color1);
 }
 
 #profile-body {

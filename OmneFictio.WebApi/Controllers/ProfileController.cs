@@ -158,22 +158,14 @@ public class ProfileController : ControllerBase
         (string targetUsername, int? userId)
     {
         //Get the user's posts
-        List<int> savedPostIds = await _db.SavedPosts
-                .Where(a => a.account.username == targetUsername)
-                .OrderByDescending(a => a.saveDate)
-                .Select(x => x.targetPostId)
-                .ToListAsync();
-        if (savedPostIds.Count() == 0)
-        {
-            return NotFound();
-        }
-
-        var posts = await _mapper.ProjectTo<PostDtoRead_1>(_db.Posts
-            .Where(p =>
-                p.isPublished == true &&
-                p.deletedStatus != null &&
-                p.deletedStatus.body == "Default" &&
-                savedPostIds.Contains(p.id)))
+        var posts = await _mapper.ProjectTo<PostDtoRead_1>(_db.SavedPosts
+            .Where(sp =>
+                sp.account.username == targetUsername &&
+                sp.targetPost.isPublished == true &&
+                sp.targetPost.deletedStatus != null &&
+                sp.targetPost.deletedStatus.body == "Default")
+            .OrderByDescending(sp => sp.saveDate)
+            .Select(sp => sp.targetPost))
             .ToListAsync();
         if (posts.Count() == 0)
         {
@@ -182,7 +174,6 @@ public class ProfileController : ControllerBase
 
         try
         {
-            posts = posts.OrderBy(p => savedPostIds.IndexOf(p.id)).ToList();
             posts = await _helperServices.GetPosts_Details(posts, userId);
             return Ok(new { posts = posts });
         }

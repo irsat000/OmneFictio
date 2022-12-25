@@ -309,17 +309,15 @@
 
     .profile-tabs-mobile,
     .profile-tabs-desktop {
-        justify-content: space-evenly;
         flex-wrap: wrap;
         padding: 0 6px;
-        gap: 6px 0;
         margin-bottom: 10px;
 
         a[data-tab="posts"],
         a[data-tab="saved"],
         a[data-tab="friends"] {
             i {
-                //These are small icons
+                //These are small icons by default so I have to make them equal
                 display: flex;
                 font-size: 1.8rem;
             }
@@ -333,39 +331,44 @@
             display: flex;
             align-items: center;
 
-            &:hover {
-                border-bottom: 1px solid var(--text-color1);
-            }
-
-            span {
-                font-size: 1.2rem;
-            }
-
             i {
                 font-size: 1.6rem;
             }
         }
 
-        a.active {
-            border-radius: 4px;
-            background-color: var(--profile-activetab);
-            color: #fff;
-
-            &:hover {
-                border-bottom: unset;
-            }
-        }
     }
 }
 
 .profile-tabs-mobile {
     display: flex;
     min-height: 48px;
+    justify-content: space-evenly;
+    gap: 6px 0;
+    a.active {
+        border-radius: 4px;
+        background-color: var(--profile-activetab);
+        color: #fff;
+    }
 }
 
 .profile-tabs-desktop {
     display: none;
     min-height: 38px;
+    gap: 6px 3%;
+    font-size: 1.1rem;
+    a{
+        &:hover {
+            border-bottom: 1px solid var(--text-color1);
+        }
+
+        span {
+            font-size: 1.2rem;
+        }
+    }
+    a.active {
+        border-bottom: 1px solid var(--text-color1);
+        color: var(--text-color1);
+    }
 }
 
 #profile-body {
