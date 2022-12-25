@@ -111,13 +111,20 @@ public class ProfileController : ControllerBase
                 p.account.username == targetUsername)
             .OrderByDescending(p => p.publishDate))
             .ToListAsync();
-
         if (posts.Count() == 0)
         {
             return NotFound();
         }
-        posts = await _helperServices.GetPosts_Details(posts, userId);
-        return Ok(new { posts = posts });
+
+        try
+        {
+            posts = await _helperServices.GetPosts_Details(posts, userId);
+            return Ok(new { posts = posts });
+        }
+        catch (System.Exception)
+        {
+            return BadRequest();
+        }
     }
 
     [HttpGet("GetReviews/{targetUsername}/{userId?}")]
@@ -131,12 +138,57 @@ public class ProfileController : ControllerBase
                 c.account != null &&
                 c.account.username == targetUsername)
             .OrderByDescending(c => c.publishDate)).ToListAsync();
-
         if (comments.Count() == 0)
         {
             return NotFound();
         }
-        comments = await _helperServices.GetComments_Details(comments, userId);
-        return Ok(comments);
+        try
+        {
+            comments = await _helperServices.GetComments_Details(comments, userId);
+            return Ok(comments);
+        }
+        catch (System.Exception)
+        {
+            return BadRequest();
+        }
+    }
+
+    [HttpGet("GetSavedPosts/{targetUsername}/{userId?}")]
+    public async Task<IActionResult> GetSavedPosts
+        (string targetUsername, int? userId)
+    {
+        //Get the user's posts
+        List<int> savedPostIds = await _db.SavedPosts
+                .Where(a => a.account.username == targetUsername)
+                .OrderByDescending(a => a.saveDate)
+                .Select(x => x.targetPostId)
+                .ToListAsync();
+        if (savedPostIds.Count() == 0)
+        {
+            return NotFound();
+        }
+
+        var posts = await _mapper.ProjectTo<PostDtoRead_1>(_db.Posts
+            .Where(p =>
+                p.isPublished == true &&
+                p.deletedStatus != null &&
+                p.deletedStatus.body == "Default" &&
+                savedPostIds.Contains(p.id)))
+            .ToListAsync();
+        if (posts.Count() == 0)
+        {
+            return NotFound();
+        }
+
+        try
+        {
+            posts = posts.OrderBy(p => savedPostIds.IndexOf(p.id)).ToList();
+            posts = await _helperServices.GetPosts_Details(posts, userId);
+            return Ok(new { posts = posts });
+        }
+        catch (System.Exception)
+        {
+            return BadRequest();
+        }
     }
 }

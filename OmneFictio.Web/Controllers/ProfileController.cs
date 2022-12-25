@@ -103,4 +103,29 @@ public class ProfileController : Controller
             return new JsonResult(StatusCode(500));
         }
     }
+
+    [HttpGet("u/GetSavedPosts/{targetUsername}")]
+    public async Task<JsonResult> GetSavedPosts(string targetUsername)
+    {
+        string url = $"Profile/GetSavedPosts/{targetUsername}";
+        if(AccountId != null){
+            url += $"/{AccountId}";
+        }
+        try
+        {
+            //request
+            var apiResponse = await _httpClient.GetAsync(url.ToString());
+            if (apiResponse.StatusCode.ToString() != "OK")
+            {
+                return new JsonResult(NotFound());
+            }
+            //return
+            string content = await apiResponse.Content.ReadAsStringAsync();
+            return new JsonResult(Ok(content));
+        }
+        catch (System.Exception)
+        {
+            return new JsonResult(StatusCode(500));
+        }
+    }
 }

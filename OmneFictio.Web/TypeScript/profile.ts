@@ -181,7 +181,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 profileBody_saved.classList.add("active");
                 if (loadedOnce_saved !== 1) {
                     window.createSkeletons("profile-saved");
-                    loadedOnce_saved = 1;
+                    createProfileBody_saved();
                 }
                 break;
             case "followed":
@@ -217,7 +217,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 } else if (data.statusCode === 404) {
                     loadedOnce_posts = 1;
                 } else {
-                    console.log();
                 }
             })
             .catch(error => {
@@ -251,6 +250,36 @@ document.addEventListener("DOMContentLoaded", function () {
             })
             .catch(error => {
                 console.log('Fetch failed -> ' + error);
+            });
+    }
+
+    function createProfileBody_saved() {
+        fetch("/u/GetSavedPosts/" + targetUsername, {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => res.json())
+            .then(async (data) => {
+                profileBody_saved.innerHTML = "";
+                if (data.statusCode === 200) {
+                    //GET THE POSTS
+                    const response = JSON.parse(data.value);
+                    for (const post of response.posts) {
+                        const clone = window.fillPostTemplate(post);
+                        profileBody_saved.appendChild(clone);
+                    }
+                    loadedOnce_saved = 1;
+                } else if (data.statusCode === 404) {
+                    loadedOnce_saved = 1;
+                } else {
+                }
+            })
+            .catch(error => {
+                profileBody_saved.innerHTML = "Fetch fail";
+                console.log('Profile post fetch failed -> ' + error);
             });
     }
 
