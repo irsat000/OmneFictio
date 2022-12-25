@@ -89,7 +89,7 @@ public class ReadingController : ControllerBase
         {
             post.Chapters = post.Chapters.Where(c => c.isPublished == true).ToList();
         }
-        //check vote by user
+        //check properties by user
         if (userId != null)
         {
             Vote? checkVoteByUser = await _db.Votes.SingleOrDefaultAsync(v =>
@@ -103,6 +103,10 @@ public class ReadingController : ControllerBase
                 r.postId == post.id);
             if (checkRateByUser != null)
                 post.ratedByUser = System.Math.Round(checkRateByUser.body, 1);
+
+            post.savedByUser = await _db.SavedPosts.AnyAsync(s =>
+                s.accountId == userId &&
+                s.targetPostId == post.id);
         }
         return Ok(post);
     }

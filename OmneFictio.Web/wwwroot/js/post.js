@@ -90,6 +90,33 @@ document.addEventListener("DOMContentLoaded", function () {
                 clone.querySelectorAll('.pd-primary > span')[1].textContent = post.language.body;
                 clone.querySelectorAll('.pd-primary > span')[2].textContent = post.postStatus.body;
                 clone.querySelectorAll('.pd-primary > span')[3].textContent = post.ratedAs.body;
+                const postSaveBtn = clone.querySelector('#postSaveBtn');
+                if (post.savedByUser == true) {
+                    postSaveBtn.classList.add('pd-saved');
+                }
+                postSaveBtn.addEventListener('click', () => {
+                    fetch('/Action/SavePost', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json',
+                            'Content-Type': 'application/json'
+                        },
+                        body: JSON.stringify({ targetPostId: post.id })
+                    })
+                        .then((res) => res.json())
+                        .then((data) => {
+                        if (data.statusCode === 200) {
+                            postSaveBtn.classList.add('pd-saved');
+                        }
+                        else if (data.statusCode === 202) {
+                            postSaveBtn.classList.remove('pd-saved');
+                        }
+                        else {
+                            alert(data.statusCode);
+                        }
+                    })
+                        .catch(error => { console.log("Fetch failed -> " + error); });
+                });
                 if (post.ratedByUser != null) {
                     rateByUser.textContent = post.ratedByUser + "/10";
                 }

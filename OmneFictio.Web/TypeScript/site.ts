@@ -281,7 +281,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 const targetId = parseInt(targetIdValue, 10);
                 let vote = false;
                 if (action === "like") { vote = true; }
-                const data = { TargetId: targetId, Body: vote, TargetType: targetType };
+                const data = { targetId: targetId, body: vote, targetType: targetType };
                 VoteRequest(btn, data);
             }
         }

@@ -21,6 +21,13 @@ public class AccountWrite1
 //sending payload to api
 
 
+public partial class SavedPostWrite
+{
+    public int? accountId { get; set; }
+    public int targetPostId { get; set; }
+}
+//Saving post
+
 public class VoteWrite1
 {
     public int? accountId { get; set; }

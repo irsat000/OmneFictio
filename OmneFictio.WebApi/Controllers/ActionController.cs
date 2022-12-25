@@ -114,10 +114,9 @@ public class ActionController : ControllerBase
             x.postId == request.postId);
         if (rate != null)
         {
-            //_db.Rates.Remove(_db.Rates.SingleOrDefault(x => x.id == rate.id)!);
-            _db.Rates.Remove(rate); //MIGHT WORK, I WILL TRY IT
+            _db.Rates.Remove(rate);
         }
-        
+
         if (request.rateValue != 0)
         {
             //create new rate
@@ -138,6 +137,41 @@ public class ActionController : ControllerBase
             return BadRequest();
         }
         return Ok();
+    }
+
+    [HttpPost("SavePost")]
+    public async Task<IActionResult> SavePost(SavedPostDtoWrite request)
+    {
+        if (await _db.Posts.AnyAsync(p => p.id == request.targetPostId) == false ||
+            await _db.Accounts.AnyAsync(a => a.id == request.accountId) == false)
+        {
+            return NotFound();
+        }
+        SavedPost? savedPost = await _db.SavedPosts.FirstOrDefaultAsync(s =>
+            s.accountId == request.accountId &&
+            s.targetPostId == request.targetPostId);
+        try
+        {
+            if (savedPost != null)
+            {
+                _db.SavedPosts.Remove(savedPost);
+                await _db.SaveChangesAsync();
+                return Accepted();
+            }
+            savedPost = new SavedPost
+            {
+                accountId = request.accountId,
+                targetPostId = request.targetPostId,
+                saveDate = DateTime.Now
+            };
+            await _db.SavedPosts.AddAsync(savedPost);
+            await _db.SaveChangesAsync();
+            return Ok();
+        }
+        catch (Exception)
+        {
+            return BadRequest();
+        }
     }
 
     [HttpPost("AddComment")]

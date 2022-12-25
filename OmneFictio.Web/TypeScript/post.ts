@@ -29,26 +29,26 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    if(params.get('lp') !== null){
+    if (params.get('lp') !== null) {
         const lastPage = params.get('lp')!;
         previousPageBtn.href = lastPage;
         params.delete('lp');
 
         let newUrl: string = window.location.href.split('?')[0];
-        if([...params.keys()].length > 0){
+        if ([...params.keys()].length > 0) {
             newUrl += "?" + params.toString();
         }
-        
+
         window.sessionStorage.setItem(newUrl, lastPage);
         window.history.replaceState({}, document.title, newUrl);
     }
-    else if(sessionStorage.getItem(window.location.href) !== null){
+    else if (sessionStorage.getItem(window.location.href) !== null) {
         previousPageBtn.href = sessionStorage.getItem(window.location.href)!;
-    } 
-    else{
+    }
+    else {
         previousPageBtn.remove();
     }
-    
+
     const postId = window.getPathPart(2);
     GetPost();
     async function GetPost() {
@@ -101,6 +101,33 @@ document.addEventListener("DOMContentLoaded", function () {
                     clone.querySelectorAll('.pd-primary > span')[1].textContent = post.language.body;
                     clone.querySelectorAll('.pd-primary > span')[2].textContent = post.postStatus.body;
                     clone.querySelectorAll('.pd-primary > span')[3].textContent = post.ratedAs.body;
+
+                    //Post save button
+                    const postSaveBtn = clone.querySelector('#postSaveBtn') as HTMLButtonElement;
+                    if(post.savedByUser == true){
+                        postSaveBtn.classList.add('pd-saved');
+                    }
+                    postSaveBtn.addEventListener('click', () => {
+                        fetch('/Action/SavePost', {
+                            method: 'POST',
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify({ targetPostId: post.id })
+                        })
+                            .then((res) => res.json())
+                            .then((data) => {
+                                if (data.statusCode === 200) {
+                                    postSaveBtn.classList.add('pd-saved');
+                                } else if (data.statusCode === 202) {
+                                    postSaveBtn.classList.remove('pd-saved');
+                                } else {
+                                    alert(data.statusCode);
+                                }
+                            })
+                            .catch(error => { console.log("Fetch failed -> " + error) });
+                    });
 
                     //get user's rate
                     if (post.ratedByUser != null) {
@@ -218,7 +245,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    function closeAllCommentMenus(){
+    function closeAllCommentMenus() {
         commentSection.querySelectorAll('.c-menupopup').forEach(menu => {
             if (menu.classList.contains('dblock')) {
                 menu.classList.remove('dblock');
