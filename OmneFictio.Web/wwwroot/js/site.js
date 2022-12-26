@@ -560,6 +560,14 @@ function createSkeletons(page) {
     const postSkelTemplate = document.getElementById("postSkeleton");
     const commentSkelTemplate = document.getElementById("commentSkeleton");
     switch (page) {
+        case "index-topposts":
+            const index_todays = document.querySelector('.todaytop_body');
+            const index_months = document.querySelector('.monthtop_body');
+            for (let i = 0; i < 4; i++) {
+                index_todays.appendChild(window.cloneFromTemplate(postSkelTemplate));
+                index_months.appendChild(window.cloneFromTemplate(postSkelTemplate));
+            }
+            break;
         case "read-posts":
             const pl_column1 = document.getElementById('pl-column1');
             const pl_column2 = document.getElementById('pl-column2');

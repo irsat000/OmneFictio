@@ -636,6 +636,15 @@ function createSkeletons(page: string) {
     const commentSkelTemplate = document.getElementById("commentSkeleton") as HTMLTemplateElement;
 
     switch (page) {
+        case "index-topposts":
+            //Creates top post skeletons for index page
+            const index_todays = document.querySelector('.todaytop_body') as HTMLDivElement;
+            const index_months = document.querySelector('.monthtop_body') as HTMLDivElement;
+            for (let i = 0; i < 5; i++) {
+                index_todays.appendChild(window.cloneFromTemplate(postSkelTemplate));
+                index_months.appendChild(window.cloneFromTemplate(postSkelTemplate));
+            }
+            break;
         case "read-posts":
             //Creates post skeletons for read page
             const pl_column1 = document.getElementById('pl-column1') as HTMLDivElement;
