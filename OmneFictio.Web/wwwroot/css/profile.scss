@@ -323,7 +323,7 @@
             }
         }
 
-        a {
+        a[data-tab] {
             padding: 4px 8px;
             color: var(--text-color1);
             transition: background-color 0.1s ease;
@@ -344,7 +344,7 @@
     min-height: 48px;
     justify-content: space-evenly;
     gap: 6px 0;
-    a.active {
+    a[data-tab].active {
         border-radius: 4px;
         background-color: var(--profile-activetab);
         color: #fff;
@@ -356,7 +356,7 @@
     min-height: 38px;
     gap: 6px 3%;
     font-size: 1.1rem;
-    a{
+    a[data-tab]{
         &:hover {
             border-bottom: 1px solid var(--text-color1);
         }
@@ -365,9 +365,27 @@
             font-size: 1.2rem;
         }
     }
-    a.active {
+    a[data-tab].active {
         border-bottom: 1px solid var(--text-color1);
         color: var(--text-color1);
+    }
+    #refresh_ptab{
+        margin-left: auto;
+        padding: 4px 8px;
+        display: flex;
+        align-items: center;
+        position: relative;
+        cursor: pointer;
+        border-radius: 6px;
+        transition: background-color 0.1s ease;
+        &:hover{
+            background-color: var(--tabrefresh-background-color);
+        }
+        i{
+            display: flex;
+            font-size: 1.3rem;
+            color: var(--text-color1);
+        }
     }
 }
 

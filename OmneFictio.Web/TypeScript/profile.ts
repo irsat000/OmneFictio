@@ -22,7 +22,8 @@ class ofAccount_I {
     gold!: number | null;
 }
 document.addEventListener("DOMContentLoaded", function () {
-    let profileTabLinks = document.querySelectorAll('.profile-tabs-cont a') as NodeListOf<HTMLAnchorElement>;
+    let profileTabLinks = document.querySelectorAll
+        ('.profile-tabs-mobile a[data-tab], .profile-tabs-desktop a[data-tab]') as NodeListOf<HTMLAnchorElement>;
     const targetUsername: string = getPathPart(2);
     const pPath: string = "/u/" + targetUsername + "/";
     const getTab: string = getPathPart(3);
@@ -40,14 +41,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let loadedOnce_saved: number = 0;
     let loadedOnce_followed: number = 0;
     let loadedOnce_friends: number = 0;
-
-    profileTabLinks.forEach(function (a) {
-        a.addEventListener("click", function () {
-            pTab = a.getAttribute('data-tab')!;
-            window.history.pushState(null, "", pPath + pTab);
-            changeProfileTab(pTab);
-        });
-    });
 
     getProfileInfo();
     function getProfileInfo() {
@@ -145,19 +138,32 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+
+    profileTabLinks.forEach(function (a) {
+        a.addEventListener("click", function () {
+            pTab = a.getAttribute('data-tab')!;
+            window.history.pushState(null, "", pPath + pTab);
+            changeProfileTab(pTab);
+        });
+    });
+
+    document.getElementById('refresh_ptab')!.addEventListener('click', () => {
+        switch (pTab) {
+            case "posts": loadedOnce_posts = 0; break;
+            case "reviews": loadedOnce_reviews = 0; break;
+            case "saved": loadedOnce_saved = 0; break;
+            case "followed": loadedOnce_followed = 0; break;
+            case "friends": loadedOnce_friends = 0; break;
+            default: return;
+        }
+        changeProfileTab(pTab);
+    });
+
     changeProfileTab(pTab);
     function changeProfileTab(tab: string) {
         //Deactivates all tabs
-        profileTabLinks.forEach(function (a) {
-            if (a.classList.contains("active")) {
-                a.classList.remove("active");
-            }
-        });
-        [...profileBody.children].forEach(function (body) {
-            if (body.classList.contains("active")) {
-                body.classList.remove("active");
-            }
-        });
+        profileTabLinks.forEach(a => a.classList.remove("active"));
+        [...profileBody.children].forEach(b => b.classList.remove("active"));
         //Activating new tab (Button only)
         document.querySelector('.profile-tabs-mobile a[data-tab="' + tab + '"]')!.classList.add('active');
         document.querySelector('.profile-tabs-desktop a[data-tab="' + tab + '"]')!.classList.add('active');
@@ -166,6 +172,7 @@ document.addEventListener("DOMContentLoaded", function () {
             case "posts":
                 profileBody_posts.classList.add("active");
                 if (loadedOnce_posts !== 1) {
+                    profileBody_posts.innerHTML = "";
                     window.createSkeletons("profile-posts");
                     createProfileBody_posts();
                 }
@@ -173,6 +180,7 @@ document.addEventListener("DOMContentLoaded", function () {
             case "reviews":
                 profileBody_reviews.classList.add("active");
                 if (loadedOnce_reviews !== 1) {
+                    profileBody_reviews.innerHTML = "";
                     window.createSkeletons("profile-reviews");
                     createProfileBody_reviews();
                 }
@@ -180,6 +188,7 @@ document.addEventListener("DOMContentLoaded", function () {
             case "saved":
                 profileBody_saved.classList.add("active");
                 if (loadedOnce_saved !== 1) {
+                    profileBody_saved.innerHTML = "";
                     window.createSkeletons("profile-saved");
                     createProfileBody_saved();
                 }
@@ -194,6 +203,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 break;
         }
     }
+
+
+
+
 
     function createProfileBody_posts() {
         fetch("/u/GetPosts/" + targetUsername, {

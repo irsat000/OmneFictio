@@ -1,4 +1,6 @@
-﻿@{
+﻿@using OmneFictio.Web.Models
+@model IndexViewmodel
+@{
     ViewData["Title"] = "Home";
     @section Stylesheets {
         <link rel="stylesheet" href="~/css/index.css" asp-append-version="true" />
@@ -8,8 +10,11 @@
         <script src="~/js/index.js" asp-append-version="true" ></script>
     }
 }
-@using OmneFictio.Web.Models
-@model IndexViewmodel
+@{
+    string? userId = User.FindFirst("nameid")?.Value ?? null;
+    string? username = User.FindFirst("unique_name")?.Value ?? null;
+    string? userPicture = User.FindFirst("actort")?.Value ?? null;
+}
 <!--
 <div><span>User ID and Username:</span>
 {
@@ -48,17 +53,29 @@
     <div class="linkgroup_cont aboutyou">
         <span>About You</span>
         <div class="linkgroup">
-            <a class="link_cont" href="/settings/library">
-                <i class="bi bi-collection"></i>
-                <span>Library</span>
-            </a>
-            <a class="link_cont" href="/settings/mystuff">
-                <i class="bi bi-archive"></i>
-                <span>My Stuff</span>
-            </a>
-            <a class="link_cont" href="/settings/history">
-                <i class="bi bi-clock-history"></i>
-                <span>History</span>
+            @if(username != null){
+                <a class="link_cont" href="/u/@username">
+                    <i class="bi bi-person"></i>
+                    <span>Profile</span>
+                </a>
+                <a class="link_cont" href="/u/@username/saved">
+                    <i class="bi bi-archive"></i>
+                    <span>Library</span>
+                </a>
+            }
+            else {
+                <a class="link_cont">
+                    <i class="bi bi-person"></i>
+                    <span>Profile</span>
+                </a>
+                <a class="link_cont">
+                    <i class="bi bi-archive"></i>
+                    <span>Library</span>
+                </a>
+            }
+            <a class="link_cont" href="/settings/customize">
+                <i class="bi bi-sliders2"></i>
+                <span>Customize</span>
             </a>
         </div>
     </div>
@@ -76,10 +93,6 @@
                 <i class="bi bi-cart"></i>
                 <span>Shop</span>
             </div>
-            <a class="link_cont" href="/settings/customize">
-                <i class="bi bi-sliders2"></i>
-                <span>Customize</span>
-            </a>
             <a class="link_cont" href="/settings">
                 <i class="bi bi-gear"></i>
                 <span>Settings</span>

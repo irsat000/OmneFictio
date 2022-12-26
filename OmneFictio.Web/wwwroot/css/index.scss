@@ -43,11 +43,15 @@ main{
                 i{
                     font-size: 3rem;
                     text-align: center;
+                    height: 72px;
                 }
                 span{
                     text-align: center;
                     transition: 0.1s;
                     height: 32px;
+                }
+                i.bi-person{
+                    font-size: 3.3rem;
                 }
             }
         }

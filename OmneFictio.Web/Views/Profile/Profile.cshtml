@@ -71,63 +71,6 @@
 </template>
 <div class="profile-cont">
     <div class="profile_details-cont">
-        <!--
-        <div class="profile_details">
-            <div class="pr-header">
-                <div class="pr-img_cont">
-                    <img src="/images/users/user_no_photo.png" alt=""
-                        onerror="this.onerror=null; this.closest('.pr-img_cont').remove()">
-                </div>
-                <div class="pr-name">
-                    <span class="pr-username">(mrathletic)</span>
-                    <span class="pr-displayname">MrBombastic</span>
-                </div>
-            </div>
-            <span class="pr-bio">This is my bio. Lalala, no one can change this lalala, camon lazy irşat come here and
-                change this shit when you are ready. When is that? Probably next year!</span>
-            <div class="pr-properties">
-                <span class="pr-nsfw_warning">NSFW <i class="bi bi-exclamation-circle"></i></span>
-                <span class="pr-officer">Moderator <i class="bi bi-shield"></i></span>
-            </div>
-            <div class="pr-email_cont">
-                <span class="pr-email">irsat000@gmail.com</span>
-                <a class="pr-verifyemail">(Verify)</a>
-            </div>
-            <span class="pr-gold">6546 <i class="bi bi-coin"></i></span>
-            <div class="pr-stats">
-                <span>User stats</span>
-                <div class="prs-userstats">
-                    <div class="prs-column">
-                        <span class="stat-reputation">313</span>
-                        <span>REP</span>
-                    </div>
-                    <div class="prs-column">
-                        <span class="stat-follow">104</span>
-                        <span>Follows</span>
-                    </div>
-                    <div class="prs-column">
-                        <span class="stat-gifts">26 + 9</span>
-                        <span>Gifts</span>
-                    </div>
-                </div>
-                <span>Post stats</span>
-                <div class="pr-postingstats">
-                    <div class="prs-column">
-                        <span class="stat-likes">987</span>
-                        <span>Likes</span>
-                    </div>
-                    <div class="prs-column">
-                        <span class="stat-follow">54</span>
-                        <span>Saved</span>
-                    </div>
-                    <div class="prs-column">
-                        <span class="stat-gifts">10 + 4</span>
-                        <span>Posts</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-        -->
         <div class="profile_details-skel">
             <div class="prskel-header">
                 <div class="prskel-img_cont"></div>
@@ -190,6 +133,7 @@
             <a data-tab="saved"><span>Saved</span></a>
             <a data-tab="followed"><span>Followed</span></a>
             <a data-tab="friends"><span>Friends</span></a>
+            <a id="refresh_ptab"><i class="bi bi-arrow-clockwise"></i></a>
         </div>
         <div id="profile-body">
             <div id="profile-posts">

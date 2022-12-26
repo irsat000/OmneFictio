@@ -36,6 +36,7 @@
   --settings-activetab: #3e6e7a;
   --profile-activetab: #3e6e7a;
   --profile-post-color: #272727;
+  --tabrefresh-background-color: #2d2d2d;
   --postskeleton-itemcolor-start: #434343;
   --postskeleton-itemcolor-end: #686868;
   --commentskeleton-itemcolor-start: #434343;
@@ -88,6 +89,7 @@
   --settings-activetab: #32a1bc;
   --profile-activetab: #32a1bc;
   --profile-post-color: #ffffff;
+  --tabrefresh-background-color: #dcdcdc;
   --postskeleton-itemcolor-start: #d1d5db;
   --postskeleton-itemcolor-end: #b9cdec;
   --commentskeleton-itemcolor-start: #d1d5db;

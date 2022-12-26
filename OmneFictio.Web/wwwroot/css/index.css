@@ -44,11 +44,15 @@ main {
 .linkgroups .linkgroup_cont .linkgroup .link_cont i {
   font-size: 3rem;
   text-align: center;
+  height: 72px;
 }
 .linkgroups .linkgroup_cont .linkgroup .link_cont span {
   text-align: center;
   transition: 0.1s;
   height: 32px;
+}
+.linkgroups .linkgroup_cont .linkgroup .link_cont i.bi-person {
+  font-size: 3.3rem;
 }
 
 .darkmode .linkgroup_cont {

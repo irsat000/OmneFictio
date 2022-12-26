@@ -20,7 +20,7 @@ class ofAccount_I {
     gold;
 }
 document.addEventListener("DOMContentLoaded", function () {
-    let profileTabLinks = document.querySelectorAll('.profile-tabs-cont a');
+    let profileTabLinks = document.querySelectorAll('.profile-tabs-mobile a[data-tab], .profile-tabs-desktop a[data-tab]');
     const targetUsername = getPathPart(2);
     const pPath = "/u/" + targetUsername + "/";
     const getTab = getPathPart(3);
@@ -37,13 +37,6 @@ document.addEventListener("DOMContentLoaded", function () {
     let loadedOnce_saved = 0;
     let loadedOnce_followed = 0;
     let loadedOnce_friends = 0;
-    profileTabLinks.forEach(function (a) {
-        a.addEventListener("click", function () {
-            pTab = a.getAttribute('data-tab');
-            window.history.pushState(null, "", pPath + pTab);
-            changeProfileTab(pTab);
-        });
-    });
     getProfileInfo();
     function getProfileInfo() {
         fetch("/u/GetUserInfo/" + targetUsername, {
@@ -131,24 +124,45 @@ document.addEventListener("DOMContentLoaded", function () {
             console.log('Profile info fetch failed -> ' + error);
         });
     }
+    profileTabLinks.forEach(function (a) {
+        a.addEventListener("click", function () {
+            pTab = a.getAttribute('data-tab');
+            window.history.pushState(null, "", pPath + pTab);
+            changeProfileTab(pTab);
+        });
+    });
+    document.getElementById('refresh_ptab').addEventListener('click', () => {
+        switch (pTab) {
+            case "posts":
+                loadedOnce_posts = 0;
+                break;
+            case "reviews":
+                loadedOnce_reviews = 0;
+                break;
+            case "saved":
+                loadedOnce_saved = 0;
+                break;
+            case "followed":
+                loadedOnce_followed = 0;
+                break;
+            case "friends":
+                loadedOnce_friends = 0;
+                break;
+            default: return;
+        }
+        changeProfileTab(pTab);
+    });
     changeProfileTab(pTab);
     function changeProfileTab(tab) {
-        profileTabLinks.forEach(function (a) {
-            if (a.classList.contains("active")) {
-                a.classList.remove("active");
-            }
-        });
-        [...profileBody.children].forEach(function (body) {
-            if (body.classList.contains("active")) {
-                body.classList.remove("active");
-            }
-        });
+        profileTabLinks.forEach(a => a.classList.remove("active"));
+        [...profileBody.children].forEach(b => b.classList.remove("active"));
         document.querySelector('.profile-tabs-mobile a[data-tab="' + tab + '"]').classList.add('active');
         document.querySelector('.profile-tabs-desktop a[data-tab="' + tab + '"]').classList.add('active');
         switch (tab) {
             case "posts":
                 profileBody_posts.classList.add("active");
                 if (loadedOnce_posts !== 1) {
+                    profileBody_posts.innerHTML = "";
                     window.createSkeletons("profile-posts");
                     createProfileBody_posts();
                 }
@@ -156,6 +170,7 @@ document.addEventListener("DOMContentLoaded", function () {
             case "reviews":
                 profileBody_reviews.classList.add("active");
                 if (loadedOnce_reviews !== 1) {
+                    profileBody_reviews.innerHTML = "";
                     window.createSkeletons("profile-reviews");
                     createProfileBody_reviews();
                 }
@@ -163,6 +178,7 @@ document.addEventListener("DOMContentLoaded", function () {
             case "saved":
                 profileBody_saved.classList.add("active");
                 if (loadedOnce_saved !== 1) {
+                    profileBody_saved.innerHTML = "";
                     window.createSkeletons("profile-saved");
                     createProfileBody_saved();
                 }
