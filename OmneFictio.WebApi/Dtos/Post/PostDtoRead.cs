@@ -30,14 +30,6 @@ public class PostDtoRead_1
     public bool? votedByUser { get; set; } = null;
     public double? ratedByUser { get; set; } = null;
     public bool savedByUser { get; set; } = false;
-    public PostDtoRead_1(ICollection<VoteDto>? votes, ICollection<RateDto>? rates)
-    {
-        if (votes != null && votes.Count > 0)
-            this.voteResult = votes.Count(l => l.body) - votes.Count(d => !d.body);
-
-        if (rates != null && rates.Count > 0)
-            this.rateResult = System.Math.Round(rates.Average(r => r.body), 1);
-    }
 }
 
 

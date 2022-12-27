@@ -12,6 +12,7 @@ public interface IHelperServices
 {
     //repetitive
     Task<List<PostDtoRead_1>> GetPosts_Details(List<PostDtoRead_1> postList, int? userId);
+    Task<PostDtoRead_1> GetPosts_Details(PostDtoRead_1 postList, int? userId);
     Task<List<CommentDtoRead_2>> GetComments_Details(List<CommentDtoRead_2> comments, int? userId);
     //helper
     string? CreateUserToken(Account user, byte[] securityToken);
@@ -28,46 +29,58 @@ public class HelperServices : IHelperServices
     //------ REPETITIVE ---------
     public async Task<List<PostDtoRead_1>> GetPosts_Details(List<PostDtoRead_1> postList, int? userId)
     {
+        List<PostDtoRead_1> newPostList = new List<PostDtoRead_1>();
         foreach (PostDtoRead_1 post in postList)
         {
-            //remove non-published chapters
-            //Maybe I can do this from the root later
-            if (post.Chapters != null && post.Chapters.Count() > 0)
-                post.Chapters = post.Chapters.Where(c => c.isPublished == true).ToList();
-
-            //Get comment and reply count
-            var commentIds = _db.Comments
-                .Where(x => x.targetPostId == post.id &&
-                        x.deletedStatus!.body == "Default")
-                .Select(x => x.id);
-            var replyCount = _db.Replies
-                .Count(x => commentIds.Contains(x.commentId) &&
-                        x.deletedStatus!.body == "Default");
-            post.comRepLength = commentIds.Count() + replyCount;
-
-            //Get the sum of words in chapters of the post
-            char[] wordSeparator = new char[] { ' ', '\r', '\n' };
-            var chbodyList = _db.Chapters
-                .Where(x => x.postId == post.id &&
-                        x.deletedStatus!.body == "Default" &&
-                        x.isPublished == true)
-                .Select(x => x.body);
-            foreach (string chbody in chbodyList)
-            {
-                post.wordsLength += chbody.Split(wordSeparator, StringSplitOptions.RemoveEmptyEntries).Length;
-            }
-
-            //check vote by user
-            if (userId != null)
-            {
-                Vote? checkVoteByUser = await _db.Votes.SingleOrDefaultAsync(v =>
-                    v.accountId == userId &&
-                    v.targetPostId == post.id);
-                if (checkVoteByUser != null)
-                    post.votedByUser = checkVoteByUser.body;
-            }
+            newPostList.Add(await GetPosts_Details(post, userId));
         }
-        return postList;
+        return newPostList;
+    }
+    public async Task<PostDtoRead_1> GetPosts_Details(PostDtoRead_1 post, int? userId){
+        //remove non-published chapters
+        //Maybe I can do this from the root later
+        if (post.Chapters != null && post.Chapters.Count() > 0)
+            post.Chapters = post.Chapters.Where(c => c.isPublished == true).ToList();
+
+        //Get vote and rate
+        post.voteResult = _db.Votes
+            .Where(v => v.targetPostId == post.id)
+            .Sum(v => v.body == true ? 1 : -1);
+        var postRates = _db.Rates.Where(r => r.postId == post.id);
+        post.rateResult = postRates.Count() < 0 ? postRates.Average(r => r.body) : -1;
+        //Get comment and reply count
+        var commentIds = _db.Comments
+            .Where(x => x.targetPostId == post.id &&
+                    x.deletedStatus!.body == "Default")
+            .Select(x => x.id);
+        var replyCount = _db.Replies
+            .Count(x => commentIds.Contains(x.commentId) &&
+                    x.deletedStatus!.body == "Default");
+        post.comRepLength = commentIds.Count() + replyCount;
+
+        //Get the sum of words in chapters of the post
+        char[] wordSeparator = new char[] { ' ', '\r', '\n' };
+        var chbodyList = _db.Chapters
+            .Where(x => x.postId == post.id &&
+                    x.deletedStatus!.body == "Default" &&
+                    x.isPublished == true)
+            .Select(x => x.body);
+        foreach (string chbody in chbodyList)
+        {
+            post.wordsLength += chbody.Split(wordSeparator, StringSplitOptions.RemoveEmptyEntries).Length;
+        }
+
+        //check vote by user
+        if (userId != null)
+        {
+            Vote? checkVoteByUser = await _db.Votes.SingleOrDefaultAsync(v =>
+                v.accountId == userId &&
+                v.targetPostId == post.id);
+            if (checkVoteByUser != null)
+                post.votedByUser = checkVoteByUser.body;
+        }
+
+        return post;
     }
 
     public async Task<List<CommentDtoRead_2>> GetComments_Details(List<CommentDtoRead_2> comments, int? userId){

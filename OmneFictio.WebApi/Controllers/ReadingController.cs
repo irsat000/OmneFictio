@@ -14,6 +14,7 @@ using System.Text.RegularExpressions;
 //tools
 using System.IdentityModel.Tokens.Jwt;
 using AutoMapper;
+using AutoMapper.QueryableExtensions;
 using BC = BCrypt.Net.BCrypt;
 using System.Data.Entity.Validation;
 using Google.Apis.Auth;
@@ -76,28 +77,20 @@ public class ReadingController : ControllerBase
     [HttpGet("GetPost/{postid}/{userId?}")]
     public async Task<IActionResult> GetPost(int postid, int? userId)
     {
-        var post = await _mapper.ProjectTo<PostDtoRead_1>(_db.Posts.Where(p =>
-            p.isPublished == true &&
-            p.deletedStatus != null &&
-            p.deletedStatus.body == "Default" &&
-            p.id == postid)).FirstOrDefaultAsync();
+        var post = await _db.Posts.Where(p =>
+                p.isPublished == true &&
+                p.deletedStatus != null &&
+                p.deletedStatus.body == "Default" &&
+                p.id == postid)
+            .ProjectTo<PostDtoRead_1>(_mapper.ConfigurationProvider)
+            .FirstOrDefaultAsync();
         if (post == null)
         {
             return NotFound();
         }
-        if (post.Chapters != null && post.Chapters.Count() > 0)
-        {
-            post.Chapters = post.Chapters.Where(c => c.isPublished == true).ToList();
-        }
         //check properties by user
         if (userId != null)
         {
-            Vote? checkVoteByUser = await _db.Votes.SingleOrDefaultAsync(v =>
-                v.accountId == userId &&
-                v.targetPostId == post.id);
-            if (checkVoteByUser != null)
-                post.votedByUser = checkVoteByUser.body;
-
             Rate? checkRateByUser = await _db.Rates.FirstOrDefaultAsync(r =>
                 r.accountId == userId &&
                 r.postId == post.id);
@@ -108,6 +101,7 @@ public class ReadingController : ControllerBase
                 s.accountId == userId &&
                 s.targetPostId == post.id);
         }
+        post = await _helperServices.GetPosts_Details(post, userId);
         return Ok(post);
     }
 
@@ -240,6 +234,33 @@ public class ReadingController : ControllerBase
         }
         return Ok(comment);
     }
+
+    [HttpGet("GetTopPosts/{userId?}")]
+    public async Task<IActionResult> GetTopPosts(int? userId)
+    {
+        async Task<List<PostDtoRead_1>> GetTopPosts(int days)
+        {
+            return await _db.Posts
+                .Where(p =>
+                    p.isPublished == true &&
+                    p.deletedStatus != null &&
+                    p.deletedStatus.body == "Default" &&
+                    p.publishDate > DateTime.Now.AddDays(days))
+                .OrderByDescending(v => v.Votes.Sum(v => v.body == true ? 1 : -1))
+                .Take(4)
+                .ProjectTo<PostDtoRead_1>(_mapper.ConfigurationProvider)
+                .ToListAsync();
+        }
+        var todaysTopPosts = await GetTopPosts(-1);
+        var monthsTopPosts = await GetTopPosts(-30);
+
+        //Return
+        todaysTopPosts = await _helperServices.GetPosts_Details(todaysTopPosts, userId);
+        monthsTopPosts = await _helperServices.GetPosts_Details(monthsTopPosts, userId);
+        return Ok(new { todaysTopPosts = todaysTopPosts, monthsTopPosts = monthsTopPosts });
+    }
+
+
     /*
     OUTDATED. But I might use this for special occasions.
         [HttpGet("CheckVoteByUser")]
