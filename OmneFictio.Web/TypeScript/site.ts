@@ -233,7 +233,6 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .then((res) => res.json())
             .then((data) => {
-                console.log(data);
                 if (data.statusCode === 200) {
                     success.innerHTML = "SUCCESS";
                     setTimeout(function () {
@@ -431,7 +430,6 @@ async function fetchReplies(commentId: string, section: HTMLElement) {
         .then(async (data) => {
             if (data.statusCode === 200) {
                 const comm = JSON.parse(data.value);
-                console.log(comm);
                 const commentInstance = document.getElementById('modalReplies-comment') as HTMLTemplateElement;
                 const replyInstance = document.getElementById('modalReplies-reply') as HTMLTemplateElement;
                 const commentClone = window.cloneFromTemplate(commentInstance);
@@ -487,7 +485,7 @@ async function fetchReplies(commentId: string, section: HTMLElement) {
 
 
 async function VoteRequest(btn: HTMLElement, data: any) {
-    var action = data.Body ? "like" : "dislike";
+    var action = data.body ? "like" : "dislike";
 
     await fetch("/Action/Vote", {
         method: 'POST',
@@ -510,6 +508,8 @@ async function VoteRequest(btn: HTMLElement, data: any) {
 
 
 function voting_visual(btn: HTMLElement, action: string) {
+    console.log(btn);
+    console.log(action);
     let btnSibling = action === "like"
         ? btn.parentElement!.querySelector('.dislikebtn') as HTMLElement
         : btn.parentElement!.querySelector('.likebtn') as HTMLElement;

@@ -194,7 +194,6 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .then((res) => res.json())
             .then((data) => {
-            console.log(data);
             if (data.statusCode === 200) {
                 success.innerHTML = "SUCCESS";
                 setTimeout(function () {
@@ -377,7 +376,6 @@ async function fetchReplies(commentId, section) {
         .then(async (data) => {
         if (data.statusCode === 200) {
             const comm = JSON.parse(data.value);
-            console.log(comm);
             const commentInstance = document.getElementById('modalReplies-comment');
             const replyInstance = document.getElementById('modalReplies-reply');
             const commentClone = window.cloneFromTemplate(commentInstance);
@@ -423,7 +421,7 @@ async function fetchReplies(commentId, section) {
     });
 }
 async function VoteRequest(btn, data) {
-    var action = data.Body ? "like" : "dislike";
+    var action = data.body ? "like" : "dislike";
     await fetch("/Action/Vote", {
         method: 'POST',
         headers: {
@@ -444,6 +442,8 @@ async function VoteRequest(btn, data) {
         .catch(error => console.log('Vote function failed.', error));
 }
 function voting_visual(btn, action) {
+    console.log(btn);
+    console.log(action);
     let btnSibling = action === "like"
         ? btn.parentElement.querySelector('.dislikebtn')
         : btn.parentElement.querySelector('.likebtn');
@@ -563,7 +563,7 @@ function createSkeletons(page) {
         case "index-topposts":
             const index_todays = document.querySelector('.todaytop_body');
             const index_months = document.querySelector('.monthtop_body');
-            for (let i = 0; i < 4; i++) {
+            for (let i = 0; i < 5; i++) {
                 index_todays.appendChild(window.cloneFromTemplate(postSkelTemplate));
                 index_months.appendChild(window.cloneFromTemplate(postSkelTemplate));
             }
