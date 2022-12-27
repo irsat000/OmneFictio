@@ -144,7 +144,7 @@ public class ProfileController : ControllerBase
         }
         try
         {
-            comments = await _helperServices.GetComments_Details(comments, userId);
+            comments = await _helperServices.GetComments_Details(comments, userId, true);
             return Ok(comments);
         }
         catch (System.Exception)

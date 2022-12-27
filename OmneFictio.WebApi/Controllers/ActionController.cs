@@ -180,7 +180,7 @@ public class ActionController : ControllerBase
         Comment? newComment = new Comment
         {
             accountId = request.accountId,
-            deletedStatusId = 1, // Default  //Might try -> _db.DeletedStatuses.FirstOrDefault(d => d.body == "Default")
+            deletedStatusId = 1, // "Default"  //Situational -> _db.DeletedStatuses.FirstOrDefault(d => d.body == "Default")?.id,
             publishDate = DateTime.Now,
             updateDate = DateTime.Now
         };

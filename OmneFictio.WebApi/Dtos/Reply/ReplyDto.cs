@@ -20,13 +20,5 @@ public partial class ReplyDtoRead_2
     public DeletedStatusDto? deletedStatus { get; set; }
     public int voteResult { get; set; } = 0;
     public bool? votedByUser { get; set; } = null;
-    public ReplyDtoRead_2()
-    {
-    } 
-    public ReplyDtoRead_2(ICollection<VoteDto>? Votes)
-    {
-        if(Votes != null && Votes.Count > 0)
-            this.voteResult = Votes.Count(l => l.body) - Votes.Count(d => !d.body);
-    } 
 }
 //to get the replies when clicking the replies button on comment

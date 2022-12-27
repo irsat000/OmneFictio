@@ -143,30 +143,17 @@ public class ReadingController : ControllerBase
     [HttpGet("GetComments/{type}/{parentid}/{userId?}")]
     public async Task<IActionResult> GetComments(string type, int parentid, int? userId)
     {
-        List<CommentDtoRead_2> comments = new List<CommentDtoRead_2>();
-
-        if (type == "post")
-        {
-            comments = await _mapper.ProjectTo<CommentDtoRead_2>(_db.Comments.Where(c =>
-                c.targetPostId == parentid &&
+        var comments = await _mapper.ProjectTo<CommentDtoRead_2>(_db.Comments.Where(c =>
+                (c.targetPostId == parentid && type == "post" ||
+                c.targetChapterId == parentid && type == "chapter") &&
                 c.deletedStatus != null &&
                 c.deletedStatus.body == "Default")
                 .OrderByDescending(c => c.publishDate)).ToListAsync();
-        }
-        else if (type == "chapter")
-        {
-            comments = await _mapper.ProjectTo<CommentDtoRead_2>(_db.Comments.Where(c =>
-                c.targetChapterId == parentid &&
-                c.deletedStatus != null &&
-                c.deletedStatus.body == "Default")
-                .OrderByDescending(c => c.publishDate)).ToListAsync();
-        }
-
-        if (comments == null || comments.Count() == 0)
+        if (comments.Count() == 0)
         {
             return NotFound();
         }
-        comments = await _helperServices.GetComments_Details(comments, userId);
+        comments = await _helperServices.GetComments_Details(comments, userId, true);
         return Ok(comments);
     }
 
@@ -184,6 +171,10 @@ public class ReadingController : ControllerBase
         {
             return NotFound();
         }
+        //Get votes
+        hReply.voteResult = _db.Votes
+            .Where(v => v.targetReplyId == hReply.id)
+            .Sum(v => v.body == true ? 1 : -1);
         //check vote by user
         if (userId != null)
         {
@@ -205,31 +196,42 @@ public class ReadingController : ControllerBase
                 c.deletedStatus.body == "Default"
             )).FirstOrDefaultAsync();
         //checking integrity
-        if (comment == null || comment.Replies == null || comment.Replies.Count() < 1)
+        if (comment == null)
         {
             return NotFound();
         }
-        //filtering deleted replies
-        comment.Replies = comment.Replies
-            .Where(r => r.deletedStatus != null &&
-                r.deletedStatus.body == "Default")
-            .OrderBy(r => r.publishDate).ToList();
-        //check vote by logged in user
+        //Get votes
+        comment.voteResult = _db.Votes
+            .Where(v => v.targetCommentId == comment.id)
+            .Sum(v => v.body == true ? 1 : -1);
+        //Check vote by logged in user
         if (userId != null)
         {
             Vote? checkVoteByUser_c = await _db.Votes.SingleOrDefaultAsync(v =>
                 v.accountId == userId &&
                 v.targetCommentId == comment.id);
-            if (checkVoteByUser_c != null)
-                comment.votedByUser = checkVoteByUser_c.body;
+            comment.votedByUser = checkVoteByUser_c?.body;
+        }
 
-            foreach (var x in comment.Replies)
+        comment.Replies = await _mapper.ProjectTo<ReplyDtoRead_2>(_db.Replies
+            .Where(r => r.deletedStatus != null &&
+                r.deletedStatus.body == "Default" &&
+                r.commentId == comment.id)
+            .OrderBy(r => r.publishDate))
+            .ToListAsync();
+        foreach (var reply in comment.Replies)
+        {
+            //Get votes
+            reply.voteResult = _db.Votes
+                .Where(v => v.targetReplyId == reply.id)
+                .Sum(v => v.body == true ? 1 : -1);
+            //Check vote by logged in user
+            if (userId != null)
             {
                 Vote? checkVoteByUser_r = await _db.Votes.SingleOrDefaultAsync(v =>
                     v.accountId == userId &&
-                    v.targetReplyId == x.id);
-                if (checkVoteByUser_r != null)
-                    x.votedByUser = checkVoteByUser_r.body;
+                    v.targetReplyId == reply.id);
+                reply.votedByUser = checkVoteByUser_r?.body;
             }
         }
         return Ok(comment);

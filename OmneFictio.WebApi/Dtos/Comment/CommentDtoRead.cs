@@ -23,15 +23,7 @@ public class CommentDtoRead_2
     public int voteResult { get; set; } = 0;
     public int repliesLength { get; set; } = 0;
     public bool? votedByUser { get; set; } = null;
-    public CommentDtoRead_2(ICollection<VoteDto>? Votes, ICollection<ReplyDtoRead_1>? Replies)
-    {
-        if(Votes != null && Votes.Count > 0) {
-            this.voteResult = Votes.Count(l => l.body) - Votes.Count(d => !d.body);
-        }
-        if(Replies != null && Replies.Count > 0) {
-            this.repliesLength = Replies.Count(r => r.deletedStatus!.body == "Default");
-        }
-    }
+    public ReplyDtoRead_2? highlightedReply { get; set; } = null;
 }
 //Getting comments of the post. Fetched by ajax. Highlighted reply will be fetched by javascript. 
 //Its replies will be sent with ajax when user click on replies.
@@ -39,28 +31,9 @@ public class CommentDtoRead_2
 
 
 
-public class CommentDtoRead_3
+public class CommentDtoRead_3 : CommentDtoRead_2
 {
-    public int id { get; set; }
-    public string body { get; set; } = null!;
-    public DateTime publishDate { get; set; }
-    public DateTime updateDate { get; set; }
-
-    public AccountDtoRead_1? account { get; set; }
-    public int voteResult { get; set; } = 0;
-    public int repliesLength { get; set; } = 0;
-    public bool? votedByUser { get; set; } = null;
     public ICollection<ReplyDtoRead_2>? Replies { get; set; }
-    public CommentDtoRead_3(ICollection<VoteDto>? Votes, ICollection<ReplyDtoRead_2>? Replies)
-    {
-        if(Votes != null && Votes.Count > 0) {
-            this.voteResult = Votes.Count(l => l.body) - Votes.Count(d => !d.body);
-        }
-        if(Replies != null && Replies.Count > 0) {
-            this.repliesLength = Replies.Count(r => r.deletedStatus!.body == "Default");
-        }
-        this.Replies = Replies;
-    }
 }
 //Get one comment and its replies
 

@@ -78,6 +78,7 @@ class ofComment_1 {
     repliesLength!: number;
     voteResult!: number;
     votedByUser!: boolean | null;
+    highlightedReply!: ofReply_1 | null;
 }
 class ofReply_1 {
     id!: number;
@@ -826,7 +827,7 @@ async function fillCommentTemplate(comment: ofComment_1, page: string | null) {
         cGetRepliesBtn.addEventListener('click', () => window.openRepliesModal(comment.id.toString()));
     }
     //Get and populate highlighted reply
-    const hreply = await fetchHighlightedReply(comment.id.toString()) as ofReply_1 | null;
+    const hreply = comment.highlightedReply; //await fetchHighlightedReply(comment.id.toString()) as ofReply_1 | null;
     if (hreply) {
         //Check if user voted this parent
         window.checkVoted_icons(rContainer, hreply.votedByUser);

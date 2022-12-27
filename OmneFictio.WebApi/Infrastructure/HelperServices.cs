@@ -1,4 +1,5 @@
 
+using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using OmneFictio.WebApi.Dtos;
@@ -12,8 +13,9 @@ public interface IHelperServices
 {
     //repetitive
     Task<List<PostDtoRead_1>> GetPosts_Details(List<PostDtoRead_1> postList, int? userId);
-    Task<PostDtoRead_1> GetPosts_Details(PostDtoRead_1 postList, int? userId);
-    Task<List<CommentDtoRead_2>> GetComments_Details(List<CommentDtoRead_2> comments, int? userId);
+    Task<PostDtoRead_1> GetPosts_Details(PostDtoRead_1 post, int? userId);
+    Task<List<CommentDtoRead_2>> GetComments_Details(List<CommentDtoRead_2> commentList, int? userId, bool withHReply);
+    Task<CommentDtoRead_2> GetComments_Details(CommentDtoRead_2 comment, int? userId, bool withHReply);
     //helper
     string? CreateUserToken(Account user, byte[] securityToken);
     string GeneratePassword(int length, int numberOfNonAlphanumericCharacters);
@@ -21,8 +23,14 @@ public interface IHelperServices
 public class HelperServices : IHelperServices
 {
     private readonly OmneFictioContext _db;
-    public HelperServices(OmneFictioContext db)
+    private readonly IMapper _mapper;
+    public HelperServices(IMapper mapper, OmneFictioContext db)
     {
+        _mapper = mapper;
+        if (_mapper == null)
+        {
+            throw new InvalidOperationException("Mapper not found");
+        }
         _db = db;
     }
 
@@ -36,7 +44,8 @@ public class HelperServices : IHelperServices
         }
         return newPostList;
     }
-    public async Task<PostDtoRead_1> GetPosts_Details(PostDtoRead_1 post, int? userId){
+    public async Task<PostDtoRead_1> GetPosts_Details(PostDtoRead_1 post, int? userId)
+    {
         //remove non-published chapters
         //Maybe I can do this from the root later
         if (post.Chapters != null && post.Chapters.Count() > 0)
@@ -51,18 +60,21 @@ public class HelperServices : IHelperServices
         //Get comment and reply count
         var commentIds = _db.Comments
             .Where(x => x.targetPostId == post.id &&
-                    x.deletedStatus!.body == "Default")
+                    x.deletedStatus != null &&
+                    x.deletedStatus.body == "Default")
             .Select(x => x.id);
         var replyCount = _db.Replies
             .Count(x => commentIds.Contains(x.commentId) &&
-                    x.deletedStatus!.body == "Default");
+                    x.deletedStatus != null &&
+                    x.deletedStatus.body == "Default");
         post.comRepLength = commentIds.Count() + replyCount;
 
         //Get the sum of words in chapters of the post
         char[] wordSeparator = new char[] { ' ', '\r', '\n' };
         var chbodyList = _db.Chapters
             .Where(x => x.postId == post.id &&
-                    x.deletedStatus!.body == "Default" &&
+                    x.deletedStatus != null &&
+                    x.deletedStatus.body == "Default" &&
                     x.isPublished == true)
             .Select(x => x.body);
         foreach (string chbody in chbodyList)
@@ -70,35 +82,80 @@ public class HelperServices : IHelperServices
             post.wordsLength += chbody.Split(wordSeparator, StringSplitOptions.RemoveEmptyEntries).Length;
         }
 
-        //check vote by user
+        //Check vote by logged in user
         if (userId != null)
         {
             Vote? checkVoteByUser = await _db.Votes.SingleOrDefaultAsync(v =>
                 v.accountId == userId &&
                 v.targetPostId == post.id);
-            if (checkVoteByUser != null)
-                post.votedByUser = checkVoteByUser.body;
+            post.votedByUser = checkVoteByUser?.body;
         }
 
         return post;
     }
 
-    public async Task<List<CommentDtoRead_2>> GetComments_Details(List<CommentDtoRead_2> comments, int? userId){
-        foreach (var x in comments)
+    public async Task<List<CommentDtoRead_2>> GetComments_Details(List<CommentDtoRead_2> commentList, int? userId, bool withHReply)
+    {
+        List<CommentDtoRead_2> newCommentList = new List<CommentDtoRead_2>();
+        foreach (CommentDtoRead_2 comment in commentList)
+        {
+            newCommentList.Add(await GetComments_Details(comment, userId, withHReply));
+        }
+        return newCommentList;
+    }
+    public async Task<CommentDtoRead_2> GetComments_Details(CommentDtoRead_2 comment, int? userId, bool withHReply)
+    {
+        if (withHReply)
+        {
+            //Get highlighted reply and its vote result
+            comment.highlightedReply = await _mapper.ProjectTo<ReplyDtoRead_2>(_db.Replies
+                    .Where(r => r.deletedStatus != null &&
+                        r.deletedStatus.body == "Default" &&
+                        r.commentId == comment.id)
+                    .OrderByDescending(r => r.Votes.Sum(v => v.body == true ? 1 : -1)))
+                .FirstOrDefaultAsync();
+            if (comment.highlightedReply != null)
+            {
+                comment.highlightedReply.voteResult = _db.Votes
+                    .Where(v => v.targetReplyId == comment.highlightedReply.id)
+                    .Sum(v => v.body == true ? 1 : -1);
+                //Check vote by logged in user
+                if (userId != null)
+                {
+                    Vote? checkVoteByUser = await _db.Votes.SingleOrDefaultAsync(v =>
+                        v.accountId == userId &&
+                        v.targetReplyId == comment.highlightedReply.id);
+                    comment.highlightedReply.votedByUser = checkVoteByUser?.body;
+                }
+            }
+        }
+
+        //Get votes
+        comment.voteResult = _db.Votes
+            .Where(v => v.targetCommentId == comment.id)
+            .Sum(v => v.body == true ? 1 : -1);
+        //Get reply amount
+        comment.repliesLength = _db.Replies
+            .Count(x => x.commentId == comment.id &&
+                    x.deletedStatus != null &&
+                    x.deletedStatus.body == "Default");
+        //Check vote by logged in user
+        if (userId != null)
         {
             Vote? checkVoteByUser = await _db.Votes.SingleOrDefaultAsync(v =>
                 v.accountId == userId &&
-                v.targetCommentId == x.id);
-            if (checkVoteByUser != null)
-                x.votedByUser = checkVoteByUser.body;
+                v.targetCommentId == comment.id);
+            comment.votedByUser = checkVoteByUser?.body;
         }
-        return comments;
+        return comment;
     }
 
     //------ HELPER functions -------------
-    public string? CreateUserToken(Account user, byte[] securityToken){
+    public string? CreateUserToken(Account user, byte[] securityToken)
+    {
         var tokenHandler = new JwtSecurityTokenHandler();
-        var tokenDescriptor = new SecurityTokenDescriptor {
+        var tokenDescriptor = new SecurityTokenDescriptor
+        {
             Subject = new ClaimsIdentity(new List<Claim>(){
                 new Claim(ClaimTypes.NameIdentifier, user.id.ToString()),
                 new Claim(ClaimTypes.Name, user.username),

@@ -72,6 +72,7 @@ class ofComment_1 {
     repliesLength;
     voteResult;
     votedByUser;
+    highlightedReply;
 }
 class ofReply_1 {
     id;
@@ -725,7 +726,7 @@ async function fillCommentTemplate(comment, page) {
         cGetRepliesBtn.firstChild.textContent = comment.repliesLength + repliesLengthText;
         cGetRepliesBtn.addEventListener('click', () => window.openRepliesModal(comment.id.toString()));
     }
-    const hreply = await fetchHighlightedReply(comment.id.toString());
+    const hreply = comment.highlightedReply;
     if (hreply) {
         window.checkVoted_icons(rContainer, hreply.votedByUser);
         rContainer.setAttribute('data-replyid', hreply.id.toString());
