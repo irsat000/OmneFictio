@@ -118,25 +118,6 @@ public class ReadingController : Controller
         return new JsonResult(Ok(content));
     }
 
-    [HttpGet("g/GetHighlightedReply/{commentId}")]
-    public async Task<JsonResult> GetHighlightedReply(int commentId)
-    {
-        string url = "Read/GetHighlightedReply/" + commentId;
-        if(AccountId != null){
-            url += "/" + AccountId;
-        }
-
-        var apiResponse = await _httpClient.GetAsync(url);
-        if (apiResponse.StatusCode.ToString() != "OK")
-        {
-            return new JsonResult(NotFound());
-        }
-        //return
-        string content = await apiResponse.Content.ReadAsStringAsync();
-        return new JsonResult(Ok(content));
-    }
-
-
     //fetch api - get comment and its replies
     [HttpGet("g/GetComment/{commentId}")]
     public async Task<JsonResult> GetComment(int commentId)

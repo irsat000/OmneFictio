@@ -390,25 +390,6 @@ async function fetchComments(type: string, parentid: string, section: HTMLElemen
         });
 }
 
-function fetchHighlightedReply(commentId: string) {
-    return new Promise((resolve, reject) => {
-        fetch("/g/GetHighlightedReply/" + commentId, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-            .then((res) => res.json())
-            .then((data) => {
-                resolve(data.statusCode === 200 ? JSON.parse(data.value) : null);
-            })
-            .catch(error => {
-                console.log("Fetch failed -> " + error);
-            });
-    })
-}
-
 let frController: AbortController | null;
 async function fetchReplies(commentId: string, section: HTMLElement) {
     section.innerHTML = "";
@@ -430,7 +411,9 @@ async function fetchReplies(commentId: string, section: HTMLElement) {
         .then((res) => res.json())
         .then(async (data) => {
             if (data.statusCode === 200) {
-                const comm = JSON.parse(data.value);
+                const response = JSON.parse(data.value);
+                const comm = response.comment;
+                const replies = response.replies;
                 const commentInstance = document.getElementById('modalReplies-comment') as HTMLTemplateElement;
                 const replyInstance = document.getElementById('modalReplies-reply') as HTMLTemplateElement;
                 const commentClone = window.cloneFromTemplate(commentInstance);
@@ -453,8 +436,8 @@ async function fetchReplies(commentId: string, section: HTMLElement) {
                 section.appendChild(commentClone);
 
                 //if it has replies
-                if (comm.replies.length > 0) {
-                    for (const reply of comm.replies) {
+                if (replies.length > 0) {
+                    for (const reply of replies) {
                         const replyClone = window.cloneFromTemplate(replyInstance);
                         //Check if user voted this parent
                         window.checkVoted_icons(replyClone, reply.votedByUser);

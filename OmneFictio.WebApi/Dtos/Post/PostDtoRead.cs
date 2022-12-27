@@ -39,3 +39,4 @@ public class PostDtoRead_2
     public AccountDtoRead_1? account { get; set; }
     public ICollection<ChapterDtoRead_1>? Chapters { get; set; }
 }
+//To get the parent of chapter

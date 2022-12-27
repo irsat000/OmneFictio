@@ -339,24 +339,6 @@ async function fetchComments(type, parentid, section) {
         console.log('Fetch failed -> ' + error);
     });
 }
-function fetchHighlightedReply(commentId) {
-    return new Promise((resolve, reject) => {
-        fetch("/g/GetHighlightedReply/" + commentId, {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',
-                'Content-Type': 'application/json'
-            }
-        })
-            .then((res) => res.json())
-            .then((data) => {
-            resolve(data.statusCode === 200 ? JSON.parse(data.value) : null);
-        })
-            .catch(error => {
-            console.log("Fetch failed -> " + error);
-        });
-    });
-}
 let frController;
 async function fetchReplies(commentId, section) {
     section.innerHTML = "";
@@ -376,7 +358,9 @@ async function fetchReplies(commentId, section) {
         .then((res) => res.json())
         .then(async (data) => {
         if (data.statusCode === 200) {
-            const comm = JSON.parse(data.value);
+            const response = JSON.parse(data.value);
+            const comm = response.comment;
+            const replies = response.replies;
             const commentInstance = document.getElementById('modalReplies-comment');
             const replyInstance = document.getElementById('modalReplies-reply');
             const commentClone = window.cloneFromTemplate(commentInstance);
@@ -395,8 +379,8 @@ async function fetchReplies(commentId, section) {
                 commentClone.querySelector('.mrc-likes').textContent = comm.voteResult;
             }
             section.appendChild(commentClone);
-            if (comm.replies.length > 0) {
-                for (const reply of comm.replies) {
+            if (replies.length > 0) {
+                for (const reply of replies) {
                     const replyClone = window.cloneFromTemplate(replyInstance);
                     window.checkVoted_icons(replyClone, reply.votedByUser);
                     replyClone.querySelector('.mr-reply').setAttribute('data-replyid', reply.id);

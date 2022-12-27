@@ -62,6 +62,10 @@ public class ReadingController : ControllerBase
         {
             chapter.post.Chapters = chapter.post.Chapters.Where(c => c.isPublished == true).ToList();
         }
+        //Get votes
+        chapter.voteResult = _db.Votes
+            .Where(v => v.targetChapterId == chapter.id)
+            .Sum(v => v.body == true ? 1 : -1);
         //check vote by user
         if (userId != null)
         {
@@ -156,41 +160,11 @@ public class ReadingController : ControllerBase
         comments = await _helperServices.GetComments_Details(comments, userId, true);
         return Ok(comments);
     }
-
-    [HttpGet("GetHighlightedReply/{commentid}/{userId?}")]
-    public async Task<IActionResult> GetHighlightedReply(int commentid, int? userId)
-    {
-        //Get the comment's replies
-        var replies = await _mapper.ProjectTo<ReplyDtoRead_2>(_db.Replies.Where(r =>
-            r.commentId == commentid)).ToListAsync();
-        //get highlighted
-        ReplyDtoRead_2? hReply = replies.OrderByDescending(r => r.voteResult)
-            .ThenBy(r => r.publishDate).FirstOrDefault();
-
-        if (hReply == null)
-        {
-            return NotFound();
-        }
-        //Get votes
-        hReply.voteResult = _db.Votes
-            .Where(v => v.targetReplyId == hReply.id)
-            .Sum(v => v.body == true ? 1 : -1);
-        //check vote by user
-        if (userId != null)
-        {
-            Vote? checkVoteByUser = await _db.Votes.SingleOrDefaultAsync(v =>
-                v.accountId == userId &&
-                v.targetReplyId == hReply.id);
-            if (checkVoteByUser != null)
-                hReply.votedByUser = checkVoteByUser.body;
-        }
-        return Ok(hReply);
-    }
-
+    
     [HttpGet("GetComment/{commentid}/{userId?}")]
     public async Task<IActionResult> GetComment(int commentid, int? userId)
     {
-        var comment = await _mapper.ProjectTo<CommentDtoRead_3>(_db.Comments.Where(c =>
+        var comment = await _mapper.ProjectTo<CommentDtoRead_2>(_db.Comments.Where(c =>
                 c.id == commentid &&
                 c.deletedStatus != null &&
                 c.deletedStatus.body == "Default"
@@ -200,26 +174,15 @@ public class ReadingController : ControllerBase
         {
             return NotFound();
         }
-        //Get votes
-        comment.voteResult = _db.Votes
-            .Where(v => v.targetCommentId == comment.id)
-            .Sum(v => v.body == true ? 1 : -1);
-        //Check vote by logged in user
-        if (userId != null)
-        {
-            Vote? checkVoteByUser_c = await _db.Votes.SingleOrDefaultAsync(v =>
-                v.accountId == userId &&
-                v.targetCommentId == comment.id);
-            comment.votedByUser = checkVoteByUser_c?.body;
-        }
+        comment = await _helperServices.GetComments_Details(comment, userId, false);
 
-        comment.Replies = await _mapper.ProjectTo<ReplyDtoRead_2>(_db.Replies
+        var replies = await _mapper.ProjectTo<ReplyDtoRead_2>(_db.Replies
             .Where(r => r.deletedStatus != null &&
                 r.deletedStatus.body == "Default" &&
                 r.commentId == comment.id)
             .OrderBy(r => r.publishDate))
             .ToListAsync();
-        foreach (var reply in comment.Replies)
+        foreach (var reply in replies)
         {
             //Get votes
             reply.voteResult = _db.Votes
@@ -234,7 +197,7 @@ public class ReadingController : ControllerBase
                 reply.votedByUser = checkVoteByUser_r?.body;
             }
         }
-        return Ok(comment);
+        return Ok(new { comment = comment, replies = replies });
     }
 
     [HttpGet("GetTopPosts/{userId?}")]

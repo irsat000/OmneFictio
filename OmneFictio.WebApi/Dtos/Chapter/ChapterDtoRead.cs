@@ -20,10 +20,4 @@ public class ChapterDtoRead_2
     public DeletedStatusDto? deletedStatus { get; set; }
     public int voteResult { get; set; } = 0;
     public bool? votedByUser { get; set; } = null;
-    public ChapterDtoRead_2(ICollection<VoteDto>? Votes)
-    {
-        if(Votes != null && Votes.Count > 0) {
-            this.voteResult = Votes.Count(l => l.body) - Votes.Count(d => !d.body);
-        }
-    }
 }

@@ -27,18 +27,3 @@ public class CommentDtoRead_2
 }
 //Getting comments of the post. Fetched by ajax. Highlighted reply will be fetched by javascript. 
 //Its replies will be sent with ajax when user click on replies.
-
-
-
-
-public class CommentDtoRead_3 : CommentDtoRead_2
-{
-    public ICollection<ReplyDtoRead_2>? Replies { get; set; }
-}
-//Get one comment and its replies
-
-
-
-
-/*int x = Votes.Count(l => l.Body) - Votes.Count(d => !d.Body);
-this.voteResult = x < 0 ? "--" : x.ToString();*/
