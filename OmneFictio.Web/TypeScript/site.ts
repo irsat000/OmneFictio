@@ -624,7 +624,7 @@ function createSkeletons(page: string) {
             //Creates top post skeletons for index page
             const index_todays = document.querySelector('.todaytop_body') as HTMLDivElement;
             const index_months = document.querySelector('.monthtop_body') as HTMLDivElement;
-            for (let i = 0; i < 5; i++) {
+            for (let i = 0; i < 4; i++) {
                 index_todays.appendChild(window.cloneFromTemplate(postSkelTemplate));
                 index_months.appendChild(window.cloneFromTemplate(postSkelTemplate));
             }

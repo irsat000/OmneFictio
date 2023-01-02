@@ -240,7 +240,7 @@ header .header-wrap {
   background-color: #b94f4f;
 }
 .drawer .dw-icon-cont {
-  width: 2.4rem;
+  padding-right: 14px;
 }
 .drawer .dw-icon-cont i {
   font-size: 1.4rem;

@@ -10,9 +10,9 @@
     }
 }
 @{
-    string? userId = User.FindFirst("nameid")?.Value ?? null;
-    string? username = User.FindFirst("unique_name")?.Value ?? null;
-    string? userPicture = User.FindFirst("actort")?.Value ?? null;
+    string? userId = User.FindFirst("nameid")?.Value;
+    string? username = User.FindFirst("unique_name")?.Value;
+    string? userPicture = User.FindFirst("actort")?.Value;
 }
 <input type="hidden" value="@Model.postid" id="postid">
 
@@ -117,15 +117,111 @@
 
 <div class="post-wrap" id="post-wrap">
 
-</div>
+    <div class="post-main" data-postid="3">
+        <div class="psection-1">
+            <div class="p-cover">
+                <img src="/images/covers/71GFREhtqNL.jpg" class="p-basecover"
+                    onerror="this.onerror=null; this.closest('.p-cover').remove()">
+                <div class="p-upscalecover-cont" id="p-upscalecover">
+                    <img src="/images/covers/71GFREhtqNL.jpg" class="p-upscalecover">
+                    <i class="bi bi-zoom-in"></i>
+                </div>
+            </div>
+            <div class="p-postinfo">
+                <div class="p-primary">
+                    <div class="p-title-cont">
+                        <span class="p-title">
+                            Odin the Omnipotent
+                        </span>
+                        <div class="p-menu">
+                            <i class="bi bi-three-dots"></i>
+                            <!--<div class="p-actions">
+                        <button type="button">Share</button>
+                        <button type="button">Report</button>
+                    </div>-->
+                        </div>
+                    </div>
+                    <span class="p-description">
+                        After his father's death, Odin was not going to be so peaceful. Old ways died as the new
+                        skyfather born. going to be so peacefu going to be so peacefu going to be so peaceful.
+                    </span>
+                </div>
+                <div class="p-footer">
+                    <div class="p-footer-wrap">
+                        <div class="p-evaluation">
+                            <i class="bi bi-hand-thumbs-up" data-action="like" data-target_type="post"></i>
+                            <span class="p-likes vote_count">4</span>
+                            <i class="bi bi-hand-thumbs-down" data-action="dislike" data-target_type="post"></i>
+                        </div>
+                        <div class="p-user">
+                            <span class="p-username">
+                                MrBombastic
+                            </span>
+                            <div class="p-uimg-cont">
+                                <img src="/images/users/user1.png"
+                                    onerror="this.onerror=null; this.src='/images/onerror/user_no_photo.png'">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="p-properties">
+                    <span class="pp-type">Story</span>
+                    <span class="pp-language">English</span>
+                    <span class="pp-status">In-Progress</span>
+                    <span class="pp-rating">E - Everyone</span>
+                </div>
+                <div class="p-series">
+                    <span>Harry Potter</span>
+                    <span>Avatar</span>
+                </div>
+                <div class="p-tags">
+                    <span>Mystery</span>
+                    <span>Adventure</span>
+                    <span>Fantasy</span>
+                </div>
+            </div>
+        </div>
 
-<div class="start_reading">
-    <a href="#">Start Reading</a>
-</div>
+        <div class="psection-2">
+            <div class="p-readbtn-cont">
+                <a href="#" class="start_reading">Start Reading</a>
+                <button id="get_chapters">Chapters</button>
+            </div>
+            <table class="rate-table">
+                <tr>
+                    <td class="rt-type">Story</td>
+                    <td id="rate-story">
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="rt-type">Writing</td>
+                    <td id="rate-writing">
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="rt-type">Originality</td>
+                    <td id="rate-originality">
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                        <i class="bi bi-star"></i>
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
 
-<div class="chapter_selection">
-    <span id="get_chapters">Chapters</span>
-    <a href="#">Open all</a>
 </div>
 
 <!--<div class="rate_it">

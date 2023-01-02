@@ -45,6 +45,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const postId = window.getPathPart(2);
     GetPost();
     async function GetPost() {
+        return;
         if (isNaN(Number(postId))) {
             return;
         }
