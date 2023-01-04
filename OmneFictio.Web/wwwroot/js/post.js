@@ -12,12 +12,8 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     document.addEventListener('click', function (e) {
         const target = e.target;
-        if (target.id === "p-upscalecover" ||
-            (target.parentElement != null &&
-                target.parentElement.id === "p-upscalecover")) {
-            if (!fullsizecover.classList.contains('dblock')) {
-                fullsizecover.classList.add('dblock');
-            }
+        if (target.classList.contains('p-basecover')) {
+            fullsizecover.classList.add('dblock');
         }
         if (target.closest('c-menupopup') === null
             && !target.closest('.c-menu')
@@ -65,8 +61,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 window.checkVoted_icons(clone, post.votedByUser);
                 clone.querySelector('.post-2').setAttribute('data-postid', post.id);
                 if (post.coverImage !== null) {
-                    clone.querySelector('.p-basecover').setAttribute('src', '/images/covers/' + post.coverImage);
-                    clone.querySelector('.p-upscalecover').setAttribute('src', '/images/covers/' + post.coverImage);
+                    clone.querySelector('.p-cover > img').setAttribute('src', '/images/covers/' + post.coverImage);
+                    clone.querySelector('.p-cover-mobile > img').setAttribute('src', '/images/covers/' + post.coverImage);
                     document.getElementById('fsc-img').setAttribute('src', '/images/covers/' + post.coverImage);
                 }
                 else {
