@@ -6,7 +6,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const rateByUser = document.getElementById('rate_by_user');
     const chaptersModal = document.getElementById('modal-chapters');
     const fullsizecover = document.getElementById('fullsize-cover');
-    const previousPageBtn = document.getElementById('goBackToReadPage');
     modalbg1.addEventListener("click", function () {
         closeChaptersModal();
     });
@@ -22,26 +21,16 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
     if (params.get('lp') !== null) {
-        const lastPage = params.get('lp');
-        previousPageBtn.href = lastPage;
         params.delete('lp');
         let newUrl = window.location.href.split('?')[0];
         if ([...params.keys()].length > 0) {
             newUrl += "?" + params.toString();
         }
-        window.sessionStorage.setItem(newUrl, lastPage);
         window.history.replaceState({}, document.title, newUrl);
-    }
-    else if (sessionStorage.getItem(window.location.href) !== null) {
-        previousPageBtn.href = sessionStorage.getItem(window.location.href);
-    }
-    else {
-        previousPageBtn.remove();
     }
     const postId = window.getPathPart(2);
     GetPost();
     async function GetPost() {
-        return;
         if (isNaN(Number(postId))) {
             return;
         }
@@ -56,10 +45,11 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(async (data) => {
             if (data.statusCode === 200) {
                 const post = JSON.parse(data.value);
+                console.log(post);
                 const instance = document.getElementById('getpost_instance');
                 const clone = window.cloneFromTemplate(instance);
                 window.checkVoted_icons(clone, post.votedByUser);
-                clone.querySelector('.post-2').setAttribute('data-postid', post.id);
+                clone.querySelector('.post-main').setAttribute('data-postid', post.id);
                 if (post.coverImage !== null) {
                     clone.querySelector('.p-cover > img').setAttribute('src', '/images/covers/' + post.coverImage);
                     clone.querySelector('.p-cover-mobile > img').setAttribute('src', '/images/covers/' + post.coverImage);
@@ -67,15 +57,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
                 else {
                     clone.querySelector('.p-cover').remove();
+                    clone.querySelector('.p-cover-mobile').remove();
                 }
                 clone.querySelector('.p-title').textContent = post.title;
-                clone.querySelector('.p-date').textContent = window.TimeAgo(post.publishDate);
                 clone.querySelector('.p-description').textContent = post.postDescription;
                 if (post.voteResult >= 0) {
                     clone.querySelector('.vote_count').textContent = post.voteResult;
                 }
-                clone.querySelector('.p-rate').textContent = post.rateResult >= 0 && post.rateResult <= 10
-                    ? post.rateResult + "/10" : "-/10";
                 if (post.account.displayName !== null) {
                     clone.querySelector('.p-username').textContent = post.account.displayName;
                 }
@@ -83,13 +71,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     clone.querySelector('.p-username').textContent = post.account.username;
                 }
                 clone.querySelector('.p-uimg-cont > img').setAttribute('src', '/images/users/' + post.account.profilePic);
-                clone.querySelectorAll('.pd-primary > span')[0].textContent = post.postType.body;
-                clone.querySelectorAll('.pd-primary > span')[1].textContent = post.language.body;
-                clone.querySelectorAll('.pd-primary > span')[2].textContent = post.postStatus.body;
-                clone.querySelectorAll('.pd-primary > span')[3].textContent = post.ratedAs.body;
-                const postSaveBtn = clone.querySelector('#postSaveBtn');
+                clone.querySelector('.pp-type').textContent = post.postType.body;
+                clone.querySelector('.pp-language').textContent = post.language.body;
+                clone.querySelector('.pp-status').textContent = post.postStatus.body;
+                clone.querySelector('.pp-rating').textContent = post.ratedAs.body;
+                const postSaveBtn = clone.querySelector('.savepost');
                 if (post.savedByUser == true) {
-                    postSaveBtn.classList.add('pd-saved');
+                    postSaveBtn.classList.remove('bi-bookmark');
+                    postSaveBtn.classList.add('bi-bookmark-fill');
+                    postSaveBtn.classList.add('active');
                 }
                 postSaveBtn.addEventListener('click', () => {
                     fetch('/Action/SavePost', {
@@ -103,27 +93,28 @@ document.addEventListener("DOMContentLoaded", function () {
                         .then((res) => res.json())
                         .then((data) => {
                         if (data.statusCode === 200) {
-                            postSaveBtn.classList.add('pd-saved');
+                            postSaveBtn.classList.remove('bi-bookmark');
+                            postSaveBtn.classList.add('bi-bookmark-fill');
+                            postSaveBtn.classList.add('active');
                         }
                         else if (data.statusCode === 202) {
-                            postSaveBtn.classList.remove('pd-saved');
+                            postSaveBtn.classList.remove('bi-bookmark-fill');
+                            postSaveBtn.classList.remove('active');
+                            postSaveBtn.classList.add('bi-bookmark');
                         }
                         else {
-                            alert(data.statusCode);
+                            alert("Failed while saving post");
                         }
                     })
                         .catch(error => { console.log("Fetch failed -> " + error); });
                 });
-                if (post.ratedByUser != null) {
-                    rateByUser.textContent = post.ratedByUser + "/10";
-                }
-                const tagSection = clone.querySelector('.pd-tags');
-                const seriesSection = clone.querySelector('.pd-series');
+                const tagSection = clone.querySelector('.p-tags');
+                const seriesSection = clone.querySelector('.p-series');
                 if (post.tags.length > 0) {
                     post.tags.forEach((tagname) => tagSection.innerHTML += "<span>" + tagname.body + "</span>");
                 }
                 else {
-                    tagSection.innerHTML = "<span>Empty</span>";
+                    tagSection.innerHTML = "<span>No tags</span>";
                 }
                 if (post.existingStories.length > 0) {
                     post.existingStories.forEach((storyname) => seriesSection.innerHTML += "<span>" + storyname.body + "</span>");
@@ -131,7 +122,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 else {
                     seriesSection.remove();
                 }
+                clone.querySelector('.pi-amount_of_words').textContent = post.wordsLength;
+                clone.querySelector('.pi-amount_of_comments').textContent = post.comRepLength;
+                clone.querySelector('.pi-publish_date').textContent = window.TimeAgo(post.publishDate);
+                if (post.publishDate !== post.updateDate) {
+                    clone.querySelector('.pi-last_update').textContent = window.TimeAgo(post.updateDate);
+                }
+                else {
+                    clone.querySelector('.pi-last_update').closest('.pi-detail-column').remove();
+                }
                 document.getElementById('post-wrap').appendChild(clone);
+                document.querySelectorAll('#mc-close, #get_chapters').forEach(function (element) {
+                    element.addEventListener("click", open_close_chapters_modal);
+                    element.addEventListener("touchstart", open_close_chapters_modal);
+                });
                 window.createSkeletons("post-commentsection");
                 window.fetchComments("post", postId, commentSection);
                 document.getElementById('addCommentToPost').addEventListener('click', function () {
@@ -148,9 +152,7 @@ document.addEventListener("DOMContentLoaded", function () {
                         "<li><a href='/p/" + post.id + "/" + chapter.chapterIndex + "'>" + chapter.title + "</a></li>");
                 }
             }
-        })
-            .catch(error => { console.log('Fetch failed -> ' + error); });
-        ;
+        });
     }
     const rateItBtn = document.getElementById('rate_it_btn');
     rateItBtn.addEventListener('click', async function () {
@@ -214,10 +216,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
-    document.querySelectorAll('#mc-close, #get_chapters').forEach(function (element) {
-        element.addEventListener("click", open_close_chapters_modal);
-        element.addEventListener("touchstart", open_close_chapters_modal);
-    });
     function closeChaptersModal() {
         if (chaptersModal !== null && chaptersModal.classList.contains('dflex')) {
             chaptersModal.classList.remove('dflex');

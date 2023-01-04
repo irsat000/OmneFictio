@@ -7,7 +7,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const rateByUser = document.getElementById('rate_by_user') as HTMLSpanElement;
     const chaptersModal = document.getElementById('modal-chapters') as HTMLDivElement;
     const fullsizecover = document.getElementById('fullsize-cover') as HTMLDivElement;
-    const previousPageBtn = document.getElementById('goBackToReadPage') as HTMLAnchorElement;
 
     modalbg1.addEventListener("click", function () {
         closeChaptersModal();
@@ -26,6 +25,14 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     if (params.get('lp') !== null) {
+        params.delete('lp');
+        let newUrl: string = window.location.href.split('?')[0];
+        if ([...params.keys()].length > 0) {
+            newUrl += "?" + params.toString();
+        }
+        window.history.replaceState({}, document.title, newUrl);
+    }
+    /*if (params.get('lp') !== null) {
         const lastPage = params.get('lp')!;
         previousPageBtn.href = lastPage;
         params.delete('lp');
@@ -43,12 +50,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     else {
         previousPageBtn.remove();
-    }
+    }*/
 
     const postId = window.getPathPart(2);
     GetPost();
     async function GetPost() {
-        return;
         if (isNaN(Number(postId))) {
             return;
         }
@@ -63,13 +69,14 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(async (data) => {
                 if (data.statusCode === 200) {
                     const post = JSON.parse(data.value);
+                    console.log(post);
                     const instance = document.getElementById('getpost_instance') as HTMLTemplateElement;
                     const clone = window.cloneFromTemplate(instance);
 
                     //Check if user voted this parent
                     window.checkVoted_icons(clone, post.votedByUser);
 
-                    clone.querySelector('.post-2')!.setAttribute('data-postid', post.id);
+                    clone.querySelector('.post-main')!.setAttribute('data-postid', post.id);
 
                     if (post.coverImage !== null) {
                         clone.querySelector('.p-cover > img')!.setAttribute('src', '/images/covers/' + post.coverImage);
@@ -77,15 +84,13 @@ document.addEventListener("DOMContentLoaded", function () {
                         document.getElementById('fsc-img')!.setAttribute('src', '/images/covers/' + post.coverImage);
                     } else {
                         clone.querySelector('.p-cover')!.remove();
+                        clone.querySelector('.p-cover-mobile')!.remove();
                     }
                     clone.querySelector('.p-title')!.textContent = post.title;
-                    clone.querySelector('.p-date')!.textContent = window.TimeAgo(post.publishDate);
                     clone.querySelector('.p-description')!.textContent = post.postDescription;
                     if (post.voteResult >= 0) {
                         clone.querySelector('.vote_count')!.textContent = post.voteResult;
                     }
-                    clone.querySelector('.p-rate')!.textContent = post.rateResult >= 0 && post.rateResult <= 10
-                        ? post.rateResult + "/10" : "-/10";
                     //user
                     if (post.account.displayName !== null) {
                         clone.querySelector('.p-username')!.textContent = post.account.displayName;
@@ -94,15 +99,17 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                     clone.querySelector('.p-uimg-cont > img')!.setAttribute('src', '/images/users/' + post.account.profilePic);
 
-                    clone.querySelectorAll('.pd-primary > span')[0].textContent = post.postType.body;
-                    clone.querySelectorAll('.pd-primary > span')[1].textContent = post.language.body;
-                    clone.querySelectorAll('.pd-primary > span')[2].textContent = post.postStatus.body;
-                    clone.querySelectorAll('.pd-primary > span')[3].textContent = post.ratedAs.body;
+                    clone.querySelector('.pp-type')!.textContent = post.postType.body;
+                    clone.querySelector('.pp-language')!.textContent = post.language.body;
+                    clone.querySelector('.pp-status')!.textContent = post.postStatus.body;
+                    clone.querySelector('.pp-rating')!.textContent = post.ratedAs.body;
 
                     //Post save button
-                    const postSaveBtn = clone.querySelector('#postSaveBtn') as HTMLButtonElement;
+                    const postSaveBtn = clone.querySelector('.savepost') as HTMLElement;
                     if(post.savedByUser == true){
-                        postSaveBtn.classList.add('pd-saved');
+                        postSaveBtn.classList.remove('bi-bookmark');
+                        postSaveBtn.classList.add('bi-bookmark-fill');
+                        postSaveBtn.classList.add('active');
                     }
                     postSaveBtn.addEventListener('click', () => {
                         fetch('/Action/SavePost', {
@@ -116,30 +123,35 @@ document.addEventListener("DOMContentLoaded", function () {
                             .then((res) => res.json())
                             .then((data) => {
                                 if (data.statusCode === 200) {
-                                    postSaveBtn.classList.add('pd-saved');
+                                    postSaveBtn.classList.remove('bi-bookmark');
+                                    postSaveBtn.classList.add('bi-bookmark-fill');
+                                    postSaveBtn.classList.add('active');
                                 } else if (data.statusCode === 202) {
-                                    postSaveBtn.classList.remove('pd-saved');
+                                    postSaveBtn.classList.remove('bi-bookmark-fill');
+                                    postSaveBtn.classList.remove('active');
+                                    postSaveBtn.classList.add('bi-bookmark');
                                 } else {
-                                    alert(data.statusCode);
+                                    alert("Failed while saving post");
                                 }
                             })
                             .catch(error => { console.log("Fetch failed -> " + error) });
                     });
 
-                    //get user's rate
-                    if (post.ratedByUser != null) {
-                        rateByUser.textContent = post.ratedByUser + "/10";
-                    }
+                    /*
+                    Rate will be split into multiple categories
+                    User's rate will be included in the stars
+                    clone.querySelector('.p-rate')!.textContent = post.rateResult >= 0 && post.rateResult <= 10
+                        ? post.rateResult + "/10" : "-/10";*/
 
-                    const tagSection = clone.querySelector('.pd-tags') as HTMLDivElement;
-                    const seriesSection = clone.querySelector('.pd-series') as HTMLDivElement;
+                    const tagSection = clone.querySelector('.p-tags') as HTMLDivElement;
+                    const seriesSection = clone.querySelector('.p-series') as HTMLDivElement;
                     //tag list
                     if (post.tags.length > 0) {
                         post.tags.forEach((tagname: any) =>
                             tagSection.innerHTML += "<span>" + tagname.body + "</span>"
                         );
                     } else {
-                        tagSection.innerHTML = "<span>Empty</span>";
+                        tagSection.innerHTML = "<span>No tags</span>";
                     }
                     //based on list
                     if (post.existingStories.length > 0) {
@@ -150,7 +162,24 @@ document.addEventListener("DOMContentLoaded", function () {
                         seriesSection.remove();
                     }
 
+                    //Extra info
+                    clone.querySelector('.pi-amount_of_words')!.textContent = post.wordsLength;
+                    clone.querySelector('.pi-amount_of_comments')!.textContent = post.comRepLength;
+                    clone.querySelector('.pi-publish_date')!.textContent = window.TimeAgo(post.publishDate);
+                    if(post.publishDate !== post.updateDate){
+                        clone.querySelector('.pi-last_update')!.textContent = window.TimeAgo(post.updateDate);
+                    } else {
+                        clone.querySelector('.pi-last_update')!.closest('.pi-detail-column')!.remove();
+                    }
+
+                    //Create post
                     document.getElementById('post-wrap')!.appendChild(clone);
+
+                    document.querySelectorAll('#mc-close, #get_chapters').forEach(function (element) {
+                        element.addEventListener("click", open_close_chapters_modal);
+                        element.addEventListener("touchstart", open_close_chapters_modal);
+                    });
+
                     //get comments right after loading the post(which is important part)
                     window.createSkeletons("post-commentsection");
                     window.fetchComments("post", postId, commentSection);
@@ -173,8 +202,8 @@ document.addEventListener("DOMContentLoaded", function () {
                         );
                     }
                 }
-            })
-            .catch(error => { console.log('Fetch failed -> ' + error); });;
+            });
+            //.catch(error => { console.log('Fetch failed -> ' + error); });
     }
 
     //----Rating the post---
@@ -249,15 +278,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
-
-
-
-
-    document.querySelectorAll('#mc-close, #get_chapters').forEach(function (element) {
-        element.addEventListener("click", open_close_chapters_modal);
-        element.addEventListener("touchstart", open_close_chapters_modal);
-    });
-
 
 
     function closeChaptersModal() {
