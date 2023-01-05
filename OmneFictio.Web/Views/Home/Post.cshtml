@@ -118,38 +118,23 @@
                 <a href="#" class="start_reading">Start Reading</a>
                 <button id="get_chapters">Chapters</button>
             </div>
-            <table class="rate-table">
-                <tr>
-                    <td class="rt-type">Story</td>
-                    <td id="rate-story">
-                        <i class="bi bi-star"></i>
-                        <i class="bi bi-star"></i>
-                        <i class="bi bi-star"></i>
-                        <i class="bi bi-star"></i>
-                        <i class="bi bi-star"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="rt-type">Writing</td>
-                    <td id="rate-writing">
-                        <i class="bi bi-star"></i>
-                        <i class="bi bi-star"></i>
-                        <i class="bi bi-star"></i>
-                        <i class="bi bi-star"></i>
-                        <i class="bi bi-star"></i>
-                    </td>
-                </tr>
-                <tr>
-                    <td class="rt-type">Originality</td>
-                    <td id="rate-originality">
-                        <i class="bi bi-star"></i>
-                        <i class="bi bi-star"></i>
-                        <i class="bi bi-star"></i>
-                        <i class="bi bi-star"></i>
-                        <i class="bi bi-star"></i>
-                    </td>
-                </tr>
-            </table>
+            <div class="ratepost-cont">
+                <div class="rate_the_post">
+                    <i class="bi bi-star"></i>
+                    <i class="bi bi-star"></i>
+                    <i class="bi bi-star"></i>
+                    <i class="bi bi-star"></i>
+                    <i class="bi bi-star"></i>
+                </div>
+                <div class="postrate">
+                    <i class="bi bi-star"></i>
+                    <i class="bi bi-star"></i>
+                    <i class="bi bi-star"></i>
+                    <i class="bi bi-star"></i>
+                    <i class="bi bi-star"></i>
+                    <span>-/5</span>
+                </div>
+            </div>
         </div>
     </div>
 </template>
@@ -190,14 +175,9 @@
         <option value="3">3</option>
         <option value="4">4</option>
         <option value="5">5</option>
-        <option value="6">6</option>
-        <option value="7">7</option>
-        <option value="8">8</option>
-        <option value="9">9</option>
-        <option value="10">10</option>
     </select>
     <button id="rate_it_btn">Rate it</button>
-    <span id="rate_by_user">--/10</span>
+    <span id="rate_by_user">-/5</span>
 </div>
 
 @if (userId != null)

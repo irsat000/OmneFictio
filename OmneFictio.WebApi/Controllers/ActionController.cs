@@ -104,7 +104,7 @@ public class ActionController : ControllerBase
     [HttpPost("Rate")]
     public async Task<IActionResult> Rate(RateInfo request)
     {
-        if (!(request.rateValue >= 0 && request.rateValue <= 10))
+        if (!(request.rateValue >= 0 && request.rateValue <= 5))
         {
             return BadRequest();
         }
@@ -112,13 +112,16 @@ public class ActionController : ControllerBase
         Rate? rate = await _db.Rates.FirstOrDefaultAsync(x =>
             x.accountId == request.accountId &&
             x.postId == request.postId);
-        if (rate != null)
+        if (rate != null && request.rateValue == 0)
         {
             _db.Rates.Remove(rate);
         }
-
-        if (request.rateValue != 0)
+        else if (rate != null && request.rateValue != 0)
         {
+            rate.body = request.rateValue;
+            _db.Rates.Update(rate);
+        }
+        else {
             //create new rate
             rate = new Rate
             {

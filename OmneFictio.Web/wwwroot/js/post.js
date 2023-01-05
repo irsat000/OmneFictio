@@ -108,6 +108,15 @@ document.addEventListener("DOMContentLoaded", function () {
                     })
                         .catch(error => { console.log("Fetch failed -> " + error); });
                 });
+                if (post.rateResult != null) {
+                    clone.querySelector('.postrate > span').textContent = post.rateResult + "/5";
+                    let i = 0;
+                    do {
+                        clone.querySelectorAll('.postrate > i')[i].classList.remove('bi-star');
+                        clone.querySelectorAll('.postrate > i')[i].classList.add('bi-star-fill');
+                        i++;
+                    } while (i < Math.round(post.rateResult));
+                }
                 const tagSection = clone.querySelector('.p-tags');
                 const seriesSection = clone.querySelector('.p-series');
                 if (post.tags.length > 0) {
@@ -174,10 +183,10 @@ document.addEventListener("DOMContentLoaded", function () {
                 .then((data) => {
                 if (data.statusCode === 200) {
                     if (rateVal != 0) {
-                        rateByUser.textContent = rateVal + "/10";
+                        rateByUser.textContent = rateVal + "/5";
                     }
                     else {
-                        rateByUser.textContent = "--/10";
+                        rateByUser.textContent = "-/5";
                     }
                 }
                 else {

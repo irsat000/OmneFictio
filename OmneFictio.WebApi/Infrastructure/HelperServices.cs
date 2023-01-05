@@ -56,7 +56,7 @@ public class HelperServices : IHelperServices
             .Where(v => v.targetPostId == post.id)
             .Sum(v => v.body == true ? 1 : -1);
         var postRates = _db.Rates.Where(r => r.postId == post.id).Select(r => r.body);
-        post.rateResult = postRates.Count() > 0 ? Math.Round(postRates.Average(), 1) : -1;
+        post.rateResult = postRates.Count() > 0 ? Math.Round(postRates.Average(), 1) : null;
         //Get comment and reply count
         var commentIds = _db.Comments
             .Where(x => x.targetPostId == post.id &&

@@ -24,7 +24,7 @@ public class PostDtoRead_1
     public ICollection<ExistingStoryDto>? existingStories { get; set; }
 
     public int voteResult { get; set; } = 0;
-    public double rateResult { get; set; } = -1;
+    public double? rateResult { get; set; } = null;
     public int comRepLength { get; set; } = 0;
     public int wordsLength { get; set; } = 0;
     public bool? votedByUser { get; set; } = null;

@@ -784,8 +784,8 @@ function fillPostTemplate(post, instance){
         clone.querySelector('.vote_count').innerText = post.voteResult;
     }
     clone.querySelector('.p-rate').innerText = post.rateResult >= 0 && post.rateResult <= 10
-        ? Number((post.rateResult).toFixed(1)) + "/10"
-        : "-/10";
+        ? Number((post.rateResult).toFixed(1)) + "/5"
+        : "-/5";
 
     clone.querySelector('.pi-type').innerText = post.postType.body;
     clone.querySelector('.pi-language').innerText = post.language.body;

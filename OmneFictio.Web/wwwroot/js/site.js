@@ -626,9 +626,9 @@ function fillPostTemplate(post) {
     if (post.voteResult >= 0) {
         voteCount.textContent = post.voteResult.toString();
     }
-    rate.textContent = post.rateResult >= 0 && post.rateResult <= 10
-        ? Number((post.rateResult).toFixed(1)) + "/10"
-        : "-/10";
+    rate.textContent = post.rateResult !== null
+        ? Number((post.rateResult).toFixed(1)) + "/5"
+        : "-/5";
     type.textContent = post.postType.body;
     language.textContent = post.language.body;
     status.textContent = post.postStatus.body;

@@ -321,7 +321,6 @@ main {
             display: flex;
             justify-content: space-between;
             font-family: 'Josefin Sans', sans-serif;
-            width: 100%;
             flex-wrap: wrap;
             gap: 6px;
             .start_reading, #get_chapters{
@@ -347,26 +346,42 @@ main {
                 }
             }
         }
-        .rate-table{
+        .ratepost-cont{
             margin-top: 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            width: 100%;
-            tr{
-                .rt-type{
-                    text-align: right;
-                    font-size: 1.2rem;
-                    font-family: 'Josefin Sans';
-                    padding-top: 3px;
+            color: var(--text-color1);
+            .rate_the_post{
+                display: flex;
+                justify-content: center;
+                gap: 14px;
+                padding: 6px 0;
+                width: calc(100% - 40px);
+                max-width: 280px;
+                border-top: 1px solid var(--background-color2);
+                border-bottom: 1px solid var(--background-color2);
+                i{
+                    font-size: 1.6rem;
                 }
-                td:last-child{
-                    display: flex;
-                    gap: 5px;
-                    padding-left: 14px;
-                    i{
-                        font-size: 1.2rem;
-                    }
+            }
+            .postrate{
+                display: flex;
+                justify-content: center;
+                gap: 6px;
+                padding: 6px 0;
+                width: 100%;
+                i{
+                    font-size: 1rem;
+                }
+                .bi-star-fill{
+                    color: #ff7d00;
+                }
+                span{
+                    padding-left: 10px;
+                    font-family: 'Gudea', cursive;
+                    font-size: 1rem;
+                    padding-top: 1px;
                 }
             }
         }
