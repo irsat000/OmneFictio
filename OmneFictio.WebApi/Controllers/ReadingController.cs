@@ -69,11 +69,10 @@ public class ReadingController : ControllerBase
         //check vote by user
         if (userId != null)
         {
-            Vote? checkVoteByUser = await _db.Votes.SingleOrDefaultAsync(v =>
-                v.accountId == userId &&
-                v.targetChapterId == chapter.id);
-            if (checkVoteByUser != null)
-                chapter.votedByUser = checkVoteByUser.body;
+            chapter.votedByUser = await _db.Votes.Where(v =>
+                    v.accountId == userId &&
+                    v.targetChapterId == chapter.id)
+                .Select(v => (bool?)v.body).FirstOrDefaultAsync();
         }
         return Ok(chapter);
     }
@@ -95,12 +94,11 @@ public class ReadingController : ControllerBase
         //check properties by user
         if (userId != null)
         {
-            Rate? checkRateByUser = await _db.Rates.FirstOrDefaultAsync(r =>
-                r.accountId == userId &&
-                r.postId == post.id);
-            if (checkRateByUser != null)
-                post.ratedByUser = System.Math.Round(checkRateByUser.body, 1);
-
+            post.ratedByUser = await _db.Rates.Where(r =>
+                    r.accountId == userId &&
+                    r.postId == post.id)
+                .Select(r => (byte?)r.body).FirstOrDefaultAsync();
+                
             post.savedByUser = await _db.SavedPosts.AnyAsync(s =>
                 s.accountId == userId &&
                 s.targetPostId == post.id);
@@ -160,7 +158,7 @@ public class ReadingController : ControllerBase
         comments = await _helperServices.GetComments_Details(comments, userId, true);
         return Ok(comments);
     }
-    
+
     [HttpGet("GetComment/{commentid}/{userId?}")]
     public async Task<IActionResult> GetComment(int commentid, int? userId)
     {
@@ -191,10 +189,10 @@ public class ReadingController : ControllerBase
             //Check vote by logged in user
             if (userId != null)
             {
-                Vote? checkVoteByUser_r = await _db.Votes.SingleOrDefaultAsync(v =>
-                    v.accountId == userId &&
-                    v.targetReplyId == reply.id);
-                reply.votedByUser = checkVoteByUser_r?.body;
+                reply.votedByUser = await _db.Votes.Where(v =>
+                        v.accountId == userId &&
+                        v.targetReplyId == reply.id)
+                    .Select(v => (bool?)v.body).FirstOrDefaultAsync();
             }
         }
         return Ok(new { comment = comment, replies = replies });

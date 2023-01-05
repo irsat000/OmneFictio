@@ -28,7 +28,7 @@ public class PostDtoRead_1
     public int comRepLength { get; set; } = 0;
     public int wordsLength { get; set; } = 0;
     public bool? votedByUser { get; set; } = null;
-    public double? ratedByUser { get; set; } = null;
+    public byte? ratedByUser { get; set; } = null;
     public bool savedByUser { get; set; } = false;
 }
 

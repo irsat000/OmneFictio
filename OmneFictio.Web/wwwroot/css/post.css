@@ -319,7 +319,7 @@ main {
 .post-main .psection-2 .ratepost-cont .rate_the_post {
   display: flex;
   justify-content: center;
-  gap: 14px;
+  flex-flow: row-reverse;
   padding: 6px 0;
   width: calc(100% - 40px);
   max-width: 280px;
@@ -328,6 +328,16 @@ main {
 }
 .post-main .psection-2 .ratepost-cont .rate_the_post i {
   font-size: 1.6rem;
+  cursor: pointer;
+  padding: 0 7px;
+}
+.post-main .psection-2 .ratepost-cont .rate_the_post i:hover,
+.post-main .psection-2 .ratepost-cont .rate_the_post i:hover ~ i {
+  color: #f2b600;
+}
+.post-main .psection-2 .ratepost-cont .rate_the_post i.active,
+.post-main .psection-2 .ratepost-cont .rate_the_post i.active ~ i {
+  color: #f2b600;
 }
 .post-main .psection-2 .ratepost-cont .postrate {
   display: flex;

@@ -335,7 +335,7 @@ namespace OmneFictio.WebApi.Entities
             {
                 entity.ToTable("Language");
 
-                entity.HasIndex(e => e.lanCode, "UQ__Language__6F6B672D3B7CC2E4")
+                entity.HasIndex(e => e.lanCode, "UQ__Language__6F6B672D2CC03E2B")
                     .IsUnique();
 
                 entity.Property(e => e.body).HasMaxLength(140);

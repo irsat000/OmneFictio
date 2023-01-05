@@ -355,7 +355,7 @@ main {
             .rate_the_post{
                 display: flex;
                 justify-content: center;
-                gap: 14px;
+                flex-flow: row-reverse;
                 padding: 6px 0;
                 width: calc(100% - 40px);
                 max-width: 280px;
@@ -363,6 +363,16 @@ main {
                 border-bottom: 1px solid var(--background-color2);
                 i{
                     font-size: 1.6rem;
+                    cursor: pointer;
+                    padding: 0 7px;
+                }
+                i:hover,
+                i:hover ~ i {
+                    color: #f2b600;
+                }
+                i.active,
+                i.active ~ i {
+                    color: #f2b600;
                 }
             }
             .postrate{

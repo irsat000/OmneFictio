@@ -57,11 +57,12 @@ public class ActionController : Controller
         var apiResponse = await _httpClient.PostAsJsonAsync("Action/Rate", request);
         string statusCode = apiResponse.StatusCode.ToString();
 
-        if (statusCode != "OK")
-        {
+        if (statusCode == "OK")
+            return new JsonResult(Ok());
+        else if (statusCode == "Accepted")
+            return new JsonResult(Accepted());
+        else
             return new JsonResult(BadRequest());
-        }
-        return new JsonResult(Ok());
     }
 
     [HttpPost]
@@ -72,7 +73,7 @@ public class ActionController : Controller
             return new JsonResult(Unauthorized());
         }
         request.accountId = AccountId;
-        
+
         var apiResponse = await _httpClient.PostAsJsonAsync("Action/SavePost", request);
         string statusCode = apiResponse.StatusCode.ToString();
         if (statusCode == "OK")

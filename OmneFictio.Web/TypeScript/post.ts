@@ -4,7 +4,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const params = new URLSearchParams(window.location.search);
     const modalbg1 = document.querySelector('.modalbg1') as HTMLDivElement;
     const commentSection = document.getElementById('comment-section') as HTMLDivElement;
-    const rateByUser = document.getElementById('rate_by_user') as HTMLSpanElement;
     const chaptersModal = document.getElementById('modal-chapters') as HTMLDivElement;
     const fullsizecover = document.getElementById('fullsize-cover') as HTMLDivElement;
 
@@ -69,7 +68,6 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(async (data) => {
                 if (data.statusCode === 200) {
                     const post = JSON.parse(data.value);
-                    console.log(post);
                     const instance = document.getElementById('getpost_instance') as HTMLTemplateElement;
                     const clone = window.cloneFromTemplate(instance);
 
@@ -106,7 +104,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
                     //Post save button
                     const postSaveBtn = clone.querySelector('.savepost') as HTMLElement;
-                    if(post.savedByUser == true){
+                    if (post.savedByUser == true) {
                         postSaveBtn.classList.remove('bi-bookmark');
                         postSaveBtn.classList.add('bi-bookmark-fill');
                         postSaveBtn.classList.add('active');
@@ -136,8 +134,8 @@ document.addEventListener("DOMContentLoaded", function () {
                             })
                             .catch(error => { console.log("Fetch failed -> " + error) });
                     });
-                    
-                    if(post.rateResult != null){
+
+                    if (post.rateResult != null) {
                         clone.querySelector('.postrate > span')!.textContent = post.rateResult + "/5";
                         let i = 0;
                         do {
@@ -170,15 +168,33 @@ document.addEventListener("DOMContentLoaded", function () {
                     clone.querySelector('.pi-amount_of_words')!.textContent = post.wordsLength;
                     clone.querySelector('.pi-amount_of_comments')!.textContent = post.comRepLength;
                     clone.querySelector('.pi-publish_date')!.textContent = window.TimeAgo(post.publishDate);
-                    if(post.publishDate !== post.updateDate){
+                    if (post.publishDate !== post.updateDate) {
                         clone.querySelector('.pi-last_update')!.textContent = window.TimeAgo(post.updateDate);
                     } else {
                         clone.querySelector('.pi-last_update')!.closest('.pi-detail-column')!.remove();
                     }
 
+                    //Rate the post
+                    const rateIconBtns = [...clone.querySelectorAll('.rate_the_post i')].reverse();
+                    rateIconBtns.forEach(i => {
+                        i.addEventListener('click', async () => {
+                            const rateVal = Number(i.getAttribute('data-rateval'));
+                            await RateThePost(rateVal, rateIconBtns, i);
+                        });
+                    });
+                    //Already rated by user?
+                    if(post.ratedByUser != null){
+                        rateIconBtns.slice(0, post.ratedByUser).forEach(btn => {
+                            btn.classList.add('bi-star-fill');
+                            btn.classList.remove('bi-star');
+                        });
+                        rateIconBtns[post.ratedByUser - 1].classList.add('active');
+                    }
+
                     //Create post
                     document.getElementById('post-wrap')!.appendChild(clone);
-
+                    
+                    //Open/close chapters modal
                     document.querySelectorAll('#mc-close, #get_chapters').forEach(function (element) {
                         element.addEventListener("click", open_close_chapters_modal);
                         element.addEventListener("touchstart", open_close_chapters_modal);
@@ -206,50 +222,11 @@ document.addEventListener("DOMContentLoaded", function () {
                         );
                     }
                 }
-            });
+            })
             //.catch(error => { console.log('Fetch failed -> ' + error); });
     }
 
-    //----Rating the post---
-    const rateItBtn = document.getElementById('rate_it_btn') as HTMLButtonElement;
-    rateItBtn.addEventListener('click', async function () {
-        const rateVal = parseInt((<HTMLSelectElement>document.getElementById('rate_it_select')).value, 10);
-        if (rateVal >= 0 && rateVal <= 10) {
-            const ratePayload = {
-                PostId: postId,
-                RateValue: rateVal
-            };
-            await fetch("/Action/RateThePost", {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(ratePayload)
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    if (data.statusCode === 200) {
-                        if (rateVal != 0) {
-                            rateByUser.textContent = rateVal + "/5";
-                        } else {
-                            rateByUser.textContent = "-/5";
-                        }
-                    } else {
-                        console.log("Server error -> " + data.statusCode);
-                    }
-                })
-                .catch(error => { console.log('Fetch failed -> ' + error); });
-        }
-    });
-    //-------------
-
-
-
-
     //-----full size cover------
-
-    //const fsc_close = [document.getElementById('fsc-wrap'), document.getElementById('fsc-close')] as Array<HTMLElement>;
     const fsc_close = document.querySelectorAll('#fsc-wrap, #fsc-close');
     fsc_close.forEach(function (element) {
         element.addEventListener("click", function () {
@@ -301,6 +278,41 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
+    async function RateThePost(rateVal: number, rateIconBtns: Element[], i: Element) {
+        const ratePayload = {
+            PostId: postId,
+            RateValue: rateVal
+        };
+        await fetch("/Action/RateThePost", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(ratePayload)
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                rateIconBtns.forEach(btn => {
+                    btn.classList.remove('bi-star-fill');
+                    btn.classList.remove('active');
+                    btn.classList.add('bi-star');
+                });
+                const active = i.classList.contains('active');
+                if (data.statusCode === 200 && !active) {
+                    rateIconBtns.slice(0, rateVal).forEach(btn => {
+                        btn.classList.add('bi-star-fill');
+                        btn.classList.remove('bi-star');
+                    });
+                    i.classList.add('active');
+                } else if (data.statusCode === 202) {
+
+                } else {
+                    console.log("Server error -> " + data.statusCode);
+                }
+            })
+            .catch(error => { console.log('Fetch failed -> ' + error); });
+    }
 });
 
 

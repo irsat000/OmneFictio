@@ -55,8 +55,9 @@ public class HelperServices : IHelperServices
         post.voteResult = _db.Votes
             .Where(v => v.targetPostId == post.id)
             .Sum(v => v.body == true ? 1 : -1);
-        var postRates = _db.Rates.Where(r => r.postId == post.id).Select(r => r.body);
-        post.rateResult = postRates.Count() > 0 ? Math.Round(postRates.Average(), 1) : null;
+        double? rateResult = await _db.Rates.Where(r => r.postId == post.id).AverageAsync(r => (byte?)r.body);
+        post.rateResult = rateResult != null ? System.Math.Round((double)rateResult, 1) : null;
+        
         //Get comment and reply count
         var commentIds = _db.Comments
             .Where(x => x.targetPostId == post.id &&
@@ -85,10 +86,10 @@ public class HelperServices : IHelperServices
         //Check vote by logged in user
         if (userId != null)
         {
-            Vote? checkVoteByUser = await _db.Votes.SingleOrDefaultAsync(v =>
+            post.votedByUser = await _db.Votes.Where(v =>
                 v.accountId == userId &&
-                v.targetPostId == post.id);
-            post.votedByUser = checkVoteByUser?.body;
+                v.targetPostId == post.id)
+                .Select(v => (bool?)v.body).FirstOrDefaultAsync();
         }
 
         return post;
@@ -122,10 +123,10 @@ public class HelperServices : IHelperServices
                 //Check vote by logged in user
                 if (userId != null)
                 {
-                    Vote? checkVoteByUser = await _db.Votes.SingleOrDefaultAsync(v =>
-                        v.accountId == userId &&
-                        v.targetReplyId == comment.highlightedReply.id);
-                    comment.highlightedReply.votedByUser = checkVoteByUser?.body;
+                    comment.highlightedReply.votedByUser = await _db.Votes.Where(v =>
+                            v.accountId == userId &&
+                            v.targetReplyId == comment.highlightedReply.id)
+                        .Select(v => (bool?)v.body).FirstOrDefaultAsync();
                 }
             }
         }
@@ -142,10 +143,10 @@ public class HelperServices : IHelperServices
         //Check vote by logged in user
         if (userId != null)
         {
-            Vote? checkVoteByUser = await _db.Votes.SingleOrDefaultAsync(v =>
-                v.accountId == userId &&
-                v.targetCommentId == comment.id);
-            comment.votedByUser = checkVoteByUser?.body;
+            comment.votedByUser = await _db.Votes.Where(v =>
+                    v.accountId == userId &&
+                    v.targetCommentId == comment.id)
+                .Select(v => (bool?)v.body).FirstOrDefaultAsync();
         }
         return comment;
     }

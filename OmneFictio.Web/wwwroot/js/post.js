@@ -3,7 +3,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const params = new URLSearchParams(window.location.search);
     const modalbg1 = document.querySelector('.modalbg1');
     const commentSection = document.getElementById('comment-section');
-    const rateByUser = document.getElementById('rate_by_user');
     const chaptersModal = document.getElementById('modal-chapters');
     const fullsizecover = document.getElementById('fullsize-cover');
     modalbg1.addEventListener("click", function () {
@@ -45,7 +44,6 @@ document.addEventListener("DOMContentLoaded", function () {
             .then(async (data) => {
             if (data.statusCode === 200) {
                 const post = JSON.parse(data.value);
-                console.log(post);
                 const instance = document.getElementById('getpost_instance');
                 const clone = window.cloneFromTemplate(instance);
                 window.checkVoted_icons(clone, post.votedByUser);
@@ -140,6 +138,20 @@ document.addEventListener("DOMContentLoaded", function () {
                 else {
                     clone.querySelector('.pi-last_update').closest('.pi-detail-column').remove();
                 }
+                const rateIconBtns = [...clone.querySelectorAll('.rate_the_post i')].reverse();
+                rateIconBtns.forEach(i => {
+                    i.addEventListener('click', async () => {
+                        const rateVal = Number(i.getAttribute('data-rateval'));
+                        await RateThePost(rateVal, rateIconBtns, i);
+                    });
+                });
+                if (post.ratedByUser != null) {
+                    rateIconBtns.slice(0, post.ratedByUser).forEach(btn => {
+                        btn.classList.add('bi-star-fill');
+                        btn.classList.remove('bi-star');
+                    });
+                    rateIconBtns[post.ratedByUser - 1].classList.add('active');
+                }
                 document.getElementById('post-wrap').appendChild(clone);
                 document.querySelectorAll('#mc-close, #get_chapters').forEach(function (element) {
                     element.addEventListener("click", open_close_chapters_modal);
@@ -163,39 +175,6 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     }
-    const rateItBtn = document.getElementById('rate_it_btn');
-    rateItBtn.addEventListener('click', async function () {
-        const rateVal = parseInt(document.getElementById('rate_it_select').value, 10);
-        if (rateVal >= 0 && rateVal <= 10) {
-            const ratePayload = {
-                PostId: postId,
-                RateValue: rateVal
-            };
-            await fetch("/Action/RateThePost", {
-                method: 'POST',
-                headers: {
-                    'Accept': 'application/json',
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(ratePayload)
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                if (data.statusCode === 200) {
-                    if (rateVal != 0) {
-                        rateByUser.textContent = rateVal + "/5";
-                    }
-                    else {
-                        rateByUser.textContent = "-/5";
-                    }
-                }
-                else {
-                    console.log("Server error -> " + data.statusCode);
-                }
-            })
-                .catch(error => { console.log('Fetch failed -> ' + error); });
-        }
-    });
     const fsc_close = document.querySelectorAll('#fsc-wrap, #fsc-close');
     fsc_close.forEach(function (element) {
         element.addEventListener("click", function () {
@@ -239,5 +218,41 @@ document.addEventListener("DOMContentLoaded", function () {
             chaptersModal.classList.add('dflex');
             modalbg1.classList.add('dblock');
         }
+    }
+    async function RateThePost(rateVal, rateIconBtns, i) {
+        const ratePayload = {
+            PostId: postId,
+            RateValue: rateVal
+        };
+        await fetch("/Action/RateThePost", {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(ratePayload)
+        })
+            .then((res) => res.json())
+            .then((data) => {
+            rateIconBtns.forEach(btn => {
+                btn.classList.remove('bi-star-fill');
+                btn.classList.remove('active');
+                btn.classList.add('bi-star');
+            });
+            const active = i.classList.contains('active');
+            if (data.statusCode === 200 && !active) {
+                rateIconBtns.slice(0, rateVal).forEach(btn => {
+                    btn.classList.add('bi-star-fill');
+                    btn.classList.remove('bi-star');
+                });
+                i.classList.add('active');
+            }
+            else if (data.statusCode === 202) {
+            }
+            else {
+                console.log("Server error -> " + data.statusCode);
+            }
+        })
+            .catch(error => { console.log('Fetch failed -> ' + error); });
     }
 });

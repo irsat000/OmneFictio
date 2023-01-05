@@ -13,7 +13,7 @@ namespace OmneFictio.WebApi.Entities
         }
 
         public int id { get; set; }
-        public string? lanCode { get; set; }
+        public string lanCode { get; set; } = null!;
         public string body { get; set; } = null!;
 
         public virtual ICollection<Post> Posts { get; set; }

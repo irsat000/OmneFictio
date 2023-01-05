@@ -57,7 +57,7 @@ public class RateInfo
 {
     public int? accountId { get; set; }
     public int postId { get; set; }
-    public int rateValue { get; set; }
+    public byte rateValue { get; set; }
 }
 //rate the post
 

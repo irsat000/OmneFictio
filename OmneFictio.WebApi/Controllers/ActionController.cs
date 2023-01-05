@@ -104,24 +104,31 @@ public class ActionController : ControllerBase
     [HttpPost("Rate")]
     public async Task<IActionResult> Rate(RateInfo request)
     {
-        if (!(request.rateValue >= 0 && request.rateValue <= 5))
+        if (!(request.rateValue >= 1 && request.rateValue <= 5))
         {
             return BadRequest();
         }
-        //check existing rate and replace if it exists
+        //Check existing rate
         Rate? rate = await _db.Rates.FirstOrDefaultAsync(x =>
             x.accountId == request.accountId &&
             x.postId == request.postId);
-        if (rate != null && request.rateValue == 0)
+        //Delete if user clicked the same star
+        if (rate != null && request.rateValue == rate.body)
         {
             _db.Rates.Remove(rate);
+            await _db.SaveChangesAsync();
+            return Accepted();
         }
-        else if (rate != null && request.rateValue != 0)
+        //If there is new vote
+        byte? newRate = null;
+        if (rate != null && request.rateValue != rate.body)
         {
             rate.body = request.rateValue;
             _db.Rates.Update(rate);
+            newRate = request.rateValue;
         }
-        else {
+        else
+        {
             //create new rate
             rate = new Rate
             {
@@ -130,15 +137,9 @@ public class ActionController : ControllerBase
                 body = request.rateValue
             };
             await _db.Rates.AddAsync(rate);
+            newRate = request.rateValue;
         }
-        try
-        {
-            await _db.SaveChangesAsync();
-        }
-        catch (Exception)
-        {
-            return BadRequest();
-        }
+        await _db.SaveChangesAsync();
         return Ok();
     }
 

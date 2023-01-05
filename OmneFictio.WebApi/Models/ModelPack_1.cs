@@ -9,7 +9,7 @@ public class CheckVoted
 
 public class RateInfo : CheckRateInfo
 {
-    public int rateValue { get; set; }
+    public byte rateValue { get; set; }
 }
 public class CheckRateInfo
 {

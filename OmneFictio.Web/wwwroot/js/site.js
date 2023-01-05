@@ -427,8 +427,6 @@ async function VoteRequest(btn, data) {
         .catch(error => console.log('Vote function failed.', error));
 }
 function voting_visual(btn, action) {
-    console.log(btn);
-    console.log(action);
     let btnSibling = action === "like"
         ? btn.parentElement.querySelector('.dislikebtn')
         : btn.parentElement.querySelector('.likebtn');
