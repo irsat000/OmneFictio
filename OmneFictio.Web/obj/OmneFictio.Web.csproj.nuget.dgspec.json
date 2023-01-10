@@ -10,11 +10,11 @@
         "projectUniqueName": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\OmneFictio.Web.csproj",
         "projectName": "OmneFictio.Web",
         "projectPath": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\OmneFictio.Web.csproj",
-        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\irsat\\.nuget\\packages\\",
         "outputPath": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\irsat\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -70,7 +70,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     }

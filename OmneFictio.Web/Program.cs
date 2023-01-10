@@ -19,9 +19,6 @@ builder.Services.AddHttpClient("of", client => {
     client.BaseAddress = new Uri("https://localhost:7223/");
     client.DefaultRequestHeaders.Add("ApiKey", configuration.GetSection("ApiKey").Value);
 });
-builder.Services.AddHttpClient("minof", client => {
-    client.BaseAddress = new Uri("https://localhost:7022/");
-});
 builder.Services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
 builder.Services.AddSession(options =>
@@ -37,11 +34,12 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     })
     .AddGoogle(GoogleDefaults.AuthenticationScheme, googleOptions =>
     {
-        googleOptions.ClientId = configuration["Authentication:Google:ClientId"];
-        googleOptions.ClientSecret = configuration["Authentication:Google:ClientSecret"];
+        googleOptions.ClientId = configuration["OF:Authentication:Google:ClientId"];
+        googleOptions.ClientSecret = configuration["OF:Authentication:Google:ClientSecret"];
         googleOptions.CorrelationCookie.SameSite = SameSiteMode.None;
         googleOptions.CorrelationCookie.SecurePolicy = CookieSecurePolicy.Always;
     });
+//Client id and secret are in secret store
 
 var app = builder.Build();
 

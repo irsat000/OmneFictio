@@ -13,7 +13,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using AutoMapper;
 using BC = BCrypt.Net.BCrypt;
-using System.Data.Entity.Validation;
 using Google.Apis.Auth;
 using static Google.Apis.Auth.GoogleJsonWebSignature;
 

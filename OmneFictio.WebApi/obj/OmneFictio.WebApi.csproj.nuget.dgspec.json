@@ -10,11 +10,11 @@
         "projectUniqueName": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.WebApi\\OmneFictio.WebApi.csproj",
         "projectName": "OmneFictio.WebApi",
         "projectPath": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.WebApi\\OmneFictio.WebApi.csproj",
-        "packagesPath": "C:\\Users\\user\\.nuget\\packages\\",
+        "packagesPath": "C:\\Users\\irsat\\.nuget\\packages\\",
         "outputPath": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.WebApi\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\user\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\irsat\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net6.0"
@@ -46,25 +46,25 @@
               "target": "Package",
               "version": "[4.0.3, )"
             },
-            "EntityFramework": {
-              "target": "Package",
-              "version": "[6.4.4, )"
-            },
             "Google.Apis.Auth": {
               "target": "Package",
               "version": "[1.57.0, )"
             },
             "Microsoft.EntityFrameworkCore.Design": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
-              "version": "[6.0.9, )"
+              "version": "[7.0.1, )"
             },
             "Microsoft.EntityFrameworkCore.SqlServer": {
               "target": "Package",
-              "version": "[6.0.9, )"
+              "version": "[7.0.1, )"
             },
             "Microsoft.EntityFrameworkCore.Tools": {
+              "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
+              "suppressParent": "All",
               "target": "Package",
-              "version": "[6.0.9, )"
+              "version": "[7.0.1, )"
             },
             "Swashbuckle.AspNetCore": {
               "target": "Package",
@@ -90,7 +90,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\7.0.101\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.404\\RuntimeIdentifierGraph.json"
         }
       }
     }

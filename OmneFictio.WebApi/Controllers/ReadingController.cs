@@ -16,7 +16,6 @@ using System.IdentityModel.Tokens.Jwt;
 using AutoMapper;
 using AutoMapper.QueryableExtensions;
 using BC = BCrypt.Net.BCrypt;
-using System.Data.Entity.Validation;
 using Google.Apis.Auth;
 using static Google.Apis.Auth.GoogleJsonWebSignature;
 using System.Diagnostics;

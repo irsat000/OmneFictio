@@ -13,7 +13,6 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Text;
 using AutoMapper;
 using BC = BCrypt.Net.BCrypt;
-using System.Data.Entity.Validation;
 using Google.Apis.Auth;
 using static Google.Apis.Auth.GoogleJsonWebSignature;
 using OmneFictio.WebApi.Infrastructure;
@@ -192,7 +191,7 @@ public class AuthController : ControllerBase
                 await _db.Preferences.AddAsync(preferences);
                 await _db.SaveChangesAsync();
             }
-            catch (DbEntityValidationException)
+            catch (Exception)
             {
                 return StatusCode(500);
             }
