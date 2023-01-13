@@ -37,22 +37,16 @@ public class ProfileController : Controller
         if(AccountId != null){
             url += $"/{AccountId}";
         }
-        try
+
+        //request
+        var apiResponse = await _httpClient.GetAsync(url.ToString());
+        if (apiResponse.StatusCode.ToString() != "OK")
         {
-            //request
-            var apiResponse = await _httpClient.GetAsync(url.ToString());
-            if (apiResponse.StatusCode.ToString() != "OK")
-            {
-                return new JsonResult(NotFound());
-            }
-            //return
-            string content = await apiResponse.Content.ReadAsStringAsync();
-            return new JsonResult(Ok(content));
+            return new JsonResult(NotFound());
         }
-        catch (System.Exception)
-        {
-            return new JsonResult(StatusCode(500));
-        }
+        //return
+        string content = await apiResponse.Content.ReadAsStringAsync();
+        return new JsonResult(Ok(content));
     }
 
     [HttpGet("u/GetPosts/{targetUsername}")]
@@ -62,22 +56,16 @@ public class ProfileController : Controller
         if(AccountId != null){
             url += $"/{AccountId}";
         }
-        try
+        
+        //request
+        var apiResponse = await _httpClient.GetAsync(url.ToString());
+        if (apiResponse.StatusCode.ToString() != "OK")
         {
-            //request
-            var apiResponse = await _httpClient.GetAsync(url.ToString());
-            if (apiResponse.StatusCode.ToString() != "OK")
-            {
-                return new JsonResult(NotFound());
-            }
-            //return
-            string content = await apiResponse.Content.ReadAsStringAsync();
-            return new JsonResult(Ok(content));
+            return new JsonResult(NotFound());
         }
-        catch (System.Exception)
-        {
-            return new JsonResult(StatusCode(500));
-        }
+        //return
+        string content = await apiResponse.Content.ReadAsStringAsync();
+        return new JsonResult(Ok(content));
     }
 
     [HttpGet("u/GetReviews/{targetUsername}")]
@@ -86,22 +74,16 @@ public class ProfileController : Controller
         if(AccountId != null){
             url += "/" + AccountId;
         }
-        try
+        
+        //request
+        var apiResponse = await _httpClient.GetAsync(url);
+        if (apiResponse.StatusCode.ToString() != "OK")
         {
-            //request
-            var apiResponse = await _httpClient.GetAsync(url);
-            if (apiResponse.StatusCode.ToString() != "OK")
-            {
-                return new JsonResult(NotFound());
-            }
-            //return
-            string content = await apiResponse.Content.ReadAsStringAsync();
-            return new JsonResult(Ok(content));
+            return new JsonResult(NotFound());
         }
-        catch (System.Exception)
-        {
-            return new JsonResult(StatusCode(500));
-        }
+        //return
+        string content = await apiResponse.Content.ReadAsStringAsync();
+        return new JsonResult(Ok(content));
     }
 
     [HttpGet("u/GetSavedPosts/{targetUsername}")]
@@ -111,21 +93,15 @@ public class ProfileController : Controller
         if(AccountId != null){
             url += $"/{AccountId}";
         }
-        try
+        
+        //request
+        var apiResponse = await _httpClient.GetAsync(url.ToString());
+        if (apiResponse.StatusCode.ToString() != "OK")
         {
-            //request
-            var apiResponse = await _httpClient.GetAsync(url.ToString());
-            if (apiResponse.StatusCode.ToString() != "OK")
-            {
-                return new JsonResult(NotFound());
-            }
-            //return
-            string content = await apiResponse.Content.ReadAsStringAsync();
-            return new JsonResult(Ok(content));
+            return new JsonResult(NotFound());
         }
-        catch (System.Exception)
-        {
-            return new JsonResult(StatusCode(500));
-        }
+        //return
+        string content = await apiResponse.Content.ReadAsStringAsync();
+        return new JsonResult(Ok(content));
     }
 }

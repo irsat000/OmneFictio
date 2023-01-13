@@ -23,12 +23,15 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
+    //Getting last page
+    //Might use it to create a back button (especially for mobile)
     if (params.get('lp') !== null) {
         params.delete('lp');
         let newUrl: string = window.location.href.split('?')[0];
         if ([...params.keys()].length > 0) {
             newUrl += "?" + params.toString();
         }
+        //removing last page querystring from the url
         window.history.replaceState({}, document.title, newUrl);
     }
     /*if (params.get('lp') !== null) {
@@ -57,6 +60,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (isNaN(Number(postId))) {
             return;
         }
+        /**/window.createSkeletons("post-commentsection");
+        return;
         await fetch("/g/GetPost/" + postId, {
             method: 'GET',
             headers: {

@@ -46,7 +46,7 @@ public class AuthController : ControllerBase
     [HttpPost("Login")]
     public async Task<IActionResult> Login([FromBody] AccountDtoRead_2 request)
     {
-        var securityToken = Encoding.ASCII.GetBytes(_configuration.GetSection("Token").Value);
+        var securityToken = Encoding.ASCII.GetBytes(_configuration.GetSection("Token").Value!);
         //Authentication
         var checkUser = await _db.Accounts.SingleOrDefaultAsync(x => x.username == request.username);
         if (checkUser == null || !BC.Verify(request.pw, checkUser.pw))
@@ -65,7 +65,7 @@ public class AuthController : ControllerBase
     [HttpPost("Register")]
     public async Task<IActionResult> Register([FromBody] AccountDtoWrite_1 request)
     {
-        var securityToken = Encoding.ASCII.GetBytes(_configuration.GetSection("Token").Value);
+        var securityToken = Encoding.ASCII.GetBytes(_configuration.GetSection("Token").Value!);
         //Input validation
         Regex usernameRegex = new Regex(@"[A-Za-z0-9_]{3,30}");
         if (!usernameRegex.IsMatch(request.username) ||
@@ -98,20 +98,15 @@ public class AuthController : ControllerBase
         {
             preferences.prefLanguageId = prefLanguageId;
         }
-        try
-        {
-            //create account
-            await _db.Accounts.AddAsync(newAccount);
-            await _db.SaveChangesAsync();
-            //create preferences
-            preferences.accountId = newAccount.id;
-            await _db.Preferences.AddAsync(preferences);
-            await _db.SaveChangesAsync();
-        }
-        catch (Exception)
-        {
-            return BadRequest();
-        }
+        
+        //create account
+        await _db.Accounts.AddAsync(newAccount);
+        await _db.SaveChangesAsync();
+        //create preferences
+        preferences.accountId = newAccount.id;
+        await _db.Preferences.AddAsync(preferences);
+        await _db.SaveChangesAsync();
+            
         //Login
         var createToken = _helperServices.CreateUserToken(newAccount, securityToken);
         if (createToken == null)
@@ -125,7 +120,7 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Signin_External([FromBody] string token)
     {
         //validating token
-        var securityToken = Encoding.ASCII.GetBytes(_configuration.GetSection("Token").Value);
+        var securityToken = Encoding.ASCII.GetBytes(_configuration.GetSection("Token").Value!);
         var validationSettings = new ValidationSettings
         {
             Audience = new string[]
@@ -179,22 +174,16 @@ public class AuthController : ControllerBase
 
             Preference preferences = new Preference();
             preferences.allowAdultContent = false;
-            try
-            {
-                //create account
-                await _db.Accounts.AddAsync(newAccount);
-                await _db.SaveChangesAsync();
-                newAccount.profilePic = "user" + newAccount.id.ToString() + ".png";
-                await _db.SaveChangesAsync();
-                //create preferences
-                preferences.accountId = newAccount.id;
-                await _db.Preferences.AddAsync(preferences);
-                await _db.SaveChangesAsync();
-            }
-            catch (Exception)
-            {
-                return StatusCode(500);
-            }
+            
+            //create account
+            await _db.Accounts.AddAsync(newAccount);
+            await _db.SaveChangesAsync();
+            newAccount.profilePic = "user" + newAccount.id.ToString() + ".png";
+            await _db.SaveChangesAsync();
+            //create preferences
+            preferences.accountId = newAccount.id;
+            await _db.Preferences.AddAsync(preferences);
+            await _db.SaveChangesAsync();
         }
 
         //Gets the user for authorization

@@ -1,19 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace OmneFictio.WebApi.Entities
+namespace OmneFictio.WebApi.Entities;
+
+public partial class Tag
 {
-    public partial class Tag
-    {
-        public Tag()
-        {
-            posts = new HashSet<Post>();
-        }
+    public int id { get; set; }
 
-        public int id { get; set; }
-        public string body { get; set; } = null!;
-        public bool userGenerated { get; set; }
+    public string body { get; set; } = null!;
 
-        public virtual ICollection<Post> posts { get; set; }
-    }
+    public bool userGenerated { get; set; }
+
+    public virtual ICollection<Post> posts { get; } = new List<Post>();
 }

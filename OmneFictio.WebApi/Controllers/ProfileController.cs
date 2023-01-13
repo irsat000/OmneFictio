@@ -115,15 +115,8 @@ public class ProfileController : ControllerBase
             return NotFound();
         }
 
-        try
-        {
-            posts = await _helperServices.GetPosts_Details(posts, userId);
-            return Ok(new { posts = posts });
-        }
-        catch (System.Exception)
-        {
-            return BadRequest();
-        }
+        posts = await _helperServices.GetPosts_Details(posts, userId);
+        return Ok(new { posts = posts });
     }
 
     [HttpGet("GetReviews/{targetUsername}/{userId?}")]
@@ -141,15 +134,9 @@ public class ProfileController : ControllerBase
         {
             return NotFound();
         }
-        try
-        {
-            comments = await _helperServices.GetComments_Details(comments, userId, true);
-            return Ok(comments);
-        }
-        catch (System.Exception)
-        {
-            return BadRequest();
-        }
+        
+        comments = await _helperServices.GetComments_Details(comments, userId, true);
+        return Ok(comments);
     }
 
     [HttpGet("GetSavedPosts/{targetUsername}/{userId?}")]
@@ -171,14 +158,7 @@ public class ProfileController : ControllerBase
             return NotFound();
         }
 
-        try
-        {
-            posts = await _helperServices.GetPosts_Details(posts, userId);
-            return Ok(new { posts = posts });
-        }
-        catch (System.Exception)
-        {
-            return BadRequest();
-        }
+        posts = await _helperServices.GetPosts_Details(posts, userId);
+        return Ok(new { posts = posts });
     }
 }

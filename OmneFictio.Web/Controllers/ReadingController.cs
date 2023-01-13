@@ -79,22 +79,16 @@ public class ReadingController : Controller
             query["ppp"] = ppp.ToString();
         }
         url.Query = query.ToString();
-        try
+
+        //request
+        var apiResponse = await _httpClient.GetAsync(url.ToString());
+        if (apiResponse.StatusCode.ToString() != "OK")
         {
-            //request
-            var apiResponse = await _httpClient.GetAsync(url.ToString());
-            if (apiResponse.StatusCode.ToString() != "OK")
-            {
-                return new JsonResult(NotFound());
-            }
-            //return
-            string content = await apiResponse.Content.ReadAsStringAsync();
-            return new JsonResult(Ok(content));
+            return new JsonResult(NotFound());
         }
-        catch (System.Exception)
-        {
-            return new JsonResult(StatusCode(500));
-        }
+        //return
+        string content = await apiResponse.Content.ReadAsStringAsync();
+        return new JsonResult(Ok(content));
     }
 
 
@@ -112,7 +106,6 @@ public class ReadingController : Controller
         {
             return new JsonResult(NotFound());
         }
-
         //return
         string content = await apiResponse.Content.ReadAsStringAsync();
         return new JsonResult(Ok(content));

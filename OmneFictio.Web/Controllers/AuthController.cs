@@ -34,14 +34,13 @@ public class AuthController : Controller
         string statusCode = apiResponse.StatusCode.ToString();
 
         if (statusCode != "OK")
-            return new JsonResult(NotFound());
-        else
         {
-            var dictResult = await getDictFromResponse(apiResponse);
-            dictResult!.TryGetValue("jwt", out var newToken);
-            CreateUserSession(newToken!, rememberme: rememberme);
-            return new JsonResult(Ok());
+            return new JsonResult(NotFound());
         }
+        var dictResult = await getDictFromResponse(apiResponse);
+        dictResult!.TryGetValue("jwt", out var newToken);
+        CreateUserSession(newToken!, rememberme: rememberme);
+        return new JsonResult(Ok());
     }
 
     [HttpPost]
@@ -63,17 +62,11 @@ public class AuthController : Controller
             return new JsonResult(Ok());
         }
         else if (statusCode == "Accepted")
-        {
-            return new JsonResult(Accepted()); //created user but failed to get JWT
-        }
+            return new JsonResult(Accepted()); //created user but failed to get JWT to login
         else if (statusCode == "Conflict")
-        {
             return new JsonResult(Conflict()); //username exists
-        }
         else
-        {
             return new JsonResult(BadRequest()); //bad payload
-        }
     }
 
     [HttpPost]
@@ -102,15 +95,9 @@ public class AuthController : Controller
             return new JsonResult(Ok());
         }
         else if (statusCode == "BadRequest")
-        {
-            //Bad token
-            return new JsonResult(BadRequest());
-        }
+            return new JsonResult(BadRequest()); //Bad token
         else
-        {
-            //Server error
-            return new JsonResult(StatusCode(500));
-        }
+            return new JsonResult(StatusCode(500)); //Server error
     }
 
 

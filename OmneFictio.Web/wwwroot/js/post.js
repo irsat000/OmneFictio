@@ -33,6 +33,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (isNaN(Number(postId))) {
             return;
         }
+        window.createSkeletons("post-commentsection");
+        return;
         await fetch("/g/GetPost/" + postId, {
             method: 'GET',
             headers: {

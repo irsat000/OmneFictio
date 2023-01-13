@@ -1,23 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace OmneFictio.WebApi.Entities
+namespace OmneFictio.WebApi.Entities;
+
+public partial class Language
 {
-    public partial class Language
-    {
-        public Language()
-        {
-            Posts = new HashSet<Post>();
-            PreferenceprefLanguageId_2Navigations = new HashSet<Preference>();
-            PreferenceprefLanguages = new HashSet<Preference>();
-        }
+    public int id { get; set; }
 
-        public int id { get; set; }
-        public string lanCode { get; set; } = null!;
-        public string body { get; set; } = null!;
+    public string lanCode { get; set; } = null!;
 
-        public virtual ICollection<Post> Posts { get; set; }
-        public virtual ICollection<Preference> PreferenceprefLanguageId_2Navigations { get; set; }
-        public virtual ICollection<Preference> PreferenceprefLanguages { get; set; }
-    }
+    public string body { get; set; } = null!;
+
+    public virtual ICollection<Post> Posts { get; } = new List<Post>();
+
+    public virtual ICollection<Preference> PreferenceprefLanguageId_2Navigations { get; } = new List<Preference>();
+
+    public virtual ICollection<Preference> PreferenceprefLanguages { get; } = new List<Preference>();
 }

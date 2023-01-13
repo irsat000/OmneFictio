@@ -1,28 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace OmneFictio.WebApi.Entities
+namespace OmneFictio.WebApi.Entities;
+
+public partial class DeletedStatus
 {
-    public partial class DeletedStatus
-    {
-        public DeletedStatus()
-        {
-            Accounts = new HashSet<Account>();
-            Chapters = new HashSet<Chapter>();
-            Comments = new HashSet<Comment>();
-            Posts = new HashSet<Post>();
-            Replies = new HashSet<Reply>();
-            Requests = new HashSet<Request>();
-        }
+    public byte id { get; set; }
 
-        public byte id { get; set; }
-        public string body { get; set; } = null!;
+    public string body { get; set; } = null!;
 
-        public virtual ICollection<Account> Accounts { get; set; }
-        public virtual ICollection<Chapter> Chapters { get; set; }
-        public virtual ICollection<Comment> Comments { get; set; }
-        public virtual ICollection<Post> Posts { get; set; }
-        public virtual ICollection<Reply> Replies { get; set; }
-        public virtual ICollection<Request> Requests { get; set; }
-    }
+    public virtual ICollection<Account> Accounts { get; } = new List<Account>();
+
+    public virtual ICollection<Chapter> Chapters { get; } = new List<Chapter>();
+
+    public virtual ICollection<Comment> Comments { get; } = new List<Comment>();
+
+    public virtual ICollection<Post> Posts { get; } = new List<Post>();
+
+    public virtual ICollection<Reply> Replies { get; } = new List<Reply>();
+
+    public virtual ICollection<Request> Requests { get; } = new List<Request>();
 }

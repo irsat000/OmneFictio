@@ -21,7 +21,8 @@ main {
   display: flex;
   justify-content: space-between;
 }
-.ch-header .ch-options a, .ch-header .ch-options span {
+.ch-header .ch-options a,
+.ch-header .ch-options span {
   font-size: 1.2rem;
   text-decoration: underline;
   cursor: pointer;

@@ -76,15 +76,13 @@ public class ActionController : Controller
 
         var apiResponse = await _httpClient.PostAsJsonAsync("Action/SavePost", request);
         string statusCode = apiResponse.StatusCode.ToString();
+        
         if (statusCode == "OK")
-        {
             return new JsonResult(Ok());
-        }
         else if (statusCode == "Accepted")
-        {
             return new JsonResult(Accepted());
-        }
-        return new JsonResult(BadRequest());
+        else
+            return new JsonResult(BadRequest());
     }
 
     [HttpPost]

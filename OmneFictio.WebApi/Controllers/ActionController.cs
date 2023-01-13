@@ -89,14 +89,7 @@ public class ActionController : ControllerBase
             await _db.Votes.AddAsync(newVote);
         }
 
-        try
-        {
-            await _db.SaveChangesAsync();
-        }
-        catch (Exception)
-        {
-            return BadRequest();
-        }
+        await _db.SaveChangesAsync();
         return Ok();
     }
 
@@ -153,28 +146,22 @@ public class ActionController : ControllerBase
         SavedPost? savedPost = await _db.SavedPosts.FirstOrDefaultAsync(s =>
             s.accountId == request.accountId &&
             s.targetPostId == request.targetPostId);
-        try
+
+        if (savedPost != null)
         {
-            if (savedPost != null)
-            {
-                _db.SavedPosts.Remove(savedPost);
-                await _db.SaveChangesAsync();
-                return Accepted();
-            }
-            savedPost = new SavedPost
-            {
-                accountId = request.accountId,
-                targetPostId = request.targetPostId,
-                saveDate = DateTime.Now
-            };
-            await _db.SavedPosts.AddAsync(savedPost);
+            _db.SavedPosts.Remove(savedPost);
             await _db.SaveChangesAsync();
-            return Ok();
+            return Accepted();
         }
-        catch (Exception)
+        savedPost = new SavedPost
         {
-            return BadRequest();
-        }
+            accountId = request.accountId,
+            targetPostId = request.targetPostId,
+            saveDate = DateTime.Now
+        };
+        await _db.SavedPosts.AddAsync(savedPost);
+        await _db.SaveChangesAsync();
+        return Ok();
     }
 
     [HttpPost("AddComment")]
@@ -202,19 +189,12 @@ public class ActionController : ControllerBase
             newComment.body = request.body;
         }
 
-        try
-        {
-            await _db.Comments.AddAsync(newComment);
-            await _db.SaveChangesAsync();
-            CommentDtoRead_2? returnComment = await _mapper.ProjectTo<CommentDtoRead_2>
-                    (_db.Comments.Where(p => p.id == newComment.id))
-                .FirstOrDefaultAsync();
-            return Ok(new { returnComment });
-        }
-        catch (Exception)
-        {
-            return BadRequest();
-        }
+        await _db.Comments.AddAsync(newComment);
+        await _db.SaveChangesAsync();
+        CommentDtoRead_2? returnComment = await _mapper.ProjectTo<CommentDtoRead_2>
+                (_db.Comments.Where(p => p.id == newComment.id))
+            .FirstOrDefaultAsync();
+        return Ok(new { returnComment });
     }
 
     [HttpPost("CreatePost")]
@@ -268,15 +248,8 @@ public class ActionController : ControllerBase
             return BadRequest(); //Fanfiction is chosen but there is no reference to stories
         }
 
-        try
-        {
-            await _db.Posts.AddAsync(newpost);
-            await _db.SaveChangesAsync();
-            return Ok();
-        }
-        catch (Exception)
-        {
-            return BadRequest();
-        }
+        await _db.Posts.AddAsync(newpost);
+        await _db.SaveChangesAsync();
+        return Ok();
     }
 }

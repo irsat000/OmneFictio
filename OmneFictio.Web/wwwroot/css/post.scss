@@ -10,6 +10,14 @@ main {
     margin-top: 10px;
 }
 
+.postmain-skel{
+    width: 100%;
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
 .post-main {
     width: 100%;
     margin-bottom: 18px;
@@ -38,46 +46,7 @@ main {
                 max-height: 370px;
                 border-radius: 4px;
                 cursor: pointer;
-
-                /*&:hover+.p-upscalecover-cont {
-                    visibility: visible !important;
-                    height: 120%;
-                    width: 120%;
-                }*/
             }
-
-            /*.p-upscalecover-cont {
-                position: absolute;
-                top: 0;
-                left: 0;
-                height: 100%;
-                width: 100%;
-                visibility: hidden;
-                cursor: pointer;
-                transition: all 0.1s ease;
-                z-index: 10;
-
-                .p-upscalecover {
-                    height: 100%;
-                    width: 100%;
-                    border-radius: 8px;
-                    filter: grayscale(50%) brightness(60%);
-                }
-
-                i {
-                    position: absolute;
-                    bottom: 6px;
-                    right: 10px;
-                    font-size: 1.4rem;
-                    opacity: 0.7;
-                }
-
-                &:hover {
-                    visibility: visible;
-                    height: 120%;
-                    width: 120%;
-                }
-            }*/
         }
 
         .p-postinfo{
@@ -396,8 +365,9 @@ main {
             }
         }
     }
-
 }
+
+
 
 .fullsize-cover-cont {
     display: none;
