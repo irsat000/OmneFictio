@@ -60,8 +60,8 @@ document.addEventListener("DOMContentLoaded", function () {
         if (isNaN(Number(postId))) {
             return;
         }
-        /**/window.createSkeletons("post-commentsection");
-        return;
+        /*window.createSkeletons("post-commentsection");
+        return; *FOR TESTS ONLY**/
         await fetch("/g/GetPost/" + postId, {
             method: 'GET',
             headers: {
@@ -197,6 +197,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
 
                     //Create post
+                    document.getElementById('post-wrap')!.innerHTML = "";
                     document.getElementById('post-wrap')!.appendChild(clone);
                     
                     //Open/close chapters modal

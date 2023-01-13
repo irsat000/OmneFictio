@@ -61,6 +61,23 @@ select {
   opacity: 0 !important;
 }
 
+@-webkit-keyframes loading-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes loading-dual-ring {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
 .modalbg1 {
   display: none;
   width: 100%;

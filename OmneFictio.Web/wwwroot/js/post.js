@@ -33,8 +33,6 @@ document.addEventListener("DOMContentLoaded", function () {
         if (isNaN(Number(postId))) {
             return;
         }
-        window.createSkeletons("post-commentsection");
-        return;
         await fetch("/g/GetPost/" + postId, {
             method: 'GET',
             headers: {
@@ -154,6 +152,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
                     rateIconBtns[post.ratedByUser - 1].classList.add('active');
                 }
+                document.getElementById('post-wrap').innerHTML = "";
                 document.getElementById('post-wrap').appendChild(clone);
                 document.querySelectorAll('#mc-close, #get_chapters').forEach(function (element) {
                     element.addEventListener("click", open_close_chapters_modal);
