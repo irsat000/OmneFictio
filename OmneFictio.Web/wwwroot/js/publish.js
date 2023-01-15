@@ -86,7 +86,7 @@ document.addEventListener("DOMContentLoaded", function () {
             closeTagAndSeriesDD();
         }
     });
-    createpost_form.addEventListener('submit', async function (event) {
+    createpost_form.addEventListener('submit', function (event) {
         event.preventDefault();
         let message = document.querySelector('.wf-message');
         message.innerHTML = "";
@@ -106,7 +106,7 @@ document.addEventListener("DOMContentLoaded", function () {
         if (coverImg !== null && coverImg !== "") {
             payload["CoverImage"] = coverImg;
         }
-        await fetch("/Action/CreatePost", {
+        fetch("/Action/CreatePost", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -115,7 +115,7 @@ document.addEventListener("DOMContentLoaded", function () {
             body: JSON.stringify(payload)
         })
             .then((res) => res.json())
-            .then(async (data) => {
+            .then((data) => {
             if (data.statusCode === 200) {
                 message.style.color = "#36914e";
                 message.innerHTML = "SUCCESS";

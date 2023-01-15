@@ -47,7 +47,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         })
             .then((res) => res.json())
-            .then(async (data) => {
+            .then((data) => {
             if (data.statusCode === 200) {
                 const Info = JSON.parse(data.value).accountInfo;
                 const instance = document.getElementById('profileInfoInstance');
@@ -202,13 +202,12 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         })
             .then((res) => res.json())
-            .then(async (data) => {
+            .then((data) => {
             profileBody_posts.innerHTML = "";
             if (data.statusCode === 200) {
                 const response = JSON.parse(data.value);
                 for (const post of response.posts) {
-                    const clone = window.fillPostTemplate(post);
-                    profileBody_posts.appendChild(clone);
+                    profileBody_posts.appendChild(window.fillPostTemplate(post));
                 }
                 loadedOnce_posts = 1;
             }
@@ -232,11 +231,11 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         })
             .then((res) => res.json())
-            .then(async (data) => {
+            .then((data) => {
             profileBody_reviews.innerHTML = "";
             if (data.statusCode === 200) {
                 for (const comment of JSON.parse(data.value)) {
-                    profileBody_reviews.appendChild(await fillCommentTemplate(comment, "profile"));
+                    profileBody_reviews.appendChild(fillCommentTemplate(comment, "profile"));
                 }
                 ;
                 loadedOnce_reviews = 1;
@@ -260,13 +259,12 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         })
             .then((res) => res.json())
-            .then(async (data) => {
+            .then((data) => {
             profileBody_saved.innerHTML = "";
             if (data.statusCode === 200) {
                 const response = JSON.parse(data.value);
                 for (const post of response.posts) {
-                    const clone = window.fillPostTemplate(post);
-                    profileBody_saved.appendChild(clone);
+                    profileBody_saved.appendChild(window.fillPostTemplate(post));
                 }
                 loadedOnce_saved = 1;
             }

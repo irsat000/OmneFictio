@@ -29,11 +29,11 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     const postId = window.getPathPart(2);
     GetPost();
-    async function GetPost() {
+    function GetPost() {
         if (isNaN(Number(postId))) {
             return;
         }
-        await fetch("/g/GetPost/" + postId, {
+        fetch("/g/GetPost/" + postId, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -41,7 +41,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         })
             .then((res) => res.json())
-            .then(async (data) => {
+            .then((data) => {
             if (data.statusCode === 200) {
                 const post = JSON.parse(data.value);
                 const instance = document.getElementById('getpost_instance');
@@ -140,9 +140,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
                 const rateIconBtns = [...clone.querySelectorAll('.rate_the_post i')].reverse();
                 rateIconBtns.forEach(i => {
-                    i.addEventListener('click', async () => {
+                    i.addEventListener('click', () => {
                         const rateVal = Number(i.getAttribute('data-rateval'));
-                        await RateThePost(rateVal, rateIconBtns, i);
+                        RateThePost(rateVal, rateIconBtns, i);
                     });
                 });
                 if (post.ratedByUser != null) {
@@ -221,12 +221,12 @@ document.addEventListener("DOMContentLoaded", function () {
             modalbg1.classList.add('dblock');
         }
     }
-    async function RateThePost(rateVal, rateIconBtns, i) {
+    function RateThePost(rateVal, rateIconBtns, i) {
         const ratePayload = {
             PostId: postId,
             RateValue: rateVal
         };
-        await fetch("/Action/RateThePost", {
+        fetch("/Action/RateThePost", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

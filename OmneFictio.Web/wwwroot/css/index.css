@@ -75,9 +75,9 @@ main {
   margin-top: 20px;
 }
 .topposts_group .postlist_cont {
-  flex-grow: 1;
   display: flex;
   flex-direction: column;
+  width: 100%;
 }
 .topposts_group .postlist_cont .top_header {
   text-align: center;
@@ -90,6 +90,9 @@ main {
 }
 .topposts_group .postlist_cont .postlist .post {
   margin-bottom: 12px;
+  background-color: var(--index-post-bg-color);
+}
+.topposts_group .postlist_cont .postlist .post .p-info {
   background-color: var(--index-post-bg-color);
 }
 @media (min-width: 768px) {

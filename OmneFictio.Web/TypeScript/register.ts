@@ -2,7 +2,7 @@
 document.addEventListener("DOMContentLoaded", function () {
     //register form - fetch api
     const register_form = document.getElementById('register-form') as HTMLFormElement;
-    register_form.addEventListener('submit', async function (event) {
+    register_form.addEventListener('submit', function (event) {
         //disables redirection of form element
         event.preventDefault();
         //Get message elements
@@ -32,9 +32,8 @@ document.addEventListener("DOMContentLoaded", function () {
             message.innerHTML = "*Passwords don't match*";
             return;
         }
-        console.log(JSON.parse(window.strfForm(register_form)));
         //Request
-        await fetch("/Auth/UserRegistration", {
+        fetch("/Auth/UserRegistration", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

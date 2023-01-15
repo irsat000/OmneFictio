@@ -18,10 +18,10 @@ document.addEventListener("DOMContentLoaded", function () {
     const plw_img = plwarning.querySelector('.plwarning-img');
     window.createSkeletons("read-posts");
     fetchPosts();
-    async function fetchPosts() {
+    function fetchPosts() {
         const pl_column1 = document.getElementById('pl-column1');
         const pl_column2 = document.getElementById('pl-column2');
-        await fetch("/g/GetPosts?" + params, {
+        fetch("/g/GetPosts?" + params, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -29,18 +29,17 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         })
             .then((res) => res.json())
-            .then(async (data) => {
+            .then((data) => {
             pl_column1.innerHTML = "";
             pl_column2.innerHTML = "";
             if (data.statusCode === 200) {
                 const response = JSON.parse(data.value);
                 for (const post of response.posts) {
-                    const clone = window.fillPostTemplate(post);
                     if (pl_column1.offsetHeight <= pl_column2.offsetHeight) {
-                        pl_column1.appendChild(clone);
+                        pl_column1.appendChild(window.fillPostTemplate(post));
                     }
                     else {
-                        pl_column2.appendChild(clone);
+                        pl_column2.appendChild(window.fillPostTemplate(post));
                     }
                 }
                 const postShowroom = document.querySelector('.posts-cont');

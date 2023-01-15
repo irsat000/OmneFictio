@@ -56,13 +56,13 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const postId = window.getPathPart(2);
     GetPost();
-    async function GetPost() {
+    function GetPost() {
         if (isNaN(Number(postId))) {
             return;
         }
         /*window.createSkeletons("post-commentsection");
         return; *FOR TESTS ONLY**/
-        await fetch("/g/GetPost/" + postId, {
+        fetch("/g/GetPost/" + postId, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -70,7 +70,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         })
             .then((res) => res.json())
-            .then(async (data) => {
+            .then((data) => {
                 if (data.statusCode === 200) {
                     const post = JSON.parse(data.value);
                     const instance = document.getElementById('getpost_instance') as HTMLTemplateElement;
@@ -182,9 +182,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     //Rate the post
                     const rateIconBtns = [...clone.querySelectorAll('.rate_the_post i')].reverse();
                     rateIconBtns.forEach(i => {
-                        i.addEventListener('click', async () => {
+                        i.addEventListener('click', () => {
                             const rateVal = Number(i.getAttribute('data-rateval'));
-                            await RateThePost(rateVal, rateIconBtns, i);
+                            RateThePost(rateVal, rateIconBtns, i);
                         });
                     });
                     //Already rated by user?
@@ -287,12 +287,12 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
 
-    async function RateThePost(rateVal: number, rateIconBtns: Element[], i: Element) {
+    function RateThePost(rateVal: number, rateIconBtns: Element[], i: Element) {
         const ratePayload = {
             PostId: postId,
             RateValue: rateVal
         };
-        await fetch("/Action/RateThePost", {
+        fetch("/Action/RateThePost", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

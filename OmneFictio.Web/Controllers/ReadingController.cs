@@ -28,12 +28,14 @@ public class ReadingController : Controller
     public async Task<IActionResult> GetChapter(int postid, int chapterindex)
     {
         string url = $"Read/GetChapter/{postid}/{chapterindex}";
-        if(AccountId != null){
+        if (AccountId != null)
+        {
             url += "/" + AccountId;
         }
 
         var apiResponse = await _httpClient.GetAsync(url);
-        if(apiResponse.StatusCode.ToString() != "OK"){
+        if (apiResponse.StatusCode.ToString() != "OK")
+        {
             return new JsonResult(NotFound());
         }
         //return
@@ -45,7 +47,8 @@ public class ReadingController : Controller
     public async Task<IActionResult> GetPost(string postid)
     {
         string url = "Read/GetPost/" + postid;
-        if(AccountId != null){
+        if (AccountId != null)
+        {
             url += "/" + AccountId;
         }
 
@@ -64,7 +67,8 @@ public class ReadingController : Controller
     public async Task<JsonResult> GetPosts(int? page, int? ppp)
     {
         string urlpath = "Read/GetPosts";
-        if(AccountId != null){
+        if (AccountId != null)
+        {
             urlpath += "/" + AccountId;
         }
         //Create url (filters)
@@ -97,10 +101,11 @@ public class ReadingController : Controller
     public async Task<JsonResult> GetComments(string type, int parentid)
     {
         string url = $"Read/GetComments/{type}/{parentid}";
-        if(AccountId != null){
+        if (AccountId != null)
+        {
             url += "/" + AccountId;
         }
-        
+
         var apiResponse = await _httpClient.GetAsync(url);
         if (apiResponse.StatusCode.ToString() != "OK")
         {
@@ -116,10 +121,11 @@ public class ReadingController : Controller
     public async Task<JsonResult> GetComment(int commentId)
     {
         string url = "Read/GetComment/" + commentId;
-        if(AccountId != null){
+        if (AccountId != null)
+        {
             url += "/" + AccountId;
         }
-        
+
         var apiResponse = await _httpClient.GetAsync(url);
         if (apiResponse.StatusCode.ToString() != "OK")
         {
@@ -129,32 +135,52 @@ public class ReadingController : Controller
         string content = await apiResponse.Content.ReadAsStringAsync();
         return new JsonResult(Ok(content));
     }
-/*
-OUTDATED. But I might use this for special occasions.
-    [HttpGet("g/CheckVoteByUser")]
-    public async Task<JsonResult> CheckVoteByUser(int TargetId, string TargetType)
+
+    //get top posts
+    [HttpGet("g/GetTopPosts")]
+    public async Task<JsonResult> GetTopPosts()
     {
-        if (AccountId == null)
+        string url = "Read/GetTopPosts";
+        if (AccountId != null)
         {
-            return new JsonResult(Unauthorized());
+            url += "/" + AccountId;
         }
-        //Create url (filters)
-        var url = new UriBuilder(_httpClient.BaseAddress!.AbsoluteUri + "Read/CheckVoteByUser");
-        var query = HttpUtility.ParseQueryString(url.Query);
-        query["AccountId"] = AccountId.ToString();
-        query["TargetId"] = TargetId.ToString();
-        query["TargetType"] = TargetType.ToString();
-        url.Query = query.ToString();
-        //Request
-        var apiResponse = await _httpClient.GetAsync(url.ToString());
+
+        var apiResponse = await _httpClient.GetAsync(url);
         if (apiResponse.StatusCode.ToString() != "OK")
         {
             return new JsonResult(NotFound());
         }
-        //return
+        
         string content = await apiResponse.Content.ReadAsStringAsync();
         return new JsonResult(Ok(content));
     }
-*/
+    /*
+    OUTDATED. But I might use this for special occasions.
+        [HttpGet("g/CheckVoteByUser")]
+        public async Task<JsonResult> CheckVoteByUser(int TargetId, string TargetType)
+        {
+            if (AccountId == null)
+            {
+                return new JsonResult(Unauthorized());
+            }
+            //Create url (filters)
+            var url = new UriBuilder(_httpClient.BaseAddress!.AbsoluteUri + "Read/CheckVoteByUser");
+            var query = HttpUtility.ParseQueryString(url.Query);
+            query["AccountId"] = AccountId.ToString();
+            query["TargetId"] = TargetId.ToString();
+            query["TargetType"] = TargetType.ToString();
+            url.Query = query.ToString();
+            //Request
+            var apiResponse = await _httpClient.GetAsync(url.ToString());
+            if (apiResponse.StatusCode.ToString() != "OK")
+            {
+                return new JsonResult(NotFound());
+            }
+            //return
+            string content = await apiResponse.Content.ReadAsStringAsync();
+            return new JsonResult(Ok(content));
+        }
+    */
 
 }

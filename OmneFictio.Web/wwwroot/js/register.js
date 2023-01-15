@@ -1,7 +1,7 @@
 "use strict";
 document.addEventListener("DOMContentLoaded", function () {
     const register_form = document.getElementById('register-form');
-    register_form.addEventListener('submit', async function (event) {
+    register_form.addEventListener('submit', function (event) {
         event.preventDefault();
         const message = document.getElementById('registerform-message');
         const usernameRegex = new RegExp("[A-Za-z0-9_]{3,30}");
@@ -27,8 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
             message.innerHTML = "*Passwords don't match*";
             return;
         }
-        console.log(JSON.parse(window.strfForm(register_form)));
-        await fetch("/Auth/UserRegistration", {
+        fetch("/Auth/UserRegistration", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',

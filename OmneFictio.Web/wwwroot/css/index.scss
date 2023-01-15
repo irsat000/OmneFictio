@@ -79,9 +79,9 @@ main{
     gap: 14px 3%;
     margin-top: 20px;
     .postlist_cont{
-        flex-grow: 1;
         display: flex;
         flex-direction: column;
+        width: 100%;
         .top_header{
             text-align: center;
             font-size: 1.6rem;
@@ -93,6 +93,9 @@ main{
             .post{
                 margin-bottom: 12px;
                 background-color: var(--index-post-bg-color);
+                .p-info{
+                    background-color: var(--index-post-bg-color);
+                }
             }
         }
     }

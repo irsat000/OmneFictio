@@ -97,7 +97,7 @@ public class ReadingController : ControllerBase
                     r.accountId == userId &&
                     r.postId == post.id)
                 .Select(r => (byte?)r.body).FirstOrDefaultAsync();
-                
+
             post.savedByUser = await _db.SavedPosts.AnyAsync(s =>
                 s.accountId == userId &&
                 s.targetPostId == post.id);
@@ -200,25 +200,30 @@ public class ReadingController : ControllerBase
     [HttpGet("GetTopPosts/{userId?}")]
     public async Task<IActionResult> GetTopPosts(int? userId)
     {
-        async Task<List<PostDtoRead_1>> GetTopPosts(int days)
+        async Task<List<PostDtoRead_1>> GetTopPosts(int days, int min)
         {
             return await _db.Posts
                 .Where(p =>
                     p.isPublished == true &&
                     p.deletedStatus != null &&
                     p.deletedStatus.body == "Default" &&
-                    p.publishDate > DateTime.Now.AddDays(days))
+                    p.publishDate > DateTime.Now.AddDays(days) &&
+                    p.publishDate < DateTime.Now.AddDays(min))
                 .OrderByDescending(v => v.Votes.Sum(v => v.body == true ? 1 : -1))
                 .Take(4)
                 .ProjectTo<PostDtoRead_1>(_mapper.ConfigurationProvider)
                 .ToListAsync();
         }
-        var todaysTopPosts = await GetTopPosts(-1);
-        var monthsTopPosts = await GetTopPosts(-30);
+        var todaysTopPosts = await GetTopPosts(-1, 0);
+        var monthsTopPosts = await GetTopPosts(-30, -1); //-1 here means excluding today
 
-        //Return
         todaysTopPosts = await _helperServices.GetPosts_Details(todaysTopPosts, userId);
         monthsTopPosts = await _helperServices.GetPosts_Details(monthsTopPosts, userId);
+
+        if (todaysTopPosts.Count() == 0 && monthsTopPosts.Count() == 0)
+        {
+            return NotFound();
+        }
         return Ok(new { todaysTopPosts = todaysTopPosts, monthsTopPosts = monthsTopPosts });
     }
 

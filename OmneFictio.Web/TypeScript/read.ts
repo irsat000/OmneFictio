@@ -27,11 +27,11 @@ document.addEventListener("DOMContentLoaded", function () {
     //-----fetch post START--------------
     window.createSkeletons("read-posts");
     fetchPosts();
-    async function fetchPosts() {
+    function fetchPosts() {
         //I use columns for masonry design.
         const pl_column1 = document.getElementById('pl-column1') as HTMLDivElement;
         const pl_column2 = document.getElementById('pl-column2') as HTMLDivElement;
-        await fetch("/g/GetPosts?" + params, {
+        fetch("/g/GetPosts?" + params, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -39,18 +39,17 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         })
             .then((res) => res.json())
-            .then(async (data: any) => {
+            .then((data: any) => {
                 pl_column1.innerHTML = "";
                 pl_column2.innerHTML = "";
                 if (data.statusCode === 200) {
                     //GET THE POSTS
                     const response = JSON.parse(data.value) as ofRead_GetPosts;
                     for (const post of response.posts) {
-                        const clone = window.fillPostTemplate(post);
                         if (pl_column1.offsetHeight <= pl_column2.offsetHeight) {
-                            pl_column1.appendChild(clone);
+                            pl_column1.appendChild(window.fillPostTemplate(post));
                         } else {
-                            pl_column2.appendChild(clone);
+                            pl_column2.appendChild(window.fillPostTemplate(post));
                         }
                     }
                     //PAGINATION

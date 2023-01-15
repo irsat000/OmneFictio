@@ -2,10 +2,10 @@
 document.addEventListener("DOMContentLoaded", function () {
     const commentSection = document.getElementById('comment-section');
     fetchChapter();
-    async function fetchChapter() {
+    function fetchChapter() {
         let postid = parseInt(window.getPathPart(2), 10);
         let index = parseInt(window.getPathPart(3), 10);
-        await fetch("/g/GetChapter/" + postid + "/" + index, {
+        fetch("/g/GetChapter/" + postid + "/" + index, {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',
@@ -13,7 +13,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         })
             .then((res) => res.json())
-            .then(async (data) => {
+            .then((data) => {
             if (data.statusCode === 200) {
                 const ch = JSON.parse(data.value);
                 document.querySelector('.chapter-container')

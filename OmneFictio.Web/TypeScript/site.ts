@@ -235,7 +235,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     //login modal - fetch api
-    loginModal.addEventListener('submit', async function (event) {
+    loginModal.addEventListener('submit', function (event) {
         //disables redirection of form element
         event.preventDefault();
         //Get message elements
@@ -243,7 +243,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const success = loginModal.querySelector('#loginmodal-success')!;
         message.innerHTML = "";
         //Request
-        await fetch("/Auth/UserLogin", {
+        fetch("/Auth/UserLogin", {
             method: 'POST',
             headers: {
                 'Accept': 'application/json',
@@ -313,9 +313,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
 //--------COMMENT SECTION-------
 
-async function AddComment(payload: string, commentSection: HTMLDivElement) {
+function AddComment(payload: string, commentSection: HTMLDivElement) {
     //Adds a new comment
-    await fetch("/Action/AddComment", {
+    fetch("/Action/AddComment", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -324,7 +324,7 @@ async function AddComment(payload: string, commentSection: HTMLDivElement) {
         body: payload
     })
         .then((res) => res.json())
-        .then(async (data) => {
+        .then((data) => {
             if (data.statusCode === 200) {
                 const comment = JSON.parse(data.value).returnComment;
                 const instance = document.getElementById('comment_instance') as HTMLTemplateElement;
@@ -386,8 +386,8 @@ function closeRepliesModal() {
     }
 }
 
-async function fetchComments(type: string, parentid: string, section: HTMLElement) {
-    await fetch("/g/GetComments/" + type + "/" + parentid, {
+function fetchComments(type: string, parentid: string, section: HTMLElement) {
+    fetch("/g/GetComments/" + type + "/" + parentid, {
         method: 'GET',
         headers: {
             'Accept': 'application/json',
@@ -395,11 +395,11 @@ async function fetchComments(type: string, parentid: string, section: HTMLElemen
         }
     })
         .then((res) => res.json())
-        .then(async (data) => {
+        .then((data) => {
             section.innerHTML = "";
             if (data.statusCode === 200) {
                 for (const comment of JSON.parse(data.value)) {
-                    section.appendChild(await fillCommentTemplate(comment, null));
+                    section.appendChild(fillCommentTemplate(comment, null));
                 };
             }
         })
@@ -410,7 +410,7 @@ async function fetchComments(type: string, parentid: string, section: HTMLElemen
 }
 
 let frController: AbortController | null;
-async function fetchReplies(commentId: string, section: HTMLElement) {
+function fetchReplies(commentId: string, section: HTMLElement) {
     section.innerHTML = "";
     //cancel pending request if there is one
     if (frController) {
@@ -428,7 +428,7 @@ async function fetchReplies(commentId: string, section: HTMLElement) {
         signal: frController.signal
     })
         .then((res) => res.json())
-        .then(async (data) => {
+        .then((data) => {
             if (data.statusCode === 200) {
                 const response = JSON.parse(data.value);
                 const comm = response.comment;
@@ -487,10 +487,10 @@ async function fetchReplies(commentId: string, section: HTMLElement) {
 
 
 
-async function VoteRequest(btn: HTMLElement, data: any) {
+function VoteRequest(btn: HTMLElement, data: any) {
     var action = data.body ? "like" : "dislike";
 
-    await fetch("/Action/Vote", {
+    fetch("/Action/Vote", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -609,8 +609,8 @@ function checkVoted_icons(clone: HTMLElement, val: boolean | null) {
 }
 
 //google auth
-async function googleHandleCredentialResponse(response: any) {
-    await fetch("/Auth/GoogleSignin", {
+function googleHandleCredentialResponse(response: any) {
+    fetch("/Auth/GoogleSignin", {
         method: 'POST',
         headers: {
             'Accept': 'application/json',
@@ -660,8 +660,7 @@ function createSkeletons(page: string) {
             //Creates comment skeletons for post or chapter's comment section
             const post_commentsection = document.getElementById("comment-section") as HTMLDivElement;
             for (let i = 0; i < 10; i++) {
-                const clone = window.cloneFromTemplate(commentSkelTemplate);
-                post_commentsection.appendChild(clone);
+                post_commentsection.appendChild(window.cloneFromTemplate(commentSkelTemplate));
             }
             break;
         case "profile-posts":
@@ -669,16 +668,14 @@ function createSkeletons(page: string) {
             //Creates post skeletons for the user posts or saved posts in profile
             const profilebody_forpost = document.getElementById(page) as HTMLDivElement;
             for (let i = 0; i < 10; i++) {
-                const clone = window.cloneFromTemplate(postSkelTemplate);
-                profilebody_forpost.appendChild(clone);
+                profilebody_forpost.appendChild(window.cloneFromTemplate(postSkelTemplate));
             }
             break;
         case "profile-reviews":
             //Creates review(comment to posts) skeletons in profile
             const profilebody_forreviews = document.getElementById(page) as HTMLDivElement;
             for (let i = 0; i < 10; i++) {
-                const clone = window.cloneFromTemplate(commentSkelTemplate);
-                profilebody_forreviews.appendChild(clone);
+                profilebody_forreviews.appendChild(window.cloneFromTemplate(commentSkelTemplate));
             }
             break;
         default:
@@ -779,7 +776,7 @@ function fillPostTemplate(post: ofPost_1) {
 }
 
 
-async function fillCommentTemplate(comment: ofComment_1, page: string | null) {
+function fillCommentTemplate(comment: ofComment_1, page: string | null) {
     const instance = document.getElementById('comment_instance') as HTMLTemplateElement;
     const clone = window.cloneFromTemplate(instance);
     //Check if user voted this parent
