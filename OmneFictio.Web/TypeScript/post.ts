@@ -195,6 +195,9 @@ document.addEventListener("DOMContentLoaded", function () {
                         });
                         rateIconBtns[post.ratedByUser - 1].classList.add('active');
                     }
+                    
+                    //Start reading (I will add Continue reading version if user already started)
+                    clone.querySelector('.start_reading')!.setAttribute('href', '/p/' + post.id + '/1');
 
                     //Create post
                     document.getElementById('post-wrap')!.innerHTML = "";

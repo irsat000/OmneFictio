@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const drawer = document.getElementById('drawer') as HTMLDivElement;
     const loginModal = document.getElementById('login-modal') as HTMLFormElement;
     const acDropdown = document.querySelector('.account-dropdown') as HTMLDivElement;
-    const repliesModal = document.getElementById('modal-replies') as HTMLDivElement;
+    //const repliesModal = document.getElementById('modal-replies') as HTMLDivElement;
 
     document.addEventListener("click", function (e) {
         //Close account dropdown if clicked somewhere else
@@ -114,6 +114,25 @@ document.addEventListener("DOMContentLoaded", function () {
                 acDropdown.classList.remove('dflex');
             }, 100);
         }
+    });
+
+    [...document.querySelectorAll('.logoutBtn')].forEach(btn => {
+        btn.addEventListener('click', () => {
+            fetch('/Auth/LogOut', {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    if (data.statusCode === 200) {
+                        location.reload();
+                    }
+                })
+                .catch(error => console.log(error));
+        })
     });
 
     //close modals, dropdowns, drawer etc when user click on the dark background
@@ -716,7 +735,7 @@ function fillPostTemplate(post: ofPost_1) {
     language.textContent = post.language.body;
     status.textContent = post.postStatus.body;
     readerRating.textContent = post.ratedAs.body;
-    if(post.chapters !== null){
+    if (post.chapters !== null) {
         chapterAmount.textContent = post.chapters.length.toString();
     }
     else {

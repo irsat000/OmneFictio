@@ -87,9 +87,13 @@ main {
   align-items: flex-start;
   justify-content: space-between;
   flex-direction: column;
+  gap: 12px 0;
 }
 .posts-cont .post-list #pl-column1, .posts-cont .post-list #pl-column2 {
+  display: flex;
+  flex-direction: column;
   width: 100%;
+  gap: 12px 0;
 }
 .posts-cont .post-list #pl-column1 .post, .posts-cont .post-list #pl-column2 .post {
   background-color: var(--background-color2);

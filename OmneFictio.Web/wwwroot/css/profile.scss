@@ -383,7 +383,18 @@
     padding: 20px 0;
     border-top: 1px solid var(--background-color2);
 
-    .post {
+    >div {
+        display: none;
+    }
+
+    >div.active {
+        display: block;
+    }
+}
+
+#profile-posts, #profile-saved{
+    .post{
+        margin-bottom: 12px;
         background-color: var(--profile-post-color);
 
         .p-info {
@@ -394,16 +405,7 @@
             background-color: var(--profile-post-color) !important;
         }
     }
-
-    >div {
-        display: none;
-    }
-
-    >div.active {
-        display: block;
-    }
 }
-
 
 #profile-friends .s-friends {
     display: flex; //flex

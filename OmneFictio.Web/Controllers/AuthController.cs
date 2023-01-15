@@ -103,12 +103,12 @@ public class AuthController : Controller
 
 
     [HttpGet]
-    public IActionResult LogOut()
+    public JsonResult LogOut()
     {
         //HttpContext.Session.Clear();
         HttpContext.SignOutAsync();
         HttpContext.Response.Cookies.Delete("UserAuth");
-        return RedirectToAction("Index", "Home");
+        return new JsonResult(Ok());
     }
 
 

@@ -152,6 +152,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     });
                     rateIconBtns[post.ratedByUser - 1].classList.add('active');
                 }
+                clone.querySelector('.start_reading').setAttribute('href', '/p/' + post.id + '/1');
                 document.getElementById('post-wrap').innerHTML = "";
                 document.getElementById('post-wrap').appendChild(clone);
                 document.querySelectorAll('#mc-close, #get_chapters').forEach(function (element) {

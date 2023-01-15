@@ -93,7 +93,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const drawer = document.getElementById('drawer');
     const loginModal = document.getElementById('login-modal');
     const acDropdown = document.querySelector('.account-dropdown');
-    const repliesModal = document.getElementById('modal-replies');
     document.addEventListener("click", function (e) {
         if (acDropdown.classList.contains('dflex') &&
             e.target.closest('.account-cont') == null) {
@@ -102,6 +101,24 @@ document.addEventListener("DOMContentLoaded", function () {
                 acDropdown.classList.remove('dflex');
             }, 100);
         }
+    });
+    [...document.querySelectorAll('.logoutBtn')].forEach(btn => {
+        btn.addEventListener('click', () => {
+            fetch('/Auth/LogOut', {
+                method: 'GET',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                }
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                if (data.statusCode === 200) {
+                    location.reload();
+                }
+            })
+                .catch(error => console.log(error));
+        });
     });
     modalbg1.addEventListener("click", function () {
         if (drawer !== null && drawer.classList.contains('drawer-active')) {

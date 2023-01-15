@@ -347,20 +347,22 @@
   padding: 20px 0;
   border-top: 1px solid var(--background-color2);
 }
-#profile-body .post {
-  background-color: var(--profile-post-color);
-}
-#profile-body .post .p-info {
-  background-color: var(--profile-post-color);
-}
-#profile-body .post .usercard-onhover {
-  background-color: var(--profile-post-color) !important;
-}
 #profile-body > div {
   display: none;
 }
 #profile-body > div.active {
   display: block;
+}
+
+#profile-posts .post, #profile-saved .post {
+  margin-bottom: 12px;
+  background-color: var(--profile-post-color);
+}
+#profile-posts .post .p-info, #profile-saved .post .p-info {
+  background-color: var(--profile-post-color);
+}
+#profile-posts .post .usercard-onhover, #profile-saved .post .usercard-onhover {
+  background-color: var(--profile-post-color) !important;
 }
 
 #profile-friends .s-friends {

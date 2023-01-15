@@ -89,6 +89,7 @@ main {
   width: 100%;
 }
 .topposts_group .postlist_cont .postlist .post {
+  margin-bottom: 12px;
   background-color: var(--index-post-bg-color);
 }
 @media (min-width: 768px) {

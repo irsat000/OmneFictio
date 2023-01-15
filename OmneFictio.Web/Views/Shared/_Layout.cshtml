@@ -425,7 +425,7 @@
         </div>
         @if (userId != null)
         {
-            <a asp-controller="Auth" asp-action="Logout" class="dw-redbutton">
+            <a class="logoutBtn" class="dw-redbutton">
                 <div class="dw-icon-cont"><i class="bi bi-box-arrow-left"></i></div>Logout
             </a>
         }
@@ -496,7 +496,7 @@
                         </ul>
                         @if (userId != null)
                         {
-                            <a href="/Auth/LogOut" class="acc_dd_redbutton">Logout</a>
+                            <a class="logoutBtn acc_dd_redbutton">Logout</a>
                         }
                     </div>
                 </div>
