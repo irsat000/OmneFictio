@@ -103,7 +103,20 @@ document.addEventListener("DOMContentLoaded", function () {
     const drawer = document.getElementById('drawer') as HTMLDivElement;
     const loginModal = document.getElementById('login-modal') as HTMLFormElement;
     const acDropdown = document.querySelector('.account-dropdown') as HTMLDivElement;
-    //const repliesModal = document.getElementById('modal-replies') as HTMLDivElement;
+    const switchThemeModal = document.querySelector('.theme-switcher') as HTMLDivElement;
+
+    const themeNameMap = new Map([
+        ['darkmode', 'Dark mode'],
+        ['lightmode', 'Light mode'],
+        ['customtheme1', 'Custom theme 1'],
+        ['customtheme2', 'Custom theme 2']
+    ]);
+
+
+    const getThemeFromStorage = localStorage.getItem("currentTheme");
+    if (getThemeFromStorage != null) {
+        changeTheme(getThemeFromStorage);
+    }
 
     document.addEventListener("click", function (e) {
         //Close account dropdown if clicked somewhere else
@@ -137,27 +150,21 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //close modals, dropdowns, drawer etc when user click on the dark background
     modalbg1.addEventListener("click", function () {
-        if (drawer !== null && drawer.classList.contains('drawer-active')) {
+        if (drawer.classList.contains('drawer-active')) {
             drawer.classList.remove('drawer-active');
             modalbg1.classList.remove('dblock');
         }
-        if (loginModal !== null && loginModal.classList.contains('dflex')) {
+        if (loginModal.classList.contains('dflex')) {
             loginModal.classList.remove('dflex');
+            loginModal.classList.remove('opacity1');
+            modalbg1.classList.remove('dblock');
+        }
+        if (switchThemeModal.classList.contains('dflex')) {
+            switchThemeModal.classList.remove('dflex');
+            switchThemeModal.classList.remove('opacity1');
             modalbg1.classList.remove('dblock');
         }
         window.closeRepliesModal();
-    });
-
-    //Theme switch
-    document.getElementById("theme-check")?.addEventListener("change", (e) => {
-        const body = document.getElementsByTagName("body")[0];
-        body.className = "";
-
-        if ((<HTMLInputElement>e.currentTarget).checked) {
-            body.classList.add("lightmode");
-        } else {
-            body.classList.add("darkmode");
-        }
     });
 
     //Top-right account dropdown menu
@@ -212,8 +219,9 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
+
     //Close login modal
-    document.querySelector('.lm-closebtn')?.addEventListener('click', function () {
+    document.querySelector('.lm-closebtn')!.addEventListener('click', function () {
         if (loginModal.classList.contains('dflex')) {
             loginModal.classList.remove('dflex');
             loginModal.classList.remove('opacity1');
@@ -221,18 +229,85 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    //Close replies modal
-    document.querySelector('.mr-close')?.addEventListener('click', function () {
-        window.closeRepliesModal();
+
+    //Theme switch - ON OFF - OUTDATED
+    /*document.getElementById("theme-check")?.addEventListener("change", (e) => {
+        const body = document.getElementsByTagName("body")[0];
+        body.className = "";
+
+        if ((<HTMLInputElement>e.currentTarget).checked) {
+            body.classList.add("lightmode");
+        } else {
+            body.classList.add("darkmode");
+        }
+    });*/
+
+    //Open switch theme modal
+    document.querySelector('.ad-theme-cont > span')!.addEventListener('click', () => {
+        if (switchThemeModal.classList.contains('dflex') === false) {
+            switchThemeModal.classList.add('dflex');
+            modalbg1.classList.add('dblock');
+            setTimeout(function () {
+                switchThemeModal.classList.add('opacity1');
+            }, 100);
+            //Close account dropdown after opening the modal
+            if (acDropdown.classList.contains('dflex')) {
+                acDropdown.classList.remove('opacity1');
+                setTimeout(function () {
+                    acDropdown.classList.remove('dflex');
+                }, 100);
+            }
+        }
     });
 
+    //Close switch theme modal
+    document.querySelector('.ts-closebtn')!.addEventListener('click', function () {
+        if (switchThemeModal.classList.contains('dflex')) {
+            switchThemeModal.classList.remove('dflex');
+            switchThemeModal.classList.remove('opacity1');
+            modalbg1.classList.remove('dblock');
+        }
+    });
+
+    //Change theme
+    switchThemeModal.querySelectorAll('ul > li').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const selectedTheme = btn.getAttribute('data-themeval') as string;
+            //close switcher modal
+            switchThemeModal.classList.remove('dflex');
+            switchThemeModal.classList.remove('opacity1');
+            modalbg1.classList.remove('dblock');
+            //deactivate icons from the modal (I don't need this for initialization of website)
+            switchThemeModal.querySelectorAll('ul > li > i').forEach((btn) => btn.classList.remove('active'));
+            //Actually change the theme with cookies, nom nom nomm
+            window.localStorage.setItem("currentTheme", selectedTheme);
+            //Effects;
+            changeTheme(selectedTheme);
+        });
+    });
+
+    function changeTheme(selectedTheme: string) {
+        //change theme
+        dombody.classList.forEach(cname => {
+            if (themeNameMap.has(cname)) {
+                dombody.classList.remove(cname);
+            }
+        });
+        dombody.classList.add(selectedTheme);
+        //show active theme
+        switchThemeModal.querySelector('ul > li[data-themeval="' + selectedTheme + '"] > i')?.classList.add('active');
+        const themeDisplayName = themeNameMap.get(selectedTheme);
+        if(themeDisplayName !== undefined){
+            document.querySelector('.ad-theme-cont span')!.textContent = themeNameMap.get(selectedTheme)!;
+        }
+    }
 
 
 
-
-
-
-
+    //Close replies modal
+    document.querySelector('.mr-close')!.addEventListener('click', function () {
+        window.closeRepliesModal();
+    });
 
     //login modal - fetch api
     loginModal.addEventListener('submit', function (event) {
@@ -360,6 +435,7 @@ function AddComment(payload: string, commentSection: HTMLDivElement) {
         })
         .catch(error => { console.log('Fetch failed -> ' + error); });
 }
+
 function openRepliesModal(commentId: string) {
     const modalbg1 = document.querySelector('.modalbg1') as HTMLDivElement;
     const repliesModal = document.getElementById('modal-replies') as HTMLDivElement;

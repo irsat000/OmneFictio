@@ -451,7 +451,7 @@ header {
 
 .theme-switcher {
     display: none; //flex
-    opacity: 1;
+    opacity: 0;
     flex-direction: column;
     transition: opacity 0.3s ease;
     z-index: 508;

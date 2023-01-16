@@ -93,6 +93,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const drawer = document.getElementById('drawer');
     const loginModal = document.getElementById('login-modal');
     const acDropdown = document.querySelector('.account-dropdown');
+    const switchThemeModal = document.querySelector('.theme-switcher');
+    const themeNameMap = new Map([
+        ['darkmode', 'Dark mode'],
+        ['lightmode', 'Light mode'],
+        ['customtheme1', 'Custom theme 1'],
+        ['customtheme2', 'Custom theme 2']
+    ]);
+    const getThemeFromStorage = localStorage.getItem("currentTheme");
+    if (getThemeFromStorage != null) {
+        changeTheme(getThemeFromStorage);
+    }
     document.addEventListener("click", function (e) {
         if (acDropdown.classList.contains('dflex') &&
             e.target.closest('.account-cont') == null) {
@@ -121,25 +132,21 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
     modalbg1.addEventListener("click", function () {
-        if (drawer !== null && drawer.classList.contains('drawer-active')) {
+        if (drawer.classList.contains('drawer-active')) {
             drawer.classList.remove('drawer-active');
             modalbg1.classList.remove('dblock');
         }
-        if (loginModal !== null && loginModal.classList.contains('dflex')) {
+        if (loginModal.classList.contains('dflex')) {
             loginModal.classList.remove('dflex');
+            loginModal.classList.remove('opacity1');
+            modalbg1.classList.remove('dblock');
+        }
+        if (switchThemeModal.classList.contains('dflex')) {
+            switchThemeModal.classList.remove('dflex');
+            switchThemeModal.classList.remove('opacity1');
             modalbg1.classList.remove('dblock');
         }
         window.closeRepliesModal();
-    });
-    document.getElementById("theme-check")?.addEventListener("change", (e) => {
-        const body = document.getElementsByTagName("body")[0];
-        body.className = "";
-        if (e.currentTarget.checked) {
-            body.classList.add("lightmode");
-        }
-        else {
-            body.classList.add("darkmode");
-        }
     });
     document.querySelector('.account_btn-cont')?.addEventListener("click", function () {
         if (acDropdown.classList.contains('dflex')) {
@@ -187,14 +194,60 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
-    document.querySelector('.lm-closebtn')?.addEventListener('click', function () {
+    document.querySelector('.lm-closebtn').addEventListener('click', function () {
         if (loginModal.classList.contains('dflex')) {
             loginModal.classList.remove('dflex');
             loginModal.classList.remove('opacity1');
             modalbg1.classList.remove('dblock');
         }
     });
-    document.querySelector('.mr-close')?.addEventListener('click', function () {
+    document.querySelector('.ad-theme-cont > span').addEventListener('click', () => {
+        if (switchThemeModal.classList.contains('dflex') === false) {
+            switchThemeModal.classList.add('dflex');
+            modalbg1.classList.add('dblock');
+            setTimeout(function () {
+                switchThemeModal.classList.add('opacity1');
+            }, 100);
+            if (acDropdown.classList.contains('dflex')) {
+                acDropdown.classList.remove('opacity1');
+                setTimeout(function () {
+                    acDropdown.classList.remove('dflex');
+                }, 100);
+            }
+        }
+    });
+    document.querySelector('.ts-closebtn').addEventListener('click', function () {
+        if (switchThemeModal.classList.contains('dflex')) {
+            switchThemeModal.classList.remove('dflex');
+            switchThemeModal.classList.remove('opacity1');
+            modalbg1.classList.remove('dblock');
+        }
+    });
+    switchThemeModal.querySelectorAll('ul > li').forEach(btn => {
+        btn.addEventListener('click', () => {
+            const selectedTheme = btn.getAttribute('data-themeval');
+            switchThemeModal.classList.remove('dflex');
+            switchThemeModal.classList.remove('opacity1');
+            modalbg1.classList.remove('dblock');
+            switchThemeModal.querySelectorAll('ul > li > i').forEach((btn) => btn.classList.remove('active'));
+            window.localStorage.setItem("currentTheme", selectedTheme);
+            changeTheme(selectedTheme);
+        });
+    });
+    function changeTheme(selectedTheme) {
+        dombody.classList.forEach(cname => {
+            if (themeNameMap.has(cname)) {
+                dombody.classList.remove(cname);
+            }
+        });
+        dombody.classList.add(selectedTheme);
+        switchThemeModal.querySelector('ul > li[data-themeval="' + selectedTheme + '"] > i')?.classList.add('active');
+        const themeDisplayName = themeNameMap.get(selectedTheme);
+        if (themeDisplayName !== undefined) {
+            document.querySelector('.ad-theme-cont span').textContent = themeNameMap.get(selectedTheme);
+        }
+    }
+    document.querySelector('.mr-close').addEventListener('click', function () {
         window.closeRepliesModal();
     });
     loginModal.addEventListener('submit', function (event) {
