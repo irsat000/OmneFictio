@@ -38,7 +38,7 @@ main {
         //color: var(--text-color1);
         .po-option {
             font-size: 1.6rem;
-            text-shadow: 0px 0px 6px var(--text-color-boxshadow1);
+            text-shadow: 0px 0px 6px var(--text-boxshadow1);
             font-family: 'Josefin Sans', sans-serif;
             cursor: pointer;
 
@@ -217,7 +217,7 @@ main {
     left: 0;
     right: 0;
     background-color: var(--background-color2);
-    box-shadow: 0px 0px 6px 0px var(--background-color-boxshadow1);
+    box-shadow: 0px 0px 6px 0px var(--div-boxshadow1);
     flex-direction: column;
     width: 240px;
     border-radius: 20px;
@@ -241,7 +241,7 @@ main {
             cursor: pointer;
             padding: 6px 16px 4px 12px;
             font-size: 1.8rem;
-            text-shadow: 0px 0px 6px var(--text-color-boxshadow1);
+            text-shadow: 0px 0px 6px var(--text-boxshadow1);
         }
     }
 
@@ -280,7 +280,7 @@ main {
     left: 0;
     right: 0;
     background-color: var(--background-color2);
-    box-shadow: 0px 0px 6px 0px var(--background-color-boxshadow1);
+    box-shadow: 0px 0px 6px 0px var(--div-boxshadow1);
     width: 260px;
     border-radius: 20px;
     font-family: 'Itim', cursive;
@@ -329,7 +329,7 @@ main {
             cursor: pointer;
             padding: 6px 12px;
             font-size: 1.8rem;
-            text-shadow: 0px 0px 6px var(--text-color-boxshadow1);
+            text-shadow: 0px 0px 6px var(--text-boxshadow1);
         }
     }
 

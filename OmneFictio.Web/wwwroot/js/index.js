@@ -27,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     todaytopBody.appendChild(window.fillPostTemplate(post));
                 }
                 for (const post of response.monthsTopPosts) {
-                    todaytopBody.appendChild(window.fillPostTemplate(post));
+                    monthtopBody.appendChild(window.fillPostTemplate(post));
                 }
                 if (response.todaysTopPosts.length < 1) {
                 }

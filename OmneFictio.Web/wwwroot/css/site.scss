@@ -56,10 +56,12 @@ select {
 .dnone {
     display: none !important;
 }
-.opacity1{
+
+.opacity1 {
     opacity: 1 !important;
 }
-.opacity0{
+
+.opacity0 {
     opacity: 0 !important;
 }
 
@@ -79,7 +81,7 @@ select {
     width: 100%;
     height: 100%;
     position: fixed;
-    background-color: rgba(0, 0, 0, 0.5);
+    background-color: #00000060;
     z-index: 200;
 }
 
@@ -145,7 +147,7 @@ header {
     i {
         color: var(--text-color1);
         font-size: 3.4rem;
-        text-shadow: 0px 0px 6px var(--text-color-boxshadow1);
+        text-shadow: 0px 0px 6px var(--text-boxshadow1);
         cursor: pointer;
 
         &:hover {
@@ -295,8 +297,8 @@ header {
     margin-right: auto;
     left: 0;
     right: 0;
-    background-color: var(--background-color2);
-    box-shadow: 0px 0px 16px 4px var(--background-color-boxshadow1);
+    background-color: var(--modal-background);
+    box-shadow: 0px 0px 16px 4px var(--div-boxshadow1);
     width: 260px;
     border-radius: 10px;
     font-family: 'Itim', cursive;
@@ -304,7 +306,7 @@ header {
     color: var(--text-color1);
 
     .lm-header {
-        border-bottom: 2px solid var(--background-color-hover4);
+        border-bottom: 2px solid var(--modal-line1);
         display: flex;
         flex-direction: row;
 
@@ -321,7 +323,7 @@ header {
             cursor: pointer;
             padding: 6px 12px;
             font-size: 1.8rem;
-            text-shadow: 0px 0px 6px var(--text-color-boxshadow1);
+            text-shadow: 0px 0px 6px var(--text-boxshadow1);
         }
     }
 
@@ -447,6 +449,84 @@ header {
     }
 }
 
+.theme-switcher {
+    display: none; //flex
+    opacity: 1;
+    flex-direction: column;
+    transition: opacity 0.3s ease;
+    z-index: 508;
+    position: fixed;
+    top: 12%;
+    margin-left: auto;
+    margin-right: auto;
+    left: 0;
+    right: 0;
+    background-color: var(--modal-background);
+    box-shadow: 0px 0px 16px 4px var(--div-boxshadow1);
+    width: 260px;
+    border-radius: 10px;
+    font-family: 'Gudea', cursive;
+    overflow: hidden;
+    color: var(--text-color1);
+
+    .ts-header {
+        border-bottom: 2px solid var(--modal-line1);
+        display: flex;
+        flex-direction: row;
+
+        .ts-title {
+            display: flex;
+            align-items: center;
+            padding-left: 20px;
+            font-size: 1.3rem;
+            flex-grow: 1;
+        }
+
+        .ts-closebtn {
+            flex-shrink: 0;
+            cursor: pointer;
+            padding: 6px 12px;
+            font-size: 1.8rem;
+            text-shadow: 0px 0px 6px var(--text-boxshadow1);
+        }
+    }
+
+    ul {
+        padding: 10px;
+
+        li {
+            padding: 8px;
+            cursor: pointer;
+            border-bottom: 2px solid var(--modal-line1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            &:last-child {
+                border-bottom: unset;
+            }
+
+            &:hover {
+                background-color: var(--modal-item-hover);
+            }
+
+            i {
+                display: none;
+                font-size: 1.4rem;
+            }
+
+            i.active {
+                display: flex;
+            }
+
+            &:has(> i.active) {
+                cursor: default;
+                background-color: var(--modal-item-hover);
+            }
+        }
+    }
+}
+
 .logo-cont {
     display: none;
     justify-content: center;
@@ -457,7 +537,7 @@ header {
         font-size: 2rem;
         font-family: 'Kaushan Script', cursive;
         color: var(--text-color1);
-        text-shadow: -2px 4px 2px var(--text-color-boxshadow1);
+        text-shadow: -2px 4px 2px var(--text-boxshadow1);
         cursor: pointer;
     }
 }
@@ -487,7 +567,7 @@ header {
             font-size: 1.2rem;
             color: var(--text-color1);
             background-color: var(--background-color2);
-            box-shadow: 0px 0px 6px 0px var(--background-color-boxshadow1);
+            box-shadow: 0px 0px 6px 0px var(--div-boxshadow1);
             padding: 6px 42px 6px 10px;
             border: none;
             outline: none;
@@ -606,13 +686,23 @@ header {
         right: 16px;
         border-radius: 8px;
         background-color: var(--dropdownbg-color);
-        font-size: 1rem;
         font-family: 'Itim', cursive;
         overflow: hidden;
         -webkit-box-shadow: -1px 1px 6px 0px rgba(0, 0, 0, 0.2);
         -moz-box-shadow: -1px 1px 6px 0px rgba(0, 0, 0, 0.2);
         box-shadow: -1px 1px 6px 0px rgba(0, 0, 0, 0.2);
 
+        /*.ad-modalbg{
+            display: none;
+            width: 100%;
+            height: 100%;
+            position: fixed;
+            background-color: rgba(0, 0, 0, 0.3);
+            z-index: 10;
+        }
+        &:has(> **** .active) > .ad-modalbg {
+            display: block;
+        }*/
 
         .ad-theme-cont {
             width: 100%;
@@ -620,9 +710,21 @@ header {
             display: flex;
             justify-content: center;
 
-            .theme-switch {
+            span {
+                padding: 4px 9px;
+                cursor: pointer;
+                background-color: var(--accountdropdown-themeswitcher);
+                border-radius: 3px;
+
+                &:hover {
+                    background-color: var(--accountdropdown-themeswitcher-hover);
+                }
+            }
+
+            /*.theme-switch {
+                display: none;
+                //display: inline-block;
                 position: relative;
-                display: inline-block;
                 width: 54px;
                 height: 30px;
 
@@ -662,28 +764,32 @@ header {
                     transform: translateX(24px);
                     background-color: #fff;
                 }
-            }
+            }*/
         }
 
-        >ul>li {
+        .ad-linklist>li {
             &:last-child {
                 border-bottom: none;
             }
 
             >a {
+                font-size: 1rem;
                 padding: 4px 20px;
                 text-align: center;
                 color: var(--text-color1) !important;
                 transition: 0.2s ease;
                 cursor: pointer;
-                border-bottom: 1px solid var(--background-color-hover1);
+                border-bottom: 1px solid var(--modal-item-hover);
 
                 &:hover {
-                    background-color: var(--background-color-hover1);
+                    background-color: var(--modal-item-hover);
                 }
             }
 
             .ad-username {
+                display: block;
+                width: 100%;
+                text-align: center;
                 border-bottom: 1px solid var(--text-color1);
                 font-size: 1rem;
                 cursor: text;
@@ -724,8 +830,8 @@ header {
     border-radius: 20px;
     overflow: hidden;
     z-index: 507;
-    background-color: var(--background-color2);
-    box-shadow: 0px 0px 6px 0px var(--background-color-boxshadow1);
+    background-color: var(--modal-background);
+    box-shadow: 0px 0px 6px 0px var(--div-boxshadow1);
     padding-bottom: 10px;
     user-select: none;
 
@@ -751,7 +857,7 @@ header {
             margin-right: 4px;
             font-size: 1.3rem;
             flex-shrink: 0;
-            text-shadow: 0px 0px 6px var(--text-color-boxshadow1);
+            text-shadow: 0px 0px 6px var(--text-boxshadow1);
             cursor: pointer;
         }
     }
@@ -767,7 +873,7 @@ header {
             cursor: pointer;
 
             &:hover {
-                background-color: var(--background-color-hover1);
+                background-color: var(--modal-item-hover);
             }
         }
     }
@@ -787,8 +893,8 @@ header {
     border-radius: 20px;
     overflow: hidden;
     z-index: 508;
-    background-color: var(--background-color2);
-    box-shadow: 0px 0px 6px 0px var(--background-color-boxshadow1);
+    background-color: var(--modal-background);
+    box-shadow: 0px 0px 6px 0px var(--div-boxshadow1);
     padding-bottom: 10px;
     user-select: none;
 
@@ -814,7 +920,7 @@ header {
             margin-right: 4px;
             font-size: 1.3rem;
             flex-shrink: 0;
-            text-shadow: 0px 0px 6px var(--text-color-boxshadow1);
+            text-shadow: 0px 0px 6px var(--text-boxshadow1);
             cursor: pointer;
         }
     }
@@ -850,7 +956,7 @@ header {
             cursor: pointer;
 
             &:hover {
-                background-color: var(--background-color-hover1);
+                background-color: var(--modal-item-hover);
             }
         }
     }
@@ -1049,7 +1155,11 @@ header {
     }
 
     .account-dropdown {
-        font-size: 1.6rem !important;
+
+        .ad-linklist>li>a,
+        .acc_dd_redbutton {
+            font-size: 1.6rem !important;
+        }
     }
 }
 
@@ -1086,7 +1196,8 @@ header {
     .filter-addseries,
     .login-modal,
     .orderby-cont,
-    .filter-cont {
+    .filter-cont,
+    .theme-switcher {
         width: 100% !important;
     }
 }
