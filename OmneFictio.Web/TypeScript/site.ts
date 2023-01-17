@@ -759,7 +759,7 @@ function createSkeletons(page: string) {
     }
 }
 
-function fillPostTemplate(post: ofPost_1) {
+function fillPostTemplate(post: ofPost_1, defaultCoverVisibility: boolean = true) {
     const instance = document.getElementById('postList-post') as HTMLTemplateElement;
     const clone = window.cloneFromTemplate(instance);
 
@@ -770,6 +770,7 @@ function fillPostTemplate(post: ofPost_1) {
     const title = clone.querySelector('.p-title > a') as HTMLAnchorElement;
     const publishDate = clone.querySelector('.p-date') as HTMLSpanElement;
     const coverImg = clone.querySelector('.p-cover > img') as HTMLImageElement;
+    const showCoverBtn = clone.querySelector('.p-cover > span') as HTMLSpanElement;
     const body = clone.querySelector('.p-body > span') as HTMLSpanElement;
     const voteCount = clone.querySelector('.vote_count') as HTMLSpanElement;
     const rate = clone.querySelector('.p-rate') as HTMLSpanElement;
@@ -798,6 +799,11 @@ function fillPostTemplate(post: ofPost_1) {
     } else {
         coverImg.parentElement!.remove();
     }
+    if(defaultCoverVisibility === false){
+        showCoverBtn.classList.add('active');
+        showCoverBtn.addEventListener('click', () => showCoverBtn.classList.remove('active'));
+    }
+
     if (post.voteResult >= 0) {
         voteCount.textContent = post.voteResult.toString();
     }

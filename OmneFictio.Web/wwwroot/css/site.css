@@ -10,6 +10,8 @@ body {
   padding: 0;
   margin: 0;
   height: 100%;
+  background-color: var(--background-color1);
+  color: var(--text-color1);
 }
 
 ul,
@@ -117,11 +119,6 @@ select {
 }
 
 /*-----------DESIGN-------------*/
-body {
-  background-color: var(--background-color1);
-  color: var(--text-color1);
-}
-
 .main-cont {
   min-height: 100%;
   padding-bottom: 30px;

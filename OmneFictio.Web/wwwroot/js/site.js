@@ -653,7 +653,7 @@ function createSkeletons(page) {
             break;
     }
 }
-function fillPostTemplate(post) {
+function fillPostTemplate(post, defaultCoverVisibility = true) {
     const instance = document.getElementById('postList-post');
     const clone = window.cloneFromTemplate(instance);
     window.checkVoted_icons(clone, post.votedByUser);
@@ -661,6 +661,7 @@ function fillPostTemplate(post) {
     const title = clone.querySelector('.p-title > a');
     const publishDate = clone.querySelector('.p-date');
     const coverImg = clone.querySelector('.p-cover > img');
+    const showCoverBtn = clone.querySelector('.p-cover > span');
     const body = clone.querySelector('.p-body > span');
     const voteCount = clone.querySelector('.vote_count');
     const rate = clone.querySelector('.p-rate');
@@ -687,6 +688,10 @@ function fillPostTemplate(post) {
     }
     else {
         coverImg.parentElement.remove();
+    }
+    if (defaultCoverVisibility === false) {
+        showCoverBtn.classList.add('active');
+        showCoverBtn.addEventListener('click', () => showCoverBtn.classList.remove('active'));
     }
     if (post.voteResult >= 0) {
         voteCount.textContent = post.voteResult.toString();

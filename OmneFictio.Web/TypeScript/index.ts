@@ -25,12 +25,11 @@ document.addEventListener("DOMContentLoaded", function () {
                     const response = JSON.parse(data.value) as ofIndex_GetTopPosts;
                     todaytopBody.innerHTML = "";
                     monthtopBody.innerHTML = "";
-                    console.log(response);
                     for (const post of response.todaysTopPosts) {
-                        todaytopBody.appendChild(window.fillPostTemplate(post));
+                        todaytopBody.appendChild(window.fillPostTemplate(post, false));
                     }
                     for (const post of response.monthsTopPosts) {
-                        monthtopBody.appendChild(window.fillPostTemplate(post));
+                        monthtopBody.appendChild(window.fillPostTemplate(post, false));
                     }
                     if(response.todaysTopPosts.length < 1){
                         //Letting the user know there was no posts
@@ -44,6 +43,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     monthtopBody.remove();
                 }
             })
-            //.catch(error => { console.log("Fetch failed -> " + error) });
+            .catch(error => { console.log("Fetch failed -> " + error) });
     }
 });
