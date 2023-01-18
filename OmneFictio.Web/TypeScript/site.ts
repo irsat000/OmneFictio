@@ -1,4 +1,4 @@
-﻿// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+// Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 // for details on configuring this project to bundle and minify static web assets.
 
 // Write your JavaScript code.
@@ -436,32 +436,6 @@ function AddComment(payload: string, commentSection: HTMLDivElement) {
         .catch(error => { console.log('Fetch failed -> ' + error); });
 }
 
-function openRepliesModal(commentId: string) {
-    const modalbg1 = document.querySelector('.modalbg1') as HTMLDivElement;
-    const repliesModal = document.getElementById('modal-replies') as HTMLDivElement;
-    if (document.getElementById('comment_instance') == null) {
-        return;
-    }
-    if (!repliesModal.classList.contains('dflex')) {
-        repliesModal.classList.add('dflex');
-        modalbg1.classList.add('dblock');
-        const replySection = repliesModal.querySelector('.mr-body') as HTMLElement;
-        fetchReplies(commentId, replySection);
-    }
-}
-function closeRepliesModal() {
-    const modalbg1 = document.querySelector('.modalbg1') as HTMLDivElement;
-    const repliesModal = document.getElementById('modal-replies') as HTMLDivElement;
-    if (repliesModal.classList.contains('dflex')) {
-        repliesModal.classList.remove('dflex');
-        modalbg1.classList.remove('dblock');
-        if (frController) {
-            frController.abort();
-        }
-        repliesModal.querySelector('.mr-body')!.innerHTML = "";
-    }
-}
-
 function fetchComments(type: string, parentid: string, section: HTMLElement) {
     fetch("/g/GetComments/" + type + "/" + parentid, {
         method: 'GET',
@@ -485,8 +459,36 @@ function fetchComments(type: string, parentid: string, section: HTMLElement) {
         });
 }
 
+//---reply modal----
+function closeRepliesModal() {
+    const modalbg1 = document.querySelector('.modalbg1') as HTMLDivElement;
+    const repliesModal = document.getElementById('modal-replies') as HTMLDivElement;
+    if (repliesModal.classList.contains('dflex')) {
+        repliesModal.classList.remove('dflex');
+        modalbg1.classList.remove('dblock');
+        if (frController) {
+            frController.abort();
+        }
+        repliesModal.querySelector('.mr-body .mr-comment-cont')!.innerHTML = "";
+        repliesModal.querySelector('.mr-body .mr-replies-cont')!.innerHTML = "";
+    }
+}
+function openRepliesModal(commentId: string, { gotoReplyId, replyToComment }: any = {}) {
+    const modalbg1 = document.querySelector('.modalbg1') as HTMLDivElement;
+    const repliesModal = document.getElementById('modal-replies') as HTMLDivElement;
+    if (document.getElementById('comment_instance') == null) {
+        return;
+    }
+    if (!repliesModal.classList.contains('dflex')) {
+        repliesModal.classList.add('dflex');
+        modalbg1.classList.add('dblock');
+        const replySection = repliesModal.querySelector('.mr-body') as HTMLElement;
+        fetchReplies(commentId, replySection, { gotoReplyId: gotoReplyId, replyToComment: replyToComment });
+    }
+}
 let frController: AbortController | null;
-function fetchReplies(commentId: string, section: HTMLElement) {
+function fetchReplies(commentId: string, section: HTMLElement, { gotoReplyId, replyToComment }: any = {}) {
+    const repliesModal = document.getElementById('modal-replies') as HTMLDivElement;
     const commentCont = section.querySelector('.mr-comment-cont') as HTMLDivElement;
     const repliesCont = section.querySelector('.mr-replies-cont') as HTMLDivElement;
     commentCont.innerHTML = "";
@@ -556,41 +558,49 @@ function fetchReplies(commentId: string, section: HTMLElement) {
                     }
                 }
 
-
-                //Maybe I decide to get loggen in from the back end with the fetch up there but doesn't seem strictly necessary right now
-                const pseudo_loggedUname = document.getElementById('loggedin-username')?.textContent; //pseudo
-                const pseudo_loggedUId = document.getElementById('loggedin-username')?.textContent; //pseudo
-                if (pseudo_loggedUname && pseudo_loggedUId) {
-                    commentCont.querySelector('.mrc-replybtn')!.addEventListener('click', () => {
-                        const targets = [] as string[];
-                        createAddReplyField(commentCont, pseudo_loggedUname, pseudo_loggedUId, targets);
+                commentCont.querySelector('.mrc-replybtn')!.addEventListener('click', () => {
+                    createAddReplyField(commentCont);
+                });
+                repliesCont.querySelectorAll('.mrr-replybtn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        const target = "haha";
+                        createAddReplyField(repliesCont, target);
                     });
-                    repliesCont.querySelectorAll('.mrr-replybtn').forEach(btn => {
-                        btn.addEventListener('click', () => {
-                            let targets = [] as string[];
-                            targets.push('haha');
-                            createAddReplyField(repliesCont, pseudo_loggedUname, pseudo_loggedUId, targets);
-                        });
-                    });
-                }
+                });
+            }
+        })
+        .then(() => {
+            if (!isNaN(gotoReplyId)) {
+                repliesModal.querySelector('.mr-reply[data-replyid="' + gotoReplyId + '"]')?.scrollIntoView();
+            }
+            else if (replyToComment === true) {
+                createAddReplyField(commentCont);
             }
         })
         .catch(error => {
             console.log('Fetching reply method is at fault', error)
         });
 }
-function createAddReplyField(section: HTMLDivElement, loggedUname: string, loggedUId: string, targets: string[]) {
+function createAddReplyField(section: HTMLDivElement, target: string | null = null) {
+    //Maybe I decide to get loggen in from the back end with the fetch up there but doesn't seem strictly necessary right now
+    const pseudo_loggedUname = document.getElementById('loggedin-username')?.textContent; //pseudo
+    const pseudo_loggedUId = document.getElementById('loggedin-username')?.textContent; //pseudo
+    if (!pseudo_loggedUname || !pseudo_loggedUId) {
+        //Not logged in, maybe tell the user to login first
+        return;
+    }
+
     section.querySelectorAll('.add_reply-cont').forEach(btn => btn.remove()); //remove add reply fields to make way for new one
     const addReplyInstance = document.getElementById('addReplyTemplate') as HTMLTemplateElement;
     const addReplyClone = window.cloneFromTemplate(addReplyInstance);
-    addReplyClone.querySelector('.ar-user > img')!.setAttribute('src', '/images/users/user' + loggedUId + '.png')
-    addReplyClone.querySelector('.ar-username')!.textContent = loggedUname;
+    addReplyClone.querySelector('.ar-user > img')!.setAttribute('src', '/images/users/user' + pseudo_loggedUId + '.png')
+    addReplyClone.querySelector('.ar-username')!.textContent = pseudo_loggedUname;
     addReplyClone.querySelector('.cancel_addreply-btn')!.addEventListener('click', e => {
         (<HTMLElement>(e.currentTarget)).closest('.add_reply-cont')!.remove();
     });
 
     section.appendChild(addReplyClone);
-    if (targets.length < 1) {
+    if (target === null) {
         
     }
     else {
@@ -915,6 +925,7 @@ function fillCommentTemplate(comment: ofComment_1, page: string | null) {
     const cReplyBtn = clone.querySelector('.c-replybtn') as HTMLAnchorElement;
     //Highlighted reply elements
     const rContainer = clone.querySelector('.reply') as HTMLDivElement;
+    const rGotoReply = clone.querySelector('.r-gotoreply') as HTMLSpanElement;
     const rBody = clone.querySelector('.r-text > span') as HTMLSpanElement;
     const rVoteCount = clone.querySelector('.r-likes') as HTMLSpanElement;
     const rUserImg = clone.querySelector('.r-user > img') as HTMLImageElement;
@@ -933,6 +944,8 @@ function fillCommentTemplate(comment: ofComment_1, page: string | null) {
     if (comment.voteResult >= 0) {
         cVoteCount.textContent = comment.voteResult.toString();
     }
+
+    //Replies
     if (comment.repliesLength === 0) {
         cGetRepliesBtn.remove();
     }
@@ -960,6 +973,9 @@ function fillCommentTemplate(comment: ofComment_1, page: string | null) {
         rUsername.textContent = hreply.account!.displayName != null
             ? hreply.account!.displayName
             : hreply.account!.username;
+
+        rGotoReply.addEventListener('click', () =>
+            window.openRepliesModal(comment.id.toString(), { gotoReplyId: hreply.id.toString() }));
     }
     else {
         clone.querySelector('.reply')!.remove();
@@ -971,6 +987,10 @@ function fillCommentTemplate(comment: ofComment_1, page: string | null) {
         linkToPost.href = "/p/" + comment.targetPostId + "?cid=" + comment.id; //targetPostId can be empty normally but reviews are only post comments so there is no chance of fail
         linkToPost.textContent = "Post";
         cEvaluation.appendChild(linkToPost);
+    }
+    else {
+        cReplyBtn.addEventListener('click', () =>
+            window.openRepliesModal(comment.id.toString(), { replyToComment: true }));
     }
 
     return clone;

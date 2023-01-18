@@ -361,31 +361,6 @@ function AddComment(payload, commentSection) {
     })
         .catch(error => { console.log('Fetch failed -> ' + error); });
 }
-function openRepliesModal(commentId) {
-    const modalbg1 = document.querySelector('.modalbg1');
-    const repliesModal = document.getElementById('modal-replies');
-    if (document.getElementById('comment_instance') == null) {
-        return;
-    }
-    if (!repliesModal.classList.contains('dflex')) {
-        repliesModal.classList.add('dflex');
-        modalbg1.classList.add('dblock');
-        const replySection = repliesModal.querySelector('.mr-body');
-        fetchReplies(commentId, replySection);
-    }
-}
-function closeRepliesModal() {
-    const modalbg1 = document.querySelector('.modalbg1');
-    const repliesModal = document.getElementById('modal-replies');
-    if (repliesModal.classList.contains('dflex')) {
-        repliesModal.classList.remove('dflex');
-        modalbg1.classList.remove('dblock');
-        if (frController) {
-            frController.abort();
-        }
-        repliesModal.querySelector('.mr-body').innerHTML = "";
-    }
-}
 function fetchComments(type, parentid, section) {
     fetch("/g/GetComments/" + type + "/" + parentid, {
         method: 'GET',
@@ -409,8 +384,35 @@ function fetchComments(type, parentid, section) {
         console.log('Fetch failed -> ' + error);
     });
 }
+function closeRepliesModal() {
+    const modalbg1 = document.querySelector('.modalbg1');
+    const repliesModal = document.getElementById('modal-replies');
+    if (repliesModal.classList.contains('dflex')) {
+        repliesModal.classList.remove('dflex');
+        modalbg1.classList.remove('dblock');
+        if (frController) {
+            frController.abort();
+        }
+        repliesModal.querySelector('.mr-body .mr-comment-cont').innerHTML = "";
+        repliesModal.querySelector('.mr-body .mr-replies-cont').innerHTML = "";
+    }
+}
+function openRepliesModal(commentId, { gotoReplyId, replyToComment } = {}) {
+    const modalbg1 = document.querySelector('.modalbg1');
+    const repliesModal = document.getElementById('modal-replies');
+    if (document.getElementById('comment_instance') == null) {
+        return;
+    }
+    if (!repliesModal.classList.contains('dflex')) {
+        repliesModal.classList.add('dflex');
+        modalbg1.classList.add('dblock');
+        const replySection = repliesModal.querySelector('.mr-body');
+        fetchReplies(commentId, replySection, { gotoReplyId: gotoReplyId, replyToComment: replyToComment });
+    }
+}
 let frController;
-function fetchReplies(commentId, section) {
+function fetchReplies(commentId, section, { gotoReplyId, replyToComment } = {}) {
+    const repliesModal = document.getElementById('modal-replies');
     const commentCont = section.querySelector('.mr-comment-cont');
     const repliesCont = section.querySelector('.mr-replies-cont');
     commentCont.innerHTML = "";
@@ -472,38 +474,45 @@ function fetchReplies(commentId, section) {
                     repliesCont.appendChild(replyClone);
                 }
             }
-            const pseudo_loggedUname = document.getElementById('loggedin-username')?.textContent;
-            const pseudo_loggedUId = document.getElementById('loggedin-username')?.textContent;
-            if (pseudo_loggedUname && pseudo_loggedUId) {
-                commentCont.querySelector('.mrc-replybtn').addEventListener('click', () => {
-                    const targets = [];
-                    createAddReplyField(commentCont, pseudo_loggedUname, pseudo_loggedUId, targets);
+            commentCont.querySelector('.mrc-replybtn').addEventListener('click', () => {
+                createAddReplyField(commentCont);
+            });
+            repliesCont.querySelectorAll('.mrr-replybtn').forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const target = "haha";
+                    createAddReplyField(repliesCont, target);
                 });
-                repliesCont.querySelectorAll('.mrr-replybtn').forEach(btn => {
-                    btn.addEventListener('click', () => {
-                        let targets = [];
-                        targets.push('haha');
-                        createAddReplyField(repliesCont, pseudo_loggedUname, pseudo_loggedUId, targets);
-                    });
-                });
-            }
+            });
+        }
+    })
+        .then(() => {
+        if (!isNaN(gotoReplyId)) {
+            repliesModal.querySelector('.mr-reply[data-replyid="' + gotoReplyId + '"]')?.scrollIntoView();
+        }
+        else if (replyToComment === true) {
+            createAddReplyField(commentCont);
         }
     })
         .catch(error => {
         console.log('Fetching reply method is at fault', error);
     });
 }
-function createAddReplyField(section, loggedUname, loggedUId, targets) {
+function createAddReplyField(section, target = null) {
+    const pseudo_loggedUname = document.getElementById('loggedin-username')?.textContent;
+    const pseudo_loggedUId = document.getElementById('loggedin-username')?.textContent;
+    if (!pseudo_loggedUname || !pseudo_loggedUId) {
+        return;
+    }
     section.querySelectorAll('.add_reply-cont').forEach(btn => btn.remove());
     const addReplyInstance = document.getElementById('addReplyTemplate');
     const addReplyClone = window.cloneFromTemplate(addReplyInstance);
-    addReplyClone.querySelector('.ar-user > img').setAttribute('src', '/images/users/user' + loggedUId + '.png');
-    addReplyClone.querySelector('.ar-username').textContent = loggedUname;
+    addReplyClone.querySelector('.ar-user > img').setAttribute('src', '/images/users/user' + pseudo_loggedUId + '.png');
+    addReplyClone.querySelector('.ar-username').textContent = pseudo_loggedUname;
     addReplyClone.querySelector('.cancel_addreply-btn').addEventListener('click', e => {
         (e.currentTarget).closest('.add_reply-cont').remove();
     });
     section.appendChild(addReplyClone);
-    if (targets.length < 1) {
+    if (target === null) {
     }
     else {
         section.querySelector('.add_reply-cont').scrollIntoView();
@@ -789,6 +798,7 @@ function fillCommentTemplate(comment, page) {
     const cGetRepliesBtn = clone.querySelector('.get_replies');
     const cReplyBtn = clone.querySelector('.c-replybtn');
     const rContainer = clone.querySelector('.reply');
+    const rGotoReply = clone.querySelector('.r-gotoreply');
     const rBody = clone.querySelector('.r-text > span');
     const rVoteCount = clone.querySelector('.r-likes');
     const rUserImg = clone.querySelector('.r-user > img');
@@ -826,6 +836,7 @@ function fillCommentTemplate(comment, page) {
         rUsername.textContent = hreply.account.displayName != null
             ? hreply.account.displayName
             : hreply.account.username;
+        rGotoReply.addEventListener('click', () => window.openRepliesModal(comment.id.toString(), { gotoReplyId: hreply.id.toString() }));
     }
     else {
         clone.querySelector('.reply').remove();
@@ -836,6 +847,9 @@ function fillCommentTemplate(comment, page) {
         linkToPost.href = "/p/" + comment.targetPostId + "?cid=" + comment.id;
         linkToPost.textContent = "Post";
         cEvaluation.appendChild(linkToPost);
+    }
+    else {
+        cReplyBtn.addEventListener('click', () => window.openRepliesModal(comment.id.toString(), { replyToComment: true }));
     }
     return clone;
 }
