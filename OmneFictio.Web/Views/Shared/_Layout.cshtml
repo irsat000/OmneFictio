@@ -322,6 +322,20 @@
             </div>
         </div>
     </template>
+    
+    <template id="addReplyTemplate">
+        <div class="add_reply-cont">
+            <textarea placeholder="This is where we reply." id="replyBody"></textarea>
+            <div class="ar-footer">
+                <div class="ar-user">
+                    <img src="" onerror="this.onerror=null; this.src='/images/onerror/user_no_photo.png'">
+                    <span class="ar-username"></span>
+                </div>
+                <a class="cancel_addreply-btn">Cancel</a>
+                <a class="reply-btn" id="addReplyToComment">Send</a>
+            </div>
+        </div>
+    </template>
 
 
     <div class="modal-replies" id="modal-replies">
@@ -332,7 +346,12 @@
             </div>
         </div>
         <div class="mr-body">
+            <div class="mr-comment-cont">
 
+            </div>
+            <div class="mr-replies-cont">
+
+            </div>
         </div>
     </div>
 
@@ -500,7 +519,7 @@
                         <ul class="ad-linklist">
                             @if (userId != null)
                             {
-                                <li><span class="ad-username">@username</span></li>
+                                <li><span id="loggedin-username" data-userid="@userId">@username</span></li>
                                 <li><a href="/u/@username">Profile</a></li>
                                 <li><a href="/u/@username/saved">Library</a></li>
                                 <li><a href="/u/@username/friends">Friends</a></li>

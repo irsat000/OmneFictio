@@ -411,7 +411,10 @@ function fetchComments(type, parentid, section) {
 }
 let frController;
 function fetchReplies(commentId, section) {
-    section.innerHTML = "";
+    const commentCont = section.querySelector('.mr-comment-cont');
+    const repliesCont = section.querySelector('.mr-replies-cont');
+    commentCont.innerHTML = "";
+    repliesCont.innerHTML = "";
     if (frController) {
         frController.abort();
         frController = null;
@@ -448,7 +451,7 @@ function fetchReplies(commentId, section) {
             if (comm.voteResult >= 0) {
                 commentClone.querySelector('.mrc-likes').textContent = comm.voteResult;
             }
-            section.appendChild(commentClone);
+            commentCont.appendChild(commentClone);
             if (replies.length > 0) {
                 for (const reply of replies) {
                     const replyClone = window.cloneFromTemplate(replyInstance);
@@ -466,14 +469,45 @@ function fetchReplies(commentId, section) {
                     if (reply.voteResult >= 0) {
                         replyClone.querySelector('.mrr-likes').textContent = reply.voteResult;
                     }
-                    section.appendChild(replyClone);
+                    repliesCont.appendChild(replyClone);
                 }
+            }
+            const pseudo_loggedUname = document.getElementById('loggedin-username')?.textContent;
+            const pseudo_loggedUId = document.getElementById('loggedin-username')?.textContent;
+            if (pseudo_loggedUname && pseudo_loggedUId) {
+                commentCont.querySelector('.mrc-replybtn').addEventListener('click', () => {
+                    const targets = [];
+                    createAddReplyField(commentCont, pseudo_loggedUname, pseudo_loggedUId, targets);
+                });
+                repliesCont.querySelectorAll('.mrr-replybtn').forEach(btn => {
+                    btn.addEventListener('click', () => {
+                        let targets = [];
+                        targets.push('haha');
+                        createAddReplyField(repliesCont, pseudo_loggedUname, pseudo_loggedUId, targets);
+                    });
+                });
             }
         }
     })
         .catch(error => {
         console.log('Fetching reply method is at fault', error);
     });
+}
+function createAddReplyField(section, loggedUname, loggedUId, targets) {
+    section.querySelectorAll('.add_reply-cont').forEach(btn => btn.remove());
+    const addReplyInstance = document.getElementById('addReplyTemplate');
+    const addReplyClone = window.cloneFromTemplate(addReplyInstance);
+    addReplyClone.querySelector('.ar-user > img').setAttribute('src', '/images/users/user' + loggedUId + '.png');
+    addReplyClone.querySelector('.ar-username').textContent = loggedUname;
+    addReplyClone.querySelector('.cancel_addreply-btn').addEventListener('click', e => {
+        (e.currentTarget).closest('.add_reply-cont').remove();
+    });
+    section.appendChild(addReplyClone);
+    if (targets.length < 1) {
+    }
+    else {
+        section.querySelector('.add_reply-cont').scrollIntoView();
+    }
 }
 function VoteRequest(btn, data) {
     var action = data.body ? "like" : "dislike";

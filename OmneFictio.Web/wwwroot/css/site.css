@@ -711,7 +711,7 @@ header .header-wrap {
 .account-cont .account-dropdown .ad-linklist > li > a:hover {
   background-color: var(--modal-item-hover);
 }
-.account-cont .account-dropdown .ad-linklist > li .ad-username {
+.account-cont .account-dropdown .ad-linklist > li #loggedin-username {
   display: block;
   width: 100%;
   text-align: center;
@@ -719,7 +719,7 @@ header .header-wrap {
   font-size: 1rem;
   cursor: text;
 }
-.account-cont .account-dropdown .ad-linklist > li .ad-username:hover {
+.account-cont .account-dropdown .ad-linklist > li #loggedin-username:hover {
   background-color: unset !important;
 }
 .account-cont .account-dropdown .acc_dd_redbutton {

@@ -294,7 +294,8 @@
                     padding: 0 8px;
                 }
 
-                a {
+                .c-replybtn {
+                    cursor: pointer;
                     margin-left: 14px;
                     font-family: 'Josefin Sans', sans-serif;
                     color: var(--text-color1);
@@ -390,6 +391,7 @@
     }
 }
 
+
 .modal-replies {
     display: none;
     //display: flex;
@@ -398,7 +400,7 @@
     left: 50%;
     top: 40%;
     transform: translate(-50%, -40%);
-    width: 92%;
+    width: 98%;
     max-width: 500px;
     max-height: 90%;
     background-color: var(--background-color2);
@@ -434,12 +436,24 @@
         flex-direction: column;
         overflow-y: auto;
         min-height: 200px;
+        gap: 15px;
+        padding-bottom: 10px;
+
+        .mr-comment-cont{
+            display: flex;
+            flex-direction: column;
+        }
+        .mr-replies-cont{
+            display: flex;
+            flex-direction: column;
+            gap: 7px;
+        }
 
         .mr-comment {
             display: flex;
             flex-direction: column;
             width: 100%;
-            padding: 10px 6px 15px;
+            padding: 10px 6px 5px;
 
             .mrc-header {
                 display: flex;
@@ -517,6 +531,7 @@
                     }
 
                     .mrc-replybtn {
+                        cursor: pointer;
                         margin-left: 10px;
                         font-family: "Josefin Sans", sans-serif;
                         color: var(--text-color1);
@@ -534,7 +549,6 @@
             display: flex;
             flex-direction: column;
             width: 100%;
-            margin-bottom: 7px;
             background-color: var(--replies-bgcolor);
             padding: 6px 4px 3px;
 
@@ -620,6 +634,7 @@
                     }
 
                     .mrr-replybtn {
+                        cursor: pointer;
                         margin-left: 8px;
                         font-family: "Josefin Sans", sans-serif;
                         color: var(--text-color1);
@@ -628,6 +643,87 @@
                         &:hover{
                             text-decoration: underline;
                         }
+                    }
+                }
+            }
+        }
+
+        .add_reply-cont {
+            display: flex;
+            flex-direction: column;
+            width: 100%;
+            padding: 5px 6px 0;
+            align-self: center;
+        
+            textarea {
+                background-color: var(--background-color1);
+                color: var(--text-color1);
+                width: 100%;
+                border: none;
+                outline: none;
+                padding: 6px 8px;
+                min-height: 60px;
+                margin-bottom: 6px;
+                font-family: 'Gudea', sans-serif;
+                font-size: 0.8rem;
+                border-radius: 4px;
+            }
+        
+            .ar-footer {
+                display: flex;
+                flex-wrap: wrap;
+                align-items: center;
+                width: 100%;
+                padding: 0 6px;
+                font-family: 'Itim', cursive;
+        
+                .ar-user {
+                    display: flex;
+                    align-items: center;
+                    flex-shrink: 0;
+        
+                    .ar-username {
+                        font-size: 0.8rem;
+                        cursor: pointer;
+                        padding: 0 8px;
+                        text-overflow: ellipsis;
+                        white-space: nowrap;
+                        overflow: hidden;
+                        max-width: 180px;
+        
+                        &:hover {
+                            text-decoration: underline;
+                        }
+                    }
+        
+                    img {
+                        height: 1.4rem;
+                        width: 1.4rem;
+                        border-radius: 50%;
+                        cursor: pointer;
+                    }
+                }
+        
+                .cancel_addreply-btn{
+                    font-size: 1.1rem;
+                    transition: font-size 0.1s ease;
+                    color: var(--text-color2);
+                    margin-left: auto;
+                    margin-right: 20px;
+                    cursor: pointer;
+        
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+                .reply-btn {
+                    font-size: 1.1rem;
+                    transition: font-size 0.1s ease;
+                    color: var(--text-color1);
+                    cursor: pointer;
+        
+                    &:hover {
+                        text-decoration: underline;
                     }
                 }
             }

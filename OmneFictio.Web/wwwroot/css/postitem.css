@@ -108,12 +108,10 @@
 .post-body .p-header {
   display: flex;
   flex-direction: row;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
   padding: 10px 0;
 }
 .post-body .p-header .p-title {
+  display: inline;
   padding: 0 10px;
   font-family: "Josefin Sans", sans-serif;
   font-weight: 600;
@@ -140,7 +138,6 @@
   padding: 0 10px;
   font-size: 1.7rem;
   gap: 20px;
-  margin-left: auto;
 }
 .post-body .p-header .p-menu i {
   cursor: pointer;

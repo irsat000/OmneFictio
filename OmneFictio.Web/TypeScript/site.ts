@@ -297,7 +297,7 @@ document.addEventListener("DOMContentLoaded", function () {
         //show active theme
         switchThemeModal.querySelector('ul > li[data-themeval="' + selectedTheme + '"] > i')?.classList.add('active');
         const themeDisplayName = themeNameMap.get(selectedTheme);
-        if(themeDisplayName !== undefined){
+        if (themeDisplayName !== undefined) {
             document.querySelector('.ad-theme-cont span')!.textContent = themeNameMap.get(selectedTheme)!;
         }
     }
@@ -487,7 +487,10 @@ function fetchComments(type: string, parentid: string, section: HTMLElement) {
 
 let frController: AbortController | null;
 function fetchReplies(commentId: string, section: HTMLElement) {
-    section.innerHTML = "";
+    const commentCont = section.querySelector('.mr-comment-cont') as HTMLDivElement;
+    const repliesCont = section.querySelector('.mr-replies-cont') as HTMLDivElement;
+    commentCont.innerHTML = "";
+    repliesCont.innerHTML = "";
     //cancel pending request if there is one
     if (frController) {
         frController.abort();
@@ -528,7 +531,7 @@ function fetchReplies(commentId: string, section: HTMLElement) {
                 if (comm.voteResult >= 0) {
                     commentClone.querySelector('.mrc-likes')!.textContent = comm.voteResult;
                 }
-                section.appendChild(commentClone);
+                commentCont.appendChild(commentClone);
 
                 //if it has replies
                 if (replies.length > 0) {
@@ -549,14 +552,50 @@ function fetchReplies(commentId: string, section: HTMLElement) {
                         if (reply.voteResult >= 0) {
                             replyClone.querySelector('.mrr-likes')!.textContent = reply.voteResult;
                         }
-                        section.appendChild(replyClone);
+                        repliesCont.appendChild(replyClone);
                     }
+                }
+
+
+                //Maybe I decide to get loggen in from the back end with the fetch up there but doesn't seem strictly necessary right now
+                const pseudo_loggedUname = document.getElementById('loggedin-username')?.textContent; //pseudo
+                const pseudo_loggedUId = document.getElementById('loggedin-username')?.textContent; //pseudo
+                if (pseudo_loggedUname && pseudo_loggedUId) {
+                    commentCont.querySelector('.mrc-replybtn')!.addEventListener('click', () => {
+                        const targets = [] as string[];
+                        createAddReplyField(commentCont, pseudo_loggedUname, pseudo_loggedUId, targets);
+                    });
+                    repliesCont.querySelectorAll('.mrr-replybtn').forEach(btn => {
+                        btn.addEventListener('click', () => {
+                            let targets = [] as string[];
+                            targets.push('haha');
+                            createAddReplyField(repliesCont, pseudo_loggedUname, pseudo_loggedUId, targets);
+                        });
+                    });
                 }
             }
         })
         .catch(error => {
             console.log('Fetching reply method is at fault', error)
         });
+}
+function createAddReplyField(section: HTMLDivElement, loggedUname: string, loggedUId: string, targets: string[]) {
+    section.querySelectorAll('.add_reply-cont').forEach(btn => btn.remove()); //remove add reply fields to make way for new one
+    const addReplyInstance = document.getElementById('addReplyTemplate') as HTMLTemplateElement;
+    const addReplyClone = window.cloneFromTemplate(addReplyInstance);
+    addReplyClone.querySelector('.ar-user > img')!.setAttribute('src', '/images/users/user' + loggedUId + '.png')
+    addReplyClone.querySelector('.ar-username')!.textContent = loggedUname;
+    addReplyClone.querySelector('.cancel_addreply-btn')!.addEventListener('click', e => {
+        (<HTMLElement>(e.currentTarget)).closest('.add_reply-cont')!.remove();
+    });
+
+    section.appendChild(addReplyClone);
+    if (targets.length < 1) {
+        
+    }
+    else {
+        section.querySelector('.add_reply-cont')!.scrollIntoView();
+    }
 }
 //--------COMMENT SECTION ENDS-------
 
@@ -799,7 +838,7 @@ function fillPostTemplate(post: ofPost_1, defaultCoverVisibility: boolean = true
     } else {
         coverImg.parentElement!.remove();
     }
-    if(defaultCoverVisibility === false){
+    if (defaultCoverVisibility === false) {
         showCoverBtn.classList.add('active');
         showCoverBtn.addEventListener('click', () => showCoverBtn.classList.remove('active'));
     }

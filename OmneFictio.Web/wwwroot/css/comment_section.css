@@ -275,14 +275,15 @@
 .comment-cont .comment .c-footer .c-evaluation .c-likes {
   padding: 0 8px;
 }
-.comment-cont .comment .c-footer .c-evaluation a {
+.comment-cont .comment .c-footer .c-evaluation .c-replybtn {
+  cursor: pointer;
   margin-left: 14px;
   font-family: "Josefin Sans", sans-serif;
   color: var(--text-color1);
   padding: 2px 0 0;
   margin-bottom: -1px;
 }
-.comment-cont .comment .c-footer .c-evaluation a:hover {
+.comment-cont .comment .c-footer .c-evaluation .c-replybtn:hover {
   text-decoration: underline;
 }
 .comment-cont .comment .c-footer .get_replies {
@@ -363,7 +364,7 @@
   left: 50%;
   top: 40%;
   transform: translate(-50%, -40%);
-  width: 92%;
+  width: 98%;
   max-width: 500px;
   max-height: 90%;
   background-color: var(--background-color2);
@@ -396,12 +397,23 @@
   flex-direction: column;
   overflow-y: auto;
   min-height: 200px;
+  gap: 15px;
+  padding-bottom: 10px;
+}
+.modal-replies .mr-body .mr-comment-cont {
+  display: flex;
+  flex-direction: column;
+}
+.modal-replies .mr-body .mr-replies-cont {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
 }
 .modal-replies .mr-body .mr-comment {
   display: flex;
   flex-direction: column;
   width: 100%;
-  padding: 10px 6px 15px;
+  padding: 10px 6px 5px;
 }
 .modal-replies .mr-body .mr-comment .mrc-header {
   display: flex;
@@ -468,6 +480,7 @@
   padding: 0 8px;
 }
 .modal-replies .mr-body .mr-comment .mrc-footer .mrc-evaluation .mrc-replybtn {
+  cursor: pointer;
   margin-left: 10px;
   font-family: "Josefin Sans", sans-serif;
   color: var(--text-color1);
@@ -481,7 +494,6 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-bottom: 7px;
   background-color: var(--replies-bgcolor);
   padding: 6px 4px 3px;
 }
@@ -557,6 +569,7 @@
   padding: 0 4px;
 }
 .modal-replies .mr-body .mr-reply .mrr-footer .mrr-evaluation .mrr-replybtn {
+  cursor: pointer;
   margin-left: 8px;
   font-family: "Josefin Sans", sans-serif;
   color: var(--text-color1);
@@ -564,6 +577,77 @@
   font-size: 0.9rem;
 }
 .modal-replies .mr-body .mr-reply .mrr-footer .mrr-evaluation .mrr-replybtn:hover {
+  text-decoration: underline;
+}
+.modal-replies .mr-body .add_reply-cont {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 5px 6px 0;
+  align-self: center;
+}
+.modal-replies .mr-body .add_reply-cont textarea {
+  background-color: var(--background-color1);
+  color: var(--text-color1);
+  width: 100%;
+  border: none;
+  outline: none;
+  padding: 6px 8px;
+  min-height: 60px;
+  margin-bottom: 6px;
+  font-family: "Gudea", sans-serif;
+  font-size: 0.8rem;
+  border-radius: 4px;
+}
+.modal-replies .mr-body .add_reply-cont .ar-footer {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  width: 100%;
+  padding: 0 6px;
+  font-family: "Itim", cursive;
+}
+.modal-replies .mr-body .add_reply-cont .ar-footer .ar-user {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+}
+.modal-replies .mr-body .add_reply-cont .ar-footer .ar-user .ar-username {
+  font-size: 0.8rem;
+  cursor: pointer;
+  padding: 0 8px;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  overflow: hidden;
+  max-width: 180px;
+}
+.modal-replies .mr-body .add_reply-cont .ar-footer .ar-user .ar-username:hover {
+  text-decoration: underline;
+}
+.modal-replies .mr-body .add_reply-cont .ar-footer .ar-user img {
+  height: 1.4rem;
+  width: 1.4rem;
+  border-radius: 50%;
+  cursor: pointer;
+}
+.modal-replies .mr-body .add_reply-cont .ar-footer .cancel_addreply-btn {
+  font-size: 1.1rem;
+  transition: font-size 0.1s ease;
+  color: var(--text-color2);
+  margin-left: auto;
+  margin-right: 20px;
+  cursor: pointer;
+}
+.modal-replies .mr-body .add_reply-cont .ar-footer .cancel_addreply-btn:hover {
+  text-decoration: underline;
+}
+.modal-replies .mr-body .add_reply-cont .ar-footer .reply-btn {
+  font-size: 1.1rem;
+  transition: font-size 0.1s ease;
+  color: var(--text-color1);
+  cursor: pointer;
+}
+.modal-replies .mr-body .add_reply-cont .ar-footer .reply-btn:hover {
   text-decoration: underline;
 }
 
