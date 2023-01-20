@@ -543,6 +543,7 @@ function fetchReplies(commentId: string, section: HTMLElement, { gotoReplyId, re
                         window.checkVoted_icons(replyClone, reply.votedByUser);
 
                         replyClone.querySelector('.mr-reply')!.setAttribute('data-replyid', reply.id);
+                        replyClone.querySelector('.mr-reply')!.setAttribute('data-username', reply.account.username);
                         replyClone.querySelector('.mrr-header > img')!.setAttribute('src', '/images/users/' + reply.account.profilePic);
                         if (reply.account.displayName != null) {
                             replyClone.querySelector('.mrr-username')!.textContent = reply.account.displayName;
@@ -563,7 +564,7 @@ function fetchReplies(commentId: string, section: HTMLElement, { gotoReplyId, re
                 });
                 repliesCont.querySelectorAll('.mrr-replybtn').forEach(btn => {
                     btn.addEventListener('click', () => {
-                        const target = "haha";
+                        const target = btn.closest('.mr-reply')!.getAttribute('data-username');
                         createAddReplyField(repliesCont, target);
                     });
                 });
@@ -598,14 +599,36 @@ function createAddReplyField(section: HTMLDivElement, target: string | null = nu
     addReplyClone.querySelector('.cancel_addreply-btn')!.addEventListener('click', e => {
         (<HTMLElement>(e.currentTarget)).closest('.add_reply-cont')!.remove();
     });
+    addReplyClone.querySelector('.send_reply-btn')!.addEventListener('click', e => {
+        const btn = e.currentTarget as HTMLAnchorElement;
+        const content = btn.closest('.add_reply-cont')!.querySelector('.replyfieldBody')!.innerHTML;
+        console.log(content);
+    });
 
     section.appendChild(addReplyClone);
+    const replyCont = section.querySelector('.add_reply-cont') as HTMLDivElement;
+    const replyField = section.querySelector('.add_reply-cont .replyfieldBody') as HTMLInputElement;
     if (target === null) {
         
     }
     else {
-        section.querySelector('.add_reply-cont')!.scrollIntoView();
+        replyCont.scrollIntoView();
+        const targetLink = document.createElement('a');
+        targetLink.href = "/u/" + target;
+        targetLink.setAttribute('data-target', target);
+        targetLink.textContent = "@" + target;
+        replyField.appendChild(targetLink);
+        replyField.innerHTML += '&nbsp;';
     }
+    replyField.contentEditable = 'true';
+    //Focus and put the cursor at the end
+    replyField.focus();
+    const range = document.createRange();
+    range.selectNodeContents(replyField);
+    range.collapse(false);
+    const sel = window.getSelection();
+    sel?.removeAllRanges();
+    sel?.addRange(range);
 }
 //--------COMMENT SECTION ENDS-------
 
@@ -647,6 +670,10 @@ function voting_visual(btn: HTMLElement, action: string) {
         ? parseInt(showVoteCount.textContent!, 10) as number
         : null;
     if (bvInputVal !== null) {
+        const val = action === "like" ? 1 : -1;
+        bvInputVal += btn.classList.contains('active') ? -val : btnSibling.classList.contains('active') ? 2 * val : val;
+        showVoteCount.textContent = bvInputVal.toString();
+        /* Old one (same result but long code)
         if (action === "like") {
             if (btn.classList.contains('active')) {
                 bvInputVal = bvInputVal - 1;
@@ -667,8 +694,7 @@ function voting_visual(btn: HTMLElement, action: string) {
                     bvInputVal = bvInputVal - 1;
                 }
             }
-        }
-        showVoteCount.textContent = bvInputVal.toString();
+        }*/
     }
 
 

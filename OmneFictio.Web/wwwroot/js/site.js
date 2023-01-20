@@ -459,6 +459,7 @@ function fetchReplies(commentId, section, { gotoReplyId, replyToComment } = {}) 
                     const replyClone = window.cloneFromTemplate(replyInstance);
                     window.checkVoted_icons(replyClone, reply.votedByUser);
                     replyClone.querySelector('.mr-reply').setAttribute('data-replyid', reply.id);
+                    replyClone.querySelector('.mr-reply').setAttribute('data-username', reply.account.username);
                     replyClone.querySelector('.mrr-header > img').setAttribute('src', '/images/users/' + reply.account.profilePic);
                     if (reply.account.displayName != null) {
                         replyClone.querySelector('.mrr-username').textContent = reply.account.displayName;
@@ -479,7 +480,7 @@ function fetchReplies(commentId, section, { gotoReplyId, replyToComment } = {}) 
             });
             repliesCont.querySelectorAll('.mrr-replybtn').forEach(btn => {
                 btn.addEventListener('click', () => {
-                    const target = "haha";
+                    const target = btn.closest('.mr-reply').getAttribute('data-username');
                     createAddReplyField(repliesCont, target);
                 });
             });
@@ -511,12 +512,33 @@ function createAddReplyField(section, target = null) {
     addReplyClone.querySelector('.cancel_addreply-btn').addEventListener('click', e => {
         (e.currentTarget).closest('.add_reply-cont').remove();
     });
+    addReplyClone.querySelector('.send_reply-btn').addEventListener('click', e => {
+        const btn = e.currentTarget;
+        const content = btn.closest('.add_reply-cont').querySelector('.replyfieldBody').innerHTML;
+        console.log(content);
+    });
     section.appendChild(addReplyClone);
+    const replyCont = section.querySelector('.add_reply-cont');
+    const replyField = section.querySelector('.add_reply-cont .replyfieldBody');
     if (target === null) {
     }
     else {
-        section.querySelector('.add_reply-cont').scrollIntoView();
+        replyCont.scrollIntoView();
+        const targetLink = document.createElement('a');
+        targetLink.href = "/u/" + target;
+        targetLink.setAttribute('data-target', target);
+        targetLink.textContent = "@" + target;
+        replyField.appendChild(targetLink);
+        replyField.innerHTML += '&nbsp;';
     }
+    replyField.contentEditable = 'true';
+    replyField.focus();
+    const range = document.createRange();
+    range.selectNodeContents(replyField);
+    range.collapse(false);
+    const sel = window.getSelection();
+    sel?.removeAllRanges();
+    sel?.addRange(range);
 }
 function VoteRequest(btn, data) {
     var action = data.body ? "like" : "dislike";
@@ -548,32 +570,8 @@ function voting_visual(btn, action) {
         ? parseInt(showVoteCount.textContent, 10)
         : null;
     if (bvInputVal !== null) {
-        if (action === "like") {
-            if (btn.classList.contains('active')) {
-                bvInputVal = bvInputVal - 1;
-            }
-            else {
-                if (btnSibling.classList.contains('active')) {
-                    bvInputVal = bvInputVal + 2;
-                }
-                else {
-                    bvInputVal = bvInputVal + 1;
-                }
-            }
-        }
-        else if (action === "dislike") {
-            if (btn.classList.contains('active')) {
-                bvInputVal = bvInputVal + 1;
-            }
-            else {
-                if (btnSibling.classList.contains('active')) {
-                    bvInputVal = bvInputVal - 2;
-                }
-                else {
-                    bvInputVal = bvInputVal - 1;
-                }
-            }
-        }
+        const val = action === "like" ? 1 : -1;
+        bvInputVal += btn.classList.contains('active') ? -val : btnSibling.classList.contains('active') ? 2 * val : val;
         showVoteCount.textContent = bvInputVal.toString();
     }
     if (btn.classList.contains("active")) {

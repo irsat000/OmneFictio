@@ -656,7 +656,7 @@
             padding: 5px 6px 0;
             align-self: center;
         
-            textarea {
+            .replyfieldBody {
                 background-color: var(--background-color1);
                 color: var(--text-color1);
                 width: 100%;
@@ -668,6 +668,15 @@
                 font-family: 'Gudea', sans-serif;
                 font-size: 0.8rem;
                 border-radius: 4px;
+                overflow: auto;
+                text-align: justify;
+                
+                a{
+                    display: inline;
+                    text-decoration: underline;
+                    font-family: 'Itim';
+                    color: var(--text-color2);
+                }
             }
         
             .ar-footer {
@@ -717,7 +726,7 @@
                         text-decoration: underline;
                     }
                 }
-                .reply-btn {
+                .send_reply-btn {
                     font-size: 1.1rem;
                     transition: font-size 0.1s ease;
                     color: var(--text-color1);

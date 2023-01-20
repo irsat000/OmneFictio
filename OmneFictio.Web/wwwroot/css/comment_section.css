@@ -587,7 +587,7 @@
   padding: 5px 6px 0;
   align-self: center;
 }
-.modal-replies .mr-body .add_reply-cont textarea {
+.modal-replies .mr-body .add_reply-cont .replyfieldBody {
   background-color: var(--background-color1);
   color: var(--text-color1);
   width: 100%;
@@ -599,6 +599,14 @@
   font-family: "Gudea", sans-serif;
   font-size: 0.8rem;
   border-radius: 4px;
+  overflow: auto;
+  text-align: justify;
+}
+.modal-replies .mr-body .add_reply-cont .replyfieldBody a {
+  display: inline;
+  text-decoration: underline;
+  font-family: "Itim";
+  color: var(--text-color2);
 }
 .modal-replies .mr-body .add_reply-cont .ar-footer {
   display: flex;
@@ -642,13 +650,13 @@
 .modal-replies .mr-body .add_reply-cont .ar-footer .cancel_addreply-btn:hover {
   text-decoration: underline;
 }
-.modal-replies .mr-body .add_reply-cont .ar-footer .reply-btn {
+.modal-replies .mr-body .add_reply-cont .ar-footer .send_reply-btn {
   font-size: 1.1rem;
   transition: font-size 0.1s ease;
   color: var(--text-color1);
   cursor: pointer;
 }
-.modal-replies .mr-body .add_reply-cont .ar-footer .reply-btn:hover {
+.modal-replies .mr-body .add_reply-cont .ar-footer .send_reply-btn:hover {
   text-decoration: underline;
 }
 
