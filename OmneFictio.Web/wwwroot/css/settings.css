@@ -69,7 +69,7 @@ nav .settings-link_cont .desktop_nav li a {
   padding: 7px 40px 7px 20px;
   font-size: 1.5rem;
   transition: all 0.1s ease;
-  border-bottom: 1px solid var(--background-color-hover1);
+  border-bottom: 1px solid var(--background-color4);
 }
 nav .settings-link_cont .desktop_nav li a:hover {
   background-color: var(--settings-hovernav);

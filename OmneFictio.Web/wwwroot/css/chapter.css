@@ -42,7 +42,7 @@ main {
   transition: background-color 0.1s;
 }
 .ch-header .ch-navigation select:hover {
-  background-color: var(--background-color-hover2);
+  background-color: var(--background-color5);
 }
 .ch-header .ch-navigation .ch-navigationicons {
   display: flex;
@@ -62,7 +62,7 @@ main {
   display: flex;
 }
 .ch-header .ch-navigation .ch-navigationicons a:hover {
-  background-color: var(--background-color-hover2);
+  background-color: var(--background-color5);
 }
 .ch-header .ch-navigation .ch-navigationicons .ch-prevlink {
   padding-right: 2px;

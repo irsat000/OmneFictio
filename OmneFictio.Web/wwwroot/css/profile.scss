@@ -419,7 +419,7 @@
         gap: 10px;
         align-items: center;
         padding: 14px;
-        border-bottom: 1px solid var(--background-color-hover1);
+        border-bottom: 1px solid var(--background-color4);
 
         .searchF-wrap {
             width: 70%;
@@ -517,7 +517,7 @@
                     margin-right: 6px;
 
                     &:hover {
-                        background-color: var(--background-color-hover1);
+                        background-color: var(--background-color4);
                     }
                 }
             }
@@ -535,7 +535,7 @@
                 transition: 0.1s ease;
 
                 &:hover {
-                    background-color: var(--background-color-hover1);
+                    background-color: var(--background-color4);
                 }
             }
         }

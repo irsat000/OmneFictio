@@ -62,7 +62,7 @@ public class RateInfo
 //rate the post
 
 
-public class CommentWrite1
+public class CommentInput
 {
     public int? accountId { get; set; }
     public string body { get; set; } = null!;
@@ -70,6 +70,13 @@ public class CommentWrite1
     public int? targetChapterId { get; set; }
 }
 //Adding a comment
+public class ReplyInput
+{
+    public int? accountId { get; set; }
+    public string body { get; set; } = null!;
+    public int commentId { get; set; }
+    public string? targetUsername { get; set; }
+}
 
 public class AuthToken
 {

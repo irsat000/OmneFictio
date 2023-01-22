@@ -164,35 +164,69 @@ public class ActionController : ControllerBase
         return Ok();
     }
 
-    [HttpPost("AddComment")]
-    public async Task<IActionResult> AddComment(CommentDtoWrite_1 request)
+    [HttpPost("AddReply")]
+    public async Task<IActionResult> AddReply(ReplyRequest request)
     {
-        Comment? newComment = new Comment
+        Reply newReply = new Reply
+        {
+            accountId = request.accountId,
+            deletedStatusId = 1,
+            publishDate = DateTime.Now,
+            updateDate = DateTime.Now
+        };
+        //Check foreign key
+        if (await _db.Comments.AnyAsync(p => p.id == request.commentId))
+            newReply.commentId = request.commentId;
+        else
+            return BadRequest();
+        //Check body
+        if (request.body != null && request.body.Length > 0 &&
+        String.IsNullOrWhiteSpace(request.body) == false)
+            newReply.body = request.body;
+        else
+            return BadRequest();
+
+        await _db.Replies.AddAsync(newReply);
+        await _db.SaveChangesAsync();
+
+        if(request.targetUsername != null){
+            //We will send the referenced user a notification
+        }
+
+        ReplyDtoRead_2? returnReply = await _mapper.ProjectTo<ReplyDtoRead_2>
+                (_db.Replies.Where(r => r.id == newReply.id))
+            .FirstOrDefaultAsync();
+        return Ok(new { returnReply });
+    }
+
+    [HttpPost("AddComment")]
+    public async Task<IActionResult> AddComment(CommentRequest request)
+    {
+        Comment newComment = new Comment
         {
             accountId = request.accountId,
             deletedStatusId = 1, // "Default"  //Situational -> _db.DeletedStatuses.FirstOrDefault(d => d.body == "Default")?.id,
             publishDate = DateTime.Now,
             updateDate = DateTime.Now
         };
-
-        if (request.targetPostId != null && request.targetPostId != 0)
+        //Check foreign key
+        if (await _db.Posts.AnyAsync(p => p.id == request.targetPostId))
             newComment.targetPostId = request.targetPostId;
-        else if (request.targetChapterId != null && request.targetChapterId != 0)
+        else if (await _db.Chapters.AnyAsync(p => p.id == request.targetChapterId))
             newComment.targetChapterId = request.targetChapterId;
         else
             return BadRequest();
-
-        if (request.body != null &&
-            request.body.Length > 0 &&
-            String.IsNullOrWhiteSpace(request.body) == false)
-        {
+        //Check body
+        if (request.body != null && request.body.Length > 0 &&
+        String.IsNullOrWhiteSpace(request.body) == false)
             newComment.body = request.body;
-        }
+        else
+            return BadRequest();
 
         await _db.Comments.AddAsync(newComment);
         await _db.SaveChangesAsync();
         CommentDtoRead_2? returnComment = await _mapper.ProjectTo<CommentDtoRead_2>
-                (_db.Comments.Where(p => p.id == newComment.id))
+                (_db.Comments.Where(c => c.id == newComment.id))
             .FirstOrDefaultAsync();
         return Ok(new { returnComment });
     }
@@ -208,19 +242,22 @@ public class ActionController : ControllerBase
             return BadRequest();
         }
 
-        Post newpost = new Post();
-        newpost.title = request.title;
-        newpost.postDescription = request.postDescription;
-        newpost.accountId = request.accountId;
-        newpost.languageId = request.languageId;
-        newpost.postTypeId = request.postTypeId;
-        newpost.ratedAsId = request.ratedAsId;
-        newpost.coverImage = request.coverImage;
-        newpost.publishDate = DateTime.Now;
-        newpost.updateDate = DateTime.Now;
-        newpost.deletedStatusId = 1; // Default
-        newpost.postStatusId = 1; // In-Progress
-        newpost.isPublished = true; // <- User will decide when creating
+        Post newpost = new Post
+        {
+            title = request.title,
+            postDescription = request.postDescription,
+            accountId = request.accountId,
+            languageId = request.languageId,
+            postTypeId = request.postTypeId,
+            ratedAsId = request.ratedAsId,
+            coverImage = request.coverImage,
+            publishDate = DateTime.Now,
+            updateDate = DateTime.Now,
+            deletedStatusId = 1, // Default
+            postStatusId = 1, // In-Progress
+            isPublished = true // <- User will decide when creating
+        };
+
         if (request.tagList != null)
         {
             foreach (int tagid in request.tagList)

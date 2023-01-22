@@ -27,3 +27,6 @@ public class CommentDtoRead_2
 }
 //Getting comments of the post. Fetched by ajax. Highlighted reply will be fetched by javascript. 
 //Its replies will be sent with ajax when user click on replies.
+
+
+

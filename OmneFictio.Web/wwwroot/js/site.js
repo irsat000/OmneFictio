@@ -316,6 +316,82 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 });
+function AddReply(payload) {
+    fetch("/Action/AddReply", {
+        method: 'POST',
+        headers: {
+            'Accept': 'application/json',
+            'Content-Type': 'application/json'
+        },
+        body: payload
+    })
+        .then((res) => res.json())
+        .then((data) => {
+        if (data.statusCode === 200) {
+            const repliesModal = document.getElementById('modal-replies');
+            const reply = JSON.parse(data.value).returnReply;
+            repliesModal.querySelector('.mr-replies-cont').appendChild(window.fillReplyTemplate(reply));
+            repliesModal.querySelectorAll('.add_reply-cont').forEach(btn => btn.remove());
+        }
+    })
+        .catch(error => { console.log('Fetch failed -> ' + error); });
+}
+function createAddReplyField(section, target = null) {
+    const pseudo_loggedUname = document.getElementById('loggedin-username')?.textContent;
+    const pseudo_loggedUId = document.getElementById('loggedin-username')?.textContent;
+    if (!pseudo_loggedUname || !pseudo_loggedUId) {
+        return;
+    }
+    section.parentElement.querySelectorAll('.add_reply-cont').forEach(btn => btn.remove());
+    const addReplyInstance = document.getElementById('addReplyTemplate');
+    const addReplyClone = window.cloneFromTemplate(addReplyInstance);
+    addReplyClone.querySelector('.ar-user > img').setAttribute('src', '/images/users/user' + pseudo_loggedUId + '.png');
+    addReplyClone.querySelector('.ar-username').textContent = pseudo_loggedUname;
+    addReplyClone.querySelector('.cancel_addreply-btn').addEventListener('click', e => {
+        (e.currentTarget).closest('.add_reply-cont').remove();
+    });
+    addReplyClone.querySelector('.send_reply-btn').addEventListener('click', e => {
+        const btn = e.currentTarget;
+        const targetCommentId = btn.closest('#modal-replies').querySelector('.mr-comment[data-commentid]')?.getAttribute('data-commentid');
+        if (!targetCommentId) {
+            return;
+        }
+        const payload = {
+            body: btn.closest('.add_reply-cont').querySelector('.replyfieldBody').innerHTML,
+            commentId: targetCommentId
+        };
+        window.AddReply(JSON.stringify(payload));
+    });
+    section.appendChild(addReplyClone);
+    const replyCont = section.querySelector('.add_reply-cont');
+    const replyField = section.querySelector('.add_reply-cont .replyfieldBody');
+    if (target === null) {
+    }
+    else {
+        replyCont.scrollIntoView();
+        const targetA = document.createElement('a');
+        targetA.href = '/u/' + target;
+        targetA.classList.add('reply_target');
+        targetA.textContent = '@' + target;
+        replyField.appendChild(targetA);
+        replyField.innerHTML += "&nbsp;";
+        const replyTarget = replyField.querySelector('.reply_target');
+        const initialTarget = replyTarget.innerHTML;
+        replyField.addEventListener('keyup', (e) => {
+            if (replyField.querySelector('.reply_target') && replyTarget.innerHTML.length < initialTarget.length) {
+                replyField.querySelector('.reply_target').remove();
+            }
+        });
+    }
+    replyField.contentEditable = 'true';
+    replyField.focus();
+    const range = document.createRange();
+    range.selectNodeContents(replyField);
+    range.collapse(false);
+    const sel = window.getSelection();
+    sel?.removeAllRanges();
+    sel?.addRange(range);
+}
 function AddComment(payload, commentSection) {
     fetch("/Action/AddComment", {
         method: 'POST',
@@ -340,7 +416,6 @@ function AddComment(payload, commentSection) {
                 clone.querySelector('.c-username').textContent = comment.account.username;
             }
             clone.querySelector('.c-date').textContent = window.TimeAgo(comment.publishDate);
-            clone.querySelector('.c-text > span').textContent = comment.body;
             if (comment.voteResult >= 0) {
                 clone.querySelector('.c-likes').textContent = comment.voteResult;
             }
@@ -355,6 +430,8 @@ function AddComment(payload, commentSection) {
                 clone.querySelector('.get_replies > span').textContent = comment.repliesLength + repliesLengthText;
             }
             clone.querySelector('.reply').remove();
+            const newcontent_comment = window.sanitizingUserInput(comment.body);
+            clone.querySelector('.c-text > span').textContent = newcontent_comment;
             commentSection.insertBefore(clone, commentSection.firstChild);
             document.getElementById('commentBody').value = "";
         }
@@ -437,7 +514,6 @@ function fetchReplies(commentId, section, { gotoReplyId, replyToComment } = {}) 
             const comm = response.comment;
             const replies = response.replies;
             const commentInstance = document.getElementById('modalReplies-comment');
-            const replyInstance = document.getElementById('modalReplies-reply');
             const commentClone = window.cloneFromTemplate(commentInstance);
             window.checkVoted_icons(commentClone, comm.votedByUser);
             commentClone.querySelector('.mr-comment').setAttribute('data-commentid', comm.id);
@@ -456,23 +532,7 @@ function fetchReplies(commentId, section, { gotoReplyId, replyToComment } = {}) 
             commentCont.appendChild(commentClone);
             if (replies.length > 0) {
                 for (const reply of replies) {
-                    const replyClone = window.cloneFromTemplate(replyInstance);
-                    window.checkVoted_icons(replyClone, reply.votedByUser);
-                    replyClone.querySelector('.mr-reply').setAttribute('data-replyid', reply.id);
-                    replyClone.querySelector('.mr-reply').setAttribute('data-username', reply.account.username);
-                    replyClone.querySelector('.mrr-header > img').setAttribute('src', '/images/users/' + reply.account.profilePic);
-                    if (reply.account.displayName != null) {
-                        replyClone.querySelector('.mrr-username').textContent = reply.account.displayName;
-                    }
-                    else {
-                        replyClone.querySelector('.mrr-username').textContent = reply.account.username;
-                    }
-                    replyClone.querySelector('.mrr-date').textContent = window.TimeAgo(reply.publishDate);
-                    replyClone.querySelector('.mrr-text > span').textContent = reply.body;
-                    if (reply.voteResult >= 0) {
-                        replyClone.querySelector('.mrr-likes').textContent = reply.voteResult;
-                    }
-                    repliesCont.appendChild(replyClone);
+                    repliesCont.appendChild(window.fillReplyTemplate(reply));
                 }
             }
             commentCont.querySelector('.mrc-replybtn').addEventListener('click', () => {
@@ -498,47 +558,108 @@ function fetchReplies(commentId, section, { gotoReplyId, replyToComment } = {}) 
         console.log('Fetching reply method is at fault', error);
     });
 }
-function createAddReplyField(section, target = null) {
-    const pseudo_loggedUname = document.getElementById('loggedin-username')?.textContent;
-    const pseudo_loggedUId = document.getElementById('loggedin-username')?.textContent;
-    if (!pseudo_loggedUname || !pseudo_loggedUId) {
-        return;
+function fillCommentTemplate(comment, page) {
+    const instance = document.getElementById('comment_instance');
+    const clone = window.cloneFromTemplate(instance);
+    window.checkVoted_icons(clone, comment.votedByUser);
+    const cContainer = clone.querySelector('.comment');
+    const cUserImg = clone.querySelector('.c-header > img');
+    const cUsername = clone.querySelector('.c-username');
+    const cPublishDate = clone.querySelector('.c-date');
+    const cBody = clone.querySelector('.c-text > span');
+    const cEvaluation = clone.querySelector('.c-evaluation');
+    const cVoteCount = clone.querySelector('.c-likes');
+    const cGetRepliesBtn = clone.querySelector('.get_replies');
+    const cReplyBtn = clone.querySelector('.c-replybtn');
+    const rContainer = clone.querySelector('.reply');
+    const rGotoReply = clone.querySelector('.r-gotoreply');
+    const rBody = clone.querySelector('.r-text > span');
+    const rVoteCount = clone.querySelector('.r-likes');
+    const rUserImg = clone.querySelector('.r-user > img');
+    const rUsername = clone.querySelector('.r-username');
+    cContainer.setAttribute('data-commentid', comment.id.toString());
+    cUserImg.src = '/images/users/' + comment.account.profilePic;
+    cUsername.textContent = comment.account.displayName !== null
+        ? comment.account.displayName
+        : comment.account.username;
+    cPublishDate.textContent = window.TimeAgo(comment.publishDate);
+    const newcontent_comment = window.sanitizingUserInput(comment.body);
+    cBody.textContent = newcontent_comment;
+    if (comment.voteResult >= 0) {
+        cVoteCount.textContent = comment.voteResult.toString();
     }
-    section.querySelectorAll('.add_reply-cont').forEach(btn => btn.remove());
-    const addReplyInstance = document.getElementById('addReplyTemplate');
-    const addReplyClone = window.cloneFromTemplate(addReplyInstance);
-    addReplyClone.querySelector('.ar-user > img').setAttribute('src', '/images/users/user' + pseudo_loggedUId + '.png');
-    addReplyClone.querySelector('.ar-username').textContent = pseudo_loggedUname;
-    addReplyClone.querySelector('.cancel_addreply-btn').addEventListener('click', e => {
-        (e.currentTarget).closest('.add_reply-cont').remove();
-    });
-    addReplyClone.querySelector('.send_reply-btn').addEventListener('click', e => {
-        const btn = e.currentTarget;
-        const content = btn.closest('.add_reply-cont').querySelector('.replyfieldBody').innerHTML;
-        console.log(content);
-    });
-    section.appendChild(addReplyClone);
-    const replyCont = section.querySelector('.add_reply-cont');
-    const replyField = section.querySelector('.add_reply-cont .replyfieldBody');
-    if (target === null) {
+    if (comment.repliesLength === 0) {
+        cGetRepliesBtn.remove();
     }
     else {
-        replyCont.scrollIntoView();
-        const targetLink = document.createElement('a');
-        targetLink.href = "/u/" + target;
-        targetLink.setAttribute('data-target', target);
-        targetLink.textContent = "@" + target;
-        replyField.appendChild(targetLink);
-        replyField.innerHTML += '&nbsp;';
+        let repliesLengthText = " replies";
+        if (comment.repliesLength === 1) {
+            repliesLengthText = " reply";
+        }
+        cGetRepliesBtn.firstChild.textContent = comment.repliesLength + repliesLengthText;
+        cGetRepliesBtn.addEventListener('click', () => window.openRepliesModal(comment.id.toString()));
     }
-    replyField.contentEditable = 'true';
-    replyField.focus();
-    const range = document.createRange();
-    range.selectNodeContents(replyField);
-    range.collapse(false);
-    const sel = window.getSelection();
-    sel?.removeAllRanges();
-    sel?.addRange(range);
+    const hreply = comment.highlightedReply;
+    if (hreply) {
+        window.checkVoted_icons(rContainer, hreply.votedByUser);
+        rContainer.setAttribute('data-replyid', hreply.id.toString());
+        const newcontent_hreply = window.sanitizingUserInput(hreply.body);
+        rBody.textContent = newcontent_hreply;
+        if (hreply.voteResult >= 0) {
+            rVoteCount.textContent = hreply.voteResult.toString();
+        }
+        rUserImg.src = '/images/users/' + hreply.account.profilePic;
+        rUsername.textContent = hreply.account.displayName != null
+            ? hreply.account.displayName
+            : hreply.account.username;
+        rGotoReply.addEventListener('click', () => window.openRepliesModal(comment.id.toString(), { gotoReplyId: hreply.id.toString() }));
+    }
+    else {
+        clone.querySelector('.reply').remove();
+    }
+    if (page === "profile") {
+        cReplyBtn.remove();
+        let linkToPost = document.createElement('a');
+        linkToPost.href = "/p/" + comment.targetPostId + "?cid=" + comment.id;
+        linkToPost.textContent = "Post";
+        cEvaluation.appendChild(linkToPost);
+    }
+    else {
+        cReplyBtn.addEventListener('click', () => window.openRepliesModal(comment.id.toString(), { replyToComment: true }));
+    }
+    return clone;
+}
+function fillReplyTemplate(reply) {
+    const instance = document.getElementById('modalReplies-reply');
+    const clone = window.cloneFromTemplate(instance);
+    window.checkVoted_icons(clone, reply.votedByUser);
+    clone.querySelector('.mr-reply').setAttribute('data-replyid', reply.id);
+    clone.querySelector('.mr-reply').setAttribute('data-username', reply.account.username);
+    clone.querySelector('.mrr-header > img').setAttribute('src', '/images/users/' + reply.account.profilePic);
+    if (reply.account.displayName != null) {
+        clone.querySelector('.mrr-username').textContent = reply.account.displayName;
+    }
+    else {
+        clone.querySelector('.mrr-username').textContent = reply.account.username;
+    }
+    clone.querySelector('.mrr-date').textContent = window.TimeAgo(reply.publishDate);
+    if (reply.voteResult >= 0) {
+        clone.querySelector('.mrr-likes').textContent = reply.voteResult;
+    }
+    const replyBody = clone.querySelector('.mrr-text > span');
+    let newcontent_reply = window.sanitizingUserInput(reply.body);
+    const replyTarget = newcontent_reply.match(/<a href=['"](.*?)['"] class=['"]reply_target['"]>(.*?)<\/a>/g);
+    if (replyTarget) {
+        const linkraw = replyTarget[0];
+        newcontent_reply = newcontent_reply.replace(linkraw, '');
+        const targetA = document.createElement('a');
+        targetA.href = linkraw.match(/href="([^"]*)/)[1];
+        targetA.classList.add('reply_target');
+        targetA.textContent = linkraw.match(/reply_target">([^<]*)/)[1];
+        replyBody.appendChild(targetA);
+    }
+    replyBody.append(newcontent_reply);
+    return clone;
 }
 function VoteRequest(btn, data) {
     var action = data.body ? "like" : "dislike";
@@ -782,74 +903,9 @@ function fillPostTemplate(post, defaultCoverVisibility = true) {
     }
     return clone;
 }
-function fillCommentTemplate(comment, page) {
-    const instance = document.getElementById('comment_instance');
-    const clone = window.cloneFromTemplate(instance);
-    window.checkVoted_icons(clone, comment.votedByUser);
-    const cContainer = clone.querySelector('.comment');
-    const cUserImg = clone.querySelector('.c-header > img');
-    const cUsername = clone.querySelector('.c-username');
-    const cPublishDate = clone.querySelector('.c-date');
-    const cBody = clone.querySelector('.c-text > span');
-    const cEvaluation = clone.querySelector('.c-evaluation');
-    const cVoteCount = clone.querySelector('.c-likes');
-    const cGetRepliesBtn = clone.querySelector('.get_replies');
-    const cReplyBtn = clone.querySelector('.c-replybtn');
-    const rContainer = clone.querySelector('.reply');
-    const rGotoReply = clone.querySelector('.r-gotoreply');
-    const rBody = clone.querySelector('.r-text > span');
-    const rVoteCount = clone.querySelector('.r-likes');
-    const rUserImg = clone.querySelector('.r-user > img');
-    const rUsername = clone.querySelector('.r-username');
-    cContainer.setAttribute('data-commentid', comment.id.toString());
-    cUserImg.src = '/images/users/' + comment.account.profilePic;
-    cUsername.textContent = comment.account.displayName !== null
-        ? comment.account.displayName
-        : comment.account.username;
-    cPublishDate.textContent = window.TimeAgo(comment.publishDate);
-    cBody.textContent = comment.body;
-    if (comment.voteResult >= 0) {
-        cVoteCount.textContent = comment.voteResult.toString();
-    }
-    if (comment.repliesLength === 0) {
-        cGetRepliesBtn.remove();
-    }
-    else {
-        let repliesLengthText = " replies";
-        if (comment.repliesLength === 1) {
-            repliesLengthText = " reply";
-        }
-        cGetRepliesBtn.firstChild.textContent = comment.repliesLength + repliesLengthText;
-        cGetRepliesBtn.addEventListener('click', () => window.openRepliesModal(comment.id.toString()));
-    }
-    const hreply = comment.highlightedReply;
-    if (hreply) {
-        window.checkVoted_icons(rContainer, hreply.votedByUser);
-        rContainer.setAttribute('data-replyid', hreply.id.toString());
-        rBody.textContent = hreply.body;
-        if (hreply.voteResult >= 0) {
-            rVoteCount.textContent = hreply.voteResult.toString();
-        }
-        rUserImg.src = '/images/users/' + hreply.account.profilePic;
-        rUsername.textContent = hreply.account.displayName != null
-            ? hreply.account.displayName
-            : hreply.account.username;
-        rGotoReply.addEventListener('click', () => window.openRepliesModal(comment.id.toString(), { gotoReplyId: hreply.id.toString() }));
-    }
-    else {
-        clone.querySelector('.reply').remove();
-    }
-    if (page === "profile") {
-        cReplyBtn.remove();
-        let linkToPost = document.createElement('a');
-        linkToPost.href = "/p/" + comment.targetPostId + "?cid=" + comment.id;
-        linkToPost.textContent = "Post";
-        cEvaluation.appendChild(linkToPost);
-    }
-    else {
-        cReplyBtn.addEventListener('click', () => window.openRepliesModal(comment.id.toString(), { replyToComment: true }));
-    }
-    return clone;
+function sanitizingUserInput(input) {
+    let result = input.replace(/&nbsp;/g, ' ');
+    return result;
 }
 function strfForm(form) {
     const formData = new FormData(form);

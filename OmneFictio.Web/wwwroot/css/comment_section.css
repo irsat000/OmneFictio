@@ -93,6 +93,18 @@
   height: 20px;
 }
 
+a.reply_target {
+  display: inline;
+  text-decoration: underline;
+  font-family: "Itim";
+  color: var(--text-color2);
+  background-color: var(--background-color2);
+  padding: 3px 6px;
+  line-height: 1.6rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
 .add_comment-cont {
   display: flex;
   flex-direction: column;
@@ -221,13 +233,13 @@
 }
 .comment-cont .comment .c-header .c-menupopup li {
   padding: 3px 10px;
-  border-bottom: 1px solid var(--background-color-hover3);
+  border-bottom: 1px solid var(--background-color6);
   white-space: nowrap;
   transition: background-color 0.1s ease;
   cursor: pointer;
 }
 .comment-cont .comment .c-header .c-menupopup li:hover {
-  background-color: var(--background-color-hover2);
+  background-color: var(--background-color5);
 }
 .comment-cont .comment .c-header .c-menupopup li:first-child {
   border-radius: 6px 6px 0 0;
@@ -376,7 +388,7 @@
   padding-bottom: 6px;
 }
 .modal-replies .mr-header {
-  border-bottom: 2px solid var(--background-color-hover4);
+  border-bottom: 2px solid var(--background-color3);
   display: flex;
   flex-direction: row;
 }
@@ -601,12 +613,6 @@
   border-radius: 4px;
   overflow: auto;
   text-align: justify;
-}
-.modal-replies .mr-body .add_reply-cont .replyfieldBody a {
-  display: inline;
-  text-decoration: underline;
-  font-family: "Itim";
-  color: var(--text-color2);
 }
 .modal-replies .mr-body .add_reply-cont .ar-footer {
   display: flex;

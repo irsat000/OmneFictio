@@ -76,7 +76,7 @@ public class ActionController : Controller
 
         var apiResponse = await _httpClient.PostAsJsonAsync("Action/SavePost", request);
         string statusCode = apiResponse.StatusCode.ToString();
-        
+
         if (statusCode == "OK")
             return new JsonResult(Ok());
         else if (statusCode == "Accepted")
@@ -86,7 +86,26 @@ public class ActionController : Controller
     }
 
     [HttpPost]
-    public async Task<JsonResult> AddComment([FromBody] CommentWrite1 request)
+    public async Task<JsonResult> AddReply([FromBody] ReplyInput request)
+    {
+        if (AccountId == null)
+        {
+            return new JsonResult(Unauthorized());
+        }
+        request.accountId = AccountId;
+
+        var apiResponse = await _httpClient.PostAsJsonAsync("Action/AddReply", request);
+        string statusCode = apiResponse.StatusCode.ToString();
+        if (statusCode != "OK")
+        {
+            return new JsonResult(BadRequest());
+        }
+        string returnedContent = await apiResponse.Content.ReadAsStringAsync();
+        return new JsonResult(Ok(returnedContent));
+    }
+
+    [HttpPost]
+    public async Task<JsonResult> AddComment([FromBody] CommentInput request)
     {
         if (AccountId == null)
         {

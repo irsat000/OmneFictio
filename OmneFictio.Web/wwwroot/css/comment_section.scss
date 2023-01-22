@@ -1,34 +1,38 @@
-
-@keyframes cskel-loading-div{
-    0%{
+@keyframes cskel-loading-div {
+    0% {
         background-color: var(--commentskeleton-itemcolor-start);
     }
-    100%{
+
+    100% {
         background-color: var(--commentskeleton-itemcolor-end);
     }
 }
-@keyframes cskel-loading-i{
-    0%{
+
+@keyframes cskel-loading-i {
+    0% {
         color: var(--commentskeleton-itemcolor-start);
     }
-    100%{
+
+    100% {
         color: var(--commentskeleton-itemcolor-end);
     }
 }
-.comment-skel{
+
+.comment-skel {
     display: flex;
     flex-direction: column;
     gap: 16px;
     padding: 10px;
     border-top: 2px solid var(--background-color2);
 
-    div.csk-item{
+    div.csk-item {
         height: 16px;
         border-radius: 10px;
         opacity: 0.5;
         animation: cskel-loading-div 1s linear infinite alternate;
     }
-    i.csk-item{
+
+    i.csk-item {
         opacity: 0.7;
         animation: cskel-loading-i 1s linear infinite alternate;
     }
@@ -42,25 +46,28 @@
             width: 120px;
             max-width: 60%;
         }
-        
-        i{
+
+        i {
             display: flex;
+
             &:first-of-type {
                 font-size: 2rem;
                 margin-right: 10px;
             }
+
             &:last-of-type {
                 margin: -20px 0 -20px auto;
                 font-size: 3rem;
             }
         }
     }
-    
+
     .cskel-body {
         display: flex;
         flex-direction: column;
         gap: 8px;
-        > div:last-child{
+
+        >div:last-child {
             width: 80%;
         }
     }
@@ -85,6 +92,18 @@
 }
 
 
+
+a.reply_target {
+    display: inline;
+    text-decoration: underline;
+    font-family: 'Itim';
+    color: var(--text-color2);
+    background-color: var(--background-color2);
+    padding: 3px 6px;
+    line-height: 1.6rem;
+    border-radius: 4px;
+    cursor: pointer;
+}
 
 
 .add_comment-cont {
@@ -229,13 +248,13 @@
 
                 li {
                     padding: 3px 10px;
-                    border-bottom: 1px solid var(--background-color-hover3);
+                    border-bottom: 1px solid var(--background-color6);
                     white-space: nowrap;
                     transition: background-color 0.1s ease;
                     cursor: pointer;
 
                     &:hover {
-                        background-color: var(--background-color-hover2);
+                        background-color: var(--background-color5);
                     }
 
                     &:first-child {
@@ -301,7 +320,8 @@
                     color: var(--text-color1);
                     padding: 2px 0 0;
                     margin-bottom: -1px;
-                    &:hover{
+
+                    &:hover {
                         text-decoration: underline;
                     }
                 }
@@ -412,7 +432,7 @@
     padding-bottom: 6px;
 
     .mr-header {
-        border-bottom: 2px solid var(--background-color-hover4);
+        border-bottom: 2px solid var(--background-color3);
         display: flex;
         flex-direction: row;
 
@@ -440,11 +460,12 @@
         gap: 15px;
         padding-bottom: 10px;
 
-        .mr-comment-cont{
+        .mr-comment-cont {
             display: flex;
             flex-direction: column;
         }
-        .mr-replies-cont{
+
+        .mr-replies-cont {
             display: flex;
             flex-direction: column;
             gap: 7px;
@@ -538,7 +559,8 @@
                         color: var(--text-color1);
                         padding: 2px 0 0;
                         margin-bottom: -1px;
-                        &:hover{
+
+                        &:hover {
                             text-decoration: underline;
                         }
                     }
@@ -641,7 +663,8 @@
                         color: var(--text-color1);
                         margin-bottom: -3px;
                         font-size: 0.9rem;
-                        &:hover{
+
+                        &:hover {
                             text-decoration: underline;
                         }
                     }
@@ -655,7 +678,7 @@
             width: 100%;
             padding: 5px 6px 0;
             align-self: center;
-        
+
             .replyfieldBody {
                 background-color: var(--background-color1);
                 color: var(--text-color1);
@@ -670,15 +693,8 @@
                 border-radius: 4px;
                 overflow: auto;
                 text-align: justify;
-                
-                a{
-                    display: inline;
-                    text-decoration: underline;
-                    font-family: 'Itim';
-                    color: var(--text-color2);
-                }
             }
-        
+
             .ar-footer {
                 display: flex;
                 flex-wrap: wrap;
@@ -686,12 +702,12 @@
                 width: 100%;
                 padding: 0 6px;
                 font-family: 'Itim', cursive;
-        
+
                 .ar-user {
                     display: flex;
                     align-items: center;
                     flex-shrink: 0;
-        
+
                     .ar-username {
                         font-size: 0.8rem;
                         cursor: pointer;
@@ -700,12 +716,12 @@
                         white-space: nowrap;
                         overflow: hidden;
                         max-width: 180px;
-        
+
                         &:hover {
                             text-decoration: underline;
                         }
                     }
-        
+
                     img {
                         height: 1.4rem;
                         width: 1.4rem;
@@ -713,25 +729,26 @@
                         cursor: pointer;
                     }
                 }
-        
-                .cancel_addreply-btn{
+
+                .cancel_addreply-btn {
                     font-size: 1.1rem;
                     transition: font-size 0.1s ease;
                     color: var(--text-color2);
                     margin-left: auto;
                     margin-right: 20px;
                     cursor: pointer;
-        
+
                     &:hover {
                         text-decoration: underline;
                     }
                 }
+
                 .send_reply-btn {
                     font-size: 1.1rem;
                     transition: font-size 0.1s ease;
                     color: var(--text-color1);
                     cursor: pointer;
-        
+
                     &:hover {
                         text-decoration: underline;
                     }

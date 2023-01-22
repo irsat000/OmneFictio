@@ -22,3 +22,4 @@ public partial class ReplyDtoRead_2
     public bool? votedByUser { get; set; } = null;
 }
 //to get the replies when clicking the replies button on comment
+
