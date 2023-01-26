@@ -400,11 +400,16 @@ function AddReply(payload: string) {
         .then((res) => res.json())
         .then((data) => {
             if (data.statusCode === 200) {
+                const commentSection = document.getElementById('comment-section') as HTMLDivElement;
                 const repliesModal = document.getElementById('modal-replies') as HTMLDivElement;
                 const reply = JSON.parse(data.value).returnReply;
                 repliesModal.querySelector('.mr-replies-cont')!.appendChild(window.fillReplyTemplate(reply));
                 //remove add_reply fields after append
                 repliesModal.querySelectorAll('.add_reply-cont').forEach(btn => btn.remove());
+                //const commentId = repliesModal.querySelector('.mr-comment[data-commentid]')!.getAttribute('data-commentid');
+                const comment_GetReplies = commentSection.querySelector('.comment[data-commentid="' + reply.commentId + '"] .get_replies') as HTMLDivElement;
+                comment_GetReplies.style.borderRadius = "6px";
+                comment_GetReplies.style.display = "block";
             }
         })
         .catch(error => { console.log('Fetch failed -> ' + error); });
@@ -461,7 +466,7 @@ function createAddReplyField(section: HTMLDivElement, target: string | null = nu
         const replyTarget = replyField.querySelector('.reply_target') as HTMLAnchorElement;
         const initialTarget = replyTarget.innerHTML;
         replyField.addEventListener('keyup', (e) => {
-            if(replyField.querySelector('.reply_target') && replyTarget.innerHTML.length < initialTarget.length){
+            if (replyField.querySelector('.reply_target') && replyTarget.innerHTML.length < initialTarget.length) {
                 replyField.querySelector('.reply_target')!.remove();
             }
         });
@@ -505,23 +510,27 @@ function AddComment(payload: string, commentSection: HTMLDivElement) {
                 if (comment.voteResult >= 0) {
                     clone.querySelector('.c-likes')!.textContent = comment.voteResult;
                 }
-                if (comment.repliesLength === 0) {
-                    clone.querySelector('.get_replies')!.remove();
-                } else {
-                    let repliesLengthText = " replies";
-                    if (comment.repliesLength === 1) {
-                        repliesLengthText = " reply";
-                    }
-                    clone.querySelector('.get_replies > span')!.textContent = comment.repliesLength + repliesLengthText;
-                }
+                //Get replies
                 clone.querySelector('.reply')!.remove();
+                const getRepliesBtn = clone.querySelector('.get_replies') as HTMLDivElement;
+                getRepliesBtn.style.display = "none";
+                getRepliesBtn.addEventListener('click', () => window.openRepliesModal(comment.id.toString()));
+                //open replies to add reply btn
+                clone.querySelector('.c-replybtn')!.addEventListener('click', () =>
+                    window.openRepliesModal(comment.id.toString(), { replyToComment: true }));
                 //body
-                const newcontent_comment = window.sanitizingUserInput(comment.body);
-                clone.querySelector('.c-text > span')!.textContent = newcontent_comment;
+                const commentBody = clone.querySelector('.c-text > span') as HTMLSpanElement;
+                const refinedText = window.sanitizingUserInput(comment.body);
+                if (refinedText.userRef) {
+                    commentBody.appendChild(refinedText.userRef);
+                }
+                commentBody.append(refinedText.text);
+
                 //add comment to the comment section
                 commentSection.insertBefore(clone, commentSection.firstChild);
                 //clear commenting body
                 (<HTMLInputElement>document.getElementById('commentBody')).value = "";
+
             }
         })
         .catch(error => { console.log('Fetch failed -> ' + error); });
@@ -662,84 +671,78 @@ function fillCommentTemplate(comment: ofComment_1, page: string | null) {
     //Check if user voted this parent
     window.checkVoted_icons(clone, comment.votedByUser);
 
-    //Comment elements
-    const cContainer = clone.querySelector('.comment') as HTMLDivElement;
-    const cUserImg = clone.querySelector('.c-header > img') as HTMLImageElement;
-    const cUsername = clone.querySelector('.c-username') as HTMLSpanElement;
-    const cPublishDate = clone.querySelector('.c-date') as HTMLSpanElement;
-    const cBody = clone.querySelector('.c-text > span') as HTMLSpanElement;
-    const cEvaluation = clone.querySelector('.c-evaluation') as HTMLDivElement;
-    const cVoteCount = clone.querySelector('.c-likes') as HTMLSpanElement;
-    const cGetRepliesBtn = clone.querySelector('.get_replies') as HTMLDivElement;
-    const cReplyBtn = clone.querySelector('.c-replybtn') as HTMLAnchorElement;
-    //Highlighted reply elements
-    const rContainer = clone.querySelector('.reply') as HTMLDivElement;
-    const rGotoReply = clone.querySelector('.r-gotoreply') as HTMLSpanElement;
-    const rBody = clone.querySelector('.r-text > span') as HTMLSpanElement;
-    const rVoteCount = clone.querySelector('.r-likes') as HTMLSpanElement;
-    const rUserImg = clone.querySelector('.r-user > img') as HTMLImageElement;
-    const rUsername = clone.querySelector('.r-username') as HTMLSpanElement;
-
     //Populate comment
-    cContainer.setAttribute('data-commentid', comment.id.toString());
-    cUserImg.src = '/images/users/' + comment.account!.profilePic;
-
+    clone.querySelector('.comment')!.setAttribute('data-commentid', comment.id.toString());
     //NULL CHECK FOR ACCOUNT WILL BE CODED
-    cUsername.textContent = comment.account!.displayName !== null
+    clone.querySelector('.c-header > img')!.setAttribute('src', '/images/users/' + comment.account!.profilePic);
+    clone.querySelector('.c-username')!.textContent = comment.account!.displayName !== null
         ? comment.account!.displayName
         : comment.account!.username;
-    cPublishDate.textContent = window.TimeAgo(comment.publishDate);
+    clone.querySelector('.c-date')!.textContent = window.TimeAgo(comment.publishDate);
+    //body
+    const commentBody = clone.querySelector('.c-text > span') as HTMLSpanElement;
+    const refinedText = window.sanitizingUserInput(comment.body);
+    if (refinedText.userRef) {
+        commentBody.appendChild(refinedText.userRef);
+    }
+    commentBody.append(refinedText.text);
 
-    const newcontent_comment = window.sanitizingUserInput(comment.body);
-    cBody.textContent = newcontent_comment;
+
     if (comment.voteResult >= 0) {
-        cVoteCount.textContent = comment.voteResult.toString();
+        clone.querySelector('.c-likes')!.textContent = comment.voteResult.toString();
     }
 
     //Replies
+    const cGetRepliesBtn = clone.querySelector('.get_replies') as HTMLDivElement;
     if (comment.repliesLength === 0) {
-        cGetRepliesBtn.remove();
+        cGetRepliesBtn.style.display = "none";
     }
     else {
-        let repliesLengthText = " replies";
+        let repliesBtnText = " replies";
         if (comment.repliesLength === 1) {
-            repliesLengthText = " reply";
+            repliesBtnText = " reply";
         }
-        cGetRepliesBtn.firstChild!.textContent = comment.repliesLength + repliesLengthText;
-        cGetRepliesBtn.addEventListener('click', () => window.openRepliesModal(comment.id.toString()));
+        cGetRepliesBtn.textContent = comment.repliesLength + repliesBtnText;
     }
+    cGetRepliesBtn.addEventListener('click', () => window.openRepliesModal(comment.id.toString()));
     //Get and populate highlighted reply
     const hreply = comment.highlightedReply; //await fetchHighlightedReply(comment.id.toString()) as ofReply_1 | null;
     if (hreply) {
         //Check if user voted this parent
+        const rContainer = clone.querySelector('.reply') as HTMLDivElement;
         window.checkVoted_icons(rContainer, hreply.votedByUser);
         rContainer.setAttribute('data-replyid', hreply.id.toString());
 
-        const newcontent_hreply = window.sanitizingUserInput(hreply.body);
-        rBody.textContent = newcontent_hreply;
-        if (hreply.voteResult >= 0) {
-            rVoteCount.textContent = hreply.voteResult.toString();
+        const hreplyBody = clone.querySelector('.r-text > span') as HTMLSpanElement;
+        const refinedText = window.sanitizingUserInput(hreply.body);
+        if (refinedText.userRef) {
+            hreplyBody.appendChild(refinedText.userRef);
         }
-        rUserImg.src = '/images/users/' + hreply.account!.profilePic;
+        hreplyBody.append(refinedText.text);
 
+        if (hreply.voteResult >= 0) {
+            clone.querySelector('.r-likes')!.textContent = hreply.voteResult.toString();
+        }
         //NULL CHECK FOR ACCOUNT WILL BE CODED
-        rUsername.textContent = hreply.account!.displayName != null
+        clone.querySelector('.r-user > img')!.setAttribute('src', '/images/users/' + hreply.account!.profilePic);
+        clone.querySelector('.r-username')!.textContent = hreply.account!.displayName != null
             ? hreply.account!.displayName
             : hreply.account!.username;
 
-        rGotoReply.addEventListener('click', () =>
+        clone.querySelector('.r-gotoreply')!.addEventListener('click', () =>
             window.openRepliesModal(comment.id.toString(), { gotoReplyId: hreply.id.toString() }));
     }
     else {
         clone.querySelector('.reply')!.remove();
     }
-    //If the comments in the context are in profile page, then show "link to post"
+    //If this is profile page, show "link to post"
+    const cReplyBtn = clone.querySelector('.c-replybtn') as HTMLAnchorElement;
     if (page === "profile") {
         cReplyBtn.remove();
         let linkToPost = document.createElement('a');
         linkToPost.href = "/p/" + comment.targetPostId + "?cid=" + comment.id; //targetPostId can be empty normally but reviews are only post comments so there is no chance of fail
         linkToPost.textContent = "Post";
-        cEvaluation.appendChild(linkToPost);
+        clone.querySelector('.c-evaluation')!.appendChild(linkToPost);
     }
     else {
         cReplyBtn.addEventListener('click', () =>
@@ -747,6 +750,9 @@ function fillCommentTemplate(comment: ofComment_1, page: string | null) {
     }
 
     return clone;
+}
+function fillHighlightedReply(hreply: any) {
+
 }
 function fillReplyTemplate(reply: any) {
     const instance = document.getElementById('modalReplies-reply') as HTMLTemplateElement;
@@ -767,20 +773,11 @@ function fillReplyTemplate(reply: any) {
     }
     //Check reply text
     const replyBody = clone.querySelector('.mrr-text > span') as HTMLSpanElement;
-    let newcontent_reply = window.sanitizingUserInput(reply.body);
-
-    const replyTarget = newcontent_reply.match(/<a href=['"](.*?)['"] class=['"]reply_target['"]>(.*?)<\/a>/g);
-    if (replyTarget) {
-        const linkraw = replyTarget[0];
-        newcontent_reply = newcontent_reply.replace(linkraw, '');
-        const targetA = document.createElement('a');
-        targetA.href = linkraw.match(/href="([^"]*)/)![1];
-        targetA.classList.add('reply_target');
-        targetA.textContent = linkraw.match(/reply_target">([^<]*)/)![1];
-        replyBody.appendChild(targetA);
-        //replyBody.innerHTML += "&nbsp;";
+    const refinedText = window.sanitizingUserInput(reply.body);
+    if (refinedText.userRef) {
+        replyBody.appendChild(refinedText.userRef);
     }
-    replyBody.append(newcontent_reply);
+    replyBody.append(refinedText.text);
     return clone;
 }
 //--------COMMENT SECTION ENDS-------
@@ -891,9 +888,9 @@ function voting_visual(btn: HTMLElement, action: string) {
     }
 }
 
-function checkVoted_icons(clone: HTMLElement, val: boolean | null) {
-    const likebtn = clone.querySelector('[data-action="like"]') as HTMLElement;
-    const dislikebtn = clone.querySelector('[data-action="dislike"]') as HTMLElement;
+function checkVoted_icons(parent: HTMLElement, val: boolean | null) {
+    const likebtn = parent.querySelector('[data-action="like"]') as HTMLElement;
+    const dislikebtn = parent.querySelector('[data-action="dislike"]') as HTMLElement;
     likebtn.className = "";
     dislikebtn.className = "";
     switch (val) {
@@ -1094,9 +1091,21 @@ function fillPostTemplate(post: ofPost_1, defaultCoverVisibility: boolean = true
 
 
 //UTILITY
-function sanitizingUserInput(input: string): string {
-    let result: string = input.replace(/&nbsp;/g, ' ');
-    return result;
+function sanitizingUserInput(input: string): { text: string, userRef: HTMLAnchorElement | null } {
+    let { text, userRef }: any = {};
+    input = input.replace(/&nbsp;/g, ' ');
+    const userReference = input.match(/<a href=['"](.*?)['"] class=['"]reply_target['"]>(.*?)<\/a>/g);
+    if (userReference) {
+        const linkraw = userReference[0];
+        input = input.replace(linkraw, '');
+        const targetA = document.createElement('a');
+        targetA.href = linkraw.match(/href="([^"]*)/)![1];
+        targetA.classList.add('reply_target');
+        targetA.textContent = linkraw.match(/reply_target">([^<]*)/)![1];
+        userRef = targetA;
+    }
+    text = input;
+    return { text, userRef };
 }
 function strfForm(form: HTMLFormElement): string {
     const formData = new FormData(form);

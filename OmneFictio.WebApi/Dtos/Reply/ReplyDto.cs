@@ -16,6 +16,8 @@ public partial class ReplyDtoRead_2
     public DateTime publishDate { get; set; }
     public DateTime updateDate { get; set; }
 
+    public int commentId { get; set; }
+
     public AccountDtoRead_1? account { get; set; }
     public DeletedStatusDto? deletedStatus { get; set; }
     public int voteResult { get; set; } = 0;
