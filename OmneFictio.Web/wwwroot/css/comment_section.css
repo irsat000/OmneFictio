@@ -95,14 +95,16 @@
 
 a.reply_target {
   display: inline;
-  text-decoration: underline;
-  font-family: "Itim";
   color: var(--text-color2);
-  background-color: var(--background-color2);
-  padding: 3px 6px;
   line-height: 1.6rem;
   border-radius: 4px;
   cursor: pointer;
+  padding: 0px 6px;
+  font-size: 1rem;
+  font-family: "Itim";
+}
+a.reply_target:hover {
+  text-decoration: underline;
 }
 
 .add_comment-cont {
@@ -548,7 +550,7 @@ a.reply_target {
   display: flex;
 }
 .modal-replies .mr-body .mr-reply .mrr-text {
-  margin-bottom: 4px;
+  margin-bottom: 6px;
   font-size: 0.9rem;
   font-family: "Gudea", sans-serif;
   line-height: 1rem;

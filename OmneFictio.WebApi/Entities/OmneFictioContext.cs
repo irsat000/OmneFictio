@@ -523,6 +523,7 @@ public partial class OmneFictioContext : DbContext
 
             entity.Property(e => e.accountCardMode).HasDefaultValueSql("((1))");
             entity.Property(e => e.allowAdultContent).HasDefaultValueSql("((0))");
+            entity.Property(e => e.emailVisibility).HasDefaultValueSql("((0))");
             entity.Property(e => e.postsMasonryDesign).HasDefaultValueSql("((1))");
 
             entity.HasOne(d => d.account).WithMany(p => p.Preferences)

@@ -19,6 +19,8 @@ public partial class Preference
 
     public int? prefLanguageId_2 { get; set; }
 
+    public bool? emailVisibility { get; set; }
+
     public virtual Account account { get; set; } = null!;
 
     public virtual Language? prefLanguage { get; set; }

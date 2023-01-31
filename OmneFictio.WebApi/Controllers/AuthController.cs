@@ -98,6 +98,9 @@ public class AuthController : ControllerBase
         {
             preferences.prefLanguageId = prefLanguageId;
         }
+        preferences.emailVisibility = false;
+        preferences.accountCardMode = 1;
+        preferences.postsMasonryDesign = true;
         
         //create account
         await _db.Accounts.AddAsync(newAccount);
@@ -120,7 +123,6 @@ public class AuthController : ControllerBase
     public async Task<IActionResult> Signin_External([FromBody] string token)
     {
         //validating token
-        var securityToken = Encoding.ASCII.GetBytes(_configuration.GetSection("Token").Value!);
         var validationSettings = new ValidationSettings
         {
             Audience = new string[]
@@ -130,21 +132,21 @@ public class AuthController : ControllerBase
         };
         try
         {
-            JsonWebSignature.Payload payload = await GoogleJsonWebSignature.ValidateAsync(token, validationSettings);
+            /*JsonWebSignature.Payload payload = */
+            await GoogleJsonWebSignature.ValidateAsync(token, validationSettings);
         }
         catch (InvalidJwtException) { return BadRequest(); }
 
+        //Validation succeeded
         var jwt = _jwtHandler.ReadJwtToken(token);
-        string? profilePic = jwt.Claims.First(claim => claim.Type == "picture").Value;
+        string? profilePic = jwt.Claims.FirstOrDefault(claim => claim.Type == "picture")?.Value;
+        var extId = jwt.Claims.First(claim => claim.Type == "sub").Value; //External Id
 
-        //Gets the Id given by google
-        var extId = jwt.Claims.First(claim => claim.Type == "sub").Value;
-
-        /*NOTE: to use other services like google, 
+        /*NOTE: to use other services similar to google's, 
             we can use query string to find out where the token comes from*/
         //Creates an account if there is no one with this ID from google
         //If there is one already, it skips to login
-        if (await _db.Accounts.SingleOrDefaultAsync(a => a.externalId == extId && a.externalType == "google") == null)
+        if (_db.Accounts.Any(a => a.externalId == extId && a.externalType == "google") == false)
         {
             Random random = new Random();
             var email = jwt.Claims.First(claim => claim.Type == "email").Value;
@@ -174,6 +176,9 @@ public class AuthController : ControllerBase
 
             Preference preferences = new Preference();
             preferences.allowAdultContent = false;
+            preferences.emailVisibility = false;
+            preferences.accountCardMode = 1;
+            preferences.postsMasonryDesign = true;
             
             //create account
             await _db.Accounts.AddAsync(newAccount);
@@ -193,6 +198,7 @@ public class AuthController : ControllerBase
             return StatusCode(500);
         }
 
+        var securityToken = Encoding.ASCII.GetBytes(_configuration.GetSection("Token").Value!);
         var createToken = _helperServices.CreateUserToken(user, securityToken);
         if (createToken == null)
         {

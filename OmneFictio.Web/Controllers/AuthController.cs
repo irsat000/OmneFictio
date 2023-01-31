@@ -82,7 +82,7 @@ public class AuthController : Controller
             dictResult!.TryGetValue("pic", out var pPicUrl);
 
             ClaimsPrincipal session = CreateUserSession(newToken!);
-            string? permaPic = session.FindFirst("actort")!.Value ?? null;
+            string? permaPic = session.FindFirst("actort")?.Value;
 
             if (pPicUrl != null && permaPic != null &&
                 !System.IO.File.Exists($"wwwroot/images/users/{permaPic}"))
