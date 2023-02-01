@@ -4,6 +4,7 @@ class ofIndex_GetTopPosts {
     monthsTopPosts;
 }
 document.addEventListener("DOMContentLoaded", function () {
+    fetchTopPosts();
     function fetchTopPosts() {
         const todaytopBody = document.querySelector('.todaytop_body');
         const monthtopBody = document.querySelector('.monthtop_body');

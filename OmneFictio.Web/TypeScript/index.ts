@@ -6,7 +6,7 @@ class ofIndex_GetTopPosts {
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    //fetchTopPosts();
+    fetchTopPosts();
     function fetchTopPosts() {
         const todaytopBody = document.querySelector('.todaytop_body') as HTMLDivElement;
         const monthtopBody = document.querySelector('.monthtop_body') as HTMLDivElement;

@@ -6,16 +6,16 @@ header {
   border-bottom: 1px solid var(--background-color2);
 }
 
-main {
+.nav__tutorials-cont {
   display: flex;
   flex-direction: column;
+  gap: 20px 20px;
 }
 
 nav.nav_index {
   display: flex;
   flex-direction: column;
   width: 100%;
-  margin-bottom: 20px;
 }
 nav.nav_index > span {
   margin: 10px 0 4px;
@@ -113,11 +113,85 @@ nav.nav_index .community_links {
   text-align: center;
 }
 .tutorials .tutorial-categories {
-  padding: 10px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px 1%;
+  margin: 0 -0.5%;
+  padding: 0 5px;
+  justify-content: center;
+}
+.tutorials .tutorial-categories .tcate {
+  width: 49%;
+  padding: 10px 8px;
+  border-radius: 6px;
+  cursor: pointer;
+  display: flex;
+  gap: 8px;
+  transition: all 0.1s ease-in-out;
+  background-color: var(--tcate-bgcolor);
+}
+.tutorials .tutorial-categories .tcate:hover {
+  background-color: var(--tcate-hover);
+}
+.tutorials .tutorial-categories .tcate .tcate-icon {
+  display: none;
+  align-items: center;
+  flex-shrink: 0;
+  padding-right: 4px;
+}
+.tutorials .tutorial-categories .tcate .tcate-icon i {
+  font-size: 2rem;
+  display: flex;
+}
+.tutorials .tutorial-categories .tcate .tcate-body {
+  flex-grow: 1;
+  font-size: 12px;
+}
+.tutorials .tutorial-categories .tcate .tcate-body h5 {
+  font-size: 1.1em;
+  font-family: "Josefin Sans";
+  margin-bottom: unset;
+}
+.tutorials .tutorial-categories .tcate .tcate-body span {
+  font-size: 0.9em;
+  font-family: "Gudea";
+  padding: 0 4px;
 }
 
+.topposts_group {
+  display: flex;
+  flex-direction: column;
+  gap: 14px 3%;
+  margin-top: 20px;
+}
+.topposts_group .postlist_cont {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+.topposts_group .postlist_cont .top_header {
+  text-align: center;
+  font-size: 1.6rem;
+  font-family: "Doppio One";
+  margin-bottom: 10px;
+}
+.topposts_group .postlist_cont .postlist {
+  width: 100%;
+}
+.topposts_group .postlist_cont .postlist .post {
+  margin-bottom: 12px;
+  background-color: var(--index-post-bg-color);
+}
+.topposts_group .postlist_cont .postlist .post .p-info {
+  background-color: var(--index-post-bg-color);
+}
+@media (min-width: 576px) {
+  .tutorials .tutorial-categories .tcate {
+    width: 32%;
+  }
+}
 @media (min-width: 768px) {
-  main {
+  .nav__tutorials-cont {
     flex-direction: row;
     gap: 20px;
   }
@@ -129,6 +203,9 @@ nav.nav_index .community_links {
     background-color: var(--link_group-bg-color);
     border-radius: 10px;
     margin-bottom: 16px;
+  }
+  nav.nav_index .link_group:last-child {
+    margin-bottom: unset;
   }
   nav.nav_index .link_group .link_cont {
     gap: 6px;
@@ -148,12 +225,29 @@ nav.nav_index .community_links {
   }
   .tutorials .tcates-title {
     text-align: left;
-    margin: 20px 0 10px;
+    margin: 20px 0 10px 10px;
     font-size: 2.1rem;
+  }
+  .tutorials .tutorial-categories {
+    padding: unset;
+  }
+  .topposts_group {
+    flex-direction: row;
+    justify-content: space-between;
+    /*
+    .postlist_cont {
+        .postlist {
+            .post {
+            }
+        }
+    }*/
   }
 }
 @media (min-width: 992px) {
-  .featured_description {
+  .tutorials .featured_description {
     font-size: 16px !important;
+  }
+  .tutorials .tutorial-categories .tcate .tcate-body {
+    font-size: 14px;
   }
 }/*# sourceMappingURL=index.css.map */

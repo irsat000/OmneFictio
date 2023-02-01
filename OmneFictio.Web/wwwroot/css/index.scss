@@ -6,16 +6,16 @@ header {
     border-bottom: 1px solid var(--background-color2);
 }
 
-main {
+.nav__tutorials-cont {
     display: flex;
     flex-direction: column;
+    gap: 20px 20px;
 }
 
 nav.nav_index {
     display: flex;
     flex-direction: column;
     width: 100%;
-    margin-bottom: 20px;
 
     >span {
         margin: 10px 0 4px;
@@ -120,23 +120,120 @@ nav.nav_index {
         }
     }
 
-    .tcates-title{
+    .tcates-title {
         margin: 14px 0 6px;
         font-size: 1.8rem;
         font-family: 'Josefin Sans';
         text-align: center;
     }
-    .tutorial-categories{
-        padding: 10px;
+
+    .tutorial-categories {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 6px 1%;
+        margin: 0 -0.5%;
+        padding: 0 5px;
+        justify-content: center;
+
+        .tcate {
+            width: 49%;
+            padding: 10px 8px;
+            border-radius: 6px;
+            cursor: pointer;
+            display: flex;
+            gap: 8px;
+            transition: all 0.1s ease-in-out;
+            background-color: var(--tcate-bgcolor);
+
+            &:hover {
+                background-color: var(--tcate-hover);
+            }
+
+            .tcate-icon {
+                display: none; //flex
+                align-items: center;
+                flex-shrink: 0;
+                padding-right: 4px;
+
+                i {
+                    font-size: 2rem;
+                    display: flex;
+                }
+            }
+
+            .tcate-body {
+                flex-grow: 1;
+                font-size: 12px;
+
+                h5 {
+                    font-size: 1.1em;
+                    font-family: 'Josefin Sans';
+                    margin-bottom: unset;
+                }
+
+                span {
+                    font-size: 0.9em;
+                    font-family: 'Gudea';
+                    padding: 0 4px;
+                }
+            }
+        }
     }
 }
 
+
+.topposts_group {
+    display: flex;
+    flex-direction: column;
+    gap: 14px 3%;
+    margin-top: 20px;
+
+    .postlist_cont {
+        display: flex;
+        flex-direction: column;
+        width: 100%;
+
+        .top_header {
+            text-align: center;
+            font-size: 1.6rem;
+            font-family: 'Doppio One';
+            margin-bottom: 10px;
+        }
+
+        .postlist {
+            width: 100%;
+
+            .post {
+                margin-bottom: 12px;
+                background-color: var(--index-post-bg-color);
+
+                .p-info {
+                    background-color: var(--index-post-bg-color);
+                }
+            }
+        }
+    }
+
+    .todaytop-cont {}
+
+    .monthtop-cont {}
+}
+
 // Small devices (landscape phones, 576px and up)
-@media (min-width: 576px) {}
+@media (min-width: 576px) {
+    .tutorials {
+        .tutorial-categories {
+            .tcate {
+                //width: 49.5%;
+                width: 32%;
+            }
+        }
+    }
+}
 
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) {
-    main {
+    .nav__tutorials-cont {
         flex-direction: row;
         gap: 20px;
     }
@@ -149,6 +246,9 @@ nav.nav_index {
             background-color: var(--link_group-bg-color);
             border-radius: 10px;
             margin-bottom: 16px;
+            &:last-child{
+                margin-bottom: unset;
+            }
 
             .link_cont {
                 //width: 24%;
@@ -172,18 +272,45 @@ nav.nav_index {
                 font-size: 12px;
             }
         }
-        .tcates-title{
+
+        .tcates-title {
             text-align: left;
-            margin: 20px 0 10px;
+            margin: 20px 0 10px 10px;
             font-size: 2.1rem;
         }
+
+        .tutorial-categories {
+            padding: unset;
+        }
+    }
+
+    .topposts_group {
+        flex-direction: row;
+        justify-content: space-between;
+        /*
+        .postlist_cont {
+            .postlist {
+                .post {
+                }
+            }
+        }*/
     }
 }
 
 // Large devices (desktops, 992px and up)
 @media (min-width: 992px) {
-    .featured_description{
-        font-size: 16px !important;
+    .tutorials {
+        .featured_description {
+            font-size: 16px !important;
+        }
+
+        .tutorial-categories {
+            .tcate {
+                .tcate-body {
+                    font-size: 14px;
+                }
+            }
+        }
     }
 }
 
