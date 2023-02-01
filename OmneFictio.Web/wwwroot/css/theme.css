@@ -20,6 +20,8 @@
   --accountdropdown-themeswitcher: #454545;
   --accountdropdown-themeswitcher-hover: #4f4f4f;
   --shortcuticons-color: #ffffff;
+  --searchbar-bg-color: #313131;
+  --searchbar-boxshadow: #31313150;
   --navlink-readingtime-color: #415050;
   --navlink-readingtime-color-hover: #607d7d;
   --navlink-aboutyou-color: #473c3c;
@@ -27,6 +29,7 @@
   --navlink-others-color: #494152;
   --navlink-others-color-hover: #5f5a66;
   --index-post-bg-color: #222222;
+  --link_group-bg-color: #313131;
   --register-form-color: #404040;
   --register-input-color: #1d1d1d;
   --publish-form-color: #404040;
@@ -81,6 +84,8 @@
   --accountdropdown-themeswitcher: #d2d2d2;
   --accountdropdown-themeswitcher-hover: #c1c1c1;
   --shortcuticons-color: #626262;
+  --searchbar-bg-color: #f0f0f0;
+  --searchbar-boxshadow: #6868684f;
   --navlink-readingtime-color: #9298b9;
   --navlink-readingtime-color-hover: #777ea8;
   --navlink-aboutyou-color: #a08888;
@@ -88,6 +93,7 @@
   --navlink-others-color: #9a90a6;
   --navlink-others-color-hover: #816f96;
   --index-post-bg-color: #e5e5e5;
+  --link_group-bg-color: #ffffff;
   --register-form-color: #f0f0f0;
   --register-input-color: #dcdcdc;
   --publish-form-color: #f0f0f0;
@@ -98,7 +104,7 @@
   --pd-actionbtns-color-hover2: #bbbbbb;
   --comment-menu-bgcolor: #e3e3e3;
   --reply-bgcolor: #dcdcdc;
-  --replies-bgcolor: #cfcfcf;
+  --replies-bgcolor: #f0f0f0;
   --settings-hovernav: #e3e3e3;
   --settings-activetab: #32a1bc;
   --profile-activetab: #32a1bc;

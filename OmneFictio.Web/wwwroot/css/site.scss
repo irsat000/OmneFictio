@@ -169,7 +169,6 @@ header {
     width: 0;
     overflow-y: auto;
     background-color: var(--background-color1);
-    font-size: 1.8rem;
     font-family: 'Itim', cursive;
     overflow-x: hidden;
     transition: width 0.3s ease;
@@ -230,6 +229,7 @@ header {
     .dw-mainpage {
         border-top: 1px solid #313131;
         border-bottom: 1px solid #313131;
+        font-size: 1.5rem;
 
         a {
             /*height: 100%;
@@ -242,7 +242,7 @@ header {
     .dw-list {
         padding: 10px 0 16px;
         flex-grow: 1;
-
+        font-size: 1.3rem;
         >ul {
             >li {
                 >a {
@@ -268,6 +268,7 @@ header {
         color: #ffffff;
         transition: 0.2s ease;
         background-color: #b73d3d;
+        font-size: 1.4rem;
 
         &:hover {
             background-color: #b94f4f;
@@ -564,8 +565,8 @@ header {
         .searchbar {
             font-size: 1.2rem;
             color: var(--text-color1);
-            background-color: var(--background-color2);
-            box-shadow: 0px 0px 6px 0px var(--div-boxshadow1);
+            background-color: var(--searchbar-bg-color);
+            box-shadow: 0px 0px 6px 0px var(--searchbar-boxshadow);
             padding: 6px 42px 6px 10px;
             border: none;
             outline: none;
@@ -598,14 +599,8 @@ header {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
-
-    >* {
-        margin-right: 16px;
-
-        &:last-child {
-            margin-right: 0;
-        }
-    }
+    gap: 16px;
+    
 
     i {
         color: var(--shortcuticons-color);
@@ -614,6 +609,10 @@ header {
         transition: 0.3s ease;
         /*&:hover {
         }*/
+    }
+    
+    .chat-shortcut, .notifications-shortcut {
+        display: none;
     }
 }
 
@@ -713,6 +712,8 @@ header {
                 cursor: pointer;
                 background-color: var(--accountdropdown-themeswitcher);
                 border-radius: 3px;
+                white-space: nowrap;
+                margin: 0 10px;
 
                 &:hover {
                     background-color: var(--accountdropdown-themeswitcher-hover);
@@ -805,6 +806,7 @@ header {
             color: #ffffff;
             transition: 0.2s ease;
             background-color: #b73d3d;
+            cursor: pointer;
 
             &:hover {
                 background-color: #b94f4f;
@@ -1156,17 +1158,27 @@ header {
 
         .ad-linklist>li>a,
         .acc_dd_redbutton {
-            font-size: 1.6rem !important;
+            font-size: 1.4rem !important;
         }
     }
 }
 
 // Custom
 @media (min-width: 360px) {
+    .shortcuts-cont{
+        .chat-shortcut, .notifications-shortcut {
+            display: block;
+        }
+    }
+    .drawer{
+        .dw-chat-btn, .dw-notifications-btn{
+            display: none;
+        }
+    }
+
     .search-shortcut {
         display: none;
     }
-
     .searchbar-cont {
         display: flex;
     }
@@ -1201,13 +1213,7 @@ header {
 }
 
 @media (max-width: 240px) {
-    .notifications-shortcut {
-        display: none;
-    }
 }
 
 @media (max-width: 210px) {
-    .chat-shortcut {
-        display: none;
-    }
 }

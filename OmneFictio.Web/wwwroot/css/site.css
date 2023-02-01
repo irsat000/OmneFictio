@@ -167,7 +167,6 @@ header .header-wrap {
   width: 0;
   overflow-y: auto;
   background-color: var(--background-color1);
-  font-size: 1.8rem;
   font-family: "Itim", cursive;
   overflow-x: hidden;
   transition: width 0.3s ease;
@@ -219,6 +218,7 @@ header .header-wrap {
 .drawer .dw-mainpage {
   border-top: 1px solid #313131;
   border-bottom: 1px solid #313131;
+  font-size: 1.5rem;
 }
 .drawer .dw-mainpage a {
   /*height: 100%;
@@ -229,6 +229,7 @@ header .header-wrap {
 .drawer .dw-list {
   padding: 10px 0 16px;
   flex-grow: 1;
+  font-size: 1.3rem;
 }
 .drawer .dw-list > ul > li > a {
   padding: 4px 20px;
@@ -249,6 +250,7 @@ header .header-wrap {
   color: #ffffff;
   transition: 0.2s ease;
   background-color: #b73d3d;
+  font-size: 1.4rem;
 }
 .drawer .dw-redbutton:hover {
   background-color: #b94f4f;
@@ -510,8 +512,8 @@ header .header-wrap {
 .searchbar-cont .searchbar-wrap .searchbar {
   font-size: 1.2rem;
   color: var(--text-color1);
-  background-color: var(--background-color2);
-  box-shadow: 0px 0px 6px 0px var(--div-boxshadow1);
+  background-color: var(--searchbar-bg-color);
+  box-shadow: 0px 0px 6px 0px var(--searchbar-boxshadow);
   padding: 6px 42px 6px 10px;
   border: none;
   outline: none;
@@ -548,12 +550,7 @@ header .header-wrap {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-}
-.shortcuts-cont > * {
-  margin-right: 16px;
-}
-.shortcuts-cont > *:last-child {
-  margin-right: 0;
+  gap: 16px;
 }
 .shortcuts-cont i {
   color: var(--shortcuticons-color);
@@ -562,6 +559,9 @@ header .header-wrap {
   transition: 0.3s ease;
   /*&:hover {
   }*/
+}
+.shortcuts-cont .chat-shortcut, .shortcuts-cont .notifications-shortcut {
+  display: none;
 }
 
 .account-cont {
@@ -692,6 +692,8 @@ header .header-wrap {
   cursor: pointer;
   background-color: var(--accountdropdown-themeswitcher);
   border-radius: 3px;
+  white-space: nowrap;
+  margin: 0 10px;
 }
 .account-cont .account-dropdown .ad-theme-cont span:hover {
   background-color: var(--accountdropdown-themeswitcher-hover);
@@ -729,6 +731,7 @@ header .header-wrap {
   color: #ffffff;
   transition: 0.2s ease;
   background-color: #b73d3d;
+  cursor: pointer;
 }
 .account-cont .account-dropdown .acc_dd_redbutton:hover {
   background-color: #b94f4f;
@@ -1014,10 +1017,16 @@ header .header-wrap {
   }
   .account-dropdown .ad-linklist > li > a,
 .account-dropdown .acc_dd_redbutton {
-    font-size: 1.6rem !important;
+    font-size: 1.4rem !important;
   }
 }
 @media (min-width: 360px) {
+  .shortcuts-cont .chat-shortcut, .shortcuts-cont .notifications-shortcut {
+    display: block;
+  }
+  .drawer .dw-chat-btn, .drawer .dw-notifications-btn {
+    display: none;
+  }
   .search-shortcut {
     display: none;
   }
@@ -1046,15 +1055,5 @@ header .header-wrap {
 .filter-cont,
 .theme-switcher {
     width: 100% !important;
-  }
-}
-@media (max-width: 240px) {
-  .notifications-shortcut {
-    display: none;
-  }
-}
-@media (max-width: 210px) {
-  .chat-shortcut {
-    display: none;
   }
 }/*# sourceMappingURL=site.css.map */
