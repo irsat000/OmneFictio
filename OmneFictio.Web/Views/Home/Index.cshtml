@@ -18,199 +18,219 @@
 
 <div class="nav__tutorials-cont">
     <nav class="nav_index">
-    <span>Read boi</span>
-    <div class="start_reading_links link_group">
-        <a class="link_cont" href="/Read/Story">
-            <i class="bi bi-book-fill"></i>
-            <span>Story</span>
-        </a>
-        <a class="link_cont" href="/Read/Scenario">
-            <i class="bi bi-book-half"></i>
-            <span>Scenario</span>
-        </a>
-        <a class="link_cont" href="/Read/Fanfiction">
-            <i class="bi bi-book"></i>
-            <span>Fanfiction</span>
-        </a>
-        <a class="link_cont" href="/Read/Plot">
-            <i class="bi bi-journal-text"></i>
-            <span>Plot</span>
-        </a>
-    </div>
-    <div class="community_links link_group">
-        <div class="link_cont">
-            <i class="bi bi-card-heading"></i>
-            <span>Requests</span>
-        </div>
-        <div class="link_cont">
-            <i class="bi bi-people"></i>
-            <span>Community</span>
-        </div>
-    </div>
-    @if (username != null)
-    {
-        <span>About You</span>
-        <div class="about_you_links link_group">
-            <a class="link_cont" href="/u/@username">
-                <i class="bi bi-person"></i>
-                <span>Profile</span>
+        <span>Read boi</span>
+        <div class="start_reading_links link_group">
+            <a class="link_cont" href="/Read/Story">
+                <i class="bi bi-book-fill"></i>
+                <span>Story</span>
             </a>
-            <a class="link_cont" href="/u/@username/saved">
-                <i class="bi bi-archive"></i>
-                <span>Library</span>
+            <a class="link_cont" href="/Read/Fanfiction">
+                <i class="bi bi-book-half"></i>
+                <span>Fanfiction</span>
             </a>
-            <a class="link_cont" href="/settings/customize">
-                <i class="bi bi-sliders2"></i>
-                <span>Customize</span>
+            <a class="link_cont" href="/Read/Scenario">
+                <i class="bi bi-book"></i>
+                <span>Scenario</span>
+            </a>
+            <a class="link_cont" href="/Read/Plot">
+                <i class="bi bi-journal-text"></i>
+                <span>Plot</span>
             </a>
         </div>
-    }
-    <span>Miscellaneous</span>
-    <div class="misc_links link_group">
-        <div class="link_cont">
-            <i class="bi bi-cart"></i>
-            <span>Shop</span>
+        <div class="community_links link_group">
+            <div class="link_cont">
+                <i class="bi bi-card-heading"></i>
+                <span>Requests</span>
+            </div>
+            <div class="link_cont">
+                <i class="bi bi-people"></i>
+                <span>Community</span>
+            </div>
         </div>
-        <a class="link_cont" href="/settings">
-            <i class="bi bi-gear"></i>
-            <span>Settings</span>
-        </a>
-        <div class="link_cont">
-            <i class="bi bi-newspaper"></i>
-            <span>News</span>
+        @if (username != null)
+        {
+            <span>About You</span>
+            <div class="about_you_links link_group">
+                <a class="link_cont" href="/u/@username">
+                    <i class="bi bi-person"></i>
+                    <span>Profile</span>
+                </a>
+                <a class="link_cont" href="/u/@username/saved">
+                    <i class="bi bi-archive"></i>
+                    <span>Library</span>
+                </a>
+                <a class="link_cont" href="/settings/customize">
+                    <i class="bi bi-sliders2"></i>
+                    <span>Customize</span>
+                </a>
+            </div>
+        }
+        <span>Miscellaneous</span>
+        <div class="misc_links link_group">
+            <div class="link_cont">
+                <i class="bi bi-cart"></i>
+                <span>Shop</span>
+            </div>
+            <a class="link_cont" href="/settings">
+                <i class="bi bi-gear"></i>
+                <span>Settings</span>
+            </a>
+            <div class="link_cont">
+                <i class="bi bi-newspaper"></i>
+                <span>News</span>
+            </div>
+            <div class="link_cont">
+                <i class="bi bi-mortarboard"></i>
+                <span>Tutorials</span>
+            </div>
         </div>
-        <div class="link_cont">
-            <i class="bi bi-mortarboard"></i>
-            <span>Tutorials</span>
+    </nav>
+    <div class="tutorials">
+        <div class="featured">
+            <div class="swiper-cont">
+                <div class="fswipe-prev">
+                    <i class="bi bi-caret-left-fill"></i>
+                </div>
+                <div class="fswipe-next">
+                    <i class="bi bi-caret-right-fill"></i>
+                </div>
+                <div class="swiper-images">
+                    <a href="/images/misc/tutorial1.webp" data-featured="1" class="active">
+                        <img src="/images/misc/tutorial1.webp">
+                    </a>
+                    <a href="/images/misc/tutorial2.webp" data-featured="2">
+                        <img src="/images/misc/tutorial2.webp">
+                    </a>
+                    <a href="/images/misc/tutorial3.jpg" data-featured="3">
+                        <img src="/images/misc/tutorial3.jpg">
+                    </a>
+                    <a href="/images/misc/tutorial4.jpg" data-featured="4">
+                        <img src="/images/misc/tutorial4.jpg">
+                    </a>
+                </div>
+            </div>
+            <div class="featured_description">
+                <h4>Writing about animals</h4>
+                <span>In this tutorial, we will examine how we can give life to animals. Writing an animal is not as
+                    simple as you might think!</span>
+            </div>
+        </div>
+        <h3 class="tcates-title">Tutorials</h3>
+        <div class="tutorial-categories">
+            <a href="#" class="tcate">
+                <div class="tcate-icon">
+                    <i class="bi bi-mortarboard"></i>
+                </div>
+                <div class="tcate-body">
+                    <h5>Script Writing</h5>
+                    <span>How do we write in screenplay format?</span>
+                </div>
+            </a>
+            <a href="#" class="tcate">
+                <div class="tcate-icon">
+                    <i class="bi bi-mortarboard"></i>
+                </div>
+                <div class="tcate-body">
+                    <h5>Plot</h5>
+                    <span>How do we drive the narrative forward?</span>
+                </div>
+            </a>
+            <a href="#" class="tcate">
+                <div class="tcate-icon">
+                    <i class="bi bi-mortarboard"></i>
+                </div>
+                <div class="tcate-body">
+                    <h5>Story Elements</h5>
+                    <span>Let's find out about the core aspects of a story.</span>
+                </div>
+            </a>
+            <a href="#" class="tcate">
+                <div class="tcate-icon">
+                    <i class="bi bi-mortarboard"></i>
+                </div>
+                <div class="tcate-body">
+                    <h5>Pacing</h5>
+                    <span>Is this good? Should I go faster?</span>
+                </div>
+            </a>
+            <a href="#" class="tcate">
+                <div class="tcate-icon">
+                    <i class="bi bi-mortarboard"></i>
+                </div>
+                <div class="tcate-body">
+                    <h5>Narration</h5>
+                    <span>Who... Who said that? I see you.</span>
+                </div>
+            </a>
+            <a href="#" class="tcate">
+                <div class="tcate-icon">
+                    <i class="bi bi-mortarboard"></i>
+                </div>
+                <div class="tcate-body">
+                    <h5>Genre</h5>
+                    <span>Working with different genres.</span>
+                </div>
+            </a>
+            <a href="#" class="tcate">
+                <div class="tcate-icon">
+                    <i class="bi bi-mortarboard"></i>
+                </div>
+                <div class="tcate-body">
+                    <h5>Language</h5>
+                    <span>Fancy narration is the seasoning of a story.</span>
+                </div>
+            </a>
+            <a href="#" class="tcate">
+                <div class="tcate-icon">
+                    <i class="bi bi-mortarboard"></i>
+                </div>
+                <div class="tcate-body">
+                    <h5>Story Arc</h5>
+                    <span>Gotta know what to do and when to do.</span>
+                </div>
+            </a>
+            <a href="#" class="tcate">
+                <div class="tcate-icon">
+                    <i class="bi bi-mortarboard"></i>
+                </div>
+                <div class="tcate-body">
+                    <h5>Visual stuff</h5>
+                    <span>What do we do with the cover and illustrations?</span>
+                </div>
+            </a>
+            <a href="#" class="tcate">
+                <div class="tcate-icon">
+                    <i class="bi bi-mortarboard"></i>
+                </div>
+                <div class="tcate-body">
+                    <h5>Draft</h5>
+                    <span>A draft of the final product is necessary.</span>
+                </div>
+            </a>
+            <a href="#" class="tcate">
+                <div class="tcate-icon">
+                    <i class="bi bi-mortarboard"></i>
+                </div>
+                <div class="tcate-body">
+                    <h5>Launch</h5>
+                    <span>Are you done? I don't think so.</span>
+                </div>
+            </a>
         </div>
     </div>
-</nav>
-<div class="tutorials">
-    <div class="featured">
-        <div class="swiper-cont">
-            <img src="/images/misc/tutorial1.webp" alt="">
-        </div>
-        <div class="featured_description">
-            <h4>Writing about animals</h4>
-            <span>In this tutorial, we will examine how we can give life to animals. Writing an animal is not as simple as you might think!</span>
-        </div>
-    </div>
-    <h3 class="tcates-title">Tutorials</h3>
-    <div class="tutorial-categories">
-        <a href="#" class="tcate">
-            <div class="tcate-icon">
-                <i class="bi bi-mortarboard"></i>
-            </div>
-            <div class="tcate-body">
-                <h5>Script Writing</h5>
-                <span>How do we write in screenplay format?</span>
-            </div>
-        </a>
-        <a href="#" class="tcate">
-            <div class="tcate-icon">
-                <i class="bi bi-mortarboard"></i>
-            </div>
-            <div class="tcate-body">
-                <h5>Plot</h5>
-                <span>How do we drive the narrative forward?</span>
-            </div>
-        </a>
-        <a href="#" class="tcate">
-            <div class="tcate-icon">
-                <i class="bi bi-mortarboard"></i>
-            </div>
-            <div class="tcate-body">
-                <h5>Story Elements</h5>
-                <span>Let's find out about the core aspects of a story.</span>
-            </div>
-        </a>
-        <a href="#" class="tcate">
-            <div class="tcate-icon">
-                <i class="bi bi-mortarboard"></i>
-            </div>
-            <div class="tcate-body">
-                <h5>Pacing</h5>
-                <span>Is this good? Should I go faster?</span>
-            </div>
-        </a>
-        <a href="#" class="tcate">
-            <div class="tcate-icon">
-                <i class="bi bi-mortarboard"></i>
-            </div>
-            <div class="tcate-body">
-                <h5>Narration</h5>
-                <span>Who... Who said that? I see you.</span>
-            </div>
-        </a>
-        <a href="#" class="tcate">
-            <div class="tcate-icon">
-                <i class="bi bi-mortarboard"></i>
-            </div>
-            <div class="tcate-body">
-                <h5>Genre</h5>
-                <span>Working with different genres.</span>
-            </div>
-        </a>
-        <a href="#" class="tcate">
-            <div class="tcate-icon">
-                <i class="bi bi-mortarboard"></i>
-            </div>
-            <div class="tcate-body">
-                <h5>Language</h5>
-                <span>Fancy narration is the seasoning of a story.</span>
-            </div>
-        </a>
-        <a href="#" class="tcate">
-            <div class="tcate-icon">
-                <i class="bi bi-mortarboard"></i>
-            </div>
-            <div class="tcate-body">
-                <h5>Story Arc</h5>
-                <span>Gotta know what to do and when to do.</span>
-            </div>
-        </a>
-        <a href="#" class="tcate">
-            <div class="tcate-icon">
-                <i class="bi bi-mortarboard"></i>
-            </div>
-            <div class="tcate-body">
-                <h5>Visual stuff</h5>
-                <span>What do we do with the cover and illustrations?</span>
-            </div>
-        </a>
-        <a href="#" class="tcate">
-            <div class="tcate-icon">
-                <i class="bi bi-mortarboard"></i>
-            </div>
-            <div class="tcate-body">
-                <h5>Draft</h5>
-                <span>A draft of the final product is necessary.</span>
-            </div>
-        </a>
-        <a href="#" class="tcate">
-            <div class="tcate-icon">
-                <i class="bi bi-mortarboard"></i>
-            </div>
-            <div class="tcate-body">
-                <h5>Launch</h5>
-                <span>Are you done? I don't think so.</span>
-            </div>
-        </a>
-    </div>
-</div>
 </div>
 
 <div class="topposts_group">
     <div class="postlist_cont todaytop-cont">
         <span class="top_header">Today's Top Posts</span>
         <div class="postlist todaytop_body">
-            
+
         </div>
     </div>
     <div class="postlist_cont monthtop-cont">
         <span class="top_header">Month's Top Posts</span>
         <div class="postlist monthtop_body">
-            
+
         </div>
     </div>
 </div>

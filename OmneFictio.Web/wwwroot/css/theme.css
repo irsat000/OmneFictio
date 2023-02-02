@@ -11,6 +11,7 @@
   --div-boxshadow1: #31313150;
   --text-boxshadow1: #ffffff50;
   --text-boxshadow2: #ffffff70;
+  --cont-bordercolor1: #595959;
   --modal-background: #313131;
   --modal-line1: #3b3b3b;
   --modal-item-hover: #373737;
@@ -77,6 +78,7 @@
   --div-boxshadow1: #e5e5e550;
   --text-boxshadow1: #00000050;
   --text-boxshadow2: #00000070;
+  --cont-bordercolor1: #dcdcdc;
   --modal-background: #dcdcdc;
   --modal-line1: #b5b5b5;
   --modal-item-hover: #d1d8db;
@@ -95,7 +97,7 @@
   --navlink-others-color: #9a90a6;
   --navlink-others-color-hover: #816f96;
   --index-post-bg-color: #ffffff;
-  --link_group-bg-color: #ffffff;
+  --link_group-bg-color: #f9f9f9;
   --tcate-bgcolor: #f9f9f9;
   --tcate-hover: #ffffff;
   --register-form-color: #f0f0f0;

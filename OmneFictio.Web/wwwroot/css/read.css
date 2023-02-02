@@ -399,8 +399,8 @@ main {
 .filter-cont .f-body .f-options select,
 .filter-cont .f-body .f-options .f-allow18 {
   outline: none;
-  border: none;
-  background: var(--background-color5);
+  border: 1px solid #5e5e5e;
+  background: var(--background-color2);
   color: var(--text-color1);
   padding: 4px;
   border-radius: 5px;
