@@ -31,7 +31,6 @@ nav.nav_index .link_group {
   flex-direction: row;
   flex-wrap: wrap;
   justify-content: space-around;
-  border-top: 1px solid var(--background-color2);
   border-bottom: 1px solid var(--background-color2);
 }
 nav.nav_index .link_group .link_cont {
@@ -82,7 +81,6 @@ nav.nav_index .community_links {
 }
 .tutorials .featured .swiper-cont {
   width: 100%;
-  aspect-ratio: 1/0.5;
   border-radius: 10px;
   position: relative;
 }
@@ -91,6 +89,7 @@ nav.nav_index .community_links {
   height: 100%;
 }
 .tutorials .featured .swiper-cont .swiper-images a {
+  aspect-ratio: 1/0.5;
   width: inherit;
   height: inherit;
   display: none;
@@ -104,6 +103,27 @@ nav.nav_index .community_links {
 }
 .tutorials .featured .swiper-cont .swiper-images a.active {
   display: block;
+}
+.tutorials .featured .swiper-cont .fswipe-pagination {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px;
+  z-index: 199;
+  gap: 4px;
+}
+.tutorials .featured .swiper-cont .fswipe-pagination span {
+  opacity: 0.6;
+  padding: 3px;
+  border-radius: 50%;
+  background-color: #000;
+}
+.tutorials .featured .swiper-cont .fswipe-pagination span.active {
+  padding: 4px;
+  background-color: rgb(244, 0, 0);
 }
 .tutorials .featured .swiper-cont .fswipe-prev,
 .tutorials .featured .swiper-cont .fswipe-next {
@@ -144,6 +164,7 @@ nav.nav_index .community_links {
   width: 100%;
   border-radius: 10px;
   border: 1px solid var(--cont-bordercolor1);
+  background-color: var(--cont-bgcolor1);
   padding: 10px;
   flex-direction: column;
 }
@@ -257,7 +278,7 @@ nav.nav_index .community_links {
   }
   nav.nav_index .link_group {
     padding: 10px 0 6px;
-    background-color: var(--link_group-bg-color);
+    background-color: var(--cont-bgcolor1);
     border: 1px solid var(--cont-bordercolor1);
     border-radius: 10px;
     margin-bottom: 16px;

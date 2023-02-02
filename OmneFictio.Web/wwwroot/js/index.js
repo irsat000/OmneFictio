@@ -4,6 +4,7 @@ class ofIndex_GetTopPosts {
     monthsTopPosts;
 }
 document.addEventListener("DOMContentLoaded", function () {
+    const featured = document.querySelector('.featured');
     const featured_images = document.querySelector('.swiper-images');
     const featured_descs = document.querySelector('.featured_description');
     fetchTopPosts();
@@ -42,16 +43,23 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .catch(error => { console.log("Fetch failed -> " + error); });
     }
-    var autoSwipeFeatured = setInterval(() => {
+    let featuredInterval_isSet = true;
+    let autoSwipeFeatured = setInterval(() => {
         swipeFeatured("next");
     }, 10000);
     document.querySelector(".featured").addEventListener("mouseover", function () {
-        clearInterval(autoSwipeFeatured);
+        if (featuredInterval_isSet) {
+            clearInterval(autoSwipeFeatured);
+            featuredInterval_isSet = false;
+        }
     });
     document.querySelector(".featured").addEventListener("mouseout", function () {
-        autoSwipeFeatured = setInterval(function () {
-            swipeFeatured("next");
-        }, 10000);
+        if (featuredInterval_isSet === false) {
+            autoSwipeFeatured = setInterval(function () {
+                swipeFeatured("next");
+            }, 10000);
+            featuredInterval_isSet = true;
+        }
     });
     document.querySelector('.fswipe-next i').addEventListener('click', () => {
         swipeFeatured("next");
@@ -60,20 +68,22 @@ document.addEventListener("DOMContentLoaded", function () {
         swipeFeatured("prev");
     });
     function swipeFeatured(action) {
-        const currentActive = featured_images.querySelector('a.active');
-        const currentIndex = parseInt(currentActive.getAttribute('data-featured'), 10);
+        const currentIndex = parseInt(featured.querySelector('[data-fswipe_tabIndex].active')
+            .getAttribute('data-fswipe_tabIndex'), 10);
         const a_indexes = [...featured_images.children]
-            .map(a => parseInt(a.getAttribute('data-featured'), 10));
+            .map(a => parseInt(a.getAttribute('data-fswipe_tabIndex'), 10));
         if (a_indexes.length < 2) {
             return;
         }
-        currentActive.classList.remove('active');
-        featured_descs.querySelector('.fdesc.active').classList.remove('active');
+        featured.querySelectorAll('[data-fswipe_tabIndex].active').forEach(element => {
+            element.classList.remove('active');
+        });
         const nextIndex = action === "next"
             ? next_swiper_index(a_indexes, currentIndex)
             : prev_swiper_index(a_indexes, currentIndex);
-        featured_images.querySelector('[data-featured="' + nextIndex + '"]').classList.add('active');
-        featured_descs.querySelector('[data-featured="' + nextIndex + '"]').classList.add('active');
+        featured.querySelectorAll('[data-fswipe_tabIndex="' + nextIndex + '"]').forEach(element => {
+            element.classList.add('active');
+        });
     }
 });
 function prev_swiper_index(numbers, num) {

@@ -32,7 +32,6 @@ nav.nav_index {
         flex-direction: row;
         flex-wrap: wrap;
         justify-content: space-around;
-        border-top: 1px solid var(--background-color2);
         border-bottom: 1px solid var(--background-color2);
 
         .link_cont {
@@ -90,7 +89,6 @@ nav.nav_index {
 
         .swiper-cont {
             width: 100%;
-            aspect-ratio: 1 / 0.5;
             border-radius: 10px;
             position: relative;
 
@@ -99,6 +97,7 @@ nav.nav_index {
                 height: 100%;
 
                 a {
+                    aspect-ratio: 1/0.5;
                     width: inherit;
                     height: inherit;
                     display: none;
@@ -117,12 +116,36 @@ nav.nav_index {
                 }
             }
 
+            .fswipe-pagination {
+                position: absolute;
+                bottom: 0;
+                width: 100%;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                padding: 10px;
+                z-index: 199;
+                gap: 4px;
+
+                span {
+                    opacity: 0.6;
+                    padding: 3px;
+                    border-radius: 50%;
+                    background-color: #000;
+                }
+
+                span.active {
+                    padding: 4px;
+                    background-color: rgb(244, 0, 0);
+                }
+            }
+
             .fswipe-prev,
             .fswipe-next {
                 position: absolute;
                 bottom: 0;
                 display: flex;
-                align-items: flex-end;
+                align-items: flex-end; //In case I want to give it 100% height
                 padding: 6px;
                 z-index: 200;
 
@@ -160,8 +183,10 @@ nav.nav_index {
                 width: 100%;
                 border-radius: 10px;
                 border: 1px solid var(--cont-bordercolor1);
+                background-color: var(--cont-bgcolor1);
                 padding: 10px;
                 flex-direction: column;
+
                 h4 {
                     margin-bottom: 10px;
                     font-family: 'Josefin Sans';
@@ -173,7 +198,8 @@ nav.nav_index {
                     font-size: 0.9rem;
                 }
             }
-            .fdesc.active{
+
+            .fdesc.active {
                 display: flex;
             }
         }
@@ -307,7 +333,7 @@ nav.nav_index {
 
         .link_group {
             padding: 10px 0 6px;
-            background-color: var(--link_group-bg-color);
+            background-color: var(--cont-bgcolor1);
             border: 1px solid var(--cont-bordercolor1);
             border-radius: 10px;
             margin-bottom: 16px;
