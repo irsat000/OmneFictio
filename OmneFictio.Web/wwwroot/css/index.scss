@@ -120,8 +120,6 @@ nav.nav_index {
             .fswipe-prev,
             .fswipe-next {
                 position: absolute;
-                height: 100%;
-                top: 0;
                 bottom: 0;
                 display: flex;
                 align-items: flex-end;
@@ -156,21 +154,27 @@ nav.nav_index {
 
         .featured_description {
             width: 100%;
-            border-radius: 10px;
-            border: 1px solid var(--cont-bordercolor1);
-            padding: 10px;
-            display: flex;
-            flex-direction: column;
 
-            h4 {
-                margin-bottom: 10px;
-                font-family: 'Josefin Sans';
-                font-size: 1.1em;
+            .fdesc {
+                display: none;
+                width: 100%;
+                border-radius: 10px;
+                border: 1px solid var(--cont-bordercolor1);
+                padding: 10px;
+                flex-direction: column;
+                h4 {
+                    margin-bottom: 10px;
+                    font-family: 'Josefin Sans';
+                    font-size: 1.1rem;
+                }
+
+                span {
+                    font-family: 'Gudea';
+                    font-size: 0.9rem;
+                }
             }
-
-            span {
-                font-family: 'Gudea';
-                font-size: 0.9em;
+            .fdesc.active{
+                display: flex;
             }
         }
     }

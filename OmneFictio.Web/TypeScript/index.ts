@@ -5,7 +5,8 @@ class ofIndex_GetTopPosts {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    const swiper_images = document.querySelector('.swiper-images') as HTMLDivElement;
+    const featured_images = document.querySelector('.swiper-images') as HTMLDivElement;
+    const featured_descs = document.querySelector('.featured_description') as HTMLDivElement;
 
     fetchTopPosts();
     function fetchTopPosts() {
@@ -47,23 +48,45 @@ document.addEventListener("DOMContentLoaded", function () {
             .catch(error => { console.log("Fetch failed -> " + error) });
     }
 
-    document.querySelectorAll('.fswipe-prev i, .fswipe-next i').forEach(btn => {
-        btn.addEventListener('click', () => {
-            //Current active
-            const currentActive = swiper_images.querySelector('a.active') as HTMLElement;
-            const currentIndex = parseInt(currentActive.getAttribute('data-featured')!, 10);
-            //Get all
-            const a_indexes = [...swiper_images.children]
-                .map(a => parseInt(a.getAttribute('data-featured')!, 10));
-            //Swipe
-            const nextIndex = btn.closest('.fswipe-next')
-                ? next_swiper_index(a_indexes, currentIndex)
-                : prev_swiper_index(a_indexes, currentIndex);
-
-            currentActive.classList.remove('active');
-            swiper_images.querySelector('[data-featured="' + nextIndex + '"]')!.classList.add('active');
-        });
+    //Auto swipe interval for featured and stop when on hover
+    var autoSwipeFeatured = setInterval(() => {
+        swipeFeatured("next");
+    }, 10000)
+    document.querySelector(".featured")!.addEventListener("mouseover", function() {
+        clearInterval(autoSwipeFeatured);
     });
+    document.querySelector(".featured")!.addEventListener("mouseout", function() {
+        autoSwipeFeatured = setInterval(function() {
+            swipeFeatured("next");
+        }, 10000);
+    });
+    //Swipe featured
+    document.querySelector('.fswipe-next i')!.addEventListener('click', () => {
+        swipeFeatured("next");
+    });
+    document.querySelector('.fswipe-prev i')!.addEventListener('click', () => {
+        swipeFeatured("prev");
+    });
+    function swipeFeatured(action: string) {
+        //Current active
+        const currentActive = featured_images.querySelector('a.active') as HTMLElement;
+        const currentIndex = parseInt(currentActive.getAttribute('data-featured')!, 10);
+        //Get all
+        const a_indexes = [...featured_images.children]
+            .map(a => parseInt(a.getAttribute('data-featured')!, 10));
+        if (a_indexes.length < 2) {
+            return;
+        }
+        //Deactivate current
+        currentActive.classList.remove('active');
+        featured_descs.querySelector('.fdesc.active')!.classList.remove('active');
+        //Swipe
+        const nextIndex = action === "next"
+            ? next_swiper_index(a_indexes, currentIndex)
+            : prev_swiper_index(a_indexes, currentIndex);
+        featured_images.querySelector('[data-featured="' + nextIndex + '"]')!.classList.add('active');
+        featured_descs.querySelector('[data-featured="' + nextIndex + '"]')!.classList.add('active');
+    }
 });
 
 function prev_swiper_index(numbers: number[], num: number): number | null {

@@ -108,8 +108,6 @@ nav.nav_index .community_links {
 .tutorials .featured .swiper-cont .fswipe-prev,
 .tutorials .featured .swiper-cont .fswipe-next {
   position: absolute;
-  height: 100%;
-  top: 0;
   bottom: 0;
   display: flex;
   align-items: flex-end;
@@ -140,20 +138,26 @@ nav.nav_index .community_links {
 }
 .tutorials .featured .featured_description {
   width: 100%;
+}
+.tutorials .featured .featured_description .fdesc {
+  display: none;
+  width: 100%;
   border-radius: 10px;
   border: 1px solid var(--cont-bordercolor1);
   padding: 10px;
-  display: flex;
   flex-direction: column;
 }
-.tutorials .featured .featured_description h4 {
+.tutorials .featured .featured_description .fdesc h4 {
   margin-bottom: 10px;
   font-family: "Josefin Sans";
-  font-size: 1.1em;
+  font-size: 1.1rem;
 }
-.tutorials .featured .featured_description span {
+.tutorials .featured .featured_description .fdesc span {
   font-family: "Gudea";
-  font-size: 0.9em;
+  font-size: 0.9rem;
+}
+.tutorials .featured .featured_description .fdesc.active {
+  display: flex;
 }
 .tutorials .tcates-title {
   margin: 14px 0 6px;

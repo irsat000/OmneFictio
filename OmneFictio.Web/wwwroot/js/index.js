@@ -4,7 +4,8 @@ class ofIndex_GetTopPosts {
     monthsTopPosts;
 }
 document.addEventListener("DOMContentLoaded", function () {
-    const swiper_images = document.querySelector('.swiper-images');
+    const featured_images = document.querySelector('.swiper-images');
+    const featured_descs = document.querySelector('.featured_description');
     fetchTopPosts();
     function fetchTopPosts() {
         const todaytopBody = document.querySelector('.todaytop_body');
@@ -41,19 +42,39 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .catch(error => { console.log("Fetch failed -> " + error); });
     }
-    document.querySelectorAll('.fswipe-prev i, .fswipe-next i').forEach(btn => {
-        btn.addEventListener('click', () => {
-            const currentActive = swiper_images.querySelector('a.active');
-            const currentIndex = parseInt(currentActive.getAttribute('data-featured'), 10);
-            const a_indexes = [...swiper_images.children]
-                .map(a => parseInt(a.getAttribute('data-featured'), 10));
-            const nextIndex = btn.closest('.fswipe-next')
-                ? next_swiper_index(a_indexes, currentIndex)
-                : prev_swiper_index(a_indexes, currentIndex);
-            currentActive.classList.remove('active');
-            swiper_images.querySelector('[data-featured="' + nextIndex + '"]').classList.add('active');
-        });
+    var autoSwipeFeatured = setInterval(() => {
+        swipeFeatured("next");
+    }, 10000);
+    document.querySelector(".featured").addEventListener("mouseover", function () {
+        clearInterval(autoSwipeFeatured);
     });
+    document.querySelector(".featured").addEventListener("mouseout", function () {
+        autoSwipeFeatured = setInterval(function () {
+            swipeFeatured("next");
+        }, 10000);
+    });
+    document.querySelector('.fswipe-next i').addEventListener('click', () => {
+        swipeFeatured("next");
+    });
+    document.querySelector('.fswipe-prev i').addEventListener('click', () => {
+        swipeFeatured("prev");
+    });
+    function swipeFeatured(action) {
+        const currentActive = featured_images.querySelector('a.active');
+        const currentIndex = parseInt(currentActive.getAttribute('data-featured'), 10);
+        const a_indexes = [...featured_images.children]
+            .map(a => parseInt(a.getAttribute('data-featured'), 10));
+        if (a_indexes.length < 2) {
+            return;
+        }
+        currentActive.classList.remove('active');
+        featured_descs.querySelector('.fdesc.active').classList.remove('active');
+        const nextIndex = action === "next"
+            ? next_swiper_index(a_indexes, currentIndex)
+            : prev_swiper_index(a_indexes, currentIndex);
+        featured_images.querySelector('[data-featured="' + nextIndex + '"]').classList.add('active');
+        featured_descs.querySelector('[data-featured="' + nextIndex + '"]').classList.add('active');
+    }
 });
 function prev_swiper_index(numbers, num) {
     let prev = Number.POSITIVE_INFINITY;
