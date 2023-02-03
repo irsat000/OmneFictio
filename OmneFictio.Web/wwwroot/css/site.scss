@@ -243,6 +243,7 @@ header {
         padding: 10px 0 16px;
         flex-grow: 1;
         font-size: 1.3rem;
+
         >ul {
             >li {
                 >a {
@@ -600,7 +601,7 @@ header {
     justify-content: space-between;
     align-items: center;
     gap: 16px;
-    
+
 
     i {
         color: var(--shortcuticons-color);
@@ -610,8 +611,9 @@ header {
         /*&:hover {
         }*/
     }
-    
-    .chat-shortcut, .notifications-shortcut {
+
+    .chat-shortcut,
+    .notifications-shortcut {
         display: none;
     }
 }
@@ -1071,7 +1073,130 @@ header {
 
 
 
+footer {
+    margin-top: 20px;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--background-color1);
+    color: var(--text-color1);
+    border-top: 2px solid var(--background-color2);
 
+    .footer-body {
+        display: flex;
+        flex-direction: column;
+
+        .about_us,
+        .contact,
+        .useful_links {
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            padding: 14px;
+            gap: 10px;
+
+            .f-section_titles {
+                font-size: 1.3rem;
+                font-family: 'Josefin Sans', 'Arial';
+                border-bottom: 1px solid var(--line-red);
+                align-self: flex-start;
+                padding: 0 44px 0 8px;
+            }
+        }
+
+        .about_us {
+            .about_us-body {
+                font-size: 0.9rem;
+                text-indent: 10px;
+                font-family: 'Gudea';
+            }
+        }
+
+        .contact {
+            .contact-body {
+                display: flex;
+                flex-direction: column;
+                gap: 10px;
+                padding: 10px;
+
+                .contact-item {
+                    display: flex;
+                    align-items: flex-start;
+                    gap: 10px;
+
+                    i {
+                        display: flex;
+                        font-size: 1.5rem;
+                    }
+
+                    .contact-list {
+                        display: flex;
+                        flex-direction: column;
+                        gap: 4px;
+
+                        span {
+                            font-size: 1rem;
+                            font-family: 'Gudea';
+                        }
+                    }
+                }
+            }
+
+            .social_media {
+                display: flex;
+                gap: 6%;
+                padding: 14px 6px;
+
+                a {
+                    padding: 10px;
+                    border-radius: 4px;
+                    background-color: var(--button-1);
+                    transition: background-color 0.1s ease-in-out;
+
+                    &:hover {
+                        background-color: var(--button-1-hover);
+                    }
+
+                    i {
+                        display: flex;
+                        font-size: 1.5rem;
+                    }
+                }
+            }
+        }
+
+        .useful_links {
+            .useful_links-body {
+                padding: 6px 10px;
+
+                ul {
+                    li {
+                        margin-bottom: 8px;
+
+                        a {
+                            font-family: 'Gudea', 'Itim';
+
+                            &:hover {
+                                text-decoration: underline;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    .copyright {
+        display: flex;
+        justify-content: center;
+        padding: 10px;
+        border-top: 2px solid var(--background-color2);
+
+        span {
+            font-size: 0.9rem;
+            font-family: 'Gudea', 'Itim';
+        }
+    }
+}
 
 
 
@@ -1127,6 +1252,20 @@ header {
         display: none;
     }
 
+    footer .footer-body {
+        flex-direction: row;
+
+        .about_us {
+            width: 40%;
+        }
+
+        .contact,
+        .useful_links {
+            width: 30%;
+        }
+    }
+
+    //----------------Repetitive
     .filter-tagdd {
         width: 280px;
     }
@@ -1134,7 +1273,6 @@ header {
     .filter-addseries {
         width: 344px;
     }
-
 
     .darkmode {
         --pd-actionbtns-color: #313131 !important;
@@ -1165,13 +1303,18 @@ header {
 
 // Custom
 @media (min-width: 360px) {
-    .shortcuts-cont{
-        .chat-shortcut, .notifications-shortcut {
+    .shortcuts-cont {
+
+        .chat-shortcut,
+        .notifications-shortcut {
             display: block;
         }
     }
-    .drawer{
-        .dw-chat-btn, .dw-notifications-btn{
+
+    .drawer {
+
+        .dw-chat-btn,
+        .dw-notifications-btn {
             display: none;
         }
     }
@@ -1179,6 +1322,7 @@ header {
     .search-shortcut {
         display: none;
     }
+
     .searchbar-cont {
         display: flex;
     }
@@ -1212,8 +1356,6 @@ header {
     }
 }
 
-@media (max-width: 240px) {
-}
+@media (max-width: 240px) {}
 
-@media (max-width: 210px) {
-}
+@media (max-width: 210px) {}

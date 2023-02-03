@@ -5,6 +5,7 @@
   --background-color4: #373737;
   --background-color5: #4E4E4E;
   --background-color6: #5e5e5e;
+  --body-bg: #232323;
   --text-color1: #ffffff;
   --text-color2: #bababa;
   --text-color3: #cccccc;
@@ -63,6 +64,9 @@
   --button-blue-hover: #6799ba;
   --button-green: #247b31;
   --button-green-hover: #4c8d56;
+  --button-1: #313131;
+  --button-1-hover: #404040;
+  --line-red: #9c3030;
 }
 
 .lightmode {
@@ -72,6 +76,7 @@
   --background-color4: #d1d8db;
   --background-color5: #c5c5c5;
   --background-color6: #c5c5c5;
+  --body-bg: #e9e9e9;
   --text-color1: #282828;
   --text-color2: #393939;
   --text-color3: #757575;
@@ -130,6 +135,9 @@
   --button-blue-hover: #5685a3;
   --button-green: #61b96e;
   --button-green-hover: #4c9156;
+  --button-1: #dcdcdc;
+  --button-1-hover: #c3d3e3;
+  --line-red: #ff7777;
 }
 
 /*
