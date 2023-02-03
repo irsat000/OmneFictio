@@ -128,37 +128,31 @@ document.addEventListener("DOMContentLoaded", function () {
     document.getElementById('fadds-close')?.addEventListener('click', function () {
         closeSeriesModal();
     });
-    document.querySelectorAll('#orderby-btn, #sb-close').forEach(element => {
-        element.addEventListener('click', function () {
-            if (orderbyModal.classList.contains('dflex')) {
-                orderbyModal.classList.remove('dflex');
-                orderbyModal.classList.remove('opacity1');
-                modalbg1.classList.remove('dblock');
-            }
-            else {
-                orderbyModal.classList.add('dflex');
-                modalbg1.classList.add('dblock');
-                setTimeout(function () {
-                    orderbyModal.classList.add('opacity1');
-                }, 100);
-            }
-        });
+    document.querySelector('#orderby-btn').addEventListener('click', () => {
+        orderbyModal.classList.add('dflex');
+        setTimeout(function () {
+            orderbyModal.classList.add('opacity1');
+        }, 100);
     });
-    document.querySelectorAll('#po-filter, #f-close').forEach(element => {
-        element.addEventListener('click', function () {
-            if (filterModal.classList.contains('dflex')) {
-                filterModal.classList.remove('dflex');
-                filterModal.classList.remove('opacity1');
-                modalbg1.classList.remove('dblock');
-            }
-            else {
-                filterModal.classList.add('dflex');
-                modalbg1.classList.add('dblock');
-                setTimeout(function () {
-                    filterModal.classList.add('opacity1');
-                }, 100);
-            }
-        });
+    orderbyModal.addEventListener('click', e => {
+        const target = e.target;
+        if (target.id === 'ob-close' || target.closest('#ob-close') || target.id === 'orderby-modal') {
+            orderbyModal.classList.remove('dflex');
+            orderbyModal.classList.remove('opacity1');
+        }
+    });
+    document.querySelector('#po-filter').addEventListener('click', () => {
+        filterModal.classList.add('dflex');
+        setTimeout(function () {
+            filterModal.classList.add('opacity1');
+        }, 100);
+    });
+    filterModal.addEventListener('click', e => {
+        const target = e.target;
+        if (target.id === 'f-close' || target.closest('#f-close') || target.id === 'filter-modal') {
+            filterModal.classList.remove('dflex');
+            filterModal.classList.remove('opacity1');
+        }
     });
     function modalbg1_click_readpage() {
         if (orderbyModal.classList.contains('dflex')) {

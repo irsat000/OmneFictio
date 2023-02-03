@@ -89,16 +89,19 @@ main {
   flex-direction: column;
   gap: 12px 0;
 }
-.posts-cont .post-list #pl-column1, .posts-cont .post-list #pl-column2 {
+.posts-cont .post-list #pl-column1,
+.posts-cont .post-list #pl-column2 {
   display: flex;
   flex-direction: column;
   width: 100%;
   gap: 12px 0;
 }
-.posts-cont .post-list #pl-column1 .post, .posts-cont .post-list #pl-column2 .post {
+.posts-cont .post-list #pl-column1 .post,
+.posts-cont .post-list #pl-column2 .post {
   background-color: var(--background-color2);
 }
-.posts-cont .post-list #pl-column1 .post .p-info, .posts-cont .post-list #pl-column2 .post .p-info {
+.posts-cont .post-list #pl-column1 .post .p-info,
+.posts-cont .post-list #pl-column2 .post .p-info {
   background-color: var(--background-color2);
 }
 
@@ -178,51 +181,49 @@ main {
 }
 
 .orderby-cont {
-  display: none;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 903;
-  position: absolute;
-  top: 6%;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
-  right: 0;
+  padding-top: 6%;
+}
+.orderby-cont .orderby-box {
+  display: flex;
+  flex-direction: column;
   background-color: var(--background-color2);
   box-shadow: 0px 0px 6px 0px var(--div-boxshadow1);
-  flex-direction: column;
   width: 240px;
   border-radius: 20px;
   font-family: "Itim", cursive;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
 }
-.orderby-cont .obt-header {
+.orderby-cont .orderby-box .obt-header {
   width: 100%;
   border-bottom: 2px solid var(--background-color3);
   display: flex;
   flex-direction: row;
   align-items: flex-start;
 }
-.orderby-cont .obt-header .obt-title {
+.orderby-cont .orderby-box .obt-header .obt-title {
   flex-grow: 1;
   padding: 6px 0 6px 16px;
   font-size: 1.6rem;
 }
-.orderby-cont .obt-header .obt-close {
+.orderby-cont .orderby-box .obt-header .obt-close {
   flex-shrink: 0;
   cursor: pointer;
   padding: 6px 16px 4px 12px;
   font-size: 1.8rem;
   text-shadow: 0px 0px 6px var(--text-boxshadow1);
 }
-.orderby-cont .obt-body {
+.orderby-cont .orderby-box .obt-body {
   padding: 6px 50px 10px;
 }
-.orderby-cont .obt-body .obt-content .obt-item {
+.orderby-cont .orderby-box .obt-body .obt-content .obt-item {
   position: relative;
   padding: 6px 0;
   font-size: 1.3rem;
 }
-.orderby-cont .obt-body .obt-content .obt-item i {
+.orderby-cont .orderby-box .obt-body .obt-content .obt-item i {
   visibility: hidden;
   font-size: 0.9rem;
   position: absolute;
@@ -234,17 +235,11 @@ main {
 }
 
 .filter-cont {
-  display: none;
+  padding-top: 6%;
+}
+.filter-cont .filter-box {
+  display: flex;
   flex-direction: column;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-  z-index: 505;
-  position: fixed;
-  top: 12%;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
-  right: 0;
   background-color: var(--background-color2);
   box-shadow: 0px 0px 6px 0px var(--div-boxshadow1);
   width: 260px;
@@ -255,30 +250,20 @@ main {
      -moz-user-select: none;
       -ms-user-select: none;
           user-select: none;
-  /*.f-tagdd-cont{
-      display: none;
-      position: absolute;
-      left: 0;
-      top: 0;
-      width: 100%;
-      height: 100%;
-      z-index: 507;
-      padding: 50px;
-  }*/
 }
-.filter-cont .f-header {
+.filter-cont .filter-box .f-header {
   width: 100%;
   border-bottom: 2px solid var(--background-color3);
   display: flex;
   flex-direction: row;
   align-items: flex-start;
 }
-.filter-cont .f-header .f-reset_cont {
+.filter-cont .filter-box .f-header .f-reset_cont {
   flex-grow: 1;
   padding: 12px 0 8px 14px;
   font-size: 1.3rem;
 }
-.filter-cont .f-header .f-reset_cont #f-resetbtn {
+.filter-cont .filter-box .f-header .f-reset_cont #f-resetbtn {
   border: none;
   outline: none;
   background-color: rgb(168, 75, 75);
@@ -287,30 +272,26 @@ main {
   padding: 2px 40px;
   transition: 0.2s ease;
 }
-.filter-cont .f-header .f-reset_cont #f-resetbtn:hover {
+.filter-cont .filter-box .f-header .f-reset_cont #f-resetbtn:hover {
   background-color: rgb(160, 53, 53);
 }
-.filter-cont .f-header .f-close {
+.filter-cont .filter-box .f-header .f-close {
   flex-shrink: 0;
   cursor: pointer;
   padding: 6px 12px;
   font-size: 1.8rem;
   text-shadow: 0px 0px 6px var(--text-boxshadow1);
 }
-.filter-cont .f-body {
+.filter-cont .filter-box .f-body {
   padding: 10px 12px 0;
 }
-.filter-cont .f-body .f-type_cont {
+.filter-cont .filter-box .f-body .f-type_cont {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   padding-bottom: 3px;
-  /*span{
-      font-size: 1.4rem;
-      margin: 0 4px 7px;
-  }*/
 }
-.filter-cont .f-body .f-type_cont .f-typebtns {
+.filter-cont .filter-box .f-body .f-type_cont .f-typebtns {
   font-size: 1.1rem;
   margin: 0 4px 7px;
   background-color: rgb(139, 136, 199);
@@ -321,26 +302,26 @@ main {
   border-radius: 5px;
   padding: 2px 8px;
 }
-.filter-cont .f-body .f-type_cont .f-typebtns:hover {
+.filter-cont .filter-box .f-body .f-type_cont .f-typebtns:hover {
   background-color: rgb(117, 113, 191);
 }
-.filter-cont .f-body .f-type_cont .f-type_active {
+.filter-cont .filter-box .f-body .f-type_cont .f-type_active {
   background-color: rgb(72, 139, 78);
 }
-.filter-cont .f-body .f-type_cont .f-type_active:hover {
+.filter-cont .filter-box .f-body .f-type_cont .f-type_active:hover {
   background-color: rgb(87, 140, 92);
 }
-.filter-cont .f-body .f-fanfiction_settings {
+.filter-cont .filter-box .f-body .f-fanfiction_settings {
   display: flex;
   flex-direction: column;
 }
-.filter-cont .f-body .f-fanfiction_settings .ffs-header {
+.filter-cont .filter-box .f-body .f-fanfiction_settings .ffs-header {
   display: flex;
   justify-content: center;
   padding: 2px 10px 4px;
   font-size: 1rem;
 }
-.filter-cont .f-body .f-fanfiction_settings .ffs-header button {
+.filter-cont .filter-box .f-body .f-fanfiction_settings .ffs-header button {
   font-size: 1.1rem;
   margin: 0 6px 7px;
   background-color: rgb(139, 136, 199);
@@ -351,21 +332,21 @@ main {
   border-radius: 5px;
   padding: 4px 8px;
 }
-.filter-cont .f-body .f-fanfiction_settings .ffs-header button:hover {
+.filter-cont .filter-box .f-body .f-fanfiction_settings .ffs-header button:hover {
   background-color: rgb(117, 113, 191);
 }
-.filter-cont .f-body .f-fanfiction_settings .ffs-header button i {
+.filter-cont .filter-box .f-body .f-fanfiction_settings .ffs-header button i {
   font-size: 0.9rem;
   padding: 0 4px;
   -webkit-text-stroke: 1px white;
 }
-.filter-cont .f-body .f-fanfiction_settings .ffs-series_include {
+.filter-cont .filter-box .f-body .f-fanfiction_settings .ffs-series_include {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   margin-bottom: 10px;
 }
-.filter-cont .f-body .f-fanfiction_settings .ffs-series_include span {
+.filter-cont .filter-box .f-body .f-fanfiction_settings .ffs-series_include span {
   border-radius: 12px;
   padding: 2px 8px;
   margin: 0 3px 4px;
@@ -376,28 +357,28 @@ main {
   background-color: #985C30;
   color: #fff;
 }
-.filter-cont .f-body .f-fanfiction_settings .ffs-series_include span > i {
+.filter-cont .filter-box .f-body .f-fanfiction_settings .ffs-series_include span > i {
   display: flex;
   font-size: 1.1rem;
   margin-left: 5px;
   cursor: pointer;
 }
-.filter-cont .f-body .f-fanfiction_settings .ffs-series_include span > i:before {
+.filter-cont .filter-box .f-body .f-fanfiction_settings .ffs-series_include span > i:before {
   background-color: #c08e8e;
   border-radius: 50%;
   transition: 0.1s;
 }
-.filter-cont .f-body .f-fanfiction_settings .ffs-series_include span > i:hover::before {
+.filter-cont .filter-box .f-body .f-fanfiction_settings .ffs-series_include span > i:hover::before {
   background-color: #be2424 !important;
 }
-.filter-cont .f-body .f-options {
+.filter-cont .filter-box .f-body .f-options {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 6px 8px;
 }
-.filter-cont .f-body .f-options select,
-.filter-cont .f-body .f-options .f-allow18 {
+.filter-cont .filter-box .f-body .f-options select,
+.filter-cont .filter-box .f-body .f-options .f-allow18 {
   outline: none;
   border: 1px solid #5e5e5e;
   background: var(--background-color2);
@@ -407,62 +388,62 @@ main {
   font-size: 1.1rem;
   cursor: pointer;
 }
-.filter-cont .f-body .f-options .f-allow18 {
+.filter-cont .filter-box .f-body .f-options .f-allow18 {
   display: flex;
   flex-direction: row;
 }
-.filter-cont .f-body .f-options .f-allow18 > span {
+.filter-cont .filter-box .f-body .f-options .f-allow18 > span {
   padding-right: 6px;
 }
-.filter-cont .f-body .f-options .f-allow18 > input {
+.filter-cont .filter-box .f-body .f-options .f-allow18 > input {
   width: 1rem;
 }
-.filter-cont .f-body .f-tagsbtn_cont {
+.filter-cont .filter-box .f-body .f-tagsbtn_cont {
   display: flex;
   justify-content: space-between;
   padding: 10px;
   font-size: 1.4rem;
 }
-.filter-cont .f-body .f-tagsbtn_cont input {
+.filter-cont .filter-box .f-body .f-tagsbtn_cont input {
   border: none;
   outline: none;
   color: #fff;
   border-radius: 8px;
   padding: 2px 12px;
 }
-.filter-cont .f-body .f-tagsbtn_cont button {
+.filter-cont .filter-box .f-body .f-tagsbtn_cont button {
   border: none;
   outline: none;
   color: #fff;
   border-radius: 8px;
   padding: 2px 12px;
 }
-.filter-cont .f-body .f-tagsbtn_cont button i {
+.filter-cont .filter-box .f-body .f-tagsbtn_cont button i {
   -webkit-text-stroke: 1px white;
   padding: 0 0 0 4px;
 }
-.filter-cont .f-body .f-tagsbtn_cont .f-includetag {
+.filter-cont .filter-box .f-body .f-tagsbtn_cont .f-includetag {
   background-color: rgb(72, 139, 78);
   transition: 0.2s ease;
 }
-.filter-cont .f-body .f-tagsbtn_cont .f-includetag:hover {
+.filter-cont .filter-box .f-body .f-tagsbtn_cont .f-includetag:hover {
   background-color: rgb(58, 129, 64);
 }
-.filter-cont .f-body .f-tagsbtn_cont .f-excludetag {
+.filter-cont .filter-box .f-body .f-tagsbtn_cont .f-excludetag {
   background-color: rgb(139, 136, 199);
   transition: 0.2s ease;
 }
-.filter-cont .f-body .f-tagsbtn_cont .f-excludetag:hover {
+.filter-cont .filter-box .f-body .f-tagsbtn_cont .f-excludetag:hover {
   background-color: rgb(117, 113, 191);
 }
-.filter-cont .f-body .f-tagsincexc {
+.filter-cont .filter-box .f-body .f-tagsincexc {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   padding-bottom: 4px;
   color: #fff;
 }
-.filter-cont .f-body .f-tagsincexc span {
+.filter-cont .filter-box .f-body .f-tagsincexc span {
   border-radius: 12px;
   padding: 2px 8px;
   margin: 0 3px 4px;
@@ -471,34 +452,34 @@ main {
   display: flex;
   align-items: center;
 }
-.filter-cont .f-body .f-tagsincexc span i {
+.filter-cont .filter-box .f-body .f-tagsincexc span i {
   font-size: 1.1rem;
   margin-left: 5px;
   cursor: pointer;
   display: none;
 }
-.filter-cont .f-body .f-tagsincexc span i:before {
+.filter-cont .filter-box .f-body .f-tagsincexc span i:before {
   background-color: #be2424;
   border-radius: 50%;
   transition: 0.1s;
 }
-.filter-cont .f-body .f-tagsincexc span i:hover::before {
+.filter-cont .filter-box .f-body .f-tagsincexc span i:hover::before {
   background-color: #be2424 !important;
 }
-.filter-cont .f-body .f-tags_include > span {
+.filter-cont .filter-box .f-body .f-tags_include > span {
   background-color: #5c976d;
 }
-.filter-cont .f-body .f-tags_exclude > span {
+.filter-cont .filter-box .f-body .f-tags_exclude > span {
   background-color: #77749f;
 }
-.filter-cont .f-submit_cont {
+.filter-cont .filter-box .f-submit_cont {
   width: 100%;
   display: flex;
   justify-content: center;
   padding: 4px 0 10px;
   font-size: 1.3rem;
 }
-.filter-cont .f-submit_cont #f-submitbtn {
+.filter-cont .filter-box .f-submit_cont #f-submitbtn {
   border: none;
   outline: none;
   background-color: #33697e;
@@ -508,7 +489,7 @@ main {
   font-family: "Kaushan Script", cursive;
   transition: 0.2s ease;
 }
-.filter-cont .f-submit_cont #f-submitbtn:hover {
+.filter-cont .filter-box .f-submit_cont #f-submitbtn:hover {
   background-color: #0f546d;
 }
 
@@ -564,7 +545,7 @@ main {
   .obt-content .obt-item i {
     top: 0 !important;
   }
-  .filter-cont {
+  .filter-cont .filter-box {
     width: 340px;
   }
   .f-removetagbtn:before {

@@ -149,40 +149,34 @@ document.addEventListener("DOMContentLoaded", function () {
         closeSeriesModal();
     });
 
-    //Open-close orderby modal
-    document.querySelectorAll('#orderby-btn, #sb-close').forEach(element => {
-        element.addEventListener('click', function () {
-            if (orderbyModal.classList.contains('dflex')) {
-                orderbyModal.classList.remove('dflex');
-                orderbyModal.classList.remove('opacity1');
-                modalbg1.classList.remove('dblock');
-            }
-            else {
-                orderbyModal.classList.add('dflex');
-                modalbg1.classList.add('dblock');
-                setTimeout(function () {
-                    orderbyModal.classList.add('opacity1');
-                }, 100);
-            }
-        })
+    //Open orderby modal
+    document.querySelector('#orderby-btn')!.addEventListener('click', () => {
+        orderbyModal.classList.add('dflex');
+        setTimeout(function () {
+            orderbyModal.classList.add('opacity1');
+        }, 100);
+    }); //close orderby modal
+    orderbyModal.addEventListener('click', e => {
+        const target = e.target as HTMLElement;
+        if (target.id === 'ob-close' || target.closest('#ob-close') || target.id === 'orderby-modal') {
+            orderbyModal.classList.remove('dflex');
+            orderbyModal.classList.remove('opacity1');
+        }
     });
 
-    //Open-close filter modal
-    document.querySelectorAll('#po-filter, #f-close').forEach(element => {
-        element.addEventListener('click', function () {
-            if (filterModal.classList.contains('dflex')) {
-                filterModal.classList.remove('dflex');
-                filterModal.classList.remove('opacity1');
-                modalbg1.classList.remove('dblock');
-            }
-            else {
-                filterModal.classList.add('dflex');
-                modalbg1.classList.add('dblock');
-                setTimeout(function () {
-                    filterModal.classList.add('opacity1');
-                }, 100);
-            }
-        })
+    //Open filter modal
+    document.querySelector('#po-filter')!.addEventListener('click', () => {
+        filterModal.classList.add('dflex');
+        setTimeout(function () {
+            filterModal.classList.add('opacity1');
+        }, 100);
+    }); //close filter modal
+    filterModal.addEventListener('click', e => {
+        const target = e.target as HTMLElement;
+        if (target.id === 'f-close' || target.closest('#f-close') || target.id === 'filter-modal') {
+            filterModal.classList.remove('dflex');
+            filterModal.classList.remove('opacity1');
+        }
     });
 
     //----------Modals----------------------------------------
@@ -297,7 +291,7 @@ document.addEventListener("DOMContentLoaded", function () {
             closeTagModal();
         })
     });
-    //Hides the tag X icon when clicked outside
+    //Hides the tag X/close icon when clicked outside
     filterModal.addEventListener('click', function (e) {
         if ((<HTMLElement>e.target).getAttribute('data-ftag') === null) {
             filterModal.querySelectorAll('.f-removetagbtn').forEach(btn => {
@@ -307,8 +301,8 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         }
     });
-    
-    //this hides, shows X and removes the tag if clicked on the X
+
+    //this hides, shows X/close and removes the tag if clicked on the X
     filterModal.addEventListener('click', function (e) {
         const target = e.target as HTMLElement;
         if (target.classList.contains('f-removetagbtn')) {
