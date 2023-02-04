@@ -43,24 +43,26 @@ document.addEventListener("DOMContentLoaded", function () {
         })
             .catch(error => { console.log("Fetch failed -> " + error); });
     }
-    let featuredInterval_isSet = true;
-    let autoSwipeFeatured = setInterval(() => {
-        swipeFeatured("next");
-    }, 10000);
-    document.querySelector(".featured").addEventListener("mouseover", function () {
-        if (featuredInterval_isSet) {
-            clearInterval(autoSwipeFeatured);
-            featuredInterval_isSet = false;
-        }
-    });
-    document.querySelector(".featured").addEventListener("mouseout", function () {
-        if (featuredInterval_isSet === false) {
-            autoSwipeFeatured = setInterval(function () {
-                swipeFeatured("next");
-            }, 10000);
-            featuredInterval_isSet = true;
-        }
-    });
+    if (window.screen.width >= 992) {
+        let featuredInterval_isSet = true;
+        let autoSwipeFeatured = setInterval(() => {
+            swipeFeatured("next");
+        }, 10000);
+        document.querySelector(".featured").addEventListener("mouseover", function () {
+            if (featuredInterval_isSet) {
+                clearInterval(autoSwipeFeatured);
+                featuredInterval_isSet = false;
+            }
+        });
+        document.querySelector(".featured").addEventListener("mouseout", function () {
+            if (featuredInterval_isSet === false) {
+                autoSwipeFeatured = setInterval(function () {
+                    swipeFeatured("next");
+                }, 10000);
+                featuredInterval_isSet = true;
+            }
+        });
+    }
     document.querySelector('.fswipe-next i').addEventListener('click', () => {
         swipeFeatured("next");
     });

@@ -16,6 +16,7 @@ nav.nav_index {
   display: flex;
   flex-direction: column;
   width: 100%;
+  padding-top: 16px;
 }
 nav.nav_index > span {
   margin: 10px 0 4px;
@@ -63,6 +64,41 @@ nav.nav_index .link_group .link_cont:hover > span {
 }
 nav.nav_index .link_group .link_cont i.bi-person {
   font-size: 2.3rem;
+}
+nav.nav_index .start_reading_links {
+  width: 100%;
+  gap: 8px;
+  padding: 0 10px 14px;
+  margin-bottom: 14px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  border-bottom: 1px solid var(--background-color2);
+}
+nav.nav_index .start_reading_links .read_link {
+  padding: 10px 10px 10px 14px;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: -3px 3px 4px -5px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: -3px 3px 4px -5px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: -3px 3px 4px -5px rgba(0, 0, 0, 0.5);
+  background-color: var(--cont-bgcolor1);
+}
+nav.nav_index .start_reading_links .read_link:hover {
+  background-color: var(--cont-bgcolor2);
+}
+nav.nav_index .start_reading_links .read_link span {
+  font-size: 1.2rem;
+  height: 1.2rem;
+  font-family: "Solitreo";
+}
+nav.nav_index .start_reading_links .read_link i {
+  font-size: 1.2rem;
+  height: 1.1rem;
+  display: flex;
 }
 nav.nav_index .community_links {
   margin-top: 6px;
@@ -202,11 +238,11 @@ nav.nav_index .community_links {
   display: flex;
   gap: 8px;
   transition: all 0.1s ease-in-out;
-  background-color: var(--tcate-bgcolor);
+  background-color: var(--cont-bgcolor1);
   border: 1px solid var(--cont-bordercolor1);
 }
 .tutorials .tutorial-categories .tcate:hover {
-  background-color: var(--tcate-hover);
+  background-color: var(--cont-bgcolor2);
 }
 .tutorials .tutorial-categories .tcate .tcate-icon {
   display: none;
@@ -275,6 +311,7 @@ nav.nav_index .community_links {
   }
   nav.nav_index {
     width: 340px;
+    padding-top: 20px;
   }
   nav.nav_index .link_group {
     padding: 10px 0 6px;
@@ -288,6 +325,15 @@ nav.nav_index .community_links {
   }
   nav.nav_index .link_group .link_cont {
     gap: 6px;
+  }
+  nav.nav_index .start_reading_links {
+    padding: unset;
+    border-bottom: unset;
+    margin-bottom: 20px;
+    flex-direction: column;
+  }
+  nav.nav_index .start_reading_links .read_link {
+    width: 100%;
   }
   .tutorials {
     padding: 20px;
