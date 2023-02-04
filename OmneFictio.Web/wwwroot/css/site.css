@@ -80,19 +80,23 @@ select {
     transform: rotate(360deg);
   }
 }
-.modalbg-base {
+.modalbg-base, .modalbg-base-2 {
   display: none;
   opacity: 0;
   transition: opacity 0.3s ease;
   position: fixed;
   top: 0;
   left: 0;
-  z-index: 504;
   width: 100%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.3764705882);
   justify-content: center;
   align-items: flex-start;
+  z-index: 504;
+}
+
+.modalbg-base-2 {
+  z-index: 505 !important;
 }
 
 .modalbg1 {
@@ -715,20 +719,16 @@ header .header-wrap {
   background-color: #b94f4f;
 }
 
-.filter-tagdd {
-  display: none;
+.filter-tagdd-cont {
+  padding-top: 6%;
+}
+.filter-tagdd-cont .filter-tagdd {
+  display: flex;
   flex-direction: column;
-  position: fixed;
-  top: 12%;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
-  right: 0;
   height: 340px;
   width: 240px;
   border-radius: 20px;
   overflow: hidden;
-  z-index: 507;
   background-color: var(--modal-background);
   box-shadow: 0px 0px 6px 0px var(--div-boxshadow1);
   padding-bottom: 10px;
@@ -737,14 +737,14 @@ header .header-wrap {
       -ms-user-select: none;
           user-select: none;
 }
-.filter-tagdd .tagdd-header {
+.filter-tagdd-cont .filter-tagdd .tagdd-header {
   width: 100%;
   flex-shrink: 0;
   display: flex;
   flex-direction: row;
   padding: 10px;
 }
-.filter-tagdd .tagdd-header .tagdd-searchbar {
+.filter-tagdd-cont .filter-tagdd .tagdd-header .tagdd-searchbar {
   padding: 2px 6px;
   border: none;
   outline: none;
@@ -753,7 +753,7 @@ header .header-wrap {
   flex-shrink: 1;
   border: 1px solid var(--text-color1);
 }
-.filter-tagdd .tagdd-header > i {
+.filter-tagdd-cont .filter-tagdd .tagdd-header > i {
   margin: 0 4px 0 20px;
   margin-right: 4px;
   font-size: 1.3rem;
@@ -761,34 +761,30 @@ header .header-wrap {
   text-shadow: 0px 0px 6px var(--text-boxshadow1);
   cursor: pointer;
 }
-.filter-tagdd > ul {
+.filter-tagdd-cont .filter-tagdd > ul {
   flex-grow: 1;
   overflow-y: auto;
 }
-.filter-tagdd > ul > li {
+.filter-tagdd-cont .filter-tagdd > ul > li {
   width: 100%;
   padding: 6px 20px;
   overflow: hidden;
   cursor: pointer;
 }
-.filter-tagdd > ul > li:hover {
+.filter-tagdd-cont .filter-tagdd > ul > li:hover {
   background-color: var(--modal-item-hover);
 }
 
-.filter-addseries {
-  display: none;
+.filter-addseries-cont {
+  padding-top: 6%;
+}
+.filter-addseries-cont .filter-addseries {
+  display: flex;
   flex-direction: column;
-  position: fixed;
-  top: 12%;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
-  right: 0;
   height: 400px;
   width: 260px;
   border-radius: 20px;
   overflow: hidden;
-  z-index: 508;
   background-color: var(--modal-background);
   box-shadow: 0px 0px 6px 0px var(--div-boxshadow1);
   padding-bottom: 10px;
@@ -797,14 +793,14 @@ header .header-wrap {
       -ms-user-select: none;
           user-select: none;
 }
-.filter-addseries .fadds-header {
+.filter-addseries-cont .filter-addseries .fadds-header {
   width: 100%;
   flex-shrink: 0;
   display: flex;
   flex-direction: row;
   padding: 10px;
 }
-.filter-addseries .fadds-header .fadds-searchbar {
+.filter-addseries-cont .filter-addseries .fadds-header .fadds-searchbar {
   padding: 2px 6px;
   border: none;
   outline: none;
@@ -813,7 +809,7 @@ header .header-wrap {
   flex-shrink: 1;
   border: 1px solid var(--text-color1);
 }
-.filter-addseries .fadds-header > i {
+.filter-addseries-cont .filter-addseries .fadds-header > i {
   margin: 0 4px 0 20px;
   margin-right: 4px;
   font-size: 1.3rem;
@@ -821,7 +817,7 @@ header .header-wrap {
   text-shadow: 0px 0px 6px var(--text-boxshadow1);
   cursor: pointer;
 }
-.filter-addseries .fadds-dropdowns {
+.filter-addseries-cont .filter-addseries .fadds-dropdowns {
   padding: 4px;
   display: flex;
   flex-direction: row;
@@ -829,7 +825,7 @@ header .header-wrap {
   flex-wrap: wrap;
   padding: 0 10px 6px;
 }
-.filter-addseries .fadds-dropdowns > select {
+.filter-addseries-cont .filter-addseries .fadds-dropdowns > select {
   outline: none;
   border: none;
   background: var(--background-color5);
@@ -839,17 +835,17 @@ header .header-wrap {
   font-size: 1.1rem;
   cursor: pointer;
 }
-.filter-addseries .fadds-list {
+.filter-addseries-cont .filter-addseries .fadds-list {
   flex-grow: 1;
   overflow-y: auto;
 }
-.filter-addseries .fadds-list > li {
+.filter-addseries-cont .filter-addseries .fadds-list > li {
   width: 100%;
   padding: 6px 20px;
   overflow: hidden;
   cursor: pointer;
 }
-.filter-addseries .fadds-list > li:hover {
+.filter-addseries-cont .filter-addseries .fadds-list > li:hover {
   background-color: var(--modal-item-hover);
 }
 

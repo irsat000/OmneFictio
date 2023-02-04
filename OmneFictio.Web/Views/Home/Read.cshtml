@@ -85,7 +85,7 @@
                         </div>
                         <div class="ffs-series_include">
                             <!-- <span data-fseries="***">***<i class="bi bi-x-circle f-removeseriesbtn"></i></span>
-                                        <input type="hidden" name="seriesinclude" value="***"/> -->
+                                                <input type="hidden" name="seriesinclude" value="***"/> -->
                         </div>
                     </div>
                 }
@@ -155,79 +155,84 @@
     </div>
 </div>
 
-<div class="filter-tagdd" id="filter-tagddmodal">
-    <div class="tagdd-header">
-        <input type="text" class="tagdd-searchbar" id="tagdd-searchbar" placeholder="Search tag">
-        <i class="bi bi-x-lg" id="f-taggdd-close"></i>
+<div class="filter-tagdd-cont modalbg-base-2 opacity1" id="filter-tagddmodal">
+    <div class="filter-tagdd">
+        <div class="tagdd-header">
+            <input type="text" class="tagdd-searchbar" id="tagdd-searchbar" placeholder="Search tag">
+            <i class="bi bi-x-lg" id="f-taggdd-close"></i>
+        </div>
+        <ul class="" id="f-tagdd-list" data-action="include">
+            <li data-tagddvalue="action">Action</li>
+            <li data-tagddvalue="comedy">Comedy</li>
+            <li data-tagddvalue="fantasy">Fantasy</li>
+            <li data-tagddvalue="romance">Romance</li>
+            <li data-tagddvalue="dram">Dram</li>
+            <li data-tagddvalue="horror">Horror</li>
+            <li data-tagddvalue="adventure">Adventure</li>
+            <li data-tagddvalue="science_fiction">Science fiction</li>
+        </ul>
     </div>
-    <ul class="" id="f-tagdd-list" data-action="include">
-        <li data-tagddvalue="action">Action</li>
-        <li data-tagddvalue="comedy">Comedy</li>
-        <li data-tagddvalue="fantasy">Fantasy</li>
-        <li data-tagddvalue="romance">Romance</li>
-        <li data-tagddvalue="dram">Dram</li>
-        <li data-tagddvalue="horror">Horror</li>
-        <li data-tagddvalue="adventure">Adventure</li>
-        <li data-tagddvalue="science_fiction">Science fiction</li>
-    </ul>
 </div>
-<div class="filter-addseries" id="filter-addseriesmodal">
-    <div class="fadds-header">
-        <input type="text" class="fadds-searchbar" id="fadds-searchbar" placeholder="Search">
-        <i class="bi bi-x-lg" id="fadds-close"></i>
+
+<div class="filter-addseries-cont modalbg-base-2 opacity1" id="filter-addseriesmodal">
+    <div class="filter-addseries">
+        <div class="fadds-header">
+            <input type="text" class="fadds-searchbar" id="fadds-searchbar" placeholder="Search">
+            <i class="bi bi-x-lg" id="fadds-close"></i>
+        </div>
+        <div class="fadds-dropdowns">
+            <select>
+                <option value="0">Type</option>
+                <option value="1">Movie</option>
+                <option value="2">TV Show</option>
+                <option value="3">Game</option>
+                <option value="4">Book</option>
+                <option value="5">Anime/Manga</option>
+                <option value="6">Cartoon/Comic</option>
+                <option value="7">Other</option>
+            </select>
+            <select>
+                <option value="0">A-Z</option>
+                <option value="Others">Others</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+                <option value="F">F</option>
+                <option value="G">G</option>
+                <option value="H">H</option>
+                <option value="I">I</option>
+                <option value="J">J</option>
+                <option value="K">K</option>
+                <option value="L">L</option>
+                <option value="M">M</option>
+                <option value="N">N</option>
+                <option value="O">O</option>
+                <option value="P">P</option>
+                <option value="Q">Q</option>
+                <option value="R">R</option>
+                <option value="S">S</option>
+                <option value="T">T</option>
+                <option value="U">U</option>
+                <option value="V">V</option>
+                <option value="W">W</option>
+                <option value="X">X</option>
+                <option value="Y">Y</option>
+                <option value="Z">Z</option>
+            </select>
+        </div>
+        <ul class="fadds-list" id="fadds-list">
+            <li data-seriesval="Overlord">Overlord</li>
+            <li data-seriesval="Harry_Potter">Harry Potter</li>
+            <li data-seriesval="The_Boys">The Boys</li>
+            <li data-seriesval="Stranger_Things">Stranger Things</li>
+            <li data-seriesval="Breaking_Bad">Breaking Bad</li>
+            <li data-seriesval="Game_of_Thrones">Game of Thrones</li>
+            <li data-seriesval="Hunger_Games">Hunger Games</li>
+            <li data-seriesval="Pirates_of_the_Caribbean">Pirates of the Caribbean</li>
+        </ul>
     </div>
-    <div class="fadds-dropdowns">
-        <select>
-            <option value="0">Type</option>
-            <option value="1">Movie</option>
-            <option value="2">TV Show</option>
-            <option value="3">Game</option>
-            <option value="4">Book</option>
-            <option value="5">Anime/Manga</option>
-            <option value="6">Cartoon/Comic</option>
-            <option value="7">Other</option>
-        </select>
-        <select>
-            <option value="0">A-Z</option>
-            <option value="Others">Others</option>
-            <option value="A">A</option>
-            <option value="B">B</option>
-            <option value="C">C</option>
-            <option value="D">D</option>
-            <option value="E">E</option>
-            <option value="F">F</option>
-            <option value="G">G</option>
-            <option value="H">H</option>
-            <option value="I">I</option>
-            <option value="J">J</option>
-            <option value="K">K</option>
-            <option value="L">L</option>
-            <option value="M">M</option>
-            <option value="N">N</option>
-            <option value="O">O</option>
-            <option value="P">P</option>
-            <option value="Q">Q</option>
-            <option value="R">R</option>
-            <option value="S">S</option>
-            <option value="T">T</option>
-            <option value="U">U</option>
-            <option value="V">V</option>
-            <option value="W">W</option>
-            <option value="X">X</option>
-            <option value="Y">Y</option>
-            <option value="Z">Z</option>
-        </select>
-    </div>
-    <ul class="fadds-list" id="fadds-list">
-        <li data-seriesval="Overlord">Overlord</li>
-        <li data-seriesval="Harry_Potter">Harry Potter</li>
-        <li data-seriesval="The_Boys">The Boys</li>
-        <li data-seriesval="Stranger_Things">Stranger Things</li>
-        <li data-seriesval="Breaking_Bad">Breaking Bad</li>
-        <li data-seriesval="Game_of_Thrones">Game of Thrones</li>
-        <li data-seriesval="Hunger_Games">Hunger Games</li>
-        <li data-seriesval="Pirates_of_the_Caribbean">Pirates of the Caribbean</li>
-    </ul>
 </div>
 
 <nav class="nav-cont">

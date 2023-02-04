@@ -1,10 +1,8 @@
 
 document.addEventListener("DOMContentLoaded", function () {
-    const modalbg2 = document.querySelector('.modalbg2') as HTMLDivElement;
-
     const orderbyModal = document.getElementById('orderby-modal') as HTMLDivElement;
     const filterModal = document.getElementById('filter-modal') as HTMLDivElement;
-
+    
     const filterTagddModal = document.getElementById('filter-tagddmodal') as HTMLDivElement;
     const ftagsIncExc = Array.from(document.querySelectorAll('.f-tagsincexc') as NodeListOf<HTMLElement>) as HTMLElement[];
     const tagSearchbar = document.getElementById('tagdd-searchbar') as HTMLInputElement;
@@ -133,16 +131,36 @@ document.addEventListener("DOMContentLoaded", function () {
     //-------fetch post END----------------------
 
 
-    modalbg2.addEventListener("click", function () {
-        return modalbg2_click_readpage();
+
+    //--------MODALS--------------
+
+    //open tag include or exclude menu.
+    document.getElementById('f-includetagbtn')?.addEventListener('click', function () {
+        filterTagddModal.classList.add('dflex');
+        filterTagList.setAttribute('data-action', "include");
+    });
+    document.getElementById('f-excludetagbtn')?.addEventListener('click', function () {
+        filterTagddModal.classList.add('dflex');
+        filterTagList.setAttribute('data-action', "exclude");
+    });//Close tag include or exclude menu
+    filterTagddModal.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        if (target.id === 'f-taggdd-close' || target.id === 'filter-tagddmodal') {
+            filterTagddModal.classList.remove('dflex');
+        }
     });
 
-    //Close second modals on the page
-    document.getElementById('f-taggdd-close')?.addEventListener('click', function () {
-        closeTagModal();
-    });
-    document.getElementById('fadds-close')?.addEventListener('click', function () {
-        closeSeriesModal();
+    //Open filter series modal (fanfiction)
+    document.getElementById('fanfic-chooseseries')?.addEventListener('click', function () {
+        filterAddseriesModal.classList.add('dflex');
+        filterAddseriesModal.classList.add('opacity1');
+    }); //Close filter series modal
+    filterAddseriesModal.addEventListener('click', (e) => {
+        //fadds = filter add series
+        const target = e.target as HTMLElement;
+        if (target.id === 'fadds-close' || target.id === 'filter-addseriesmodal') {
+            filterAddseriesModal.classList.remove('dflex');
+        }
     });
 
     //Open orderby modal
@@ -175,69 +193,9 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    //----------Modals----------------------------------------
-
-
-    function modalbg2_click_readpage() {
-        closeTagModal();
-        closeSeriesModal();
-    }
-    function closeTagModal() {
-        if (filterTagddModal.classList.contains('dflex')) {
-            filterTagddModal.classList.remove('dflex');
-            modalbg2.classList.remove('dblock');
-        }
-    }
-    function closeSeriesModal() {
-        if (filterAddseriesModal.classList.contains('dflex')) {
-            filterAddseriesModal.classList.remove('dflex');
-            modalbg2.classList.remove('dblock');
-        }
-    }
-
-    //Resets the filters
-    filterModal.querySelector('#f-resetbtn')?.addEventListener('click', function () {
-        //tags
-        ftagsIncExc.forEach(body => {
-            body.innerHTML = "";
-        })
-        //fanfiction series
-        filterSeriesInclude.innerHTML = "";
-        //options
-        filterModal.querySelectorAll(".f-options > select").forEach(select => {
-            (<HTMLInputElement>select).value = "0";
-        });
-        //tag modal
-        tagSearchbar.value = "";
-        //fanfiction modal
-        seriesSearchbar.value = "";
-        filterAddseriesModal.querySelectorAll(".fadds-dropdowns > select").forEach(select => {
-            (<HTMLInputElement>select).value = "0";
-        });
-    });
-
 
     //-----TAG SELECTIONS------
 
-    //open tag include and exclude menus.
-    //closes modal if it's open
-    document.getElementById('f-includetagbtn')?.addEventListener('click', function () {
-        openFilterTagDD("include");
-    });
-    document.getElementById('f-excludetagbtn')?.addEventListener('click', function () {
-        openFilterTagDD("exclude");
-    });
-    function openFilterTagDD(action: string) {
-        filterTagddModal.classList.add('dflex');
-        modalbg2.classList.add('dblock');
-
-        if (action == "include") {
-            filterTagList.setAttribute('data-action', 'include');
-        }
-        else if (action == "exclude") {
-            filterTagList.setAttribute('data-action', 'exclude');
-        }
-    }
     //adding tags to the filter modal
     filterTagList.querySelectorAll('li').forEach(li => {
         li.addEventListener('click', function () {
@@ -272,7 +230,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 excludeBody.appendChild(newTagInput);
             }
             tagSearchbar.value = "";
-            closeTagModal();
+            filterTagddModal.classList.remove('dflex');
         })
     });
     //Hides the tag X/close icon when clicked outside
@@ -335,13 +293,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //--------FANFICTION SERIES OPTIONS-----------
 
-    //choose series or add crossover menu for fanfictions
-    //closes modal if it's open
-    document.getElementById('fanfic-chooseseries')?.addEventListener('click', function () {
-        filterAddseriesModal.classList.add('dflex');
-        modalbg2.classList.add('dblock');
-    });
-
     //adding series to the filter modal / fanfiction
     //fadds = fanfiction add series
 
@@ -365,7 +316,7 @@ document.addEventListener("DOMContentLoaded", function () {
             filterSeriesInclude.appendChild(newSeriesInput);
 
             seriesSearchbar.value = "";
-            closeSeriesModal();
+            filterAddseriesModal.classList.remove('dflex');
         });
     });
 
@@ -378,9 +329,31 @@ document.addEventListener("DOMContentLoaded", function () {
             target.parentElement!.remove();
         }
     });
-
     //--------------------
 
+
+    //-------FILTERS---------
+
+    //Resets the filters
+    filterModal.querySelector('#f-resetbtn')?.addEventListener('click', function () {
+        //tags
+        ftagsIncExc.forEach(body => {
+            body.innerHTML = "";
+        })
+        //fanfiction series
+        filterSeriesInclude.innerHTML = "";
+        //options
+        filterModal.querySelectorAll(".f-options > select").forEach(select => {
+            (<HTMLInputElement>select).value = "0";
+        });
+        //tag modal
+        tagSearchbar.value = "";
+        //fanfiction modal
+        seriesSearchbar.value = "";
+        filterAddseriesModal.querySelectorAll(".fadds-dropdowns > select").forEach(select => {
+            (<HTMLInputElement>select).value = "0";
+        });
+    });
 
 
 });

@@ -69,19 +69,6 @@ document.addEventListener("DOMContentLoaded", function () {
         modalbg2.classList.add('dblock');
     });
 
-    //searchbar for tags
-    //Will be used vanilla instead
-    /*$("#wf-addtag-searchbar").keyup(function(){
-        var filter = $(this).val();
-        $("#wf-addtag-list > li").each(function () {
-            if ($(this).text().search(new RegExp(filter, "i")) < 0) {
-                $(this).hide();
-            } else {
-                $(this).show()
-            }
-        });
-    });*/
-
     //adding tags
     document.getElementById('wf-addtag-list')!.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
@@ -109,19 +96,6 @@ document.addEventListener("DOMContentLoaded", function () {
         seriesmenu.classList.add('dflex');
         modalbg2.classList.add('dblock');
     });
-
-    //searchbar for choosing series
-    //Will be vanilla
-    /*$("#wf-addseries-searchbar").keyup(function(){
-        var filter = $(this).val();
-        $("#wf-addseries-list > li").each(function () {
-            if ($(this).text().search(new RegExp(filter, "i")) < 0) {
-                $(this).hide();
-            } else {
-                $(this).show()
-            }
-        });
-    });*/
 
     //adding series to the filter modal / fanfiction
     document.getElementById('wf-addseries-list')!.addEventListener('click', (e) => {
@@ -154,17 +128,6 @@ document.addEventListener("DOMContentLoaded", function () {
         let message = document.querySelector('.wf-message') as HTMLSpanElement;
         message.innerHTML = "";
         message.style.color = "#b22525";
-
-        /*const payload = JSON.stringify(Object.fromEntries(new FormData(createpost_form)));
-        const payload = {
-            Title: 'Post title from fetch api',
-            PostDescription: 'Post description from fetch api',
-            PostTypeId: 3,
-            LanguageId: 1,
-            RatedAsId: 2,
-            CoverImage: null,
-            TagList: null
-        };*/
 
         //Request
         let payload = Object.fromEntries(new FormData(createpost_form)) as any;

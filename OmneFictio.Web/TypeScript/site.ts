@@ -523,7 +523,6 @@ function fetchComments(type: string, parentid: string, section: HTMLElement) {
 //---reply modal----
 function closeRepliesModal() {
     const repliesModal = document.getElementById('modal-replies') as HTMLDivElement;
-    repliesModal.classList.remove('opacity1');
     repliesModal.classList.remove('dflex');
     if (frController) {
         frController.abort();
@@ -537,7 +536,6 @@ function openRepliesModal(commentId: string, { gotoReplyId, replyToComment }: an
         return;
     }
     repliesModal.classList.add('dflex');
-    repliesModal.classList.add('opacity1');
     const replySection = repliesModal.querySelector('.mr-body') as HTMLElement;
     fetchReplies(commentId, replySection, { gotoReplyId: gotoReplyId, replyToComment: replyToComment });
 }

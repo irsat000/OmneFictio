@@ -445,7 +445,6 @@ function fetchComments(type, parentid, section) {
 }
 function closeRepliesModal() {
     const repliesModal = document.getElementById('modal-replies');
-    repliesModal.classList.remove('opacity1');
     repliesModal.classList.remove('dflex');
     if (frController) {
         frController.abort();
@@ -459,7 +458,6 @@ function openRepliesModal(commentId, { gotoReplyId, replyToComment } = {}) {
         return;
     }
     repliesModal.classList.add('dflex');
-    repliesModal.classList.add('opacity1');
     const replySection = repliesModal.querySelector('.mr-body');
     fetchReplies(commentId, replySection, { gotoReplyId: gotoReplyId, replyToComment: replyToComment });
 }
