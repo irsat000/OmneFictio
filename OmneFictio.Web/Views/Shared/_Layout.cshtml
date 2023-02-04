@@ -339,23 +339,25 @@
         </div>
     </template>
 
-
-    <div class="modal-replies" id="modal-replies">
-        <div class="mr-header">
-            <span>Replies</span>
-            <div class="mr-close" id="mr-close">
-                <i class="bi bi-x-lg"></i>
+    <div class="modal-replies-cont modalbg-base" id="modal-replies">
+        <div class="modal-replies">
+            <div class="mr-header">
+                <span>Replies</span>
+                <div class="mr-close" id="mr-close">
+                    <i class="bi bi-x-lg"></i>
+                </div>
             </div>
-        </div>
-        <div class="mr-body">
-            <div class="mr-comment-cont">
+            <div class="mr-body">
+                <div class="mr-comment-cont">
 
-            </div>
-            <div class="mr-replies-cont">
+                </div>
+                <div class="mr-replies-cont">
 
+                </div>
             </div>
         </div>
     </div>
+
 
     <div class="login-modal-cont modalbg-base" id="login-modal">
         <form class="login-modal">
@@ -402,80 +404,82 @@
         </div>
     </div>
 
-    <div class="drawer" id="drawer">
-        <div class="dw-top">
-            <div class="dw-account">
-                <div class="dw-userimg">
-                    @if (userPicture != null && userId != null)
-                    {
-                        @Html.Raw("<img src='/images/users/" + userPicture + "'/>")
-                    }
-                    else
-                    {
-                        <i class="bi bi-person-square"></i>
-                    }
+    <div class="drawer-cont modalbg-base" id="drawer">
+        <div class="drawer">
+            <div class="dw-top">
+                <div class="dw-account">
+                    <div class="dw-userimg">
+                        @if (userPicture != null && userId != null)
+                        {
+                            @Html.Raw("<img src='/images/users/" + userPicture + "'/>")
+                        }
+                        else
+                        {
+                            <i class="bi bi-person-square"></i>
+                        }
+                    </div>
+                </div>
+                <div class="dw-close" id="dw-close">
+                    <i class="bi bi-x-lg"></i>
                 </div>
             </div>
-            <div class="dw-close">
-                <i class="bi bi-x-lg"></i>
-            </div>
-        </div>
-        <div class="dw-username">
-            @if (userId != null)
-            {
-                <span>@username</span>
-            }
-            else
-            {
-                <span class="dw-username">--</span>
-            }
-        </div>
-        <div class="dw-mainpage">
-            <a href="/">OmneFictio</a>
-        </div>
-        <div class="dw-list">
-            <ul>
+            <div class="dw-username">
                 @if (userId != null)
                 {
-                    <li><a href="/u/@username">
-                            <div class="dw-icon-cont"><i class="bi bi-person"></i></div>Profile
-                        </a></li>
-                    <li><a href="/u/@username/saved">
-                            <div class="dw-icon-cont"><i class="bi bi-collection"></i></div>Library
-                        </a></li>
-                    <li><a href="/u/@username/friends">
-                            <div class="dw-icon-cont"><i class="bi bi-people"></i></div>Friends
-                        </a></li>
+                    <span>@username</span>
                 }
                 else
                 {
-                    <li><a class="login-openbtn">
-                            <div class="dw-icon-cont"><i class="bi bi-person"></i></div>Login
-                        </a></li>
-                    <li><a href="/Register">
-                            <div class="dw-icon-cont"><i class="bi bi-person-plus"></i></div>Register
-                        </a></li>
+                    <span class="dw-username">--</span>
                 }
-                <li><a href="#">
-                        <div class="dw-icon-cont"><i class="bi bi-cart"></i></div>Shop
-                    </a></li>
-                <li class="dw-chat-btn"><a href="#">
-                        <div class="dw-icon-cont"><i class="bi bi-chat-dots"></i></div>Chat
-                    </a></li>
-                <li class="dw-notifications-btn"><a href="#">
-                        <div class="dw-icon-cont"><i class="bi bi-bell"></i></div>Notifications
-                    </a></li>
-                <li><a href="/settings">
-                        <div class="dw-icon-cont"><i class="bi bi-gear"></i></div>Settings
-                    </a></li>
-            </ul>
+            </div>
+            <div class="dw-mainpage">
+                <a href="/">OmneFictio</a>
+            </div>
+            <div class="dw-list">
+                <ul>
+                    @if (userId != null)
+                    {
+                        <li><a href="/u/@username">
+                                <div class="dw-icon-cont"><i class="bi bi-person"></i></div>Profile
+                            </a></li>
+                        <li><a href="/u/@username/saved">
+                                <div class="dw-icon-cont"><i class="bi bi-collection"></i></div>Library
+                            </a></li>
+                        <li><a href="/u/@username/friends">
+                                <div class="dw-icon-cont"><i class="bi bi-people"></i></div>Friends
+                            </a></li>
+                    }
+                    else
+                    {
+                        <li><a class="login-openbtn">
+                                <div class="dw-icon-cont"><i class="bi bi-person"></i></div>Login
+                            </a></li>
+                        <li><a href="/Register">
+                                <div class="dw-icon-cont"><i class="bi bi-person-plus"></i></div>Register
+                            </a></li>
+                    }
+                    <li><a href="#">
+                            <div class="dw-icon-cont"><i class="bi bi-cart"></i></div>Shop
+                        </a></li>
+                    <li class="dw-chat-btn"><a href="#">
+                            <div class="dw-icon-cont"><i class="bi bi-chat-dots"></i></div>Chat
+                        </a></li>
+                    <li class="dw-notifications-btn"><a href="#">
+                            <div class="dw-icon-cont"><i class="bi bi-bell"></i></div>Notifications
+                        </a></li>
+                    <li><a href="/settings">
+                            <div class="dw-icon-cont"><i class="bi bi-gear"></i></div>Settings
+                        </a></li>
+                </ul>
+            </div>
+            @if (userId != null)
+            {
+                <a class="logoutBtn dw-redbutton">
+                    <div class="dw-icon-cont"><i class="bi bi-box-arrow-left"></i></div>Logout
+                </a>
+            }
         </div>
-        @if (userId != null)
-        {
-            <a class="logoutBtn dw-redbutton">
-                <div class="dw-icon-cont"><i class="bi bi-box-arrow-left"></i></div>Logout
-            </a>
-        }
     </div>
 
 

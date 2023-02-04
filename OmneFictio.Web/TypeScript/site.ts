@@ -95,12 +95,11 @@ class ofRead_GetPosts {
     pages!: number;
 }
 
-//let modalbg1_click_site: () => void;
 
 document.addEventListener("DOMContentLoaded", function () {
     const dombody = document.getElementsByTagName("BODY")[0] as HTMLBodyElement;
-    const modalbg1 = document.querySelector('.modalbg1') as HTMLDivElement;
     const drawer = document.getElementById('drawer') as HTMLDivElement;
+    const repliesModal = document.getElementById('modal-replies') as HTMLDivElement;
     const loginModal = document.getElementById('login-modal') as HTMLFormElement;
     const acDropdown = document.querySelector('.account-dropdown') as HTMLDivElement;
     const switchThemeModal = document.getElementById('theme-switcher-modal') as HTMLDivElement;
@@ -148,25 +147,6 @@ document.addEventListener("DOMContentLoaded", function () {
         })
     });
 
-    //close modals, dropdowns, drawer etc when user click on the dark background
-    modalbg1.addEventListener("click", function () {
-        if (drawer.classList.contains('active')) {
-            drawer.classList.remove('active');
-            modalbg1.classList.remove('dblock');
-        }
-        if (loginModal.classList.contains('dflex')) {
-            loginModal.classList.remove('dflex');
-            loginModal.classList.remove('opacity1');
-            modalbg1.classList.remove('dblock');
-        }
-        if (switchThemeModal.classList.contains('dflex')) {
-            switchThemeModal.classList.remove('dflex');
-            switchThemeModal.classList.remove('opacity1');
-            modalbg1.classList.remove('dblock');
-        }
-        window.closeRepliesModal();
-    });
-
     //Top-right account dropdown menu
     document.querySelector('.account_btn-cont')!.addEventListener("click", function () {
         if (acDropdown.classList.contains('dflex')) {
@@ -183,18 +163,23 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     });
 
-    //Drawer for mobile
-    document.querySelectorAll('.drawerbtn-cont, .dw-close').forEach(btn => {
+    //Open drawer (mobile)
+    document.querySelectorAll('.drawerbtn-cont').forEach(btn => {
         btn.addEventListener('click', function () {
-            if (drawer.classList.contains('active')) {
-                drawer.classList.remove('active');
-                modalbg1.classList.remove('dblock');
-            }
-            else {
-                drawer.classList.add('active');
-                modalbg1.classList.add('dblock');
-            }
+            drawer.classList.add('dblock');
+            setTimeout(() => { //for transition to have an effect
+                drawer.querySelector('.drawer')!.classList.add('active');
+            }, 1)
         })
+    }); //close drawer
+    drawer.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        if(target.id === 'dw-close' || target.closest('#dw-close') || target.id === 'drawer'){
+            drawer.querySelector('.drawer')!.classList.remove('active');
+            setTimeout(() => { //for transition to have an effect
+                drawer.classList.remove('dblock');
+            }, 300)
+        }
     });
 
     //Open login modal
@@ -209,8 +194,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 acDropdown.classList.remove('opacity1');
                 acDropdown.classList.remove('dflex');
             }
-            if (drawer.classList.contains('active')) {
-                drawer.classList.remove('active');
+            if (drawer.classList.contains('dblock')) {
+                drawer.classList.remove('dblock');
+                drawer.querySelector('.drawer')!.classList.remove('active');
             }
         });
     }); //Close login modal
@@ -219,6 +205,15 @@ document.addEventListener("DOMContentLoaded", function () {
         if (target.id === 'lm-closebtn' || target.closest('#lm-closebtn') || target.id === 'login-modal') {
             loginModal.classList.remove('dflex');
             loginModal.classList.remove('opacity1');
+        }
+    });
+
+    
+    //Close replies modal
+    repliesModal.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        if (target.id === 'mr-close' || target.closest('#mr-close') || target.id === 'modal-replies') {
+            window.closeRepliesModal();
         }
     });
 
@@ -273,10 +268,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
-    //Close replies modal
-    document.querySelector('.mr-close')!.addEventListener('click', function () {
-        window.closeRepliesModal();
-    });
 
     //login modal - fetch api
     loginModal.addEventListener('submit', function (event) {
@@ -390,6 +381,7 @@ function createAddReplyField(section: HTMLDivElement, target: string | null = nu
     const pseudo_loggedUId = document.getElementById('loggedin-username')?.textContent; //pseudo
     if (!pseudo_loggedUname || !pseudo_loggedUId) {
         //Not logged in, maybe tell the user to login first
+        alert("Log in, please");
         return;
     }
 
@@ -530,30 +522,24 @@ function fetchComments(type: string, parentid: string, section: HTMLElement) {
 
 //---reply modal----
 function closeRepliesModal() {
-    const modalbg1 = document.querySelector('.modalbg1') as HTMLDivElement;
     const repliesModal = document.getElementById('modal-replies') as HTMLDivElement;
-    if (repliesModal.classList.contains('dflex')) {
-        repliesModal.classList.remove('dflex');
-        modalbg1.classList.remove('dblock');
-        if (frController) {
-            frController.abort();
-        }
-        repliesModal.querySelector('.mr-body .mr-comment-cont')!.innerHTML = "";
-        repliesModal.querySelector('.mr-body .mr-replies-cont')!.innerHTML = "";
+    repliesModal.classList.remove('opacity1');
+    repliesModal.classList.remove('dflex');
+    if (frController) {
+        frController.abort();
     }
+    repliesModal.querySelector('.mr-body .mr-comment-cont')!.innerHTML = "";
+    repliesModal.querySelector('.mr-body .mr-replies-cont')!.innerHTML = "";
 }
 function openRepliesModal(commentId: string, { gotoReplyId, replyToComment }: any = {}) {
-    const modalbg1 = document.querySelector('.modalbg1') as HTMLDivElement;
     const repliesModal = document.getElementById('modal-replies') as HTMLDivElement;
     if (document.getElementById('comment_instance') == null) {
         return;
     }
-    if (!repliesModal.classList.contains('dflex')) {
-        repliesModal.classList.add('dflex');
-        modalbg1.classList.add('dblock');
-        const replySection = repliesModal.querySelector('.mr-body') as HTMLElement;
-        fetchReplies(commentId, replySection, { gotoReplyId: gotoReplyId, replyToComment: replyToComment });
-    }
+    repliesModal.classList.add('dflex');
+    repliesModal.classList.add('opacity1');
+    const replySection = repliesModal.querySelector('.mr-body') as HTMLElement;
+    fetchReplies(commentId, replySection, { gotoReplyId: gotoReplyId, replyToComment: replyToComment });
 }
 let frController: AbortController | null;
 function fetchReplies(commentId: string, section: HTMLElement, { gotoReplyId, replyToComment }: any = {}) {

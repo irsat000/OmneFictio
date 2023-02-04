@@ -168,19 +168,20 @@ header .header-wrap {
   font-size: 3.2rem;
 }
 
-.drawer.active {
+.drawer-cont {
+  opacity: 1 !important;
+}
+.drawer-cont .drawer.active {
   width: 70% !important;
 }
-
-.drawer {
-  display: flex;
-  flex-direction: column;
-  z-index: 550;
-  position: fixed;
-  top: 0;
+.drawer-cont .drawer {
+  position: absolute;
   left: 0;
+  top: 0;
   height: 100%;
   width: 0;
+  display: flex;
+  flex-direction: column;
   overflow-y: auto;
   background-color: var(--background-color1);
   font-family: "Itim", cursive;
@@ -188,76 +189,77 @@ header .header-wrap {
   transition: width 0.3s ease;
   color: var(--text-color1);
 }
-.drawer .dw-top {
+.drawer-cont .drawer .dw-top {
   display: flex;
   flex-direction: row;
+  align-items: flex-start;
   border-bottom: 1px solid var(--background-color2);
 }
-.drawer .dw-top .dw-close {
+.drawer-cont .drawer .dw-top .dw-close {
   padding: 10px;
   flex-shrink: 0;
 }
-.drawer .dw-top .dw-close i {
+.drawer-cont .drawer .dw-top .dw-close i {
   font-size: 2rem;
 }
-.drawer .dw-top .dw-account {
+.drawer-cont .drawer .dw-top .dw-account {
   flex-grow: 1;
   display: flex;
   justify-content: center;
   overflow: hidden;
 }
-.drawer .dw-top .dw-account .dw-userimg {
+.drawer-cont .drawer .dw-top .dw-account .dw-userimg {
   display: flex;
   justify-content: center;
   padding: 1rem 0 10px;
 }
-.drawer .dw-top .dw-account .dw-userimg img {
+.drawer-cont .drawer .dw-top .dw-account .dw-userimg img {
   width: 4rem;
   height: 4rem;
   border-radius: 6px;
 }
-.drawer .dw-top .dw-account .dw-userimg i {
+.drawer-cont .drawer .dw-top .dw-account .dw-userimg i {
   font-size: 4rem;
 }
-.drawer .dw-top .dw-account .dw-acc-info {
+.drawer-cont .drawer .dw-top .dw-account .dw-acc-info {
   font-family: "Hubballi", cursive;
   padding-bottom: 6px;
   font-size: 1.1rem;
 }
-.drawer .dw-username {
+.drawer-cont .drawer .dw-username {
   display: flex;
   justify-content: center;
   font-family: "Doppio One", sans-serif;
   padding: 8px 0;
   font-size: 1.1rem;
 }
-.drawer .dw-mainpage {
+.drawer-cont .drawer .dw-mainpage {
   border-top: 1px solid #313131;
   border-bottom: 1px solid #313131;
   font-size: 1.5rem;
 }
-.drawer .dw-mainpage a {
+.drawer-cont .drawer .dw-mainpage a {
   /*height: 100%;
   width: 100%;*/
   padding: 6px 0 6px 20px;
   font-family: "Kaushan Script", cursive;
 }
-.drawer .dw-list {
+.drawer-cont .drawer .dw-list {
   padding: 10px 0 16px;
   flex-grow: 1;
   font-size: 1.3rem;
 }
-.drawer .dw-list > ul > li > a {
+.drawer-cont .drawer .dw-list > ul > li > a {
   padding: 4px 20px;
   color: var(--text-color1) !important;
   transition: 0.2s ease;
   display: flex;
   cursor: pointer;
 }
-.drawer .dw-list > ul > li > a:hover {
+.drawer-cont .drawer .dw-list > ul > li > a:hover {
   background-color: var(--background-color2);
 }
-.drawer .dw-redbutton {
+.drawer-cont .drawer .dw-redbutton {
   display: flex;
   position: -webkit-sticky;
   position: sticky;
@@ -268,13 +270,13 @@ header .header-wrap {
   background-color: #b73d3d;
   font-size: 1.4rem;
 }
-.drawer .dw-redbutton:hover {
+.drawer-cont .drawer .dw-redbutton:hover {
   background-color: #b94f4f;
 }
-.drawer .dw-icon-cont {
+.drawer-cont .drawer .dw-icon-cont {
   padding-right: 14px;
 }
-.drawer .dw-icon-cont i {
+.drawer-cont .drawer .dw-icon-cont i {
   font-size: 1.4rem;
 }
 

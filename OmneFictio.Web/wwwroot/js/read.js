@@ -1,6 +1,5 @@
 "use strict";
 document.addEventListener("DOMContentLoaded", function () {
-    const modalbg1 = document.querySelector('.modalbg1');
     const modalbg2 = document.querySelector('.modalbg2');
     const orderbyModal = document.getElementById('orderby-modal');
     const filterModal = document.getElementById('filter-modal');
@@ -116,9 +115,6 @@ document.addEventListener("DOMContentLoaded", function () {
             appendLocation.appendChild(pagClone);
         }
     }
-    modalbg1.addEventListener("click", function () {
-        return modalbg1_click_readpage();
-    });
     modalbg2.addEventListener("click", function () {
         return modalbg2_click_readpage();
     });
@@ -154,18 +150,6 @@ document.addEventListener("DOMContentLoaded", function () {
             filterModal.classList.remove('opacity1');
         }
     });
-    function modalbg1_click_readpage() {
-        if (orderbyModal.classList.contains('dflex')) {
-            orderbyModal.classList.remove('dflex');
-            orderbyModal.classList.remove('opacity1');
-            modalbg1.classList.remove('dblock');
-        }
-        if (filterModal.classList.contains('dflex')) {
-            filterModal.classList.remove('dflex');
-            filterModal.classList.remove('opacity1');
-            modalbg1.classList.remove('dblock');
-        }
-    }
     function modalbg2_click_readpage() {
         closeTagModal();
         closeSeriesModal();

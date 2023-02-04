@@ -1,13 +1,9 @@
 "use strict";
 document.addEventListener("DOMContentLoaded", function () {
     const params = new URLSearchParams(window.location.search);
-    const modalbg1 = document.querySelector('.modalbg1');
     const commentSection = document.getElementById('comment-section');
     const chaptersModal = document.getElementById('modal-chapters');
     const fullsizecover = document.getElementById('fullsize-cover');
-    modalbg1.addEventListener("click", function () {
-        closeChaptersModal();
-    });
     document.addEventListener('click', function (e) {
         const target = e.target;
         if (target.classList.contains('p-basecover')) {
@@ -158,10 +154,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.querySelectorAll('#mc-close, #get_chapters').forEach(function (element) {
                     element.addEventListener("click", open_close_chapters_modal);
                     element.addEventListener("touchstart", open_close_chapters_modal);
+                    function open_close_chapters_modal() {
+                        chaptersModal.classList.add('dflex');
+                        chaptersModal.classList.add('opacity1');
+                    }
                 });
                 window.createSkeletons("post-commentsection");
                 window.fetchComments("post", postId, commentSection);
-                document.getElementById('addCommentToPost').addEventListener('click', function () {
+                document.getElementById('addCommentToPost')?.addEventListener('click', function () {
                     window.AddComment(JSON.stringify({
                         Body: document.getElementById('commentBody').value,
                         TargetPostId: postId
@@ -185,6 +185,13 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
+    chaptersModal.addEventListener('click', (e) => {
+        const target = e.target;
+        if (target.id === 'mc-close' || target.closest('#mc-close') || target.id === 'modal-chapters') {
+            chaptersModal.classList.remove('opacity1');
+            chaptersModal.classList.remove('dflex');
+        }
+    });
     commentSection.addEventListener('click', function (e) {
         const target = e.target;
         if (target.classList.contains('c-menu')
@@ -205,21 +212,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 menu.classList.remove('dblock');
             }
         });
-    }
-    function closeChaptersModal() {
-        if (chaptersModal !== null && chaptersModal.classList.contains('dflex')) {
-            chaptersModal.classList.remove('dflex');
-            modalbg1.classList.remove('dblock');
-        }
-    }
-    function open_close_chapters_modal() {
-        if (chaptersModal.classList.contains('dflex')) {
-            closeChaptersModal();
-        }
-        else {
-            chaptersModal.classList.add('dflex');
-            modalbg1.classList.add('dblock');
-        }
     }
     function RateThePost(rateVal, rateIconBtns, i) {
         const ratePayload = {

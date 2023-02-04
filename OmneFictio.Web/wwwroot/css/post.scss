@@ -718,74 +718,72 @@ main {
 
 
 
+.modal-chapters-cont{
+    align-items: center;
 
-.modal-chapters {
-    display: none;
-    //display: flex;
-    flex-direction: column;
-    position: fixed;
-    left: 50%;
-    top: 40%;
-    transform: translate(-50%, -40%);
-    width: 92%;
-    max-width: 500px;
-    max-height: 90%;
-    background-color: var(--background-color2);
-    box-shadow: 0px 0px 14px 4px var(--div-boxshadow1);
-    border-radius: 20px 20px 10px 10px;
-    font-family: "Itim", cursive;
-    z-index: 200;
-    padding-bottom: 6px;
-
-    .mc-header {
-        border-bottom: 2px solid var(--background-color3);
+    .modal-chapters {
         display: flex;
-        flex-direction: row;
-
-        span {
+        flex-direction: column;
+        width: 92%;
+        max-width: 500px;
+        max-height: 90%;
+        background-color: var(--background-color2);
+        box-shadow: 0px 0px 14px 4px var(--div-boxshadow1);
+        border-radius: 20px 20px 10px 10px;
+        font-family: "Itim", cursive;
+        padding-bottom: 6px;
+    
+        .mc-header {
+            border-bottom: 2px solid var(--background-color3);
             display: flex;
-            align-items: center;
-            padding-left: 20px;
-            font-size: 1.3rem;
-            margin-right: auto;
-        }
-
-        .mc-close {
-            cursor: pointer;
-            padding: 4px 12px 0px;
-            font-size: 1.8rem;
-            text-shadow: 0px 0px 6px var(--text-boxshadow1);
-        }
-    }
-
-    .mc-body {
-        overflow-y: auto;
-        padding: 6px 0 10px;
-
-        ul {
-            flex-grow: 1;
-
-            >li {
-                width: 100%;
-                overflow: hidden;
+            flex-direction: row;
+    
+            span {
+                display: flex;
+                align-items: center;
+                padding-left: 20px;
+                font-size: 1.3rem;
+                margin-right: auto;
+            }
+    
+            .mc-close {
                 cursor: pointer;
-                border-bottom: 1px solid var(--background-color5);
-
-                >a {
-                    padding: 6px 20px;
-                }
-
-                &:hover {
-                    background-color: var(--background-color4);
-                }
-
-                &:last-child {
-                    border-bottom: unset;
+                padding: 4px 12px 0px;
+                font-size: 1.8rem;
+                text-shadow: 0px 0px 6px var(--text-boxshadow1);
+            }
+        }
+    
+        .mc-body {
+            overflow-y: auto;
+            padding: 6px 0 10px;
+    
+            ul {
+                flex-grow: 1;
+    
+                >li {
+                    width: 100%;
+                    overflow: hidden;
+                    cursor: pointer;
+                    border-bottom: 1px solid var(--background-color5);
+    
+                    >a {
+                        padding: 6px 20px;
+                    }
+    
+                    &:hover {
+                        background-color: var(--background-color4);
+                    }
+    
+                    &:last-child {
+                        border-bottom: unset;
+                    }
                 }
             }
         }
     }
 }
+
 
 
 

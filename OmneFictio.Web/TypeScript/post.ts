@@ -2,14 +2,9 @@
 
 document.addEventListener("DOMContentLoaded", function () {
     const params = new URLSearchParams(window.location.search);
-    const modalbg1 = document.querySelector('.modalbg1') as HTMLDivElement;
     const commentSection = document.getElementById('comment-section') as HTMLDivElement;
     const chaptersModal = document.getElementById('modal-chapters') as HTMLDivElement;
     const fullsizecover = document.getElementById('fullsize-cover') as HTMLDivElement;
-
-    modalbg1.addEventListener("click", function () {
-        closeChaptersModal();
-    });
 
     document.addEventListener('click', function (e) {
         const target = e.target as HTMLElement;
@@ -188,32 +183,38 @@ document.addEventListener("DOMContentLoaded", function () {
                         });
                     });
                     //Already rated by user?
-                    if(post.ratedByUser != null){
+                    if (post.ratedByUser != null) {
                         rateIconBtns.slice(0, post.ratedByUser).forEach(btn => {
                             btn.classList.add('bi-star-fill');
                             btn.classList.remove('bi-star');
                         });
                         rateIconBtns[post.ratedByUser - 1].classList.add('active');
                     }
-                    
+
                     //Start reading (I will add Continue reading version if user already started)
                     clone.querySelector('.start_reading')!.setAttribute('href', '/p/' + post.id + '/1');
 
                     //Create post
                     document.getElementById('post-wrap')!.innerHTML = "";
                     document.getElementById('post-wrap')!.appendChild(clone);
-                    
+
                     //Open/close chapters modal
                     document.querySelectorAll('#mc-close, #get_chapters').forEach(function (element) {
                         element.addEventListener("click", open_close_chapters_modal);
                         element.addEventListener("touchstart", open_close_chapters_modal);
+                        //Open chapters modal
+                        function open_close_chapters_modal() {
+                            chaptersModal.classList.add('dflex');
+                            chaptersModal.classList.add('opacity1');
+                        }
                     });
 
                     //get comments right after loading the post(which is important part)
                     window.createSkeletons("post-commentsection");
                     window.fetchComments("post", postId, commentSection);
 
-                    document.getElementById('addCommentToPost')!.addEventListener('click', function () {
+                    //addCommentToPost wouldn't exist if user is not logged in
+                    document.getElementById('addCommentToPost')?.addEventListener('click', function () {
                         window.AddComment(JSON.stringify({
                             Body: (<HTMLTextAreaElement>document.getElementById('commentBody')).value,
                             TargetPostId: postId
@@ -232,10 +233,10 @@ document.addEventListener("DOMContentLoaded", function () {
                     }
                 }
             })
-            //.catch(error => { console.log('Fetch failed -> ' + error); });
+        //.catch(error => { console.log('Fetch failed -> ' + error); });
     }
 
-    //-----full size cover------
+    //full size cover
     const fsc_close = document.querySelectorAll('#fsc-wrap, #fsc-close');
     fsc_close.forEach(function (element) {
         element.addEventListener("click", function () {
@@ -244,7 +245,16 @@ document.addEventListener("DOMContentLoaded", function () {
             }
         });
     });
+    //Close chapters modal
+    chaptersModal.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        if (target.id === 'mc-close' || target.closest('#mc-close') || target.id === 'modal-chapters') {
+            chaptersModal.classList.remove('opacity1');
+            chaptersModal.classList.remove('dflex');
+        }
+    });
     //----------------------
+    
 
     //open or close comment menu
     commentSection.addEventListener('click', function (e) {
@@ -267,24 +277,6 @@ document.addEventListener("DOMContentLoaded", function () {
                 menu.classList.remove('dblock');
             }
         });
-    }
-
-
-    function closeChaptersModal() {
-        if (chaptersModal !== null && chaptersModal.classList.contains('dflex')) {
-            chaptersModal.classList.remove('dflex');
-            modalbg1.classList.remove('dblock');
-        }
-    }
-
-    function open_close_chapters_modal() {
-        if (chaptersModal.classList.contains('dflex')) {
-            closeChaptersModal();
-        }
-        else {
-            chaptersModal.classList.add('dflex');
-            modalbg1.classList.add('dblock');
-        }
     }
 
     function RateThePost(rateVal: number, rateIconBtns: Element[], i: Element) {

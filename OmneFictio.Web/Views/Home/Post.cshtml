@@ -2,11 +2,11 @@
 @{
     ViewData["Title"] = "Post";
     @section Stylesheets {
-    <link rel="stylesheet" href="~/css/comment_section.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/post.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/comment_section.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/post.css" asp-append-version="true" />
     }
     @section Scripts {
-    <script src="~/js/post.js" asp-append-version="true"></script>
+        <script src="~/js/post.js" asp-append-version="true"></script>
     }
 }
 @{
@@ -27,7 +27,7 @@
                 <div class="p-primary">
                     <div class="p-title-cont">
                         <span class="p-title">
-                            
+
                         </span>
                         <div class="p-menu">
                             <i class="bi bi-three-dots"></i>
@@ -39,7 +39,7 @@
                                 onerror="this.onerror=null; this.closest('.p-cover-mobile').remove()">
                         </div>
                         <span class="p-description">
-                            
+
                         </span>
                     </div>
                 </div>
@@ -55,7 +55,7 @@
                         </div>
                         <div class="p-user">
                             <span class="p-username">
-                                
+
                             </span>
                             <div class="p-uimg-cont">
                                 <img src="/images/users/"
@@ -66,47 +66,47 @@
                 </div>
                 <div class="p-properties">
                     <span class="pp-type">
-                        
+
                     </span>
                     <span class="pp-language">
-                        
+
                     </span>
                     <span class="pp-status">
-                        
+
                     </span>
                     <span class="pp-rating">
-                        
+
                     </span>
                 </div>
                 <div class="p-series">
 
                 </div>
                 <div class="p-tags">
-                    
+
                 </div>
                 <div class="pi-details">
                     <div class="pi-detail-column">
                         <i class="bi bi-body-text"></i>
                         <span class="pi-amount_of_words">
-                            
+
                         </span>
                     </div>
                     <div class="pi-detail-column">
                         <i class="bi bi-chat-right"></i>
                         <span class="pi-amount_of_comments">
-                            
+
                         </span>
                     </div>
                     <div class="pi-detail-column">
                         <i class="bi bi-clock"></i>
                         <span class="pi-publish_date">
-                            
+
                         </span>
                     </div>
                     <div class="pi-detail-column">
                         <i class="bi bi-arrow-repeat"></i>
                         <span class="pi-last_update">
-                            
+
                         </span>
                     </div>
                 </div>
@@ -139,17 +139,18 @@
     </div>
 </template>
 
-
-<div class="modal-chapters" id="modal-chapters">
-    <div class="mc-header">
-        <span>Chapters</span>
-        <div class="mc-close" id="mc-close">
-            <i class="bi bi-x-lg"></i>
+<div class="modal-chapters-cont modalbg-base" id="modal-chapters">
+    <div class="modal-chapters">
+        <div class="mc-header">
+            <span>Chapters</span>
+            <div class="mc-close" id="mc-close">
+                <i class="bi bi-x-lg"></i>
+            </div>
         </div>
-    </div>
-    <div class="mc-body">
-        <ul id="modalchapters-list">
-        </ul>
+        <div class="mc-body">
+            <ul id="modalchapters-list">
+            </ul>
+        </div>
     </div>
 </div>
 
@@ -255,7 +256,7 @@
         <div class="ac-footer">
             <div class="ac-user">
                 <img src="/images/users/@userPicture"
-                onerror="this.onerror=null; this.src='/images/onerror/user_no_photo.png'">
+                    onerror="this.onerror=null; this.src='/images/onerror/user_no_photo.png'">
                 <span class="ac-username">@username</span>
             </div>
             <a class="comment-btn" id="addCommentToPost">Send</a>

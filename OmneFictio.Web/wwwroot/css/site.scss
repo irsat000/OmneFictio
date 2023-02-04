@@ -171,136 +171,142 @@ header {
     }
 }
 
-.drawer.active {
-    width: 70% !important;
-}
+.drawer-cont {
+    opacity: 1 !important;
 
-.drawer {
-    display: flex;
-    flex-direction: column;
-    z-index: 550;
-    position: fixed;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 0;
-    overflow-y: auto;
-    background-color: var(--background-color1);
-    font-family: 'Itim', cursive;
-    overflow-x: hidden;
-    transition: width 0.3s ease;
-    color: var(--text-color1);
+    .drawer.active {
+        width: 70% !important;
+    }
 
-    .dw-top {
+    .drawer {
+        position: absolute;
+        left: 0;
+        top: 0;
+        height: 100%;
+        width: 0;
+
         display: flex;
-        flex-direction: row;
-        border-bottom: 1px solid var(--background-color2);
+        flex-direction: column;
+        overflow-y: auto;
+        background-color: var(--background-color1);
+        font-family: 'Itim', cursive;
+        overflow-x: hidden;
+        transition: width 0.3s ease;
+        color: var(--text-color1);
 
-        .dw-close {
-            padding: 10px;
-            flex-shrink: 0;
-
-            i {
-                font-size: 2rem;
-            }
-        }
-
-        .dw-account {
-            flex-grow: 1;
+        .dw-top {
             display: flex;
-            justify-content: center;
-            overflow: hidden;
+            flex-direction: row;
+            align-items: flex-start;
+            border-bottom: 1px solid var(--background-color2);
 
-            .dw-userimg {
-                display: flex;
-                justify-content: center;
-                padding: 1rem 0 10px;
-
-                img {
-                    width: 4rem;
-                    height: 4rem;
-                    border-radius: 6px;
-                }
+            .dw-close {
+                padding: 10px;
+                flex-shrink: 0;
 
                 i {
-                    font-size: 4rem;
+                    font-size: 2rem;
                 }
             }
 
-            .dw-acc-info {
-                font-family: 'Hubballi', cursive;
-                padding-bottom: 6px;
-                font-size: 1.1rem;
+            .dw-account {
+                flex-grow: 1;
+                display: flex;
+                justify-content: center;
+                overflow: hidden;
+
+                .dw-userimg {
+                    display: flex;
+                    justify-content: center;
+                    padding: 1rem 0 10px;
+
+                    img {
+                        width: 4rem;
+                        height: 4rem;
+                        border-radius: 6px;
+                    }
+
+                    i {
+                        font-size: 4rem;
+                    }
+                }
+
+                .dw-acc-info {
+                    font-family: 'Hubballi', cursive;
+                    padding-bottom: 6px;
+                    font-size: 1.1rem;
+                }
             }
         }
-    }
 
-    .dw-username {
-        display: flex;
-        justify-content: center;
-        font-family: 'Doppio One', sans-serif;
-        padding: 8px 0;
-        font-size: 1.1rem;
-    }
-
-    .dw-mainpage {
-        border-top: 1px solid #313131;
-        border-bottom: 1px solid #313131;
-        font-size: 1.5rem;
-
-        a {
-            /*height: 100%;
-            width: 100%;*/
-            padding: 6px 0 6px 20px;
-            font-family: 'Kaushan Script', cursive;
+        .dw-username {
+            display: flex;
+            justify-content: center;
+            font-family: 'Doppio One', sans-serif;
+            padding: 8px 0;
+            font-size: 1.1rem;
         }
-    }
 
-    .dw-list {
-        padding: 10px 0 16px;
-        flex-grow: 1;
-        font-size: 1.3rem;
+        .dw-mainpage {
+            border-top: 1px solid #313131;
+            border-bottom: 1px solid #313131;
+            font-size: 1.5rem;
 
-        >ul {
-            >li {
-                >a {
-                    padding: 4px 20px;
-                    color: var(--text-color1) !important;
-                    transition: 0.2s ease;
-                    display: flex;
-                    cursor: pointer;
+            a {
+                /*height: 100%;
+                width: 100%;*/
+                padding: 6px 0 6px 20px;
+                font-family: 'Kaushan Script', cursive;
+            }
+        }
 
-                    &:hover {
-                        background-color: var(--background-color2);
+        .dw-list {
+            padding: 10px 0 16px;
+            flex-grow: 1;
+            font-size: 1.3rem;
+
+            >ul {
+                >li {
+                    >a {
+                        padding: 4px 20px;
+                        color: var(--text-color1) !important;
+                        transition: 0.2s ease;
+                        display: flex;
+                        cursor: pointer;
+
+                        &:hover {
+                            background-color: var(--background-color2);
+                        }
                     }
                 }
             }
         }
-    }
 
-    .dw-redbutton {
-        display: flex;
-        position: sticky;
-        bottom: 0;
-        padding: 4px 20px;
-        color: #ffffff;
-        transition: 0.2s ease;
-        background-color: #b73d3d;
-        font-size: 1.4rem;
-
-        &:hover {
-            background-color: #b94f4f;
-        }
-    }
-
-    .dw-icon-cont {
-        padding-right: 14px;
-
-        i {
+        .dw-redbutton {
+            display: flex;
+            position: sticky;
+            bottom: 0;
+            padding: 4px 20px;
+            color: #ffffff;
+            transition: 0.2s ease;
+            background-color: #b73d3d;
             font-size: 1.4rem;
+
+            &:hover {
+                background-color: #b94f4f;
+            }
+        }
+
+        .dw-icon-cont {
+            padding-right: 14px;
+
+            i {
+                font-size: 1.4rem;
+            }
         }
     }
 }
+
 
 .login-modal-cont {
     padding-top: 6%;
