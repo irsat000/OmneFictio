@@ -103,7 +103,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const drawer = document.getElementById('drawer') as HTMLDivElement;
     const loginModal = document.getElementById('login-modal') as HTMLFormElement;
     const acDropdown = document.querySelector('.account-dropdown') as HTMLDivElement;
-    const switchThemeModal = document.querySelector('.theme-switcher') as HTMLDivElement;
+    const switchThemeModal = document.getElementById('theme-switcher-modal') as HTMLDivElement;
 
     const themeNameMap = new Map([
         ['darkmode', 'Dark mode'],
@@ -150,8 +150,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //close modals, dropdowns, drawer etc when user click on the dark background
     modalbg1.addEventListener("click", function () {
-        if (drawer.classList.contains('drawer-active')) {
-            drawer.classList.remove('drawer-active');
+        if (drawer.classList.contains('active')) {
+            drawer.classList.remove('active');
             modalbg1.classList.remove('dblock');
         }
         if (loginModal.classList.contains('dflex')) {
@@ -168,7 +168,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
 
     //Top-right account dropdown menu
-    document.querySelector('.account_btn-cont')?.addEventListener("click", function () {
+    document.querySelector('.account_btn-cont')!.addEventListener("click", function () {
         if (acDropdown.classList.contains('dflex')) {
             acDropdown.classList.remove('opacity1');
             setTimeout(function () {
@@ -186,12 +186,12 @@ document.addEventListener("DOMContentLoaded", function () {
     //Drawer for mobile
     document.querySelectorAll('.drawerbtn-cont, .dw-close').forEach(btn => {
         btn.addEventListener('click', function () {
-            if (drawer.classList.contains('drawer-active')) {
-                drawer.classList.remove('drawer-active');
+            if (drawer.classList.contains('active')) {
+                drawer.classList.remove('active');
                 modalbg1.classList.remove('dblock');
             }
             else {
-                drawer.classList.add('drawer-active');
+                drawer.classList.add('active');
                 modalbg1.classList.add('dblock');
             }
         })
@@ -200,88 +200,57 @@ document.addEventListener("DOMContentLoaded", function () {
     //Open login modal
     document.querySelectorAll('.login-openbtn').forEach(btn => {
         btn.addEventListener('click', function () {
-            if (loginModal.classList.contains('dflex') === false) {
-                loginModal.classList.add('dflex');
-                modalbg1.classList.add('dblock');
-                setTimeout(function () {
-                    loginModal.classList.add('opacity1');
-                }, 100);
-                //Close others after opening login modal
-                if (acDropdown.classList.contains('dflex')) {
-                    acDropdown.classList.remove('opacity1');
-                    setTimeout(function () {
-                        acDropdown.classList.remove('dflex');
-                    }, 100);
-                }
-                if (drawer.classList.contains('drawer-active')) {
-                    drawer.classList.remove('drawer-active');
-                }
-            }
-        });
-    });
-
-    //Close login modal
-    document.querySelector('.lm-closebtn')!.addEventListener('click', function () {
-        if (loginModal.classList.contains('dflex')) {
-            loginModal.classList.remove('dflex');
-            loginModal.classList.remove('opacity1');
-            modalbg1.classList.remove('dblock');
-        }
-    });
-
-
-    //Theme switch - ON OFF - OUTDATED
-    /*document.getElementById("theme-check")?.addEventListener("change", (e) => {
-        const body = document.getElementsByTagName("body")[0];
-        body.className = "";
-
-        if ((<HTMLInputElement>e.currentTarget).checked) {
-            body.classList.add("lightmode");
-        } else {
-            body.classList.add("darkmode");
-        }
-    });*/
-
-    //Open switch theme modal
-    document.querySelector('.ad-theme-cont > span')!.addEventListener('click', () => {
-        if (switchThemeModal.classList.contains('dflex') === false) {
-            switchThemeModal.classList.add('dflex');
-            modalbg1.classList.add('dblock');
+            loginModal.classList.add('dflex');
             setTimeout(function () {
-                switchThemeModal.classList.add('opacity1');
+                loginModal.classList.add('opacity1');
             }, 100);
-            //Close account dropdown after opening the modal
+            //Close others after opening login modal
             if (acDropdown.classList.contains('dflex')) {
                 acDropdown.classList.remove('opacity1');
-                setTimeout(function () {
-                    acDropdown.classList.remove('dflex');
-                }, 100);
+                acDropdown.classList.remove('dflex');
             }
+            if (drawer.classList.contains('active')) {
+                drawer.classList.remove('active');
+            }
+        });
+    }); //Close login modal
+    loginModal.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        if (target.id === 'lm-closebtn' || target.closest('#lm-closebtn') || target.id === 'login-modal') {
+            loginModal.classList.remove('dflex');
+            loginModal.classList.remove('opacity1');
         }
     });
 
-    //Close switch theme modal
-    document.querySelector('.ts-closebtn')!.addEventListener('click', function () {
-        if (switchThemeModal.classList.contains('dflex')) {
+
+    //Open switch-theme modal
+    document.querySelector('.ad-theme-cont > span')!.addEventListener('click', () => {
+        switchThemeModal.classList.add('dflex');
+        setTimeout(function () {
+            switchThemeModal.classList.add('opacity1');
+        }, 100);
+        //Close account dropdown after opening the modal
+        acDropdown.classList.remove('dflex');
+        acDropdown.classList.remove('opacity1');
+    }); //Close switch theme modal
+    switchThemeModal.addEventListener('click', function (e) {
+        const target = e.target as HTMLElement;
+        if (target.id === 'ts-closebtn' || target.closest('#ts-closebtn') || target.id === 'theme-switcher-modal') {
             switchThemeModal.classList.remove('dflex');
             switchThemeModal.classList.remove('opacity1');
-            modalbg1.classList.remove('dblock');
         }
-    });
-
-    //Change theme
+    }); //Change theme
     switchThemeModal.querySelectorAll('ul > li').forEach(btn => {
         btn.addEventListener('click', () => {
             const selectedTheme = btn.getAttribute('data-themeval') as string;
             //close switcher modal
             switchThemeModal.classList.remove('dflex');
             switchThemeModal.classList.remove('opacity1');
-            modalbg1.classList.remove('dblock');
             //deactivate icons from the modal (I don't need this for initialization of website)
             switchThemeModal.querySelectorAll('ul > li > i').forEach((btn) => btn.classList.remove('active'));
             //Actually change the theme with cookies, nom nom nomm
             window.localStorage.setItem("currentTheme", selectedTheme);
-            //Effects;
+            //Function because this function is executed during page load too
             changeTheme(selectedTheme);
         });
     });

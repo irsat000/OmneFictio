@@ -93,7 +93,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const drawer = document.getElementById('drawer');
     const loginModal = document.getElementById('login-modal');
     const acDropdown = document.querySelector('.account-dropdown');
-    const switchThemeModal = document.querySelector('.theme-switcher');
+    const switchThemeModal = document.getElementById('theme-switcher-modal');
     const themeNameMap = new Map([
         ['darkmode', 'Dark mode'],
         ['lightmode', 'Light mode'],
@@ -132,8 +132,8 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
     modalbg1.addEventListener("click", function () {
-        if (drawer.classList.contains('drawer-active')) {
-            drawer.classList.remove('drawer-active');
+        if (drawer.classList.contains('active')) {
+            drawer.classList.remove('active');
             modalbg1.classList.remove('dblock');
         }
         if (loginModal.classList.contains('dflex')) {
@@ -148,7 +148,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         window.closeRepliesModal();
     });
-    document.querySelector('.account_btn-cont')?.addEventListener("click", function () {
+    document.querySelector('.account_btn-cont').addEventListener("click", function () {
         if (acDropdown.classList.contains('dflex')) {
             acDropdown.classList.remove('opacity1');
             setTimeout(function () {
@@ -164,63 +164,51 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     document.querySelectorAll('.drawerbtn-cont, .dw-close').forEach(btn => {
         btn.addEventListener('click', function () {
-            if (drawer.classList.contains('drawer-active')) {
-                drawer.classList.remove('drawer-active');
+            if (drawer.classList.contains('active')) {
+                drawer.classList.remove('active');
                 modalbg1.classList.remove('dblock');
             }
             else {
-                drawer.classList.add('drawer-active');
+                drawer.classList.add('active');
                 modalbg1.classList.add('dblock');
             }
         });
     });
     document.querySelectorAll('.login-openbtn').forEach(btn => {
         btn.addEventListener('click', function () {
-            if (loginModal.classList.contains('dflex') === false) {
-                loginModal.classList.add('dflex');
-                modalbg1.classList.add('dblock');
-                setTimeout(function () {
-                    loginModal.classList.add('opacity1');
-                }, 100);
-                if (acDropdown.classList.contains('dflex')) {
-                    acDropdown.classList.remove('opacity1');
-                    setTimeout(function () {
-                        acDropdown.classList.remove('dflex');
-                    }, 100);
-                }
-                if (drawer.classList.contains('drawer-active')) {
-                    drawer.classList.remove('drawer-active');
-                }
-            }
-        });
-    });
-    document.querySelector('.lm-closebtn').addEventListener('click', function () {
-        if (loginModal.classList.contains('dflex')) {
-            loginModal.classList.remove('dflex');
-            loginModal.classList.remove('opacity1');
-            modalbg1.classList.remove('dblock');
-        }
-    });
-    document.querySelector('.ad-theme-cont > span').addEventListener('click', () => {
-        if (switchThemeModal.classList.contains('dflex') === false) {
-            switchThemeModal.classList.add('dflex');
-            modalbg1.classList.add('dblock');
+            loginModal.classList.add('dflex');
             setTimeout(function () {
-                switchThemeModal.classList.add('opacity1');
+                loginModal.classList.add('opacity1');
             }, 100);
             if (acDropdown.classList.contains('dflex')) {
                 acDropdown.classList.remove('opacity1');
-                setTimeout(function () {
-                    acDropdown.classList.remove('dflex');
-                }, 100);
+                acDropdown.classList.remove('dflex');
             }
+            if (drawer.classList.contains('active')) {
+                drawer.classList.remove('active');
+            }
+        });
+    });
+    loginModal.addEventListener('click', (e) => {
+        const target = e.target;
+        if (target.id === 'lm-closebtn' || target.closest('#lm-closebtn') || target.id === 'login-modal') {
+            loginModal.classList.remove('dflex');
+            loginModal.classList.remove('opacity1');
         }
     });
-    document.querySelector('.ts-closebtn').addEventListener('click', function () {
-        if (switchThemeModal.classList.contains('dflex')) {
+    document.querySelector('.ad-theme-cont > span').addEventListener('click', () => {
+        switchThemeModal.classList.add('dflex');
+        setTimeout(function () {
+            switchThemeModal.classList.add('opacity1');
+        }, 100);
+        acDropdown.classList.remove('dflex');
+        acDropdown.classList.remove('opacity1');
+    });
+    switchThemeModal.addEventListener('click', function (e) {
+        const target = e.target;
+        if (target.id === 'ts-closebtn' || target.closest('#ts-closebtn') || target.id === 'theme-switcher-modal') {
             switchThemeModal.classList.remove('dflex');
             switchThemeModal.classList.remove('opacity1');
-            modalbg1.classList.remove('dblock');
         }
     });
     switchThemeModal.querySelectorAll('ul > li').forEach(btn => {
@@ -228,7 +216,6 @@ document.addEventListener("DOMContentLoaded", function () {
             const selectedTheme = btn.getAttribute('data-themeval');
             switchThemeModal.classList.remove('dflex');
             switchThemeModal.classList.remove('opacity1');
-            modalbg1.classList.remove('dblock');
             switchThemeModal.querySelectorAll('ul > li > i').forEach((btn) => btn.classList.remove('active'));
             window.localStorage.setItem("currentTheme", selectedTheme);
             changeTheme(selectedTheme);

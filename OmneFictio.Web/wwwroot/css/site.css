@@ -168,7 +168,7 @@ header .header-wrap {
   font-size: 3.2rem;
 }
 
-.drawer-active {
+.drawer.active {
   width: 70% !important;
 }
 
@@ -278,18 +278,12 @@ header .header-wrap {
   font-size: 1.4rem;
 }
 
-.login-modal {
-  display: none;
-  opacity: 0;
+.login-modal-cont {
+  padding-top: 6%;
+}
+.login-modal-cont .login-modal {
+  display: flex;
   flex-direction: column;
-  transition: opacity 0.3s ease;
-  z-index: 509;
-  position: fixed;
-  top: 12%;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
-  right: 0;
   background-color: var(--modal-background);
   box-shadow: 0px 0px 16px 4px var(--div-boxshadow1);
   width: 260px;
@@ -298,32 +292,32 @@ header .header-wrap {
   overflow: hidden;
   color: var(--text-color1);
 }
-.login-modal .lm-header {
+.login-modal-cont .login-modal .lm-header {
   border-bottom: 2px solid var(--modal-line1);
   display: flex;
   flex-direction: row;
 }
-.login-modal .lm-header .lm-title {
+.login-modal-cont .login-modal .lm-header .lm-title {
   display: flex;
   align-items: center;
   padding-left: 20px;
   font-size: 1.3rem;
   flex-grow: 1;
 }
-.login-modal .lm-header .lm-closebtn {
+.login-modal-cont .login-modal .lm-header .lm-closebtn {
   flex-shrink: 0;
   cursor: pointer;
   padding: 6px 12px;
   font-size: 1.8rem;
   text-shadow: 0px 0px 6px var(--text-boxshadow1);
 }
-.login-modal .lm-primary {
+.login-modal-cont .login-modal .lm-primary {
   display: flex;
   flex-direction: column;
   align-items: center;
   padding: 10px 20px;
 }
-.login-modal .lm-primary .lm-textbox {
+.login-modal-cont .login-modal .lm-primary .lm-textbox {
   width: 100%;
   margin-bottom: 14px;
   background-color: var(--background-color1);
@@ -333,7 +327,7 @@ header .header-wrap {
   border: none;
   outline: none;
 }
-.login-modal .lm-primary .lm-submit {
+.login-modal-cont .login-modal .lm-primary .lm-submit {
   width: 50%;
   margin-top: 2px;
   border: none;
@@ -344,97 +338,62 @@ header .header-wrap {
   padding: 4px;
   transition: 0.2s ease;
 }
-.login-modal .lm-primary .lm-submit:hover {
+.login-modal-cont .login-modal .lm-primary .lm-submit:hover {
   background-color: #5a5b95;
 }
-.login-modal .lm-primary span {
+.login-modal-cont .login-modal .lm-primary span {
   margin-top: 6px;
   text-align: center;
   color: #b22525;
 }
-.login-modal .lm-primary .lm-success {
+.login-modal-cont .login-modal .lm-primary .lm-success {
   color: #36914e !important;
 }
-.login-modal .lm-loginwith {
+.login-modal-cont .login-modal .lm-loginwith {
   padding: 10px 20px 0;
   display: flex;
   flex-direction: column;
   align-items: center;
   overflow: hidden;
-  /*> div{
-      cursor: pointer;
-      padding: 6px 16px;
-      border-radius: 6px;
-      transition: 0.2s ease;
-      > i{
-          font-size: 1.2rem;
-          margin: 0 auto;
-          color: #fff;
-      }
-  }
-  .facebook{
-      background-color: #284878;
-      &:hover{
-          background-color: #3e5b86;
-      }
-  }
-  .twitter{
-      background-color: #4c7ac0;
-      &:hover{
-          background-color: #769ad2;
-      }
-  }
-  .google{
-      background-color: #a23535;
-      &:hover{
-          background-color: #b25252;
-      }
-  }*/
 }
-.login-modal .lm-loginwith > div {
+.login-modal-cont .login-modal .lm-loginwith > div {
   margin-bottom: 12px;
 }
-.login-modal .lm-forgot {
+.login-modal-cont .login-modal .lm-forgot {
   text-align: center;
   font-size: 1.2rem;
   padding: 4px 10px;
 }
-.login-modal .lm-rememberme {
+.login-modal-cont .login-modal .lm-rememberme {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
   padding: 6px 14px 10px;
 }
-.login-modal .lm-rememberme > label {
+.login-modal-cont .login-modal .lm-rememberme > label {
   display: flex;
   flex-direction: row;
 }
-.login-modal .lm-rememberme > label > span {
+.login-modal-cont .login-modal .lm-rememberme > label > span {
   padding-right: 6px;
 }
-.login-modal .lm-rememberme > label > input {
+.login-modal-cont .login-modal .lm-rememberme > label > input {
   width: 1rem;
 }
-.login-modal a {
+.login-modal-cont .login-modal a {
   color: #628ad8;
   display: unset;
 }
-.login-modal a:hover {
+.login-modal-cont .login-modal a:hover {
   text-decoration: underline;
 }
 
-.theme-switcher {
-  display: none;
-  opacity: 0;
+.theme-switcher-cont {
+  padding-top: 6%;
+}
+.theme-switcher-cont .theme-switcher {
+  display: flex;
   flex-direction: column;
-  transition: opacity 0.3s ease;
-  z-index: 508;
-  position: fixed;
-  top: 12%;
-  margin-left: auto;
-  margin-right: auto;
-  left: 0;
-  right: 0;
   background-color: var(--modal-background);
   box-shadow: 0px 0px 16px 4px var(--div-boxshadow1);
   width: 260px;
@@ -443,29 +402,29 @@ header .header-wrap {
   overflow: hidden;
   color: var(--text-color1);
 }
-.theme-switcher .ts-header {
+.theme-switcher-cont .theme-switcher .ts-header {
   border-bottom: 2px solid var(--modal-line1);
   display: flex;
   flex-direction: row;
 }
-.theme-switcher .ts-header .ts-title {
+.theme-switcher-cont .theme-switcher .ts-header .ts-title {
   display: flex;
   align-items: center;
   padding-left: 20px;
   font-size: 1.3rem;
   flex-grow: 1;
 }
-.theme-switcher .ts-header .ts-closebtn {
+.theme-switcher-cont .theme-switcher .ts-header .ts-closebtn {
   flex-shrink: 0;
   cursor: pointer;
   padding: 6px 12px;
   font-size: 1.8rem;
   text-shadow: 0px 0px 6px var(--text-boxshadow1);
 }
-.theme-switcher ul {
+.theme-switcher-cont .theme-switcher ul {
   padding: 10px;
 }
-.theme-switcher ul li {
+.theme-switcher-cont .theme-switcher ul li {
   padding: 8px;
   cursor: pointer;
   border-bottom: 2px solid var(--modal-line1);
@@ -473,20 +432,20 @@ header .header-wrap {
   justify-content: space-between;
   align-items: center;
 }
-.theme-switcher ul li:last-child {
+.theme-switcher-cont .theme-switcher ul li:last-child {
   border-bottom: unset;
 }
-.theme-switcher ul li:hover {
+.theme-switcher-cont .theme-switcher ul li:hover {
   background-color: var(--modal-item-hover);
 }
-.theme-switcher ul li i {
+.theme-switcher-cont .theme-switcher ul li i {
   display: none;
   font-size: 1.4rem;
 }
-.theme-switcher ul li i.active {
+.theme-switcher-cont .theme-switcher ul li i.active {
   display: flex;
 }
-.theme-switcher ul li:has(> i.active) {
+.theme-switcher-cont .theme-switcher ul li:has(> i.active) {
   cursor: default;
   background-color: var(--modal-item-hover);
 }
@@ -1083,7 +1042,7 @@ footer .copyright span {
 }
 
 @media (min-width: 576px) {
-  .drawer-active {
+  .drawer.active {
     width: 300px !important;
   }
 }

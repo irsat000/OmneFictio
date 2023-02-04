@@ -357,47 +357,49 @@
         </div>
     </div>
 
-
-    <form class="login-modal" id="login-modal">
-        <div class="lm-header">
-            <span class="lm-title">Login</span>
-            <div class="lm-closebtn">
-                <i class="bi bi-x-lg"></i>
+    <div class="login-modal-cont modalbg-base" id="login-modal">
+        <form class="login-modal">
+            <div class="lm-header">
+                <span class="lm-title">Login</span>
+                <div class="lm-closebtn" id="lm-closebtn">
+                    <i class="bi bi-x-lg"></i>
+                </div>
             </div>
-        </div>
-        <div class="lm-primary">
-            <input type="text" placeholder="Username/Email" name="username" class="lm-textbox">
-            <input type="password" placeholder="Password" name="pw" class="lm-textbox">
-            <input type="submit" value="Login" class="lm-submit">
-            <span class="lm-message" id="loginmodal-message"></span>
-            <span class="lm-success" id="loginmodal-success"></span>
-        </div>
-        <div class="lm-loginwith">
-            <div class="g_id_signin" data-type="standart"></div>
-        </div>
-        <div class="lm-forgot">
-            <span>I forgot <a href="#">something</a></span>
-        </div>
-        <div class="lm-rememberme">
-            <label><span>Remember me</span><input type="checkbox" name="rememberMe" value="true" checked></label>
-            <a asp-controller="Home" asp-action="Register">Sign Up</a>
-        </div>
-    </form>
-
-
-    <div class="theme-switcher">
-        <div class="ts-header">
-            <span class="ts-title">Switch theme</span>
-            <div class="ts-closebtn">
-                <i class="bi bi-x-lg"></i>
+            <div class="lm-primary">
+                <input type="text" placeholder="Username/Email" name="username" class="lm-textbox">
+                <input type="password" placeholder="Password" name="pw" class="lm-textbox">
+                <input type="submit" value="Login" class="lm-submit">
+                <span class="lm-message" id="loginmodal-message"></span>
+                <span class="lm-success" id="loginmodal-success"></span>
             </div>
+            <div class="lm-loginwith">
+                <div class="g_id_signin" data-type="standart"></div>
+            </div>
+            <div class="lm-forgot">
+                <span>I forgot <a href="#">something</a></span>
+            </div>
+            <div class="lm-rememberme">
+                <label><span>Remember me</span><input type="checkbox" name="rememberMe" value="true" checked></label>
+                <a asp-controller="Home" asp-action="Register">Sign Up</a>
+            </div>
+        </form>
+    </div>
+
+    <div class="theme-switcher-cont modalbg-base" id="theme-switcher-modal">
+        <div class="theme-switcher">
+            <div class="ts-header">
+                <span class="ts-title">Switch theme</span>
+                <div class="ts-closebtn" id="ts-closebtn">
+                    <i class="bi bi-x-lg"></i>
+                </div>
+            </div>
+            <ul>
+                <li data-themeval="darkmode">Dark mode <i class="bi bi-check-lg"></i></li>
+                <li data-themeval="lightmode">Light mode <i class="bi bi-check-lg"></i></li>
+                <li data-themeval="customtheme1">Custom theme 1 <i class="bi bi-check-lg"></i></li>
+                <li data-themeval="customtheme2">Custom theme 2 <i class="bi bi-check-lg"></i></li>
+            </ul>
         </div>
-        <ul>
-            <li data-themeval="darkmode">Dark mode <i class="bi bi-check-lg"></i></li>
-            <li data-themeval="lightmode">Light mode <i class="bi bi-check-lg"></i></li>
-            <li data-themeval="customtheme1">Custom theme 1 <i class="bi bi-check-lg"></i></li>
-            <li data-themeval="customtheme2">Custom theme 2 <i class="bi bi-check-lg"></i></li>
-        </ul>
     </div>
 
     <div class="drawer" id="drawer">
