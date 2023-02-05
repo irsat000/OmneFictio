@@ -85,10 +85,10 @@ nav.nav_index .start_reading_links .read_link {
   box-shadow: -3px 3px 4px -5px rgba(0, 0, 0, 0.5);
   -moz-box-shadow: -3px 3px 4px -5px rgba(0, 0, 0, 0.5);
   -webkit-box-shadow: -3px 3px 4px -5px rgba(0, 0, 0, 0.5);
-  background-color: var(--cont-bgcolor1);
+  background-color: var(--index-bgcolor1);
 }
 nav.nav_index .start_reading_links .read_link:hover {
-  background-color: var(--cont-bgcolor2);
+  background-color: var(--index-bgcolor2);
 }
 nav.nav_index .start_reading_links .read_link span {
   font-size: 1.2rem;
@@ -199,8 +199,8 @@ nav.nav_index .community_links {
   display: none;
   width: 100%;
   border-radius: 10px;
-  border: 1px solid var(--cont-bordercolor1);
-  background-color: var(--cont-bgcolor1);
+  border: 1px solid var(--index-border1);
+  background-color: var(--index-bgcolor1);
   padding: 10px;
   flex-direction: column;
 }
@@ -238,11 +238,11 @@ nav.nav_index .community_links {
   display: flex;
   gap: 8px;
   transition: all 0.1s ease-in-out;
-  background-color: var(--cont-bgcolor1);
-  border: 1px solid var(--cont-bordercolor1);
+  background-color: var(--index-bgcolor1);
+  border: 1px solid var(--index-border1);
 }
 .tutorials .tutorial-categories .tcate:hover {
-  background-color: var(--cont-bgcolor2);
+  background-color: var(--index-bgcolor2);
 }
 .tutorials .tutorial-categories .tcate .tcate-icon {
   display: none;
@@ -315,8 +315,8 @@ nav.nav_index .community_links {
   }
   nav.nav_index .link_group {
     padding: 10px 0 6px;
-    background-color: var(--cont-bgcolor1);
-    border: 1px solid var(--cont-bordercolor1);
+    background-color: var(--index-bgcolor1);
+    border: 1px solid var(--index-border1);
     border-radius: 10px;
     margin-bottom: 16px;
   }

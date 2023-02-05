@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "h6tKv/2gJmrB5cw4LUB0k8/t8ii+PEitLMjrYt8kzag=",
+  "Hash": "sE2Qai7SyWiNb1SNgwYhPRbS/fykdJHxaenQUVcO638=",
   "Source": "OmneFictio.Web",
   "BasePath": "_content/OmneFictio.Web",
   "Mode": "Default",
@@ -1054,23 +1054,6 @@
       "OriginalItemSpec": "wwwroot\\images\\users\\user9.png"
     },
     {
-      "Identity": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\wwwroot\\js\\c.js",
-      "SourceId": "OmneFictio.Web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\wwwroot\\",
-      "BasePath": "_content/OmneFictio.Web",
-      "RelativePath": "js/c.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\c.js"
-    },
-    {
       "Identity": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\wwwroot\\js\\chapter.js",
       "SourceId": "OmneFictio.Web",
       "SourceType": "Discovered",
@@ -1188,23 +1171,6 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\profile.js"
-    },
-    {
-      "Identity": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\wwwroot\\js\\publish copy.js",
-      "SourceId": "OmneFictio.Web",
-      "SourceType": "Discovered",
-      "ContentRoot": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\wwwroot\\",
-      "BasePath": "_content/OmneFictio.Web",
-      "RelativePath": "js/publish copy.js",
-      "AssetKind": "All",
-      "AssetMode": "All",
-      "AssetRole": "Primary",
-      "RelatedAsset": "",
-      "AssetTraitName": "",
-      "AssetTraitValue": "",
-      "CopyToOutputDirectory": "Never",
-      "CopyToPublishDirectory": "PreserveNewest",
-      "OriginalItemSpec": "wwwroot\\js\\publish copy.js"
     },
     {
       "Identity": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\wwwroot\\js\\publish.js",

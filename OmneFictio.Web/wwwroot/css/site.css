@@ -1000,8 +1000,9 @@ footer .footer-body .contact .contact-body .contact-item .contact-list span {
 }
 footer .footer-body .contact .social_media {
   display: flex;
-  gap: 6%;
+  gap: 8px 6%;
   padding: 14px 6px;
+  flex-wrap: wrap;
 }
 footer .footer-body .contact .social_media a {
   padding: 10px;

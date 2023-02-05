@@ -11,7 +11,7 @@
 
 <div class="create_content-container">
     <div class="cc-header">
-        <span>Create</span>
+        <h2>Create</h2>
         <select id="create-category">
             <optgroup label="Fiction">
                 <option value="novel">Novel</option>
@@ -33,12 +33,8 @@
                     <input type="text" placeholder="Title" name="title">
                 </div>
                 <div class="ff-primary-body">
-                    <textarea placeholder="Description" name="description">
-
-                    </textarea>
-                    <div class="description-tools">
-
-                    </div>
+                    <textarea placeholder="Description" name="description"></textarea>
+                    <div class="description-tools"></div>
                 </div>
             </div>
 
@@ -74,7 +70,7 @@
                         </button>
                     </div>
                     <div class="fftags-body">
-                        <span>Sample</span>
+                        <span>Sample<i class="bi bi-x-circle ff-removetagbtn"></i></span>
                     </div>
                 </div>
                 <div class="ff-series-cont">
@@ -85,15 +81,19 @@
                         </button>
                     </div>
                     <div class="ffseries-body">
-                        <span>Sample</span>
+                        <span>Sample<i class="bi bi-x-circle ff-removeseriesbtn"></i></span>
                     </div>
                 </div>
             </div>
 
             <div class="ff-footer">
-                <button type="button" class="ff-clear">Clear</button>
-                <button type="button" class="ff-save_draft">Save Draft</button>
-                <button type="button" class="ff-save_and_continue">Save and Continue</button>
+                <div class="ff-clearbtn-cont">
+                    <button type="button" class="ff-clear">Clear</button>
+                </div>
+                <div class="ff-savebtn-cont">
+                    <button type="button" class="ff-save_draft">Save Draft</button>
+                    <button type="button" class="ff-save_and_continue">Save & Continue</button>
+                </div>
             </div>
         </div>
     </div>

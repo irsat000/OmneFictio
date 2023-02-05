@@ -92,10 +92,10 @@ nav.nav_index {
             box-shadow: -3px 3px 4px -5px rgb(0 0 0 / 50%);
             -moz-box-shadow: -3px 3px 4px -5px rgb(0 0 0 / 50%);
             -webkit-box-shadow: -3px 3px 4px -5px rgb(0 0 0 / 50%);
-            background-color: var(--cont-bgcolor1);
+            background-color: var(--index-bgcolor1);
 
             &:hover {
-                background-color: var(--cont-bgcolor2);
+                background-color: var(--index-bgcolor2);
             }
 
             span {
@@ -223,8 +223,8 @@ nav.nav_index {
                 display: none;
                 width: 100%;
                 border-radius: 10px;
-                border: 1px solid var(--cont-bordercolor1);
-                background-color: var(--cont-bgcolor1);
+                border: 1px solid var(--index-border1);
+                background-color: var(--index-bgcolor1);
                 padding: 10px;
                 flex-direction: column;
 
@@ -269,11 +269,11 @@ nav.nav_index {
             display: flex;
             gap: 8px;
             transition: all 0.1s ease-in-out;
-            background-color: var(--cont-bgcolor1);
-            border: 1px solid var(--cont-bordercolor1);
+            background-color: var(--index-bgcolor1);
+            border: 1px solid var(--index-border1);
 
             &:hover {
-                background-color: var(--cont-bgcolor2);
+                background-color: var(--index-bgcolor2);
             }
 
             .tcate-icon {
@@ -375,8 +375,8 @@ nav.nav_index {
 
         .link_group {
             padding: 10px 0 6px;
-            background-color: var(--cont-bgcolor1);
-            border: 1px solid var(--cont-bordercolor1);
+            background-color: var(--index-bgcolor1);
+            border: 1px solid var(--index-border1);
             border-radius: 10px;
             margin-bottom: 16px;
 

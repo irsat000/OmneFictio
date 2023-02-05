@@ -1125,8 +1125,9 @@ footer {
 
             .social_media {
                 display: flex;
-                gap: 6%;
+                gap: 8px 6%;
                 padding: 14px 6px;
+                flex-wrap: wrap;
 
                 a {
                     padding: 10px;
