@@ -1,0 +1,102 @@
+@{
+    ViewData["Title"] = "Create";
+    @section Stylesheets {
+        <link rel="stylesheet" href="~/css/create.css" asp-append-version="true" />
+    }
+    @section Scripts {
+        <script src="~/js/create.js" asp-append-version="true" ></script>
+    }
+}
+
+
+<div class="create_content-container">
+    <div class="cc-header">
+        <span>Create</span>
+        <select id="create-category">
+            <optgroup label="Fiction">
+                <option value="novel">Novel</option>
+                <option value="fanfiction">Fanfiction</option>
+                <option value="graphical">Graphical</option>
+                <option value="script">Script</option>
+                <option value="plot">Plot</option>
+            </optgroup>
+            <optgroup label="Others">
+                <option value="request">Request</option>
+                <option value="community_post">Community post</option>
+            </optgroup>
+        </select>
+    </div>
+    <div class="cc-body">
+        <div class="cc-fiction" id="fiction-form">
+            <div class="ff-primary">
+                <div class="ff-primary-header">
+                    <input type="text" placeholder="Title" name="title">
+                </div>
+                <div class="ff-primary-body">
+                    <textarea placeholder="Description" name="description">
+
+                    </textarea>
+                    <div class="description-tools">
+
+                    </div>
+                </div>
+            </div>
+
+            <div class="ff-info">
+                <div class="ff-properties-cont">
+                    <select>
+                        <option value="0">Language</option>
+                        <option value="1">Turkish</option>
+                        <option value="2">English</option>
+                        <option value="3">French</option>
+                        <option value="4">German</option>
+                        <option value="5">Japanese</option>
+                    </select>
+                    <select>
+                        <option value="0">Rated as</option>
+                        <option value="1">E - Everyone</option>
+                        <option value="2">T - 13+</option>
+                        <option value="3">M - 15+</option>
+                        <option value="4">A - 18+</option>
+                    </select>
+                </div>
+                <div class="ff-coverimage-cont">
+                    <span>Cover Image(?)</span>
+                    <div class="ff-coverimage-wrap">
+                        <input type="file" id="uploadCoverImg">
+                    </div>
+                </div>
+                <div class="ff-tags-cont">
+                    <div class="fftags-header">
+                        <h3>Tags</h3>
+                        <button type="button">
+                            <i class="bi bi-plus"></i>
+                        </button>
+                    </div>
+                    <div class="fftags-body">
+                        <span>Sample</span>
+                    </div>
+                </div>
+                <div class="ff-series-cont">
+                    <div class="ffseries-header">
+                        <h3>Series</h3>
+                        <button type="button">
+                            <i class="bi bi-plus"></i>
+                        </button>
+                    </div>
+                    <div class="ffseries-body">
+                        <span>Sample</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ff-footer">
+                <button type="button" class="ff-clear">Clear</button>
+                <button type="button" class="ff-save_draft">Save Draft</button>
+                <button type="button" class="ff-save_and_continue">Save and Continue</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
