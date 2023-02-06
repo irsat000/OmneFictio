@@ -72,6 +72,13 @@ nav.nav_index {
         }
     }
 
+    .about_you_header {
+        display: none;
+    }
+    .about_you_links {
+        display: none;
+    }
+
     .start_reading_links {
         width: 100%;
         gap: 8px;
@@ -390,12 +397,20 @@ nav.nav_index {
             }
         }
 
+        .about_you_header {
+            display: block;
+        }
+        .about_you_links {
+            display: flex;
+        }
+
         .start_reading_links {
             padding: unset;
             border-bottom: unset;
             margin-bottom: 20px;
             flex-direction: column;
-            .read_link{
+
+            .read_link {
                 width: 100%;
             }
         }

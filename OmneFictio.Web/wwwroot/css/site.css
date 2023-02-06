@@ -80,7 +80,7 @@ select {
     transform: rotate(360deg);
   }
 }
-.modalbg-base, .modalbg-base-2 {
+.modalbg-base-1, .modalbg-base-2 {
   display: none;
   opacity: 0;
   transition: opacity 0.3s ease;
@@ -719,10 +719,10 @@ header .header-wrap {
   background-color: #b94f4f;
 }
 
-.filter-tagdd-cont {
+.filter-taglist-cont {
   padding-top: 6%;
 }
-.filter-tagdd-cont .filter-tagdd {
+.filter-taglist-cont .filter-taglist {
   display: flex;
   flex-direction: column;
   height: 340px;
@@ -737,14 +737,14 @@ header .header-wrap {
       -ms-user-select: none;
           user-select: none;
 }
-.filter-tagdd-cont .filter-tagdd .tagdd-header {
+.filter-taglist-cont .filter-taglist .taglist-header {
   width: 100%;
   flex-shrink: 0;
   display: flex;
   flex-direction: row;
   padding: 10px;
 }
-.filter-tagdd-cont .filter-tagdd .tagdd-header .tagdd-searchbar {
+.filter-taglist-cont .filter-taglist .taglist-header .taglist-searchbar {
   padding: 2px 6px;
   border: none;
   outline: none;
@@ -753,7 +753,7 @@ header .header-wrap {
   flex-shrink: 1;
   border: 1px solid var(--text-color1);
 }
-.filter-tagdd-cont .filter-tagdd .tagdd-header > i {
+.filter-taglist-cont .filter-taglist .taglist-header > i {
   margin: 0 4px 0 20px;
   margin-right: 4px;
   font-size: 1.3rem;
@@ -761,24 +761,24 @@ header .header-wrap {
   text-shadow: 0px 0px 6px var(--text-boxshadow1);
   cursor: pointer;
 }
-.filter-tagdd-cont .filter-tagdd > ul {
+.filter-taglist-cont .filter-taglist > ul {
   flex-grow: 1;
   overflow-y: auto;
 }
-.filter-tagdd-cont .filter-tagdd > ul > li {
+.filter-taglist-cont .filter-taglist > ul > li {
   width: 100%;
   padding: 6px 20px;
   overflow: hidden;
   cursor: pointer;
 }
-.filter-tagdd-cont .filter-tagdd > ul > li:hover {
+.filter-taglist-cont .filter-taglist > ul > li:hover {
   background-color: var(--modal-item-hover);
 }
 
-.filter-addseries-cont {
+.filter-serieslist-cont {
   padding-top: 6%;
 }
-.filter-addseries-cont .filter-addseries {
+.filter-serieslist-cont .filter-serieslist {
   display: flex;
   flex-direction: column;
   height: 400px;
@@ -793,14 +793,14 @@ header .header-wrap {
       -ms-user-select: none;
           user-select: none;
 }
-.filter-addseries-cont .filter-addseries .fadds-header {
+.filter-serieslist-cont .filter-serieslist .fsl-header {
   width: 100%;
   flex-shrink: 0;
   display: flex;
   flex-direction: row;
   padding: 10px;
 }
-.filter-addseries-cont .filter-addseries .fadds-header .fadds-searchbar {
+.filter-serieslist-cont .filter-serieslist .fsl-header .fsl-searchbar {
   padding: 2px 6px;
   border: none;
   outline: none;
@@ -809,7 +809,7 @@ header .header-wrap {
   flex-shrink: 1;
   border: 1px solid var(--text-color1);
 }
-.filter-addseries-cont .filter-addseries .fadds-header > i {
+.filter-serieslist-cont .filter-serieslist .fsl-header > i {
   margin: 0 4px 0 20px;
   margin-right: 4px;
   font-size: 1.3rem;
@@ -817,7 +817,7 @@ header .header-wrap {
   text-shadow: 0px 0px 6px var(--text-boxshadow1);
   cursor: pointer;
 }
-.filter-addseries-cont .filter-addseries .fadds-dropdowns {
+.filter-serieslist-cont .filter-serieslist .fsl-filters {
   padding: 4px;
   display: flex;
   flex-direction: row;
@@ -825,7 +825,7 @@ header .header-wrap {
   flex-wrap: wrap;
   padding: 0 10px 6px;
 }
-.filter-addseries-cont .filter-addseries .fadds-dropdowns > select {
+.filter-serieslist-cont .filter-serieslist .fsl-filters > select {
   outline: none;
   border: none;
   background: var(--background-color5);
@@ -835,17 +835,17 @@ header .header-wrap {
   font-size: 1.1rem;
   cursor: pointer;
 }
-.filter-addseries-cont .filter-addseries .fadds-list {
+.filter-serieslist-cont .filter-serieslist .f-serieslist-list {
   flex-grow: 1;
   overflow-y: auto;
 }
-.filter-addseries-cont .filter-addseries .fadds-list > li {
+.filter-serieslist-cont .filter-serieslist .f-serieslist-list > li {
   width: 100%;
   padding: 6px 20px;
   overflow: hidden;
   cursor: pointer;
 }
-.filter-addseries-cont .filter-addseries .fadds-list > li:hover {
+.filter-serieslist-cont .filter-serieslist .f-serieslist-list > li:hover {
   background-color: var(--modal-item-hover);
 }
 
@@ -1090,10 +1090,10 @@ footer .copyright span {
 footer .footer-body .useful_links {
     width: 30%;
   }
-  .filter-tagdd {
+  .filter-taglist {
     width: 280px;
   }
-  .filter-addseries {
+  .filter-serieslist {
     width: 344px;
   }
   .darkmode {
@@ -1142,8 +1142,8 @@ footer .footer-body .useful_links {
   }
 }
 @media (max-width: 260px) {
-  .filter-tagdd,
-.filter-addseries,
+  .filter-taglist,
+.filter-serieslist,
 .login-modal,
 .orderby-box,
 .filter-box,

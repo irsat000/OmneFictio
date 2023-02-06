@@ -9,6 +9,87 @@
 }
 
 
+<div class="filter-taglist-cont modalbg-base-1 opacity1" id="create-tag_list_modal">
+    <div class="filter-taglist">
+        <div class="taglist-header">
+            <input type="text" class="taglist-searchbar" id="taglist-searchbar" placeholder="Search tag">
+            <i class="bi bi-x-lg" id="c-taglist-close"></i>
+        </div>
+        <ul class="" id="c-taglist-list" data-action="include">
+            <li data-taglistvalue="action">Action</li>
+            <li data-taglistvalue="comedy">Comedy</li>
+            <li data-taglistvalue="fantasy">Fantasy</li>
+            <li data-taglistvalue="romance">Romance</li>
+            <li data-taglistvalue="dram">Dram</li>
+            <li data-taglistvalue="horror">Horror</li>
+            <li data-taglistvalue="adventure">Adventure</li>
+            <li data-taglistvalue="science_fiction">Science fiction</li>
+        </ul>
+    </div>
+</div>
+
+<div class="filter-serieslist-cont modalbg-base-1 opacity1" id="create-serieslistmodal">
+    <div class="filter-serieslist">
+        <div class="fsl-header">
+            <input type="text" class="serieslist-searchbar" id="serieslist-searchbar" placeholder="Search">
+            <i class="bi bi-x-lg" id="csl-close"></i>
+        </div>
+        <div class="fsl-filters">
+            <select>
+                <option value="0">Type</option>
+                <option value="1">Movie</option>
+                <option value="2">TV Show</option>
+                <option value="3">Game</option>
+                <option value="4">Book</option>
+                <option value="5">Anime/Manga</option>
+                <option value="6">Cartoon/Comic</option>
+                <option value="7">Other</option>
+            </select>
+            <select>
+                <option value="0">A-Z</option>
+                <option value="Others">Others</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+                <option value="F">F</option>
+                <option value="G">G</option>
+                <option value="H">H</option>
+                <option value="I">I</option>
+                <option value="J">J</option>
+                <option value="K">K</option>
+                <option value="L">L</option>
+                <option value="M">M</option>
+                <option value="N">N</option>
+                <option value="O">O</option>
+                <option value="P">P</option>
+                <option value="Q">Q</option>
+                <option value="R">R</option>
+                <option value="S">S</option>
+                <option value="T">T</option>
+                <option value="U">U</option>
+                <option value="V">V</option>
+                <option value="W">W</option>
+                <option value="X">X</option>
+                <option value="Y">Y</option>
+                <option value="Z">Z</option>
+            </select>
+        </div>
+        <ul class="f-serieslist-list" id="c-serieslist-list">
+            <li data-seriesval="Overlord">Overlord</li>
+            <li data-seriesval="Harry_Potter">Harry Potter</li>
+            <li data-seriesval="The_Boys">The Boys</li>
+            <li data-seriesval="Stranger_Things">Stranger Things</li>
+            <li data-seriesval="Breaking_Bad">Breaking Bad</li>
+            <li data-seriesval="Game_of_Thrones">Game of Thrones</li>
+            <li data-seriesval="Hunger_Games">Hunger Games</li>
+            <li data-seriesval="Pirates_of_the_Caribbean">Pirates of the Caribbean</li>
+        </ul>
+    </div>
+</div>
+
+
 <div class="create_content-container">
     <div class="cc-header">
         <h2>Create</h2>
@@ -65,7 +146,7 @@
                 <div class="ff-tags-cont">
                     <div class="fftags-header">
                         <h3>Tags</h3>
-                        <button type="button">
+                        <button type="button" id="ff-open_taglist-btn">
                             <i class="bi bi-plus"></i>
                         </button>
                     </div>
@@ -76,7 +157,7 @@
                 <div class="ff-series-cont">
                     <div class="ffseries-header">
                         <h3>Series</h3>
-                        <button type="button">
+                        <button type="button" id="ff-open_serieslist-btn">
                             <i class="bi bi-plus"></i>
                         </button>
                     </div>

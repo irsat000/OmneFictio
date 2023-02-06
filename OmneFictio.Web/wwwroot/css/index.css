@@ -65,6 +65,12 @@ nav.nav_index .link_group .link_cont:hover > span {
 nav.nav_index .link_group .link_cont i.bi-person {
   font-size: 2.3rem;
 }
+nav.nav_index .about_you_header {
+  display: none;
+}
+nav.nav_index .about_you_links {
+  display: none;
+}
 nav.nav_index .start_reading_links {
   width: 100%;
   gap: 8px;
@@ -325,6 +331,12 @@ nav.nav_index .community_links {
   }
   nav.nav_index .link_group .link_cont {
     gap: 6px;
+  }
+  nav.nav_index .about_you_header {
+    display: block;
+  }
+  nav.nav_index .about_you_links {
+    display: flex;
   }
   nav.nav_index .start_reading_links {
     padding: unset;

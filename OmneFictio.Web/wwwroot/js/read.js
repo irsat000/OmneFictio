@@ -2,14 +2,14 @@
 document.addEventListener("DOMContentLoaded", function () {
     const orderbyModal = document.getElementById('orderby-modal');
     const filterModal = document.getElementById('filter-modal');
-    const filterTagddModal = document.getElementById('filter-tagddmodal');
+    const filterTagListModal = document.getElementById('filter-tag_list_modal');
     const ftagsIncExc = Array.from(document.querySelectorAll('.f-tagsincexc'));
-    const tagSearchbar = document.getElementById('tagdd-searchbar');
-    const filterTagList = document.getElementById('f-tagdd-list');
-    const filterAddseriesModal = document.getElementById('filter-addseriesmodal');
+    const tagSearchbar = document.getElementById('taglist-searchbar');
+    const filterTagList = document.getElementById('f-taglist-list');
+    const filterSeriesListModal = document.getElementById('filter-serieslistmodal');
     const filterSeriesInclude = document.querySelector('.ffs-series_include');
-    const seriesSearchbar = document.getElementById('fadds-searchbar');
-    const filterSeriesList = document.getElementById('fadds-list');
+    const seriesSearchbar = document.getElementById('serieslist-searchbar');
+    const filterSeriesList = document.getElementById('f-serieslist-list');
     const params = new URLSearchParams(window.location.search);
     const plwarning = document.getElementById('plwarning');
     const plw_message = plwarning.querySelector('.plwarning-message');
@@ -115,27 +115,26 @@ document.addEventListener("DOMContentLoaded", function () {
         }
     }
     document.getElementById('f-includetagbtn')?.addEventListener('click', function () {
-        filterTagddModal.classList.add('dflex');
+        filterTagListModal.classList.add('dflex');
         filterTagList.setAttribute('data-action', "include");
     });
     document.getElementById('f-excludetagbtn')?.addEventListener('click', function () {
-        filterTagddModal.classList.add('dflex');
+        filterTagListModal.classList.add('dflex');
         filterTagList.setAttribute('data-action', "exclude");
     });
-    filterTagddModal.addEventListener('click', (e) => {
+    filterTagListModal.addEventListener('click', (e) => {
         const target = e.target;
-        if (target.id === 'f-taggdd-close' || target.id === 'filter-tagddmodal') {
-            filterTagddModal.classList.remove('dflex');
+        if (target.id === 'f-taglist-close' || target.id === 'filter-tag_list_modal') {
+            filterTagListModal.classList.remove('dflex');
         }
     });
     document.getElementById('fanfic-chooseseries')?.addEventListener('click', function () {
-        filterAddseriesModal.classList.add('dflex');
-        filterAddseriesModal.classList.add('opacity1');
+        filterSeriesListModal.classList.add('dflex');
     });
-    filterAddseriesModal.addEventListener('click', (e) => {
+    filterSeriesListModal.addEventListener('click', (e) => {
         const target = e.target;
-        if (target.id === 'fadds-close' || target.id === 'filter-addseriesmodal') {
-            filterAddseriesModal.classList.remove('dflex');
+        if (target.id === 'fsl-close' || target.id === 'filter-serieslistmodal') {
+            filterSeriesListModal.classList.remove('dflex');
         }
     });
     document.querySelector('#orderby-btn').addEventListener('click', () => {
@@ -166,7 +165,7 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     filterTagList.querySelectorAll('li').forEach(li => {
         li.addEventListener('click', function () {
-            const tagname = li.getAttribute('data-tagddvalue');
+            const tagname = li.getAttribute('data-taglistvalue');
             if (tagname === null) {
                 return;
             }
@@ -195,7 +194,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 excludeBody.appendChild(newTagInput);
             }
             tagSearchbar.value = "";
-            filterTagddModal.classList.remove('dflex');
+            filterTagListModal.classList.remove('dflex');
         });
     });
     filterModal.addEventListener('click', function (e) {
@@ -240,7 +239,7 @@ document.addEventListener("DOMContentLoaded", function () {
             filterSeriesInclude.appendChild(newSeriesSpan);
             filterSeriesInclude.appendChild(newSeriesInput);
             seriesSearchbar.value = "";
-            filterAddseriesModal.classList.remove('dflex');
+            filterSeriesListModal.classList.remove('dflex');
         });
     });
     filterSeriesInclude.addEventListener('click', function (e) {
@@ -261,7 +260,7 @@ document.addEventListener("DOMContentLoaded", function () {
         });
         tagSearchbar.value = "";
         seriesSearchbar.value = "";
-        filterAddseriesModal.querySelectorAll(".fadds-dropdowns > select").forEach(select => {
+        filterSeriesListModal.querySelectorAll(".fsl-filters > select").forEach(select => {
             select.value = "0";
         });
     });

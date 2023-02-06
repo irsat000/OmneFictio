@@ -3,15 +3,15 @@ document.addEventListener("DOMContentLoaded", function () {
     const orderbyModal = document.getElementById('orderby-modal') as HTMLDivElement;
     const filterModal = document.getElementById('filter-modal') as HTMLDivElement;
     
-    const filterTagddModal = document.getElementById('filter-tagddmodal') as HTMLDivElement;
+    const filterTagListModal = document.getElementById('filter-tag_list_modal') as HTMLDivElement;
     const ftagsIncExc = Array.from(document.querySelectorAll('.f-tagsincexc') as NodeListOf<HTMLElement>) as HTMLElement[];
-    const tagSearchbar = document.getElementById('tagdd-searchbar') as HTMLInputElement;
-    const filterTagList = document.getElementById('f-tagdd-list') as HTMLUListElement;
+    const tagSearchbar = document.getElementById('taglist-searchbar') as HTMLInputElement;
+    const filterTagList = document.getElementById('f-taglist-list') as HTMLUListElement;
 
-    const filterAddseriesModal = document.getElementById('filter-addseriesmodal') as HTMLDivElement;
+    const filterSeriesListModal = document.getElementById('filter-serieslistmodal') as HTMLDivElement;
     const filterSeriesInclude = document.querySelector('.ffs-series_include') as HTMLDivElement;
-    const seriesSearchbar = document.getElementById('fadds-searchbar') as HTMLInputElement;
-    const filterSeriesList = document.getElementById('fadds-list') as HTMLUListElement;
+    const seriesSearchbar = document.getElementById('serieslist-searchbar') as HTMLInputElement;
+    const filterSeriesList = document.getElementById('f-serieslist-list') as HTMLUListElement;
 
 
 
@@ -136,30 +136,29 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //open tag include or exclude menu.
     document.getElementById('f-includetagbtn')?.addEventListener('click', function () {
-        filterTagddModal.classList.add('dflex');
+        filterTagListModal.classList.add('dflex');
         filterTagList.setAttribute('data-action', "include");
     });
     document.getElementById('f-excludetagbtn')?.addEventListener('click', function () {
-        filterTagddModal.classList.add('dflex');
+        filterTagListModal.classList.add('dflex');
         filterTagList.setAttribute('data-action', "exclude");
     });//Close tag include or exclude menu
-    filterTagddModal.addEventListener('click', (e) => {
+    filterTagListModal.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
-        if (target.id === 'f-taggdd-close' || target.id === 'filter-tagddmodal') {
-            filterTagddModal.classList.remove('dflex');
+        if (target.id === 'f-taglist-close' || target.id === 'filter-tag_list_modal') {
+            filterTagListModal.classList.remove('dflex');
         }
     });
 
     //Open filter series modal (fanfiction)
     document.getElementById('fanfic-chooseseries')?.addEventListener('click', function () {
-        filterAddseriesModal.classList.add('dflex');
-        filterAddseriesModal.classList.add('opacity1');
+        filterSeriesListModal.classList.add('dflex');
     }); //Close filter series modal
-    filterAddseriesModal.addEventListener('click', (e) => {
-        //fadds = filter add series
+    filterSeriesListModal.addEventListener('click', (e) => {
+        //fsl = filter series list
         const target = e.target as HTMLElement;
-        if (target.id === 'fadds-close' || target.id === 'filter-addseriesmodal') {
-            filterAddseriesModal.classList.remove('dflex');
+        if (target.id === 'fsl-close' || target.id === 'filter-serieslistmodal') {
+            filterSeriesListModal.classList.remove('dflex');
         }
     });
 
@@ -199,7 +198,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //adding tags to the filter modal
     filterTagList.querySelectorAll('li').forEach(li => {
         li.addEventListener('click', function () {
-            const tagname = li.getAttribute('data-tagddvalue') as string;
+            const tagname = li.getAttribute('data-taglistvalue') as string;
             if (tagname === null) {
                 return;
             }
@@ -230,7 +229,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 excludeBody.appendChild(newTagInput);
             }
             tagSearchbar.value = "";
-            filterTagddModal.classList.remove('dflex');
+            filterTagListModal.classList.remove('dflex');
         })
     });
     //Hides the tag X/close icon when clicked outside
@@ -266,9 +265,9 @@ document.addEventListener("DOMContentLoaded", function () {
     //searchbar that works with keyup. it's for finding the option more easily.
     //WE WILL HAVE TO FIND VANILLA JS VERSION
     /*
-    $("#tagdd-searchbar").keyup(function (bar: HTMLInputElement) {
+    $("#taglist-searchbar").keyup(function (bar: HTMLInputElement) {
         var filter = $(this).val();
-        $("#f-tagdd-list > li").each(function () {
+        $("#f-taglist-list > li").each(function () {
             if ($(this).text().search(new RegExp(filter, "i")) < 0) {
                 $(this).hide();
             } else {
@@ -277,9 +276,9 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
     
-    $("#fadds-searchbar").keyup(function () {
+    $("#fsl-searchbar").keyup(function () {
         var filter = $(this).val();
-        $("#fadds-list > li").each(function () {
+        $("#fsl-list > li").each(function () {
             if ($(this).text().search(new RegExp(filter, "i")) < 0) {
                 $(this).hide();
             } else {
@@ -294,7 +293,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //--------FANFICTION SERIES OPTIONS-----------
 
     //adding series to the filter modal / fanfiction
-    //fadds = fanfiction add series
+    //fsl = fanfiction add series
 
     filterSeriesList.querySelectorAll('li').forEach(li => {
         li.addEventListener('click', function () {
@@ -316,7 +315,7 @@ document.addEventListener("DOMContentLoaded", function () {
             filterSeriesInclude.appendChild(newSeriesInput);
 
             seriesSearchbar.value = "";
-            filterAddseriesModal.classList.remove('dflex');
+            filterSeriesListModal.classList.remove('dflex');
         });
     });
 
@@ -350,7 +349,7 @@ document.addEventListener("DOMContentLoaded", function () {
         tagSearchbar.value = "";
         //fanfiction modal
         seriesSearchbar.value = "";
-        filterAddseriesModal.querySelectorAll(".fadds-dropdowns > select").forEach(select => {
+        filterSeriesListModal.querySelectorAll(".fsl-filters > select").forEach(select => {
             (<HTMLInputElement>select).value = "0";
         });
     });
