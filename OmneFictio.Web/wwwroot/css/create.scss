@@ -255,7 +255,7 @@ main {}
         gap: 20px 0;
         justify-content: center;
 
-        .ff-clearbtn-cont {
+        .ff-cancelbtn-cont {
             display: flex;
             justify-content: center;
             padding: 0 10px;
@@ -284,7 +284,7 @@ main {}
             }
         }
 
-        button.ff-clear {
+        button.ff-cancel {
             background-color: var(--button-red);
 
             &:hover {
@@ -307,7 +307,7 @@ main {}
             .ff-footer {
                 flex-direction: row;
 
-                .ff-clearbtn-cont {
+                .ff-cancelbtn-cont {
                     width: 30%;
                     flex-shrink: 0;
                     border-right: 1px solid var(--create-border1);

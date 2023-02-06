@@ -196,6 +196,7 @@ document.addEventListener("DOMContentLoaded", function () {
     //-----TAG SELECTIONS------
 
     //adding tags to the filter modal
+    //This will be made dynamic by using click event on filterTagList then looking for the e.target
     filterTagList.querySelectorAll('li').forEach(li => {
         li.addEventListener('click', function () {
             const tagname = li.getAttribute('data-taglistvalue') as string;

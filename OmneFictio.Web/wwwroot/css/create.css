@@ -252,7 +252,7 @@ header {
   .ff-save_and_continue{
   }*/
 }
-.cc-fiction .ff-footer .ff-clearbtn-cont {
+.cc-fiction .ff-footer .ff-cancelbtn-cont {
   display: flex;
   justify-content: center;
   padding: 0 10px;
@@ -277,10 +277,10 @@ header {
 .cc-fiction .ff-footer button:hover {
   background-color: var(--button-green-hover);
 }
-.cc-fiction .ff-footer button.ff-clear {
+.cc-fiction .ff-footer button.ff-cancel {
   background-color: var(--button-red);
 }
-.cc-fiction .ff-footer button.ff-clear:hover {
+.cc-fiction .ff-footer button.ff-cancel:hover {
   background-color: var(--button-red-hover);
 }
 
@@ -288,7 +288,7 @@ header {
   .create_content-container .cc-fiction .ff-footer {
     flex-direction: row;
   }
-  .create_content-container .cc-fiction .ff-footer .ff-clearbtn-cont {
+  .create_content-container .cc-fiction .ff-footer .ff-cancelbtn-cont {
     width: 30%;
     flex-shrink: 0;
     border-right: 1px solid var(--create-border1);
