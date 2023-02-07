@@ -25,8 +25,8 @@ header {
 }
 .create_content-container .cc-header select {
   outline: none;
-  border: 1px solid #5e5e5e;
-  background: var(--create-input-bg);
+  border: 1px solid var(--input-border1);
+  background: var(--input-bg1);
   color: var(--text-color1);
   padding: 4px;
   border-radius: 5px;
@@ -57,7 +57,7 @@ header {
   width: 100%;
   border-radius: 4px;
   border: 1px solid var(--create-border2);
-  background-color: var(--create-input-bg);
+  background-color: var(--input-bg1);
   font-family: "Gudea", cursive;
 }
 .cc-fiction .ff-primary .ff-primary-body {
@@ -74,7 +74,7 @@ header {
   border-radius: 4px 4px 0 0;
   color: var(--text-color1);
   border: 1px solid var(--create-border2);
-  background-color: var(--create-input-bg);
+  background-color: var(--input-bg1);
   font-family: "Times New Roman";
 }
 .cc-fiction .ff-primary .ff-primary-body .description-tools {
@@ -82,7 +82,7 @@ header {
   padding: 6px;
   height: 36px;
   border: 1px solid var(--create-border2);
-  background-color: var(--create-input-bg);
+  background-color: var(--input-bg1);
   border-top: 0;
 }
 .cc-fiction .ff-info {
@@ -103,7 +103,7 @@ header {
 .cc-fiction .ff-info .ff-properties-cont select {
   outline: none;
   border: 1px solid var(--create-border2);
-  background: var(--create-input-bg);
+  background: var(--input-bg1);
   color: var(--text-color1);
   padding: 4px 10px;
   border-radius: 5px;
@@ -131,7 +131,7 @@ header {
   padding: 4px 4px;
   max-width: 500px;
   color: var(--text-color1);
-  background-color: var(--create-input-bg);
+  background-color: var(--input-bg1);
   border: none;
   outline: none;
   border-radius: 4px;
@@ -313,15 +313,15 @@ header {
     gap: 4%;
   }
   .create_content-container .cc-fiction .ff-info .ff-tags-cont .fftags-header,
-.create_content-container .cc-fiction .ff-info .ff-tags-cont .ffseries-header,
-.create_content-container .cc-fiction .ff-info .ff-series-cont .fftags-header,
-.create_content-container .cc-fiction .ff-info .ff-series-cont .ffseries-header {
+  .create_content-container .cc-fiction .ff-info .ff-tags-cont .ffseries-header,
+  .create_content-container .cc-fiction .ff-info .ff-series-cont .fftags-header,
+  .create_content-container .cc-fiction .ff-info .ff-series-cont .ffseries-header {
     justify-content: flex-start;
   }
   .create_content-container .cc-fiction .ff-info .ff-tags-cont .fftags-body,
-.create_content-container .cc-fiction .ff-info .ff-tags-cont .ffseries-body,
-.create_content-container .cc-fiction .ff-info .ff-series-cont .fftags-body,
-.create_content-container .cc-fiction .ff-info .ff-series-cont .ffseries-body {
+  .create_content-container .cc-fiction .ff-info .ff-tags-cont .ffseries-body,
+  .create_content-container .cc-fiction .ff-info .ff-series-cont .fftags-body,
+  .create_content-container .cc-fiction .ff-info .ff-series-cont .ffseries-body {
     padding: 16px 10px;
     font-size: 16px;
   }

@@ -1,8 +1,8 @@
 main {
     background-color: var(--background-color1);
-    border-radius: 10px;
     display: flex;
     flex-direction: column;
+    border-bottom: 1px solid var(--background-color2);
 }
 
 .post-wrap {
@@ -734,7 +734,7 @@ main {
         padding-bottom: 6px;
     
         .mc-header {
-            border-bottom: 2px solid var(--background-color3);
+            border-bottom: 2px solid var(--modal-line1);
             display: flex;
             flex-direction: row;
     
@@ -842,7 +842,9 @@ main {
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) {
     main {
+        border: 1px solid var(--background-color2);
         margin-top: 10px;
+        border-radius: 4px;
         padding: 10px 16px 0;
     }
 

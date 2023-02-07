@@ -12,7 +12,7 @@ body {
     padding: 0;
     margin: 0;
     height: 100%;
-    background-color: var(--background-color1);
+    background-color: var(--body-bg);
     color: var(--text-color1);
 }
 
@@ -145,6 +145,7 @@ select {
 
 header {
     background-color: var(--background-color1);
+    border-bottom: 1px solid var(--background-color2);
 
     /*padding: 20px 0;*/
     .header-wrap {
@@ -701,6 +702,7 @@ header {
                 padding: 4px 9px;
                 cursor: pointer;
                 background-color: var(--accountdropdown-themeswitcher);
+                border: 1px solid var(--input-border1);
                 border-radius: 3px;
                 white-space: nowrap;
                 margin: 0 10px;
@@ -963,7 +965,6 @@ header {
         position: absolute;
         bottom: 30px;
         right: 0;
-        background: var(--background-color2);
         border-radius: 8px;
         -webkit-box-shadow: 0 0 19px -5px rgba(0, 0, 0, 0.5);
         -moz-box-shadow: 0 0 19px -5px rgba(0, 0, 0, 0.5);
@@ -1217,10 +1218,6 @@ footer {
 
     html {
         font-size: 16px;
-    }
-
-    body {
-        background-color: var(--background-color2);
     }
 
     header {

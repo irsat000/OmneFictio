@@ -90,10 +90,10 @@ main {
 }
 .topposts_group .postlist_cont .postlist .post {
   margin-bottom: 12px;
-  background-color: var(--index-post-bg-color);
+  background-color: var(--post-bgcolor1);
 }
 .topposts_group .postlist_cont .postlist .post .p-info {
-  background-color: var(--index-post-bg-color);
+  background-color: var(--post-bgcolor1);
 }
 @media (min-width: 768px) {
   main {

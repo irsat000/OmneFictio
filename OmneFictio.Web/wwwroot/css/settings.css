@@ -1,6 +1,6 @@
 main {
   display: flex;
-  gap: 6px;
+  gap: 6px 14px;
   color: var(--text-color1);
   align-items: flex-start;
   padding-top: 8px;
@@ -54,8 +54,9 @@ nav .settings-link_cont .desktop_nav {
   display: none;
   width: 100%;
   background-color: var(--background-color1);
+  border: 1px solid var(--background-color2);
   padding: 10px 0 20px;
-  border-radius: 8px;
+  border-radius: 4px;
 }
 nav .settings-link_cont .desktop_nav li {
   /*&:first-child a { border-radius: 8px 8px 0 0; }
@@ -69,7 +70,7 @@ nav .settings-link_cont .desktop_nav li a {
   padding: 7px 40px 7px 20px;
   font-size: 1.5rem;
   transition: all 0.1s ease;
-  border-bottom: 1px solid var(--background-color4);
+  border-bottom: 1px solid var(--background-color2);
 }
 nav .settings-link_cont .desktop_nav li a:hover {
   background-color: var(--settings-hovernav);
@@ -81,9 +82,10 @@ nav .settings-link_cont .desktop_nav li a.active {
 
 .settings_body {
   width: 100%;
-  background-color: var(--background-color1);
   min-height: 600px;
-  border-radius: 8px;
+  border-radius: 4px;
+  background-color: var(--background-color1);
+  border-bottom: 1px solid var(--background-color2);
 }
 
 .settings_body .s-profile_settings {
@@ -115,7 +117,8 @@ nav .settings-link_cont .desktop_nav li a.active {
   outline: none;
   border-radius: 6px;
   padding: 8px;
-  background-color: var(--background-color2);
+  background-color: var(--input-bg1);
+  border: 1px solid var(--background-color2);
   color: var(--text-color1);
   margin-bottom: 10px;
   font-family: "Itim", cursive;
@@ -255,6 +258,9 @@ nav .settings-link_cont .desktop_nav li a.active {
   }
   nav .settings-link_cont .desktop_nav {
     display: block;
+  }
+  .settings_body {
+    border: 1px solid var(--background-color2);
   }
   .settings_body .s-library {
     padding-top: 18px;

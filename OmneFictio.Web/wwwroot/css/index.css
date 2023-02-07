@@ -2,10 +2,6 @@ body {
   background-color: var(--body-bg);
 }
 
-header {
-  border-bottom: 1px solid var(--background-color2);
-}
-
 .nav__tutorials-cont {
   display: flex;
   flex-direction: column;
@@ -297,13 +293,13 @@ nav.nav_index .community_links {
 }
 .topposts_group .postlist_cont .postlist .post {
   margin-bottom: 12px;
-  background-color: var(--index-post-bg-color);
+  background-color: var(--post-bgcolor1);
 }
 .topposts_group .postlist_cont .postlist .post .p-info {
-  background-color: var(--index-post-bg-color);
+  background-color: var(--post-bgcolor1);
 }
 .topposts_group .postlist_cont .postlist .post .usercard-onhover {
-  background-color: var(--index-post-bg-color) !important;
+  background-color: var(--post-bgcolor1) !important;
 }
 @media (min-width: 576px) {
   .tutorials .tutorial-categories .tcate {

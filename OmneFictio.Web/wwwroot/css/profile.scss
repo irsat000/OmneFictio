@@ -1,7 +1,6 @@
 .main-cont {
     background-color: var(--background-color1);
-    margin-top: 10px;
-    border-radius: 8px;
+    border-bottom: 1px solid var(--background-color2);
 }
 
 .profile-cont {
@@ -395,14 +394,10 @@
 #profile-posts, #profile-saved{
     .post{
         margin-bottom: 12px;
-        background-color: var(--profile-post-color);
+        background-color: var(--post-bgcolor1);
 
-        .p-info {
-            background-color: var(--profile-post-color);
-        }
-
-        .usercard-onhover {
-            background-color: var(--profile-post-color) !important;
+        .p-info, .usercard-onhover {
+            background-color: var(--post-bgcolor1);
         }
     }
 }
@@ -557,7 +552,13 @@
 }
 
 // Medium devices (tablets, 768px and up)
-@media (min-width: 768px) {}
+@media (min-width: 768px) {
+    .main-cont{
+        border: 1px solid var(--background-color2);
+        margin-top: 10px;
+        border-radius: 4px;
+    }
+}
 
 // Large devices (desktops, 992px and up)
 @media (min-width: 992px) {

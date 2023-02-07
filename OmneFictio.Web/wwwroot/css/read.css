@@ -1,3 +1,7 @@
+body {
+  background-color: var(--body-bg);
+}
+
 .read-nopost {
   display: flex;
   width: 100%;
@@ -98,11 +102,12 @@ main {
 }
 .posts-cont .post-list #pl-column1 .post,
 .posts-cont .post-list #pl-column2 .post {
-  background-color: var(--background-color2);
+  background-color: var(--post-bgcolor1);
 }
-.posts-cont .post-list #pl-column1 .post .p-info,
-.posts-cont .post-list #pl-column2 .post .p-info {
-  background-color: var(--background-color2);
+.posts-cont .post-list #pl-column1 .post .p-info, .posts-cont .post-list #pl-column1 .post .usercard-onhover,
+.posts-cont .post-list #pl-column2 .post .p-info,
+.posts-cont .post-list #pl-column2 .post .usercard-onhover {
+  background-color: var(--post-bgcolor1);
 }
 
 .nav-cont {
@@ -112,65 +117,40 @@ main {
   margin: 20px 20px 0 0;
   flex-shrink: 0;
   font-family: "Itim", cursive;
-  color: #fff;
+  color: var(--text-color1);
 }
-.nav-cont .nav-primary {
+.nav-cont .start_reading_links {
+  width: 100%;
+  gap: 8px;
   display: flex;
   flex-direction: column;
-  background-color: var(--background-color1) !important;
-  border-radius: 10px;
-  padding: 8px;
-  width: 100%;
-  min-height: 140px;
-  margin-bottom: 12px;
+  margin-bottom: 20px;
 }
-.nav-cont .nav-primary .nlink-cont {
+.nav-cont .start_reading_links .read_link {
+  padding: 10px 10px 10px 14px;
+  border-radius: 6px;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
+  align-items: center;
   gap: 10px;
-  padding: 6px;
+  box-shadow: -3px 3px 4px -5px rgba(0, 0, 0, 0.5);
+  -moz-box-shadow: -3px 3px 4px -5px rgba(0, 0, 0, 0.5);
+  -webkit-box-shadow: -3px 3px 4px -5px rgba(0, 0, 0, 0.5);
+  background-color: var(--read-bgcolor1);
 }
-.nav-cont .nav-primary .nlink-cont > a {
-  padding: 4px 14px;
-  border-radius: 8px;
-  border: none;
-  outline: none;
-  transition: 0.2s ease;
-  cursor: pointer;
+.nav-cont .start_reading_links .read_link:hover {
+  background-color: var(--read-bgcolor2);
 }
-.nav-cont .nav-primary .np-readingtime > a {
-  background-color: var(--navlink-readingtime-color);
+.nav-cont .start_reading_links .read_link span {
+  font-size: 1.2rem;
+  height: 1.2rem;
+  font-family: "Solitreo";
 }
-.nav-cont .nav-primary .np-readingtime > a:hover {
-  background-color: var(--navlink-readingtime-color-hover);
-}
-.nav-cont .nav-primary .np-aboutyou > a {
-  background-color: var(--navlink-aboutyou-color);
-}
-.nav-cont .nav-primary .np-aboutyou > a:hover {
-  background-color: var(--navlink-aboutyou-color-hover);
-}
-.nav-cont .nav-others {
-  background-color: var(--background-color1) !important;
-  border-radius: 10px;
-  width: 100%;
+.nav-cont .start_reading_links .read_link i {
+  font-size: 1.2rem;
+  height: 1.1rem;
   display: flex;
-  flex-wrap: wrap;
-  justify-content: space-around;
-  gap: 10px;
-  padding: 14px;
-  margin-bottom: 12px;
-}
-.nav-cont .nav-others > a {
-  color: var(--text-color1);
-  cursor: pointer;
-}
-.nav-cont .nav-others > a:hover {
-  text-decoration: underline;
 }
 .nav-cont .nav-ad1 {
-  position: -webkit-sticky;
   /* Safari & IE */
   position: sticky;
   top: 20px;
@@ -193,7 +173,6 @@ main {
   font-family: "Itim", cursive;
   -webkit-user-select: none;
      -moz-user-select: none;
-      -ms-user-select: none;
           user-select: none;
 }
 .orderby-cont .orderby-box .obt-header {
@@ -248,7 +227,6 @@ main {
   overflow: hidden;
   -webkit-user-select: none;
      -moz-user-select: none;
-      -ms-user-select: none;
           user-select: none;
 }
 .filter-cont .filter-box .f-header {
@@ -536,9 +514,6 @@ main {
   .nav-cont {
     display: flex;
   }
-  .post {
-    background-color: var(--background-color1) !important;
-  }
   .post-options {
     padding: 20px 10px 10px !important;
   }
@@ -552,7 +527,7 @@ main {
     background-color: #c08e8e !important;
   }
   .pagination {
-    background-color: var(--background-color1);
+    background-color: var(--read-bgcolor1);
   }
   .post-list-warnings img {
     width: 25% !important;

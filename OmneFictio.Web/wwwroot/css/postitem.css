@@ -1,25 +1,9 @@
-@-webkit-keyframes pskel-loading-div {
-  0% {
-    background-color: var(--postskeleton-itemcolor-start);
-  }
-  100% {
-    background-color: var(--postskeleton-itemcolor-end);
-  }
-}
 @keyframes pskel-loading-div {
   0% {
     background-color: var(--postskeleton-itemcolor-start);
   }
   100% {
     background-color: var(--postskeleton-itemcolor-end);
-  }
-}
-@-webkit-keyframes pskel-loading-i {
-  0% {
-    color: var(--postskeleton-itemcolor-start);
-  }
-  100% {
-    color: var(--postskeleton-itemcolor-end);
   }
 }
 @keyframes pskel-loading-i {
@@ -40,13 +24,11 @@
   height: 16px;
   border-radius: 10px;
   opacity: 0.5;
-  -webkit-animation: pskel-loading-div 1s linear infinite alternate;
-          animation: pskel-loading-div 1s linear infinite alternate;
+  animation: pskel-loading-div 1s linear infinite alternate;
 }
 .post-skel i.psk-item {
   opacity: 0.7;
-  -webkit-animation: pskel-loading-i 1s linear infinite alternate;
-          animation: pskel-loading-i 1s linear infinite alternate;
+  animation: pskel-loading-i 1s linear infinite alternate;
 }
 .post-skel .pskel-header {
   display: flex;

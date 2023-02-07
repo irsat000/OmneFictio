@@ -1,3 +1,7 @@
+body{
+    background-color: var(--body-bg);
+}
+
 .read-nopost {
     display: flex;
     width: 100%;
@@ -113,10 +117,10 @@ main {
             gap: 12px 0;
 
             .post {
-                background-color: var(--background-color2);
+                background-color: var(--post-bgcolor1);
 
-                .p-info {
-                    background-color: var(--background-color2);
+                .p-info, .usercard-onhover{
+                    background-color: var(--post-bgcolor1);
                 }
             }
         }
@@ -130,69 +134,40 @@ main {
     margin: 20px 20px 0 0;
     flex-shrink: 0;
     font-family: 'Itim', cursive;
-    color: #fff;
+    color: var(--text-color1);
 
-    .nav-primary {
+    .start_reading_links {
+        width: 100%;
+        gap: 8px;
         display: flex;
         flex-direction: column;
-        background-color: var(--background-color1) !important;
-        border-radius: 10px;
-        padding: 8px;
-        width: 100%;
-        min-height: 140px;
-        margin-bottom: 12px;
+        margin-bottom: 20px;
 
-        .nlink-cont {
+        .read_link {
+            padding: 10px 10px 10px 14px;
+            border-radius: 6px;
             display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
+            align-items: center;
             gap: 10px;
-            padding: 6px;
-
-            >a {
-                padding: 4px 14px;
-                border-radius: 8px;
-                border: none;
-                outline: none;
-                transition: 0.2s ease;
-                cursor: pointer;
-            }
-        }
-
-        .np-readingtime>a {
-            background-color: var(--navlink-readingtime-color);
+            box-shadow: -3px 3px 4px -5px rgb(0 0 0 / 50%);
+            -moz-box-shadow: -3px 3px 4px -5px rgb(0 0 0 / 50%);
+            -webkit-box-shadow: -3px 3px 4px -5px rgb(0 0 0 / 50%);
+            background-color: var(--read-bgcolor1);
 
             &:hover {
-                background-color: var(--navlink-readingtime-color-hover);
+                background-color: var(--read-bgcolor2);
             }
-        }
 
-        .np-aboutyou>a {
-            background-color: var(--navlink-aboutyou-color);
-
-            &:hover {
-                background-color: var(--navlink-aboutyou-color-hover);
+            span {
+                font-size: 1.2rem;
+                height: 1.2rem;
+                font-family: 'Solitreo';
             }
-        }
-    }
 
-    .nav-others {
-        background-color: var(--background-color1) !important;
-        border-radius: 10px;
-        width: 100%;
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-around;
-        gap: 10px;
-        padding: 14px;
-        margin-bottom: 12px;
-
-        >a {
-            color: var(--text-color1);
-            cursor: pointer;
-
-            &:hover {
-                text-decoration: underline;
+            i {
+                font-size: 1.2rem;
+                height: 1.1rem;
+                display: flex;
             }
         }
     }
@@ -623,10 +598,6 @@ main {
         display: flex;
     }
 
-    .post {
-        background-color: var(--background-color1) !important;
-    }
-
     .post-options {
         padding: 20px 10px 10px !important;
     }
@@ -645,7 +616,7 @@ main {
     }
 
     .pagination {
-        background-color: var(--background-color1);
+        background-color: var(--read-bgcolor1);
     }
 
     .post-list-warnings img {

@@ -315,7 +315,7 @@ a.reply_target {
                     padding: 0 8px;
                 }
 
-                .c-replybtn {
+                .c-replybtn, a {
                     cursor: pointer;
                     margin-left: 14px;
                     font-family: 'Josefin Sans', sans-serif;
@@ -344,9 +344,11 @@ a.reply_target {
         display: flex;
         flex-direction: column;
         width: 92%;
-        border-radius: 6px 0 6px 6px;
-        background-color: var(--reply-bgcolor);
+        border-radius: 0 0 10px 0;
         padding: 6px 0;
+        border: 1px solid var(--background-color2);
+        border-left: none;
+        border-top: none;
 
         .r-text {
             padding: 0 10px 6px;
@@ -430,7 +432,7 @@ a.reply_target {
         padding-bottom: 6px;
 
         .mr-header {
-            border-bottom: 2px solid var(--background-color3);
+            border-bottom: 2px solid var(--modal-line1);
             display: flex;
             flex-direction: row;
 
@@ -570,8 +572,8 @@ a.reply_target {
                 display: flex;
                 flex-direction: column;
                 width: 100%;
-                background-color: var(--replies-bgcolor);
                 padding: 6px 4px 3px;
+                border-top: 1px solid var(--replies-bordercolor);
 
                 .mrr-header {
                     display: flex;

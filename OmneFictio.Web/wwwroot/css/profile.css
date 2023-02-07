@@ -1,7 +1,6 @@
 .main-cont {
   background-color: var(--background-color1);
-  margin-top: 10px;
-  border-radius: 8px;
+  border-bottom: 1px solid var(--background-color2);
 }
 
 .profile-cont {
@@ -14,15 +13,6 @@
   display: flex;
   flex-direction: column;
   flex-shrink: 0;
-}
-
-@-webkit-keyframes prskel-loading {
-  0% {
-    background-color: var(--profileskeleton-itemcolor-start);
-  }
-  100% {
-    background-color: var(--profileskeleton-itemcolor-end);
-  }
 }
 
 @keyframes prskel-loading {
@@ -42,8 +32,7 @@
   font-family: "Gudea", Arial, Helvetica, sans-serif;
 }
 .profile_details-skel .prskel-img_cont, .profile_details-skel .prskel-name, .profile_details-skel .prskel-bio > span {
-  -webkit-animation: prskel-loading 1s linear infinite alternate;
-          animation: prskel-loading 1s linear infinite alternate;
+  animation: prskel-loading 1s linear infinite alternate;
 }
 .profile_details-skel .prskel-header {
   display: flex;
@@ -118,8 +107,7 @@
   border-radius: 50%;
   border: 4px solid var(--text-color1);
   border-color: var(--profileskeleton-itemcolor-end) transparent var(--profileskeleton-itemcolor-end) transparent;
-  -webkit-animation: loading-dual-ring 1.2s linear infinite;
-          animation: loading-dual-ring 1.2s linear infinite;
+  animation: loading-dual-ring 1.2s linear infinite;
 }
 .profile_details-skel .prskel-stats-cont .prskel-stats .prskel-stat_column :last-child {
   font-size: 0.9rem;
@@ -356,13 +344,10 @@
 
 #profile-posts .post, #profile-saved .post {
   margin-bottom: 12px;
-  background-color: var(--profile-post-color);
+  background-color: var(--post-bgcolor1);
 }
-#profile-posts .post .p-info, #profile-saved .post .p-info {
-  background-color: var(--profile-post-color);
-}
-#profile-posts .post .usercard-onhover, #profile-saved .post .usercard-onhover {
-  background-color: var(--profile-post-color) !important;
+#profile-posts .post .p-info, #profile-posts .post .usercard-onhover, #profile-saved .post .p-info, #profile-saved .post .usercard-onhover {
+  background-color: var(--post-bgcolor1);
 }
 
 #profile-friends .s-friends {
@@ -487,6 +472,13 @@
     width: unset;
     flex-grow: 1;
     flex-basis: 26%;
+  }
+}
+@media (min-width: 768px) {
+  .main-cont {
+    border: 1px solid var(--background-color2);
+    margin-top: 10px;
+    border-radius: 4px;
   }
 }
 @media (min-width: 992px) {

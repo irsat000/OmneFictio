@@ -18,6 +18,8 @@
     --text-boxshadow1: #ffffff50;
     --text-boxshadow2: #ffffff70;
 
+    --input-bg1: #313131;
+    --input-border1: #5e5e5e;
     
     //modals
     --modal-background: #313131;
@@ -27,11 +29,17 @@
     --headericon-color: #ffffff;
     --accountdropdown-icon-hover: #ffffff10;
     --dropdownbg-color: #313131;
-    --accountdropdown-themeswitcher: #454545;
-    --accountdropdown-themeswitcher-hover: #4f4f4f;
+    --accountdropdown-themeswitcher: #313131;
+    --accountdropdown-themeswitcher-hover: #434242;
     --shortcuticons-color: #ffffff;
     --searchbar-bg-color: #313131;
     --searchbar-boxshadow: #31313150;
+    //post list
+    --post-bgcolor1: #313131;
+    --profile-post-color: #272727;
+    --comment-menu-bgcolor: #3b3b3b;
+    --reply-bgcolor: #313131;
+    --replies-bordercolor: #424242;
     //nav
     --navlink-readingtime-color: #415050;
     --navlink-readingtime-color-hover: #607d7d;
@@ -40,11 +48,13 @@
     --navlink-others-color: #494152;
     --navlink-others-color-hover: #5f5a66;
     //index
-    --index-post-bg-color: #313131;
     --index-bgcolor1: #313131;
     --index-bgcolor2: #454545;
     --index-border1: #595959;
     //read
+    --read-bgcolor1: #313131;
+    --read-bgcolor2: #454545;
+    --read-border1: #595959;
     //register
     --register-form-color: #404040;
     --register-input-color: #1d1d1d;
@@ -52,7 +62,6 @@
     --publish-form-color: #404040;
     --publish-input-color: #1d1d1d;
     //create
-    --create-input-bg: #313131;
     --create-border1: #313131;
     --create-border2: #595959;
     //post
@@ -60,15 +69,11 @@
     --pd-actionbtns-color-hover1: #5e5e5e;
     --pd-actionbtns-color2: #444444;
     --pd-actionbtns-color-hover2: #5e5e5e;
-    --comment-menu-bgcolor: #3b3b3b;
-    --reply-bgcolor: #313131;
-    --replies-bgcolor: #424242;
     //settings
     --settings-hovernav: #252525;
     --settings-activetab: #3e6e7a;
     //profile
     --profile-activetab: #3e6e7a;
-    --profile-post-color: #272727;
     --tabrefresh-background-color: #2d2d2d;
     //----------
     //skeleton
@@ -112,20 +117,28 @@
     --text-boxshadow1: #00000050;
     --text-boxshadow2: #00000070;
 
+    --input-bg1: #f7f7f7;
+    --input-border1: #5e5e5e;
     
     //modals
     --modal-background: #dcdcdc;
     --modal-line1: #b5b5b5;
-    --modal-item-hover: #d1d8db;
+    --modal-item-hover: #e1e1e1;
     //layout
     --headericon-color: #ffffff;
     --accountdropdown-icon-hover:#00000010;
-    --dropdownbg-color: #e7e7e7;
-    --accountdropdown-themeswitcher: #d2d2d2;
-    --accountdropdown-themeswitcher-hover: #c1c1c1;
+    --dropdownbg-color: #f0f0f0;
+    --accountdropdown-themeswitcher: #f7f7f7;
+    --accountdropdown-themeswitcher-hover: #e8e8e8;
     --shortcuticons-color: #626262;
     --searchbar-bg-color: #f0f0f0;
     --searchbar-boxshadow: #6868684f;
+    //post list
+    --post-bgcolor1: #f9f9f9;
+    --profile-post-color: #ffffff;
+    --comment-menu-bgcolor: #e3e3e3;
+    --reply-bgcolor: #e1e1e1;
+    --replies-bordercolor: #a5a5a5;
     //nav
     --navlink-readingtime-color: #9298b9;
     --navlink-readingtime-color-hover: #777ea8;
@@ -134,11 +147,13 @@
     --navlink-others-color: #9a90a6;
     --navlink-others-color-hover: #816f96;
     //index
-    --index-post-bg-color: #ffffff;
     --index-bgcolor1: #f9f9f9;
     --index-bgcolor2: #ffffff;
     --index-border1: #dcdcdc;
     //read
+    --read-bgcolor1: #f9f9f9;
+    --read-bgcolor2: #ffffff;
+    --read-border1: #dcdcdc;
     //register
     --register-form-color: #f0f0f0;
     --register-input-color: #dcdcdc;
@@ -146,7 +161,6 @@
     --publish-form-color: #f0f0f0;
     --publish-input-color: #dcdcdc;
     //create
-    --create-input-bg: #f7f7f7;
     --create-border1: #dcdcdc;
     --create-border2: #dcdcdc;
     //post
@@ -154,15 +168,11 @@
     --pd-actionbtns-color-hover1: #c5c5c5;
     --pd-actionbtns-color2: #c7c7c7;
     --pd-actionbtns-color-hover2: #bbbbbb;
-    --comment-menu-bgcolor: #e3e3e3;
-    --reply-bgcolor: #dcdcdc;
-    --replies-bgcolor: #f0f0f0;
     //settings
     --settings-hovernav: #e3e3e3;
     --settings-activetab: #32a1bc;
     //profile
     --profile-activetab: #32a1bc;
-    --profile-post-color: #ffffff;
     --tabrefresh-background-color: #dcdcdc;
     //----------
     //skeleton

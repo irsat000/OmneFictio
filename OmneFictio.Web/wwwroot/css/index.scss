@@ -2,10 +2,6 @@ body {
     background-color: var(--body-bg);
 }
 
-header {
-    border-bottom: 1px solid var(--background-color2);
-}
-
 .nav__tutorials-cont {
     display: flex;
     flex-direction: column;
@@ -339,14 +335,14 @@ nav.nav_index {
 
             .post {
                 margin-bottom: 12px;
-                background-color: var(--index-post-bg-color);
+                background-color: var(--post-bgcolor1);
 
                 .p-info {
-                    background-color: var(--index-post-bg-color);
+                    background-color: var(--post-bgcolor1);
                 }
 
                 .usercard-onhover {
-                    background-color: var(--index-post-bg-color) !important;
+                    background-color: var(--post-bgcolor1) !important;
                 }
             }
         }

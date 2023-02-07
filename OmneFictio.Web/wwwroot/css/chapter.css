@@ -1,8 +1,8 @@
 main {
   width: 100%;
-  border-radius: 16px;
   color: var(--text-color1);
   background-color: var(--background-color1);
+  border-bottom: 1px solid var(--background-color2);
 }
 
 .chapter-container {
@@ -30,19 +30,16 @@ main {
 .ch-header .ch-navigation {
   display: flex;
   justify-content: space-between;
-  font-family: "Itim", cursive;
+  font-family: "Gudea", cursive;
 }
 .ch-header .ch-navigation select {
   color: var(--text-color1);
-  background: var(--background-color2);
+  background: var(--input-bg1);
+  border: 1px solid var(--input-border1);
   padding: 4px 8px;
   border-radius: 5px;
   font-size: 1.1rem;
   cursor: pointer;
-  transition: background-color 0.1s;
-}
-.ch-header .ch-navigation select:hover {
-  background-color: var(--background-color5);
 }
 .ch-header .ch-navigation .ch-navigationicons {
   display: flex;
@@ -51,18 +48,15 @@ main {
 .ch-header .ch-navigation .ch-navigationicons a {
   font-size: 1.2rem;
   border-radius: 5px;
-  background-color: var(--background-color2);
+  background-color: var(--input-bg1);
+  border: 1px solid var(--input-border1);
   display: flex;
   align-items: center;
   justify-content: center;
   width: 34px;
-  transition: background-color 0.1s;
 }
 .ch-header .ch-navigation .ch-navigationicons a i {
   display: flex;
-}
-.ch-header .ch-navigation .ch-navigationicons a:hover {
-  background-color: var(--background-color5);
 }
 .ch-header .ch-navigation .ch-navigationicons .ch-prevlink {
   padding-right: 2px;
@@ -168,6 +162,8 @@ main {
 
 @media (min-width: 768px) {
   main {
+    border: 1px solid var(--background-color2);
+    border-radius: 4px;
     padding: 14px 20px;
     margin-top: 14px;
   }

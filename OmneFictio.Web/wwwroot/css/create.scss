@@ -28,8 +28,8 @@ main {}
 
         select {
             outline: none;
-            border: 1px solid #5e5e5e;
-            background: var(--create-input-bg);
+            border: 1px solid var(--input-border1);
+            background: var(--input-bg1);
             color: var(--text-color1);
             padding: 4px;
             border-radius: 5px;
@@ -66,7 +66,7 @@ main {}
                 width: 100%;
                 border-radius: 4px;
                 border: 1px solid var(--create-border2);
-                background-color: var(--create-input-bg);
+                background-color: var(--input-bg1);
                 font-family: 'Gudea', cursive;
             }
         }
@@ -85,7 +85,7 @@ main {}
                 border-radius: 4px 4px 0 0;
                 color: var(--text-color1);
                 border: 1px solid var(--create-border2);
-                background-color: var(--create-input-bg);
+                background-color: var(--input-bg1);
                 font-family: 'Times New Roman';
             }
 
@@ -94,7 +94,7 @@ main {}
                 padding: 6px;
                 height: 36px;
                 border: 1px solid var(--create-border2);
-                background-color: var(--create-input-bg);
+                background-color: var(--input-bg1);
                 border-top: 0;
             }
         }
@@ -118,7 +118,7 @@ main {}
             select {
                 outline: none;
                 border: 1px solid var(--create-border2);
-                background: var(--create-input-bg);
+                background: var(--input-bg1);
                 color: var(--text-color1);
                 padding: 4px 10px;
                 border-radius: 5px;
@@ -149,7 +149,7 @@ main {}
                     padding: 4px 4px;
                     max-width: 500px;
                     color: var(--text-color1);
-                    background-color: var(--create-input-bg);
+                    background-color: var(--input-bg1);
                     border: none;
                     outline: none;
                     border-radius: 4px;

@@ -1,25 +1,9 @@
-@-webkit-keyframes cskel-loading-div {
-  0% {
-    background-color: var(--commentskeleton-itemcolor-start);
-  }
-  100% {
-    background-color: var(--commentskeleton-itemcolor-end);
-  }
-}
 @keyframes cskel-loading-div {
   0% {
     background-color: var(--commentskeleton-itemcolor-start);
   }
   100% {
     background-color: var(--commentskeleton-itemcolor-end);
-  }
-}
-@-webkit-keyframes cskel-loading-i {
-  0% {
-    color: var(--commentskeleton-itemcolor-start);
-  }
-  100% {
-    color: var(--commentskeleton-itemcolor-end);
   }
 }
 @keyframes cskel-loading-i {
@@ -41,13 +25,11 @@
   height: 16px;
   border-radius: 10px;
   opacity: 0.5;
-  -webkit-animation: cskel-loading-div 1s linear infinite alternate;
-          animation: cskel-loading-div 1s linear infinite alternate;
+  animation: cskel-loading-div 1s linear infinite alternate;
 }
 .comment-skel i.csk-item {
   opacity: 0.7;
-  -webkit-animation: cskel-loading-i 1s linear infinite alternate;
-          animation: cskel-loading-i 1s linear infinite alternate;
+  animation: cskel-loading-i 1s linear infinite alternate;
 }
 .comment-skel .cskel-header {
   display: flex;
@@ -289,7 +271,7 @@ a.reply_target:hover {
 .comment-cont .comment .c-footer .c-evaluation .c-likes {
   padding: 0 8px;
 }
-.comment-cont .comment .c-footer .c-evaluation .c-replybtn {
+.comment-cont .comment .c-footer .c-evaluation .c-replybtn, .comment-cont .comment .c-footer .c-evaluation a {
   cursor: pointer;
   margin-left: 14px;
   font-family: "Josefin Sans", sans-serif;
@@ -297,7 +279,7 @@ a.reply_target:hover {
   padding: 2px 0 0;
   margin-bottom: -1px;
 }
-.comment-cont .comment .c-footer .c-evaluation .c-replybtn:hover {
+.comment-cont .comment .c-footer .c-evaluation .c-replybtn:hover, .comment-cont .comment .c-footer .c-evaluation a:hover {
   text-decoration: underline;
 }
 .comment-cont .comment .c-footer .get_replies {
@@ -312,9 +294,11 @@ a.reply_target:hover {
   display: flex;
   flex-direction: column;
   width: 92%;
-  border-radius: 6px 0 6px 6px;
-  background-color: var(--reply-bgcolor);
+  border-radius: 0 0 10px 0;
   padding: 6px 0;
+  border: 1px solid var(--background-color2);
+  border-left: none;
+  border-top: none;
 }
 .comment-cont .reply .r-text {
   padding: 0 10px 6px;
@@ -388,7 +372,7 @@ a.reply_target:hover {
   padding-bottom: 6px;
 }
 .modal-replies-cont .modal-replies .mr-header {
-  border-bottom: 2px solid var(--background-color3);
+  border-bottom: 2px solid var(--modal-line1);
   display: flex;
   flex-direction: row;
 }
@@ -507,8 +491,8 @@ a.reply_target:hover {
   display: flex;
   flex-direction: column;
   width: 100%;
-  background-color: var(--replies-bgcolor);
   padding: 6px 4px 3px;
+  border-top: 1px solid var(--replies-bordercolor);
 }
 .modal-replies-cont .modal-replies .mr-body .mr-reply .mrr-header {
   display: flex;
