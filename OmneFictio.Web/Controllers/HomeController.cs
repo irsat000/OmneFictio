@@ -52,12 +52,6 @@ public class HomeController : Controller
         return View();
     }
 
-    [HttpGet("Publish")]
-    public IActionResult Publish()
-    {
-        return View();
-    }
-
     [HttpGet("Create")]
     public IActionResult Create()
     {

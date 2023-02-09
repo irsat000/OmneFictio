@@ -346,16 +346,6 @@ nav.nav_index .community_links {
   .tutorials {
     padding: 20px;
   }
-  .tutorials .featured {
-    flex-direction: row;
-  }
-  .tutorials .featured .swiper-cont {
-    width: 60%;
-  }
-  .tutorials .featured .featured_description {
-    width: 40%;
-    font-size: 12px;
-  }
   .tutorials .tcates-title {
     text-align: left;
     margin: 20px 0 10px 10px;
@@ -377,8 +367,14 @@ nav.nav_index .community_links {
   }
 }
 @media (min-width: 992px) {
-  .tutorials .featured_description {
-    font-size: 16px !important;
+  .tutorials .featured {
+    flex-direction: row;
+  }
+  .tutorials .featured .swiper-cont {
+    width: 60%;
+  }
+  .tutorials .featured .featured_description {
+    width: 40%;
   }
   .tutorials .tutorial-categories .tcate .tcate-body {
     font-size: 14px;

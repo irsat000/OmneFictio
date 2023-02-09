@@ -4,7 +4,8 @@
 @{
     string? userId = User.FindFirst("nameid")?.Value;
     string? username = User.FindFirst("unique_name")?.Value;
-    string? userPicture = User.FindFirst("actort")?.Value;
+    string? userEmail = User.FindFirst("email")?.Value;
+    string? userPicture = User.FindFirst("actort")?.Value == "noimage" ? null : User.FindFirst("actort")?.Value;
 }
 
 <!DOCTYPE html>
@@ -43,8 +44,6 @@
         data-ux_mode="popup" data-callback="googleHandleCredentialResponse" data-skip_prompt_cookie="UserAuth">
         <!--data-login_uri="https://localhost:7067/Auth/GoogleSigninDirectly">-->
     </div>
-    <div class="modalbg1"></div>
-    <div class="modalbg2"></div>
 
 
     <template id="commentSkeleton">
@@ -406,37 +405,33 @@
 
     <div class="drawer-cont modalbg-base-1" id="drawer">
         <div class="drawer">
-            <div class="dw-top">
-                <div class="dw-account">
-                    <div class="dw-userimg">
-                        @if (userPicture != null && userId != null)
-                        {
-                            @Html.Raw("<img src='/images/users/" + userPicture + "'/>")
-                        }
-                        else
-                        {
-                            <i class="bi bi-person-square"></i>
-                        }
+            <div class="dw-user-cont">
+                <div class="dw-userimg">
+                    @if (userPicture != null)
+                    {
+                        @Html.Raw("<img src='/images/users/" + userPicture + "'/>")
+                    }
+                    else
+                    {
+                        <i class="bi bi-person-square"></i>
+                    }
+                    <div class="dw-close" id="dw-close">
+                        <i class="bi bi-arrow-left-short"></i>
                     </div>
                 </div>
-                <div class="dw-close" id="dw-close">
-                    <i class="bi bi-x-lg"></i>
-                </div>
-            </div>
-            <div class="dw-username">
                 @if (userId != null)
                 {
-                    <span>@username</span>
-                }
-                else
-                {
-                    <span class="dw-username">--</span>
+                    <div class="dw-user_identity">
+                        <span class="dwu-username">@username</span>
+                        <span class="dwu-email">@userEmail</span>
+                    </div>
                 }
             </div>
             <div class="dw-mainpage">
                 <a href="/">OmneFictio</a>
             </div>
             <div class="dw-list">
+                <h6 class="dw-list-title">User</h6>
                 <ul>
                     @if (userId != null)
                     {
@@ -449,6 +444,15 @@
                         <li><a href="/u/@username/friends">
                                 <div class="dw-icon-cont"><i class="bi bi-people"></i></div>Friends
                             </a></li>
+                        <li><a href="#">
+                                <div class="dw-icon-cont"><i class="bi bi-cart"></i></div>Shop
+                            </a></li>
+                        <li class="dw-chat-btn"><a href="#">
+                                <div class="dw-icon-cont"><i class="bi bi-chat-dots"></i></div>Chat
+                            </a></li>
+                        <li class="dw-notifications-btn"><a href="#">
+                                <div class="dw-icon-cont"><i class="bi bi-bell"></i></div>Notifications
+                            </a></li>
                     }
                     else
                     {
@@ -459,26 +463,25 @@
                                 <div class="dw-icon-cont"><i class="bi bi-person-plus"></i></div>Register
                             </a></li>
                     }
-                    <li><a href="#">
-                            <div class="dw-icon-cont"><i class="bi bi-cart"></i></div>Shop
-                        </a></li>
-                    <li class="dw-chat-btn"><a href="#">
-                            <div class="dw-icon-cont"><i class="bi bi-chat-dots"></i></div>Chat
-                        </a></li>
-                    <li class="dw-notifications-btn"><a href="#">
-                            <div class="dw-icon-cont"><i class="bi bi-bell"></i></div>Notifications
-                        </a></li>
+                </ul>
+            </div>
+            <div class="dw-list">
+                <h6 class="dw-list-title">Settings</h6>
+                <ul>
                     <li><a href="/settings">
                             <div class="dw-icon-cont"><i class="bi bi-gear"></i></div>Settings
                         </a></li>
+                    <li><a href="/settings/customize">
+                            <div class="dw-icon-cont"><i class="bi bi-sliders2"></i></div>Customize
+                        </a></li>
+                    @if (userId != null)
+                    {
+                        <li><a class="logoutBtn">
+                                <div class="dw-icon-cont"><i class="bi bi-box-arrow-left"></i></div>Logout
+                            </a></li>
+                    }
                 </ul>
             </div>
-            @if (userId != null)
-            {
-                <a class="logoutBtn dw-redbutton">
-                    <div class="dw-icon-cont"><i class="bi bi-box-arrow-left"></i></div>Logout
-                </a>
-            }
         </div>
     </div>
 
@@ -503,14 +506,14 @@
                 <div class="shortcuts-cont">
                     <i class="bi bi-search search-shortcut"></i>
                     <i class="bi bi-chat-dots chat-shortcut"></i>
-                    <a href="/Create"><i class="bi bi-plus-circle"></i></a>
+                    <a href="/Create" class="create-shortcut"><i class="bi bi-plus-circle"></i></a>
                     <i class="bi bi-bell notifications-shortcut"></i>
                 </div>
                 <div class="account-cont">
                     <div class="account_btn-cont">
                         <div class="ppic-wrap">
                             @{
-                                if (userId != null)
+                                if (userPicture != null)
                                 {
                                     @Html.Raw("<img src='/images/users/" + userPicture + "'/>")
                                 }

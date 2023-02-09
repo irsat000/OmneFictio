@@ -158,10 +158,10 @@ public class HelperServices : IHelperServices
         var tokenDescriptor = new SecurityTokenDescriptor
         {
             Subject = new ClaimsIdentity(new List<Claim>(){
-                new Claim(ClaimTypes.NameIdentifier, user.id.ToString()),
-                new Claim(ClaimTypes.Name, user.username),
+                new Claim(ClaimTypes.NameIdentifier, user.id.ToString()), //nameid
+                new Claim(ClaimTypes.Name, user.username), //unique_name
                 new Claim(ClaimTypes.Email, user.email),
-                new Claim(ClaimTypes.Actor, user.profilePic ?? "noimage")
+                new Claim(ClaimTypes.Actor, user.profilePic ?? "noimage") //actort
             }),
             Issuer = "OmneFictio.com",
             Expires = DateTime.UtcNow.AddDays(30),

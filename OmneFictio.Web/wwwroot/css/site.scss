@@ -170,10 +170,6 @@ header {
         text-shadow: 0px 0px 6px var(--text-boxshadow1);
         cursor: pointer;
         display: flex;
-
-        &:hover {
-            font-size: 3.2rem;
-        }
     }
 }
 
@@ -194,120 +190,117 @@ header {
         display: flex;
         flex-direction: column;
         overflow-y: auto;
-        background-color: var(--background-color1);
-        font-family: 'Itim', cursive;
         overflow-x: hidden;
         transition: width 0.3s ease;
+        background-color: var(--background-color1);
         color: var(--text-color1);
 
-        .dw-top {
+        .dw-user-cont {
             display: flex;
-            flex-direction: row;
-            align-items: flex-start;
-            border-bottom: 1px solid var(--background-color2);
+            flex-direction: column;
+            background-color: #2f78b4;
+            color: #ffffff;
 
-            .dw-close {
-                padding: 10px;
-                flex-shrink: 0;
-
-                i {
-                    font-size: 2rem;
-                }
-            }
-
-            .dw-account {
-                flex-grow: 1;
+            .dw-userimg {
                 display: flex;
-                justify-content: center;
-                overflow: hidden;
+                justify-content: space-between;
+                align-items: flex-start;
+                padding-left: 14px;
 
-                .dw-userimg {
+                >i {
                     display: flex;
-                    justify-content: center;
-                    padding: 1rem 0 10px;
+                    font-size: 5rem;
+                    margin: 14px 0 14px;
+                }
 
-                    img {
-                        width: 4rem;
-                        height: 4rem;
-                        border-radius: 6px;
-                    }
+                >img {
+                    width: 5rem;
+                    height: 5rem;
+                    border-radius: 6px;
+                    margin: 14px 0 14px;
+                }
+
+                .dw-close {
+                    padding: 10px;
 
                     i {
-                        font-size: 4rem;
+                        display: flex;
+                        font-size: 2rem;
                     }
                 }
+            }
 
-                .dw-acc-info {
-                    font-family: 'Hubballi', cursive;
-                    padding-bottom: 6px;
+            .dw-user_identity {
+                display: flex;
+                flex-direction: column;
+                padding: 0 10px 10px;
+
+                .dwu-username {
+                    margin-top: -4px;
                     font-size: 1.1rem;
+                    font-family: 'Josefin Sans', cursive;
+                }
+
+                .dwu-email {
+                    font-size: 0.8rem;
+                    font-family: 'Gudea', cursive;
                 }
             }
-        }
-
-        .dw-username {
-            display: flex;
-            justify-content: center;
-            font-family: 'Doppio One', sans-serif;
-            padding: 8px 0;
-            font-size: 1.1rem;
         }
 
         .dw-mainpage {
-            border-top: 1px solid #313131;
-            border-bottom: 1px solid #313131;
-            font-size: 1.5rem;
+            border-bottom: 1px solid var(--background-color2);
+            font-size: 1.6rem;
 
             a {
-                /*height: 100%;
-                width: 100%;*/
-                padding: 6px 0 6px 20px;
+                padding: 7px 16px;
                 font-family: 'Kaushan Script', cursive;
             }
         }
 
         .dw-list {
-            padding: 10px 0 16px;
-            flex-grow: 1;
-            font-size: 1.3rem;
+            margin-top: 4px;
+            padding: 10px 0 10px;
+            border-bottom: 1px solid var(--background-color2);
+
+            &:last-child {
+                border-bottom: unset;
+            }
+
+            >h6 {
+                color: var(--text-color3);
+                font-size: 0.9rem;
+                font-weight: bold;
+                font-family: 'Gudea', cursive;
+                padding: 4px 10px;
+            }
 
             >ul {
                 >li {
                     >a {
-                        padding: 4px 20px;
+                        padding: 5px 12px;
                         color: var(--text-color1) !important;
-                        transition: 0.2s ease;
                         display: flex;
+                        align-items: center;
                         cursor: pointer;
+                        font-size: 1.2rem;
+                        font-family: 'Gudea', cursive;
 
                         &:hover {
                             background-color: var(--background-color2);
                         }
+
+                        .dw-icon-cont {
+                            width: 2rem;
+                            padding-bottom: 2px;
+                            flex-shrink: 0;
+
+                            i {
+                                font-size: 1.3rem;
+                            }
+                        }
                     }
                 }
-            }
-        }
-
-        .dw-redbutton {
-            display: flex;
-            position: sticky;
-            bottom: 0;
-            padding: 4px 20px;
-            color: #ffffff;
-            transition: 0.2s ease;
-            background-color: #b73d3d;
-            font-size: 1.4rem;
-
-            &:hover {
-                background-color: #b94f4f;
-            }
-        }
-
-        .dw-icon-cont {
-            padding-right: 14px;
-
-            i {
-                font-size: 1.4rem;
             }
         }
     }
@@ -601,6 +594,10 @@ header {
         }*/
     }
 
+    .create-shortcut {
+        display: block;
+    }
+
     .chat-shortcut,
     .notifications-shortcut {
         display: none;
@@ -784,6 +781,7 @@ header {
                 border-bottom: 1px solid var(--text-color1);
                 font-size: 1rem;
                 cursor: text;
+                font-family: 'Josefin Sans';
 
                 &:hover {
                     background-color: unset !important;
@@ -1228,6 +1226,14 @@ footer {
         .searchbar-cont {
             padding-top: 4px;
         }
+
+        .shortcuts-cont {
+
+            .chat-shortcut,
+            .notifications-shortcut {
+                display: block;
+            }
+        }
     }
 
     .account-cont {
@@ -1293,28 +1299,14 @@ footer {
 
 // Custom
 @media (min-width: 360px) {
-    .shortcuts-cont {
-
-        .chat-shortcut,
-        .notifications-shortcut {
-            display: block;
-        }
-    }
-
-    .drawer {
-
-        .dw-chat-btn,
-        .dw-notifications-btn {
+    header {
+        .search-shortcut {
             display: none;
         }
-    }
 
-    .search-shortcut {
-        display: none;
-    }
-
-    .searchbar-cont {
-        display: flex;
+        .searchbar-cont {
+            display: flex;
+        }
     }
 }
 

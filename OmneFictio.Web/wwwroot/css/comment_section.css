@@ -296,7 +296,7 @@ a.reply_target:hover {
   width: 92%;
   border-radius: 0 0 10px 0;
   padding: 6px 0;
-  border: 1px solid var(--background-color2);
+  border: 1px solid var(--reply-bgcolor);
   border-left: none;
   border-top: none;
 }

@@ -307,7 +307,7 @@
 
 @media (min-width: 768px) {
   .post {
-    border-radius: 10px;
+    border-radius: 4px;
   }
   .post .p-showCoverBtn {
     padding: 2px 5px 0;

@@ -160,9 +160,6 @@ header .header-wrap {
   cursor: pointer;
   display: flex;
 }
-.drawerbtn-cont i:hover {
-  font-size: 3.2rem;
-}
 
 .drawer-cont {
   opacity: 1 !important;
@@ -179,100 +176,97 @@ header .header-wrap {
   display: flex;
   flex-direction: column;
   overflow-y: auto;
-  background-color: var(--background-color1);
-  font-family: "Itim", cursive;
   overflow-x: hidden;
   transition: width 0.3s ease;
+  background-color: var(--background-color1);
   color: var(--text-color1);
 }
-.drawer-cont .drawer .dw-top {
+.drawer-cont .drawer .dw-user-cont {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  background-color: #2f78b4;
+  color: #ffffff;
+}
+.drawer-cont .drawer .dw-user-cont .dw-userimg {
+  display: flex;
+  justify-content: space-between;
   align-items: flex-start;
-  border-bottom: 1px solid var(--background-color2);
+  padding-left: 14px;
 }
-.drawer-cont .drawer .dw-top .dw-close {
+.drawer-cont .drawer .dw-user-cont .dw-userimg > i {
+  display: flex;
+  font-size: 5rem;
+  margin: 14px 0 14px;
+}
+.drawer-cont .drawer .dw-user-cont .dw-userimg > img {
+  width: 5rem;
+  height: 5rem;
+  border-radius: 6px;
+  margin: 14px 0 14px;
+}
+.drawer-cont .drawer .dw-user-cont .dw-userimg .dw-close {
   padding: 10px;
-  flex-shrink: 0;
 }
-.drawer-cont .drawer .dw-top .dw-close i {
+.drawer-cont .drawer .dw-user-cont .dw-userimg .dw-close i {
+  display: flex;
   font-size: 2rem;
 }
-.drawer-cont .drawer .dw-top .dw-account {
-  flex-grow: 1;
+.drawer-cont .drawer .dw-user-cont .dw-user_identity {
   display: flex;
-  justify-content: center;
-  overflow: hidden;
+  flex-direction: column;
+  padding: 0 10px 10px;
 }
-.drawer-cont .drawer .dw-top .dw-account .dw-userimg {
-  display: flex;
-  justify-content: center;
-  padding: 1rem 0 10px;
-}
-.drawer-cont .drawer .dw-top .dw-account .dw-userimg img {
-  width: 4rem;
-  height: 4rem;
-  border-radius: 6px;
-}
-.drawer-cont .drawer .dw-top .dw-account .dw-userimg i {
-  font-size: 4rem;
-}
-.drawer-cont .drawer .dw-top .dw-account .dw-acc-info {
-  font-family: "Hubballi", cursive;
-  padding-bottom: 6px;
+.drawer-cont .drawer .dw-user-cont .dw-user_identity .dwu-username {
+  margin-top: -4px;
   font-size: 1.1rem;
+  font-family: "Josefin Sans", cursive;
 }
-.drawer-cont .drawer .dw-username {
-  display: flex;
-  justify-content: center;
-  font-family: "Doppio One", sans-serif;
-  padding: 8px 0;
-  font-size: 1.1rem;
+.drawer-cont .drawer .dw-user-cont .dw-user_identity .dwu-email {
+  font-size: 0.8rem;
+  font-family: "Gudea", cursive;
 }
 .drawer-cont .drawer .dw-mainpage {
-  border-top: 1px solid #313131;
-  border-bottom: 1px solid #313131;
-  font-size: 1.5rem;
+  border-bottom: 1px solid var(--background-color2);
+  font-size: 1.6rem;
 }
 .drawer-cont .drawer .dw-mainpage a {
-  /*height: 100%;
-  width: 100%;*/
-  padding: 6px 0 6px 20px;
+  padding: 7px 16px;
   font-family: "Kaushan Script", cursive;
 }
 .drawer-cont .drawer .dw-list {
-  padding: 10px 0 16px;
-  flex-grow: 1;
-  font-size: 1.3rem;
+  margin-top: 4px;
+  padding: 10px 0 10px;
+  border-bottom: 1px solid var(--background-color2);
+}
+.drawer-cont .drawer .dw-list:last-child {
+  border-bottom: unset;
+}
+.drawer-cont .drawer .dw-list > h6 {
+  color: var(--text-color3);
+  font-size: 0.9rem;
+  font-weight: bold;
+  font-family: "Gudea", cursive;
+  padding: 4px 10px;
 }
 .drawer-cont .drawer .dw-list > ul > li > a {
-  padding: 4px 20px;
+  padding: 5px 12px;
   color: var(--text-color1) !important;
-  transition: 0.2s ease;
   display: flex;
+  align-items: center;
   cursor: pointer;
+  font-size: 1.2rem;
+  font-family: "Gudea", cursive;
 }
 .drawer-cont .drawer .dw-list > ul > li > a:hover {
   background-color: var(--background-color2);
 }
-.drawer-cont .drawer .dw-redbutton {
-  display: flex;
-  position: sticky;
-  bottom: 0;
-  padding: 4px 20px;
-  color: #ffffff;
-  transition: 0.2s ease;
-  background-color: #b73d3d;
-  font-size: 1.4rem;
+.drawer-cont .drawer .dw-list > ul > li > a .dw-icon-cont {
+  width: 2rem;
+  padding-bottom: 2px;
+  flex-shrink: 0;
 }
-.drawer-cont .drawer .dw-redbutton:hover {
-  background-color: #b94f4f;
-}
-.drawer-cont .drawer .dw-icon-cont {
-  padding-right: 14px;
-}
-.drawer-cont .drawer .dw-icon-cont i {
-  font-size: 1.4rem;
+.drawer-cont .drawer .dw-list > ul > li > a .dw-icon-cont i {
+  font-size: 1.3rem;
 }
 
 .login-modal-cont {
@@ -528,6 +522,9 @@ header .header-wrap {
   /*&:hover {
   }*/
 }
+.shortcuts-cont .create-shortcut {
+  display: block;
+}
 .shortcuts-cont .chat-shortcut,
 .shortcuts-cont .notifications-shortcut {
   display: none;
@@ -690,6 +687,7 @@ header .header-wrap {
   border-bottom: 1px solid var(--text-color1);
   font-size: 1rem;
   cursor: text;
+  font-family: "Josefin Sans";
 }
 .account-cont .account-dropdown .ad-linklist > li #loggedin-username:hover {
   background-color: unset !important;
@@ -1053,6 +1051,10 @@ footer .copyright span {
   header .searchbar-cont {
     padding-top: 4px;
   }
+  header .shortcuts-cont .chat-shortcut,
+  header .shortcuts-cont .notifications-shortcut {
+    display: block;
+  }
   .account-cont {
     display: flex;
   }
@@ -1095,18 +1097,10 @@ footer .copyright span {
   }
 }
 @media (min-width: 360px) {
-  .shortcuts-cont .chat-shortcut,
-  .shortcuts-cont .notifications-shortcut {
-    display: block;
-  }
-  .drawer .dw-chat-btn,
-  .drawer .dw-notifications-btn {
+  header .search-shortcut {
     display: none;
   }
-  .search-shortcut {
-    display: none;
-  }
-  .searchbar-cont {
+  header .searchbar-cont {
     display: flex;
   }
 }
