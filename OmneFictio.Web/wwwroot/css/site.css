@@ -144,7 +144,7 @@ header .header-wrap {
   flex-direction: row;
   justify-content: space-between;
   align-items: center;
-  padding: 4px 10px;
+  padding: 4px 18px 4px 10px;
 }
 
 .drawerbtn-cont {
@@ -159,6 +159,7 @@ header .header-wrap {
   text-shadow: 0px 0px 6px var(--text-boxshadow1);
   cursor: pointer;
   display: flex;
+  margin-left: -6px;
 }
 
 .drawer-cont {
@@ -445,7 +446,6 @@ header .header-wrap {
   display: none;
   justify-content: center;
   align-items: center;
-  padding-left: 16px;
 }
 .logo-cont span {
   font-size: 2rem;
@@ -535,7 +535,7 @@ header .header-wrap {
   flex-direction: row;
   justify-content: center;
   align-items: center;
-  margin: 0 16px 0 30px;
+  margin-left: 30px;
   position: relative;
 }
 .account-cont .account_btn-cont {
@@ -928,6 +928,8 @@ footer {
   background-color: var(--background-color1);
   color: var(--text-color1);
   border-top: 2px solid var(--background-color2);
+  word-break: break-word;
+  overflow: hidden;
 }
 footer .footer-body {
   display: flex;
@@ -1046,7 +1048,7 @@ footer .copyright span {
     font-size: 16px;
   }
   header .header-wrap {
-    padding: 10px;
+    padding: 6px 18px;
   }
   header .searchbar-cont {
     padding-top: 4px;

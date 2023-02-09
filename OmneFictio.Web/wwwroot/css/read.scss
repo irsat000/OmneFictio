@@ -60,14 +60,6 @@ main {
             .orderby-btn {
                 margin-right: 16px;
             }
-
-            .orderby-value {
-                font-size: 1.2rem;
-
-                &:hover {
-                    text-decoration: unset;
-                }
-            }
         }
 
         .po-type {
@@ -646,9 +638,6 @@ main {
 
 // Custom
 @media (max-width: 340px) {
-    .orderby-value {
-        display: none;
-    }
 
     .po-option {
         font-size: 1.3rem !important;

@@ -1,12 +1,10 @@
 main {
     width: 100%;
     color: var(--text-color1);
-    background-color: var(--background-color1);
-    border-bottom: 1px solid var(--background-color2);
 }
 
-.chapter-container {
-    padding: 10px;
+.chapter-field {
+    
 }
 
 .ch-header {
@@ -15,17 +13,20 @@ main {
     justify-content: space-between;
     gap: 18px;
     font-family: 'Josefin Sans', sans-serif;
-    margin: 10px 0 22px;
+    margin-bottom: 14px;
+    padding: 10px 10px 14px;
+    border-bottom: 1px solid var(--background-color2);
+    background-color: var(--background-color1);
 
     .ch-options {
         display: flex;
         justify-content: space-between;
 
-        a,
-        span {
+        a {
             font-size: 1.2rem;
             text-decoration: underline;
             cursor: pointer;
+            padding-top: 2px;
         }
     }
 
@@ -74,108 +75,116 @@ main {
     }
 }
 
-.ch-author_note {
+.chapter-cont{
     display: flex;
     flex-direction: column;
-    margin-bottom: 26px;
+    padding: 16px 10px 14px;
+    border-top: 1px solid var(--background-color2);
+    border-bottom: 1px solid var(--background-color2);
+    background-color: var(--background-color1);
+    margin-bottom: 14px;
 
-    .note_caption {
-        font-family: 'Josefin Sans', sans-serif;
-        font-size: 1.2rem;
-    }
-
-    .authornote_body {
-        font-family: sans-serif;
-        padding: 0 10px;
-    }
-}
-
-.ch-caption {
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-    margin-bottom: 16px;
-    text-align: center;
-
-    h3 {
-        font-family: 'Josefin Sans', sans-serif;
-    }
-
-    h5 {
-        font-family: 'Itim', cursive;
-    }
-}
-
-.ch-end {
-    text-align: center;
-    margin-bottom: 20px;
-
-    span {
-        font-family: 'Itim', cursive;
-    }
-}
-
-.ch-footer {
-    font-family: 'Itim', cursive;
-    display: flex;
-    flex-flow: wrap;
-    padding: 0 10px;
-    margin-bottom: 20px;
-    justify-content: center;
-    gap: 10px;
-
-    .ch-evaluation {
+    .ch-author_note {
         display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        color: var(--text-color2);
-
-        i {
+        flex-direction: column;
+        margin-bottom: 26px;
+    
+        .note_caption {
+            font-family: 'Josefin Sans', sans-serif;
             font-size: 1.2rem;
-            cursor: pointer;
-            transition: color 0.2s ease;
         }
-
-        .ch-likes {
-            padding: 0 8px;
+    
+        .authornote_body {
+            font-family: sans-serif;
+            padding: 0 10px;
         }
     }
-
-    .ch-user {
+    
+    .ch-caption {
         display: flex;
-        flex-direction: row;
-        justify-content: flex-start;
-        align-items: center;
-        flex-shrink: 0;
-
-        .ch-username {
-            font-size: 0.8rem;
-            cursor: pointer;
-            margin-left: 8px;
-            padding-right: 8px;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-            overflow: hidden;
-            max-width: 180px;
-
-            &:hover {
-                text-decoration: underline;
+        flex-direction: column;
+        gap: 6px;
+        margin-bottom: 16px;
+        text-align: center;
+    
+        h3 {
+            font-family: 'Josefin Sans', sans-serif;
+        }
+    
+        h5 {
+            font-family: 'Itim', cursive;
+        }
+    }
+    
+    .ch-end {
+        text-align: center;
+        margin-bottom: 20px;
+    
+        span {
+            font-family: 'Itim', cursive;
+        }
+    }
+    
+    .ch-footer {
+        font-family: 'Itim', cursive;
+        display: flex;
+        flex-flow: wrap;
+        padding: 0 10px;
+        justify-content: center;
+        gap: 10px;
+    
+        .ch-evaluation {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            color: var(--text-color2);
+    
+            i {
+                font-size: 1.2rem;
+                cursor: pointer;
+                transition: color 0.2s ease;
+            }
+    
+            .ch-likes {
+                padding: 0 8px;
             }
         }
-
-        img {
-            height: 1.7rem;
-            width: 1.7rem;
-            border-radius: 50%;
-            cursor: pointer;
+    
+        .ch-user {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            flex-shrink: 0;
+    
+            .ch-username {
+                font-size: 0.8rem;
+                cursor: pointer;
+                margin-left: 8px;
+                padding-right: 8px;
+                text-overflow: ellipsis;
+                white-space: nowrap;
+                overflow: hidden;
+                max-width: 180px;
+    
+                &:hover {
+                    text-decoration: underline;
+                }
+            }
+    
+            img {
+                height: 1.7rem;
+                width: 1.7rem;
+                border-radius: 50%;
+                cursor: pointer;
+            }
         }
     }
 }
 
-
-
-.ch-body {
+//a lot of settings will be defined here
+.chapter-cont .ch-body {
     margin-bottom: 16px;
     text-align: justify;
 
@@ -185,11 +194,12 @@ main {
 }
 
 
-
-
-
-
-
+.comment_section-cont{
+    padding: 14px 6px 10px;
+    background-color: var(--background-color1);
+    border-top: 1px solid var(--background-color2);
+    border-bottom: 1px solid var(--background-color2);
+}
 
 
 
@@ -203,18 +213,27 @@ main {
 // Medium devices (tablets, 768px and up)
 @media (min-width: 768px) {
     main {
-        border: 1px solid var(--background-color2);
-        border-radius: 4px;
         padding: 14px 20px;
-        margin-top: 14px;
     }
 
     .ch-header {
         flex-direction: row;
+        border-radius: 4px;
+        border: 1px solid var(--background-color2);
+        padding: 10px;
 
         >* {
             gap: 40px;
         }
+    }
+    .chapter-cont{
+        border-radius: 4px;
+        border: 1px solid var(--background-color2);
+    }
+    .comment_section-cont{
+        border-radius: 4px;
+        border: 1px solid var(--background-color2);
+        padding: 16px 10px 10px;
     }
 }
 

@@ -1,11 +1,11 @@
 @{
     ViewData["Title"] = "Chapter";
     @section Stylesheets {
-    <link rel="stylesheet" href="~/css/comment_section.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/css/chapter.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/comment_section.css" asp-append-version="true" />
+        <link rel="stylesheet" href="~/css/chapter.css" asp-append-version="true" />
     }
     @section Scripts {
-    <script src="~/js/chapter.js" asp-append-version="true"></script>
+        <script src="~/js/chapter.js" asp-append-version="true"></script>
     }
 }
 @{
@@ -17,7 +17,6 @@
     <div class="ch-header">
         <div class="ch-options">
             <a href="">Return to Post</a>
-            <span>Customize</span>
         </div>
         <div class="ch-navigation">
             <select id="ch-selectch">
@@ -28,69 +27,72 @@
             </div>
         </div>
     </div>
+    <div class="chapter-cont">
+        <div class="ch-author_note cnote_1">
+            <span class="note_caption">Writer note</span>
+            <div class="authornote_body">
 
-    <div class="ch-author_note cnote_1">
-        <span class="note_caption">Writer note</span>
-        <div class="authornote_body">
-            
+            </div>
         </div>
-    </div>
 
-    <div class="ch-caption">
-        <h3></h3>
-        <h5></h5>
-    </div>
-
-    <div class="ch-body">
-        
-    </div>
-
-    <div class="ch-end">
-        <span>~ End of the Chapter ~</span>
-    </div>
-
-    <div class="ch-author_note cnote_2">
-        <span class="note_caption">Writer note</span>
-        <div class="authornote_body">
-            
+        <div class="ch-caption">
+            <h3></h3>
+            <h5></h5>
         </div>
-    </div>
 
-    <div class="ch-footer">
-        <div class="ch-evaluation">
-            <i class='bi bi-hand-thumbs-up' data-action='like' data-target_type='chapter'></i>
-            <span class="ch-likes vote_count">--</span>
-            <i class='bi bi-hand-thumbs-down' data-action='dislike' data-target_type='chapter'></i>
+        <div class="ch-body">
+
         </div>
-        <div class="ch-user">
-            <span class="ch-username">
-                
-            </span>
-            <!--<span class="p-username p-deleted_user">DeletedUser</span>-->
-            <img src="" onerror="this.onerror=null; this.src='/images/onerror/user_no_photo.png'">
+
+        <div class="ch-end">
+            <span>~ End of the Chapter ~</span>
+        </div>
+
+        <div class="ch-author_note cnote_2">
+            <span class="note_caption">Writer note</span>
+            <div class="authornote_body">
+
+            </div>
+        </div>
+
+        <div class="ch-footer">
+            <div class="ch-evaluation">
+                <i class='bi bi-hand-thumbs-up' data-action='like' data-target_type='chapter'></i>
+                <span class="ch-likes vote_count">--</span>
+                <i class='bi bi-hand-thumbs-down' data-action='dislike' data-target_type='chapter'></i>
+            </div>
+            <div class="ch-user">
+                <span class="ch-username">
+
+                </span>
+                <!--<span class="p-username p-deleted_user">DeletedUser</span>-->
+                <img src="" onerror="this.onerror=null; this.src='/images/onerror/user_no_photo.png'">
+            </div>
         </div>
     </div>
 </template>
 
-<div class="chapter-container">
+<div class="chapter-field">
 
 </div>
 
-@if (userId != null)
-{ ///images/users/
-    <div class="add_comment-cont">
-        <textarea placeholder="This is where we comment." id="commentBody"></textarea>
-        <div class="ac-footer">
-            <div class="ac-user">
-                <img src="/images/users/@userPicture"
-                onerror="this.onerror=null; this.src='/images/onerror/user_no_photo.png'">
-                <span class="ac-username">@username</span>
+<div class="comment_section-cont">
+    @if (userId != null)
+    { ///images/users/
+        <div class="add_comment-cont">
+            <textarea placeholder="This is where we comment." id="commentBody"></textarea>
+            <div class="ac-footer">
+                <div class="ac-user">
+                    <img src="/images/users/@userPicture"
+                        onerror="this.onerror=null; this.src='/images/onerror/user_no_photo.png'">
+                    <span class="ac-username">@username</span>
+                </div>
+                <a class="comment-btn" id="addCommentToChapter">Send</a>
             </div>
-            <a class="comment-btn" id="addCommentToChapter">Send</a>
         </div>
+    }
+
+    <div class="comments" id="comment-section">
+
     </div>
-}
-
-<div class="comments" id="comment-section">
-
 </div>

@@ -56,12 +56,6 @@ main {
 .posts-cont .post-options .po-orderby .orderby-btn {
   margin-right: 16px;
 }
-.posts-cont .post-options .po-orderby .orderby-value {
-  font-size: 1.2rem;
-}
-.posts-cont .post-options .po-orderby .orderby-value:hover {
-  text-decoration: unset;
-}
 .posts-cont .post-options .po-type {
   margin-left: auto;
   margin-right: 36px;
@@ -546,9 +540,6 @@ main {
   }
 }
 @media (max-width: 340px) {
-  .orderby-value {
-    display: none;
-  }
   .po-option {
     font-size: 1.3rem !important;
   }

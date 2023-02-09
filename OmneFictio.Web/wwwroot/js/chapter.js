@@ -16,7 +16,7 @@ document.addEventListener("DOMContentLoaded", function () {
             .then((data) => {
             if (data.statusCode === 200) {
                 const ch = JSON.parse(data.value);
-                document.querySelector('.chapter-container')
+                document.querySelector('.chapter-field')
                     .setAttribute('data-chid', ch.id);
                 const instance = document.getElementById('chapter_instance');
                 const clone = window.cloneFromTemplate(instance);
@@ -91,7 +91,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
                 clone.querySelector('.ch-user > img')
                     .setAttribute('src', '/images/users/' + ch.post.account.profilePic);
-                document.querySelector('.chapter-container').appendChild(clone);
+                document.querySelector('.chapter-field').appendChild(clone);
                 window.createSkeletons("chapter-commentsection");
                 window.fetchComments("chapter", ch.id, commentSection);
                 document.getElementById('addCommentToChapter').addEventListener('click', function () {
