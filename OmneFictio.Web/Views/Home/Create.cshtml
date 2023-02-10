@@ -102,13 +102,29 @@
                 <option value="plot">Plot</option>
             </optgroup>
             <optgroup label="Others">
-                <option value="request">Request</option>
                 <option value="community_post">Community post</option>
             </optgroup>
         </select>
     </div>
     <div class="cc-body">
-        <div class="cc-fiction" id="fiction-form">
+        <div class="cc-community_post" id="community_post-form">
+            <div class="cp-primary">
+                <div class="cp-primary-header">
+                    <input type="text" placeholder="Title" name="title">
+                </div>
+                <div class="cp-primary-body">
+                    <textarea placeholder="Description" name="description"></textarea>
+                    <div class="description-tools"></div>
+                </div>
+            </div>
+
+            <div class="cp-footer">
+                <button type="button" class="cp-cancel">Cancel</button>
+                <button type="button" class="cp-post">Post</button>
+            </div>
+        </div>
+        
+        <div class="cc-fiction active" id="fiction-form">
             <div class="ff-primary">
                 <div class="ff-primary-header">
                     <input type="text" placeholder="Title" name="title">

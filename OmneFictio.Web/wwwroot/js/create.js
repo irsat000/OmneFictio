@@ -1,5 +1,7 @@
 "use strict";
 document.addEventListener("DOMContentLoaded", function () {
+    const categorySelect = document.getElementById('create-category');
+    const createBody = document.querySelector('.cc-body');
     const create__TagListModal = document.getElementById('create-tag_list_modal');
     const tagSearchbar = document.getElementById('taglist-searchbar');
     const create__TagList = document.getElementById('c-taglist-list');
@@ -61,4 +63,32 @@ document.addEventListener("DOMContentLoaded", function () {
         ff_seriesfield.appendChild(newSeriesSpan);
         create__SeriesListModal.classList.remove('dflex');
     });
+    categorySelect.addEventListener('change', () => {
+        switch (categorySelect.value) {
+            case "novel":
+            case "graphical":
+            case "script":
+            case "plot":
+                switch__FictionBody();
+                break;
+            case "fanfiction":
+                switch__FictionBody();
+                document.querySelector('.ff-series-cont').classList.add('active');
+                break;
+            case "community_post":
+                switch__CommunityPostBody();
+                break;
+            default:
+                break;
+        }
+    });
+    function switch__FictionBody() {
+        [...createBody.children].forEach(form => form.classList.remove('active'));
+        document.querySelector('.ff-series-cont').classList.remove('active');
+        document.getElementById('fiction-form').classList.add('active');
+    }
+    function switch__CommunityPostBody() {
+        [...createBody.children].forEach(form => form.classList.remove('active'));
+        document.getElementById('community_post-form').classList.add('active');
+    }
 });

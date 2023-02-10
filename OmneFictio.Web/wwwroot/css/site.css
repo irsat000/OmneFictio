@@ -454,6 +454,11 @@ header .header-wrap {
   text-shadow: -2px 4px 2px var(--text-boxshadow1);
   cursor: pointer;
 }
+.logo-cont span a span {
+  font-size: 0.8rem;
+  padding-left: 8px;
+  font-family: "Gudea";
+}
 
 .searchbar-cont {
   flex-grow: 1;
@@ -585,8 +590,9 @@ header .header-wrap {
   transition: opacity 0.1s ease;
   position: absolute;
   top: 52px;
-  right: 16px;
-  border-radius: 8px;
+  right: 0;
+  border-radius: 4px;
+  min-width: 150px;
   background-color: var(--dropdownbg-color);
   font-family: "Itim", cursive;
   overflow: hidden;

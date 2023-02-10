@@ -87,7 +87,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     propertiesCont.innerHTML += `<span class="pr-nsfw_warning">NSFW <i class="bi bi-exclamation-circle"></i></span>`;
                 }
                 if (Info.authorities.find(a => a.code === "DEV")) {
-                    propertiesCont.innerHTML += '<span class="pr-developer">Developer <i class="bi bi-gear"></i></span>';
+                    propertiesCont.innerHTML += '<span class="pr-developer">Developer <i class="bi bi-tools"></i></span>';
                 }
                 if (Info.authorities.find(a => a.code === "ADMIN")) {
                     propertiesCont.innerHTML += '<span class="pr-officer">Admin <i class="bi bi-shield"></i></span>';

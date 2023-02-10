@@ -1,5 +1,8 @@
 
 document.addEventListener("DOMContentLoaded", function () {
+    const categorySelect = document.getElementById('create-category') as HTMLSelectElement;
+    const createBody = document.querySelector('.cc-body') as HTMLDivElement;
+
     const create__TagListModal = document.getElementById('create-tag_list_modal') as HTMLDivElement;
     const tagSearchbar = document.getElementById('taglist-searchbar') as HTMLInputElement;
     const create__TagList = document.getElementById('c-taglist-list') as HTMLUListElement;
@@ -43,7 +46,8 @@ document.addEventListener("DOMContentLoaded", function () {
         const target = e.target as HTMLElement;
         const selectedTag__value = target.getAttribute('data-taglistvalue') as string | null;
         const selectedTag__displayName = target.textContent as string | null;
-        if (selectedTag__value === null || selectedTag__displayName === null) {create__TagList
+        if (selectedTag__value === null || selectedTag__displayName === null) {
+            create__TagList
             return;
         }
         //Remove the selected tag if it exists already
@@ -85,9 +89,35 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 
+    categorySelect.addEventListener('change', () => {
+        switch (categorySelect.value) {
+            case "novel":
+            case "graphical":
+            case "script":
+            case "plot":
+                switch__FictionBody();
+                break;
+            case "fanfiction":
+                switch__FictionBody();
+                document.querySelector('.ff-series-cont')!.classList.add('active');
+                break;
+            case "community_post":
+                switch__CommunityPostBody();
+                break;
+            default:
+                break;
+        }
+    });
+    function switch__FictionBody() {
+        [...createBody.children].forEach(form => form.classList.remove('active'));
+        document.querySelector('.ff-series-cont')!.classList.remove('active');
+        document.getElementById('fiction-form')!.classList.add('active');
+    }
 
-
-
+    function switch__CommunityPostBody() {
+        [...createBody.children].forEach(form => form.classList.remove('active'));
+        document.getElementById('community_post-form')!.classList.add('active');
+    }
 
 });
 

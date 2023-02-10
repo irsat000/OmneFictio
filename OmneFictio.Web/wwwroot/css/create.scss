@@ -39,12 +39,14 @@ main {}
         }
     }
 
-    .cc-body {}
+    .cc-body>div.active {
+        display: flex;
+    }
 }
 
 //Content Creation - Fiction
 .cc-fiction {
-    display: flex;
+    display: none; //flex
     flex-direction: column;
     gap: 14px;
 
@@ -159,7 +161,6 @@ main {}
 
         .ff-tags-cont,
         .ff-series-cont {
-            display: flex;
             flex-direction: column;
             padding: 10px;
 
@@ -230,18 +231,30 @@ main {}
             }
         }
 
-        .ff-tags-cont .fftags-body span {
-            border-radius: 14px;
-            background-color: #6c92a7;
-            font-size: 0.9em;
-            font-family: 'Itim', cursive;
+        .ff-tags-cont {
+            display: flex;
+
+            .fftags-body span {
+                border-radius: 14px;
+                background-color: #6c92a7;
+                font-size: 0.9em;
+                font-family: 'Itim', cursive;
+            }
         }
 
-        .ff-series-cont .ffseries-body span {
-            border-radius: 4px;
-            background-color: #8d2c2c;
-            font-size: 1em;
-            font-family: 'Gudea', cursive;
+        .ff-series-cont {
+            display: none;
+
+            .ffseries-body span {
+                border-radius: 4px;
+                background-color: #8d2c2c;
+                font-size: 1em;
+                font-family: 'Gudea', cursive;
+            }
+        }
+
+        .ff-series-cont.active {
+            display: flex !important;
         }
     }
 
@@ -299,6 +312,97 @@ main {}
     }
 }
 
+.cc-community_post {
+    display: none; //flex
+    flex-direction: column;
+    gap: 14px;
+
+    .cp-primary {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid var(--create-border1);
+        background-color: var(--background-color1);
+        border-radius: 4px;
+
+        .cp-primary-header {
+            padding: 16px;
+
+            input {
+                font-size: 1.2rem;
+                color: var(--text-color1);
+                padding: 6px 10px;
+                outline: none;
+                width: 100%;
+                border-radius: 4px;
+                border: 1px solid var(--create-border2);
+                background-color: var(--input-bg1);
+                font-family: 'Gudea', cursive;
+            }
+        }
+
+        .cp-primary-body {
+            padding: 16px;
+            display: flex;
+            flex-direction: column;
+
+            textarea {
+                font-size: 1rem;
+                padding: 6px 10px;
+                outline: none;
+                width: 100%;
+                min-height: 140px;
+                border-radius: 4px 4px 0 0;
+                color: var(--text-color1);
+                border: 1px solid var(--create-border2);
+                background-color: var(--input-bg1);
+                font-family: 'Times New Roman';
+            }
+
+            .description-tools {
+                border-radius: 0 0 4px 4px;
+                padding: 6px;
+                height: 36px;
+                border: 1px solid var(--create-border2);
+                background-color: var(--input-bg1);
+                border-top: 0;
+            }
+        }
+    }
+
+    .cp-footer {
+        padding: 16px;
+        display: flex;
+        justify-content: space-evenly;
+        background-color: var(--background-color1);
+        border: 1px solid var(--create-border1);
+        border-radius: 4px;
+        gap: 20px 0;
+
+        button {
+            outline: none;
+            border: none;
+            padding: 4px 16px 3px;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-family: 'Gudea', cursive;
+            background-color: var(--button-green);
+            color: #ffffff;
+
+            &:hover {
+                background-color: var(--button-green-hover);
+            }
+        }
+
+        button.cp-cancel {
+            background-color: var(--button-red);
+
+            &:hover {
+                background-color: var(--button-red-hover);
+            }
+        }
+    }
+}
+
 
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) {
@@ -322,6 +426,14 @@ main {}
                 }
             }
         }
+
+        .cc-community_post {
+            .cp-footer {
+                button {
+                    font-size: 1.3rem;
+                }
+            }
+        }
     }
 }
 
@@ -336,6 +448,7 @@ main {}
         .cc-fiction {
             .ff-info {
                 padding: 16px;
+
                 .ff-properties-cont {
                     justify-content: flex-start;
                     gap: 4%;
@@ -348,9 +461,9 @@ main {}
                     .ffseries-header {
                         justify-content: flex-start;
                     }
-                    
+
                     .fftags-body,
-                    .ffseries-body{
+                    .ffseries-body {
                         padding: 16px 10px;
                         font-size: 16px;
                     }
