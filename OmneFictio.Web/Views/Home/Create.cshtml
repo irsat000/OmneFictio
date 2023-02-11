@@ -95,14 +95,14 @@
         <h2>Create</h2>
         <select id="create-category">
             <optgroup label="Fiction">
-                <option value="novel">Novel</option>
-                <option value="fanfiction">Fanfiction</option>
-                <option value="graphical">Graphical</option>
-                <option value="script">Script</option>
-                <option value="plot">Plot</option>
+                <option value="Novel">Novel</option>
+                <option value="Fanfiction">Fanfiction</option>
+                <option value="Graphical">Graphical</option>
+                <option value="Script">Script</option>
+                <option value="Plot">Plot</option>
             </optgroup>
             <optgroup label="Others">
-                <option value="community_post">Community post</option>
+                <option value="Community_post">Community post</option>
             </optgroup>
         </select>
     </div>
@@ -137,7 +137,7 @@
 
             <div class="ff-info">
                 <div class="ff-properties-cont">
-                    <select>
+                    <select name="language">
                         <option value="0">Language</option>
                         <option value="1">Turkish</option>
                         <option value="2">English</option>
@@ -145,7 +145,7 @@
                         <option value="4">German</option>
                         <option value="5">Japanese</option>
                     </select>
-                    <select>
+                    <select name="ratedas">
                         <option value="0">Rated as</option>
                         <option value="1">E - Everyone</option>
                         <option value="2">T - 13+</option>
@@ -156,8 +156,11 @@
                 <div class="ff-coverimage-cont">
                     <span>Cover Image(?)</span>
                     <div class="ff-coverimage-wrap">
-                        <input type="file" id="uploadCoverImg">
+                        <input type="file" id="uploadCoverImg" name="coverimg">
                     </div>
+                </div>
+                <div class="ff-coverimage_preview-cont" id="coverimage_preview">
+                    <img src="">
                 </div>
                 <div class="ff-tags-cont">
                     <div class="fftags-header">

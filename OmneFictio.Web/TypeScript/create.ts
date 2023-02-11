@@ -1,7 +1,20 @@
 
+class Fiction_Post_Data {
+    title!: String;
+    postDescription!: String;
+    languageId!: Number;
+    postType!: String;
+    ratedAsId!: Number;
+    tagList!: Array<String>;
+    seriesList!: Array<String> | null;
+    coverImage!: null;
+}
+
 document.addEventListener("DOMContentLoaded", function () {
     const categorySelect = document.getElementById('create-category') as HTMLSelectElement;
     const createBody = document.querySelector('.cc-body') as HTMLDivElement;
+
+    const fiction_form = document.getElementById('fiction-form') as HTMLDivElement;
 
     const create__TagListModal = document.getElementById('create-tag_list_modal') as HTMLDivElement;
     const tagSearchbar = document.getElementById('taglist-searchbar') as HTMLInputElement;
@@ -91,17 +104,17 @@ document.addEventListener("DOMContentLoaded", function () {
 
     categorySelect.addEventListener('change', () => {
         switch (categorySelect.value) {
-            case "novel":
-            case "graphical":
-            case "script":
-            case "plot":
+            case "Novel":
+            case "Script":
+            case "Plot":
                 switch__FictionBody();
                 break;
-            case "fanfiction":
+            case "Graphical":
+            case "Fanfiction":
                 switch__FictionBody();
                 document.querySelector('.ff-series-cont')!.classList.add('active');
                 break;
-            case "community_post":
+            case "Community_post":
                 switch__CommunityPostBody();
                 break;
             default:
@@ -111,7 +124,7 @@ document.addEventListener("DOMContentLoaded", function () {
     function switch__FictionBody() {
         [...createBody.children].forEach(form => form.classList.remove('active'));
         document.querySelector('.ff-series-cont')!.classList.remove('active');
-        document.getElementById('fiction-form')!.classList.add('active');
+        fiction_form.classList.add('active');
     }
 
     function switch__CommunityPostBody() {
@@ -119,6 +132,59 @@ document.addEventListener("DOMContentLoaded", function () {
         document.getElementById('community_post-form')!.classList.add('active');
     }
 
+
+
+    const ff_savebtns = document.querySelectorAll('.ff-save_draft, .ff-save_and_continue') as NodeListOf<HTMLButtonElement>;
+    ff_savebtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const postType = categorySelect.value;
+            const title = (<HTMLInputElement>fiction_form.querySelector('[name="title"]')).value;
+            const description = (<HTMLInputElement>fiction_form.querySelector('[name="description"]')).value;
+            const language = parseInt((<HTMLSelectElement>fiction_form.querySelector('[name="language"]')).value, 10);
+            const ratedAs = parseInt((<HTMLSelectElement>fiction_form.querySelector('[name="ratedas"]')).value, 10);
+
+            const tagNames = Array.from(fiction_form.querySelectorAll('[data-tag_val]'))
+                .map(span => span.getAttribute('data-tag_val') as string);
+
+            const formData: Fiction_Post_Data = {
+                title: title,
+                postDescription: description,
+                languageId: language,
+                postType: postType,
+                ratedAsId: ratedAs,
+                tagList: tagNames,
+                seriesList: null,
+                coverImage: null
+            };
+
+            //Get cover image
+            const coverimg_input = fiction_form.querySelector('[name="coverimg"]') as HTMLInputElement;
+            const coverimg_file = coverimg_input.files;
+            if (coverimg_file && coverimg_file[0]) {
+                const file = coverimg_file[0];
+                const reader = new FileReader();
+                reader.addEventListener('load', (event) => {
+                    const dataURL = reader.result as string;
+                    document.getElementById('coverimage_preview')!.style.display = "block";
+                    document.querySelector('#coverimage_preview img')!.setAttribute('src', dataURL);
+                    // Use the dataURL to display the image
+                });
+                reader.readAsDataURL(file);
+            }
+
+
+            //If type allows fanfiction, include them
+            if (categorySelect.value === "Graphical" || categorySelect.value === "Fanfiction") {
+                const seriesNames = Array.from(fiction_form.querySelectorAll('[data-series_val]'))
+                    .map(span => span.getAttribute('data-series_val') as string);
+                if(seriesNames.length > 0){
+                    formData.seriesList = seriesNames;
+                }
+            }
+
+            //console.log(formData);
+        });
+    });
 });
 
 

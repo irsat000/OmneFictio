@@ -96,6 +96,8 @@ nav.nav_index {
             -moz-box-shadow: -3px 3px 4px -5px rgb(0 0 0 / 50%);
             -webkit-box-shadow: -3px 3px 4px -5px rgb(0 0 0 / 50%);
             background-color: var(--index-bgcolor1);
+            border-bottom: 1px solid var(--index-border1);
+            border-left: 1px solid var(--index-border1);
 
             &:hover {
                 background-color: var(--index-bgcolor2);

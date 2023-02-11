@@ -878,7 +878,7 @@ function googleHandleCredentialResponse(response: any) {
         .then((data) => {
             if (data.statusCode === 200) {
                 setTimeout(function () {
-                    window.location.href = "https://localhost:7067/";
+                    location.reload();
                 }, 500);
             }
             else {

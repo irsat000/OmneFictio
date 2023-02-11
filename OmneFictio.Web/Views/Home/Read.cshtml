@@ -75,7 +75,8 @@
         <div class="f-body">
             @{
                 string? typeQuery = Context.Request.RouteValues["Type"]!.ToString();
-                if (typeQuery == "Fanfiction" || typeQuery == "fanfiction")
+                if (typeQuery == "Fanfiction" || typeQuery == "fanfiction" ||
+                typeQuery == "Graphical" || typeQuery == "graphical")
                 {
                     <div class="f-fanfiction_settings">
                         <div class="ffs-header">
@@ -84,8 +85,7 @@
                             </button>
                         </div>
                         <div class="ffs-series_include">
-                            <!-- <span data-fseries="***">***<i class="bi bi-x-circle f-removeseriesbtn"></i></span>
-                                                <input type="hidden" name="seriesinclude" value="***"/> -->
+
                         </div>
                     </div>
                 }
@@ -137,16 +137,10 @@
                 <button class="f-excludetag" id="f-excludetagbtn">Tags<i class="bi bi-dash"></i></button>
             </div>
             <div class="f-tagsincexc f-tags_include">
-                <!--
-            <span data-ftag="comedy">Comedy<i class="bi bi-x-circle f-removetagbtn"></i></span>
-            <input type="hidden" name="taginclude" value="comedy" data-ftagref="comedy"/>
-            -->
+
             </div>
             <div class="f-tagsincexc f-tags_exclude">
-                <!--
-            <span data-ftag="romance">Romance<i class="bi bi-x-circle f-removetagbtn"></i></span>
-            <input type="hidden" name="tagexclude" value="romance" data-ftagref="romance"/>
-            -->
+
             </div>
         </div>
         <div class="f-submit_cont">
@@ -162,14 +156,14 @@
             <i class="bi bi-x-lg" id="f-taglist-close"></i>
         </div>
         <ul class="" id="f-taglist-list" data-action="include">
-            <li data-taglistvalue="action">Action</li>
-            <li data-taglistvalue="comedy">Comedy</li>
-            <li data-taglistvalue="fantasy">Fantasy</li>
-            <li data-taglistvalue="romance">Romance</li>
-            <li data-taglistvalue="dram">Dram</li>
-            <li data-taglistvalue="horror">Horror</li>
-            <li data-taglistvalue="adventure">Adventure</li>
-            <li data-taglistvalue="science_fiction">Science fiction</li>
+            <li data-tagvalue="action">Action</li>
+            <li data-tagvalue="comedy">Comedy</li>
+            <li data-tagvalue="fantasy">Fantasy</li>
+            <li data-tagvalue="romance">Romance</li>
+            <li data-tagvalue="dram">Dram</li>
+            <li data-tagvalue="horror">Horror</li>
+            <li data-tagvalue="adventure">Adventure</li>
+            <li data-tagvalue="science_fiction">Science fiction</li>
         </ul>
     </div>
 </div>
@@ -223,14 +217,14 @@
             </select>
         </div>
         <ul class="f-serieslist-list" id="f-serieslist-list">
-            <li data-seriesval="Overlord">Overlord</li>
-            <li data-seriesval="Harry_Potter">Harry Potter</li>
-            <li data-seriesval="The_Boys">The Boys</li>
-            <li data-seriesval="Stranger_Things">Stranger Things</li>
-            <li data-seriesval="Breaking_Bad">Breaking Bad</li>
-            <li data-seriesval="Game_of_Thrones">Game of Thrones</li>
-            <li data-seriesval="Hunger_Games">Hunger Games</li>
-            <li data-seriesval="Pirates_of_the_Caribbean">Pirates of the Caribbean</li>
+            <li data-series_val="Overlord">Overlord</li>
+            <li data-series_val="Harry_Potter">Harry Potter</li>
+            <li data-series_val="The_Boys">The Boys</li>
+            <li data-series_val="Stranger_Things">Stranger Things</li>
+            <li data-series_val="Breaking_Bad">Breaking Bad</li>
+            <li data-series_val="Game_of_Thrones">Game of Thrones</li>
+            <li data-series_val="Hunger_Games">Hunger Games</li>
+            <li data-series_val="Pirates_of_the_Caribbean">Pirates of the Caribbean</li>
         </ul>
     </div>
 </div>

@@ -53,12 +53,12 @@ main {}
     .ff-primary {
         display: flex;
         flex-direction: column;
-        border: 1px solid var(--create-border1);
+        padding: 14px 6px;
+        gap: 14px;
+        border-bottom: 1px solid var(--create-border1);
         background-color: var(--background-color1);
-        border-radius: 4px;
 
         .ff-primary-header {
-            padding: 16px;
 
             input {
                 font-size: 1.2rem;
@@ -74,7 +74,6 @@ main {}
         }
 
         .ff-primary-body {
-            padding: 16px;
             display: flex;
             flex-direction: column;
 
@@ -106,9 +105,8 @@ main {}
         padding: 8px;
         display: flex;
         flex-direction: column;
-        border: 1px solid var(--create-border1);
         background-color: var(--background-color1);
-        border-radius: 4px;
+        border-bottom: 1px solid var(--create-border1);
 
         .ff-properties-cont {
             display: flex;
@@ -156,6 +154,16 @@ main {}
                     outline: none;
                     border-radius: 4px;
                 }
+            }
+        }
+
+        .ff-coverimage_preview-cont {
+            display: none;
+            padding: 10px;
+
+            img {
+                width: 140px;
+                height: 200px;
             }
         }
 
@@ -263,8 +271,7 @@ main {}
         display: flex;
         flex-direction: column;
         background-color: var(--background-color1);
-        border: 1px solid var(--create-border1);
-        border-radius: 4px;
+        border-bottom: 1px solid var(--create-border1);
         gap: 20px 0;
         justify-content: center;
 
@@ -446,8 +453,16 @@ main {}
         }
 
         .cc-fiction {
+            .ff-primary {
+                border: 1px solid var(--create-border1);
+                border-radius: 4px;
+                padding: 16px;
+            }
+
             .ff-info {
                 padding: 16px;
+                border: 1px solid var(--create-border1);
+                border-radius: 4px;
 
                 .ff-properties-cont {
                     justify-content: flex-start;
@@ -468,6 +483,11 @@ main {}
                         font-size: 16px;
                     }
                 }
+            }
+
+            .ff-footer {
+                border: 1px solid var(--create-border1);
+                border-radius: 4px;
             }
         }
     }

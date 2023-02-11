@@ -26,6 +26,7 @@
   --searchbar-bg-color: #313131;
   --searchbar-boxshadow: #31313150;
   --post-bgcolor1: #313131;
+  --post-border1: #5e5e5e;
   --profile-post-color: #272727;
   --comment-menu-bgcolor: #3b3b3b;
   --reply-bgcolor: #313131;
@@ -103,6 +104,7 @@
   --searchbar-bg-color: #f0f0f0;
   --searchbar-boxshadow: #6868684f;
   --post-bgcolor1: #f9f9f9;
+  --post-border1: #b1b1b1;
   --profile-post-color: #ffffff;
   --comment-menu-bgcolor: #e3e3e3;
   --reply-bgcolor: #e1e1e1;

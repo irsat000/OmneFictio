@@ -42,10 +42,10 @@ public class PostWrite1
 {
     public string title { get; set; } = null!;
     public string postDescription { get; set; } = null!;
-    public object postTypeId { get; set; } = null!; //byte
-    public object languageId { get; set; } = null!; //int
+    public string postType { get; set; } = null!; //byte
+    public int languageId { get; set; } //int
     public int? accountId { get; set; }
-    public object ratedAsId { get; set; } = null!; //int
+    public int ratedAsId { get; set; } //int
     public string? coverImage { get; set; }
     public List<int>? tagList { get; set; }
     public List<int>? seriesList { get; set; }

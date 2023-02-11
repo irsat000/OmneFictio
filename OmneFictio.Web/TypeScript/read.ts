@@ -2,14 +2,14 @@
 document.addEventListener("DOMContentLoaded", function () {
     const orderbyModal = document.getElementById('orderby-modal') as HTMLDivElement;
     const filterModal = document.getElementById('filter-modal') as HTMLDivElement;
-    
+
     const filterTagListModal = document.getElementById('filter-tag_list_modal') as HTMLDivElement;
     const ftagsIncExc = Array.from(document.querySelectorAll('.f-tagsincexc') as NodeListOf<HTMLElement>) as HTMLElement[];
     const tagSearchbar = document.getElementById('taglist-searchbar') as HTMLInputElement;
     const filterTagList = document.getElementById('f-taglist-list') as HTMLUListElement;
 
     const filterSeriesListModal = document.getElementById('filter-serieslistmodal') as HTMLDivElement;
-    const filterSeriesInclude = document.querySelector('.ffs-series_include') as HTMLDivElement;
+    const filterSeriesInclude = document.querySelector('.ffs-series_include') as HTMLDivElement | null;
     const seriesSearchbar = document.getElementById('serieslist-searchbar') as HTMLInputElement;
     const filterSeriesList = document.getElementById('f-serieslist-list') as HTMLUListElement;
 
@@ -195,139 +195,72 @@ document.addEventListener("DOMContentLoaded", function () {
 
     //-----TAG SELECTIONS------
 
-    //adding tags to the filter modal
-    //This will be made dynamic by using click event on filterTagList then looking for the e.target
-    filterTagList.querySelectorAll('li').forEach(li => {
-        li.addEventListener('click', function () {
-            const tagname = li.getAttribute('data-taglistvalue') as string;
-            if (tagname === null) {
-                return;
-            }
-            ftagsIncExc.forEach(body => {
-                body.querySelector('span[data-ftag="' + tagname + '"]')?.remove();
-                body.querySelector('input[data-ftagref="' + tagname + '"]')?.remove();
-            });
-            const tagnamedisplay = capitalizeFirstLetter(tagname.replaceAll('_', ' '));
-
-            const newTagSpan = document.createElement("span") as HTMLSpanElement;
-            newTagSpan.setAttribute('data-ftag', tagname);
-            newTagSpan.innerHTML = tagnamedisplay + '<i class="bi bi-x-circle f-removetagbtn"></i>';
-            const newTagInput = document.createElement("input") as HTMLInputElement;
-            newTagInput.setAttribute('data-ftagref', tagname)
-            newTagInput.type = "hidden"
-            newTagInput.value = tagname;
-
-            const includeBody = filterModal.querySelector(".f-tags_include")!;
-            const excludeBody = filterModal.querySelector(".f-tags_exclude")!;
-            if (filterTagList.getAttribute('data-action') == 'include') {
-                newTagInput.name = "taginclude";
-                includeBody.appendChild(newTagSpan);
-                includeBody.appendChild(newTagInput);
-            }
-            else {
-                newTagInput.name = "tagexclude";
-                excludeBody.appendChild(newTagSpan);
-                excludeBody.appendChild(newTagInput);
-            }
-            tagSearchbar.value = "";
-            filterTagListModal.classList.remove('dflex');
-        })
-    });
     //Hides the tag X/close icon when clicked outside
     filterModal.addEventListener('click', function (e) {
-        if ((<HTMLElement>e.target).getAttribute('data-ftag') === null) {
-            filterModal.querySelectorAll('.f-removetagbtn').forEach(btn => {
-                if (btn.classList.contains('dflex')) {
-                    btn.classList.remove('dflex');
-                }
-            });
-        }
-    });
-
-    //this hides, shows X/close and removes the tag if clicked on the X
-    filterModal.addEventListener('click', function (e) {
         const target = e.target as HTMLElement;
-        if (target.classList.contains('f-removetagbtn')) {
-            const tagname = target.parentElement!.getAttribute('data-ftag') as string;
-            filterModal.querySelector('input[data-ftagref="' + tagname + '"]')?.remove();
-            target.parentElement!.remove();
+        if (!target.hasAttribute('data-tagvalue')) {
+            filterModal.querySelectorAll('.f-removetagbtn').forEach(btn => btn.classList.remove('dflex'));
         }
-        else if (target.tagName === 'SPAN') {
-            const removeBtn = target.querySelector('.f-removetagbtn')! as HTMLElement;
-            if (removeBtn.classList.contains('dflex')) {
-                removeBtn.classList.remove('dflex');
-            } else {
-                removeBtn.classList.add('dflex');
-            }
-        }
-    });
-
-
-    //searchbar that works with keyup. it's for finding the option more easily.
-    //WE WILL HAVE TO FIND VANILLA JS VERSION
-    /*
-    $("#taglist-searchbar").keyup(function (bar: HTMLInputElement) {
-        var filter = $(this).val();
-        $("#f-taglist-list > li").each(function () {
-            if ($(this).text().search(new RegExp(filter, "i")) < 0) {
-                $(this).hide();
-            } else {
-                $(this).show()
+    }); //this hides, shows X/close
+    ftagsIncExc.forEach(body => {
+        body.addEventListener('click', function (e) {
+            const target = e.target as HTMLElement;
+            if (target.tagName === 'SPAN') {
+                const removeBtn = target.querySelector('.f-removetagbtn')! as HTMLElement;
+                removeBtn.classList.toggle('dflex');
             }
         });
     });
-    
-    $("#fsl-searchbar").keyup(function () {
-        var filter = $(this).val();
-        $("#fsl-list > li").each(function () {
-            if ($(this).text().search(new RegExp(filter, "i")) < 0) {
-                $(this).hide();
-            } else {
-                $(this).show()
-            }
-        });
-    });
-    */
 
+    //adding tags to the filter modal / exclude or include
+    filterTagList.addEventListener('click', (e) => {
+        const target = e.target as HTMLElement;
+        const selectedTag__value = target.getAttribute('data-tagvalue') as string | null;
+        const selectedTag__displayName = target.textContent as string | null;
+        if (selectedTag__value === null || selectedTag__displayName === null) {
+            return;
+        }
+        //Remove the tag from tag lists if it already exists
+        ftagsIncExc.forEach(body => body.querySelector('span[data-tagvalue="' + selectedTag__value + '"]')?.remove());
+        //new tag span
+        const newTagSpan = document.createElement("span") as HTMLSpanElement;
+        newTagSpan.setAttribute('data-tagvalue', selectedTag__value);
+        newTagSpan.textContent = selectedTag__displayName;
+        newTagSpan.innerHTML += '<i class="bi bi-x-circle f-removetagbtn" onclick="this.parentNode.remove();"></i>';
+
+        const targetList = filterTagList.getAttribute('data-action') === 'include'
+            ? filterModal.querySelector(".f-tags_include")!
+            : filterModal.querySelector(".f-tags_exclude")!;
+        targetList!.appendChild(newTagSpan);
+
+        //clean tag list modal
+        tagSearchbar.value = "";
+        filterTagListModal.classList.remove('dflex');
+    });
 
 
     //--------FANFICTION SERIES OPTIONS-----------
 
-    //adding series to the filter modal / fanfiction
-    //fsl = fanfiction add series
-
-    filterSeriesList.querySelectorAll('li').forEach(li => {
-        li.addEventListener('click', function () {
-            const name = li.getAttribute('data-seriesval') as string;
-            const namedisplay = capitalizeFirstLetter(name.replaceAll('_', ' '));
-
-            //delete if span-input already exist
-            filterSeriesInclude.querySelector('span[data-fseries="' + name + '"]')?.remove();
-            filterSeriesInclude.querySelector('input[value="' + name + '"]')?.remove();
-
-            const newSeriesSpan = document.createElement("span") as HTMLSpanElement;
-            newSeriesSpan.setAttribute('data-fseries', name);
-            newSeriesSpan.innerHTML = namedisplay + '<i class="bi bi-x-circle f-removeseriesbtn"></i>';
-            const newSeriesInput = document.createElement("input") as HTMLInputElement;
-            newSeriesInput.type = "hidden"
-            newSeriesInput.value = name;
-            newSeriesInput.name = "seriesinclude";
-            filterSeriesInclude.appendChild(newSeriesSpan);
-            filterSeriesInclude.appendChild(newSeriesInput);
-
-            seriesSearchbar.value = "";
-            filterSeriesListModal.classList.remove('dflex');
-        });
-    });
-
-    //this is for removing series from filters
-    filterSeriesInclude.addEventListener('click', function (e) {
+    //adding series to the filter modal / fanfiction - graphical
+    filterSeriesList.addEventListener('click', (e) => {
         const target = e.target as HTMLElement;
-        if (target.classList.contains('f-removeseriesbtn')) {
-            const seriesname = target.parentElement!.getAttribute('data-fseries') as string;
-            filterSeriesInclude.querySelector('input[value="' + seriesname + '"]')?.remove();
-            target.parentElement!.remove();
+        const selectedSeries__value = target.getAttribute('data-series_val') as string | null;
+        const selectedSeries__displayName = target.textContent as string | null;
+        if (selectedSeries__value === null || selectedSeries__displayName === null) {
+            return;
         }
+
+        //delete if span already exist
+        filterSeriesInclude!.querySelector('span[data-fseries="' + selectedSeries__value + '"]')?.remove();
+
+        const newSeriesSpan = document.createElement("span") as HTMLSpanElement;
+        newSeriesSpan.setAttribute('data-series_val', selectedSeries__value);
+        newSeriesSpan.textContent = selectedSeries__displayName;
+        newSeriesSpan.innerHTML += '<i class="bi bi-x-circle f-removeseriesbtn" onclick="this.parentNode.remove();"></i>';
+        filterSeriesInclude!.appendChild(newSeriesSpan);
+
+        seriesSearchbar.value = "";
+        filterSeriesListModal.classList.remove('dflex');
     });
     //--------------------
 
@@ -341,7 +274,9 @@ document.addEventListener("DOMContentLoaded", function () {
             body.innerHTML = "";
         })
         //fanfiction series
-        filterSeriesInclude.innerHTML = "";
+        if (filterSeriesInclude != null) {
+            filterSeriesInclude.innerHTML = "";
+        }
         //options
         filterModal.querySelectorAll(".f-options > select").forEach(select => {
             (<HTMLInputElement>select).value = "0";

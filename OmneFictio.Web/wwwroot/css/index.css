@@ -88,6 +88,8 @@ nav.nav_index .start_reading_links .read_link {
   -moz-box-shadow: -3px 3px 4px -5px rgba(0, 0, 0, 0.5);
   -webkit-box-shadow: -3px 3px 4px -5px rgba(0, 0, 0, 0.5);
   background-color: var(--index-bgcolor1);
+  border-bottom: 1px solid var(--index-border1);
+  border-left: 1px solid var(--index-border1);
 }
 nav.nav_index .start_reading_links .read_link:hover {
   background-color: var(--index-bgcolor2);

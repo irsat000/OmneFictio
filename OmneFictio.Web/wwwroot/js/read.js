@@ -163,98 +163,63 @@ document.addEventListener("DOMContentLoaded", function () {
             filterModal.classList.remove('opacity1');
         }
     });
-    filterTagList.querySelectorAll('li').forEach(li => {
-        li.addEventListener('click', function () {
-            const tagname = li.getAttribute('data-taglistvalue');
-            if (tagname === null) {
-                return;
-            }
-            ftagsIncExc.forEach(body => {
-                body.querySelector('span[data-ftag="' + tagname + '"]')?.remove();
-                body.querySelector('input[data-ftagref="' + tagname + '"]')?.remove();
-            });
-            const tagnamedisplay = capitalizeFirstLetter(tagname.replaceAll('_', ' '));
-            const newTagSpan = document.createElement("span");
-            newTagSpan.setAttribute('data-ftag', tagname);
-            newTagSpan.innerHTML = tagnamedisplay + '<i class="bi bi-x-circle f-removetagbtn"></i>';
-            const newTagInput = document.createElement("input");
-            newTagInput.setAttribute('data-ftagref', tagname);
-            newTagInput.type = "hidden";
-            newTagInput.value = tagname;
-            const includeBody = filterModal.querySelector(".f-tags_include");
-            const excludeBody = filterModal.querySelector(".f-tags_exclude");
-            if (filterTagList.getAttribute('data-action') == 'include') {
-                newTagInput.name = "taginclude";
-                includeBody.appendChild(newTagSpan);
-                includeBody.appendChild(newTagInput);
-            }
-            else {
-                newTagInput.name = "tagexclude";
-                excludeBody.appendChild(newTagSpan);
-                excludeBody.appendChild(newTagInput);
-            }
-            tagSearchbar.value = "";
-            filterTagListModal.classList.remove('dflex');
-        });
-    });
-    filterModal.addEventListener('click', function (e) {
-        if (e.target.getAttribute('data-ftag') === null) {
-            filterModal.querySelectorAll('.f-removetagbtn').forEach(btn => {
-                if (btn.classList.contains('dflex')) {
-                    btn.classList.remove('dflex');
-                }
-            });
-        }
-    });
     filterModal.addEventListener('click', function (e) {
         const target = e.target;
-        if (target.classList.contains('f-removetagbtn')) {
-            const tagname = target.parentElement.getAttribute('data-ftag');
-            filterModal.querySelector('input[data-ftagref="' + tagname + '"]')?.remove();
-            target.parentElement.remove();
-        }
-        else if (target.tagName === 'SPAN') {
-            const removeBtn = target.querySelector('.f-removetagbtn');
-            if (removeBtn.classList.contains('dflex')) {
-                removeBtn.classList.remove('dflex');
-            }
-            else {
-                removeBtn.classList.add('dflex');
-            }
+        if (!target.hasAttribute('data-tagvalue')) {
+            filterModal.querySelectorAll('.f-removetagbtn').forEach(btn => btn.classList.remove('dflex'));
         }
     });
-    filterSeriesList.querySelectorAll('li').forEach(li => {
-        li.addEventListener('click', function () {
-            const name = li.getAttribute('data-seriesval');
-            const namedisplay = capitalizeFirstLetter(name.replaceAll('_', ' '));
-            filterSeriesInclude.querySelector('span[data-fseries="' + name + '"]')?.remove();
-            filterSeriesInclude.querySelector('input[value="' + name + '"]')?.remove();
-            const newSeriesSpan = document.createElement("span");
-            newSeriesSpan.setAttribute('data-fseries', name);
-            newSeriesSpan.innerHTML = namedisplay + '<i class="bi bi-x-circle f-removeseriesbtn"></i>';
-            const newSeriesInput = document.createElement("input");
-            newSeriesInput.type = "hidden";
-            newSeriesInput.value = name;
-            newSeriesInput.name = "seriesinclude";
-            filterSeriesInclude.appendChild(newSeriesSpan);
-            filterSeriesInclude.appendChild(newSeriesInput);
-            seriesSearchbar.value = "";
-            filterSeriesListModal.classList.remove('dflex');
+    ftagsIncExc.forEach(body => {
+        body.addEventListener('click', function (e) {
+            const target = e.target;
+            if (target.tagName === 'SPAN') {
+                const removeBtn = target.querySelector('.f-removetagbtn');
+                removeBtn.classList.toggle('dflex');
+            }
         });
     });
-    filterSeriesInclude.addEventListener('click', function (e) {
+    filterTagList.addEventListener('click', (e) => {
         const target = e.target;
-        if (target.classList.contains('f-removeseriesbtn')) {
-            const seriesname = target.parentElement.getAttribute('data-fseries');
-            filterSeriesInclude.querySelector('input[value="' + seriesname + '"]')?.remove();
-            target.parentElement.remove();
+        const selectedTag__value = target.getAttribute('data-tagvalue');
+        const selectedTag__displayName = target.textContent;
+        if (selectedTag__value === null || selectedTag__displayName === null) {
+            return;
         }
+        ftagsIncExc.forEach(body => body.querySelector('span[data-tagvalue="' + selectedTag__value + '"]')?.remove());
+        const newTagSpan = document.createElement("span");
+        newTagSpan.setAttribute('data-tagvalue', selectedTag__value);
+        newTagSpan.textContent = selectedTag__displayName;
+        newTagSpan.innerHTML += '<i class="bi bi-x-circle f-removetagbtn" onclick="this.parentNode.remove();"></i>';
+        const targetList = filterTagList.getAttribute('data-action') === 'include'
+            ? filterModal.querySelector(".f-tags_include")
+            : filterModal.querySelector(".f-tags_exclude");
+        targetList.appendChild(newTagSpan);
+        tagSearchbar.value = "";
+        filterTagListModal.classList.remove('dflex');
+    });
+    filterSeriesList.addEventListener('click', (e) => {
+        const target = e.target;
+        const selectedSeries__value = target.getAttribute('data-series_val');
+        const selectedSeries__displayName = target.textContent;
+        if (selectedSeries__value === null || selectedSeries__displayName === null) {
+            return;
+        }
+        filterSeriesInclude.querySelector('span[data-fseries="' + selectedSeries__value + '"]')?.remove();
+        const newSeriesSpan = document.createElement("span");
+        newSeriesSpan.setAttribute('data-series_val', selectedSeries__value);
+        newSeriesSpan.textContent = selectedSeries__displayName;
+        newSeriesSpan.innerHTML += '<i class="bi bi-x-circle f-removeseriesbtn" onclick="this.parentNode.remove();"></i>';
+        filterSeriesInclude.appendChild(newSeriesSpan);
+        seriesSearchbar.value = "";
+        filterSeriesListModal.classList.remove('dflex');
     });
     filterModal.querySelector('#f-resetbtn')?.addEventListener('click', function () {
         ftagsIncExc.forEach(body => {
             body.innerHTML = "";
         });
-        filterSeriesInclude.innerHTML = "";
+        if (filterSeriesInclude != null) {
+            filterSeriesInclude.innerHTML = "";
+        }
         filterModal.querySelectorAll(".f-options > select").forEach(select => {
             select.value = "0";
         });
