@@ -13,6 +13,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const categorySelect = document.getElementById('create-category');
     const createBody = document.querySelector('.cc-body');
     const fiction_form = document.getElementById('fiction-form');
+    const coverImg_input = fiction_form.querySelector('[name="coverimg"]');
+    const coverImg_preview = document.getElementById('coverimage_preview');
+    const ff_requirements = fiction_form.querySelector('.ff-requirements');
     const create__TagListModal = document.getElementById('create-tag_list_modal');
     const tagSearchbar = document.getElementById('taglist-searchbar');
     const create__TagList = document.getElementById('c-taglist-list');
@@ -74,6 +77,24 @@ document.addEventListener("DOMContentLoaded", function () {
         ff_seriesfield.appendChild(newSeriesSpan);
         create__SeriesListModal.classList.remove('dflex');
     });
+    coverImg_input.addEventListener('change', () => {
+        const coverimg_file = coverImg_input.files;
+        if (coverimg_file && coverimg_file[0]) {
+            const file = coverimg_file[0];
+            if (file.type !== "image/png" && file.type !== "image/jpg" && file.type !== "image/jpeg" && file.type !== "image/webp") {
+                coverImg_input.value = "";
+                coverImg_preview.style.display = "none";
+                return;
+            }
+            const reader = new FileReader();
+            reader.onloadend = (event) => {
+                const dataURL = reader.result;
+                coverImg_preview.style.display = "block";
+                coverImg_preview.querySelector('img').setAttribute('src', dataURL);
+            };
+            reader.readAsDataURL(file);
+        }
+    });
     categorySelect.addEventListener('change', () => {
         switch (categorySelect.value) {
             case "Novel":
@@ -82,9 +103,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 switch__FictionBody();
                 break;
             case "Graphical":
+                switch__FictionBody();
+                document.querySelector('.ff-series-cont').classList.add('active');
+                break;
             case "Fanfiction":
                 switch__FictionBody();
                 document.querySelector('.ff-series-cont').classList.add('active');
+                ff_requirements.querySelector('[data-ref="series"]').classList.remove('dnone');
                 break;
             case "Community_post":
                 switch__CommunityPostBody();
@@ -95,8 +120,13 @@ document.addEventListener("DOMContentLoaded", function () {
     });
     function switch__FictionBody() {
         [...createBody.children].forEach(form => form.classList.remove('active'));
-        document.querySelector('.ff-series-cont').classList.remove('active');
+        fiction_form.querySelector('.ff-series-cont').classList.remove('active');
         fiction_form.classList.add('active');
+        ff_requirements.querySelectorAll('[data-ref]').forEach((li) => {
+            li.classList.remove('failed');
+            li.classList.remove('passed');
+        });
+        ff_requirements.querySelector('[data-ref="series"]').classList.add('dnone');
     }
     function switch__CommunityPostBody() {
         [...createBody.children].forEach(form => form.classList.remove('active'));
@@ -112,6 +142,31 @@ document.addEventListener("DOMContentLoaded", function () {
             const ratedAs = parseInt(fiction_form.querySelector('[name="ratedas"]').value, 10);
             const tagNames = Array.from(fiction_form.querySelectorAll('[data-tag_val]'))
                 .map(span => span.getAttribute('data-tag_val'));
+            ff_requirements.querySelectorAll('[data-ref]').forEach((li) => li.classList.remove('failed'));
+            if (title.length < 3 || description.length < 3) {
+                ff_requirements.querySelector('[data-ref="title_desc"]').classList.add('failed');
+            }
+            else {
+                ff_requirements.querySelector('[data-ref="title_desc"]').classList.add('passed');
+            }
+            if (language === 0) {
+                ff_requirements.querySelector('[data-ref="language"]').classList.add('failed');
+            }
+            else {
+                ff_requirements.querySelector('[data-ref="language"]').classList.add('passed');
+            }
+            if (ratedAs === 0) {
+                ff_requirements.querySelector('[data-ref="rating"]').classList.add('failed');
+            }
+            else {
+                ff_requirements.querySelector('[data-ref="rating"]').classList.add('passed');
+            }
+            if (tagNames.length < 2) {
+                ff_requirements.querySelector('[data-ref="tag"]').classList.add('failed');
+            }
+            else {
+                ff_requirements.querySelector('[data-ref="tag"]').classList.add('passed');
+            }
             const formData = {
                 title: title,
                 postDescription: description,
@@ -122,17 +177,17 @@ document.addEventListener("DOMContentLoaded", function () {
                 seriesList: null,
                 coverImage: null
             };
-            const coverimg_input = fiction_form.querySelector('[name="coverimg"]');
-            const coverimg_file = coverimg_input.files;
+            const coverimg_file = coverImg_input.files;
             if (coverimg_file && coverimg_file[0]) {
                 const file = coverimg_file[0];
                 const reader = new FileReader();
-                reader.addEventListener('load', (event) => {
-                    const dataURL = reader.result;
-                    document.getElementById('coverimage_preview').style.display = "block";
-                    document.querySelector('#coverimage_preview img').setAttribute('src', dataURL);
-                });
-                reader.readAsDataURL(file);
+                reader.onloadend = (event) => {
+                    const data = reader.result;
+                    if (data != null) {
+                        formData.coverImage = data;
+                    }
+                };
+                reader.readAsArrayBuffer(file);
             }
             if (categorySelect.value === "Graphical" || categorySelect.value === "Fanfiction") {
                 const seriesNames = Array.from(fiction_form.querySelectorAll('[data-series_val]'))
@@ -140,7 +195,14 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (seriesNames.length > 0) {
                     formData.seriesList = seriesNames;
                 }
+                if (categorySelect.value === "Fanfiction" && seriesNames.length < 1) {
+                    ff_requirements.querySelector('[data-ref="series"]').classList.add('failed');
+                }
+                else {
+                    ff_requirements.querySelector('[data-ref="series"]').classList.add('passed');
+                }
             }
+            console.log(formData);
         });
     });
 });

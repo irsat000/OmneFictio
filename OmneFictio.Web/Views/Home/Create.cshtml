@@ -31,7 +31,7 @@
 <div class="filter-serieslist-cont modalbg-base-1 opacity1" id="create-serieslistmodal">
     <div class="filter-serieslist">
         <div class="fsl-header">
-            <input type="text" class="serieslist-searchbar" id="serieslist-searchbar" placeholder="Search">
+            <input type="text" class="fsl-searchbar" id="serieslist-searchbar" placeholder="Search">
             <i class="bi bi-x-lg" id="csl-close"></i>
         </div>
         <div class="fsl-filters">
@@ -194,6 +194,16 @@
                     <button type="button" class="ff-save_draft">Save Draft</button>
                     <button type="button" class="ff-save_and_continue">Save & Continue</button>
                 </div>
+            </div>
+
+            <div class="ff-requirements">
+                <ul>
+                    <li data-ref="title_desc"><i class="bi bi-x"></i>Title and description must contain at least 3 letters.</li>
+                    <li data-ref="language"><i class="bi bi-x"></i>Language should be selected.</li>
+                    <li data-ref="rating"><i class="bi bi-x"></i>Rating should be selected.</li>
+                    <li data-ref="tag"><i class="bi bi-x"></i>Tag list must contain at least 2 tags.</li>
+                    <li data-ref="series" class="dnone"><i class="bi bi-x"></i>Choose at least one series.</li>
+                </ul>
             </div>
         </div>
     </div>

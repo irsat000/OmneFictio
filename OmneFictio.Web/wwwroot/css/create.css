@@ -41,9 +41,11 @@ header {
 .cc-fiction {
   display: none;
   flex-direction: column;
+  align-items: center;
   gap: 14px;
 }
 .cc-fiction .ff-primary {
+  width: 100%;
   display: flex;
   flex-direction: column;
   padding: 14px 6px;
@@ -87,11 +89,13 @@ header {
   border-top: 0;
 }
 .cc-fiction .ff-info {
+  width: 100%;
   padding: 8px;
   display: flex;
   flex-direction: column;
   background-color: var(--background-color1);
   border-bottom: 1px solid var(--create-border1);
+  gap: 6px;
 }
 .cc-fiction .ff-info .ff-properties-cont {
   display: flex;
@@ -107,7 +111,7 @@ header {
   color: var(--text-color1);
   padding: 4px 10px;
   border-radius: 5px;
-  font-size: 1.1rem;
+  font-size: 1.3rem;
   cursor: pointer;
   font-family: "Gudea", cursive;
 }
@@ -255,6 +259,7 @@ header {
   display: flex !important;
 }
 .cc-fiction .ff-footer {
+  width: 100%;
   padding: 16px;
   display: flex;
   flex-direction: column;
@@ -297,6 +302,36 @@ header {
 }
 .cc-fiction .ff-footer button.ff-cancel:hover {
   background-color: var(--button-red-hover);
+}
+.cc-fiction .ff-requirements {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 20px 16px 10px;
+  background-color: var(--background-color1);
+  border-bottom: 1px solid var(--create-border1);
+}
+.cc-fiction .ff-requirements ul li {
+  font-size: 0.9rem;
+  font-family: "Gudea", cursive;
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+.cc-fiction .ff-requirements ul li i {
+  display: none;
+  font-size: 1.3rem;
+  margin-right: 5px;
+  padding-bottom: 1px;
+}
+.cc-fiction .ff-requirements ul li.failed {
+  color: red;
+}
+.cc-fiction .ff-requirements ul li.failed i {
+  display: flex;
+}
+.cc-fiction .ff-requirements ul li.passed {
+  color: green;
 }
 
 .cc-community_post {
@@ -433,5 +468,11 @@ header {
   .create_content-container .cc-fiction .ff-footer {
     border: 1px solid var(--create-border1);
     border-radius: 4px;
+  }
+  .create_content-container .cc-fiction .ff-requirements {
+    width: unset;
+    border: 1px solid var(--create-border1);
+    border-radius: 4px;
+    padding: 17px 10% 10px;
   }
 }/*# sourceMappingURL=create.css.map */

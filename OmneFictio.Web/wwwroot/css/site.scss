@@ -842,7 +842,9 @@ header {
                 border-radius: 4px;
                 width: 100%;
                 flex-shrink: 1;
-                border: 1px solid var(--text-color1);
+                background: var(--input-bg1);
+                color: var(--text-color1);
+                border: 1px solid var(--input-border1);
             }
 
             >i {
@@ -902,7 +904,9 @@ header {
                 border-radius: 4px;
                 width: 100%;
                 flex-shrink: 1;
-                border: 1px solid var(--text-color1);
+                background: var(--input-bg1);
+                color: var(--text-color1);
+                border: 1px solid var(--input-border1);
             }
 
             >i {
@@ -926,7 +930,8 @@ header {
             >select {
                 outline: none;
                 border: none;
-                background: var(--background-color5);
+                background: var(--input-bg1);
+                border: 1px solid var(--input-border1);
                 color: var(--text-color1);
                 padding: 4px;
                 border-radius: 5px;

@@ -742,7 +742,9 @@ header .header-wrap {
   border-radius: 4px;
   width: 100%;
   flex-shrink: 1;
-  border: 1px solid var(--text-color1);
+  background: var(--input-bg1);
+  color: var(--text-color1);
+  border: 1px solid var(--input-border1);
 }
 .filter-taglist-cont .filter-taglist .taglist-header > i {
   margin: 0 4px 0 20px;
@@ -797,7 +799,9 @@ header .header-wrap {
   border-radius: 4px;
   width: 100%;
   flex-shrink: 1;
-  border: 1px solid var(--text-color1);
+  background: var(--input-bg1);
+  color: var(--text-color1);
+  border: 1px solid var(--input-border1);
 }
 .filter-serieslist-cont .filter-serieslist .fsl-header > i {
   margin: 0 4px 0 20px;
@@ -818,7 +822,8 @@ header .header-wrap {
 .filter-serieslist-cont .filter-serieslist .fsl-filters > select {
   outline: none;
   border: none;
-  background: var(--background-color5);
+  background: var(--input-bg1);
+  border: 1px solid var(--input-border1);
   color: var(--text-color1);
   padding: 4px;
   border-radius: 5px;

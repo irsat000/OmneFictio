@@ -132,14 +132,6 @@ public class ActionController : Controller
         }
         request.accountId = AccountId;
         
-        /* I no longer need this because now I don't use a literal form data
-        request.postTypeId = byte.TryParse(request.postTypeId?.ToString(), out byte postTypeId)
-            ? postTypeId : 1;
-        request.languageId = int.TryParse(request.languageId?.ToString(), out int languageId)
-            ? languageId : 1;
-        request.ratedAsId = int.TryParse(request.ratedAsId?.ToString(), out int ratedAsId)
-            ? ratedAsId : 1;*/
-
         var apiResponse = await _httpClient.PostAsJsonAsync("Action/CreatePost", request);
         string statusCode = apiResponse.StatusCode.ToString();
 

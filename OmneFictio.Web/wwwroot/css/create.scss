@@ -48,9 +48,11 @@ main {}
 .cc-fiction {
     display: none; //flex
     flex-direction: column;
+    align-items: center;
     gap: 14px;
 
     .ff-primary {
+        width: 100%;
         display: flex;
         flex-direction: column;
         padding: 14px 6px;
@@ -102,11 +104,13 @@ main {}
     }
 
     .ff-info {
+        width: 100%;
         padding: 8px;
         display: flex;
         flex-direction: column;
         background-color: var(--background-color1);
         border-bottom: 1px solid var(--create-border1);
+        gap: 6px;
 
         .ff-properties-cont {
             display: flex;
@@ -122,7 +126,7 @@ main {}
                 color: var(--text-color1);
                 padding: 4px 10px;
                 border-radius: 5px;
-                font-size: 1.1rem;
+                font-size: 1.3rem;
                 cursor: pointer;
                 font-family: 'Gudea', cursive;
             }
@@ -267,6 +271,7 @@ main {}
     }
 
     .ff-footer {
+        width: 100%;
         padding: 16px;
         display: flex;
         flex-direction: column;
@@ -316,6 +321,43 @@ main {}
         }
         .ff-save_and_continue{
         }*/
+    }
+
+    .ff-requirements {
+        width: 100%;
+        display: flex;
+        justify-content: center;
+        padding: 20px 16px 10px;
+        background-color: var(--background-color1);
+        border-bottom: 1px solid var(--create-border1);
+
+        ul {
+            li {
+                font-size: 0.9rem;
+                font-family: 'Gudea', cursive;
+                margin-bottom: 10px;
+                display: flex;
+                align-items: center;
+
+                i {
+                    display: none;
+                    font-size: 1.3rem;
+                    margin-right: 5px;
+                    padding-bottom: 1px;
+                }
+            }
+
+            li.failed {
+                color: red;
+
+                i {
+                    display: flex;
+                }
+            }
+            li.passed{
+                color: green;
+            }
+        }
     }
 }
 
@@ -488,6 +530,13 @@ main {}
             .ff-footer {
                 border: 1px solid var(--create-border1);
                 border-radius: 4px;
+            }
+
+            .ff-requirements {
+                width: unset;
+                border: 1px solid var(--create-border1);
+                border-radius: 4px;
+                padding: 17px 10% 10px;
             }
         }
     }

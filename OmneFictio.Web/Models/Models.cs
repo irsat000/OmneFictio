@@ -42,12 +42,12 @@ public class PostWrite1
 {
     public string title { get; set; } = null!;
     public string postDescription { get; set; } = null!;
-    public string postType { get; set; } = null!; //byte
+    public string postType { get; set; } = null!;
     public int languageId { get; set; } //int
     public int? accountId { get; set; }
     public int ratedAsId { get; set; } //int
-    public string? coverImage { get; set; }
-    public List<int>? tagList { get; set; }
+    public byte[]? coverImage { get; set; }
+    public List<int> tagList { get; set; } = null!;
     public List<int>? seriesList { get; set; }
 }
 //create post request
