@@ -46,9 +46,9 @@ public class PostWrite1
     public int languageId { get; set; } //int
     public int? accountId { get; set; }
     public int ratedAsId { get; set; } //int
-    public byte[]? coverImage { get; set; }
-    public List<int> tagList { get; set; } = null!;
-    public List<int>? seriesList { get; set; }
+    public int[]? coverImage { get; set; }
+    public List<string> tagList { get; set; } = null!;
+    public List<string>? seriesList { get; set; }
 }
 //create post request
 

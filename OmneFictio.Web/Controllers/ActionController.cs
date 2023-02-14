@@ -131,7 +131,7 @@ public class ActionController : Controller
             return new JsonResult(Unauthorized());
         }
         request.accountId = AccountId;
-        
+        /*
         var apiResponse = await _httpClient.PostAsJsonAsync("Action/CreatePost", request);
         string statusCode = apiResponse.StatusCode.ToString();
 
@@ -139,7 +139,7 @@ public class ActionController : Controller
         if (statusCode != "OK")
         {
             return new JsonResult(BadRequest());
-        }
+        }*/
         return new JsonResult(Ok());
     }
 

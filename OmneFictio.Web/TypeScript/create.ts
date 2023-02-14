@@ -2,12 +2,12 @@
 class Fiction_Post_Data {
     title!: String;
     postDescription!: String;
-    languageId!: Number;
     postType!: String;
+    languageId!: Number;
     ratedAsId!: Number;
+    coverImage!: Number[] | null;
     tagList!: Array<String>;
     seriesList!: Array<String> | null;
-    coverImage!: ArrayBuffer | null;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -171,7 +171,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const ff_savebtns = document.querySelectorAll('.ff-save_draft, .ff-save_and_continue') as NodeListOf<HTMLButtonElement>;
     ff_savebtns.forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
             const postType = categorySelect.value;
             const title = (<HTMLInputElement>fiction_form.querySelector('[name="title"]')).value;
             const description = (<HTMLInputElement>fiction_form.querySelector('[name="description"]')).value;
@@ -203,31 +203,23 @@ document.addEventListener("DOMContentLoaded", function () {
                 ff_requirements.querySelector('[data-ref="tag"]')!.classList.add('passed');
             }
 
-
-
-            const formData: Fiction_Post_Data = {
+            let formData: Fiction_Post_Data = {
                 title: title,
                 postDescription: description,
-                languageId: language,
                 postType: postType,
+                languageId: language,
                 ratedAsId: ratedAs,
+                coverImage: null,
                 tagList: tagNames,
-                seriesList: null,
-                coverImage: null
+                seriesList: null
             };
 
+
             //Get cover image
-            const coverimg_file = coverImg_input.files;
+            var coverimg_file = coverImg_input.files;
             if (coverimg_file && coverimg_file[0]) {
-                const file = coverimg_file[0];
-                const reader = new FileReader();
-                reader.onloadend = (event) => {
-                    const data = reader.result as ArrayBuffer | null;
-                    if (data != null) {
-                        formData.coverImage = data;
-                    }
-                };
-                reader.readAsArrayBuffer(file);
+                var file = coverimg_file[0];
+                formData.coverImage = await ImageToByteArray(file);
             }
 
 
@@ -246,9 +238,37 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }
 
-            console.log(formData);
+            await fetch('Action/CreatePost', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log(data.statusCode);
+                    //const response = JSON.parse(data.value);
+                })
+                .catch((err) => console.log("Create post function failed -> " + err));
+
         });
     });
 });
 
-
+async function ImageToByteArray(file: File): Promise<Number[] | null> {
+    return new Promise((resolve) => {
+        const reader = new FileReader()
+        reader.onloadend = () => {
+            var data = reader.result as ArrayBuffer | null;
+            if (data != null) {
+                return resolve([...new Uint8Array(data)]);
+            }
+            else {
+                return resolve(null);
+            }
+        };
+        reader.readAsArrayBuffer(file);
+    })
+}

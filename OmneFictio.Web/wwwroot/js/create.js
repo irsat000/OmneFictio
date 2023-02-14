@@ -2,12 +2,12 @@
 class Fiction_Post_Data {
     title;
     postDescription;
-    languageId;
     postType;
+    languageId;
     ratedAsId;
+    coverImage;
     tagList;
     seriesList;
-    coverImage;
 }
 document.addEventListener("DOMContentLoaded", function () {
     const categorySelect = document.getElementById('create-category');
@@ -134,7 +134,7 @@ document.addEventListener("DOMContentLoaded", function () {
     }
     const ff_savebtns = document.querySelectorAll('.ff-save_draft, .ff-save_and_continue');
     ff_savebtns.forEach(btn => {
-        btn.addEventListener('click', () => {
+        btn.addEventListener('click', async () => {
             const postType = categorySelect.value;
             const title = fiction_form.querySelector('[name="title"]').value;
             const description = fiction_form.querySelector('[name="description"]').value;
@@ -167,27 +167,20 @@ document.addEventListener("DOMContentLoaded", function () {
             else {
                 ff_requirements.querySelector('[data-ref="tag"]').classList.add('passed');
             }
-            const formData = {
+            let formData = {
                 title: title,
                 postDescription: description,
-                languageId: language,
                 postType: postType,
+                languageId: language,
                 ratedAsId: ratedAs,
+                coverImage: null,
                 tagList: tagNames,
-                seriesList: null,
-                coverImage: null
+                seriesList: null
             };
-            const coverimg_file = coverImg_input.files;
+            var coverimg_file = coverImg_input.files;
             if (coverimg_file && coverimg_file[0]) {
-                const file = coverimg_file[0];
-                const reader = new FileReader();
-                reader.onloadend = (event) => {
-                    const data = reader.result;
-                    if (data != null) {
-                        formData.coverImage = data;
-                    }
-                };
-                reader.readAsArrayBuffer(file);
+                var file = coverimg_file[0];
+                formData.coverImage = await ImageToByteArray(file);
             }
             if (categorySelect.value === "Graphical" || categorySelect.value === "Fanfiction") {
                 const seriesNames = Array.from(fiction_form.querySelectorAll('[data-series_val]'))
@@ -202,7 +195,34 @@ document.addEventListener("DOMContentLoaded", function () {
                     ff_requirements.querySelector('[data-ref="series"]').classList.add('passed');
                 }
             }
-            console.log(formData);
+            await fetch('Action/CreatePost', {
+                method: 'POST',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(formData)
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                console.log(data.statusCode);
+            })
+                .catch((err) => console.log("Create post function failed -> " + err));
         });
     });
 });
+async function ImageToByteArray(file) {
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            var data = reader.result;
+            if (data != null) {
+                return resolve([...new Uint8Array(data)]);
+            }
+            else {
+                return resolve(null);
+            }
+        };
+        reader.readAsArrayBuffer(file);
+    });
+}
