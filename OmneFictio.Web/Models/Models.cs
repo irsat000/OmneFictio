@@ -46,7 +46,7 @@ public class PostWrite1
     public int languageId { get; set; }
     public int? accountId { get; set; }
     public int ratedAsId { get; set; }
-    public int[]? coverImage { get; set; }
+    public string? coverImage { get; set; }
     public Boolean? coverSent { get; set; } = false;
     public List<int> tagList { get; set; } = null!;
     public List<int>? seriesList { get; set; }

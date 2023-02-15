@@ -5,7 +5,7 @@ class Fiction_Post_Data {
     postTypeId!: Number;
     languageId!: Number;
     ratedAsId!: Number;
-    coverImage!: Number[] | null;
+    coverImage!: string | null;
     tagList!: Number[];
     seriesList!: Number[] | null;
 }
@@ -219,7 +219,7 @@ document.addEventListener("DOMContentLoaded", function () {
             var coverimg_file = coverImg_input.files;
             if (coverimg_file && coverimg_file[0]) {
                 var file = coverimg_file[0];
-                formData.coverImage = await ImageToByteArray(file);
+                formData.coverImage = await ArrayBufferToBase64(file);
             }
 
 
@@ -237,7 +237,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     ff_requirements.querySelector('[data-ref="series"]')!.classList.add('passed');
                 }
             }
-            
+
             await fetch('Action/CreatePost', {
                 method: 'POST',
                 headers: {
@@ -264,6 +264,28 @@ async function ImageToByteArray(file: File): Promise<Number[] | null> {
             var data = reader.result as ArrayBuffer | null;
             if (data != null) {
                 return resolve([...new Uint8Array(data)]);
+            }
+            else {
+                return resolve(null);
+            }
+        };
+        reader.readAsArrayBuffer(file);
+    })
+}
+
+async function ArrayBufferToBase64(file: File): Promise<string | null> {
+    return new Promise((resolve) => {
+        const reader = new FileReader()
+        reader.onloadend = () => {
+            var buffer = reader.result as ArrayBuffer | null;
+            if (buffer != null) {
+                var binary = '';
+                var bytes = new Uint8Array(buffer);
+                var len = bytes.byteLength;
+                for (var i = 0; i < len; i++) {
+                    binary += String.fromCharCode(bytes[i]);
+                }
+                return resolve(window.btoa(binary));
             }
             else {
                 return resolve(null);

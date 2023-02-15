@@ -132,17 +132,18 @@ public class ActionController : Controller
         }
         request.accountId = AccountId;
 
-        int[]? coverImage_ForOk = null; //Backup the image because I will not send it to API
+
+        string? coverImage_WhenOk = null; //Backup the image because I will not send it to API
         if (request.coverImage != null)
         {
-            coverImage_ForOk = request.coverImage;
+            coverImage_WhenOk = request.coverImage;
             request.coverImage = null;
             request.coverSent = true;
         }
 
         var apiResponse = await _httpClient.PostAsJsonAsync("Action/CreatePost", request);
         string statusCode = apiResponse.StatusCode.ToString();
-        if (statusCode == "OK" && coverImage_ForOk != null)
+        if (statusCode == "OK" && coverImage_WhenOk != null)
         {
             var dictResult = await _helperServices.getDictFromResponse(apiResponse);
             dictResult!.TryGetValue("coverImageName", out string? cvrImgName);
@@ -151,9 +152,9 @@ public class ActionController : Controller
             {
                 System.IO.File.Delete($"wwwroot/images/covers/{cvrImgName}");
             }
-            /*byte[] picBytes = new byte[coverImage_ForOk.Length * sizeof(int)];
-            Buffer.BlockCopy(coverImage_ForOk, 0, picBytes, 0, picBytes.Length);
-            await System.IO.File.WriteAllBytesAsync($"wwwroot/images/covers/{cvrImgName}", picBytes);*/
+
+            byte[] picBytes = Convert.FromBase64String(coverImage_WhenOk);
+            await System.IO.File.WriteAllBytesAsync($"wwwroot/images/covers/{cvrImgName}", picBytes);
 
             return new JsonResult(Ok());
         }

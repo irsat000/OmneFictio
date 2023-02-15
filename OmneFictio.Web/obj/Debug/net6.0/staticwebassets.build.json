@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "L1hKE2cN3SPjNIoy+P4SzKXfyH9BVT2BI2CLoVydT2c=",
+  "Hash": "Zh8JlI6nfanKDwAFY4neDfB1GWrWB3yFTHLCrONYLok=",
   "Source": "OmneFictio.Web",
   "BasePath": "_content/OmneFictio.Web",
   "Mode": "Default",
@@ -695,6 +695,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\covers\\cover8-WEF3OKHIQX.png"
+    },
+    {
+      "Identity": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\wwwroot\\images\\covers\\cover9-RGWQPM6BO8",
+      "SourceId": "OmneFictio.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\wwwroot\\",
+      "BasePath": "_content/OmneFictio.Web",
+      "RelativePath": "images/covers/cover9-RGWQPM6BO8",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\covers\\cover9-RGWQPM6BO8"
     },
     {
       "Identity": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\wwwroot\\images\\covers\\media_178ebed46ae02d6f3284c7886e9b28c5bb9046a02.jpeg",

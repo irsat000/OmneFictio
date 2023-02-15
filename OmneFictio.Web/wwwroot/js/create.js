@@ -180,7 +180,7 @@ document.addEventListener("DOMContentLoaded", function () {
             var coverimg_file = coverImg_input.files;
             if (coverimg_file && coverimg_file[0]) {
                 var file = coverimg_file[0];
-                formData.coverImage = await ImageToByteArray(file);
+                formData.coverImage = await ArrayBufferToBase64(file);
             }
             if (categorySelect.value === "Graphical" || categorySelect.value === "Fanfiction") {
                 const seriesNames = Array.from(fiction_form.querySelectorAll('[data-series_val]'))
@@ -218,6 +218,27 @@ async function ImageToByteArray(file) {
             var data = reader.result;
             if (data != null) {
                 return resolve([...new Uint8Array(data)]);
+            }
+            else {
+                return resolve(null);
+            }
+        };
+        reader.readAsArrayBuffer(file);
+    });
+}
+async function ArrayBufferToBase64(file) {
+    return new Promise((resolve) => {
+        const reader = new FileReader();
+        reader.onloadend = () => {
+            var buffer = reader.result;
+            if (buffer != null) {
+                var binary = '';
+                var bytes = new Uint8Array(buffer);
+                var len = bytes.byteLength;
+                for (var i = 0; i < len; i++) {
+                    binary += String.fromCharCode(bytes[i]);
+                }
+                return resolve(window.btoa(binary));
             }
             else {
                 return resolve(null);

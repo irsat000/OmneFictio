@@ -42,7 +42,7 @@ public class CreatePost{
     public int languageId { get; set; } //int
     public int? accountId { get; set; }
     public int ratedAsId { get; set; } //int
-    public int[]? coverImage { get; set; }
+    public string? coverImage { get; set; }
     public Boolean coverSent { get; set; }
     public List<int> tagList { get; set; } = null!;
     public List<int>? seriesList { get; set; }
