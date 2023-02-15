@@ -2,7 +2,7 @@
 class Fiction_Post_Data {
     title;
     postDescription;
-    postType;
+    postTypeId;
     languageId;
     ratedAsId;
     coverImage;
@@ -135,13 +135,13 @@ document.addEventListener("DOMContentLoaded", function () {
     const ff_savebtns = document.querySelectorAll('.ff-save_draft, .ff-save_and_continue');
     ff_savebtns.forEach(btn => {
         btn.addEventListener('click', async () => {
-            const postType = categorySelect.value;
+            const postTypeId = parseInt(categorySelect.options[categorySelect.selectedIndex].getAttribute('data-id'), 10);
             const title = fiction_form.querySelector('[name="title"]').value;
             const description = fiction_form.querySelector('[name="description"]').value;
             const language = parseInt(fiction_form.querySelector('[name="language"]').value, 10);
             const ratedAs = parseInt(fiction_form.querySelector('[name="ratedas"]').value, 10);
             const tagNames = Array.from(fiction_form.querySelectorAll('[data-tag_val]'))
-                .map(span => span.getAttribute('data-tag_val'));
+                .map(span => parseInt(span.getAttribute('data-tag_val'), 10));
             ff_requirements.querySelectorAll('[data-ref]').forEach((li) => li.classList.remove('failed'));
             if (title.length < 3 || description.length < 3) {
                 ff_requirements.querySelector('[data-ref="title_desc"]').classList.add('failed');
@@ -170,7 +170,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let formData = {
                 title: title,
                 postDescription: description,
-                postType: postType,
+                postTypeId: postTypeId,
                 languageId: language,
                 ratedAsId: ratedAs,
                 coverImage: null,
@@ -184,7 +184,7 @@ document.addEventListener("DOMContentLoaded", function () {
             }
             if (categorySelect.value === "Graphical" || categorySelect.value === "Fanfiction") {
                 const seriesNames = Array.from(fiction_form.querySelectorAll('[data-series_val]'))
-                    .map(span => span.getAttribute('data-series_val'));
+                    .map(span => parseInt(span.getAttribute('data-series_val'), 10));
                 if (seriesNames.length > 0) {
                     formData.seriesList = seriesNames;
                 }

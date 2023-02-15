@@ -2,6 +2,8 @@ using OmneFictio.WebApi.Entities;
 using OmneFictio.WebApi.Dtos;
 using OmneFictio.WebApi.Models;
 using OmneFictio.WebApi.Configurations;
+//services
+using OmneFictio.WebApi.Infrastructure;
 //basic
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
@@ -23,10 +25,11 @@ namespace OmneFictio.WebApi.Controllers;
 public class ActionController : ControllerBase
 {
     private readonly OmneFictioContext _db;
+    private readonly IHelperServices _helperServices;
     private readonly IMapper _mapper;
     private readonly ILogger<ReadingController> _logger;
 
-    public ActionController(ILogger<ReadingController> logger, IMapper mapper, OmneFictioContext db)
+    public ActionController(ILogger<ReadingController> logger, IMapper mapper, OmneFictioContext db, IHelperServices helperServices)
     {
         _logger = logger;
         _mapper = mapper;
@@ -35,6 +38,7 @@ public class ActionController : ControllerBase
             throw new InvalidOperationException("Mapper not found");
         }
         _db = db;
+        _helperServices = helperServices;
     }
 
     [HttpPost("Vote")]
@@ -189,7 +193,8 @@ public class ActionController : ControllerBase
         await _db.Replies.AddAsync(newReply);
         await _db.SaveChangesAsync();
 
-        if(request.targetUsername != null){
+        if (request.targetUsername != null)
+        {
             //We will send the referenced user a notification
         }
 
@@ -232,15 +237,16 @@ public class ActionController : ControllerBase
     }
 
     [HttpPost("CreatePost")]
-    public async Task<IActionResult> CreatePost(PostDtoWrite_1 request)
+    public async Task<IActionResult> CreatePost(CreatePost request)
     {
         if (request.title == null ||
-            request.title.Length > 250 || request.title.Length == 0 ||
+            request.title.Length > 250 || request.title.Length < 3 ||
             request.postDescription == null ||
-            request.postDescription.Length > 2000 || request.postDescription.Length < 10)
+            request.postDescription.Length > 2000 || request.postDescription.Length < 3)
         {
             return BadRequest();
         }
+
 
         Post newpost = new Post
         {
@@ -250,13 +256,13 @@ public class ActionController : ControllerBase
             languageId = request.languageId,
             postTypeId = request.postTypeId,
             ratedAsId = request.ratedAsId,
-            coverImage = request.coverImage,
             publishDate = DateTime.Now,
             updateDate = DateTime.Now,
             deletedStatusId = 1, // Default
             postStatusId = 1, // In-Progress
-            isPublished = true // <- User will decide when creating
+            isPublished = true // <- User will decide when creating //True for now
         };
+
 
         if (request.tagList != null)
         {
@@ -269,7 +275,9 @@ public class ActionController : ControllerBase
                 }
             }
         }
-        if (request.postTypeId == 3 && request.seriesList != null)
+        //Fanfiction id = 2
+        //Graphical id = 3
+        if ((request.postTypeId == 2 || request.postTypeId == 3) && request.seriesList != null)
         {
             foreach (int seriesid in request.seriesList)
             {
@@ -280,13 +288,23 @@ public class ActionController : ControllerBase
                 }
             }
         }
-        if (request.postTypeId == 3 && newpost.existingStories.Count < 1)
+
+
+        if ((request.postTypeId == 2 && newpost.existingStories.Count < 1) || newpost.tags.Count < 2)
         {
-            return BadRequest(); //Fanfiction is chosen but there is no reference to stories
+            return BadRequest();
+            //Fanfiction is chosen but there is no reference to stories
+            //Not enough tags selected
         }
 
         await _db.Posts.AddAsync(newpost);
         await _db.SaveChangesAsync();
-        return Ok();
+        if (request.coverSent == true)
+        {
+            newpost.coverImage = "cover" + newpost.id + "-" + _helperServices.RandomString(10) + ".png";
+            await _db.SaveChangesAsync();
+            return Ok(new { coverImageName = newpost.coverImage });
+        }
+        return Accepted();
     }
 }

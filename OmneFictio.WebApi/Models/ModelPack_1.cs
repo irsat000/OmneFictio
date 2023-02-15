@@ -34,3 +34,17 @@ public class CommentRequest
     public int? targetChapterId { get; set; }
 }
 //Adding a comment
+
+public class CreatePost{
+    public string title { get; set; } = null!;
+    public string postDescription { get; set; } = null!;
+    public byte postTypeId { get; set; }
+    public int languageId { get; set; } //int
+    public int? accountId { get; set; }
+    public int ratedAsId { get; set; } //int
+    public int[]? coverImage { get; set; }
+    public Boolean coverSent { get; set; }
+    public List<int> tagList { get; set; } = null!;
+    public List<int>? seriesList { get; set; }
+}
+//for creating the post

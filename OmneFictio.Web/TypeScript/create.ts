@@ -2,12 +2,12 @@
 class Fiction_Post_Data {
     title!: String;
     postDescription!: String;
-    postType!: String;
+    postTypeId!: Number;
     languageId!: Number;
     ratedAsId!: Number;
     coverImage!: Number[] | null;
-    tagList!: Array<String>;
-    seriesList!: Array<String> | null;
+    tagList!: Number[];
+    seriesList!: Number[] | null;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -172,14 +172,14 @@ document.addEventListener("DOMContentLoaded", function () {
     const ff_savebtns = document.querySelectorAll('.ff-save_draft, .ff-save_and_continue') as NodeListOf<HTMLButtonElement>;
     ff_savebtns.forEach(btn => {
         btn.addEventListener('click', async () => {
-            const postType = categorySelect.value;
+            const postTypeId = parseInt(categorySelect.options[categorySelect.selectedIndex].getAttribute('data-id')!, 10);
             const title = (<HTMLInputElement>fiction_form.querySelector('[name="title"]')).value;
             const description = (<HTMLInputElement>fiction_form.querySelector('[name="description"]')).value;
             const language = parseInt((<HTMLSelectElement>fiction_form.querySelector('[name="language"]')).value, 10);
             const ratedAs = parseInt((<HTMLSelectElement>fiction_form.querySelector('[name="ratedas"]')).value, 10);
 
             const tagNames = Array.from(fiction_form.querySelectorAll('[data-tag_val]'))
-                .map(span => span.getAttribute('data-tag_val') as string);
+                .map(span => parseInt(span.getAttribute('data-tag_val')!, 10));
 
             ff_requirements.querySelectorAll('[data-ref]').forEach((li) => li.classList.remove('failed'));
             if (title.length < 3 || description.length < 3) {
@@ -206,7 +206,7 @@ document.addEventListener("DOMContentLoaded", function () {
             let formData: Fiction_Post_Data = {
                 title: title,
                 postDescription: description,
-                postType: postType,
+                postTypeId: postTypeId,
                 languageId: language,
                 ratedAsId: ratedAs,
                 coverImage: null,
@@ -226,7 +226,7 @@ document.addEventListener("DOMContentLoaded", function () {
             //If type allows fanfiction, include them
             if (categorySelect.value === "Graphical" || categorySelect.value === "Fanfiction") {
                 const seriesNames = Array.from(fiction_form.querySelectorAll('[data-series_val]'))
-                    .map(span => span.getAttribute('data-series_val') as string);
+                    .map(span => parseInt(span.getAttribute('data-series_val')!, 10));
                 if (seriesNames.length > 0) {
                     formData.seriesList = seriesNames;
                 }
@@ -237,7 +237,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     ff_requirements.querySelector('[data-ref="series"]')!.classList.add('passed');
                 }
             }
-
+            
             await fetch('Action/CreatePost', {
                 method: 'POST',
                 headers: {

@@ -1,11 +1,14 @@
 
 
+using System.Text.Json;
+
 namespace OmneFictio.Web.Infrastructure;
 
 public interface IHelperServices
 {
     //helper
     int? checkUserLogin();
+    Task<Dictionary<string, string>> getDictFromResponse(HttpResponseMessage response);
 }
 public class HelperServices : IHelperServices
 {
@@ -27,6 +30,12 @@ public class HelperServices : IHelperServices
             return accountid;
         }
         catch (Exception) { return null; } 
+    }
+    public async Task<Dictionary<string, string>> getDictFromResponse(HttpResponseMessage response)
+    {
+        string raw = await response.Content.ReadAsStringAsync();
+        var result = JsonSerializer.Deserialize<Dictionary<string, string>>(raw);
+        return result!;
     }
 
 }

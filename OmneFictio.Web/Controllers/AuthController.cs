@@ -1,3 +1,5 @@
+
+using OmneFictio.Web.Infrastructure;
 using System.Diagnostics;
 using Microsoft.AspNetCore.Mvc;
 using OmneFictio.Web.Models;
@@ -16,12 +18,16 @@ public class AuthController : Controller
 {
     private readonly ILogger<HomeController> _logger;
     private readonly HttpClient _httpClient;
+    private readonly IHelperServices _helperServices;
     JwtSecurityTokenHandler _jwtHandler = new JwtSecurityTokenHandler();
 
-    public AuthController(ILogger<HomeController> logger, IHttpClientFactory httpClientFactory)
+    public AuthController(ILogger<HomeController> logger,
+        IHttpClientFactory httpClientFactory,
+                            IHelperServices helperServices)
     {
         _logger = logger;
         _httpClient = httpClientFactory.CreateClient("of");
+        _helperServices = helperServices;
     }
 
     //fetch api manual login
@@ -37,7 +43,7 @@ public class AuthController : Controller
         {
             return new JsonResult(NotFound());
         }
-        var dictResult = await getDictFromResponse(apiResponse);
+        var dictResult = await _helperServices.getDictFromResponse(apiResponse);
         dictResult!.TryGetValue("jwt", out var newToken);
         CreateUserSession(newToken!, rememberme: rememberme);
         return new JsonResult(Ok());
@@ -56,7 +62,7 @@ public class AuthController : Controller
 
         if (statusCode == "OK")
         {
-            var dictResult = await getDictFromResponse(apiResponse);
+            var dictResult = await _helperServices.getDictFromResponse(apiResponse);
             dictResult!.TryGetValue("jwt", out var newToken);
             CreateUserSession(newToken!);
             return new JsonResult(Ok());
@@ -77,7 +83,7 @@ public class AuthController : Controller
 
         if (statusCode == "OK")
         {
-            var dictResult = await getDictFromResponse(apiResponse);
+            var dictResult = await _helperServices.getDictFromResponse(apiResponse);
             dictResult!.TryGetValue("jwt", out var newToken);
             dictResult!.TryGetValue("pic", out var pPicUrl);
 
@@ -113,12 +119,6 @@ public class AuthController : Controller
 
 
 
-    public async Task<Dictionary<string, string>> getDictFromResponse(HttpResponseMessage response)
-    {
-        string raw = await response.Content.ReadAsStringAsync();
-        var result = JsonSerializer.Deserialize<Dictionary<string, string>>(raw);
-        return result!;
-    }
     public ClaimsPrincipal CreateUserSession(string tokenRaw, bool rememberme = true)
     {
         //HttpContext.Session.Clear();

@@ -2,6 +2,8 @@ using OmneFictio.WebApi.Entities;
 using OmneFictio.WebApi.Dtos;
 using OmneFictio.WebApi.Models;
 using OmneFictio.WebApi.Configurations;
+//services
+using OmneFictio.WebApi.Infrastructure;
 //basic
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Mvc;
@@ -15,8 +17,6 @@ using AutoMapper;
 using BC = BCrypt.Net.BCrypt;
 using Google.Apis.Auth;
 using static Google.Apis.Auth.GoogleJsonWebSignature;
-using OmneFictio.WebApi.Infrastructure;
-
 namespace OmneFictio.WebApi.Controllers;
 
 [ApiController]
@@ -183,7 +183,7 @@ public class AuthController : ControllerBase
             //create account
             await _db.Accounts.AddAsync(newAccount);
             await _db.SaveChangesAsync();
-            newAccount.profilePic = "user" + newAccount.id.ToString() + ".png";
+            newAccount.profilePic = "user" + newAccount.id.ToString() + "-" + _helperServices.RandomString(10) + ".png";
             await _db.SaveChangesAsync();
             //create preferences
             preferences.accountId = newAccount.id;

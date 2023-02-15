@@ -19,6 +19,7 @@ public interface IHelperServices
     //helper
     string? CreateUserToken(Account user, byte[] securityToken);
     string GeneratePassword(int length, int numberOfNonAlphanumericCharacters);
+    string RandomString(int length);
 }
 public class HelperServices : IHelperServices
 {
@@ -171,6 +172,7 @@ public class HelperServices : IHelperServices
         return token;
     }
 
+    //NOT SAFE, I WILL USE SOMETHING ELSE IN THE FUTURE
     public string GeneratePassword(int length, int numberOfNonAlphanumericCharacters)
     {
         char[] Punctuations = "!@#$%^&*()_-+=[{]};:>|./?".ToCharArray();
@@ -238,6 +240,14 @@ public class HelperServices : IHelperServices
 
             return new string(characterBuffer);
         }
+    }
+
+    public string RandomString(int length)
+    {
+        Random random = new Random();
+        const string chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+        return new string(Enumerable.Repeat(chars, length)
+            .Select(s => s[random.Next(s.Length)]).ToArray());
     }
 }
 

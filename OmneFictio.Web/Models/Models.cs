@@ -43,12 +43,14 @@ public class PostWrite1
     public string title { get; set; } = null!;
     public string postDescription { get; set; } = null!;
     public string postType { get; set; } = null!;
-    public int languageId { get; set; } //int
+    public int languageId { get; set; }
     public int? accountId { get; set; }
-    public int ratedAsId { get; set; } //int
+    public int ratedAsId { get; set; }
     public int[]? coverImage { get; set; }
-    public List<string> tagList { get; set; } = null!;
-    public List<string>? seriesList { get; set; }
+    public Boolean? coverSent { get; set; } = false;
+    public List<int> tagList { get; set; } = null!;
+    public List<int>? seriesList { get; set; }
+    
 }
 //create post request
 

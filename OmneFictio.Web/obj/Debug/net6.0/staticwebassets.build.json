@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "TmAaPcu0NS91dOCw2qHReUXLz3mB3ArNbmQLyq0LLoI=",
+  "Hash": "L1hKE2cN3SPjNIoy+P4SzKXfyH9BVT2BI2CLoVydT2c=",
   "Source": "OmneFictio.Web",
   "BasePath": "_content/OmneFictio.Web",
   "Mode": "Default",
@@ -678,6 +678,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\covers\\book-covers-big-2019101610.jpg"
+    },
+    {
+      "Identity": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\wwwroot\\images\\covers\\cover8-WEF3OKHIQX.png",
+      "SourceId": "OmneFictio.Web",
+      "SourceType": "Discovered",
+      "ContentRoot": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\wwwroot\\",
+      "BasePath": "_content/OmneFictio.Web",
+      "RelativePath": "images/covers/cover8-WEF3OKHIQX.png",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\covers\\cover8-WEF3OKHIQX.png"
     },
     {
       "Identity": "C:\\Irsat\\myprojects\\WriterProject\\OmneFictio\\OmneFictio.Web\\wwwroot\\images\\covers\\media_178ebed46ae02d6f3284c7886e9b28c5bb9046a02.jpeg",

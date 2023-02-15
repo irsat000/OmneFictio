@@ -378,7 +378,8 @@ function AddReply(payload: string) {
 function createAddReplyField(section: HTMLDivElement, target: string | null = null) {
     //Maybe I decide to get loggen in from the back end with the fetch up there but doesn't seem strictly necessary right now
     const pseudo_loggedUname = document.getElementById('loggedin-username')?.textContent; //pseudo
-    const pseudo_loggedUId = document.getElementById('loggedin-username')?.textContent; //pseudo
+    const pseudo_loggedUId = document.getElementById('loggedin-username')?.getAttribute('data-userid'); //pseudo
+    const pseudo_loggedUPic = document.getElementById('loggedin-username')?.getAttribute('data-userpic'); //pseudo
     if (!pseudo_loggedUname || !pseudo_loggedUId) {
         //Not logged in, maybe tell the user to login first
         alert("Log in, please");
@@ -390,7 +391,7 @@ function createAddReplyField(section: HTMLDivElement, target: string | null = nu
     //populate
     const addReplyInstance = document.getElementById('addReplyTemplate') as HTMLTemplateElement;
     const addReplyClone = window.cloneFromTemplate(addReplyInstance);
-    addReplyClone.querySelector('.ar-user > img')!.setAttribute('src', '/images/users/user' + pseudo_loggedUId + '.png')
+    addReplyClone.querySelector('.ar-user > img')!.setAttribute('src', '/images/users/user' + pseudo_loggedUPic)
     addReplyClone.querySelector('.ar-username')!.textContent = pseudo_loggedUname;
     addReplyClone.querySelector('.cancel_addreply-btn')!.addEventListener('click', e => {
         (<HTMLElement>(e.currentTarget)).closest('.add_reply-cont')!.remove();

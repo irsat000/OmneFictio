@@ -321,7 +321,8 @@ function AddReply(payload) {
 }
 function createAddReplyField(section, target = null) {
     const pseudo_loggedUname = document.getElementById('loggedin-username')?.textContent;
-    const pseudo_loggedUId = document.getElementById('loggedin-username')?.textContent;
+    const pseudo_loggedUId = document.getElementById('loggedin-username')?.getAttribute('data-userid');
+    const pseudo_loggedUPic = document.getElementById('loggedin-username')?.getAttribute('data-userpic');
     if (!pseudo_loggedUname || !pseudo_loggedUId) {
         alert("Log in, please");
         return;
@@ -329,7 +330,7 @@ function createAddReplyField(section, target = null) {
     section.parentElement.querySelectorAll('.add_reply-cont').forEach(btn => btn.remove());
     const addReplyInstance = document.getElementById('addReplyTemplate');
     const addReplyClone = window.cloneFromTemplate(addReplyInstance);
-    addReplyClone.querySelector('.ar-user > img').setAttribute('src', '/images/users/user' + pseudo_loggedUId + '.png');
+    addReplyClone.querySelector('.ar-user > img').setAttribute('src', '/images/users/user' + pseudo_loggedUPic);
     addReplyClone.querySelector('.ar-username').textContent = pseudo_loggedUname;
     addReplyClone.querySelector('.cancel_addreply-btn').addEventListener('click', e => {
         (e.currentTarget).closest('.add_reply-cont').remove();
