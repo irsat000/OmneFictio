@@ -105,7 +105,7 @@ nav {
     border-bottom: 1px solid var(--background-color2);
 }
 
-.settings_body .s-profile_settings {
+.settings_body .s-account_settings {
     display: flex; //flex
     flex-direction: column;
     width: 100%;
@@ -271,7 +271,7 @@ nav {
 
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) {
-    .s-profile_settings {
+    .s-account_settings {
         padding: 16px !important;
 
         .ps-row {
@@ -344,7 +344,7 @@ nav {
 //extra
 
 @media (max-width: 279px) {
-    .s-profile_settings .psr-actions button {
+    .s-account_settings .psr-actions button {
         padding: 8px 3% !important;
     }
 }

@@ -89,8 +89,8 @@ select {
     height: 100%;
     background-color: #00000060;
     justify-content: center;
-    align-items: flex-start;
     z-index: 504;
+    align-items: center;
 }
 
 .modalbg-base-2 {
@@ -309,7 +309,6 @@ header {
 
 
 .login-modal-cont {
-    padding-top: 6%;
 
     .login-modal {
         display: flex;
@@ -438,7 +437,6 @@ header {
 }
 
 .theme-switcher-cont {
-    padding-top: 6%;
 
     .theme-switcher {
         display: flex;
@@ -521,8 +519,9 @@ header {
         color: var(--text-color1);
         text-shadow: -2px 4px 2px var(--text-boxshadow1);
         cursor: pointer;
-        a{
-            span{
+
+        a {
+            span {
                 font-size: 0.8rem;
                 padding-left: 8px;
                 font-family: 'Gudea';
@@ -814,7 +813,6 @@ header {
 }
 
 .filter-taglist-cont {
-    padding-top: 6%;
 
     .filter-taglist {
         display: flex;
@@ -876,7 +874,6 @@ header {
 }
 
 .filter-serieslist-cont {
-    padding-top: 6%;
 
     .filter-serieslist {
         display: flex;

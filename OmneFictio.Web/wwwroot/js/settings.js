@@ -24,8 +24,8 @@ document.addEventListener("DOMContentLoaded", function () {
         navmobile.querySelector('[data-href="' + tab + '"]').classList.add('active');
         navdesktop.querySelector('[data-href="' + tab + '"]').classList.add('active');
         switch (tab) {
-            case "/settings/profile":
-                createBody_profile();
+            case "/settings/account":
+                createBody_account();
                 break;
             case "/settings":
                 createBody_settings();
@@ -37,7 +37,19 @@ document.addEventListener("DOMContentLoaded", function () {
                 break;
         }
     }
-    function createBody_profile() {
+    function createBody_account() {
+        fetch("/u/GetAccountInformation", {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => res.json())
+            .then((data) => {
+            const account = JSON.parse(data.value);
+            console.log(account);
+        });
     }
     function createBody_settings() {
     }

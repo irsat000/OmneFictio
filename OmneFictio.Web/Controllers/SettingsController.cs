@@ -26,7 +26,27 @@ public class SettingsController : Controller
     [HttpGet("settings/{path?}")]
     public IActionResult Settings(string path)
     {
-
         return View();
+    }
+
+    [HttpGet("u/GetAccountInformation")]
+    public async Task<JsonResult> GetAccountInformation()
+    {
+        if (AccountId == null)
+        {
+            return new JsonResult(Unauthorized());
+        }
+
+        var apiResponse = await _httpClient
+            .GetAsync("Settings/AccountInformation/" + AccountId);
+        if (apiResponse.StatusCode.ToString() != "OK")
+        {
+            return new JsonResult(NotFound());
+        }
+        //return
+        /*var dictResult = await _helperServices.getDictFromResponse(apiResponse);
+        dictResult!.TryGetValue("account", out var accountInfo);*/
+        string content = await apiResponse.Content.ReadAsStringAsync();
+        return new JsonResult(Ok(content));
     }
 }

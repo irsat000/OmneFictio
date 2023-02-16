@@ -82,8 +82,8 @@ select {
   height: 100%;
   background-color: rgba(0, 0, 0, 0.3764705882);
   justify-content: center;
-  align-items: flex-start;
   z-index: 504;
+  align-items: center;
 }
 
 .modalbg-base-2 {
@@ -270,9 +270,6 @@ header .header-wrap {
   font-size: 1.3rem;
 }
 
-.login-modal-cont {
-  padding-top: 6%;
-}
 .login-modal-cont .login-modal {
   display: flex;
   flex-direction: column;
@@ -380,9 +377,6 @@ header .header-wrap {
   text-decoration: underline;
 }
 
-.theme-switcher-cont {
-  padding-top: 6%;
-}
 .theme-switcher-cont .theme-switcher {
   display: flex;
   flex-direction: column;
@@ -711,9 +705,6 @@ header .header-wrap {
   background-color: #b94f4f;
 }
 
-.filter-taglist-cont {
-  padding-top: 6%;
-}
 .filter-taglist-cont .filter-taglist {
   display: flex;
   flex-direction: column;
@@ -768,9 +759,6 @@ header .header-wrap {
   background-color: var(--modal-item-hover);
 }
 
-.filter-serieslist-cont {
-  padding-top: 6%;
-}
 .filter-serieslist-cont .filter-serieslist {
   display: flex;
   flex-direction: column;

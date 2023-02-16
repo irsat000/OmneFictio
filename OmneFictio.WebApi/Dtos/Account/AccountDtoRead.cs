@@ -56,3 +56,22 @@ public partial class AccountDtoRead_3
     public bool isNSFW { get; set; }
 }
 //To get the profile details
+
+
+public class AccountDto_Settings
+{
+    public int id { get; set; }
+
+    public string username { get; set; } = null!;
+
+    public string email { get; set; } = null!;
+
+    public bool emailValid { get; set; }
+
+    public string? displayName { get; set; }
+
+    public string? profilePic { get; set; }
+
+    public string? selfDesc { get; set; }
+}
+//For account settings

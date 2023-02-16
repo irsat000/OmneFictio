@@ -3,7 +3,7 @@ document.addEventListener("DOMContentLoaded", function () {
     const navmobile = document.querySelector('.mobile_nav') as HTMLDivElement;
     const navdesktop = document.querySelector('.desktop_nav') as HTMLDivElement;
 
-    let settingsTab:string = window.location.pathname!;
+    let settingsTab: string = window.location.pathname!;
 
     //Get all tab buttons
     let settingTabLinks = Array.from(navmobile.children) as Array<HTMLAnchorElement>;
@@ -35,8 +35,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
         //Filling the tabs
         switch (tab) {
-            case "/settings/profile":
-                createBody_profile();
+            case "/settings/account":
+                createBody_account();
                 break;
             case "/settings":
                 createBody_settings();
@@ -52,21 +52,33 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
     //-----Creating pages for settings-----
-    function createBody_profile() {
-        
+    function createBody_account() {
+        fetch("/u/GetAccountInformation", {
+            method: 'GET',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            }
+        })
+            .then((res) => res.json())
+            .then((data) => {
+                const account = JSON.parse(data.value);
+                console.log(account);
+            });
+            //.catch((err) => console.log('Account info could not be fetched -> ') + err)
     }
     function createBody_settings() {
-        
+
     }
     function createBody_customize() {
-        
+
     }
 
 
 
     //-----MIGHT BE MOVED TO THE PROFILE INFO-----
     //document.querySelector('.s-library a[data-subtab="liked"]').classList.add('active');
-    
+
     //Library tab actions
     /*document.querySelectorAll('.s-library .lib-tabs a').forEach(function (a) {
         a.addEventListener("click", function () {

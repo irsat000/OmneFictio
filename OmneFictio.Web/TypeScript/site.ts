@@ -607,9 +607,13 @@ function fetchReplies(commentId: string, section: HTMLElement, { gotoReplyId, re
             }
         })
         .then(() => {
+            //If gotoReplyId is sent, then this means the "Go" btn on the reply is clicked,
+            //so we scroll down to it in replies modal
             if (!isNaN(gotoReplyId)) {
                 repliesModal.querySelector('.mr-reply[data-replyid="' + gotoReplyId + '"]')?.scrollIntoView();
             }
+            //If "Reply" btn is pressed in comment section, then after opening the replies modal,
+            //it creates a reply container to reply to the main comment
             else if (replyToComment === true) {
                 createAddReplyField(commentCont);
             }
