@@ -149,12 +149,14 @@ public class ReadingController : Controller
         var apiResponse = await _httpClient.GetAsync(url);
         if (apiResponse.StatusCode.ToString() != "OK")
         {
-            return new JsonResult(NotFound());
+            return new JsonResult(NotFound()); //If neither tops have any post inside them
         }
         
         string content = await apiResponse.Content.ReadAsStringAsync();
         return new JsonResult(Ok(content));
     }
+
+    
     /*
     OUTDATED. But I might use this for special occasions.
         [HttpGet("g/CheckVoteByUser")]

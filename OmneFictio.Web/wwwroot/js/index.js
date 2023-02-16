@@ -9,8 +9,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const featured_descs = document.querySelector('.featured_description');
     fetchTopPosts();
     function fetchTopPosts() {
-        const todaytopBody = document.querySelector('.todaytop_body');
-        const monthtopBody = document.querySelector('.monthtop_body');
+        const topPostsCont = document.querySelector('.topposts_group');
+        const todaytopBody = topPostsCont.querySelector('.todaytop_body');
+        const monthtopBody = topPostsCont.querySelector('.monthtop_body');
         window.createSkeletons("index-topposts");
         fetch('/g/GetTopPosts', {
             method: 'GET',
@@ -22,23 +23,22 @@ document.addEventListener("DOMContentLoaded", function () {
             .then((res) => res.json())
             .then((data) => {
             if (data.statusCode == 200) {
+                topPostsCont.classList.add('active');
                 const response = JSON.parse(data.value);
                 todaytopBody.innerHTML = "";
                 monthtopBody.innerHTML = "";
-                for (const post of response.todaysTopPosts) {
+                response.todaysTopPosts.forEach(post => {
                     todaytopBody.appendChild(window.fillPostTemplate(post, false));
-                }
-                for (const post of response.monthsTopPosts) {
+                });
+                response.monthsTopPosts.forEach(post => {
                     monthtopBody.appendChild(window.fillPostTemplate(post, false));
-                }
+                });
                 if (response.todaysTopPosts.length < 1) {
+                    topPostsCont.querySelector('.todaytop-cont').remove();
                 }
                 if (response.monthsTopPosts.length < 1) {
+                    topPostsCont.querySelector('.monthtop-cont').remove();
                 }
-            }
-            else {
-                todaytopBody.remove();
-                monthtopBody.remove();
             }
         })
             .catch(error => { console.log("Fetch failed -> " + error); });

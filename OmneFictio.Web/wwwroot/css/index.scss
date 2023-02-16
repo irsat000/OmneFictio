@@ -71,6 +71,7 @@ nav.nav_index {
     .about_you_header {
         display: none;
     }
+
     .about_you_links {
         display: none;
     }
@@ -313,9 +314,12 @@ nav.nav_index {
     }
 }
 
+.topposts_group.active {
+    display: flex;
+}
 
 .topposts_group {
-    display: flex;
+    display: none; //flex
     flex-direction: column;
     gap: 14px 3%;
     margin-top: 20px;
@@ -398,6 +402,7 @@ nav.nav_index {
         .about_you_header {
             display: block;
         }
+
         .about_you_links {
             display: flex;
         }
@@ -430,14 +435,16 @@ nav.nav_index {
 
     .topposts_group {
         flex-direction: row;
-        justify-content: space-between;
-        /*
+        justify-content: center;
+
         .postlist_cont {
-            .postlist {
+            flex-grow: 1;
+            max-width: 70%;
+            /*.postlist {
                 .post {
                 }
-            }
-        }*/
+            }*/
+        }
     }
 }
 

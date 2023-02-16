@@ -273,8 +273,12 @@ nav.nav_index .community_links {
   padding: 0 4px;
 }
 
-.topposts_group {
+.topposts_group.active {
   display: flex;
+}
+
+.topposts_group {
+  display: none;
   flex-direction: column;
   gap: 14px 3%;
   margin-top: 20px;
@@ -358,12 +362,13 @@ nav.nav_index .community_links {
   }
   .topposts_group {
     flex-direction: row;
-    justify-content: space-between;
-    /*
-    .postlist_cont {
-        .postlist {
-            .post {
-            }
+    justify-content: center;
+  }
+  .topposts_group .postlist_cont {
+    flex-grow: 1;
+    max-width: 70%;
+    /*.postlist {
+        .post {
         }
     }*/
   }

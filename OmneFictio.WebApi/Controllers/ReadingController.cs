@@ -215,7 +215,7 @@ public class ReadingController : ControllerBase
                 .ToListAsync();
         }
         //var todaysTopPosts = await GetTopPosts(-1, 0); //I don't want todays top posts to be empty every god damn day while developing it
-        var todaysTopPosts = await GetTopPosts(-30, -1);
+        var todaysTopPosts = await GetTopPosts(-1, 0); //0 here means now
         var monthsTopPosts = await GetTopPosts(-30, -1); //-1 here means excluding today
 
         todaysTopPosts = await _helperServices.GetPosts_Details(todaysTopPosts, userId);

@@ -1,39 +1,37 @@
-
-
-
-
-
-
-
-@keyframes pskel-loading-div{
-    0%{
+@keyframes pskel-loading-div {
+    0% {
         background-color: var(--postskeleton-itemcolor-start);
     }
-    100%{
+
+    100% {
         background-color: var(--postskeleton-itemcolor-end);
     }
 }
-@keyframes pskel-loading-i{
-    0%{
+
+@keyframes pskel-loading-i {
+    0% {
         color: var(--postskeleton-itemcolor-start);
     }
-    100%{
+
+    100% {
         color: var(--postskeleton-itemcolor-end);
     }
 }
+
 .post-skel {
     display: flex;
     flex-direction: column;
     gap: 16px;
     padding: 10px;
 
-    div.psk-item{
+    div.psk-item {
         height: 16px;
         border-radius: 10px;
         opacity: 0.5;
         animation: pskel-loading-div 1s linear infinite alternate;
     }
-    i.psk-item{
+
+    i.psk-item {
         opacity: 0.7;
         animation: pskel-loading-i 1s linear infinite alternate;
     }
@@ -88,7 +86,6 @@
 
 
 
-
 .post {
     width: 100%;
     color: var(--text-color1);
@@ -99,6 +96,20 @@
 
     &:last-child {
         margin-bottom: unset;
+    }
+}
+
+.post.nsfw_post {
+    .p-body .nsfw-warning-cont {
+        display: flex;
+    }
+
+    .p-cover {
+        filter: blur(6px);
+    }
+
+    .p-desc {
+        filter: blur(3px);
     }
 }
 
@@ -275,6 +286,28 @@
         display: flex;
         flex-direction: row;
         align-items: flex-start;
+        position: relative;
+
+        .nsfw-warning-cont {
+            display: none;
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            cursor: pointer;
+
+            span{
+                font-size: 1.4rem;
+                font-family: 'Itim', cursive;
+                color: var(--text-color1);
+                opacity: 0.9;
+                filter: blur(1px);
+            }
+        }
 
         .p-cover {
             flex-shrink: 0;
@@ -287,7 +320,7 @@
                 border-radius: 4px;
             }
 
-            .p-showCoverBtn{
+            .p-showCoverBtn {
                 display: none;
             }
         }
@@ -368,19 +401,22 @@
     .post {
         border-radius: 4px;
 
-        .p-showCoverBtn{
+        .p-showCoverBtn {
             padding: 2px 5px 0;
             font-family: 'Josefin Sans', 'Gudea';
             cursor: pointer;
             color: var(--text-color1);
             text-shadow: 0px 0px 6px var(--text-boxshadow1);
-            &:hover{
+
+            &:hover {
                 border-bottom: 1px solid var(--text-color1);
             }
         }
-        .p-showCoverBtn.active{
+
+        .p-showCoverBtn.active {
             display: inline-block !important;
-            & + img{
+
+            &+img {
                 display: none;
             }
         }

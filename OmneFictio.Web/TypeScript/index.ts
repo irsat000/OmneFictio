@@ -11,8 +11,9 @@ document.addEventListener("DOMContentLoaded", function () {
 
     fetchTopPosts();
     function fetchTopPosts() {
-        const todaytopBody = document.querySelector('.todaytop_body') as HTMLDivElement;
-        const monthtopBody = document.querySelector('.monthtop_body') as HTMLDivElement;
+        const topPostsCont = document.querySelector('.topposts_group') as HTMLDivElement;
+        const todaytopBody = topPostsCont.querySelector('.todaytop_body') as HTMLDivElement;
+        const monthtopBody = topPostsCont.querySelector('.monthtop_body') as HTMLDivElement;
 
         window.createSkeletons("index-topposts");
         fetch('/g/GetTopPosts', {
@@ -25,32 +26,31 @@ document.addEventListener("DOMContentLoaded", function () {
             .then((res) => res.json())
             .then((data) => {
                 if (data.statusCode == 200) {
+                    topPostsCont.classList.add('active');
                     const response = JSON.parse(data.value) as ofIndex_GetTopPosts;
                     todaytopBody.innerHTML = "";
                     monthtopBody.innerHTML = "";
-                    for (const post of response.todaysTopPosts) {
+
+                    response.todaysTopPosts.forEach(post => {
                         todaytopBody.appendChild(window.fillPostTemplate(post, false));
-                    }
-                    for (const post of response.monthsTopPosts) {
+                    });
+                    response.monthsTopPosts.forEach(post => {
                         monthtopBody.appendChild(window.fillPostTemplate(post, false));
-                    }
+                    });
+                    
                     if (response.todaysTopPosts.length < 1) {
-                        //Letting the user know there was no posts
+                        topPostsCont.querySelector('.todaytop-cont')!.remove();
                     }
                     if (response.monthsTopPosts.length < 1) {
-                        //Letting the user know there was no posts
+                        topPostsCont.querySelector('.monthtop-cont')!.remove();
                     }
-                }
-                else {
-                    todaytopBody.remove();
-                    monthtopBody.remove();
                 }
             })
             .catch(error => { console.log("Fetch failed -> " + error) });
     }
 
     //Auto swipe interval for featured and stop when on hover
-    if(window.screen.width >= 992){ //If screen is big, then use auto swipe feature
+    if (window.screen.width >= 992) { //If screen is big, then use auto swipe feature
         let featuredInterval_isSet = true;
         let autoSwipeFeatured = setInterval(() => {
             swipeFeatured("next");
