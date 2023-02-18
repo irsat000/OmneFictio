@@ -13,6 +13,44 @@
     string? username = User.FindFirst("unique_name")?.Value;
     string? userPicture = User.FindFirst("actort")?.Value;
 }
+<template id="accountSettings_instance">
+    <div class="s-account_settings dflex">
+        <div class="ps-row">
+            <div class="ps-cell">
+                <span>Username</span>
+                <input type="text" placeholder="Username" name="as-username">
+            </div>
+            <div class="ps-cell">
+                <span>Display Name</span>
+                <input type="text" placeholder="Display Name" name="as-displayname">
+            </div>
+        </div>
+        <div class="ps-row">
+            <div class="ps-cell">
+                <span class="email_title">E-Mail<a href="#" class="email_confirm">(Confirm)</a></span>
+                <input type="text" placeholder="E-Mail" name="as-email">
+            </div>
+            <div class="ps-cell">
+            </div>
+        </div>
+        <div class="ps-row">
+            <div class="ps-cell">
+                <span>Bio</span>
+                <textarea placeholder="Bio" name="as-bio"></textarea>
+            </div>
+            <div class="ps-cell">
+                <span>Profile picture</span>
+                <div class="ps-ppic_cont">
+
+                </div>
+            </div>
+        </div>
+        <div class="ps-row psr-actions">
+            <button>Revert</button>
+            <button>Save</button>
+        </div>
+    </div>
+</template>
 
 <nav>
     <div class="settings-goback">
@@ -32,21 +70,21 @@
     </div>
 </nav>
 <div class="settings_body">
-    <div class="s-account_settings">
+    <div class="s-account_skel pre_load">
         <div class="ps-row">
             <div class="ps-cell">
-                <span>Display Name</span>
-                <input type="text" placeholder="Display name">
+                <span>Username</span>
+                <input type="text" placeholder="Loading...">
             </div>
             <div class="ps-cell">
-                <span>Username</span>
-                <input type="text" placeholder="Username">
+                <span>Display Name</span>
+                <input type="text" placeholder="Loading...">
             </div>
         </div>
         <div class="ps-row">
             <div class="ps-cell">
                 <span>E-Mail</span>
-                <input type="text" placeholder="E-Mail">
+                <input type="text" placeholder="Loading...">
             </div>
             <div class="ps-cell">
             </div>
@@ -54,7 +92,7 @@
         <div class="ps-row">
             <div class="ps-cell">
                 <span>Bio</span>
-                <textarea placeholder="Bio"></textarea>
+                <textarea placeholder="Loading..."></textarea>
             </div>
             <div class="ps-cell">
                 <span>Profile picture</span>
@@ -63,6 +101,12 @@
                 </div>
             </div>
         </div>
+        <div class="ps-row psr-actions">
+            <button>Revert</button>
+            <button>Save</button>
+        </div>
+    </div>
+
         <!--
         <div class="ps-row">
             <h2 class="ps-preferences">Preferences</h2>
@@ -80,9 +124,12 @@
             </div>
         </div>
         -->
-        <div class="ps-row psr-actions">
-            <button>Revert</button>
-            <button>Save</button>
-        </div>
+
+    <div class="s-settings_skel pre_load">
+        <h3>This is settings</h3>
+    </div>
+
+    <div class="s-customize_skel pre_load">
+        <h3>This is customize</h3>
     </div>
 </div>

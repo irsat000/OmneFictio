@@ -105,8 +105,18 @@ nav {
     border-bottom: 1px solid var(--background-color2);
 }
 
-.settings_body .s-account_settings {
-    display: flex; //flex
+.s-account_skel.pre_load {
+
+    input,
+    textarea {
+        user-select: none;
+        pointer-events: none;
+    }
+}
+
+.s-account_settings,
+.s-account_skel {
+    display: none; //flex
     flex-direction: column;
     width: 100%;
     padding: 12px;
@@ -120,6 +130,20 @@ nav {
             display: flex;
             flex-direction: column;
             gap: 6px;
+
+            .email_title {
+                display: flex;
+                align-items: center;
+                gap: 10px;
+
+                .email_confirm {
+                    font-size: 0.8rem;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
 
             >span,
             label {
@@ -207,71 +231,23 @@ nav {
     }
 }
 
-.settings_body .s-library {
+.s-settings,
+.s-settings_skel {
     display: none;
-    flex-direction: column;
-    width: 100%;
-    padding: 12px 0 20px;
-
-    .lib-header {
-        display: flex;
-        color: var(--text-color1);
-
-        .lib-tabs {
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            border-bottom: 1px solid var(--background-color2);
-            padding-bottom: 8px;
-
-            a {
-                font-size: 1.1rem;
-                font-family: 'Josefin Sans', sans-serif;
-                cursor: pointer;
-                border-radius: 25px;
-                padding: 8px 5% 3px;
-                transition: all 0.1s ease;
-            }
-
-            a.active {
-                background: var(--settings-activetab);
-                color: #fff;
-            }
-        }
-
-        /*.lib-subtabs {
-            display: none;
-            justify-content: space-evenly;
-            padding: 6px 10% 14px;
-
-            a {
-                font-size: 1rem;
-                font-family: 'Itim', cursive;
-                cursor: pointer;
-                padding: 4px 10px;
-            }
-
-            a.active {
-                border-bottom: 1px solid var(--text-color1);
-            }
-        }*/
-    }
-
-    .lib-body {
-        display: flex;
-        flex-direction: column;
-        > div{
-            width: 49.5%;
-        }
-    }
 }
 
+.s-customize,
+.s-customize_skel {
+    display: none;
+}
 
 
 
 // Small devices (landscape phones, 576px and up)
 @media (min-width: 576px) {
-    .s-account_settings {
+
+    .s-account_settings,
+    .s-account_skel {
         padding: 16px !important;
 
         .ps-row {
@@ -281,16 +257,6 @@ nav {
                 width: 50%;
             }
         }
-    }
-
-    .s-library {
-        .lib-tabs a {
-            font-size: 1.3rem !important;
-        }
-
-        /*.lib-subtabs a {
-            font-size: 1.2rem !important;
-        }*/
     }
 }
 
@@ -314,25 +280,14 @@ nav {
             }
         }
     }
-    .settings_body{
-        border: 1px solid var(--background-color2);
-    }
 
-    .settings_body .s-library {
-        padding-top: 18px;
-        .lib-body{
-            padding: 0 12px;
-        }
+    .settings_body {
+        border: 1px solid var(--background-color2);
     }
 }
 
 // Large devices (desktops, 992px and up)
-@media (min-width: 992px) {
-    .s-library .lib-body.lib-masonry{
-        flex-direction: row !important;
-        gap: 1%;
-    }
-}
+@media (min-width: 992px) {}
 
 // X-Large devices (large desktops, 1200px and up)
 @media (min-width: 1200px) {}
@@ -344,7 +299,11 @@ nav {
 //extra
 
 @media (max-width: 279px) {
-    .s-account_settings .psr-actions button {
-        padding: 8px 3% !important;
+
+    .s-account_settings,
+    .s-account_skel {
+        .psr-actions button {
+            padding: 8px 3% !important;
+        }
     }
 }

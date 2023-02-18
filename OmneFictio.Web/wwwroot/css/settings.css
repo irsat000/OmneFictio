@@ -88,30 +88,60 @@ nav .settings-link_cont .desktop_nav li a.active {
   border-bottom: 1px solid var(--background-color2);
 }
 
-.settings_body .s-account_settings {
-  display: flex;
+.s-account_skel.pre_load input,
+.s-account_skel.pre_load textarea {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  pointer-events: none;
+}
+
+.s-account_settings,
+.s-account_skel {
+  display: none;
   flex-direction: column;
   width: 100%;
   padding: 12px;
 }
-.settings_body .s-account_settings .ps-row {
+.s-account_settings .ps-row,
+.s-account_skel .ps-row {
   display: flex;
   flex-direction: column;
   gap: 8px 30px;
 }
-.settings_body .s-account_settings .ps-row .ps-cell {
+.s-account_settings .ps-row .ps-cell,
+.s-account_skel .ps-row .ps-cell {
   display: flex;
   flex-direction: column;
   gap: 6px;
 }
-.settings_body .s-account_settings .ps-row .ps-cell > span,
-.settings_body .s-account_settings .ps-row .ps-cell label {
+.s-account_settings .ps-row .ps-cell .email_title,
+.s-account_skel .ps-row .ps-cell .email_title {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.s-account_settings .ps-row .ps-cell .email_title .email_confirm,
+.s-account_skel .ps-row .ps-cell .email_title .email_confirm {
+  font-size: 0.8rem;
+}
+.s-account_settings .ps-row .ps-cell .email_title .email_confirm:hover,
+.s-account_skel .ps-row .ps-cell .email_title .email_confirm:hover {
+  text-decoration: underline;
+}
+.s-account_settings .ps-row .ps-cell > span,
+.s-account_settings .ps-row .ps-cell label,
+.s-account_skel .ps-row .ps-cell > span,
+.s-account_skel .ps-row .ps-cell label {
   font-size: 1.2rem;
   font-family: "Gudea";
 }
-.settings_body .s-account_settings .ps-row .ps-cell > input,
-.settings_body .s-account_settings .ps-row .ps-cell textarea,
-.settings_body .s-account_settings .ps-row .ps-cell select {
+.s-account_settings .ps-row .ps-cell > input,
+.s-account_settings .ps-row .ps-cell textarea,
+.s-account_settings .ps-row .ps-cell select,
+.s-account_skel .ps-row .ps-cell > input,
+.s-account_skel .ps-row .ps-cell textarea,
+.s-account_skel .ps-row .ps-cell select {
   flex-grow: 1;
   border: none;
   outline: none;
@@ -123,34 +153,40 @@ nav .settings-link_cont .desktop_nav li a.active {
   margin-bottom: 10px;
   font-family: "Itim", cursive;
 }
-.settings_body .s-account_settings .ps-ppic_cont {
+.s-account_settings .ps-ppic_cont,
+.s-account_skel .ps-ppic_cont {
   width: 120px;
   height: 120px;
   border-radius: 8px;
   background-color: var(--background-color2);
   margin-bottom: 10px;
 }
-.settings_body .s-account_settings .ps-preferences {
+.s-account_settings .ps-preferences,
+.s-account_skel .ps-preferences {
   margin: 10px 0;
   padding-left: 16px;
   font-family: "Josefin Sans", sans-serif;
 }
-.settings_body .s-account_settings .psr-preferences label {
+.s-account_settings .psr-preferences label,
+.s-account_skel .psr-preferences label {
   display: flex;
   align-items: center;
 }
-.settings_body .s-account_settings .psr-preferences label input[type=checkbox] {
+.s-account_settings .psr-preferences label input[type=checkbox],
+.s-account_skel .psr-preferences label input[type=checkbox] {
   height: 16px;
   width: 16px;
   margin-left: 10px;
 }
-.settings_body .s-account_settings .psr-actions {
+.s-account_settings .psr-actions,
+.s-account_skel .psr-actions {
   flex-direction: row;
   justify-content: center;
   margin-top: 36px;
   gap: 20%;
 }
-.settings_body .s-account_settings .psr-actions > button {
+.s-account_settings .psr-actions > button,
+.s-account_skel .psr-actions > button {
   border: none;
   outline: none;
   border-radius: 6px;
@@ -160,89 +196,45 @@ nav .settings-link_cont .desktop_nav li a.active {
   font-family: "Gudea", cursive;
   font-size: 1.2rem;
 }
-.settings_body .s-account_settings .psr-actions > button:first-child {
+.s-account_settings .psr-actions > button:first-child,
+.s-account_skel .psr-actions > button:first-child {
   background-color: var(--button-red);
 }
-.settings_body .s-account_settings .psr-actions > button:first-child:hover {
+.s-account_settings .psr-actions > button:first-child:hover,
+.s-account_skel .psr-actions > button:first-child:hover {
   background-color: var(--button-red-hover);
 }
-.settings_body .s-account_settings .psr-actions > button:last-child {
+.s-account_settings .psr-actions > button:last-child,
+.s-account_skel .psr-actions > button:last-child {
   background-color: var(--button-green);
 }
-.settings_body .s-account_settings .psr-actions > button:last-child:hover {
+.s-account_settings .psr-actions > button:last-child:hover,
+.s-account_skel .psr-actions > button:last-child:hover {
   background-color: var(--button-green-hover);
 }
 
-.settings_body .s-library {
+.s-settings,
+.s-settings_skel {
   display: none;
-  flex-direction: column;
-  width: 100%;
-  padding: 12px 0 20px;
 }
-.settings_body .s-library .lib-header {
-  display: flex;
-  color: var(--text-color1);
-  /*.lib-subtabs {
-      display: none;
-      justify-content: space-evenly;
-      padding: 6px 10% 14px;
 
-      a {
-          font-size: 1rem;
-          font-family: 'Itim', cursive;
-          cursor: pointer;
-          padding: 4px 10px;
-      }
-
-      a.active {
-          border-bottom: 1px solid var(--text-color1);
-      }
-  }*/
-}
-.settings_body .s-library .lib-header .lib-tabs {
-  display: flex;
-  justify-content: space-around;
-  align-items: center;
-  border-bottom: 1px solid var(--background-color2);
-  padding-bottom: 8px;
-}
-.settings_body .s-library .lib-header .lib-tabs a {
-  font-size: 1.1rem;
-  font-family: "Josefin Sans", sans-serif;
-  cursor: pointer;
-  border-radius: 25px;
-  padding: 8px 5% 3px;
-  transition: all 0.1s ease;
-}
-.settings_body .s-library .lib-header .lib-tabs a.active {
-  background: var(--settings-activetab);
-  color: #fff;
-}
-.settings_body .s-library .lib-body {
-  display: flex;
-  flex-direction: column;
-}
-.settings_body .s-library .lib-body > div {
-  width: 49.5%;
+.s-customize,
+.s-customize_skel {
+  display: none;
 }
 
 @media (min-width: 576px) {
-  .s-account_settings {
+  .s-account_settings,
+  .s-account_skel {
     padding: 16px !important;
   }
-  .s-account_settings .ps-row {
+  .s-account_settings .ps-row,
+  .s-account_skel .ps-row {
     flex-direction: row !important;
   }
-  .s-account_settings .ps-row .ps-cell {
+  .s-account_settings .ps-row .ps-cell,
+  .s-account_skel .ps-row .ps-cell {
     width: 50%;
-  }
-  .s-library {
-    /*.lib-subtabs a {
-        font-size: 1.2rem !important;
-    }*/
-  }
-  .s-library .lib-tabs a {
-    font-size: 1.3rem !important;
   }
 }
 @media (min-width: 768px) {
@@ -262,21 +254,10 @@ nav .settings-link_cont .desktop_nav li a.active {
   .settings_body {
     border: 1px solid var(--background-color2);
   }
-  .settings_body .s-library {
-    padding-top: 18px;
-  }
-  .settings_body .s-library .lib-body {
-    padding: 0 12px;
-  }
-}
-@media (min-width: 992px) {
-  .s-library .lib-body.lib-masonry {
-    flex-direction: row !important;
-    gap: 1%;
-  }
 }
 @media (max-width: 279px) {
-  .s-account_settings .psr-actions button {
+  .s-account_settings .psr-actions button,
+  .s-account_skel .psr-actions button {
     padding: 8px 3% !important;
   }
 }/*# sourceMappingURL=settings.css.map */
