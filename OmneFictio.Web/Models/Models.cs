@@ -1,7 +1,7 @@
 
 namespace OmneFictio.Web.Models;
 
-public class AccountRead2
+public class AccountRead
 {
     public string username { get; set; } = null!;
     public string pw { get; set; } = null!;
@@ -9,7 +9,7 @@ public class AccountRead2
 }
 //Authentication
 
-public class AccountWrite1
+public class AccountWrite
 {
     public string username { get; set; } = null!;
     public string pw { get; set; } = null!;
@@ -20,6 +20,14 @@ public class AccountWrite1
 //Getting payload from registration form
 //sending payload to api
 
+public class AccountUpdate
+{
+    public int? id { get; set; }
+    public string? displayName { get; set; }
+    public string? selfDesc { get; set; }
+    public string? profilePic { get; set; }
+}
+//Account settings update
 
 public partial class SavedPostWrite
 {

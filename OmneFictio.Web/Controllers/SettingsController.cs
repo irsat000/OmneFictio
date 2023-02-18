@@ -49,4 +49,22 @@ public class SettingsController : Controller
         string content = await apiResponse.Content.ReadAsStringAsync();
         return new JsonResult(Ok(content));
     }
+
+    [HttpGet("u/UpdateAccountInformation")]
+    public async Task<JsonResult> UpdateAccountInformation(AccountUpdate request)
+    {
+        if (AccountId == null)
+        {
+            return new JsonResult(Unauthorized());
+        }
+        request.id = AccountId;
+
+        var apiResponse = await _httpClient.PostAsJsonAsync("Settings/UpdateAccountInformation/", request);
+        if (apiResponse.StatusCode.ToString() != "OK")
+        {
+            return new JsonResult(BadRequest());
+        }
+        return new JsonResult(Ok());
+    }
+
 }

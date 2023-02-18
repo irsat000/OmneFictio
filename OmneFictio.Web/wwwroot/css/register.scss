@@ -19,9 +19,9 @@
     width: 100%;
     color: var(--text-color1);
     font-family: 'Itim', cursive;
-    margin-top: 20px;
-    border-radius: 10px;
-    background: var(--register-form-color);
+    background-color: var(--background-color1);
+    border-bottom: 1px solid var(--background-color2);
+
     .register-main{
         display: flex;
         flex-direction: column;
@@ -43,12 +43,12 @@
             .rm-textbox{
                 width: 100%;
                 margin-bottom: 14px;
-                background-color: var(--register-input-color);
-                color: var(--text-color1);
                 padding: 6px 10px;
                 border-radius: 4px;
-                border: none;
                 outline: none;
+                color: var(--text-color1);
+                background-color: var(--input-bg1);
+                border: 1px solid var(--input-border1);
             }
             .rm-submit{
                 width: 50%;
@@ -113,12 +113,12 @@
                 }
             }
             > select{
-                background-color: var(--register-input-color);
-                color: var(--text-color1);
                 border-radius: 4px;
-                border: none;
                 outline: none;
                 padding: 6px;
+                color: var(--text-color1);
+                background-color: var(--input-bg1);
+                border: 1px solid var(--input-border1);
             }
         }
     }
@@ -136,6 +136,10 @@
     .register{
         flex-direction: row;
         padding: 20px 0;
+        border-radius: 4px;
+        border: 1px solid var(--background-color2);
+        margin-top: 20px;
+
         .register-main {
             .rm-registerwith {
                 padding-top: 14px;

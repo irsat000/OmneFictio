@@ -136,7 +136,7 @@ nav {
                 align-items: center;
                 gap: 10px;
 
-                .email_confirm {
+                .email_confirm, .email_change {
                     font-size: 0.8rem;
 
                     &:hover {
@@ -166,15 +166,42 @@ nav {
                 margin-bottom: 10px;
                 font-family: 'Itim', cursive;
             }
+
+            >input[name="as-username"], >input[name="as-email"]{
+                user-select: none;
+                pointer-events: none;
+                color: var(--text-color2);
+            }
         }
     }
 
     .ps-ppic_cont {
         width: 120px;
-        height: 120px;
-        border-radius: 8px;
-        background-color: var(--background-color2);
         margin-bottom: 10px; //to align with textarea
+
+        img {
+            width: 120px;
+            height: 120px;
+            border-radius: 8px;
+        }
+
+        .change_pp-btn {
+            margin-top: 10px;
+            width: 100%;
+            padding: 4px;
+            background-color: var(--input-bg1);
+            color: var(--text-color1);
+            border: 1px solid var(--background-color2);
+            outline: none;
+            border-radius: 4px;
+            text-align: center;
+            transition: background-color 0.1s ease;
+            font-family: 'Gudea', cursive;
+
+            &:hover {
+                background-color: var(--input-bg-hover1);
+            }
+        }
     }
 
     .ps-preferences {

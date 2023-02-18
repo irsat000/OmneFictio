@@ -13,6 +13,7 @@
   --text-boxshadow1: #ffffff50;
   --text-boxshadow2: #ffffff70;
   --input-bg1: #313131;
+  --input-bg-hover1: #3e3e3e;
   --input-border1: #5e5e5e;
   --modal-background: #313131;
   --modal-line1: #3b3b3b;
@@ -91,6 +92,7 @@
   --text-boxshadow1: #00000050;
   --text-boxshadow2: #00000070;
   --input-bg1: #f7f7f7;
+  --input-bg-hover1: #ffffff;
   --input-border1: #5e5e5e;
   --modal-background: #dcdcdc;
   --modal-line1: #b5b5b5;

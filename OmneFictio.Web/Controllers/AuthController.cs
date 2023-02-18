@@ -32,7 +32,7 @@ public class AuthController : Controller
 
     //fetch api manual login
     [HttpPost]
-    public async Task<JsonResult> UserLogin([FromBody] AccountRead2 account)
+    public async Task<JsonResult> UserLogin([FromBody] AccountRead account)
     {
         bool rememberme = true;
         bool.TryParse(account.rememberMe, out rememberme);
@@ -50,7 +50,7 @@ public class AuthController : Controller
     }
 
     [HttpPost]
-    public async Task<JsonResult> UserRegistration([FromBody] AccountWrite1 account)
+    public async Task<JsonResult> UserRegistration([FromBody] AccountWrite account)
     {
         account.allowAdultContent = account.allowAdultContent?.ToString() == "true"
             ? true : false;

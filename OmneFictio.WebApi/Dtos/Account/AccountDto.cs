@@ -75,3 +75,12 @@ public class AccountDto_Settings
     public string? selfDesc { get; set; }
 }
 //For account settings
+
+public partial class AccountDtoWrite_1
+{
+    public string username { get; set; } = null!;
+    public string pw { get; set; } = null!;
+    public string email { get; set; } = null!;
+    public object? allowAdultContent { get; set; } //bool
+    public object? prefLanguageId { get; set; } //int
+}

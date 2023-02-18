@@ -67,13 +67,18 @@ document.addEventListener("DOMContentLoaded", function () {
                 const email_input = clone.querySelector('input[name="as-email"]');
                 email_input.value = account.email;
                 email_input.setAttribute('data-revert', account.email);
-                if (!account.emailValid) {
+                if (account.emailValid) {
                     clone.querySelector('.email_confirm').remove();
                 }
                 if (account.selfDesc !== null) {
                     const bio_input = clone.querySelector('textarea[name="as-bio"]');
                     bio_input.value = account.selfDesc;
                     bio_input.setAttribute('data-revert', account.selfDesc);
+                }
+                if (account.profilePic !== null) {
+                    const profilePic_img = clone.querySelector('.as-profile_picture');
+                    profilePic_img.src = '/images/users/' + account.profilePic;
+                    profilePic_img.setAttribute('data-revert', '/images/users/' + account.profilePic);
                 }
                 settingsbody.querySelectorAll('.pre_load').forEach(body => body.classList.remove('dflex'));
                 settingsbody.appendChild(clone);

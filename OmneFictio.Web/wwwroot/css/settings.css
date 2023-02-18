@@ -121,12 +121,14 @@ nav .settings-link_cont .desktop_nav li a.active {
   align-items: center;
   gap: 10px;
 }
-.s-account_settings .ps-row .ps-cell .email_title .email_confirm,
-.s-account_skel .ps-row .ps-cell .email_title .email_confirm {
+.s-account_settings .ps-row .ps-cell .email_title .email_confirm, .s-account_settings .ps-row .ps-cell .email_title .email_change,
+.s-account_skel .ps-row .ps-cell .email_title .email_confirm,
+.s-account_skel .ps-row .ps-cell .email_title .email_change {
   font-size: 0.8rem;
 }
-.s-account_settings .ps-row .ps-cell .email_title .email_confirm:hover,
-.s-account_skel .ps-row .ps-cell .email_title .email_confirm:hover {
+.s-account_settings .ps-row .ps-cell .email_title .email_confirm:hover, .s-account_settings .ps-row .ps-cell .email_title .email_change:hover,
+.s-account_skel .ps-row .ps-cell .email_title .email_confirm:hover,
+.s-account_skel .ps-row .ps-cell .email_title .email_change:hover {
   text-decoration: underline;
 }
 .s-account_settings .ps-row .ps-cell > span,
@@ -153,13 +155,43 @@ nav .settings-link_cont .desktop_nav li a.active {
   margin-bottom: 10px;
   font-family: "Itim", cursive;
 }
+.s-account_settings .ps-row .ps-cell > input[name=as-username], .s-account_settings .ps-row .ps-cell > input[name=as-email],
+.s-account_skel .ps-row .ps-cell > input[name=as-username],
+.s-account_skel .ps-row .ps-cell > input[name=as-email] {
+  -webkit-user-select: none;
+     -moz-user-select: none;
+          user-select: none;
+  pointer-events: none;
+  color: var(--text-color2);
+}
 .s-account_settings .ps-ppic_cont,
 .s-account_skel .ps-ppic_cont {
   width: 120px;
+  margin-bottom: 10px;
+}
+.s-account_settings .ps-ppic_cont img,
+.s-account_skel .ps-ppic_cont img {
+  width: 120px;
   height: 120px;
   border-radius: 8px;
-  background-color: var(--background-color2);
-  margin-bottom: 10px;
+}
+.s-account_settings .ps-ppic_cont .change_pp-btn,
+.s-account_skel .ps-ppic_cont .change_pp-btn {
+  margin-top: 10px;
+  width: 100%;
+  padding: 4px;
+  background-color: var(--input-bg1);
+  color: var(--text-color1);
+  border: 1px solid var(--background-color2);
+  outline: none;
+  border-radius: 4px;
+  text-align: center;
+  transition: background-color 0.1s ease;
+  font-family: "Gudea", cursive;
+}
+.s-account_settings .ps-ppic_cont .change_pp-btn:hover,
+.s-account_skel .ps-ppic_cont .change_pp-btn:hover {
+  background-color: var(--input-bg-hover1);
 }
 .s-account_settings .ps-preferences,
 .s-account_skel .ps-preferences {
