@@ -99,7 +99,7 @@ nav {
 
 .settings_body {
     width: 100%;
-    min-height: 600px;
+    min-height: 400px;
     border-radius: 4px;
     background-color: var(--background-color1);
     border-bottom: 1px solid var(--background-color2);
@@ -111,6 +111,11 @@ nav {
     textarea {
         user-select: none;
         pointer-events: none;
+    }
+
+    .ps-ppic_cont{
+        height: 120px;
+        background-color: var(--input-bg1);
     }
 }
 
@@ -164,7 +169,7 @@ nav {
                 border: 1px solid var(--background-color2);
                 color: var(--text-color1);
                 margin-bottom: 10px;
-                font-family: 'Itim', cursive;
+                font-family: "Times New Roman", cursive;
             }
 
             >input[name="as-username"], >input[name="as-email"]{

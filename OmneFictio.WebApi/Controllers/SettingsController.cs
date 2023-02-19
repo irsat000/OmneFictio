@@ -42,7 +42,7 @@ public class SettingsController : ControllerBase
         _helperServices = helperServices;
     }
 
-    [HttpGet("AccountInformation/{accountId}")]
+    [HttpGet("GetAccountInformation/{accountId}")]
     public async Task<IActionResult> AccountInformation(int accountId)
     {
         AccountDto_Settings? account = await _mapper
@@ -55,5 +55,33 @@ public class SettingsController : ControllerBase
         }
 
         return Ok(new { account });
+    }
+
+    [HttpPost("UpdateAccountInformation")]
+    public async Task<IActionResult> UpdateAccountInformation(Account_Update_Settings request)
+    {
+        Account? account = await _db.Accounts.FirstOrDefaultAsync(a => a.id == request.id);
+        if (account == null)
+        {
+            return NotFound();
+            //logging
+        }
+        
+        if (request.displayName != null && request.displayName != account.displayName)
+        {
+            account.displayName = request.displayName;
+        }
+        if (request.selfDesc != null && request.selfDesc != account.selfDesc)
+        {
+            account.selfDesc = request.selfDesc;
+        }
+        if (request.profilePic != null)
+        {
+            account.profilePic = request.profilePic; // If profile pic is downloaded and uploaded to my storage
+        }
+
+        // _db.Accounts.Update(account);
+        await _db.SaveChangesAsync();
+        return Ok();
     }
 }

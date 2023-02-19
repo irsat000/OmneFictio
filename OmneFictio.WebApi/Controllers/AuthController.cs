@@ -63,7 +63,7 @@ public class AuthController : ControllerBase
     }
 
     [HttpPost("Register")]
-    public async Task<IActionResult> Register([FromBody] AccountDtoWrite_1 request)
+    public async Task<IActionResult> Register([FromBody] Account_Create request)
     {
         var securityToken = Encoding.ASCII.GetBytes(_configuration.GetSection("Token").Value!);
         //Input validation

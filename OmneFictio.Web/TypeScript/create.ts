@@ -238,7 +238,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 }
             }
 
-            await fetch('Action/CreatePost', {
+            await fetch('/Action/CreatePost', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

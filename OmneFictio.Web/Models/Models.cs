@@ -36,7 +36,7 @@ public partial class SavedPostWrite
 }
 //Saving post
 
-public class VoteWrite1
+public class VoteWrite
 {
     public int? accountId { get; set; }
     public bool body { get; set; }
@@ -46,7 +46,7 @@ public class VoteWrite1
 //Voting
 
 
-public class PostWrite1
+public class PostWrite
 {
     public string title { get; set; } = null!;
     public string postDescription { get; set; } = null!;

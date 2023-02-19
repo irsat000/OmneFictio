@@ -82,7 +82,7 @@ nav .settings-link_cont .desktop_nav li a.active {
 
 .settings_body {
   width: 100%;
-  min-height: 600px;
+  min-height: 400px;
   border-radius: 4px;
   background-color: var(--background-color1);
   border-bottom: 1px solid var(--background-color2);
@@ -94,6 +94,10 @@ nav .settings-link_cont .desktop_nav li a.active {
      -moz-user-select: none;
           user-select: none;
   pointer-events: none;
+}
+.s-account_skel.pre_load .ps-ppic_cont {
+  height: 120px;
+  background-color: var(--input-bg1);
 }
 
 .s-account_settings,
@@ -153,7 +157,7 @@ nav .settings-link_cont .desktop_nav li a.active {
   border: 1px solid var(--background-color2);
   color: var(--text-color1);
   margin-bottom: 10px;
-  font-family: "Itim", cursive;
+  font-family: "Times New Roman", cursive;
 }
 .s-account_settings .ps-row .ps-cell > input[name=as-username], .s-account_settings .ps-row .ps-cell > input[name=as-email],
 .s-account_skel .ps-row .ps-cell > input[name=as-username],

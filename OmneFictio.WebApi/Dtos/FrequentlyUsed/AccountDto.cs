@@ -1,6 +1,12 @@
 
 namespace OmneFictio.WebApi.Dtos;
 
+
+
+//GET
+
+
+
 public partial class AccountDtoRead_1
 {
     public int id { get; set; }
@@ -76,7 +82,19 @@ public class AccountDto_Settings
 }
 //For account settings
 
-public partial class AccountDtoWrite_1
+
+
+//WRITE
+
+public class Account_Update_Settings
+{
+    public int id { get; set; }
+    public string? displayName { get; set; }
+    public string? selfDesc { get; set; }
+    public string? profilePic { get; set; }
+}
+
+public class Account_Create
 {
     public string username { get; set; } = null!;
     public string pw { get; set; } = null!;

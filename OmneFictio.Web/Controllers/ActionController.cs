@@ -26,7 +26,7 @@ public class ActionController : Controller
 
     //Voting post/chapter/comment/reply
     [HttpPost]
-    public async Task<JsonResult> Vote([FromBody] VoteWrite1 request)
+    public async Task<JsonResult> Vote([FromBody] VoteWrite request)
     {
         if (AccountId == null)
         {
@@ -124,7 +124,7 @@ public class ActionController : Controller
     }
 
     [HttpPost]
-    public async Task<JsonResult> CreatePost([FromBody] PostWrite1 request)
+    public async Task<JsonResult> CreatePost([FromBody] PostWrite request)
     {
         if (AccountId == null)
         {

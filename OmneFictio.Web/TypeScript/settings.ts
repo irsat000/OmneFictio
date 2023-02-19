@@ -73,36 +73,84 @@ document.addEventListener("DOMContentLoaded", function () {
                     const clone = window.cloneFromTemplate(instance);
 
                     const username_input = clone.querySelector('input[name="as-username"]') as HTMLInputElement;
+                    const email_input = clone.querySelector('input[name="as-email"]') as HTMLInputElement;
+                    const displayName_input = clone.querySelector('input[name="as-displayname"]') as HTMLInputElement;
+                    const bio_input = clone.querySelector('textarea[name="as-bio"]') as HTMLTextAreaElement;
+                    const profilePic_img = clone.querySelector('.as-profile_picture') as HTMLImageElement;
+
+                    //Get username
                     username_input.value = account.username;
                     username_input.setAttribute('data-revert', account.username);
-
+                    //Get display name
                     if (account.displayName !== null) {
-                        const displayName_input = clone.querySelector('input[name="as-displayname"]') as HTMLInputElement;
                         displayName_input.value = account.displayName;
                         displayName_input.setAttribute('data-revert', account.displayName);
                     }
-
-                    const email_input = clone.querySelector('input[name="as-email"]') as HTMLInputElement;
+                    //Get email
                     email_input.value = account.email;
                     email_input.setAttribute('data-revert', account.email);
 
+                    //Remove email confirm option if email is valid
                     if (account.emailValid) {
                         clone.querySelector('.email_confirm')!.remove();
-                        //If email is valid, show only "change"
                         //I will add an email verification system for email change after confirmation of email
                     }
-
+                    //Get bio
                     if (account.selfDesc !== null) {
-                        const bio_input = clone.querySelector('textarea[name="as-bio"]') as HTMLTextAreaElement;
                         bio_input.value = account.selfDesc;
                         bio_input.setAttribute('data-revert', account.selfDesc);
                     }
-
+                    //Get profile picture
                     if (account.profilePic !== null) {
-                        const profilePic_img = clone.querySelector('.as-profile_picture') as HTMLImageElement;
                         profilePic_img.src = '/images/users/' + account.profilePic;
                         profilePic_img.setAttribute('data-revert', '/images/users/' + account.profilePic);
                     }
+
+                    clone.querySelector('.as-savebtn')!.addEventListener('click', () => {
+                        let profilePic = null;
+                        // TODO: I will add an advanced profile picture uploader, with crops and all
+                        // TODO: If hidden input is not empty, it means new image is uploaded
+
+                        let displayName = displayName_input.value != "" && displayName_input.value !== displayName_input.getAttribute('data-revert')
+                            ? displayName_input.value
+                            : null;
+
+                        let selfDesc = bio_input.value != "" && bio_input.value !== bio_input.getAttribute('data-revert')
+                            ? bio_input.value
+                            : null;
+
+                        const updateData = {
+                            displayName: displayName,
+                            selfDesc: selfDesc,
+                            profilePic: profilePic
+                        }
+
+                        fetch('/u/UpdateAccountInformation', {
+                            method: 'POST',
+                            headers: {
+                                'Accept': 'application/json',
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(updateData)
+                        })
+                            .then((res) => res.json())
+                            .then((data) => {
+                                if (data.statusCode === 200) {
+                                    if (displayName !== null) {
+                                        displayName_input.setAttribute('data-revert', displayName)
+                                    }
+                                    if (selfDesc !== null) {
+                                        bio_input.setAttribute('data-revert', selfDesc)
+                                    }
+                                    console.log("Success")
+                                    // Show "Saved" message
+                                } else {
+                                    console.log("Fail")
+                                    // Show "Failed" message
+                                }
+                            })
+                        //.catch(err => { console.log('Update account failed -> ' + err) });
+                    });
 
                     settingsbody.querySelectorAll('.pre_load').forEach(body => body.classList.remove('dflex'));
                     settingsbody.appendChild(clone);

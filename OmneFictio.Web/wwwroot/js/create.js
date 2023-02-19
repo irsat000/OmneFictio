@@ -195,7 +195,7 @@ document.addEventListener("DOMContentLoaded", function () {
                     ff_requirements.querySelector('[data-ref="series"]').classList.add('passed');
                 }
             }
-            await fetch('Action/CreatePost', {
+            await fetch('/Action/CreatePost', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',

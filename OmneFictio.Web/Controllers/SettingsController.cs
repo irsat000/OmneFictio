@@ -38,7 +38,7 @@ public class SettingsController : Controller
         }
 
         var apiResponse = await _httpClient
-            .GetAsync("Settings/AccountInformation/" + AccountId);
+            .GetAsync("Settings/GetAccountInformation/" + AccountId);
         if (apiResponse.StatusCode.ToString() != "OK")
         {
             return new JsonResult(NotFound());
@@ -50,8 +50,8 @@ public class SettingsController : Controller
         return new JsonResult(Ok(content));
     }
 
-    [HttpGet("u/UpdateAccountInformation")]
-    public async Task<JsonResult> UpdateAccountInformation(AccountUpdate request)
+    [HttpPost("u/UpdateAccountInformation")]
+    public async Task<JsonResult> UpdateAccountInformation([FromBody] AccountUpdate request)
     {
         if (AccountId == null)
         {
